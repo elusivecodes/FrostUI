@@ -1,6 +1,8 @@
 "use strict";
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -47,7 +49,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Alert);
 
       this._node = node;
-      this._settings = _objectSpread({}, Alert.defaults, dom.getDataset(this._node), settings);
+      this._settings = _objectSpread({}, Alert.defaults, {}, dom.getDataset(this._node), {}, settings);
       dom.setData(this._node, 'alert', this);
     }
     /**
@@ -83,9 +85,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             dom.triggerEvent(_this._node, 'closed.frost.alert');
             dom.remove(_this._node);
             resolve();
-          }).catch(function (_) {
+          })["catch"](function (_) {
             return reject();
-          }).finally(function (_) {
+          })["finally"](function (_) {
             _this._animating = false;
           });
         });
@@ -125,7 +127,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Carousel);
 
       this._node = node;
-      this._settings = _objectSpread({}, Carousel.defaults, dom.getDataset(this._node), settings);
+      this._settings = _objectSpread({}, Carousel.defaults, {}, dom.getDataset(this._node), {}, settings);
       this._items = dom.find('.carousel-item', this._node);
       this._index = this._items.findIndex(function (item) {
         return dom.hasClass(item, 'active');
@@ -342,8 +344,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _iteratorError = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion && _iterator.return != null) {
-          _iterator.return();
+        if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+          _iterator["return"]();
         }
       } finally {
         if (_didIteratorError) {
@@ -515,7 +517,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Collapse);
 
       this._node = node;
-      this._settings = _objectSpread({}, Collapse.defaults, dom.getDataset(this._node), settings);
+      this._settings = _objectSpread({}, Collapse.defaults, {}, dom.getDataset(this._node), {}, settings);
       this._target = dom.find(this._settings.target);
       this._visible = dom.isVisible(this._target);
 
@@ -559,9 +561,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             dom.hide(_this5._target);
             dom.triggerEvent(_this5._node, 'hidden.frost.collapse');
             resolve();
-          }).catch(function (_) {
+          })["catch"](function (_) {
             return reject();
-          }).finally(function (_) {
+          })["finally"](function (_) {
             _this5._animating = false;
           });
         });
@@ -590,9 +592,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           }).then(function (_) {
             dom.triggerEvent(_this6._node, 'shown.frost.collapse');
             resolve();
-          }).catch(function (_) {
+          })["catch"](function (_) {
             return reject();
-          }).finally(function (_) {
+          })["finally"](function (_) {
             _this6._animating = false;
           });
         });
@@ -634,8 +636,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _iteratorError2 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
-          _iterator2.return();
+        if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+          _iterator2["return"]();
         }
       } finally {
         if (_didIteratorError2) {
@@ -718,7 +720,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Dropdown);
 
       this._node = node;
-      this._settings = _objectSpread({}, Dropdown.defaults, dom.getDataset(this._node), settings);
+      this._settings = _objectSpread({}, Dropdown.defaults, {}, dom.getDataset(this._node), {}, settings);
       this._containerNode = dom.parent(this._node);
       this._menuNode = dom.siblings(this._node).find(function (child) {
         return dom.hasClass(child, 'dropdown-menu');
@@ -800,9 +802,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             dom.removeClass(_this9._containerNode, 'open');
             dom.triggerEvent(_this9._node, 'hidden.frost.dropdown');
             resolve();
-          }).catch(function (_) {
+          })["catch"](function (_) {
             return reject();
-          }).finally(function (_) {
+          })["finally"](function (_) {
             _this9._animating = false;
           });
         });
@@ -834,9 +836,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             dom.addEventOnce(window, 'click.frost.dropdown', _this10._windowClickEvent);
             dom.triggerEvent(_this10._node, 'shown.frost.dropdown');
             resolve();
-          }).catch(function (_) {
+          })["catch"](function (_) {
             return reject();
-          }).finally(function (_) {
+          })["finally"](function (_) {
             _this10._animating = false;
           });
         });
@@ -883,8 +885,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _iteratorError3 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion3 && _iterator3.return != null) {
-          _iterator3.return();
+        if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
+          _iterator3["return"]();
         }
       } finally {
         if (_didIteratorError3) {
@@ -1013,7 +1015,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Modal);
 
       this._node = node;
-      this._settings = _objectSpread({}, Modal.defaults, dom.getDataset(node), settings);
+      this._settings = _objectSpread({}, Modal.defaults, {}, dom.getDataset(node), {}, settings);
       this._dialog = dom.child(this._node, '.modal-dialog');
       this._visible = dom.isVisible(this._node);
 
@@ -1087,9 +1089,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             dom.removeClass(document.body, 'modal-open');
             dom.triggerEvent(_this13._node, 'hidden.frost.modal');
             resolve();
-          }).catch(function (_) {
+          })["catch"](function (_) {
             return reject();
-          }).finally(function (_) {
+          })["finally"](function (_) {
             _this13._animating = false;
           });
         });
@@ -1111,7 +1113,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
           if (_this14._settings.backdrop) {
             _this14._backdrop = dom.create('div', {
-              class: 'modal-backdrop'
+              "class": 'modal-backdrop'
             });
             dom.append(document.body, _this14._backdrop);
           }
@@ -1145,9 +1147,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
             dom.triggerEvent(_this14._node, 'shown.frost.modal');
             resolve();
-          }).catch(function (_) {
+          })["catch"](function (_) {
             return reject();
-          }).finally(function (_) {
+          })["finally"](function (_) {
             _this14._animating = false;
           });
         });
@@ -1246,7 +1248,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Popover);
 
       this._node = node;
-      this._settings = _objectSpread({}, Popover.defaults, dom.getDataset(this._node), settings);
+      this._settings = _objectSpread({}, Popover.defaults, {}, dom.getDataset(this._node), {}, settings);
 
       if (this._settings.container) {
         this._container = dom.findOne(this._settings.container);
@@ -1337,7 +1339,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             _this15._popper = null;
             dom.triggerEvent(_this15._node, 'hidden.frost.popover');
             resolve();
-          }).catch(function (_) {
+          })["catch"](function (_) {
             return reject();
           });
         });
@@ -1365,7 +1367,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           }).then(function (_) {
             dom.triggerEvent(_this16._node, 'shown.frost.popover');
             resolve();
-          }).catch(function (_) {
+          })["catch"](function (_) {
             return reject();
           });
         });
@@ -1438,8 +1440,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _iteratorError4 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion4 && _iterator4.return != null) {
-          _iterator4.return();
+        if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
+          _iterator4["return"]();
         }
       } finally {
         if (_didIteratorError4) {
@@ -1557,13 +1559,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      */
     _render: function _render() {
       this._popover = dom.create('div', {
-        class: this._settings.classes.popover,
+        "class": this._settings.classes.popover,
         attributes: {
           role: 'tooltip'
         }
       });
       var arrow = dom.create('div', {
-        class: this._settings.classes.arrow
+        "class": this._settings.classes.arrow
       });
       dom.append(this._popover, arrow);
       var method = this._settings.html ? 'html' : 'text';
@@ -1624,7 +1626,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this._node = node;
       this._referenceNode = reference;
       this._fixed = dom.isFixed(this._referenceNode);
-      this._settings = _objectSpread({}, Popper.defaults, dom.getDataset(this._node), settings);
+      this._settings = _objectSpread({}, Popper.defaults, {}, dom.getDataset(this._node), {}, settings);
       var wrapper = dom.create('div', {
         style: {
           position: 'absolute',
@@ -1649,6 +1651,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         Popper.start();
       }
     }
+    /**
+     * Destroy the Popper.
+     */
+
 
     _createClass(Popper, [{
       key: "destroy",
@@ -1657,8 +1663,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         dom.remove(this._wrapper);
         dom.removeData(this._node, 'popper');
 
-        Popper._poppers.delete(this._node);
+        Popper._poppers["delete"](this._node);
       }
+      /**
+       * Update the Popper position.
+       */
+
     }, {
       key: "update",
       value: function update() {
@@ -1821,7 +1831,22 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   };
   Popper._poppers = new Map();
   UI.Popper = Popper;
+  /**
+   * Popper Static
+   */
+
   Object.assign(Popper, {
+    /**
+     * Get the actual placement of the Popper.
+     * @param {object} nodeBox The computed bounding rectangle of the node.
+     * @param {number} spaceTop Available pixels above the node.
+     * @param {number} spaceRight Available pixels to the right of the node.
+     * @param {number} spaceBottom Available pixels below the node.
+     * @param {number} spaceLeft Available pixels to the left of the node.
+     * @param {string} placement The initial placement of the Popper.
+     * @param {number} spacing The amount of spacing to use.
+     * @returns {string} The new placement of the Popper.
+     */
     getPopperPlacement: function getPopperPlacement(nodeBox, spaceTop, spaceRight, spaceBottom, spaceLeft, placement, spacing) {
       if (placement === 'top') {
         // if node is bigger than space top and there is more room on bottom
@@ -1865,6 +1890,18 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       return placement;
     },
+
+    /**
+     * Get the actual position of the Popper.
+     * @param {object} referenceBox The computed bounding rectangle of the reference.
+     * @param {number} deltaX The difference between the node and reference widths.
+     * @param {number} deltaY The difference between the node and reference heights.
+     * @param {number} docWidth The width of the document.
+     * @param {number} docHeight The height of the document.
+     * @param {string} placement The actual placement of the Popper.
+     * @param {string} position The initial position of the Popper.
+     * @returns {string} The new position of the Popper.
+     */
     getPopperPosition: function getPopperPosition(referenceBox, deltaX, deltaY, docWidth, docHeight, placement, position) {
       if (placement === 'top' || placement === 'bottom') {
         if (position === 'start') {
@@ -1934,6 +1971,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       return position;
     },
+
+    /**
+     * Update the position of all Poppers.
+     */
     run: function run() {
       this._poppers.forEach(function (popper) {
         return popper.update();
@@ -1944,6 +1985,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         this._running = false;
       }
     },
+
+    /**
+     * Start updating the position of all Poppers.
+     */
     start: function start() {
       if (this._running) {
         return;
@@ -1973,7 +2018,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Tab);
 
       this._node = node;
-      this._settings = _objectSpread({}, Tab.defaults, dom.getDataset(this._node), settings);
+      this._settings = _objectSpread({}, Tab.defaults, {}, dom.getDataset(this._node), {}, settings);
 
       if (!this._settings.target) {
         this._settings.target = dom.getAttribute(this._node, 'href');
@@ -2020,9 +2065,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             dom.removeClass(_this18._node, 'active');
             dom.triggerEvent(_this18._node, 'hidden.frost.tab');
             resolve();
-          }).catch(function (_) {
+          })["catch"](function (_) {
             return reject();
-          }).finally(function (_) {
+          })["finally"](function (_) {
             _this18._animating = false;
           });
         });
@@ -2058,9 +2103,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           }).then(function (_) {
             dom.triggerEvent(_this19._node, 'shown.frost.tab');
             resolve();
-          }).catch(function (_) {
+          })["catch"](function (_) {
             return reject();
-          }).finally(function (_) {
+          })["finally"](function (_) {
             _this19._animating = false;
           });
         });
@@ -2091,8 +2136,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _iteratorError5 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion5 && _iterator5.return != null) {
-          _iterator5.return();
+        if (!_iteratorNormalCompletion5 && _iterator5["return"] != null) {
+          _iterator5["return"]();
         }
       } finally {
         if (_didIteratorError5) {
@@ -2175,7 +2220,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Toast);
 
       this._node = node;
-      this._settings = _objectSpread({}, Toast.defaults, dom.getDataset(this._node), settings);
+      this._settings = _objectSpread({}, Toast.defaults, {}, dom.getDataset(this._node), {}, settings);
       this._visible = dom.isVisible(this._node);
 
       if (this._settings.autohide) {
@@ -2222,9 +2267,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             dom.hide(_this22._node);
             dom.triggerEvent(_this22._node, 'hidden.frost.toast');
             resolve();
-          }).catch(function (_) {
+          })["catch"](function (_) {
             return reject();
-          }).finally(function (_) {
+          })["finally"](function (_) {
             _this22._animating = false;
           });
         });
@@ -2252,9 +2297,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           }).then(function (_) {
             dom.triggerEvent(_this23._node, 'shown.frost.toast');
             resolve();
-          }).catch(function (_) {
+          })["catch"](function (_) {
             return reject();
-          }).finally(function (_) {
+          })["finally"](function (_) {
             _this23._animating = false;
           });
         });
@@ -2287,8 +2332,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _iteratorError6 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion6 && _iterator6.return != null) {
-          _iterator6.return();
+        if (!_iteratorNormalCompletion6 && _iterator6["return"] != null) {
+          _iterator6["return"]();
         }
       } finally {
         if (_didIteratorError6) {
@@ -2356,7 +2401,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Tooltip);
 
       this._node = node;
-      this._settings = _objectSpread({}, Tooltip.defaults, dom.getDataset(this._node), settings);
+      this._settings = _objectSpread({}, Tooltip.defaults, {}, dom.getDataset(this._node), {}, settings);
 
       if (this._settings.container) {
         this._container = dom.findOne(this._settings.container);
@@ -2447,7 +2492,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             _this24._popper = null;
             dom.triggerEvent(_this24._node, 'hidden.frost.tooltip');
             resolve();
-          }).catch(function (_) {
+          })["catch"](function (_) {
             return reject();
           });
         });
@@ -2475,7 +2520,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           }).then(function (_) {
             dom.triggerEvent(_this25._node, 'shown.frost.tooltip');
             resolve();
-          }).catch(function (_) {
+          })["catch"](function (_) {
             return reject();
           });
         });
@@ -2547,8 +2592,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _iteratorError7 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion7 && _iterator7.return != null) {
-          _iterator7.return();
+        if (!_iteratorNormalCompletion7 && _iterator7["return"] != null) {
+          _iterator7["return"]();
         }
       } finally {
         if (_didIteratorError7) {
@@ -2668,13 +2713,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       var _dom$create3;
 
       this._tooltip = dom.create('div', {
-        class: this._settings.classes.tooltip,
+        "class": this._settings.classes.tooltip,
         attributes: {
           role: 'tooltip'
         }
       });
       var arrow = dom.create('div', {
-        class: this._settings.classes.arrow
+        "class": this._settings.classes.arrow
       });
       dom.append(this._tooltip, arrow);
 

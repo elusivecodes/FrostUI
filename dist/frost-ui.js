@@ -1566,6 +1566,9 @@
             }
         }
 
+        /**
+         * Destroy the Popper.
+         */
         destroy() {
             dom.before(this._wrapper, dom.contents(this._wrapper));
             dom.remove(this._wrapper);
@@ -1574,6 +1577,9 @@
             Popper._poppers.delete(this._node);
         }
 
+        /**
+         * Update the Popper position.
+         */
         update() {
             if (!dom.isConnected(this._node)) {
                 return;
@@ -1736,6 +1742,7 @@
 
     }
 
+
     // Default Popper options
     Popper.defaults = {
         placement: 'bottom',
@@ -1751,8 +1758,23 @@
     UI.Popper = Popper;
 
 
+    /**
+     * Popper Static
+     */
+
     Object.assign(Popper, {
 
+        /**
+         * Get the actual placement of the Popper.
+         * @param {object} nodeBox The computed bounding rectangle of the node.
+         * @param {number} spaceTop Available pixels above the node.
+         * @param {number} spaceRight Available pixels to the right of the node.
+         * @param {number} spaceBottom Available pixels below the node.
+         * @param {number} spaceLeft Available pixels to the left of the node.
+         * @param {string} placement The initial placement of the Popper.
+         * @param {number} spacing The amount of spacing to use.
+         * @returns {string} The new placement of the Popper.
+         */
         getPopperPlacement(nodeBox, spaceTop, spaceRight, spaceBottom, spaceLeft, placement, spacing) {
             if (placement === 'top') {
                 // if node is bigger than space top and there is more room on bottom
@@ -1801,6 +1823,17 @@
             return placement
         },
 
+        /**
+         * Get the actual position of the Popper.
+         * @param {object} referenceBox The computed bounding rectangle of the reference.
+         * @param {number} deltaX The difference between the node and reference widths.
+         * @param {number} deltaY The difference between the node and reference heights.
+         * @param {number} docWidth The width of the document.
+         * @param {number} docHeight The height of the document.
+         * @param {string} placement The actual placement of the Popper.
+         * @param {string} position The initial position of the Popper.
+         * @returns {string} The new position of the Popper.
+         */
         getPopperPosition(referenceBox, deltaX, deltaY, docWidth, docHeight, placement, position) {
             if (placement === 'top' || placement === 'bottom') {
 
@@ -1893,6 +1926,9 @@
             return position;
         },
 
+        /**
+         * Update the position of all Poppers.
+         */
         run() {
             this._poppers.forEach(popper => popper.update());
 
@@ -1902,6 +1938,9 @@
             }
         },
 
+        /**
+         * Start updating the position of all Poppers.
+         */
         start() {
             if (this._running) {
                 return;

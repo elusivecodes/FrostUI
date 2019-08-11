@@ -10,11 +10,11 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "@babel/core": "^7.1.6",
-        "@babel/preset-env": "^7.1.6",
+        "@babel/core": "^7.5.5",
+        "@babel/preset-env": "^7.5.5",
         "cssmin": "^0.4.3",
         "filepath": "^1.1.0",
-        "less": "^3.0.2",
+        "less": "^3.9.0",
         "uglify-es": "^3.3.9"
     }
 }
