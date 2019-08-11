@@ -1,0 +1,29 @@
+.close {
+    float: right;
+    font-size: .8rem;
+    font-weight: bolder;
+    line-height: 1;
+    color: @black;
+    text-shadow: 0 1px 0 @white;
+    opacity: .5;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &:not(:disabled):not(.disabled) {
+        cursor: pointer;
+    }
+}
+
+.close-x::before {
+    content: @cancel;
+}
+
+button.close {
+    padding: 0;
+    background: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    appearance: none;
+}

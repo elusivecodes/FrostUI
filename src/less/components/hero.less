@@ -1,0 +1,48 @@
+.mix-hero(@color) {
+    @background: lighten(@color, 2%);
+    background-color: @background;
+    .text-color(@background);
+
+    & .hero-link {
+        .text-color(@background);
+    }
+}
+
+.hero {
+    padding: 2.5rem 1.5rem;
+    margin-bottom: @spacing;
+    border: @border-size @border-style @border-color;
+    border-radius: @border-radius * 2;
+}
+
+.hero-primary {
+    .mix-hero(@primary);
+}
+
+.hero-secondary {
+    .mix-hero(@secondary);
+}
+
+.hero-success {
+    .mix-hero(@success);
+}
+
+.hero-info {
+    .mix-hero(@info);
+}
+
+.hero-warning {
+    .mix-hero(@warning);
+}
+
+.hero-danger {
+    .mix-hero(@danger);
+}
+
+.hero-light {
+    .mix-hero(@light);
+}
+
+.hero-dark {
+    .mix-hero(@dark);
+}

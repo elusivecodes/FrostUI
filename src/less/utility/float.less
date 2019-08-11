@@ -1,0 +1,19 @@
+.mix-float(@b: -) {
+    .float@{b}left {
+        float: left !important;
+    }
+
+    .float@{b}right {
+        float: right !important;
+    }
+
+    .float@{b}none {
+        float: none !important;
+    }
+}
+
+.clearfix ::after {
+    display: block;
+    content: '';
+    clear: both;
+}

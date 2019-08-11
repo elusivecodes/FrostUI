@@ -1,0 +1,162 @@
+.mix-btn(@color) {
+    background-color: @color;
+    .text-color(@color);
+
+    &.active,
+    &.active:hover {
+        background-color: darken(@color, 20%);
+    }
+
+    &:hover {
+        background-color: darken(@color, 10%);
+        .text-color(@color);
+    }
+}
+
+.mix-btn-outline(@color) {
+    background-color: transparent;
+    color: @color;
+    border-color: @color;
+
+    &.active,
+    &.active:hover {
+        color: darken(@color, 20%);
+        border-color: darken(@color, 20%);
+    }
+
+    &:hover {
+        background-color: @color;
+        .text-color(@color);
+    }
+}
+
+.btn {
+    display: inline-block;
+    padding: .15rem .5rem;
+    margin-bottom: @spacing;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    font-size: 1rem;
+    line-height: 1.5;
+    border: @border-size @border-style @border-color;
+    border-radius: @border-radius;
+    transition: color .1s ease-in-out, background-color .1s ease-in-out, box-shadow .1s ease-in-out;
+
+    &:disabled,
+    &.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    &:hover {
+        z-index: 2;
+    }
+
+    &:focus {
+        box-shadow: 0 2px 3px 0 rgba(0,0,0,.12), 0 2px 2px 0 rgba(0,0,0,.24);
+    }
+
+    &:active {
+        box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2);
+    }
+
+    &:active,
+    &.active,
+    &.active:hover {
+        z-index: 3;
+    }
+
+    &:focus {
+        outline: 0;
+        z-index: 4;
+    }
+
+    &:not(.btn-link):hover {
+        text-decoration: none;
+    }
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.btn-link {
+    border: 0;
+    border-radius: 0;
+    color: @link;
+    box-shadow: none;
+
+    &:hover {
+        color: tint(@link, 25%);
+        box-shadow: none;
+    }
+}
+
+.btn-primary {
+    .mix-btn(@primary);
+}
+
+.btn-secondary {
+    .mix-btn(@secondary);
+}
+
+.btn-success {
+    .mix-btn(@success);
+}
+
+.btn-info {
+    .mix-btn(@info);
+}
+
+.btn-warning {
+    .mix-btn(@warning);
+}
+
+.btn-danger {
+    .mix-btn(@danger);
+}
+
+.btn-light {
+    .mix-btn(@light);
+}
+
+.btn-dark {
+    .mix-btn(@dark);
+}
+
+.btn-outline-primary {
+    .mix-btn-outline(@primary);
+}
+
+.btn-outline-secondary {
+    .mix-btn-outline(@secondary);
+}
+
+.btn-outline-success {
+    .mix-btn-outline(@success);
+}
+
+.btn-outline-info {
+    .mix-btn-outline(@info);
+}
+
+.btn-outline-warning {
+    .mix-btn-outline(@warning);
+}
+
+.btn-outline-danger {
+    .mix-btn-outline(@danger);
+}
+
+.btn-outline-light {
+    .mix-btn-outline(@light);
+}
+
+.btn-outline-dark {
+    .mix-btn-outline(@dark);
+}

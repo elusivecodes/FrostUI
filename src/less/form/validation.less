@@ -1,0 +1,31 @@
+.form-success {
+    & .form-label {
+        color: @success;
+    }
+
+    & .input-group-text {
+        background-color: tint(lighten(@success, 15%), 75%);
+        border-color: @success;
+        color: darken(@success, 10%);
+    }
+}
+
+.form-success .form-input {
+    border-color: @success;
+}
+
+.form-error {
+    & .form-label {
+        color: @danger;
+    }
+
+    & .input-group-text {
+        background-color: tint(lighten(@danger, 15%), 75%);
+        border-color: @danger;
+        color: darken(@danger, 10%);
+    }
+}
+
+.form-error .form-input {
+    border-color: @danger;
+}

@@ -1,0 +1,65 @@
+.mix-badge(@color) {
+    background-color: @color;
+    .text-color(@color);
+
+    &[href]:hover {
+        text-decoration: none;
+        background-color: darken(@color, 10%);
+        .text-color(@color);
+    }
+}
+
+.badge {
+    display: inline-block;
+    padding: .25rem .4rem;
+    border-radius: @border-radius;
+    font-size: 75%;
+    font-weight: 500;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    transition: color .1s ease-in-out, background-color .1s ease-in-out, box-shadow .1s ease-in-out;
+
+    &[href] {
+        &:focus {
+            box-shadow: 0 2px 3px 0 rgba(0,0,0,.12), 0 2px 2px 0 rgba(0,0,0,.24);
+        }
+
+        &:active {
+            box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2);
+        }
+    }
+}
+
+.badge-primary {
+    .mix-badge(@primary);
+}
+
+.badge-secondary {
+    .mix-badge(@secondary);
+}
+
+.badge-success {
+    .mix-badge(@success);
+}
+
+.badge-info {
+    .mix-badge(@info);
+}
+
+.badge-warning {
+    .mix-badge(@warning);
+}
+
+.badge-danger {
+    .mix-badge(@danger);
+}
+
+.badge-light {
+    .mix-badge(@light);
+}
+
+.badge-dark {
+    .mix-badge(@dark);
+}

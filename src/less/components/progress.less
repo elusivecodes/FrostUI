@@ -1,0 +1,36 @@
+.progress {
+    display: flex;
+    height: @spacing;
+    overflow: hidden;
+    font-size: .75rem;
+    background-color: @light;
+    border-radius: @border-radius;
+    margin-bottom: @spacing;
+}
+
+.progress-vertical {
+    align-items: flex-end;
+    flex-direction: column;
+    width: @spacing;
+    height: 200px;
+
+    & .progress-bar {
+        width: 100%;
+        transition: height .6s ease;
+
+        &:first-child {
+            margin-top: auto;
+        }
+    }
+}
+
+.progress-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: @white;
+    text-align: center;
+    white-space: nowrap;
+    background-color: @primary;
+    transition: width .6s ease;
+}

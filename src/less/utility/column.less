@@ -1,0 +1,18 @@
+.mix-cols(@n, @b: -, @i: 1) when (@i =< @n) {
+    @width: (@i * 100% / @n);
+
+    .col@{b}@{i} {
+        flex: 0 0 @width;
+        max-width: @width;
+    }
+
+    .offset@{b}@{i} {
+        margin-left: @width;
+    }
+
+    .order@{b}@{i} {
+        order: @i;
+    }
+
+    .mix-cols(@n, @b, (@i + 1));
+}

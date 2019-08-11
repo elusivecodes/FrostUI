@@ -1,0 +1,18 @@
+.mix-color(@name) {
+    .bg-@{name} {
+        background-color: @@name !important;
+    }
+
+    .text-@{name} {
+        color: @@name !important;
+    }
+
+    .border-@{name} {
+        border-color: @@name !important;
+    }
+}
+
+.text-color(@background) {
+    @luma: unit(luma(@background));
+    color: if((@luma < 50), @white, @black);
+}

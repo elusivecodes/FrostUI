@@ -1,0 +1,34 @@
+.mix-sizing(@n, @b: -, @i: 1) when (@i =< @n) {
+    @size: 100 / @n * @i;
+    @amount: 1% * @size;
+
+    .w@{b}@{size} {
+        width: @amount !important;
+    }
+
+    .mw@{b}@{size} {
+        max-width: @amount !important;
+    }
+
+    .h@{b}@{size} {
+        height: @amount !important;
+    }
+
+    .mh@{b}@{size} {
+        max-height: @amount !important;
+    }
+
+    .mix-sizing(@n, @b, (@i + 1));
+}
+
+.create-sizing(@n, @b: -) {
+    .w@{b}auto {
+        width: auto !important;
+    }
+
+    .h@{b}auto {
+        height: auto !important;
+    }
+
+    .mix-sizing(@n, @b);
+}
