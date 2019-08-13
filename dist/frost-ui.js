@@ -247,6 +247,7 @@
                 this.pause();
 
                 dom.addClass(this._items[this._index], 'active');
+                dom.removeClass(this._items[oldIndex], 'active');
                 dom.animate(
                     this._items[this._index],
                     (node, progress, options) =>
@@ -256,8 +257,6 @@
                         duration: this._settings.transition
                     }
                 ).then(_ => {
-                    dom.removeClass(this._items[oldIndex], 'active');
-
                     dom.removeClass(
                         dom.find('.active[data-slide-to]', this._node),
                         'active'
@@ -373,25 +372,22 @@
          */
         _update(nodeIn, nodeOut, progress, direction) {
             if (progress < 1) {
-                const size = DOM._width(nodeIn);
                 const inverse = direction === 'left';
-                DOMNode.setStyle(nodeIn, 'position', 'absolute');
-                DOMNode.setStyle(nodeIn, 'top', 0);
-                DOMNode.setStyle(
-                    nodeIn,
-                    'transform',
-                    `translateX(${Math.round(size - (size * progress)) * (inverse ? -1 : 1)}px)`
-                );
+                DOMNode.setStyle(nodeOut, 'display', 'block');
                 DOMNode.setStyle(
                     nodeOut,
                     'transform',
-                    `translateX(${Math.round(size - (size * (1 - progress))) * (inverse ? 1 : -1)}px)`
+                    `translateX(${Math.round(progress * 100) * (inverse ? -1 : 1)}%)`
+                );
+                DOMNode.setStyle(
+                    nodeIn,
+                    'transform',
+                    `translateX(${Math.round((1 - progress) * 100) * (inverse ? 1 : -1)}%)`
                 );
             } else {
-                DOMNode.setStyle(nodeIn, 'transform', '');
-                DOMNode.setStyle(nodeIn, 'position', '');
-                DOMNode.setStyle(nodeIn, 'top', '');
+                DOMNode.setStyle(nodeOut, 'display', '');
                 DOMNode.setStyle(nodeOut, 'transform', '');
+                DOMNode.setStyle(nodeIn, 'transform', '');
             }
         },
 
@@ -495,7 +491,7 @@
 
             this._target = dom.find(this._settings.target);
 
-            this._visible = dom.isVisible(this._target);
+            this._visible = dom.hasClass(this._target, 'show');
 
             this._events();
 
@@ -527,7 +523,7 @@
                     duration: this._settings.duration
                 }).then(_ => {
                     this._visible = false;
-                    dom.hide(this._target);
+                    dom.removeClass(this._target, 'show');
                     dom.triggerEvent(this._node, 'hidden.frost.collapse');
                     resolve();
                 }).catch(_ =>
@@ -551,7 +547,7 @@
 
                 this._animating = true;
                 this._visible = true;
-                dom.show(this._target);
+                dom.addClass(this._target, 'show');
                 dom.squeezeIn(this._target, {
                     dir: this._settings.direction,
                     duration: this._settings.duration

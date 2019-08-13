@@ -148,6 +148,7 @@ class Carousel {
             this.pause();
 
             dom.addClass(this._items[this._index], 'active');
+            dom.removeClass(this._items[oldIndex], 'active');
             dom.animate(
                 this._items[this._index],
                 (node, progress, options) =>
@@ -157,8 +158,6 @@ class Carousel {
                     duration: this._settings.transition
                 }
             ).then(_ => {
-                dom.removeClass(this._items[oldIndex], 'active');
-
                 dom.removeClass(
                     dom.find('.active[data-slide-to]', this._node),
                     'active'

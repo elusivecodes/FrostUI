@@ -270,13 +270,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           _this2.pause();
 
           dom.addClass(_this2._items[_this2._index], 'active');
+          dom.removeClass(_this2._items[oldIndex], 'active');
           dom.animate(_this2._items[_this2._index], function (node, progress, options) {
             return _this2._update(node, _this2._items[oldIndex], progress, options.direction);
           }, {
             direction: direction,
             duration: _this2._settings.transition
           }).then(function (_) {
-            dom.removeClass(_this2._items[oldIndex], 'active');
             dom.removeClass(dom.find('.active[data-slide-to]', _this2._node), 'active');
             dom.addClass(dom.find('[data-slide-to="' + _this2._index + '"]', _this2._node), 'active');
             _this2._sliding = false;
@@ -402,18 +402,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      */
     _update: function _update(nodeIn, nodeOut, progress, direction) {
       if (progress < 1) {
-        var size = DOM._width(nodeIn);
-
         var inverse = direction === 'left';
-        DOMNode.setStyle(nodeIn, 'position', 'absolute');
-        DOMNode.setStyle(nodeIn, 'top', 0);
-        DOMNode.setStyle(nodeIn, 'transform', "translateX(".concat(Math.round(size - size * progress) * (inverse ? -1 : 1), "px)"));
-        DOMNode.setStyle(nodeOut, 'transform', "translateX(".concat(Math.round(size - size * (1 - progress)) * (inverse ? 1 : -1), "px)"));
+        DOMNode.setStyle(nodeOut, 'display', 'block');
+        DOMNode.setStyle(nodeOut, 'transform', "translateX(".concat(Math.round(progress * 100) * (inverse ? -1 : 1), "%)"));
+        DOMNode.setStyle(nodeIn, 'transform', "translateX(".concat(Math.round((1 - progress) * 100) * (inverse ? 1 : -1), "%)"));
       } else {
-        DOMNode.setStyle(nodeIn, 'transform', '');
-        DOMNode.setStyle(nodeIn, 'position', '');
-        DOMNode.setStyle(nodeIn, 'top', '');
+        DOMNode.setStyle(nodeOut, 'display', '');
         DOMNode.setStyle(nodeOut, 'transform', '');
+        DOMNode.setStyle(nodeIn, 'transform', '');
       }
     },
 
@@ -519,7 +515,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this._node = node;
       this._settings = _objectSpread({}, Collapse.defaults, {}, dom.getDataset(this._node), {}, settings);
       this._target = dom.find(this._settings.target);
-      this._visible = dom.isVisible(this._target);
+      this._visible = dom.hasClass(this._target, 'show');
 
       this._events();
 
@@ -558,7 +554,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             duration: _this5._settings.duration
           }).then(function (_) {
             _this5._visible = false;
-            dom.hide(_this5._target);
+            dom.removeClass(_this5._target, 'show');
             dom.triggerEvent(_this5._node, 'hidden.frost.collapse');
             resolve();
           })["catch"](function (_) {
@@ -585,7 +581,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
           _this6._animating = true;
           _this6._visible = true;
-          dom.show(_this6._target);
+          dom.addClass(_this6._target, 'show');
           dom.squeezeIn(_this6._target, {
             dir: _this6._settings.direction,
             duration: _this6._settings.duration

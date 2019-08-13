@@ -6,11 +6,11 @@
 html {
   font-family: sans-serif;
   line-height: 1.15;
+  font-size: 1.1rem;
 }
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 1.1rem;
   font-weight: 400;
   line-height: 1.5;
   color: #121212;
@@ -1189,6 +1189,11 @@ button.list-item:hover,
   border: 1px solid transparent;
   border-radius: 0.2rem;
 }
+.navbar-collapse {
+  flex-basis: 100%;
+  flex-grow: 1;
+  align-items: center;
+}
 @media (min-width: 576px) {
   .navbar-expand-xs .navbar-collapse {
     display: flex !important;
@@ -1801,6 +1806,9 @@ input.form-input[type="file"] {
 .carousel-next-arrow::before {
   content: '\2b9e';
 }
+.collapse:not(.show) {
+  display: none;
+}
 [data-toggle="dropdown"]::after {
   margin-left: 0.5rem;
   content: '\2b9f';
@@ -1969,6 +1977,7 @@ body.modal-open {
   display: block;
   width: 1rem;
   height: 0.5rem;
+  pointer-events: none;
 }
 .popover .arrow::before,
 .popover .arrow::after {
@@ -2075,6 +2084,7 @@ body.modal-open {
   display: block;
   width: 0.8rem;
   height: 0.4rem;
+  pointer-events: none;
 }
 .tooltip .arrow::before {
   position: absolute;

@@ -20,7 +20,7 @@ class Collapse {
 
         this._target = dom.find(this._settings.target);
 
-        this._visible = dom.isVisible(this._target);
+        this._visible = dom.hasClass(this._target, 'show');
 
         this._events();
 
@@ -52,7 +52,7 @@ class Collapse {
                 duration: this._settings.duration
             }).then(_ => {
                 this._visible = false;
-                dom.hide(this._target);
+                dom.removeClass(this._target, 'show');
                 dom.triggerEvent(this._node, 'hidden.frost.collapse');
                 resolve();
             }).catch(_ =>
@@ -76,7 +76,7 @@ class Collapse {
 
             this._animating = true;
             this._visible = true;
-            dom.show(this._target);
+            dom.addClass(this._target, 'show');
             dom.squeezeIn(this._target, {
                 dir: this._settings.direction,
                 duration: this._settings.duration

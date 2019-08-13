@@ -13,25 +13,22 @@ Object.assign(Carousel.prototype, {
      */
     _update(nodeIn, nodeOut, progress, direction) {
         if (progress < 1) {
-            const size = DOM._width(nodeIn);
             const inverse = direction === 'left';
-            DOMNode.setStyle(nodeIn, 'position', 'absolute');
-            DOMNode.setStyle(nodeIn, 'top', 0);
-            DOMNode.setStyle(
-                nodeIn,
-                'transform',
-                `translateX(${Math.round(size - (size * progress)) * (inverse ? -1 : 1)}px)`
-            );
+            DOMNode.setStyle(nodeOut, 'display', 'block');
             DOMNode.setStyle(
                 nodeOut,
                 'transform',
-                `translateX(${Math.round(size - (size * (1 - progress))) * (inverse ? 1 : -1)}px)`
+                `translateX(${Math.round(progress * 100) * (inverse ? -1 : 1)}%)`
+            );
+            DOMNode.setStyle(
+                nodeIn,
+                'transform',
+                `translateX(${Math.round((1 - progress) * 100) * (inverse ? 1 : -1)}%)`
             );
         } else {
-            DOMNode.setStyle(nodeIn, 'transform', '');
-            DOMNode.setStyle(nodeIn, 'position', '');
-            DOMNode.setStyle(nodeIn, 'top', '');
+            DOMNode.setStyle(nodeOut, 'display', '');
             DOMNode.setStyle(nodeOut, 'transform', '');
+            DOMNode.setStyle(nodeIn, 'transform', '');
         }
     },
 
