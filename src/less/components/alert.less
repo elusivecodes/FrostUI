@@ -1,5 +1,5 @@
 .mix-alert(@color) {
-    background-color: tint(lighten(@color, 20%), 70%);
+    background-color: tint(lighten(@color, 20%), 50%);
     color: darken(@color, 20%);
 
     & .alert-link {
@@ -20,7 +20,7 @@
 }
 
 .alert-link {
-    font-weight: bolder;
+    font-weight: @font-weight-bold;
 }
 
 .alert-primary {

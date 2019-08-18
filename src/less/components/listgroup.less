@@ -1,5 +1,5 @@
-.mix-list(@color) {
-    @background: tint(lighten(@color, 20%), 70%);
+.mix-list-group-item(@color) {
+    @background: tint(lighten(@color, 20%), 50%);
     background-color: @background;
     color: darken(@color, 10%);
 
@@ -9,16 +9,16 @@
     }
 }
 
-ul.list {
-    list-style: none;
-    padding: 0;
-}
-
-.list {
+.list-group {
     margin-bottom: @spacing;
     border: @border-size @border-style @border-color;
     border-radius: @border-radius;
     background-color: @white;
+
+    &ul {
+        list-style: none;
+        padding: 0;
+    }
 
     & > :first-child {
         border-top-left-radius: inherit;
@@ -31,7 +31,50 @@ ul.list {
     }
 }
 
-.list-item {
+.list-group-flush {
+    &:first-child .list-group-item:first-child {
+        border-top: 0;
+    }
+
+    &:last-child .list-group-item:last-child {
+        margin-bottom: 0;
+        border-bottom: 0;
+    }
+
+    & .list-group-item {
+        border-right: 0;
+        border-left: 0;
+        border-radius: 0;
+
+        &:last-child {
+            margin-bottom: -@border-size;
+        }
+    }
+}
+
+.list-group-horizontal {
+    flex-direction: row;
+
+    & .list-group-item {
+        margin-right: -@border-size;
+        margin-bottom: 0;
+
+        &:first-child {
+            border-top-left-radius: @border-radius;
+            border-bottom-left-radius: @border-radius;
+            border-top-right-radius: 0;
+        }
+
+        &:last-child {
+            margin-right: 0;
+            border-top-right-radius: @border-radius;
+            border-bottom-right-radius: @border-radius;
+            border-bottom-left-radius: 0;
+        }
+    }
+}
+
+.list-group-item {
     width: 100%;
     position: relative;     
     padding: (@spacing / 2) @spacing;
@@ -41,34 +84,36 @@ ul.list {
     border-top: @border-size @border-style @border-color;
     background-color: transparent;
 
-    &:first-child {
-        border-top: 0;
-        margin-top: 0;
+    &button,
+    &[href] {
+        display: flex;
+
+        &:hover {
+            z-index: @z-hover;
+            text-decoration: none;
+            background-color: @shadow-color;
+        }
+
+        &:active {
+            box-shadow: @shadow;
+        }
+
+        &:focus {
+            outline: 0;
+            box-shadow: @shadow-xs;
+        }
     }
 
-    &:last-child {
-        border-bottom: 0;
+    &:disabled,
+    &.disabled {
+        opacity: 0.5;
+        pointer-events: none;
     }
 
     &:active,
     &.active,
     &.active:hover {
-        z-index: 3;
-    }
-
-    &:focus {
-        z-index: 4;
-    }
-
-    &[href] {
-        &:focus {
-            outline: 0;
-            box-shadow: 0 2px 3px 0 rgba(0,0,0,.12), 0 2px 2px 0 rgba(0,0,0,.24);
-        }
-
-        &:active {
-            box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2);
-        }
+        z-index: @z-active;
     }
 
     &.active {
@@ -80,50 +125,48 @@ ul.list {
         }
     }
 
-    &.disabled {
-        color: rgba(0, 0, 0, .5);
-        pointer-events: none;
+    &:focus {
+        z-index: @z-focus;
+    }
+
+    &:first-child {
+        border-top: 0;
+        margin-top: 0;
+    }
+
+    &:last-child {
+        border-bottom: 0;
     }
 }
 
-button.list-item,
-.list-item[href] {
-    display: flex;
-
-    &:hover {
-        text-decoration: none;
-        background-color: rgba(0, 0, 0, .05);
-    }
+.list-group-item-primary {
+    .mix-list-group-item(@primary);
 }
 
-.list-primary {
-    .mix-list(@primary);
+.list-group-item-secondary {
+    .mix-list-group-item(@secondary);
 }
 
-.list-secondary {
-    .mix-list(@secondary);
+.list-group-item-success {
+    .mix-list-group-item(@success);
 }
 
-.list-success {
-    .mix-list(@success);
+.list-group-item-info {
+    .mix-list-group-item(@info);
 }
 
-.list-info {
-    .mix-list(@info);
+.list-group-item-warning {
+    .mix-list-group-item(@warning);
 }
 
-.list-warning {
-    .mix-list(@warning);
+.list-group-item-danger {
+    .mix-list-group-item(@danger);
 }
 
-.list-danger {
-    .mix-list(@danger);
+.list-group-item-light {
+    .mix-list-group-item(@light);
 }
 
-.list-light {
-    .mix-list(@light);
-}
-
-.list-dark {
-    .mix-list(@dark);
+.list-group-item-dark {
+    .mix-list-group-item(@dark);
 }

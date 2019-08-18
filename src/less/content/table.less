@@ -1,0 +1,122 @@
+.mix-table(@color) {
+    background-color: tint(lighten(@color, 20%), 50%);
+    color: darken(@color, 10%);
+}
+
+.table {
+    width: 100%;
+    margin-bottom: @spacing;
+
+    & th,
+    & td {
+        border-bottom: @border-size @border-style @border-color;
+        padding: (@spacing / 2) @spacing;
+    }
+
+    & th {
+        border-bottom-width: (@border-size * 2);
+    }
+}
+
+.table-bordered {
+    & th,
+    & td {
+       border: @border-size @border-style @border-color;
+    }
+
+    & th {
+       border-bottom-width: (@border-size * 2);
+    }
+}
+
+.table-borderless {
+    & tbody+tbody,
+    & td,
+    & th,
+    & thead th {
+        border: 0;
+    }
+}
+
+.table-striped {
+    & tr:nth-child(even) {
+        background-color: @light;
+    }
+}
+
+.table-hover {
+    & tbody tr:hover {
+        color: @dark;
+        background-color: rgba(0,0,0,.075);
+    }
+}
+
+.table-sm {
+    & td,
+    & th {
+        padding: @spacing / 3;
+    }
+}
+
+.table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table-dark {
+    color: @white;
+    background-color: @dark;
+
+    &.table-hover tbody tr:hover {
+        color: @white;
+        background-color: rgba(255,255,255,.075);
+    }
+}
+
+.table .thead-dark th {
+    color: @white;
+    background-color: @dark;
+}
+
+.table .thead-light th {
+    color: @dark;
+    background-color: @light;
+}
+
+.table-active, .table-active > td, .table-active > th {
+    .mix-table(@link);
+}
+
+.table-primary, .table-primary>td, .table-primary>th {
+    .mix-table(@primary);
+}
+
+.table-secondary, .table-secondary>td, .table-secondary>th {
+    .mix-table(@secondary);
+}
+
+.table-success, .table-success>td, .table-success>th {
+    .mix-table(@success);
+}
+
+.table-info, .table-info>td, .table-info>th {
+    .mix-table(@info);
+}
+
+.table-warning, .table-warning>td, .table-warning>th {
+    .mix-table(@warning);
+}
+
+.table-danger, .table-danger>td, .table-danger>th {
+    .mix-table(@danger);
+}
+
+.table-light, .table-light>td, .table-light>th {
+    .mix-table(@light);
+}
+
+.table-dark, .table-dark>td, .table-dark>th {
+    .mix-table(@dark);
+}

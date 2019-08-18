@@ -13,7 +13,7 @@ Object.assign(Carousel.prototype, {
      */
     _update(nodeIn, nodeOut, progress, direction) {
         if (progress < 1) {
-            const inverse = direction === 'left';
+            const inverse = direction === 'right';
             DOMNode.setStyle(nodeOut, 'display', 'block');
             DOMNode.setStyle(
                 nodeOut,

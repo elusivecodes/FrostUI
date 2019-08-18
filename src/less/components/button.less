@@ -32,7 +32,7 @@
 
 .btn {
     display: inline-block;
-    padding: .15rem .5rem;
+    padding: (@spacing / 4) (@spacing / 2);
     margin-bottom: @spacing;
     text-align: center;
     white-space: nowrap;
@@ -44,7 +44,7 @@
     line-height: 1.5;
     border: @border-size @border-style @border-color;
     border-radius: @border-radius;
-    transition: color .1s ease-in-out, background-color .1s ease-in-out, box-shadow .1s ease-in-out;
+    transition: color @transition-time @transition-type, background-color @transition-time @transition-type, box-shadow @transition-time @transition-type;
 
     &:disabled,
     &.disabled {
@@ -53,26 +53,23 @@
     }
 
     &:hover {
-        z-index: 2;
-    }
-
-    &:focus {
-        box-shadow: 0 2px 3px 0 rgba(0,0,0,.12), 0 2px 2px 0 rgba(0,0,0,.24);
+        z-index: @z-hover;
     }
 
     &:active {
-        box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2);
+        box-shadow: @shadow;
     }
 
     &:active,
     &.active,
     &.active:hover {
-        z-index: 3;
+        z-index: @z-active;
     }
 
     &:focus {
         outline: 0;
-        z-index: 4;
+        z-index: @z-focus;
+        box-shadow: @shadow-xs;
     }
 
     &:not(.btn-link):hover {

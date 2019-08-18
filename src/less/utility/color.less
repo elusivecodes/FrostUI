@@ -14,5 +14,5 @@
 
 .text-color(@background) {
     @luma: unit(luma(@background));
-    color: if((@luma < 50), @white, @black);
+    color: if((@luma < 55), @white, @black);
 }

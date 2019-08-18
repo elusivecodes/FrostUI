@@ -402,7 +402,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      */
     _update: function _update(nodeIn, nodeOut, progress, direction) {
       if (progress < 1) {
-        var inverse = direction === 'left';
+        var inverse = direction === 'right';
         DOMNode.setStyle(nodeOut, 'display', 'block');
         DOMNode.setStyle(nodeOut, 'transform', "translateX(".concat(Math.round(progress * 100) * (inverse ? -1 : 1), "%)"));
         DOMNode.setStyle(nodeIn, 'transform', "translateX(".concat(Math.round((1 - progress) * 100) * (inverse ? 1 : -1), "%)"));

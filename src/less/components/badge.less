@@ -11,25 +11,43 @@
 
 .badge {
     display: inline-block;
-    padding: .25rem .4rem;
+    padding: (@spacing / 4) (@spacing / 3);
     border-radius: @border-radius;
     font-size: 75%;
-    font-weight: 500;
+    font-weight: @font-weight-bold;
     line-height: 1;
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
-    transition: color .1s ease-in-out, background-color .1s ease-in-out, box-shadow .1s ease-in-out;
+    transition: color @transition-time @transition-type, background-color @transition-time @transition-type, box-shadow @transition-time @transition-type;
 
     &[href] {
-        &:focus {
-            box-shadow: 0 2px 3px 0 rgba(0,0,0,.12), 0 2px 2px 0 rgba(0,0,0,.24);
+        &:hover {
+            z-index: @z-hover;
         }
 
         &:active {
-            box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2);
+            box-shadow: @shadow;
+            z-index: @z-active;
+        }
+
+        &:focus {
+            box-shadow: @shadow-xs;
+            z-index: @z-focus;
         }
     }
+
+    &:disabled,
+    &.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+}
+
+.badge-pill {
+    padding-right: @spacing / 2;
+    padding-left: @spacing / 2;
+    border-radius: @spacing * 10;
 }
 
 .badge-primary {

@@ -1,42 +1,41 @@
 .position-static {
-    position: static;
+    position: static !important;
 }
 
 .position-relative {
-    position: relative;
+    position: relative !important;
 }
 
 .position-absolute {
-    position: absolute;
+    position: absolute !important;
 }
 
 .position-fixed {
-    position: fixed;
+    position: fixed !important;
 }
 
 .position-sticky {
-    position: -webkit-sticky;
-    position: sticky;
+    position: sticky !important;
 }
 
 .fixed-top {
-    .position-fixed();
+    position: fixed;
     top: 0;
     right: 0;
     left: 0;
-    z-index: 1030;
+    z-index: @z-fixed;
 }
 
 .fixed-bottom {
-    .position-fixed();
+    position: fixed;
     bottom: 0;
     right: 0;
     left: 0;
-    z-index: 1030;
+    z-index: @z-fixed;
 }
 
 .sticky-top {
-    .position-sticky();
+    position: sticky;
     top: 0;
-    z-index: 1020;
+    z-index: @z-sticky;
 }

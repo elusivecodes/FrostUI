@@ -1,3 +1,7 @@
+.text-wrap {
+    white-space: normal !important;
+}
+
 .text-nowrap {
     white-space: nowrap !important;
 }
@@ -6,6 +10,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.text-break {
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
 }
 
 .text-lowercase {
@@ -20,15 +29,42 @@
     text-transform: capitalize !important;
 }
 
-.text-hide {
-    font-size: 0px;
-    line-height: 0;
-    font-family: a;
-    color: transparent;
-    text-shadow: none;
-    background-color: transparent;
-    border: 0;
+.font-weight-bold {
+    font-weight: @font-weight-bold !important;
 }
+
+.font-weight-bolder {
+    font-weight: @font-weight-bolder !important;
+}
+
+.font-weight-normal {
+    font-weight: @font-weight !important;
+}
+
+.font-weight-light {
+    font-weight: @font-weight-light !important;
+}
+
+.font-weight-lighter {
+    font-weight: @font-weight-lighter !important;
+}
+
+.font-italic {
+    font-style: italic !important;
+}
+
+.text-monospace {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+}
+
+.text-reset {
+    color: inherit !important;
+}
+
+.text-decoration-none {
+    text-decoration: none !important;
+}
+
 
 .blockquote {
     margin-bottom: @spacing;
