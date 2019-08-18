@@ -70,3 +70,41 @@
     background-color: @light;
     border: @border-size @border-style @border-color;
 }
+
+.input-group-sm {
+    & > .custom-select,
+    & > .form-input:not(textarea) {
+        height: calc(1.5em + (@spacing / 2) + (@border-size * 2));
+    }
+
+    & > .custom-select,
+    & > .form-input,
+    & > .input-group-append > .btn,
+    & > .input-group-append > .input-group-text,
+    & > .input-group-prepend > .btn,
+    & > .input-group-prepend > .input-group-text {
+        padding: (@spacing / 4) (@spacing / 2);
+        font-size: .875rem;
+        line-height: @line-height;
+        border-radius: (@border-radius * .75);
+    }
+}
+
+.input-group-lg {
+    & > .custom-select,
+    & > .form-input:not(textarea) {
+        height: calc(1.5em + @spacing + (@border-size * 2));
+    }
+
+    & > .custom-select,
+    & > .form-input,
+    & > .input-group-append > .btn,
+    & > .input-group-append > .input-group-text,
+    & > .input-group-prepend > .btn,
+    & > .input-group-prepend > .input-group-text {
+        padding: (@spacing / 2) @spacing;
+        font-size: 1.25rem;
+        line-height: @line-height;
+        border-radius: (@border-radius * 1.25);
+    }
+}
