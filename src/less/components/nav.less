@@ -43,15 +43,15 @@
                 background-color: darken(@link, 5%);
             }
     
-            &:active {
-                z-index: @z-active;
-                box-shadow: @shadow;
-            }
-    
             &:focus {
                 z-index: @z-focus;
                 outline: 0;
                 box-shadow: @shadow-xs;
+            }
+    
+            &:active {
+                z-index: @z-active;
+                box-shadow: @shadow;
             }
         }
 
@@ -89,13 +89,13 @@
             text-decoration: none;
             z-index: @z-hover;
         }
-    
-        &:active {
-            z-index: @z-active;
-        }
 
         &:focus {
             z-index: @z-focus;
+        }
+    
+        &:active {
+            z-index: @z-active;
         }
     }
 }

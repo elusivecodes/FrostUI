@@ -56,6 +56,12 @@
         z-index: @z-hover;
     }
 
+    &:focus {
+        outline: 0;
+        z-index: @z-focus;
+        box-shadow: @shadow-xs;
+    }
+
     &:active {
         box-shadow: @shadow;
     }
@@ -64,12 +70,6 @@
     &.active,
     &.active:hover {
         z-index: @z-active;
-    }
-
-    &:focus {
-        outline: 0;
-        z-index: @z-focus;
-        box-shadow: @shadow-xs;
     }
 
     &:not(.btn-link):hover {

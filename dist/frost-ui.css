@@ -520,13 +520,13 @@ u {
 .badge[href]:hover {
   z-index: 2;
 }
-.badge[href]:active {
-  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-  z-index: 3;
-}
 .badge[href]:focus {
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
   z-index: 4;
+}
+.badge[href]:active {
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  z-index: 3;
 }
 .badge:disabled,
 .badge.disabled {
@@ -657,6 +657,11 @@ u {
 .btn:hover {
   z-index: 2;
 }
+.btn:focus {
+  outline: 0;
+  z-index: 4;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+}
 .btn:active {
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
 }
@@ -664,11 +669,6 @@ u {
 .btn.active,
 .btn.active:hover {
   z-index: 3;
-}
-.btn:focus {
-  outline: 0;
-  z-index: 4;
-  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
 }
 .btn:not(.btn-link):hover {
   text-decoration: none;
@@ -1241,14 +1241,14 @@ u {
   text-decoration: none;
   background-color: rgba(0, 0, 0, 0.05);
 }
-.list-group-itembutton:active,
-.list-group-item[href]:active {
-  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-}
 .list-group-itembutton:focus,
 .list-group-item[href]:focus {
   outline: 0;
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+}
+.list-group-itembutton:active,
+.list-group-item[href]:active {
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
 }
 .list-group-item:disabled,
 .list-group-item.disabled {
@@ -1385,14 +1385,14 @@ u {
 .nav-pills .nav-link.active:hover {
   background-color: #3f75a2;
 }
-.nav-pills .nav-link.active:active {
-  z-index: 3;
-  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-}
 .nav-pills .nav-link.active:focus {
   z-index: 4;
   outline: 0;
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+}
+.nav-pills .nav-link.active:active {
+  z-index: 3;
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
 }
 .nav-pills .nav-link:hover {
   text-decoration: none;
@@ -1423,11 +1423,11 @@ u {
   text-decoration: none;
   z-index: 2;
 }
-.nav-tabs .nav-link:active {
-  z-index: 3;
-}
 .nav-tabs .nav-link:focus {
   z-index: 4;
+}
+.nav-tabs .nav-link:active {
+  z-index: 3;
 }
 .tab-pane {
   display: none;
