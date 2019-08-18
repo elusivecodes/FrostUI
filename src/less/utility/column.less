@@ -17,19 +17,20 @@
     .mix-cols(@n, @b, (@i + 1));
 }
 
-.col {
-    flex-basis: 0;
-    flex-grow: 1;
-    max-width: 100%;
+.mix-cols(@grid-size);
+
+@media (min-width: @break-xs) {
+    .mix-cols(@grid-size, -xs-);
 }
 
-.no-gutters {
-    margin-right: 0;
-    margin-left: 0;
+@media (min-width: @break-sm) {
+    .mix-cols(@grid-size, -sm-);
+}
 
-    > .col,
-    > [class*="col-"] {
-        padding-right: 0;
-        padding-left: 0;
-    }
+@media (min-width: @break-md) {
+    .mix-cols(@grid-size, -md-);
+}
+
+@media (min-width: @break-lg) {
+    .mix-cols(@grid-size, -lg-);
 }

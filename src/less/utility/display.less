@@ -36,10 +36,24 @@
     }
 }
 
-.visible {
-    visibility: visible;
+.mix-display();
+
+@media (min-width: @break-xs) {
+    .mix-display(-xs);
 }
 
-.invisible {
-    visibility: hidden;
+@media (min-width: @break-sm) {
+    .mix-display(-sm);
+}
+
+@media (min-width: @break-md) {
+    .mix-display(-md);
+}
+
+@media (min-width: @break-lg) {
+    .mix-display(-lg);
+}
+
+@media only print {
+    .mix-display(-print-);
 }

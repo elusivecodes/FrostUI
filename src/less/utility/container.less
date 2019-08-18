@@ -14,12 +14,43 @@
     margin-left: -15px;
 }
 
+.col {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+}
+
 .no-gutters {
     margin-right: 0;
     margin-left: 0;
 
-    & > .col, > [class*="col-"] {
+    > .col,
+    > [class*="col-"] {
         padding-right: 0;
         padding-left: 0;
+    }
+}
+
+@media (min-width: @break-xs) {
+    .container {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: @break-sm) {
+    .container {
+        max-width: 768px;
+    }
+}
+
+@media (min-width: @break-md) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: @break-lg) {
+    .container {
+        max-width: 1140px;
     }
 }
