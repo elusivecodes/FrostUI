@@ -48,7 +48,7 @@ class Collapse {
 
             this._animating = true;
             dom.squeezeOut(this._target, {
-                dir: this._settings.direction,
+                direction: this._settings.direction,
                 duration: this._settings.duration
             }).then(_ => {
                 this._visible = false;
@@ -78,7 +78,7 @@ class Collapse {
             this._visible = true;
             dom.addClass(this._target, 'show');
             dom.squeezeIn(this._target, {
-                dir: this._settings.direction,
+                direction: this._settings.direction,
                 duration: this._settings.duration
             }).then(_ => {
                 dom.triggerEvent(this._node, 'shown.frost.collapse');

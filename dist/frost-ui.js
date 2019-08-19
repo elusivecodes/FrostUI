@@ -292,7 +292,7 @@
         slide(direction = 1) {
             if (this._sliding) {
                 return this._queue.push({
-                    dir: direction
+                    direction
                 });
             }
 
@@ -519,7 +519,7 @@
 
                 this._animating = true;
                 dom.squeezeOut(this._target, {
-                    dir: this._settings.direction,
+                    direction: this._settings.direction,
                     duration: this._settings.duration
                 }).then(_ => {
                     this._visible = false;
@@ -549,7 +549,7 @@
                 this._visible = true;
                 dom.addClass(this._target, 'show');
                 dom.squeezeIn(this._target, {
-                    dir: this._settings.direction,
+                    direction: this._settings.direction,
                     duration: this._settings.duration
                 }).then(_ => {
                     dom.triggerEvent(this._node, 'shown.frost.collapse');
@@ -738,7 +738,7 @@
                         duration: this._settings.duration
                     }),
                     dom.squeezeOut(this._menuNode, {
-                        dir: this._getDir,
+                        direction: this._getDir,
                         duration: this._settings.duration
                     })
                 ]).then(_ => {
@@ -772,7 +772,7 @@
                         duration: this._settings.duration
                     }),
                     dom.squeezeIn(this._menuNode, {
-                        dir: this._getDir,
+                        direction: this._getDir,
                         duration: this._settings.duration
                     })
                 ]).then(_ => {

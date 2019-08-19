@@ -193,7 +193,7 @@ class Carousel {
     slide(direction = 1) {
         if (this._sliding) {
             return this._queue.push({
-                dir: direction
+                direction
             });
         }
 

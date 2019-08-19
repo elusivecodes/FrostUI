@@ -307,7 +307,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         if (this._sliding) {
           return this._queue.push({
-            dir: direction
+            direction: direction
           });
         }
 
@@ -550,7 +550,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
           _this5._animating = true;
           dom.squeezeOut(_this5._target, {
-            dir: _this5._settings.direction,
+            direction: _this5._settings.direction,
             duration: _this5._settings.duration
           }).then(function (_) {
             _this5._visible = false;
@@ -583,7 +583,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           _this6._visible = true;
           dom.addClass(_this6._target, 'show');
           dom.squeezeIn(_this6._target, {
-            dir: _this6._settings.direction,
+            direction: _this6._settings.direction,
             duration: _this6._settings.duration
           }).then(function (_) {
             dom.triggerEvent(_this6._node, 'shown.frost.collapse');
@@ -791,7 +791,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           Promise.all([dom.fadeOut(_this9._menuNode, {
             duration: _this9._settings.duration
           }), dom.squeezeOut(_this9._menuNode, {
-            dir: _this9._getDir,
+            direction: _this9._getDir,
             duration: _this9._settings.duration
           })]).then(function (_) {
             _this9._visible = false;
@@ -826,7 +826,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           Promise.all([dom.fadeIn(_this10._menuNode, {
             duration: _this10._settings.duration
           }), dom.squeezeIn(_this10._menuNode, {
-            dir: _this10._getDir,
+            direction: _this10._getDir,
             duration: _this10._settings.duration
           })]).then(function (_) {
             dom.addEventOnce(window, 'click.frost.dropdown', _this10._windowClickEvent);

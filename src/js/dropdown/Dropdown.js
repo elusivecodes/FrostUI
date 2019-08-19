@@ -88,7 +88,7 @@ class Dropdown {
                     duration: this._settings.duration
                 }),
                 dom.squeezeOut(this._menuNode, {
-                    dir: this._getDir,
+                    direction: this._getDir,
                     duration: this._settings.duration
                 })
             ]).then(_ => {
@@ -122,7 +122,7 @@ class Dropdown {
                     duration: this._settings.duration
                 }),
                 dom.squeezeIn(this._menuNode, {
-                    dir: this._getDir,
+                    direction: this._getDir,
                     duration: this._settings.duration
                 })
             ]).then(_ => {
