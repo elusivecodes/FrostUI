@@ -13,6 +13,11 @@
     }
 }
 
+.nav-link {
+    display: block;
+    padding: (@spacing / 2) @spacing;
+}
+
 .nav-fill .nav-item {
     flex: 1 1 auto;
     text-align: center;
@@ -27,7 +32,6 @@
 .nav-pills {
     & .nav-link {
         margin: 0;
-        padding: (@spacing / 4) @spacing;
         border: @border-size @border-style transparent;
         border-radius: @border-radius;
 
@@ -76,7 +80,6 @@
     & .nav-link {
         margin: 0 0 -@border-size;
         background-color: transparent;
-        padding: (@spacing / 2) @spacing;
         border: @border-size @border-style transparent;
         border-top-left-radius: @border-radius;
         border-top-right-radius: @border-radius;

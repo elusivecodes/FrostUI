@@ -1,18 +1,22 @@
-.text-left {
-    text-align: left !important;
+.mix-text(@b: -) {
+    .text@{b}left {
+        text-align: left !important;
+    }
+
+    .text@{b}center {
+        text-align: center !important;
+    }
+
+    .text@{b}right {
+        text-align: right !important;
+    }
+
+    .text@{b}justify {
+        text-align: justify !important;
+    }
 }
 
-.text-center {
-    text-align: center !important;
-}
-
-.text-right {
-    text-align: right !important;
-}
-
-.text-justify {
-    text-align: justify !important;
-}
+.mix-text();
 
 .align-baseline {
     vertical-align: baseline !important;
@@ -36,4 +40,20 @@
 
 .align-text-bottom {
     vertical-align: text-bottom !important;
+}
+
+@media (min-width: @break-xs) {
+    .mix-text(-sm-);
+}
+
+@media (min-width: @break-sm) {
+    .mix-text(-md-);
+}
+
+@media (min-width: @break-md) {
+    .mix-text(-lg-);
+}
+
+@media (min-width: @break-lg) {
+    .mix-text(-xl-);
 }

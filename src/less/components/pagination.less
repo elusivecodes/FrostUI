@@ -53,6 +53,25 @@
     color: @link;
     background-color: @white;
     border: @border-size @border-style @border-color;
+    transition: color @transition-time @transition-type, background-color @transition-time @transition-type, box-shadow @transition-time @transition-type;
+
+    &:hover {
+        color: darken(@link, 30%);
+        background-color: @light;
+        text-decoration: none;
+        z-index: @z-hover;
+    }
+
+    &:focus {
+        outline: 0;
+        z-index: @z-focus;
+        box-shadow: @shadow-xs;
+    }
+
+    &:active {
+        z-index: @z-active;
+        box-shadow: @shadow;
+    }
 
     &:not(:disabled):not(.disabled) {
         cursor: pointer;

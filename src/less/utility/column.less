@@ -20,17 +20,17 @@
 .mix-cols(@grid-size);
 
 @media (min-width: @break-xs) {
-    .mix-cols(@grid-size, -xs-);
-}
-
-@media (min-width: @break-sm) {
     .mix-cols(@grid-size, -sm-);
 }
 
-@media (min-width: @break-md) {
+@media (min-width: @break-sm) {
     .mix-cols(@grid-size, -md-);
 }
 
-@media (min-width: @break-lg) {
+@media (min-width: @break-md) {
     .mix-cols(@grid-size, -lg-);
+}
+
+@media (min-width: @break-lg) {
+    .mix-cols(@grid-size, -xl-);
 }

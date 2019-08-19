@@ -83,6 +83,7 @@
     border-bottom: @border-size @border-style @border-color;
     border-top: @border-size @border-style @border-color;
     background-color: transparent;
+    transition: color @transition-time @transition-type, background-color @transition-time @transition-type, box-shadow @transition-time @transition-type;
 
     &button,
     &[href] {
@@ -136,6 +137,7 @@
 
     &:last-child {
         border-bottom: 0;
+        margin-bottom: -@border-size;
     }
 }
 
