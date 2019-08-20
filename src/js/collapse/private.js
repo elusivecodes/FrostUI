@@ -11,7 +11,7 @@ Object.assign(Collapse.prototype, {
         this._clickEvent = e => {
             e.preventDefault();
 
-            this.toggle();
+            this.toggle().catch(_ => { });
         };
 
         dom.addEvent(this._node, 'click.frost.collapse', this._clickEvent);

@@ -27,20 +27,13 @@
             background-color: @primary;
     
             &::before {
-                -webkit-transform: translateX(1rem);
                 transform: translateX(1rem);
-            }
-
-            &:focus, &:active {
-                & + .slider {
-                    box-shadow: 0 0 5px 0 fade(@primary, 50%);
-                }
             }
         }
 
         &:focus, &:active {
             & + .slider {
-                box-shadow: 0 0 5px 0 fade(@secondary, 50%);
+                box-shadow: @shadow-sm;
             }
         }
     }
@@ -51,8 +44,7 @@
         position: absolute;
         cursor: pointer;
         background-color: @light;
-        -webkit-transition: .4s;
-        transition: .4s;
+        transition: .5s ease-in-out;
 
         &.rounded {
             border-radius: @border-radius;
@@ -70,8 +62,7 @@
             height: .6rem;
             width: .6rem;
             background-color: @white;
-            -webkit-transition: .4s;
-            transition: .4s;
+            transition: .5s ease-in-out;
         }
     }
 }

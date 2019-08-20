@@ -1,4 +1,5 @@
 .form-group {
+    position: relative;
     margin-bottom: @spacing;
 }
 
@@ -19,10 +20,6 @@
     border: @border-size @border-style @border-color;
     border-radius: @border-radius;
     background-color: @white;
-
-    &:focus {
-        box-shadow: 0 0 5px 0 fade(@primary, 20%);
-    }
 }
 
 .form-minimal {
@@ -36,7 +33,7 @@
     width: 100%;
     padding: (@spacing / 2) 0;
     margin-bottom: 0;
-    line-height: 1.5;
+    line-height: @line-height;
     color: @text;
     background-color: transparent;
     border: solid transparent;
@@ -48,14 +45,14 @@
     width: 100%;
     padding: @spacing / 2;
     font-size: 1rem;
-    line-height: 1.5;
+    line-height: @line-height;
 
     &::placeholder {
         color: rgba(0, 0, 0, .5);
     }
 
     &:hover {
-        border-color: @info;
+        border-color: tint(lighten(@primary, 5%), 50%);
         z-index: @z-hover;
     }
 

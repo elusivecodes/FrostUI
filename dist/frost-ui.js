@@ -55,11 +55,15 @@
          */
         close() {
             return new Promise((resolve, reject) => {
-                if (this._animating || !DOM._triggerEvent(this._node, 'close.frost.alert')) {
+                if (!DOM._triggerEvent(this._node, 'close.frost.alert')) {
                     return reject();
                 }
 
-                this._animating = true;
+                if (dom.hasClass(this._node, 'closing')) {
+                    return reject();
+                }
+
+                dom.addClass(this._node, 'closing');
                 dom.fadeOut(this._node, {
                     duration: this._settings.duration
                 }).then(_ => {
@@ -91,7 +95,7 @@
             dom.getData(element, 'alert') :
             new Alert(element);
 
-        alert.close();
+        alert.close().catch(_ => { });
     });
 
     UI.Alert = Alert;
@@ -489,10 +493,6 @@
                 ...settings
             };
 
-            this._target = dom.find(this._settings.target);
-
-            this._visible = dom.hasClass(this._target, 'show');
-
             this._events();
 
             dom.setData(this._node, 'collapse', this);
@@ -513,17 +513,24 @@
          */
         hide() {
             return new Promise((resolve, reject) => {
-                if (!this._visible || this._animating || !DOM._triggerEvent(this._node, 'hide.frost.collapse')) {
+                if (!DOM._triggerEvent(this._node, 'hide.frost.collapse')) {
                     return reject();
                 }
 
-                this._animating = true;
-                dom.squeezeOut(this._target, {
+                const targets = dom.find(this._settings.target)
+                    .filter(target => dom.hasClass(target, 'show') && !dom.hasClass('collapsing'));
+
+                if (!targets.length) {
+                    return reject();
+                }
+
+                dom.addClass(targets, 'collapsing');
+                dom.squeezeOut(targets, {
                     direction: this._settings.direction,
                     duration: this._settings.duration
                 }).then(_ => {
                     this._visible = false;
-                    dom.removeClass(this._target, 'show');
+                    dom.removeClass(targets, 'show collapsing');
                     dom.triggerEvent(this._node, 'hidden.frost.collapse');
                     resolve();
                 }).catch(_ =>
@@ -532,7 +539,6 @@
                     this._animating = false;
                 });
             });
-
         }
 
         /**
@@ -541,17 +547,23 @@
          */
         show() {
             return new Promise((resolve, reject) => {
-                if (this._visible || this._animating || !DOM._triggerEvent(this._node, 'show.frost.collapse')) {
+                if (!DOM._triggerEvent(this._node, 'show.frost.collapse')) {
                     return reject();
                 }
 
-                this._animating = true;
-                this._visible = true;
-                dom.addClass(this._target, 'show');
-                dom.squeezeIn(this._target, {
+                const targets = dom.find(this._settings.target)
+                    .filter(target => !dom.hasClass(target, 'show') && !dom.hasClass(target, 'collapsing'));
+
+                if (!targets.length) {
+                    return reject();
+                }
+
+                dom.addClass(targets, 'show collapsing');
+                dom.squeezeIn(targets, {
                     direction: this._settings.direction,
                     duration: this._settings.duration
                 }).then(_ => {
+                    dom.removeClass(targets, 'collapsing');
                     dom.triggerEvent(this._node, 'shown.frost.collapse');
                     resolve();
                 }).catch(_ =>
@@ -567,9 +579,45 @@
          * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         toggle() {
-            return this._visible ?
-                this.hide() :
-                this.show();
+            return new Promise((resolve, reject) => {
+                if (!DOM._triggerEvent(this._node, 'show.frost.collapse')) {
+                    return reject();
+                }
+
+                const targets = dom.find(this._settings.target)
+                    .filter(target => !dom.hasClass(target, 'collapsing'));
+
+                if (!targets.length) {
+                    return reject();
+                }
+
+                dom.addClass(targets, 'collapsing');
+
+                const hidden = targets.filter(target => !dom.hasClass(target, 'show'));
+                const visible = targets.filter(target => dom.hasClass(target, 'show'));
+                const animations = targets.map(target => {
+                    const animation = dom.hasClass(target, 'show') ?
+                        'squeezeOut' : 'squeezeIn';
+
+                    return dom[animation](target, {
+                        direction: this._settings.direction,
+                        duration: this._settings.duration
+                    });
+                });
+
+                dom.addClass(hidden, 'show')
+
+                Promise.all(animations).then(_ => {
+                    dom.removeClass(visible, 'show');
+                    dom.removeClass(targets, 'collapsing');
+                    dom.triggerEvent(this._node, 'shown.frost.collapse');
+                    resolve();
+                }).catch(_ =>
+                    reject()
+                ).finally(_ => {
+                    this._animating = false;
+                });
+            });
         }
 
     }
@@ -639,7 +687,7 @@
             this._clickEvent = e => {
                 e.preventDefault();
 
-                this.toggle();
+                this.toggle().catch(_ => { });
             };
 
             dom.addEvent(this._node, 'click.frost.collapse', this._clickEvent);
@@ -1797,11 +1845,10 @@
                     return 'right';
                 }
             } else if (placement === 'auto') {
-                const vLoss = Math.min(spaceTop, spaceBottom);
                 const vSpace = Math.max(spaceTop, spaceBottom);
                 const hSpace = Math.max(spaceRight, spaceLeft);
 
-                if (hSpace > vSpace && hSpace > nodeBox.width + spacing && vLoss > nodeBox.height) {
+                if (hSpace > vSpace && hSpace > nodeBox.width + spacing) {
                     if (spaceLeft > spaceRight) {
                         return 'left';
                     }

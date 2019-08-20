@@ -35,11 +35,15 @@ class Alert {
      */
     close() {
         return new Promise((resolve, reject) => {
-            if (this._animating || !DOM._triggerEvent(this._node, 'close.frost.alert')) {
+            if (!DOM._triggerEvent(this._node, 'close.frost.alert')) {
                 return reject();
             }
 
-            this._animating = true;
+            if (dom.hasClass(this._node, 'closing')) {
+                return reject();
+            }
+
+            dom.addClass(this._node, 'closing');
             dom.fadeOut(this._node, {
                 duration: this._settings.duration
             }).then(_ => {

@@ -18,15 +18,15 @@
     color: @color;
     border-color: @color;
 
-    &.active,
-    &.active:hover {
-        color: darken(@color, 20%);
+    &.active {
         border-color: darken(@color, 20%);
+        color: darken(@color, 20%);
     }
 
     &:hover {
         background-color: @color;
         .text-color(@color);
+        border-color: @border-color;
     }
 }
 

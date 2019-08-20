@@ -17,6 +17,7 @@
     & > :last-child {
         border-bottom-left-radius: inherit;
         border-bottom-right-radius: inherit;
+        margin-bottom: -@border-size;
     }
 }
 
@@ -25,6 +26,10 @@
     margin-bottom: 0;
     background-color: rgba(0, 0, 0, .1);
     border-bottom: @border-size @border-style @border-color;
+
+    & + .list-group .list-group-item:first-child {
+        border-top: 0;
+    }
 }
 
 .card-body {
@@ -55,7 +60,7 @@
     right: 0;
     bottom: 0;
     left: 0;
-    padding: 0;
+    padding: 1.25rem;
 }
 
 .card-img {
@@ -80,6 +85,10 @@
 
 .card-subtitle {
     margin-top: -(@spacing / 3);
+    margin-bottom: 0;
+}
+
+.card-text:last-child {
     margin-bottom: 0;
 }
 

@@ -74,11 +74,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this._animating || !DOM._triggerEvent(_this._node, 'close.frost.alert')) {
+          if (!DOM._triggerEvent(_this._node, 'close.frost.alert')) {
             return reject();
           }
 
-          _this._animating = true;
+          if (dom.hasClass(_this._node, 'closing')) {
+            return reject();
+          }
+
+          dom.addClass(_this._node, 'closing');
           dom.fadeOut(_this._node, {
             duration: _this._settings.duration
           }).then(function (_) {
@@ -106,7 +110,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     e.preventDefault();
     var element = dom.closest(e.currentTarget, '.alert').shift();
     var alert = dom.hasData(element, 'alert') ? dom.getData(element, 'alert') : new Alert(element);
-    alert.close();
+    alert.close()["catch"](function (_) {});
   });
   UI.Alert = Alert;
   /**
@@ -514,8 +518,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       this._node = node;
       this._settings = _objectSpread({}, Collapse.defaults, {}, dom.getDataset(this._node), {}, settings);
-      this._target = dom.find(this._settings.target);
-      this._visible = dom.hasClass(this._target, 'show');
 
       this._events();
 
@@ -544,17 +546,25 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this5 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!_this5._visible || _this5._animating || !DOM._triggerEvent(_this5._node, 'hide.frost.collapse')) {
+          if (!DOM._triggerEvent(_this5._node, 'hide.frost.collapse')) {
             return reject();
           }
 
-          _this5._animating = true;
-          dom.squeezeOut(_this5._target, {
+          var targets = dom.find(_this5._settings.target).filter(function (target) {
+            return dom.hasClass(target, 'show') && !dom.hasClass('collapsing');
+          });
+
+          if (!targets.length) {
+            return reject();
+          }
+
+          dom.addClass(targets, 'collapsing');
+          dom.squeezeOut(targets, {
             direction: _this5._settings.direction,
             duration: _this5._settings.duration
           }).then(function (_) {
             _this5._visible = false;
-            dom.removeClass(_this5._target, 'show');
+            dom.removeClass(targets, 'show collapsing');
             dom.triggerEvent(_this5._node, 'hidden.frost.collapse');
             resolve();
           })["catch"](function (_) {
@@ -575,17 +585,24 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this6 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this6._visible || _this6._animating || !DOM._triggerEvent(_this6._node, 'show.frost.collapse')) {
+          if (!DOM._triggerEvent(_this6._node, 'show.frost.collapse')) {
             return reject();
           }
 
-          _this6._animating = true;
-          _this6._visible = true;
-          dom.addClass(_this6._target, 'show');
-          dom.squeezeIn(_this6._target, {
+          var targets = dom.find(_this6._settings.target).filter(function (target) {
+            return !dom.hasClass(target, 'show') && !dom.hasClass(target, 'collapsing');
+          });
+
+          if (!targets.length) {
+            return reject();
+          }
+
+          dom.addClass(targets, 'show collapsing');
+          dom.squeezeIn(targets, {
             direction: _this6._settings.direction,
             duration: _this6._settings.duration
           }).then(function (_) {
+            dom.removeClass(targets, 'collapsing');
             dom.triggerEvent(_this6._node, 'shown.frost.collapse');
             resolve();
           })["catch"](function (_) {
@@ -603,7 +620,47 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toggle",
       value: function toggle() {
-        return this._visible ? this.hide() : this.show();
+        var _this7 = this;
+
+        return new Promise(function (resolve, reject) {
+          if (!DOM._triggerEvent(_this7._node, 'show.frost.collapse')) {
+            return reject();
+          }
+
+          var targets = dom.find(_this7._settings.target).filter(function (target) {
+            return !dom.hasClass(target, 'collapsing');
+          });
+
+          if (!targets.length) {
+            return reject();
+          }
+
+          dom.addClass(targets, 'collapsing');
+          var hidden = targets.filter(function (target) {
+            return !dom.hasClass(target, 'show');
+          });
+          var visible = targets.filter(function (target) {
+            return dom.hasClass(target, 'show');
+          });
+          var animations = targets.map(function (target) {
+            var animation = dom.hasClass(target, 'show') ? 'squeezeOut' : 'squeezeIn';
+            return dom[animation](target, {
+              direction: _this7._settings.direction,
+              duration: _this7._settings.duration
+            });
+          });
+          dom.addClass(hidden, 'show');
+          Promise.all(animations).then(function (_) {
+            dom.removeClass(visible, 'show');
+            dom.removeClass(targets, 'collapsing');
+            dom.triggerEvent(_this7._node, 'shown.frost.collapse');
+            resolve();
+          })["catch"](function (_) {
+            return reject();
+          })["finally"](function (_) {
+            _this7._animating = false;
+          });
+        });
       }
     }]);
 
@@ -685,12 +742,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Collapse.
      */
     _events: function _events() {
-      var _this7 = this;
+      var _this8 = this;
 
       this._clickEvent = function (e) {
         e.preventDefault();
 
-        _this7.toggle();
+        _this8.toggle()["catch"](function (_) {});
       };
 
       dom.addEvent(this._node, 'click.frost.collapse', this._clickEvent);
@@ -711,7 +768,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Dropdown} A new Dropdown object.
      */
     function Dropdown(node, settings) {
-      var _this8 = this;
+      var _this9 = this;
 
       _classCallCheck(this, Dropdown);
 
@@ -744,7 +801,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this._visible = dom.hasClass(this._containerNode, 'open');
 
       this._getDir = function (_) {
-        return dom.getDataset(_this8._referenceNode, 'placement');
+        return dom.getDataset(_this9._referenceNode, 'placement');
       };
 
       this._events();
@@ -779,29 +836,29 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "hide",
       value: function hide() {
-        var _this9 = this;
+        var _this10 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!_this9._visible || _this9._animating || !DOM._triggerEvent(_this9._node, 'hide.frost.dropdown')) {
+          if (!_this10._visible || _this10._animating || !DOM._triggerEvent(_this10._node, 'hide.frost.dropdown')) {
             return reject();
           }
 
-          _this9._animating = true;
-          dom.removeEvent(window, 'click.frost.dropdown', _this9._windowClickEvent);
-          Promise.all([dom.fadeOut(_this9._menuNode, {
-            duration: _this9._settings.duration
-          }), dom.squeezeOut(_this9._menuNode, {
-            direction: _this9._getDir,
-            duration: _this9._settings.duration
+          _this10._animating = true;
+          dom.removeEvent(window, 'click.frost.dropdown', _this10._windowClickEvent);
+          Promise.all([dom.fadeOut(_this10._menuNode, {
+            duration: _this10._settings.duration
+          }), dom.squeezeOut(_this10._menuNode, {
+            direction: _this10._getDir,
+            duration: _this10._settings.duration
           })]).then(function (_) {
-            _this9._visible = false;
-            dom.removeClass(_this9._containerNode, 'open');
-            dom.triggerEvent(_this9._node, 'hidden.frost.dropdown');
+            _this10._visible = false;
+            dom.removeClass(_this10._containerNode, 'open');
+            dom.triggerEvent(_this10._node, 'hidden.frost.dropdown');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            _this9._animating = false;
+            _this10._animating = false;
           });
         });
       }
@@ -813,29 +870,29 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show() {
-        var _this10 = this;
+        var _this11 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this10._visible || _this10._animating || !DOM._triggerEvent(_this10._node, 'show.frost.dropdown')) {
+          if (_this11._visible || _this11._animating || !DOM._triggerEvent(_this11._node, 'show.frost.dropdown')) {
             return reject();
           }
 
-          _this10._animating = true;
-          _this10._visible = true;
-          dom.addClass(_this10._containerNode, 'open');
-          Promise.all([dom.fadeIn(_this10._menuNode, {
-            duration: _this10._settings.duration
-          }), dom.squeezeIn(_this10._menuNode, {
-            direction: _this10._getDir,
-            duration: _this10._settings.duration
+          _this11._animating = true;
+          _this11._visible = true;
+          dom.addClass(_this11._containerNode, 'open');
+          Promise.all([dom.fadeIn(_this11._menuNode, {
+            duration: _this11._settings.duration
+          }), dom.squeezeIn(_this11._menuNode, {
+            direction: _this11._getDir,
+            duration: _this11._settings.duration
           })]).then(function (_) {
-            dom.addEventOnce(window, 'click.frost.dropdown', _this10._windowClickEvent);
-            dom.triggerEvent(_this10._node, 'shown.frost.dropdown');
+            dom.addEventOnce(window, 'click.frost.dropdown', _this11._windowClickEvent);
+            dom.triggerEvent(_this11._node, 'shown.frost.dropdown');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            _this10._animating = false;
+            _this11._animating = false;
           });
         });
       }
@@ -934,12 +991,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Dropdown.
      */
     _events: function _events() {
-      var _this11 = this;
+      var _this12 = this;
 
       this._clickEvent = function (e) {
         e.preventDefault();
 
-        _this11.toggle();
+        _this12.toggle();
       };
 
       this._keyUpEvent = function (e) {
@@ -949,7 +1006,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         e.preventDefault();
 
-        _this11.toggle();
+        _this12.toggle();
       };
 
       this._keyDownEvent = function (e) {
@@ -959,8 +1016,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         e.preventDefault();
 
-        _this11.show().then(function (_) {
-          var next = dom.findOne('.dropdown-item', _this11._menuNode);
+        _this12.show().then(function (_) {
+          var next = dom.findOne('.dropdown-item', _this12._menuNode);
           dom.focus(next);
         });
       };
@@ -982,7 +1039,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       };
 
       this._windowClickEvent = function (_) {
-        return _this11.hide();
+        return _this12.hide();
       };
 
       dom.addEvent(this._node, 'click.frost.dropdown', this._clickEvent);
@@ -1006,7 +1063,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Modal} A new Modal object.
      */
     function Modal(node, settings) {
-      var _this12 = this;
+      var _this13 = this;
 
       _classCallCheck(this, Modal);
 
@@ -1022,7 +1079,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         e.preventDefault();
 
-        _this12.hide();
+        _this13.hide();
       };
 
       if (this._settings.show) {
@@ -1055,40 +1112,40 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "hide",
       value: function hide() {
-        var _this13 = this;
+        var _this14 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!_this13._visible || _this13._animating || !DOM._triggerEvent(_this13._node, 'hide.frost.modal')) {
+          if (!_this14._visible || _this14._animating || !DOM._triggerEvent(_this14._node, 'hide.frost.modal')) {
             return reject();
           }
 
-          _this13._animating = true;
-          dom.removeEvent(_this13._backdrop, 'click.frost.autocomplete');
-          Promise.all([dom.fadeOut(_this13._dialog, {
-            duration: _this13._settings.duration
-          }), dom.dropOut(_this13._dialog, {
-            duration: _this13._settings.duration
-          }), dom.fadeOut(_this13._backdrop, {
-            duration: _this13._settings.duration
+          _this14._animating = true;
+          dom.removeEvent(_this14._backdrop, 'click.frost.autocomplete');
+          Promise.all([dom.fadeOut(_this14._dialog, {
+            duration: _this14._settings.duration
+          }), dom.dropOut(_this14._dialog, {
+            duration: _this14._settings.duration
+          }), dom.fadeOut(_this14._backdrop, {
+            duration: _this14._settings.duration
           })]).then(function (_) {
-            _this13._visible = false;
+            _this14._visible = false;
 
-            if (_this13._settings.backdrop) {
-              dom.remove(_this13._backdrop);
+            if (_this14._settings.backdrop) {
+              dom.remove(_this14._backdrop);
             }
 
-            if (_this13._settings.keyboard) {
-              dom.removeEvent(window, 'keydown.frost.modal', _this13._windowKeyDownEvent);
+            if (_this14._settings.keyboard) {
+              dom.removeEvent(window, 'keydown.frost.modal', _this14._windowKeyDownEvent);
             }
 
-            dom.removeClass(_this13._node, 'show');
+            dom.removeClass(_this14._node, 'show');
             dom.removeClass(document.body, 'modal-open');
-            dom.triggerEvent(_this13._node, 'hidden.frost.modal');
+            dom.triggerEvent(_this14._node, 'hidden.frost.modal');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            _this13._animating = false;
+            _this14._animating = false;
           });
         });
       }
@@ -1100,53 +1157,53 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show() {
-        var _this14 = this;
+        var _this15 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this14._visible || _this14._animating || !DOM._triggerEvent(_this14._node, 'show.frost.modal')) {
+          if (_this15._visible || _this15._animating || !DOM._triggerEvent(_this15._node, 'show.frost.modal')) {
             return reject();
           }
 
-          if (_this14._settings.backdrop) {
-            _this14._backdrop = dom.create('div', {
+          if (_this15._settings.backdrop) {
+            _this15._backdrop = dom.create('div', {
               "class": 'modal-backdrop'
             });
-            dom.append(document.body, _this14._backdrop);
+            dom.append(document.body, _this15._backdrop);
           }
 
-          _this14._animating = true;
-          _this14._visible = true;
-          dom.addClass(_this14._node, 'show');
+          _this15._animating = true;
+          _this15._visible = true;
+          dom.addClass(_this15._node, 'show');
           dom.addClass(document.body, 'modal-open');
-          Promise.all([dom.fadeIn(_this14._dialog, {
-            duration: _this14._settings.duration
-          }), dom.dropIn(_this14._dialog, {
-            duration: _this14._settings.duration
-          }), dom.fadeIn(_this14._backdrop, {
-            duration: _this14._settings.duration
+          Promise.all([dom.fadeIn(_this15._dialog, {
+            duration: _this15._settings.duration
+          }), dom.dropIn(_this15._dialog, {
+            duration: _this15._settings.duration
+          }), dom.fadeIn(_this15._backdrop, {
+            duration: _this15._settings.duration
           })]).then(function (_) {
-            _this14._animating = false;
+            _this15._animating = false;
 
-            if (_this14._settings.backdrop) {
-              dom.addEventOnce(_this14._backdrop, 'click.frost.modal', function (_) {
-                return _this14.hide();
+            if (_this15._settings.backdrop) {
+              dom.addEventOnce(_this15._backdrop, 'click.frost.modal', function (_) {
+                return _this15.hide();
               });
             }
 
-            if (_this14._settings.keyboard) {
-              dom.addEvent(window, 'keydown.frost.modal', _this14._windowKeyDownEvent);
+            if (_this15._settings.keyboard) {
+              dom.addEvent(window, 'keydown.frost.modal', _this15._windowKeyDownEvent);
             }
 
-            if (_this14._settings.focus) {
-              dom.focus(_this14._node);
+            if (_this15._settings.focus) {
+              dom.focus(_this15._node);
             }
 
-            dom.triggerEvent(_this14._node, 'shown.frost.modal');
+            dom.triggerEvent(_this15._node, 'shown.frost.modal');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            _this14._animating = false;
+            _this15._animating = false;
           });
         });
       }
@@ -1318,22 +1375,22 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "hide",
       value: function hide() {
-        var _this15 = this;
+        var _this16 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!_this15._popover || !DOM._triggerEvent(_this15._node, 'hide.frost.popover')) {
+          if (!_this16._popover || !DOM._triggerEvent(_this16._node, 'hide.frost.popover')) {
             return reject();
           }
 
-          dom.fadeOut(_this15._popover, {
-            duration: _this15._settings.duration
+          dom.fadeOut(_this16._popover, {
+            duration: _this16._settings.duration
           }).then(function (_) {
-            _this15._popper.destroy();
+            _this16._popper.destroy();
 
-            dom.remove(_this15._popover);
-            _this15._popover = null;
-            _this15._popper = null;
-            dom.triggerEvent(_this15._node, 'hidden.frost.popover');
+            dom.remove(_this16._popover);
+            _this16._popover = null;
+            _this16._popper = null;
+            dom.triggerEvent(_this16._node, 'hidden.frost.popover');
             resolve();
           })["catch"](function (_) {
             return reject();
@@ -1348,20 +1405,20 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show() {
-        var _this16 = this;
+        var _this17 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this16._popover || !DOM._triggerEvent(_this16._node, 'show.frost.popover')) {
+          if (_this17._popover || !DOM._triggerEvent(_this17._node, 'show.frost.popover')) {
             return reject();
           }
 
-          _this16._render();
+          _this17._render();
 
-          dom.addClass(_this16._popover, 'show');
-          dom.fadeIn(_this16._popover, {
-            duration: _this16._settings.duration
+          dom.addClass(_this17._popover, 'show');
+          dom.fadeIn(_this17._popover, {
+            duration: _this17._settings.duration
           }).then(function (_) {
-            dom.triggerEvent(_this16._node, 'shown.frost.popover');
+            dom.triggerEvent(_this17._node, 'shown.frost.popover');
             resolve();
           })["catch"](function (_) {
             return reject();
@@ -1489,51 +1546,51 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Popover.
      */
     _events: function _events() {
-      var _this17 = this;
+      var _this18 = this;
 
       this._hideEvent = function (_) {
-        if (!_this17._enabled) {
+        if (!_this18._enabled) {
           return;
         }
 
         try {
-          _this17.hide();
+          _this18.hide();
         } catch (e) {}
       };
 
       this._hoverEvent = function (_) {
-        if (!_this17._enabled) {
+        if (!_this18._enabled) {
           return;
         }
 
         try {
-          _this17.show();
+          _this18.show();
 
-          dom.addEventOnce(_this17._node, 'mouseout.frost.popover', _this17._hideEvent);
+          dom.addEventOnce(_this18._node, 'mouseout.frost.popover', _this18._hideEvent);
         } catch (e) {}
       };
 
       this._focusEvent = function (_) {
-        if (!_this17._enabled) {
+        if (!_this18._enabled) {
           return;
         }
 
         try {
-          _this17.show();
+          _this18.show();
 
-          dom.addEventOnce(_this17._node, 'blur.frost.popover', _this17._hideEvent);
+          dom.addEventOnce(_this18._node, 'blur.frost.popover', _this18._hideEvent);
         } catch (e) {}
       };
 
       this._clickEvent = function (e) {
         e.preventDefault();
 
-        if (!_this17._enabled) {
+        if (!_this18._enabled) {
           return;
         }
 
         try {
-          _this17.toggle();
+          _this18.toggle();
         } catch (e) {}
       };
 
@@ -1865,11 +1922,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           return 'right';
         }
       } else if (placement === 'auto') {
-        var vLoss = Math.min(spaceTop, spaceBottom);
         var vSpace = Math.max(spaceTop, spaceBottom);
         var hSpace = Math.max(spaceRight, spaceLeft);
 
-        if (hSpace > vSpace && hSpace > nodeBox.width + spacing && vLoss > nodeBox.height) {
+        if (hSpace > vSpace && hSpace > nodeBox.width + spacing) {
           if (spaceLeft > spaceRight) {
             return 'left';
           }
@@ -2046,25 +2102,25 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "hide",
       value: function hide() {
-        var _this18 = this;
+        var _this19 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this18._animating || !DOM._triggerEvent(_this18._node, 'hide.frost.tab')) {
+          if (_this19._animating || !DOM._triggerEvent(_this19._node, 'hide.frost.tab')) {
             return reject();
           }
 
-          _this18._animating = true;
-          dom.fadeOut(_this18._target, {
-            duration: _this18._settings.duration
+          _this19._animating = true;
+          dom.fadeOut(_this19._target, {
+            duration: _this19._settings.duration
           }).then(function (_) {
-            dom.removeClass(_this18._target, 'active');
-            dom.removeClass(_this18._node, 'active');
-            dom.triggerEvent(_this18._node, 'hidden.frost.tab');
+            dom.removeClass(_this19._target, 'active');
+            dom.removeClass(_this19._node, 'active');
+            dom.triggerEvent(_this19._node, 'hidden.frost.tab');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            _this18._animating = false;
+            _this19._animating = false;
           });
         });
       }
@@ -2076,33 +2132,33 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show() {
-        var _this19 = this;
+        var _this20 = this;
 
         return new Promise(function (resolve, reject) {
-          var activeTab = dom.siblings(_this19._node, '.active').shift();
+          var activeTab = dom.siblings(_this20._node, '.active').shift();
 
-          if (_this19._animating || !activeTab || !dom.hasData(activeTab, 'tab')) {
+          if (_this20._animating || !activeTab || !dom.hasData(activeTab, 'tab')) {
             return reject();
           }
 
-          _this19._animating = true;
+          _this20._animating = true;
           dom.getData(activeTab, 'tab').hide().then(function (_) {
-            if (!DOM._triggerEvent(_this19._node, 'show.frost.tab')) {
+            if (!DOM._triggerEvent(_this20._node, 'show.frost.tab')) {
               return reject();
             }
 
-            dom.addClass(_this19._target, 'active');
-            dom.addClass(_this19._node, 'active');
-            return dom.fadeIn(_this19._target, {
-              duration: _this19._settings.duration
+            dom.addClass(_this20._target, 'active');
+            dom.addClass(_this20._node, 'active');
+            return dom.fadeIn(_this20._target, {
+              duration: _this20._settings.duration
             });
           }).then(function (_) {
-            dom.triggerEvent(_this19._node, 'shown.frost.tab');
+            dom.triggerEvent(_this20._node, 'shown.frost.tab');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            _this19._animating = false;
+            _this20._animating = false;
           });
         });
       }
@@ -2185,12 +2241,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Tab.
      */
     _events: function _events() {
-      var _this20 = this;
+      var _this21 = this;
 
       this._clickEvent = function (e) {
         e.preventDefault();
 
-        _this20.show();
+        _this21.show();
       };
 
       dom.addEvent(this._node, 'click.frost.tab', this._clickEvent);
@@ -2211,7 +2267,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Toast} A new Toast object.
      */
     function Toast(node, settings) {
-      var _this21 = this;
+      var _this22 = this;
 
       _classCallCheck(this, Toast);
 
@@ -2222,7 +2278,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       if (this._settings.autohide) {
         setTimeout(function (_) {
           try {
-            _this21.hide();
+            _this22.hide();
           } catch (e) {}
         }, this._settings.delay);
       }
@@ -2248,25 +2304,25 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "hide",
       value: function hide() {
-        var _this22 = this;
+        var _this23 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this22._animating || !_this22._visible || !DOM._triggerEvent(_this22._node, 'hide.frost.toast')) {
+          if (_this23._animating || !_this23._visible || !DOM._triggerEvent(_this23._node, 'hide.frost.toast')) {
             return reject();
           }
 
-          _this22._animating = true;
-          return dom.fadeOut(_this22._node, {
-            duration: _this22._settings.duration
+          _this23._animating = true;
+          return dom.fadeOut(_this23._node, {
+            duration: _this23._settings.duration
           }).then(function (_) {
-            _this22._visible = false;
-            dom.hide(_this22._node);
-            dom.triggerEvent(_this22._node, 'hidden.frost.toast');
+            _this23._visible = false;
+            dom.hide(_this23._node);
+            dom.triggerEvent(_this23._node, 'hidden.frost.toast');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            _this22._animating = false;
+            _this23._animating = false;
           });
         });
       }
@@ -2278,25 +2334,25 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show() {
-        var _this23 = this;
+        var _this24 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this23._animating || _this23._visible || !DOM._triggerEvent(_this23._node, 'show.frost.toast')) {
+          if (_this24._animating || _this24._visible || !DOM._triggerEvent(_this24._node, 'show.frost.toast')) {
             return reject();
           }
 
-          _this23._animating = true;
-          _this23._visible = true;
-          dom.show(_this23._node);
-          return dom.fadeIn(_this23._node, {
-            duration: _this23._settings.duration
+          _this24._animating = true;
+          _this24._visible = true;
+          dom.show(_this24._node);
+          return dom.fadeIn(_this24._node, {
+            duration: _this24._settings.duration
           }).then(function (_) {
-            dom.triggerEvent(_this23._node, 'shown.frost.toast');
+            dom.triggerEvent(_this24._node, 'shown.frost.toast');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            _this23._animating = false;
+            _this24._animating = false;
           });
         });
       }
@@ -2471,22 +2527,22 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "hide",
       value: function hide() {
-        var _this24 = this;
+        var _this25 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!_this24._tooltip || !DOM._triggerEvent(_this24._node, 'hide.frost.tooltip')) {
+          if (!_this25._tooltip || !DOM._triggerEvent(_this25._node, 'hide.frost.tooltip')) {
             return reject();
           }
 
-          dom.fadeOut(_this24._tooltip, {
-            duration: _this24._settings.duration
+          dom.fadeOut(_this25._tooltip, {
+            duration: _this25._settings.duration
           }).then(function (_) {
-            _this24._popper.destroy();
+            _this25._popper.destroy();
 
-            dom.remove(_this24._tooltip);
-            _this24._tooltip = null;
-            _this24._popper = null;
-            dom.triggerEvent(_this24._node, 'hidden.frost.tooltip');
+            dom.remove(_this25._tooltip);
+            _this25._tooltip = null;
+            _this25._popper = null;
+            dom.triggerEvent(_this25._node, 'hidden.frost.tooltip');
             resolve();
           })["catch"](function (_) {
             return reject();
@@ -2501,20 +2557,20 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show() {
-        var _this25 = this;
+        var _this26 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this25._tooltip || !DOM._triggerEvent(_this25._node, 'show.frost.tooltip')) {
+          if (_this26._tooltip || !DOM._triggerEvent(_this26._node, 'show.frost.tooltip')) {
             return reject();
           }
 
-          _this25._render();
+          _this26._render();
 
-          dom.addClass(_this25._tooltip, 'show');
-          dom.fadeIn(_this25._tooltip, {
-            duration: _this25._settings.duration
+          dom.addClass(_this26._tooltip, 'show');
+          dom.fadeIn(_this26._tooltip, {
+            duration: _this26._settings.duration
           }).then(function (_) {
-            dom.triggerEvent(_this25._node, 'shown.frost.tooltip');
+            dom.triggerEvent(_this26._node, 'shown.frost.tooltip');
             resolve();
           })["catch"](function (_) {
             return reject();
@@ -2641,51 +2697,51 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Tooltip.
      */
     _events: function _events() {
-      var _this26 = this;
+      var _this27 = this;
 
       this._hideEvent = function (_) {
-        if (!_this26._enabled) {
+        if (!_this27._enabled) {
           return;
         }
 
         try {
-          _this26.hide();
+          _this27.hide();
         } catch (e) {}
       };
 
       this._hoverEvent = function (_) {
-        if (!_this26._enabled) {
+        if (!_this27._enabled) {
           return;
         }
 
         try {
-          _this26.show();
+          _this27.show();
 
-          dom.addEventOnce(_this26._node, 'mouseout.frost.tooltip', _this26._hideEvent);
+          dom.addEventOnce(_this27._node, 'mouseout.frost.tooltip', _this27._hideEvent);
         } catch (e) {}
       };
 
       this._focusEvent = function (_) {
-        if (!_this26._enabled) {
+        if (!_this27._enabled) {
           return;
         }
 
         try {
-          _this26.show();
+          _this27.show();
 
-          dom.addEventOnce(_this26._node, 'blur.frost.tooltip', _this26._hideEvent);
+          dom.addEventOnce(_this27._node, 'blur.frost.tooltip', _this27._hideEvent);
         } catch (e) {}
       };
 
       this._clickEvent = function (e) {
         e.preventDefault();
 
-        if (!_this26._enabled) {
+        if (!_this27._enabled) {
           return;
         }
 
         try {
-          _this26.toggle();
+          _this27.toggle();
         } catch (e) {}
       };
 

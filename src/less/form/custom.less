@@ -17,19 +17,12 @@
             & + .radio::before {
                 background-color: @primary;
             }
-
-            &:focus, &:active {
-                & + .checkbox::before,
-                & + .radio::before {
-                    box-shadow: 0 0 5px 0 fade(@primary, 50%);
-                }
-            }
         }
 
         &:focus, &:active {
             & + .checkbox::before,
             & + .radio::before {
-                box-shadow: 0 0 5px 0 fade(@secondary, 50%);
+                box-shadow: @shadow-sm;
             }
         }
     }
@@ -47,6 +40,7 @@
         line-height: 1.1;
         font-size: .8rem;
         font-weight: @font-weight-bolder;
+        transition: .1s ease-in-out;
     }
 }
 

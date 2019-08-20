@@ -11,14 +11,7 @@
 
 .list-group {
     margin-bottom: @spacing;
-    border: @border-size @border-style @border-color;
     border-radius: @border-radius;
-    background-color: @white;
-
-    &ul {
-        list-style: none;
-        padding: 0;
-    }
 
     & > :first-child {
         border-top-left-radius: inherit;
@@ -29,6 +22,12 @@
         border-bottom-left-radius: inherit;
         border-bottom-right-radius: inherit;
     }
+}
+
+ul.list-group {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 0;
 }
 
 .list-group-flush {
@@ -78,12 +77,11 @@
     width: 100%;
     position: relative;     
     padding: (@spacing / 2) @spacing;
-    margin-top: -@border-size;
-    border: 0;
-    border-bottom: @border-size @border-style @border-color;
-    border-top: @border-size @border-style @border-color;
+    margin-bottom: -@border-size;
+    border: @border-size @border-style @border-color;
     background-color: transparent;
     transition: color @transition-time @transition-type, background-color @transition-time @transition-type, box-shadow @transition-time @transition-type;
+    border-bottom: 0;
 
     &button,
     &[href] {
@@ -131,13 +129,7 @@
     }
 
     &:first-child {
-        border-top: 0;
         margin-top: 0;
-    }
-
-    &:last-child {
-        border-bottom: 0;
-        margin-bottom: -@border-size;
     }
 }
 

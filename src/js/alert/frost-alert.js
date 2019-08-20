@@ -12,7 +12,7 @@ dom.addEventDelegate(document, 'click', '[data-dismiss="alert"]', e => {
         dom.getData(element, 'alert') :
         new Alert(element);
 
-    alert.close();
+    alert.close().catch(_ => { });
 });
 
 UI.Alert = Alert;

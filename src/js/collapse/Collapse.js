@@ -18,10 +18,6 @@ class Collapse {
             ...settings
         };
 
-        this._target = dom.find(this._settings.target);
-
-        this._visible = dom.hasClass(this._target, 'show');
-
         this._events();
 
         dom.setData(this._node, 'collapse', this);
@@ -42,17 +38,24 @@ class Collapse {
      */
     hide() {
         return new Promise((resolve, reject) => {
-            if (!this._visible || this._animating || !DOM._triggerEvent(this._node, 'hide.frost.collapse')) {
+            if (!DOM._triggerEvent(this._node, 'hide.frost.collapse')) {
                 return reject();
             }
 
-            this._animating = true;
-            dom.squeezeOut(this._target, {
+            const targets = dom.find(this._settings.target)
+                .filter(target => dom.hasClass(target, 'show') && !dom.hasClass('collapsing'));
+
+            if (!targets.length) {
+                return reject();
+            }
+
+            dom.addClass(targets, 'collapsing');
+            dom.squeezeOut(targets, {
                 direction: this._settings.direction,
                 duration: this._settings.duration
             }).then(_ => {
                 this._visible = false;
-                dom.removeClass(this._target, 'show');
+                dom.removeClass(targets, 'show collapsing');
                 dom.triggerEvent(this._node, 'hidden.frost.collapse');
                 resolve();
             }).catch(_ =>
@@ -61,7 +64,6 @@ class Collapse {
                 this._animating = false;
             });
         });
-
     }
 
     /**
@@ -70,17 +72,23 @@ class Collapse {
      */
     show() {
         return new Promise((resolve, reject) => {
-            if (this._visible || this._animating || !DOM._triggerEvent(this._node, 'show.frost.collapse')) {
+            if (!DOM._triggerEvent(this._node, 'show.frost.collapse')) {
                 return reject();
             }
 
-            this._animating = true;
-            this._visible = true;
-            dom.addClass(this._target, 'show');
-            dom.squeezeIn(this._target, {
+            const targets = dom.find(this._settings.target)
+                .filter(target => !dom.hasClass(target, 'show') && !dom.hasClass(target, 'collapsing'));
+
+            if (!targets.length) {
+                return reject();
+            }
+
+            dom.addClass(targets, 'show collapsing');
+            dom.squeezeIn(targets, {
                 direction: this._settings.direction,
                 duration: this._settings.duration
             }).then(_ => {
+                dom.removeClass(targets, 'collapsing');
                 dom.triggerEvent(this._node, 'shown.frost.collapse');
                 resolve();
             }).catch(_ =>
@@ -96,9 +104,45 @@ class Collapse {
      * @returns {Promise} A new Promise that resolves when the animation has completed.
      */
     toggle() {
-        return this._visible ?
-            this.hide() :
-            this.show();
+        return new Promise((resolve, reject) => {
+            if (!DOM._triggerEvent(this._node, 'show.frost.collapse')) {
+                return reject();
+            }
+
+            const targets = dom.find(this._settings.target)
+                .filter(target => !dom.hasClass(target, 'collapsing'));
+
+            if (!targets.length) {
+                return reject();
+            }
+
+            dom.addClass(targets, 'collapsing');
+
+            const hidden = targets.filter(target => !dom.hasClass(target, 'show'));
+            const visible = targets.filter(target => dom.hasClass(target, 'show'));
+            const animations = targets.map(target => {
+                const animation = dom.hasClass(target, 'show') ?
+                    'squeezeOut' : 'squeezeIn';
+
+                return dom[animation](target, {
+                    direction: this._settings.direction,
+                    duration: this._settings.duration
+                });
+            });
+
+            dom.addClass(hidden, 'show')
+
+            Promise.all(animations).then(_ => {
+                dom.removeClass(visible, 'show');
+                dom.removeClass(targets, 'collapsing');
+                dom.triggerEvent(this._node, 'shown.frost.collapse');
+                resolve();
+            }).catch(_ =>
+                reject()
+            ).finally(_ => {
+                this._animating = false;
+            });
+        });
     }
 
 }

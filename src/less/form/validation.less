@@ -1,31 +1,31 @@
 .form-success {
     & .form-label {
-        color: @success;
+        color: darken(@success, 5%);
     }
 
     & .input-group-text {
-        background-color: tint(lighten(@success, 15%), 50%);
-        border-color: @success;
-        color: darken(@success, 10%);
+        background-color: @success;
+        border-color: darken(@success, 5%);
+        color: darken(@success, 25%);
     }
 }
 
 .form-success .form-input {
-    border-color: @success;
+    border-color: darken(@success, 5%);
 }
 
 .form-error {
     & .form-label {
-        color: @danger;
+        color: darken(@danger, 5%);
     }
 
     & .input-group-text {
-        background-color: tint(lighten(@danger, 15%), 50%);
-        border-color: @danger;
-        color: darken(@danger, 10%);
+        background-color: @danger;
+        border-color: darken(@danger, 5%);
+        color: darken(@danger, 25%);
     }
 }
 
 .form-error .form-input {
-    border-color: @danger;
+    border-color: darken(@danger, 5%);
 }

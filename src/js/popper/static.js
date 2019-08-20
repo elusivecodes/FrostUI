@@ -41,11 +41,10 @@ Object.assign(Popper, {
                 return 'right';
             }
         } else if (placement === 'auto') {
-            const vLoss = Math.min(spaceTop, spaceBottom);
             const vSpace = Math.max(spaceTop, spaceBottom);
             const hSpace = Math.max(spaceRight, spaceLeft);
 
-            if (hSpace > vSpace && hSpace > nodeBox.width + spacing && vLoss > nodeBox.height) {
+            if (hSpace > vSpace && hSpace > nodeBox.width + spacing) {
                 if (spaceLeft > spaceRight) {
                     return 'left';
                 }
