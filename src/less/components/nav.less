@@ -4,7 +4,6 @@
 
     & .nav-link {
         display: inline-flex;
-        margin: (@spacing / 4) @spacing;
 
         &.disabled {
             opacity: 0.5;
@@ -16,6 +15,11 @@
 .nav-link {
     display: block;
     padding: (@spacing / 2) @spacing;
+
+    &:focus,
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 .nav-fill .nav-item {

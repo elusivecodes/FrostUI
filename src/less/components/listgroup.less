@@ -10,6 +10,8 @@
 }
 
 .list-group {
+    display: flex;
+    flex-direction: column;
     margin-bottom: @spacing;
     border-radius: @border-radius;
 
@@ -31,22 +33,18 @@ ul.list-group {
 }
 
 .list-group-flush {
-    &:first-child .list-group-item:first-child {
-        border-top: 0;
-    }
-
-    &:last-child .list-group-item:last-child {
-        margin-bottom: 0;
-        border-bottom: 0;
-    }
+    border-radius: 0;
 
     & .list-group-item {
-        border-right: 0;
         border-left: 0;
-        border-radius: 0;
+        border-right: 0;
+
+        &:first-child {
+            border-top: 0;
+        }
 
         &:last-child {
-            margin-bottom: -@border-size;
+            border-bottom: 0;
         }
     }
 }
@@ -55,33 +53,32 @@ ul.list-group {
     flex-direction: row;
 
     & .list-group-item {
-        margin-right: -@border-size;
-        margin-bottom: 0;
 
         &:first-child {
-            border-top-left-radius: @border-radius;
-            border-bottom-left-radius: @border-radius;
+            border-top-left-radius: inherit;
+            border-bottom-left-radius: inherit;
             border-top-right-radius: 0;
         }
 
         &:last-child {
-            margin-right: 0;
-            border-top-right-radius: @border-radius;
-            border-bottom-right-radius: @border-radius;
+            border-top-right-radius: inherit;
+            border-bottom-right-radius: inherit;
             border-bottom-left-radius: 0;
+        }
+
+        &:not(:last-child) {
+            border-bottom: @border-size @border-style @border-color;
+            border-right: 0;
         }
     }
 }
 
 .list-group-item {
-    width: 100%;
     position: relative;     
     padding: (@spacing / 2) @spacing;
-    margin-bottom: -@border-size;
-    border: @border-size @border-style @border-color;
     background-color: transparent;
+    border: @border-size @border-style @border-color;
     transition: color @transition-time @transition-type, background-color @transition-time @transition-type, box-shadow @transition-time @transition-type;
-    border-bottom: 0;
 
     &button,
     &[href] {
@@ -128,8 +125,8 @@ ul.list-group {
         z-index: @z-focus;
     }
 
-    &:first-child {
-        margin-top: 0;
+    &:not(:last-child) {
+        border-bottom: 0;
     }
 }
 
