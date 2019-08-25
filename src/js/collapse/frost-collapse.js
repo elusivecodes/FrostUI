@@ -4,6 +4,17 @@ Collapse.defaults = {
     duration: 300
 };
 
+// Trigger Collapse from data-toggle
+dom.addEventDelegate(document, 'click', '[data-toggle="collapse"]', e => {
+    e.preventDefault();
+
+    const collapse = dom.hasData(e.currentTarget, 'collapse') ?
+        dom.getData(e.currentTarget, 'collapse') :
+        new Collapse(e.currentTarget);
+
+    collapse.toggle().catch(_ => { });
+});
+
 // Auto-initialize Collapse from data-toggle
 dom.addEvent(window, 'load', _ => {
     const nodes = dom.find('[data-toggle="collapse"]');

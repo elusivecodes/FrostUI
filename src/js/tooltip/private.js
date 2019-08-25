@@ -13,9 +13,7 @@ Object.assign(Tooltip.prototype, {
                 return;
             }
 
-            try {
-                this.hide();
-            } catch (e) { }
+            this.hide().catch(_ => { });
         };
 
         this._hoverEvent = _ => {
@@ -23,11 +21,11 @@ Object.assign(Tooltip.prototype, {
                 return;
             }
 
-            try {
-                this.show();
-
-                dom.addEventOnce(this._node, 'mouseout.frost.tooltip', this._hideEvent);
-            } catch (e) { }
+            this.show()
+                .then(_ =>
+                    dom.addEventOnce(this._node, 'mouseout.frost.tooltip', this._hideEvent)
+                )
+                .catch(_ => { });
         };
 
         this._focusEvent = _ => {
@@ -35,11 +33,11 @@ Object.assign(Tooltip.prototype, {
                 return;
             }
 
-            try {
-                this.show();
-
-                dom.addEventOnce(this._node, 'blur.frost.tooltip', this._hideEvent);
-            } catch (e) { }
+            this.show()
+                .then(_ =>
+                    dom.addEventOnce(this._node, 'blur.frost.tooltip', this._hideEvent)
+                )
+                .catch(_ => { });
         };
 
         this._clickEvent = e => {
@@ -49,9 +47,7 @@ Object.assign(Tooltip.prototype, {
                 return;
             }
 
-            try {
-                this.toggle();
-            } catch (e) { }
+            this.toggle().catch(_ => { });
         };
 
         if (this._triggers.includes('hover')) {

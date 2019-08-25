@@ -81,10 +81,17 @@ class Tooltip {
      */
     hide() {
         return new Promise((resolve, reject) => {
-            if (!this._tooltip || !DOM._triggerEvent(this._node, 'hide.frost.tooltip')) {
+            if (!this._tooltip) {
                 return reject();
             }
 
+            if (!DOM._triggerEvent(this._node, 'hide.frost.tooltip')) {
+                return reject();
+            }
+
+            dom.setDataset(this._tooltip, 'animating', 'true');
+
+            dom.stop(this._tooltip);
             dom.fadeOut(this._tooltip, {
                 duration: this._settings.duration
             }).then(_ => {
@@ -95,9 +102,10 @@ class Tooltip {
 
                 dom.triggerEvent(this._node, 'hidden.frost.tooltip');
                 resolve();
-            }).catch(_ =>
-                reject()
-            );
+            }).catch(_ => {
+                dom.removeAttribute(this._tooltip, 'data-animating');
+                reject();
+            });
         });
     }
 
@@ -107,11 +115,17 @@ class Tooltip {
      */
     show() {
         return new Promise((resolve, reject) => {
-            if (this._tooltip || !DOM._triggerEvent(this._node, 'show.frost.tooltip')) {
+            if (this._tooltip) {
+                return reject();
+            }
+
+            if (!DOM._triggerEvent(this._node, 'show.frost.tooltip')) {
                 return reject();
             }
 
             this._render();
+
+            dom.setDataset(this._tooltip, 'animating', 'true');
 
             dom.addClass(this._tooltip, 'show');
             dom.fadeIn(this._tooltip, {
@@ -121,6 +135,8 @@ class Tooltip {
                 resolve();
             }).catch(_ =>
                 reject()
+            ).finally(_ =>
+                dom.removeAttribute(this._popover, 'data-animating')
             );
         });
     }

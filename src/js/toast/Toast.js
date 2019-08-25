@@ -18,14 +18,10 @@ class Toast {
             ...settings
         };
 
-        this._visible = dom.isVisible(this._node);
-
         if (this._settings.autohide) {
             setTimeout(
                 _ => {
-                    try {
-                        this.hide();
-                    } catch (e) { }
+                    this.hide().catch(_ => { });
                 },
                 this._settings.delay
             );
@@ -48,23 +44,27 @@ class Toast {
      */
     hide() {
         return new Promise((resolve, reject) => {
-            if (this._animating || !this._visible || !DOM._triggerEvent(this._node, 'hide.frost.toast')) {
+            if (!dom.isVisible(this._node) || dom.getDataset(this._node, 'animating') === 'true') {
                 return reject();
             }
 
-            this._animating = true;
+            if (!DOM._triggerEvent(this._node, 'hide.frost.toast')) {
+                return reject();
+            }
+
+            dom.setDataset(this._node, 'animating', 'true');
+
             return dom.fadeOut(this._node, {
                 duration: this._settings.duration
             }).then(_ => {
-                this._visible = false;
                 dom.hide(this._node);
                 dom.triggerEvent(this._node, 'hidden.frost.toast');
                 resolve();
             }).catch(_ =>
                 reject()
-            ).finally(_ => {
-                this._animating = false;
-            });
+            ).finally(_ =>
+                dom.removeAttribute(this._node, 'data-animating')
+            );
         });
     }
 
@@ -74,12 +74,16 @@ class Toast {
      */
     show() {
         return new Promise((resolve, reject) => {
-            if (this._animating || this._visible || !DOM._triggerEvent(this._node, 'show.frost.toast')) {
+            if (dom.isVisible(this._node) || dom.getDataset(this._node, 'animating') === 'true') {
                 return reject();
             }
 
-            this._animating = true;
-            this._visible = true;
+            if (!DOM._triggerEvent(this._node, 'show.frost.toast')) {
+                return reject();
+            }
+
+            dom.setDataset(this._node, 'animating', 'true');
+
             dom.show(this._node);
             return dom.fadeIn(this._node, {
                 duration: this._settings.duration
@@ -88,9 +92,9 @@ class Toast {
                 resolve();
             }).catch(_ =>
                 reject()
-            ).finally(_ => {
-                this._animating = false;
-            });
+            ).finally(_ =>
+                dom.removeAttribute(this._node, 'data-animating')
+            );
         });
     }
 

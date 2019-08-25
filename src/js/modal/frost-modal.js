@@ -15,7 +15,7 @@ dom.addEventDelegate(document, 'click', '[data-toggle="modal"]', e => {
     const element = dom.findOne(target);
 
     if (dom.hasData(element, 'modal')) {
-        dom.getData(element, 'modal').show();
+        dom.getData(element, 'modal').show().catch(_ => { });
     } else {
         new Modal(element);
     }
@@ -30,7 +30,7 @@ dom.addEventDelegate(document, 'click', '[data-dismiss="modal"]', e => {
         dom.getData(element, 'modal') :
         new Modal(element);
 
-    modal.hide();
+    modal.hide().catch(_ => { });
 });
 
 // Add Modal QuerySet method

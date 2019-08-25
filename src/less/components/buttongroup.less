@@ -26,6 +26,17 @@
     }
 }
 
+.btn-group-toggle {
+    & > .btn input[type="checkbox"],
+    & > .btn input[type="radio"],
+    & > .btn-group > .btn input[type="checkbox"],
+    & > .btn-group > .btn input[type="radio"] {
+        position: absolute;
+        clip: rect(0,0,0,0);
+        pointer-events: none;
+    }
+}
+
 .btn-group-vertical {
     flex-direction: column;
     align-items: flex-start;
@@ -49,7 +60,6 @@
 .btn-lg {
     padding: (@spacing / 3) @spacing;
     font-size: 1.25rem;
-    line-height: 1.5;
 }
 
 .btn-group-sm > .btn,

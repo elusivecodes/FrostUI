@@ -1,15 +1,6 @@
 .nav {
     display: flex;
     margin-bottom: @spacing;
-
-    & .nav-link {
-        display: inline-flex;
-
-        &.disabled {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-    }
 }
 
 .nav-link {
@@ -20,14 +11,19 @@
     &:hover {
         text-decoration: none;
     }
+
+    &.disabled {
+        opacity: @disabled-opacity;
+        pointer-events: none;
+    }
 }
 
-.nav-fill .nav-item {
+.nav-fill .nav-link {
     flex: 1 1 auto;
     text-align: center;
 }
 
-.nav-justified .nav-item {
+.nav-justified .nav-link {
     flex-basis: 0;
     flex-grow: 1;
     text-align: center;

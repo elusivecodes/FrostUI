@@ -11,7 +11,7 @@ Object.assign(Tab.prototype, {
         this._clickEvent = e => {
             e.preventDefault();
 
-            this.show();
+            this.show().catch(_ => { });
         };
 
         dom.addEvent(this._node, 'click.frost.tab', this._clickEvent);

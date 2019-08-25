@@ -3,7 +3,6 @@
     .text-color(@color);
 
     &[href]:hover {
-        text-decoration: none;
         background-color: darken(@color, 10%);
         .text-color(@color);
     }
@@ -19,10 +18,13 @@
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
-    transition: color @transition-time @transition-type, background-color @transition-time @transition-type, box-shadow @transition-time @transition-type;
+    transition: color @transition-time @transition-type,
+        background-color @transition-time @transition-type,
+        box-shadow @transition-time @transition-type;
 
     &[href] {
         &:hover {
+            text-decoration: none;
             z-index: @z-hover;
         }
 
@@ -39,7 +41,7 @@
 
     &:disabled,
     &.disabled {
-        opacity: 0.5;
+        opacity: @disabled-opacity;
         pointer-events: none;
     }
 }

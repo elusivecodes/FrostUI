@@ -44,11 +44,16 @@ class Tab {
      */
     hide() {
         return new Promise((resolve, reject) => {
-            if (this._animating || !DOM._triggerEvent(this._node, 'hide.frost.tab')) {
+            if (!dom.hasClass(this._target, 'active') || dom.getDataset(this._node, 'animating') === 'true') {
                 return reject();
             }
 
-            this._animating = true;
+            if (!DOM._triggerEvent(this._node, 'hide.frost.tab')) {
+                return reject();
+            }
+
+            dom.setDataset(this._node, 'animating', 'true');
+
             dom.fadeOut(this._target, {
                 duration: this._settings.duration
             }).then(_ => {
@@ -58,9 +63,9 @@ class Tab {
                 resolve();
             }).catch(_ =>
                 reject()
-            ).finally(_ => {
-                this._animating = false;
-            });
+            ).finally(_ =>
+                dom.removeAttribute(this._node, 'data-animating')
+            );
         });
     }
 
@@ -70,13 +75,18 @@ class Tab {
      */
     show() {
         return new Promise((resolve, reject) => {
-            const activeTab = dom.siblings(this._node, '.active').shift();
-
-            if (this._animating || !activeTab || !dom.hasData(activeTab, 'tab')) {
+            if (dom.hasClass(this._target, 'active') || dom.getDataset(this._node, 'animating') === 'true') {
                 return reject();
             }
 
-            this._animating = true;
+            const activeTab = dom.siblings(this._node, '.active').shift();
+
+            if (!dom.hasData(activeTab, 'tab')) {
+                return reject();
+            }
+
+            dom.setDataset(this._node, 'animating', 'true');
+
             dom.getData(activeTab, 'tab').hide().then(_ => {
                 if (!DOM._triggerEvent(this._node, 'show.frost.tab')) {
                     return reject();
@@ -92,9 +102,9 @@ class Tab {
                 resolve();
             }).catch(_ =>
                 reject()
-            ).finally(_ => {
-                this._animating = false;
-            });
+            ).finally(_ =>
+                dom.removeAttribute(this._node, 'data-animating')
+            );
         });
     }
 

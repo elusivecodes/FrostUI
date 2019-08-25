@@ -18,7 +18,8 @@ class Collapse {
             ...settings
         };
 
-        this._events();
+        this._targets = dom.find(this._settings.target);
+        this._hasAccordion = this._targets.find(target => dom.getDataset(target, 'parent'));
 
         dom.setData(this._node, 'collapse', this);
     }
@@ -38,31 +39,31 @@ class Collapse {
      */
     hide() {
         return new Promise((resolve, reject) => {
-            if (!DOM._triggerEvent(this._node, 'hide.frost.collapse')) {
-                return reject();
-            }
-
-            const targets = dom.find(this._settings.target)
-                .filter(target => dom.hasClass(target, 'show') && !dom.hasClass('collapsing'));
+            const targets = this._targets
+                .filter(target => dom.hasClass(target, 'show') && dom.getDataset(target, 'animating') !== 'true');
 
             if (!targets.length) {
                 return reject();
             }
 
-            dom.addClass(targets, 'collapsing');
+            if (!DOM._triggerEvent(this._node, 'hide.frost.collapse')) {
+                return reject();
+            }
+
+            dom.setDataset(targets, 'animating', 'true');
+
             dom.squeezeOut(targets, {
                 direction: this._settings.direction,
                 duration: this._settings.duration
             }).then(_ => {
-                this._visible = false;
-                dom.removeClass(targets, 'show collapsing');
+                dom.removeClass(targets, 'show');
                 dom.triggerEvent(this._node, 'hidden.frost.collapse');
                 resolve();
             }).catch(_ =>
                 reject()
-            ).finally(_ => {
-                this._animating = false;
-            });
+            ).finally(_ =>
+                dom.removeAttribute(targets, 'data-animating')
+            );
         });
     }
 
@@ -72,30 +73,35 @@ class Collapse {
      */
     show() {
         return new Promise((resolve, reject) => {
-            if (!DOM._triggerEvent(this._node, 'show.frost.collapse')) {
-                return reject();
-            }
-
-            const targets = dom.find(this._settings.target)
-                .filter(target => !dom.hasClass(target, 'show') && !dom.hasClass(target, 'collapsing'));
+            const targets = this._targets
+                .filter(target => dom.hasClass(target, 'show') && dom.getDataset(target, 'animating') !== 'true');
 
             if (!targets.length) {
                 return reject();
             }
 
-            dom.addClass(targets, 'show collapsing');
+            if (!DOM._triggerEvent(this._node, 'show.frost.collapse')) {
+                return reject();
+            }
+
+            if (this._hasAccordion && !this._hideAccordion(targets)) {
+                return reject();
+            }
+
+            dom.setDataset(targets, 'animating', 'true');
+
+            dom.addClass(targets, 'show');
             dom.squeezeIn(targets, {
                 direction: this._settings.direction,
                 duration: this._settings.duration
             }).then(_ => {
-                dom.removeClass(targets, 'collapsing');
                 dom.triggerEvent(this._node, 'shown.frost.collapse');
                 resolve();
             }).catch(_ =>
                 reject()
-            ).finally(_ => {
-                this._animating = false;
-            });
+            ).finally(_ =>
+                dom.removeAttribute(targets, 'data-animating')
+            );
         });
     }
 
@@ -105,21 +111,27 @@ class Collapse {
      */
     toggle() {
         return new Promise((resolve, reject) => {
-            if (!DOM._triggerEvent(this._node, 'show.frost.collapse')) {
-                return reject();
-            }
-
-            const targets = dom.find(this._settings.target)
-                .filter(target => !dom.hasClass(target, 'collapsing'));
+            const targets = this._targets
+                .filter(target => dom.getDataset(target, 'animating') !== 'true');
 
             if (!targets.length) {
                 return reject();
             }
 
-            dom.addClass(targets, 'collapsing');
+            if (!DOM._triggerEvent(this._node, 'show.frost.collapse')) {
+                return reject();
+            }
 
             const hidden = targets.filter(target => !dom.hasClass(target, 'show'));
+
+            if (this._hasAccordion && !this._hideAccordion(hidden)) {
+                return reject();
+            }
+
             const visible = targets.filter(target => dom.hasClass(target, 'show'));
+
+            dom.setDataset(targets, 'animating', 'true');
+
             const animations = targets.map(target => {
                 const animation = dom.hasClass(target, 'show') ?
                     'squeezeOut' : 'squeezeIn';
@@ -131,17 +143,15 @@ class Collapse {
             });
 
             dom.addClass(hidden, 'show')
-
             Promise.all(animations).then(_ => {
                 dom.removeClass(visible, 'show');
-                dom.removeClass(targets, 'collapsing');
                 dom.triggerEvent(this._node, 'shown.frost.collapse');
                 resolve();
             }).catch(_ =>
                 reject()
-            ).finally(_ => {
-                this._animating = false;
-            });
+            ).finally(_ =>
+                dom.removeAttribute(targets, 'data-animating')
+            );
         });
     }
 

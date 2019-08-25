@@ -74,15 +74,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this = this;
 
         return new Promise(function (resolve, reject) {
+          if (dom.getDataset(_this._node, 'animating') === 'true') {
+            return reject();
+          }
+
           if (!DOM._triggerEvent(_this._node, 'close.frost.alert')) {
             return reject();
           }
 
-          if (dom.hasClass(_this._node, 'closing')) {
-            return reject();
-          }
-
-          dom.addClass(_this._node, 'closing');
+          dom.setDataset(_this._node, 'animating', 'true');
           dom.fadeOut(_this._node, {
             duration: _this._settings.duration
           }).then(function (_) {
@@ -90,9 +90,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             dom.remove(_this._node);
             resolve();
           })["catch"](function (_) {
-            return reject();
-          })["finally"](function (_) {
-            _this._animating = false;
+            dom.removeAttribute(_this._node, 'data-animating');
+            reject();
           });
         });
       }
@@ -113,6 +112,85 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     alert.close()["catch"](function (_) {});
   });
   UI.Alert = Alert;
+  /**
+   * Button Class
+   * @class
+   */
+
+  var Button =
+  /*#__PURE__*/
+  function () {
+    /**
+     * New Button constructor.
+     * @param {HTMLElement} node The input node.
+     * @param {object} [settings] The options to create the Button with.
+     * @returns {Button} A new Button object.
+     */
+    function Button(node, settings) {
+      var _this2 = this;
+
+      _classCallCheck(this, Button);
+
+      this._node = node;
+      this._settings = _objectSpread({}, Button.defaults, {}, dom.getDataset(this._node), {}, settings);
+      var group = dom.closest(this._node, '[data-toggle="buttons"]');
+      this._siblings = dom.find('.btn', group).filter(function (node) {
+        return !dom.isSame(node, _this2._node);
+      });
+      this._input = dom.findOne('input[type="checkbox"], input[type="radio"]', this._node);
+      dom.setData(this._node, 'button', this);
+    }
+    /**
+     * Destroy the Button.
+     */
+
+
+    _createClass(Button, [{
+      key: "destroy",
+      value: function destroy() {
+        dom.removeData(this._node, 'button');
+      }
+      /**
+       * Toggle the Button.
+       */
+
+    }, {
+      key: "toggle",
+      value: function toggle() {
+        if (!this._siblings.length) {
+          if (this._input) {
+            dom.setProperty(this._input, 'checked', !dom.getProperty(this._input, 'checked'));
+          }
+
+          dom.toggleClass(this._node, 'active');
+          return;
+        }
+
+        if (dom.hasClass(this._node, 'active')) {
+          return;
+        }
+
+        dom.removeClass(this._siblings, 'active');
+        dom.addClass(this._node, 'active');
+
+        if (this._input) {
+          dom.setProperty(this._input, 'checked', true);
+        }
+      }
+    }]);
+
+    return Button;
+  }(); // Default Button options
+
+
+  Button.defaults = {}; // Trigger Button from data-toggle
+
+  dom.addEventDelegate(document, 'click', '[data-toggle="buttons"] > .btn, [data-toggle="button"]', function (e) {
+    e.preventDefault();
+    var button = dom.hasData(e.currentTarget, 'button') ? dom.getData(e.currentTarget, 'button') : new Button(e.currentTarget);
+    button.toggle();
+  });
+  UI.Button = Button;
   /**
    * Carousel Class
    * @class
@@ -220,11 +298,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show(index) {
-        var _this2 = this;
+        var _this3 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this2._sliding) {
-            _this2._queue.push({
+          if (_this3._sliding) {
+            _this3._queue.push({
               index: index
             });
 
@@ -233,7 +311,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
           index = parseInt(index);
 
-          if (!_this2._settings.wrap && (index < 0 || index > _this2._items.length - 1)) {
+          if (!_this3._settings.wrap && (index < 0 || index > _this3._items.length - 1)) {
             return reject();
           }
 
@@ -241,60 +319,60 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
           if (index < 0) {
             dir = -1;
-          } else if (index > _this2._items.length - 1) {
+          } else if (index > _this3._items.length - 1) {
             dir = 1;
           }
 
-          index %= _this2._items.length;
+          index %= _this3._items.length;
 
           if (index < 0) {
-            index = _this2._items.length + index;
+            index = _this3._items.length + index;
           }
 
-          if (index === _this2._index) {
+          if (index === _this3._index) {
             return reject();
           }
 
-          var direction = dir == -1 || dir == 0 && index < _this2._index ? 'left' : 'right';
+          var direction = dir == -1 || dir == 0 && index < _this3._index ? 'left' : 'right';
           var eventData = {
             direction: direction,
-            relatedTarget: _this2._items[index],
-            from: _this2._index,
+            relatedTarget: _this3._items[index],
+            from: _this3._index,
             to: index
           };
 
-          if (!DOM._triggerEvent(_this2._node, 'slide.frost.carousel', eventData)) {
+          if (!DOM._triggerEvent(_this3._node, 'slide.frost.carousel', eventData)) {
             return reject();
           }
 
-          var oldIndex = _this2._index;
-          _this2._index = index;
-          _this2._sliding = true;
+          var oldIndex = _this3._index;
+          _this3._index = index;
+          _this3._sliding = true;
 
-          _this2.pause();
+          _this3.pause();
 
-          dom.addClass(_this2._items[_this2._index], 'active');
-          dom.removeClass(_this2._items[oldIndex], 'active');
-          dom.animate(_this2._items[_this2._index], function (node, progress, options) {
-            return _this2._update(node, _this2._items[oldIndex], progress, options.direction);
+          dom.addClass(_this3._items[_this3._index], 'active');
+          dom.removeClass(_this3._items[oldIndex], 'active');
+          dom.animate(_this3._items[_this3._index], function (node, progress, options) {
+            return _this3._update(node, _this3._items[oldIndex], progress, options.direction);
           }, {
             direction: direction,
-            duration: _this2._settings.transition
+            duration: _this3._settings.transition
           }).then(function (_) {
-            dom.removeClass(dom.find('.active[data-slide-to]', _this2._node), 'active');
-            dom.addClass(dom.find('[data-slide-to="' + _this2._index + '"]', _this2._node), 'active');
-            _this2._sliding = false;
-            dom.triggerEvent(_this2._node, 'slid.frost.carousel', eventData);
+            dom.removeClass(dom.find('.active[data-slide-to]', _this3._node), 'active');
+            dom.addClass(dom.find('[data-slide-to="' + _this3._index + '"]', _this3._node), 'active');
+            _this3._sliding = false;
+            dom.triggerEvent(_this3._node, 'slid.frost.carousel', eventData);
 
-            if (!_this2._queue.length) {
-              _this2._setTimer();
+            if (!_this3._queue.length) {
+              _this3._setTimer();
 
               return resolve();
             }
 
-            var next = _this2._queue.shift();
+            var next = _this3._queue.shift();
 
-            return next.dir ? _this2.slide(next.dir) : _this2.show(next.index);
+            return next.dir ? _this3.slide(next.dir) : _this3.show(next.index);
           });
         });
       }
@@ -421,13 +499,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Carousel.
      */
     _events: function _events() {
-      var _this3 = this;
+      var _this4 = this;
 
       this._clickNextEvent = function (e) {
         e.preventDefault();
 
         try {
-          _this3.next();
+          _this4.next();
         } catch (e) {}
       };
 
@@ -435,7 +513,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         e.preventDefault();
 
         try {
-          _this3.prev();
+          _this4.prev();
         } catch (e) {}
       };
 
@@ -444,12 +522,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var slideTo = dom.getDataset(e.currentTarget, 'slideTo');
 
         try {
-          _this3.show(slideTo);
+          _this4.show(slideTo);
         } catch (e) {}
       };
 
       this._keyDownEvent = function (e) {
-        if (_this3._sliding || e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+        if (_this4._sliding || e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
           return;
         }
 
@@ -457,19 +535,19 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         try {
           if (e.key === 'ArrowLeft') {
-            _this3.prev();
+            _this4.prev();
           } else if (e.key === 'ArrowRight') {
-            _this3.next();
+            _this4.next();
           }
         } catch (e) {}
       };
 
       this._mouseEnterEvent = function (_) {
-        return _this3.pause();
+        return _this4.pause();
       };
 
       this._mouseLeaveEvent = function (_) {
-        return _this3._setTimer();
+        return _this4._setTimer();
       };
 
       dom.addEventDelegate(this._node, 'click.frost.carousel', '.carousel-next', this._clickNextEvent);
@@ -490,11 +568,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Set a timer for the next Carousel cycle.
      */
     _setTimer: function _setTimer() {
-      var _this4 = this;
+      var _this5 = this;
 
       this._timer = setTimeout(function (_) {
         try {
-          _this4.cycle();
+          _this5.cycle();
         } catch (e) {}
       }, this._settings.interval);
     }
@@ -518,9 +596,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       this._node = node;
       this._settings = _objectSpread({}, Collapse.defaults, {}, dom.getDataset(this._node), {}, settings);
-
-      this._events();
-
+      this._targets = dom.find(this._settings.target);
+      this._hasAccordion = this._targets.find(function (target) {
+        return dom.getDataset(target, 'parent');
+      });
       dom.setData(this._node, 'collapse', this);
     }
     /**
@@ -543,34 +622,33 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "hide",
       value: function hide() {
-        var _this5 = this;
+        var _this6 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!DOM._triggerEvent(_this5._node, 'hide.frost.collapse')) {
-            return reject();
-          }
-
-          var targets = dom.find(_this5._settings.target).filter(function (target) {
-            return dom.hasClass(target, 'show') && !dom.hasClass('collapsing');
+          var targets = _this6._targets.filter(function (target) {
+            return dom.hasClass(target, 'show') && dom.getDataset(target, 'animating') !== 'true';
           });
 
           if (!targets.length) {
             return reject();
           }
 
-          dom.addClass(targets, 'collapsing');
+          if (!DOM._triggerEvent(_this6._node, 'hide.frost.collapse')) {
+            return reject();
+          }
+
+          dom.setDataset(targets, 'animating', 'true');
           dom.squeezeOut(targets, {
-            direction: _this5._settings.direction,
-            duration: _this5._settings.duration
+            direction: _this6._settings.direction,
+            duration: _this6._settings.duration
           }).then(function (_) {
-            _this5._visible = false;
-            dom.removeClass(targets, 'show collapsing');
-            dom.triggerEvent(_this5._node, 'hidden.frost.collapse');
+            dom.removeClass(targets, 'show');
+            dom.triggerEvent(_this6._node, 'hidden.frost.collapse');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            _this5._animating = false;
+            return dom.removeAttribute(targets, 'data-animating');
           });
         });
       }
@@ -582,33 +660,37 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show() {
-        var _this6 = this;
+        var _this7 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!DOM._triggerEvent(_this6._node, 'show.frost.collapse')) {
-            return reject();
-          }
-
-          var targets = dom.find(_this6._settings.target).filter(function (target) {
-            return !dom.hasClass(target, 'show') && !dom.hasClass(target, 'collapsing');
+          var targets = _this7._targets.filter(function (target) {
+            return dom.hasClass(target, 'show') && dom.getDataset(target, 'animating') !== 'true';
           });
 
           if (!targets.length) {
             return reject();
           }
 
-          dom.addClass(targets, 'show collapsing');
+          if (!DOM._triggerEvent(_this7._node, 'show.frost.collapse')) {
+            return reject();
+          }
+
+          if (_this7._hasAccordion && !_this7._hideAccordion(targets)) {
+            return reject();
+          }
+
+          dom.setDataset(targets, 'animating', 'true');
+          dom.addClass(targets, 'show');
           dom.squeezeIn(targets, {
-            direction: _this6._settings.direction,
-            duration: _this6._settings.duration
+            direction: _this7._settings.direction,
+            duration: _this7._settings.duration
           }).then(function (_) {
-            dom.removeClass(targets, 'collapsing');
-            dom.triggerEvent(_this6._node, 'shown.frost.collapse');
+            dom.triggerEvent(_this7._node, 'shown.frost.collapse');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            _this6._animating = false;
+            return dom.removeAttribute(targets, 'data-animating');
           });
         });
       }
@@ -620,45 +702,49 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toggle",
       value: function toggle() {
-        var _this7 = this;
+        var _this8 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!DOM._triggerEvent(_this7._node, 'show.frost.collapse')) {
-            return reject();
-          }
-
-          var targets = dom.find(_this7._settings.target).filter(function (target) {
-            return !dom.hasClass(target, 'collapsing');
+          var targets = _this8._targets.filter(function (target) {
+            return dom.getDataset(target, 'animating') !== 'true';
           });
 
           if (!targets.length) {
             return reject();
           }
 
-          dom.addClass(targets, 'collapsing');
+          if (!DOM._triggerEvent(_this8._node, 'show.frost.collapse')) {
+            return reject();
+          }
+
           var hidden = targets.filter(function (target) {
             return !dom.hasClass(target, 'show');
           });
+
+          if (_this8._hasAccordion && !_this8._hideAccordion(hidden)) {
+            return reject();
+          }
+
           var visible = targets.filter(function (target) {
             return dom.hasClass(target, 'show');
           });
+          dom.setDataset(targets, 'animating', 'true');
           var animations = targets.map(function (target) {
             var animation = dom.hasClass(target, 'show') ? 'squeezeOut' : 'squeezeIn';
             return dom[animation](target, {
-              direction: _this7._settings.direction,
-              duration: _this7._settings.duration
+              direction: _this8._settings.direction,
+              duration: _this8._settings.duration
             });
           });
           dom.addClass(hidden, 'show');
           Promise.all(animations).then(function (_) {
             dom.removeClass(visible, 'show');
-            dom.removeClass(targets, 'collapsing');
-            dom.triggerEvent(_this7._node, 'shown.frost.collapse');
+            dom.triggerEvent(_this8._node, 'shown.frost.collapse');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            _this7._animating = false;
+            return dom.removeAttribute(targets, 'data-animating');
           });
         });
       }
@@ -671,7 +757,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   Collapse.defaults = {
     direction: 'bottom',
     duration: 300
-  }; // Auto-initialize Collapse from data-toggle
+  }; // Trigger Collapse from data-toggle
+
+  dom.addEventDelegate(document, 'click', '[data-toggle="collapse"]', function (e) {
+    e.preventDefault();
+    var collapse = dom.hasData(e.currentTarget, 'collapse') ? dom.getData(e.currentTarget, 'collapse') : new Collapse(e.currentTarget);
+    collapse.toggle()["catch"](function (_) {});
+  }); // Auto-initialize Collapse from data-toggle
 
   dom.addEvent(window, 'load', function (_) {
     var nodes = dom.find('[data-toggle="collapse"]');
@@ -739,18 +831,98 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   Object.assign(Collapse.prototype, {
     /**
-     * Attach events for the Collapse.
+     * Hide accordion nodes for all targets.
+     * @param {array} targets The target nodes.
      */
-    _events: function _events() {
-      var _this8 = this;
+    _hideAccordion: function _hideAccordion(targets) {
+      var parents = [];
+      var collapses = [];
+      var _iteratorNormalCompletion3 = true;
+      var _didIteratorError3 = false;
+      var _iteratorError3 = undefined;
 
-      this._clickEvent = function (e) {
-        e.preventDefault();
+      try {
+        for (var _iterator3 = targets[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+          var target = _step3.value;
+          var parent = dom.getDataset(target, 'parent');
 
-        _this8.toggle()["catch"](function (_) {});
-      };
+          if (!parent) {
+            continue;
+          }
 
-      dom.addEvent(this._node, 'click.frost.collapse', this._clickEvent);
+          var parentNode = dom.closest(target, parent);
+
+          if (!parents.includes(parentNode)) {
+            parents.push(parentNode);
+          }
+        }
+      } catch (err) {
+        _didIteratorError3 = true;
+        _iteratorError3 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
+            _iterator3["return"]();
+          }
+        } finally {
+          if (_didIteratorError3) {
+            throw _iteratorError3;
+          }
+        }
+      }
+
+      for (var _i = 0, _parents = parents; _i < _parents.length; _i++) {
+        var _parent = _parents[_i];
+        var collapseToggle = dom.find('[data-toggle="collapse"]', _parent);
+        var _iteratorNormalCompletion4 = true;
+        var _didIteratorError4 = false;
+        var _iteratorError4 = undefined;
+
+        try {
+          for (var _iterator4 = collapseToggle[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+            var toggle = _step4.value;
+
+            if (dom.isSame(this._node, toggle)) {
+              continue;
+            }
+
+            var collapse = dom.getData(toggle, 'collapse');
+
+            var _targets = dom.find(collapse._settings.target);
+
+            var animating = _targets.find(function (target) {
+              return dom.getDataset(target, 'animating') === 'true';
+            });
+
+            if (animating) {
+              return false;
+            }
+
+            collapses.push(collapse);
+          }
+        } catch (err) {
+          _didIteratorError4 = true;
+          _iteratorError4 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
+              _iterator4["return"]();
+            }
+          } finally {
+            if (_didIteratorError4) {
+              throw _iteratorError4;
+            }
+          }
+        }
+      }
+
+      for (var _i2 = 0, _collapses = collapses; _i2 < _collapses.length; _i2++) {
+        var _collapse = _collapses[_i2];
+
+        _collapse.hide()["catch"](function (_) {});
+      }
+
+      return true;
     }
   });
   /**
@@ -798,7 +970,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         width: this._settings.width,
         zIndex: this._settings.zIndex
       });
-      this._visible = dom.hasClass(this._containerNode, 'open');
 
       this._getDir = function (_) {
         return dom.getDataset(_this9._referenceNode, 'placement');
@@ -839,11 +1010,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this10 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!_this10._visible || _this10._animating || !DOM._triggerEvent(_this10._node, 'hide.frost.dropdown')) {
+          if (!dom.hasClass(_this10._containerNode, 'open') || dom.getDataset(_this10._menuNode, 'animating') === 'true') {
             return reject();
           }
 
-          _this10._animating = true;
+          if (!DOM._triggerEvent(_this10._node, 'hide.frost.dropdown')) {
+            return reject();
+          }
+
+          dom.setDataset(_this10._menuNode, 'animating', 'true');
           dom.removeEvent(window, 'click.frost.dropdown', _this10._windowClickEvent);
           Promise.all([dom.fadeOut(_this10._menuNode, {
             duration: _this10._settings.duration
@@ -851,14 +1026,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             direction: _this10._getDir,
             duration: _this10._settings.duration
           })]).then(function (_) {
-            _this10._visible = false;
             dom.removeClass(_this10._containerNode, 'open');
             dom.triggerEvent(_this10._node, 'hidden.frost.dropdown');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            _this10._animating = false;
+            return dom.removeAttribute(_this10._menuNode, 'data-animating');
           });
         });
       }
@@ -873,12 +1047,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this11 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this11._visible || _this11._animating || !DOM._triggerEvent(_this11._node, 'show.frost.dropdown')) {
+          if (dom.hasClass(_this11._containerNode, 'open') || dom.getDataset(_this11._menuNode, 'animating') === 'true') {
             return reject();
           }
 
-          _this11._animating = true;
-          _this11._visible = true;
+          if (!DOM._triggerEvent(_this11._node, 'show.frost.dropdown')) {
+            return reject();
+          }
+
+          dom.setDataset(_this11._menuNode, 'animating', 'true');
           dom.addClass(_this11._containerNode, 'open');
           Promise.all([dom.fadeIn(_this11._menuNode, {
             duration: _this11._settings.duration
@@ -892,7 +1069,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            _this11._animating = false;
+            return dom.removeAttribute(_this11._menuNode, 'data-animating');
           });
         });
       }
@@ -904,7 +1081,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toggle",
       value: function toggle() {
-        return this._visible ? this.hide() : this.show();
+        return dom.hasClass(this._containerNode, 'open') ? this.hide() : this.show();
       }
     }]);
 
@@ -924,26 +1101,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   dom.addEvent(window, 'load', function (_) {
     var nodes = dom.find('[data-toggle="dropdown"]');
-    var _iteratorNormalCompletion3 = true;
-    var _didIteratorError3 = false;
-    var _iteratorError3 = undefined;
+    var _iteratorNormalCompletion5 = true;
+    var _didIteratorError5 = false;
+    var _iteratorError5 = undefined;
 
     try {
-      for (var _iterator3 = nodes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-        var node = _step3.value;
+      for (var _iterator5 = nodes[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+        var node = _step5.value;
         new Dropdown(node);
       }
     } catch (err) {
-      _didIteratorError3 = true;
-      _iteratorError3 = err;
+      _didIteratorError5 = true;
+      _iteratorError5 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
-          _iterator3["return"]();
+        if (!_iteratorNormalCompletion5 && _iterator5["return"] != null) {
+          _iterator5["return"]();
         }
       } finally {
-        if (_didIteratorError3) {
-          throw _iteratorError3;
+        if (_didIteratorError5) {
+          throw _iteratorError5;
         }
       }
     }
@@ -996,7 +1173,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this._clickEvent = function (e) {
         e.preventDefault();
 
-        _this12.toggle();
+        _this12.toggle()["catch"](function (_) {});
       };
 
       this._keyUpEvent = function (e) {
@@ -1006,7 +1183,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         e.preventDefault();
 
-        _this12.toggle();
+        _this12.toggle()["catch"](function (_) {});
       };
 
       this._keyDownEvent = function (e) {
@@ -1070,7 +1247,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this._node = node;
       this._settings = _objectSpread({}, Modal.defaults, {}, dom.getDataset(node), {}, settings);
       this._dialog = dom.child(this._node, '.modal-dialog');
-      this._visible = dom.isVisible(this._node);
 
       this._windowKeyDownEvent = function (e) {
         if (e.key !== 'Escape') {
@@ -1096,7 +1272,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Modal, [{
       key: "destroy",
       value: function destroy() {
-        dom.stop([this._node, this._dialog, this._backdrop], true);
+        dom.stop([this._dialog, this._backdrop], true);
 
         if (this._settings.keyboard) {
           dom.removeEvent(window, 'keydown.frost.modal', this._windowKeyDownEvent);
@@ -1115,11 +1291,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this14 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!_this14._visible || _this14._animating || !DOM._triggerEvent(_this14._node, 'hide.frost.modal')) {
+          if (!dom.hasClass(_this14._node, 'show') || dom.getDataset(_this14._dialog, 'animating') === 'true') {
             return reject();
           }
 
-          _this14._animating = true;
+          if (!DOM._triggerEvent(_this14._node, 'hide.frost.modal')) {
+            return reject();
+          }
+
+          dom.setDataset([_this14._dialog, _this14._backdrop], 'animating', 'true');
           dom.removeEvent(_this14._backdrop, 'click.frost.autocomplete');
           Promise.all([dom.fadeOut(_this14._dialog, {
             duration: _this14._settings.duration
@@ -1128,10 +1308,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           }), dom.fadeOut(_this14._backdrop, {
             duration: _this14._settings.duration
           })]).then(function (_) {
-            _this14._visible = false;
-
             if (_this14._settings.backdrop) {
               dom.remove(_this14._backdrop);
+              _this14._backdrop = null;
             }
 
             if (_this14._settings.keyboard) {
@@ -1145,7 +1324,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            _this14._animating = false;
+            return dom.removeAttribute([_this14._dialog, _this14._backdrop], 'data-animating');
           });
         });
       }
@@ -1160,9 +1339,17 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this15 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this15._visible || _this15._animating || !DOM._triggerEvent(_this15._node, 'show.frost.modal')) {
+          if (dom.hasClass(_this15._node, 'show') || dom.getDataset(_this15._dialog, 'animating') === 'true') {
             return reject();
           }
+
+          if (!DOM._triggerEvent(_this15._node, 'show.frost.modal')) {
+            return reject();
+          }
+
+          dom.setDataset([_this15._dialog, _this15._backdrop], 'animating', 'true');
+          dom.addClass(_this15._node, 'show');
+          dom.addClass(document.body, 'modal-open');
 
           if (_this15._settings.backdrop) {
             _this15._backdrop = dom.create('div', {
@@ -1171,10 +1358,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             dom.append(document.body, _this15._backdrop);
           }
 
-          _this15._animating = true;
-          _this15._visible = true;
-          dom.addClass(_this15._node, 'show');
-          dom.addClass(document.body, 'modal-open');
           Promise.all([dom.fadeIn(_this15._dialog, {
             duration: _this15._settings.duration
           }), dom.dropIn(_this15._dialog, {
@@ -1182,8 +1365,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           }), dom.fadeIn(_this15._backdrop, {
             duration: _this15._settings.duration
           })]).then(function (_) {
-            _this15._animating = false;
-
             if (_this15._settings.backdrop) {
               dom.addEventOnce(_this15._backdrop, 'click.frost.modal', function (_) {
                 return _this15.hide();
@@ -1203,7 +1384,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            _this15._animating = false;
+            return dom.removeAttribute([_this15._dialog, _this15._backdrop], 'data-animating');
           });
         });
       }
@@ -1215,7 +1396,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toggle",
       value: function toggle() {
-        return this._visible ? this.hide() : this.show();
+        return dom.hasClass(this._node, 'show') ? this.hide() : this.show();
       }
     }]);
 
@@ -1237,7 +1418,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     var element = dom.findOne(target);
 
     if (dom.hasData(element, 'modal')) {
-      dom.getData(element, 'modal').show();
+      dom.getData(element, 'modal').show()["catch"](function (_) {});
     } else {
       new Modal(element);
     }
@@ -1247,7 +1428,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     e.preventDefault();
     var element = dom.closest(e.currentTarget, '.modal');
     var modal = dom.hasData(element, 'modal') ? dom.getData(element, 'modal') : new Modal(element);
-    modal.hide();
+    modal.hide()["catch"](function (_) {});
   }); // Add Modal QuerySet method
 
   if (QuerySet) {
@@ -1378,10 +1559,16 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this16 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!_this16._popover || !DOM._triggerEvent(_this16._node, 'hide.frost.popover')) {
+          if (!_this16._popover) {
             return reject();
           }
 
+          if (!DOM._triggerEvent(_this16._node, 'hide.frost.popover')) {
+            return reject();
+          }
+
+          dom.setDataset(_this16._popover, 'animating', 'true');
+          dom.stop(_this16._popover);
           dom.fadeOut(_this16._popover, {
             duration: _this16._settings.duration
           }).then(function (_) {
@@ -1393,7 +1580,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             dom.triggerEvent(_this16._node, 'hidden.frost.popover');
             resolve();
           })["catch"](function (_) {
-            return reject();
+            dom.removeAttribute(_this16._popover, 'data-animating');
+            reject();
           });
         });
       }
@@ -1408,12 +1596,17 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this17 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this17._popover || !DOM._triggerEvent(_this17._node, 'show.frost.popover')) {
+          if (_this17._popover) {
+            return reject();
+          }
+
+          if (!DOM._triggerEvent(_this17._node, 'show.frost.popover')) {
             return reject();
           }
 
           _this17._render();
 
+          dom.setDataset(_this17._popover, 'animating', 'true');
           dom.addClass(_this17._popover, 'show');
           dom.fadeIn(_this17._popover, {
             duration: _this17._settings.duration
@@ -1422,6 +1615,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             resolve();
           })["catch"](function (_) {
             return reject();
+          })["finally"](function (_) {
+            return dom.removeAttribute(_this17._popover, 'data-animating');
           });
         });
       }
@@ -1479,26 +1674,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   dom.addEvent(window, 'load', function (_) {
     var nodes = dom.find('[data-toggle="popover"]');
-    var _iteratorNormalCompletion4 = true;
-    var _didIteratorError4 = false;
-    var _iteratorError4 = undefined;
+    var _iteratorNormalCompletion6 = true;
+    var _didIteratorError6 = false;
+    var _iteratorError6 = undefined;
 
     try {
-      for (var _iterator4 = nodes[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-        var node = _step4.value;
+      for (var _iterator6 = nodes[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+        var node = _step6.value;
         new Popover(node);
       }
     } catch (err) {
-      _didIteratorError4 = true;
-      _iteratorError4 = err;
+      _didIteratorError6 = true;
+      _iteratorError6 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
-          _iterator4["return"]();
+        if (!_iteratorNormalCompletion6 && _iterator6["return"] != null) {
+          _iterator6["return"]();
         }
       } finally {
-        if (_didIteratorError4) {
-          throw _iteratorError4;
+        if (_didIteratorError6) {
+          throw _iteratorError6;
         }
       }
     }
@@ -1553,9 +1748,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           return;
         }
 
-        try {
-          _this18.hide();
-        } catch (e) {}
+        _this18.hide()["catch"](function (_) {});
       };
 
       this._hoverEvent = function (_) {
@@ -1563,11 +1756,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           return;
         }
 
-        try {
-          _this18.show();
-
-          dom.addEventOnce(_this18._node, 'mouseout.frost.popover', _this18._hideEvent);
-        } catch (e) {}
+        _this18.show().then(function (_) {
+          return dom.addEventOnce(_this18._node, 'mouseout.frost.popover', _this18._hideEvent);
+        })["catch"](function (_) {});
       };
 
       this._focusEvent = function (_) {
@@ -1575,11 +1766,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           return;
         }
 
-        try {
-          _this18.show();
-
-          dom.addEventOnce(_this18._node, 'blur.frost.popover', _this18._hideEvent);
-        } catch (e) {}
+        _this18.show().then(function (_) {
+          return dom.addEventOnce(_this18._node, 'blur.frost.popover', _this18._hideEvent);
+        })["catch"](function (_) {});
       };
 
       this._clickEvent = function (e) {
@@ -1589,9 +1778,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           return;
         }
 
-        try {
-          _this18.toggle();
-        } catch (e) {}
+        _this18.toggle()["catch"](function (_) {});
       };
 
       if (this._triggers.includes('hover')) {
@@ -2105,11 +2292,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this19 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this19._animating || !DOM._triggerEvent(_this19._node, 'hide.frost.tab')) {
+          if (!dom.hasClass(_this19._target, 'active') || dom.getDataset(_this19._node, 'animating') === 'true') {
             return reject();
           }
 
-          _this19._animating = true;
+          if (!DOM._triggerEvent(_this19._node, 'hide.frost.tab')) {
+            return reject();
+          }
+
+          dom.setDataset(_this19._node, 'animating', 'true');
           dom.fadeOut(_this19._target, {
             duration: _this19._settings.duration
           }).then(function (_) {
@@ -2120,7 +2311,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            _this19._animating = false;
+            return dom.removeAttribute(_this19._node, 'data-animating');
           });
         });
       }
@@ -2135,13 +2326,17 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this20 = this;
 
         return new Promise(function (resolve, reject) {
-          var activeTab = dom.siblings(_this20._node, '.active').shift();
-
-          if (_this20._animating || !activeTab || !dom.hasData(activeTab, 'tab')) {
+          if (dom.hasClass(_this20._target, 'active') || dom.getDataset(_this20._node, 'animating') === 'true') {
             return reject();
           }
 
-          _this20._animating = true;
+          var activeTab = dom.siblings(_this20._node, '.active').shift();
+
+          if (!dom.hasData(activeTab, 'tab')) {
+            return reject();
+          }
+
+          dom.setDataset(_this20._node, 'animating', 'true');
           dom.getData(activeTab, 'tab').hide().then(function (_) {
             if (!DOM._triggerEvent(_this20._node, 'show.frost.tab')) {
               return reject();
@@ -2158,7 +2353,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            _this20._animating = false;
+            return dom.removeAttribute(_this20._node, 'data-animating');
           });
         });
       }
@@ -2174,26 +2369,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   dom.addEvent(window, 'load', function (_) {
     var nodes = dom.find('[data-toggle="tab"]');
-    var _iteratorNormalCompletion5 = true;
-    var _didIteratorError5 = false;
-    var _iteratorError5 = undefined;
+    var _iteratorNormalCompletion7 = true;
+    var _didIteratorError7 = false;
+    var _iteratorError7 = undefined;
 
     try {
-      for (var _iterator5 = nodes[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-        var node = _step5.value;
+      for (var _iterator7 = nodes[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+        var node = _step7.value;
         new Tab(node);
       }
     } catch (err) {
-      _didIteratorError5 = true;
-      _iteratorError5 = err;
+      _didIteratorError7 = true;
+      _iteratorError7 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion5 && _iterator5["return"] != null) {
-          _iterator5["return"]();
+        if (!_iteratorNormalCompletion7 && _iterator7["return"] != null) {
+          _iterator7["return"]();
         }
       } finally {
-        if (_didIteratorError5) {
-          throw _iteratorError5;
+        if (_didIteratorError7) {
+          throw _iteratorError7;
         }
       }
     }
@@ -2246,7 +2441,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this._clickEvent = function (e) {
         e.preventDefault();
 
-        _this21.show();
+        _this21.show()["catch"](function (_) {});
       };
 
       dom.addEvent(this._node, 'click.frost.tab', this._clickEvent);
@@ -2273,13 +2468,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       this._node = node;
       this._settings = _objectSpread({}, Toast.defaults, {}, dom.getDataset(this._node), {}, settings);
-      this._visible = dom.isVisible(this._node);
 
       if (this._settings.autohide) {
         setTimeout(function (_) {
-          try {
-            _this22.hide();
-          } catch (e) {}
+          _this22.hide()["catch"](function (_) {});
         }, this._settings.delay);
       }
 
@@ -2307,22 +2499,25 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this23 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this23._animating || !_this23._visible || !DOM._triggerEvent(_this23._node, 'hide.frost.toast')) {
+          if (!dom.isVisible(_this23._node) || dom.getDataset(_this23._node, 'animating') === 'true') {
             return reject();
           }
 
-          _this23._animating = true;
+          if (!DOM._triggerEvent(_this23._node, 'hide.frost.toast')) {
+            return reject();
+          }
+
+          dom.setDataset(_this23._node, 'animating', 'true');
           return dom.fadeOut(_this23._node, {
             duration: _this23._settings.duration
           }).then(function (_) {
-            _this23._visible = false;
             dom.hide(_this23._node);
             dom.triggerEvent(_this23._node, 'hidden.frost.toast');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            _this23._animating = false;
+            return dom.removeAttribute(_this23._node, 'data-animating');
           });
         });
       }
@@ -2337,12 +2532,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this24 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this24._animating || _this24._visible || !DOM._triggerEvent(_this24._node, 'show.frost.toast')) {
+          if (dom.isVisible(_this24._node) || dom.getDataset(_this24._node, 'animating') === 'true') {
             return reject();
           }
 
-          _this24._animating = true;
-          _this24._visible = true;
+          if (!DOM._triggerEvent(_this24._node, 'show.frost.toast')) {
+            return reject();
+          }
+
+          dom.setDataset(_this24._node, 'animating', 'true');
           dom.show(_this24._node);
           return dom.fadeIn(_this24._node, {
             duration: _this24._settings.duration
@@ -2352,7 +2550,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            _this24._animating = false;
+            return dom.removeAttribute(_this24._node, 'data-animating');
           });
         });
       }
@@ -2370,26 +2568,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   dom.addEvent(window, 'load', function (_) {
     var nodes = dom.find('[data-toggle="toast"]');
-    var _iteratorNormalCompletion6 = true;
-    var _didIteratorError6 = false;
-    var _iteratorError6 = undefined;
+    var _iteratorNormalCompletion8 = true;
+    var _didIteratorError8 = false;
+    var _iteratorError8 = undefined;
 
     try {
-      for (var _iterator6 = nodes[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-        var node = _step6.value;
+      for (var _iterator8 = nodes[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
+        var node = _step8.value;
         new Toast(node);
       }
     } catch (err) {
-      _didIteratorError6 = true;
-      _iteratorError6 = err;
+      _didIteratorError8 = true;
+      _iteratorError8 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion6 && _iterator6["return"] != null) {
-          _iterator6["return"]();
+        if (!_iteratorNormalCompletion8 && _iterator8["return"] != null) {
+          _iterator8["return"]();
         }
       } finally {
-        if (_didIteratorError6) {
-          throw _iteratorError6;
+        if (_didIteratorError8) {
+          throw _iteratorError8;
         }
       }
     }
@@ -2399,7 +2597,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     e.preventDefault();
     var element = dom.closest(e.currentTarget, '.toast');
     var toast = dom.hasData(element, 'toast') ? dom.getData(element, 'toast') : new Toast(element);
-    toast.hide();
+    toast.hide()["catch"](function (_) {});
   }); // Add Toast QuerySet method
 
   if (QuerySet) {
@@ -2530,10 +2728,16 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this25 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!_this25._tooltip || !DOM._triggerEvent(_this25._node, 'hide.frost.tooltip')) {
+          if (!_this25._tooltip) {
             return reject();
           }
 
+          if (!DOM._triggerEvent(_this25._node, 'hide.frost.tooltip')) {
+            return reject();
+          }
+
+          dom.setDataset(_this25._tooltip, 'animating', 'true');
+          dom.stop(_this25._tooltip);
           dom.fadeOut(_this25._tooltip, {
             duration: _this25._settings.duration
           }).then(function (_) {
@@ -2545,7 +2749,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             dom.triggerEvent(_this25._node, 'hidden.frost.tooltip');
             resolve();
           })["catch"](function (_) {
-            return reject();
+            dom.removeAttribute(_this25._tooltip, 'data-animating');
+            reject();
           });
         });
       }
@@ -2560,12 +2765,17 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this26 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this26._tooltip || !DOM._triggerEvent(_this26._node, 'show.frost.tooltip')) {
+          if (_this26._tooltip) {
+            return reject();
+          }
+
+          if (!DOM._triggerEvent(_this26._node, 'show.frost.tooltip')) {
             return reject();
           }
 
           _this26._render();
 
+          dom.setDataset(_this26._tooltip, 'animating', 'true');
           dom.addClass(_this26._tooltip, 'show');
           dom.fadeIn(_this26._tooltip, {
             duration: _this26._settings.duration
@@ -2574,6 +2784,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             resolve();
           })["catch"](function (_) {
             return reject();
+          })["finally"](function (_) {
+            return dom.removeAttribute(_this26._popover, 'data-animating');
           });
         });
       }
@@ -2630,26 +2842,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   dom.addEvent(window, 'load', function (_) {
     var nodes = dom.find('[data-toggle="tooltip"]');
-    var _iteratorNormalCompletion7 = true;
-    var _didIteratorError7 = false;
-    var _iteratorError7 = undefined;
+    var _iteratorNormalCompletion9 = true;
+    var _didIteratorError9 = false;
+    var _iteratorError9 = undefined;
 
     try {
-      for (var _iterator7 = nodes[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
-        var node = _step7.value;
+      for (var _iterator9 = nodes[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
+        var node = _step9.value;
         new Tooltip(node);
       }
     } catch (err) {
-      _didIteratorError7 = true;
-      _iteratorError7 = err;
+      _didIteratorError9 = true;
+      _iteratorError9 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion7 && _iterator7["return"] != null) {
-          _iterator7["return"]();
+        if (!_iteratorNormalCompletion9 && _iterator9["return"] != null) {
+          _iterator9["return"]();
         }
       } finally {
-        if (_didIteratorError7) {
-          throw _iteratorError7;
+        if (_didIteratorError9) {
+          throw _iteratorError9;
         }
       }
     }
@@ -2704,9 +2916,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           return;
         }
 
-        try {
-          _this27.hide();
-        } catch (e) {}
+        _this27.hide()["catch"](function (_) {});
       };
 
       this._hoverEvent = function (_) {
@@ -2714,11 +2924,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           return;
         }
 
-        try {
-          _this27.show();
-
-          dom.addEventOnce(_this27._node, 'mouseout.frost.tooltip', _this27._hideEvent);
-        } catch (e) {}
+        _this27.show().then(function (_) {
+          return dom.addEventOnce(_this27._node, 'mouseout.frost.tooltip', _this27._hideEvent);
+        })["catch"](function (_) {});
       };
 
       this._focusEvent = function (_) {
@@ -2726,11 +2934,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           return;
         }
 
-        try {
-          _this27.show();
-
-          dom.addEventOnce(_this27._node, 'blur.frost.tooltip', _this27._hideEvent);
-        } catch (e) {}
+        _this27.show().then(function (_) {
+          return dom.addEventOnce(_this27._node, 'blur.frost.tooltip', _this27._hideEvent);
+        })["catch"](function (_) {});
       };
 
       this._clickEvent = function (e) {
@@ -2740,9 +2946,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           return;
         }
 
-        try {
-          _this27.toggle();
-        } catch (e) {}
+        _this27.toggle()["catch"](function (_) {});
       };
 
       if (this._triggers.includes('hover')) {

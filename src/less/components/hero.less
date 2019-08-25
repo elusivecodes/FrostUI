@@ -1,10 +1,9 @@
 .mix-hero(@color) {
-    @background: lighten(@color, 2%);
-    background-color: @background;
-    .text-color(@background);
+    background-color: lighten(@color, 2%);
+    .text-color(@color);
 
     & .hero-link {
-        .text-color(@background);
+        .text-color(@color);
     }
 }
 

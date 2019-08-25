@@ -35,25 +35,25 @@ class Alert {
      */
     close() {
         return new Promise((resolve, reject) => {
+            if (dom.getDataset(this._node, 'animating') === 'true') {
+                return reject();
+            }
+
             if (!DOM._triggerEvent(this._node, 'close.frost.alert')) {
                 return reject();
             }
 
-            if (dom.hasClass(this._node, 'closing')) {
-                return reject();
-            }
+            dom.setDataset(this._node, 'animating', 'true');
 
-            dom.addClass(this._node, 'closing');
             dom.fadeOut(this._node, {
                 duration: this._settings.duration
             }).then(_ => {
                 dom.triggerEvent(this._node, 'closed.frost.alert');
                 dom.remove(this._node);
                 resolve();
-            }).catch(_ =>
-                reject()
-            ).finally(_ => {
-                this._animating = false;
+            }).catch(_ => {
+                dom.removeAttribute(this._node, 'data-animating');
+                reject();
             });
         });
     }

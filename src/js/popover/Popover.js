@@ -81,10 +81,17 @@ class Popover {
      */
     hide() {
         return new Promise((resolve, reject) => {
-            if (!this._popover || !DOM._triggerEvent(this._node, 'hide.frost.popover')) {
+            if (!this._popover) {
                 return reject();
             }
 
+            if (!DOM._triggerEvent(this._node, 'hide.frost.popover')) {
+                return reject();
+            }
+
+            dom.setDataset(this._popover, 'animating', 'true');
+
+            dom.stop(this._popover);
             dom.fadeOut(this._popover, {
                 duration: this._settings.duration
             }).then(_ => {
@@ -95,9 +102,10 @@ class Popover {
 
                 dom.triggerEvent(this._node, 'hidden.frost.popover');
                 resolve();
-            }).catch(_ =>
+            }).catch(_ => {
+                dom.removeAttribute(this._popover, 'data-animating');
                 reject()
-            );
+            });
         });
     }
 
@@ -107,11 +115,17 @@ class Popover {
      */
     show() {
         return new Promise((resolve, reject) => {
-            if (this._popover || !DOM._triggerEvent(this._node, 'show.frost.popover')) {
+            if (this._popover) {
+                return reject();
+            }
+
+            if (!DOM._triggerEvent(this._node, 'show.frost.popover')) {
                 return reject();
             }
 
             this._render();
+
+            dom.setDataset(this._popover, 'animating', 'true');
 
             dom.addClass(this._popover, 'show');
             dom.fadeIn(this._popover, {
@@ -121,6 +135,8 @@ class Popover {
                 resolve();
             }).catch(_ =>
                 reject()
+            ).finally(_ =>
+                dom.removeAttribute(this._popover, 'data-animating')
             );
         });
     }

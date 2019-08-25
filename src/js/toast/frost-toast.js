@@ -23,7 +23,7 @@ dom.addEventDelegate(document, 'click', '[data-dismiss="toast"]', e => {
         dom.getData(element, 'toast') :
         new Toast(element);
 
-    toast.hide();
+    toast.hide().catch(_ => { });
 });
 
 // Add Toast QuerySet method

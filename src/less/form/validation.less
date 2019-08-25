@@ -1,31 +1,47 @@
 .form-success {
-    & .form-label {
-        color: darken(@success, 5%);
+    & .input-group-text {
+        background-color: tint(lighten(@form-success, 25%), 75%);
+        border-color: @form-success;
+        color: @form-success;
     }
 
-    & .input-group-text {
-        background-color: @success;
-        border-color: darken(@success, 5%);
-        color: darken(@success, 25%);
+    & .form-input {
+        border-color: @form-success;
+    }
+
+    & .valid-feedback {
+        display: block;
     }
 }
 
-.form-success .form-input {
-    border-color: darken(@success, 5%);
+.valid-feedback {
+    display: none;
+    width: 100%;
+    margin-top: @spacing / 4;
+    font-size: 80%;
+    color: @form-success;
 }
 
 .form-error {
-    & .form-label {
-        color: darken(@danger, 5%);
+    & .input-group-text {
+        background-color: tint(lighten(@form-error, 25%), 75%);
+        border-color: @form-error;
+        color: @form-error;
     }
 
-    & .input-group-text {
-        background-color: @danger;
-        border-color: darken(@danger, 5%);
-        color: darken(@danger, 25%);
+    & .form-input {
+        border-color: @form-error;
+    }
+
+    & .invalid-feedback {
+        display: block;
     }
 }
 
-.form-error .form-input {
-    border-color: darken(@danger, 5%);
+.invalid-feedback {
+    display: none;
+    width: 100%;
+    margin-top: @spacing / 4;
+    font-size: 80%;
+    color: @form-error;
 }

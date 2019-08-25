@@ -20,8 +20,6 @@ class Modal {
 
         this._dialog = dom.child(this._node, '.modal-dialog');
 
-        this._visible = dom.isVisible(this._node);
-
         this._windowKeyDownEvent = e => {
             if (e.key !== 'Escape') {
                 return;
@@ -43,7 +41,7 @@ class Modal {
      * Destroy the Modal.
      */
     destroy() {
-        dom.stop([this._node, this._dialog, this._backdrop], true);
+        dom.stop([this._dialog, this._backdrop], true);
 
         if (this._settings.keyboard) {
             dom.removeEvent(window, 'keydown.frost.modal', this._windowKeyDownEvent);
@@ -58,11 +56,16 @@ class Modal {
      */
     hide() {
         return new Promise((resolve, reject) => {
-            if (!this._visible || this._animating || !DOM._triggerEvent(this._node, 'hide.frost.modal')) {
+            if (!dom.hasClass(this._node, 'show') || dom.getDataset(this._dialog, 'animating') === 'true') {
                 return reject();
             }
 
-            this._animating = true;
+            if (!DOM._triggerEvent(this._node, 'hide.frost.modal')) {
+                return reject();
+            }
+
+            dom.setDataset([this._dialog, this._backdrop], 'animating', 'true');
+
             dom.removeEvent(this._backdrop, 'click.frost.autocomplete');
             Promise.all([
                 dom.fadeOut(this._dialog, {
@@ -75,10 +78,9 @@ class Modal {
                     duration: this._settings.duration
                 })
             ]).then(_ => {
-                this._visible = false;
-
                 if (this._settings.backdrop) {
                     dom.remove(this._backdrop);
+                    this._backdrop = null;
                 }
 
                 if (this._settings.keyboard) {
@@ -91,9 +93,9 @@ class Modal {
                 resolve();
             }).catch(_ =>
                 reject()
-            ).finally(_ => {
-                this._animating = false;
-            });
+            ).finally(_ =>
+                dom.removeAttribute([this._dialog, this._backdrop], 'data-animating')
+            );
         });
     }
 
@@ -103,9 +105,18 @@ class Modal {
      */
     show() {
         return new Promise((resolve, reject) => {
-            if (this._visible || this._animating || !DOM._triggerEvent(this._node, 'show.frost.modal')) {
+            if (dom.hasClass(this._node, 'show') || dom.getDataset(this._dialog, 'animating') === 'true') {
                 return reject();
             }
+
+            if (!DOM._triggerEvent(this._node, 'show.frost.modal')) {
+                return reject();
+            }
+
+            dom.setDataset([this._dialog, this._backdrop], 'animating', 'true');
+
+            dom.addClass(this._node, 'show');
+            dom.addClass(document.body, 'modal-open');
 
             if (this._settings.backdrop) {
                 this._backdrop = dom.create('div', {
@@ -114,10 +125,6 @@ class Modal {
                 dom.append(document.body, this._backdrop);
             }
 
-            this._animating = true;
-            this._visible = true;
-            dom.addClass(this._node, 'show');
-            dom.addClass(document.body, 'modal-open');
             Promise.all([
                 dom.fadeIn(this._dialog, {
                     duration: this._settings.duration
@@ -129,8 +136,6 @@ class Modal {
                     duration: this._settings.duration
                 })
             ]).then(_ => {
-                this._animating = false;
-
                 if (this._settings.backdrop) {
                     dom.addEventOnce(this._backdrop, 'click.frost.modal', _ => this.hide());
                 }
@@ -147,9 +152,9 @@ class Modal {
                 resolve();
             }).catch(_ =>
                 reject()
-            ).finally(_ => {
-                this._animating = false;
-            });
+            ).finally(_ =>
+                dom.removeAttribute([this._dialog, this._backdrop], 'data-animating')
+            );
         });
     }
 
@@ -158,7 +163,7 @@ class Modal {
      * @returns {Promise} A new Promise that resolves when the animation has completed.
      */
     toggle() {
-        return this._visible ?
+        return dom.hasClass(this._node, 'show') ?
             this.hide() :
             this.show();
     }

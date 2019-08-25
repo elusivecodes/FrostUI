@@ -47,8 +47,6 @@ class Dropdown {
             }
         );
 
-        this._visible = dom.hasClass(this._containerNode, 'open');
-
         this._getDir = _ => dom.getDataset(this._referenceNode, 'placement');
 
         this._events();
@@ -77,11 +75,16 @@ class Dropdown {
      */
     hide() {
         return new Promise((resolve, reject) => {
-            if (!this._visible || this._animating || !DOM._triggerEvent(this._node, 'hide.frost.dropdown')) {
+            if (!dom.hasClass(this._containerNode, 'open') || dom.getDataset(this._menuNode, 'animating') === 'true') {
                 return reject();
             }
 
-            this._animating = true;
+            if (!DOM._triggerEvent(this._node, 'hide.frost.dropdown')) {
+                return reject();
+            }
+
+            dom.setDataset(this._menuNode, 'animating', 'true');
+
             dom.removeEvent(window, 'click.frost.dropdown', this._windowClickEvent);
             Promise.all([
                 dom.fadeOut(this._menuNode, {
@@ -92,15 +95,14 @@ class Dropdown {
                     duration: this._settings.duration
                 })
             ]).then(_ => {
-                this._visible = false;
                 dom.removeClass(this._containerNode, 'open');
                 dom.triggerEvent(this._node, 'hidden.frost.dropdown');
                 resolve();
             }).catch(_ =>
                 reject()
-            ).finally(_ => {
-                this._animating = false;
-            });
+            ).finally(_ =>
+                dom.removeAttribute(this._menuNode, 'data-animating')
+            );
         });
     }
 
@@ -110,12 +112,16 @@ class Dropdown {
      */
     show() {
         return new Promise((resolve, reject) => {
-            if (this._visible || this._animating || !DOM._triggerEvent(this._node, 'show.frost.dropdown')) {
+            if (dom.hasClass(this._containerNode, 'open') || dom.getDataset(this._menuNode, 'animating') === 'true') {
                 return reject();
             }
 
-            this._animating = true;
-            this._visible = true;
+            if (!DOM._triggerEvent(this._node, 'show.frost.dropdown')) {
+                return reject();
+            }
+
+            dom.setDataset(this._menuNode, 'animating', 'true');
+
             dom.addClass(this._containerNode, 'open');
             Promise.all([
                 dom.fadeIn(this._menuNode, {
@@ -131,9 +137,9 @@ class Dropdown {
                 resolve();
             }).catch(_ =>
                 reject()
-            ).finally(_ => {
-                this._animating = false;
-            });
+            ).finally(_ =>
+                dom.removeAttribute(this._menuNode, 'data-animating')
+            );
         });
     }
 
@@ -142,7 +148,7 @@ class Dropdown {
      * @returns {Promise} A new Promise that resolves when the animation has completed.
      */
     toggle() {
-        return this._visible ?
+        return dom.hasClass(this._containerNode, 'open') ?
             this.hide() :
             this.show();
     }

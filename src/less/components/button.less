@@ -21,6 +21,10 @@
     &.active {
         border-color: darken(@color, 20%);
         color: darken(@color, 20%);
+
+        &:hover {
+            background-color: darken(@color, 20%);
+        }
     }
 
     &:hover {
@@ -41,14 +45,17 @@
     -moz-user-select: none;
     user-select: none;
     font-size: 1rem;
-    line-height: 1.5;
+    line-height: @line-height;
+    background-color: transparent;
     border: @border-size @border-style @border-color;
     border-radius: @border-radius;
-    transition: color @transition-time @transition-type, background-color @transition-time @transition-type, box-shadow @transition-time @transition-type;
+    transition: color @transition-time @transition-type,
+        background-color @transition-time @transition-type,
+        box-shadow @transition-time @transition-type;
 
     &:disabled,
     &.disabled {
-        opacity: 0.5;
+        opacity: @disabled-opacity;
         pointer-events: none;
     }
 
@@ -77,6 +84,12 @@
     }
 }
 
+.btn-pill {
+    padding-left: @spacing;
+    padding-right: @spacing;
+    border-radius: @spacing * 25;
+}
+
 .btn-block {
     display: block;
     width: 100%;
@@ -86,11 +99,11 @@
     border: 0;
     border-radius: 0;
     color: @link;
-    box-shadow: none;
+    box-shadow: none !important;
 
     &:hover {
-        color: tint(@link, 25%);
         box-shadow: none;
+        text-decoration: underline;
     }
 }
 

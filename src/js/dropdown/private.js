@@ -11,7 +11,7 @@ Object.assign(Dropdown.prototype, {
         this._clickEvent = e => {
             e.preventDefault();
 
-            this.toggle();
+            this.toggle().catch(_ => { });
         };
 
         this._keyUpEvent = e => {
@@ -21,7 +21,7 @@ Object.assign(Dropdown.prototype, {
 
             e.preventDefault();
 
-            this.toggle();
+            this.toggle().catch(_ => { });
         };
 
         this._keyDownEvent = e => {

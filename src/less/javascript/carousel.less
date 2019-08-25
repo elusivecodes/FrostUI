@@ -44,9 +44,9 @@
         position: relative;
         -webkit-box-flex: 0;
         flex: 0 1 auto;
-        width: 1rem;
-        height: .25rem;
-        margin: 0 .25rem;
+        width: @spacing;
+        height: @spacing / 4;
+        margin: 0 (@spacing / 4);
         background-color: @white;
         border-radius: @border-radius;
         opacity: 0.5;
@@ -87,9 +87,9 @@
 }
 
 .carousel-prev-arrow::before {
-    content: '\2b9c';
+    content: @arrow-left;
 }
 
 .carousel-next-arrow::before {
-    content: '\2b9e';
+    content: @arrow-right;
 }

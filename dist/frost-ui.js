@@ -55,25 +55,25 @@
          */
         close() {
             return new Promise((resolve, reject) => {
+                if (dom.getDataset(this._node, 'animating') === 'true') {
+                    return reject();
+                }
+
                 if (!DOM._triggerEvent(this._node, 'close.frost.alert')) {
                     return reject();
                 }
 
-                if (dom.hasClass(this._node, 'closing')) {
-                    return reject();
-                }
+                dom.setDataset(this._node, 'animating', 'true');
 
-                dom.addClass(this._node, 'closing');
                 dom.fadeOut(this._node, {
                     duration: this._settings.duration
                 }).then(_ => {
                     dom.triggerEvent(this._node, 'closed.frost.alert');
                     dom.remove(this._node);
                     resolve();
-                }).catch(_ =>
-                    reject()
-                ).finally(_ => {
-                    this._animating = false;
+                }).catch(_ => {
+                    dom.removeAttribute(this._node, 'data-animating');
+                    reject();
                 });
             });
         }
@@ -99,6 +99,83 @@
     });
 
     UI.Alert = Alert;
+
+
+    /**
+     * Button Class
+     * @class
+     */
+    class Button {
+
+        /**
+         * New Button constructor.
+         * @param {HTMLElement} node The input node.
+         * @param {object} [settings] The options to create the Button with.
+         * @returns {Button} A new Button object.
+         */
+        constructor(node, settings) {
+            this._node = node;
+            this._settings = {
+                ...Button.defaults,
+                ...dom.getDataset(this._node),
+                ...settings
+            };
+
+            const group = dom.closest(this._node, '[data-toggle="buttons"]');
+            this._siblings = dom.find('.btn', group).filter(node => !dom.isSame(node, this._node));
+            this._input = dom.findOne('input[type="checkbox"], input[type="radio"]', this._node);
+
+            dom.setData(this._node, 'button', this);
+        }
+
+        /**
+         * Destroy the Button.
+         */
+        destroy() {
+            dom.removeData(this._node, 'button');
+        }
+
+        /**
+         * Toggle the Button.
+         */
+        toggle() {
+
+            if (!this._siblings.length) {
+                if (this._input) {
+                    dom.setProperty(this._input, 'checked', !dom.getProperty(this._input, 'checked'));
+                }
+                dom.toggleClass(this._node, 'active');
+                return;
+            }
+
+            if (dom.hasClass(this._node, 'active')) {
+                return;
+            }
+            dom.removeClass(this._siblings, 'active');
+            dom.addClass(this._node, 'active');
+            if (this._input) {
+                dom.setProperty(this._input, 'checked', true);
+            }
+        }
+
+    }
+
+
+    // Default Button options
+    Button.defaults = {};
+
+    // Trigger Button from data-toggle
+    dom.addEventDelegate(document, 'click', '[data-toggle="buttons"] > .btn, [data-toggle="button"]', e => {
+        e.preventDefault();
+
+        const button = dom.hasData(e.currentTarget, 'button') ?
+            dom.getData(e.currentTarget, 'button') :
+            new Button(e.currentTarget);
+
+        button.toggle();
+    });
+
+    UI.Button = Button;
 
 
     /**
@@ -493,7 +570,8 @@
                 ...settings
             };
 
-            this._events();
+            this._targets = dom.find(this._settings.target);
+            this._hasAccordion = this._targets.find(target => dom.getDataset(target, 'parent'));
 
             dom.setData(this._node, 'collapse', this);
         }
@@ -513,31 +591,31 @@
          */
         hide() {
             return new Promise((resolve, reject) => {
-                if (!DOM._triggerEvent(this._node, 'hide.frost.collapse')) {
-                    return reject();
-                }
-
-                const targets = dom.find(this._settings.target)
-                    .filter(target => dom.hasClass(target, 'show') && !dom.hasClass('collapsing'));
+                const targets = this._targets
+                    .filter(target => dom.hasClass(target, 'show') && dom.getDataset(target, 'animating') !== 'true');
 
                 if (!targets.length) {
                     return reject();
                 }
 
-                dom.addClass(targets, 'collapsing');
+                if (!DOM._triggerEvent(this._node, 'hide.frost.collapse')) {
+                    return reject();
+                }
+
+                dom.setDataset(targets, 'animating', 'true');
+
                 dom.squeezeOut(targets, {
                     direction: this._settings.direction,
                     duration: this._settings.duration
                 }).then(_ => {
-                    this._visible = false;
-                    dom.removeClass(targets, 'show collapsing');
+                    dom.removeClass(targets, 'show');
                     dom.triggerEvent(this._node, 'hidden.frost.collapse');
                     resolve();
                 }).catch(_ =>
                     reject()
-                ).finally(_ => {
-                    this._animating = false;
-                });
+                ).finally(_ =>
+                    dom.removeAttribute(targets, 'data-animating')
+                );
             });
         }
 
@@ -547,30 +625,35 @@
          */
         show() {
             return new Promise((resolve, reject) => {
-                if (!DOM._triggerEvent(this._node, 'show.frost.collapse')) {
-                    return reject();
-                }
-
-                const targets = dom.find(this._settings.target)
-                    .filter(target => !dom.hasClass(target, 'show') && !dom.hasClass(target, 'collapsing'));
+                const targets = this._targets
+                    .filter(target => dom.hasClass(target, 'show') && dom.getDataset(target, 'animating') !== 'true');
 
                 if (!targets.length) {
                     return reject();
                 }
 
-                dom.addClass(targets, 'show collapsing');
+                if (!DOM._triggerEvent(this._node, 'show.frost.collapse')) {
+                    return reject();
+                }
+
+                if (this._hasAccordion && !this._hideAccordion(targets)) {
+                    return reject();
+                }
+
+                dom.setDataset(targets, 'animating', 'true');
+
+                dom.addClass(targets, 'show');
                 dom.squeezeIn(targets, {
                     direction: this._settings.direction,
                     duration: this._settings.duration
                 }).then(_ => {
-                    dom.removeClass(targets, 'collapsing');
                     dom.triggerEvent(this._node, 'shown.frost.collapse');
                     resolve();
                 }).catch(_ =>
                     reject()
-                ).finally(_ => {
-                    this._animating = false;
-                });
+                ).finally(_ =>
+                    dom.removeAttribute(targets, 'data-animating')
+                );
             });
         }
 
@@ -580,21 +663,27 @@
          */
         toggle() {
             return new Promise((resolve, reject) => {
-                if (!DOM._triggerEvent(this._node, 'show.frost.collapse')) {
-                    return reject();
-                }
-
-                const targets = dom.find(this._settings.target)
-                    .filter(target => !dom.hasClass(target, 'collapsing'));
+                const targets = this._targets
+                    .filter(target => dom.getDataset(target, 'animating') !== 'true');
 
                 if (!targets.length) {
                     return reject();
                 }
 
-                dom.addClass(targets, 'collapsing');
+                if (!DOM._triggerEvent(this._node, 'show.frost.collapse')) {
+                    return reject();
+                }
 
                 const hidden = targets.filter(target => !dom.hasClass(target, 'show'));
+
+                if (this._hasAccordion && !this._hideAccordion(hidden)) {
+                    return reject();
+                }
+
                 const visible = targets.filter(target => dom.hasClass(target, 'show'));
+
+                dom.setDataset(targets, 'animating', 'true');
+
                 const animations = targets.map(target => {
                     const animation = dom.hasClass(target, 'show') ?
                         'squeezeOut' : 'squeezeIn';
@@ -606,17 +695,15 @@
                 });
 
                 dom.addClass(hidden, 'show')
-
                 Promise.all(animations).then(_ => {
                     dom.removeClass(visible, 'show');
-                    dom.removeClass(targets, 'collapsing');
                     dom.triggerEvent(this._node, 'shown.frost.collapse');
                     resolve();
                 }).catch(_ =>
                     reject()
-                ).finally(_ => {
-                    this._animating = false;
-                });
+                ).finally(_ =>
+                    dom.removeAttribute(targets, 'data-animating')
+                );
             });
         }
 
@@ -628,6 +715,17 @@
         direction: 'bottom',
         duration: 300
     };
+
+    // Trigger Collapse from data-toggle
+    dom.addEventDelegate(document, 'click', '[data-toggle="collapse"]', e => {
+        e.preventDefault();
+
+        const collapse = dom.hasData(e.currentTarget, 'collapse') ?
+            dom.getData(e.currentTarget, 'collapse') :
+            new Collapse(e.currentTarget);
+
+        collapse.toggle().catch(_ => { });
+    });
 
     // Auto-initialize Collapse from data-toggle
     dom.addEvent(window, 'load', _ => {
@@ -681,16 +779,48 @@
     Object.assign(Collapse.prototype, {
 
         /**
-         * Attach events for the Collapse.
+         * Hide accordion nodes for all targets.
+         * @param {array} targets The target nodes.
          */
-        _events() {
-            this._clickEvent = e => {
-                e.preventDefault();
+        _hideAccordion(targets) {
+            const parents = [];
+            const collapses = [];
 
-                this.toggle().catch(_ => { });
-            };
+            for (const target of targets) {
+                const parent = dom.getDataset(target, 'parent');
+                if (!parent) {
+                    continue;
+                }
 
-            dom.addEvent(this._node, 'click.frost.collapse', this._clickEvent);
+                const parentNode = dom.closest(target, parent);
+                if (!parents.includes(parentNode)) {
+                    parents.push(parentNode);
+                }
+            }
+
+            for (const parent of parents) {
+                const collapseToggle = dom.find('[data-toggle="collapse"]', parent);
+                for (const toggle of collapseToggle) {
+                    if (dom.isSame(this._node, toggle)) {
+                        continue;
+                    }
+
+                    const collapse = dom.getData(toggle, 'collapse');
+                    const targets = dom.find(collapse._settings.target);
+                    const animating = targets.find(target => dom.getDataset(target, 'animating') === 'true');
+                    if (animating) {
+                        return false;
+                    }
+
+                    collapses.push(collapse);
+                }
+            }
+
+            for (const collapse of collapses) {
+                collapse.hide().catch(_ => { });
+            }
+
+            return true;
         }
 
     });
@@ -745,8 +875,6 @@
                 }
             );
 
-            this._visible = dom.hasClass(this._containerNode, 'open');
-
             this._getDir = _ => dom.getDataset(this._referenceNode, 'placement');
 
             this._events();
@@ -775,11 +903,16 @@
          */
         hide() {
             return new Promise((resolve, reject) => {
-                if (!this._visible || this._animating || !DOM._triggerEvent(this._node, 'hide.frost.dropdown')) {
+                if (!dom.hasClass(this._containerNode, 'open') || dom.getDataset(this._menuNode, 'animating') === 'true') {
                     return reject();
                 }
 
-                this._animating = true;
+                if (!DOM._triggerEvent(this._node, 'hide.frost.dropdown')) {
+                    return reject();
+                }
+
+                dom.setDataset(this._menuNode, 'animating', 'true');
+
                 dom.removeEvent(window, 'click.frost.dropdown', this._windowClickEvent);
                 Promise.all([
                     dom.fadeOut(this._menuNode, {
@@ -790,15 +923,14 @@
                         duration: this._settings.duration
                     })
                 ]).then(_ => {
-                    this._visible = false;
                     dom.removeClass(this._containerNode, 'open');
                     dom.triggerEvent(this._node, 'hidden.frost.dropdown');
                     resolve();
                 }).catch(_ =>
                     reject()
-                ).finally(_ => {
-                    this._animating = false;
-                });
+                ).finally(_ =>
+                    dom.removeAttribute(this._menuNode, 'data-animating')
+                );
             });
         }
 
@@ -808,12 +940,16 @@
          */
         show() {
             return new Promise((resolve, reject) => {
-                if (this._visible || this._animating || !DOM._triggerEvent(this._node, 'show.frost.dropdown')) {
+                if (dom.hasClass(this._containerNode, 'open') || dom.getDataset(this._menuNode, 'animating') === 'true') {
                     return reject();
                 }
 
-                this._animating = true;
-                this._visible = true;
+                if (!DOM._triggerEvent(this._node, 'show.frost.dropdown')) {
+                    return reject();
+                }
+
+                dom.setDataset(this._menuNode, 'animating', 'true');
+
                 dom.addClass(this._containerNode, 'open');
                 Promise.all([
                     dom.fadeIn(this._menuNode, {
@@ -829,9 +965,9 @@
                     resolve();
                 }).catch(_ =>
                     reject()
-                ).finally(_ => {
-                    this._animating = false;
-                });
+                ).finally(_ =>
+                    dom.removeAttribute(this._menuNode, 'data-animating')
+                );
             });
         }
 
@@ -840,7 +976,7 @@
          * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         toggle() {
-            return this._visible ?
+            return dom.hasClass(this._containerNode, 'open') ?
                 this.hide() :
                 this.show();
         }
@@ -917,7 +1053,7 @@
             this._clickEvent = e => {
                 e.preventDefault();
 
-                this.toggle();
+                this.toggle().catch(_ => { });
             };
 
             this._keyUpEvent = e => {
@@ -927,7 +1063,7 @@
 
                 e.preventDefault();
 
-                this.toggle();
+                this.toggle().catch(_ => { });
             };
 
             this._keyDownEvent = e => {
@@ -992,8 +1128,6 @@
 
             this._dialog = dom.child(this._node, '.modal-dialog');
 
-            this._visible = dom.isVisible(this._node);
-
             this._windowKeyDownEvent = e => {
                 if (e.key !== 'Escape') {
                     return;
@@ -1015,7 +1149,7 @@
          * Destroy the Modal.
          */
         destroy() {
-            dom.stop([this._node, this._dialog, this._backdrop], true);
+            dom.stop([this._dialog, this._backdrop], true);
 
             if (this._settings.keyboard) {
                 dom.removeEvent(window, 'keydown.frost.modal', this._windowKeyDownEvent);
@@ -1030,11 +1164,16 @@
          */
         hide() {
             return new Promise((resolve, reject) => {
-                if (!this._visible || this._animating || !DOM._triggerEvent(this._node, 'hide.frost.modal')) {
+                if (!dom.hasClass(this._node, 'show') || dom.getDataset(this._dialog, 'animating') === 'true') {
                     return reject();
                 }
 
-                this._animating = true;
+                if (!DOM._triggerEvent(this._node, 'hide.frost.modal')) {
+                    return reject();
+                }
+
+                dom.setDataset([this._dialog, this._backdrop], 'animating', 'true');
+
                 dom.removeEvent(this._backdrop, 'click.frost.autocomplete');
                 Promise.all([
                     dom.fadeOut(this._dialog, {
@@ -1047,10 +1186,9 @@
                         duration: this._settings.duration
                     })
                 ]).then(_ => {
-                    this._visible = false;
-
                     if (this._settings.backdrop) {
                         dom.remove(this._backdrop);
+                        this._backdrop = null;
                     }
 
                     if (this._settings.keyboard) {
@@ -1063,9 +1201,9 @@
                     resolve();
                 }).catch(_ =>
                     reject()
-                ).finally(_ => {
-                    this._animating = false;
-                });
+                ).finally(_ =>
+                    dom.removeAttribute([this._dialog, this._backdrop], 'data-animating')
+                );
             });
         }
 
@@ -1075,9 +1213,18 @@
          */
         show() {
             return new Promise((resolve, reject) => {
-                if (this._visible || this._animating || !DOM._triggerEvent(this._node, 'show.frost.modal')) {
+                if (dom.hasClass(this._node, 'show') || dom.getDataset(this._dialog, 'animating') === 'true') {
                     return reject();
                 }
+
+                if (!DOM._triggerEvent(this._node, 'show.frost.modal')) {
+                    return reject();
+                }
+
+                dom.setDataset([this._dialog, this._backdrop], 'animating', 'true');
+
+                dom.addClass(this._node, 'show');
+                dom.addClass(document.body, 'modal-open');
 
                 if (this._settings.backdrop) {
                     this._backdrop = dom.create('div', {
@@ -1086,10 +1233,6 @@
                     dom.append(document.body, this._backdrop);
                 }
 
-                this._animating = true;
-                this._visible = true;
-                dom.addClass(this._node, 'show');
-                dom.addClass(document.body, 'modal-open');
                 Promise.all([
                     dom.fadeIn(this._dialog, {
                         duration: this._settings.duration
@@ -1101,8 +1244,6 @@
                         duration: this._settings.duration
                     })
                 ]).then(_ => {
-                    this._animating = false;
-
                     if (this._settings.backdrop) {
                         dom.addEventOnce(this._backdrop, 'click.frost.modal', _ => this.hide());
                     }
@@ -1119,9 +1260,9 @@
                     resolve();
                 }).catch(_ =>
                     reject()
-                ).finally(_ => {
-                    this._animating = false;
-                });
+                ).finally(_ =>
+                    dom.removeAttribute([this._dialog, this._backdrop], 'data-animating')
+                );
             });
         }
 
@@ -1130,7 +1271,7 @@
          * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         toggle() {
-            return this._visible ?
+            return dom.hasClass(this._node, 'show') ?
                 this.hide() :
                 this.show();
         }
@@ -1155,7 +1296,7 @@
         const element = dom.findOne(target);
 
         if (dom.hasData(element, 'modal')) {
-            dom.getData(element, 'modal').show();
+            dom.getData(element, 'modal').show().catch(_ => { });
         } else {
             new Modal(element);
         }
@@ -1170,7 +1311,7 @@
             dom.getData(element, 'modal') :
             new Modal(element);
 
-        modal.hide();
+        modal.hide().catch(_ => { });
     });
 
     // Add Modal QuerySet method
@@ -1292,10 +1433,17 @@
          */
         hide() {
             return new Promise((resolve, reject) => {
-                if (!this._popover || !DOM._triggerEvent(this._node, 'hide.frost.popover')) {
+                if (!this._popover) {
                     return reject();
                 }
 
+                if (!DOM._triggerEvent(this._node, 'hide.frost.popover')) {
+                    return reject();
+                }
+
+                dom.setDataset(this._popover, 'animating', 'true');
+
+                dom.stop(this._popover);
                 dom.fadeOut(this._popover, {
                     duration: this._settings.duration
                 }).then(_ => {
@@ -1306,9 +1454,10 @@
 
                     dom.triggerEvent(this._node, 'hidden.frost.popover');
                     resolve();
-                }).catch(_ =>
+                }).catch(_ => {
+                    dom.removeAttribute(this._popover, 'data-animating');
                     reject()
-                );
+                });
             });
         }
 
@@ -1318,11 +1467,17 @@
          */
         show() {
             return new Promise((resolve, reject) => {
-                if (this._popover || !DOM._triggerEvent(this._node, 'show.frost.popover')) {
+                if (this._popover) {
+                    return reject();
+                }
+
+                if (!DOM._triggerEvent(this._node, 'show.frost.popover')) {
                     return reject();
                 }
 
                 this._render();
+
+                dom.setDataset(this._popover, 'animating', 'true');
 
                 dom.addClass(this._popover, 'show');
                 dom.fadeIn(this._popover, {
@@ -1332,6 +1487,8 @@
                     resolve();
                 }).catch(_ =>
                     reject()
+                ).finally(_ =>
+                    dom.removeAttribute(this._popover, 'data-animating')
                 );
             });
         }
@@ -1442,9 +1599,7 @@
                     return;
                 }
 
-                try {
-                    this.hide();
-                } catch (e) { }
+                this.hide().catch(_ => { });
             };
 
             this._hoverEvent = _ => {
@@ -1452,11 +1607,11 @@
                     return;
                 }
 
-                try {
-                    this.show();
-
-                    dom.addEventOnce(this._node, 'mouseout.frost.popover', this._hideEvent);
-                } catch (e) { }
+                this.show()
+                    .then(_ =>
+                        dom.addEventOnce(this._node, 'mouseout.frost.popover', this._hideEvent)
+                    )
+                    .catch(_ => { });
             };
 
             this._focusEvent = _ => {
@@ -1464,11 +1619,11 @@
                     return;
                 }
 
-                try {
-                    this.show();
-
-                    dom.addEventOnce(this._node, 'blur.frost.popover', this._hideEvent);
-                } catch (e) { }
+                this.show()
+                    .then(_ =>
+                        dom.addEventOnce(this._node, 'blur.frost.popover', this._hideEvent)
+                    )
+                    .catch(_ => { });
             };
 
             this._clickEvent = e => {
@@ -1478,9 +1633,7 @@
                     return;
                 }
 
-                try {
-                    this.toggle();
-                } catch (e) { }
+                this.toggle().catch(_ => { });
             };
 
             if (this._triggers.includes('hover')) {
@@ -2042,11 +2195,16 @@
          */
         hide() {
             return new Promise((resolve, reject) => {
-                if (this._animating || !DOM._triggerEvent(this._node, 'hide.frost.tab')) {
+                if (!dom.hasClass(this._target, 'active') || dom.getDataset(this._node, 'animating') === 'true') {
                     return reject();
                 }
 
-                this._animating = true;
+                if (!DOM._triggerEvent(this._node, 'hide.frost.tab')) {
+                    return reject();
+                }
+
+                dom.setDataset(this._node, 'animating', 'true');
+
                 dom.fadeOut(this._target, {
                     duration: this._settings.duration
                 }).then(_ => {
@@ -2056,9 +2214,9 @@
                     resolve();
                 }).catch(_ =>
                     reject()
-                ).finally(_ => {
-                    this._animating = false;
-                });
+                ).finally(_ =>
+                    dom.removeAttribute(this._node, 'data-animating')
+                );
             });
         }
 
@@ -2068,13 +2226,18 @@
          */
         show() {
             return new Promise((resolve, reject) => {
-                const activeTab = dom.siblings(this._node, '.active').shift();
-
-                if (this._animating || !activeTab || !dom.hasData(activeTab, 'tab')) {
+                if (dom.hasClass(this._target, 'active') || dom.getDataset(this._node, 'animating') === 'true') {
                     return reject();
                 }
 
-                this._animating = true;
+                const activeTab = dom.siblings(this._node, '.active').shift();
+
+                if (!dom.hasData(activeTab, 'tab')) {
+                    return reject();
+                }
+
+                dom.setDataset(this._node, 'animating', 'true');
+
                 dom.getData(activeTab, 'tab').hide().then(_ => {
                     if (!DOM._triggerEvent(this._node, 'show.frost.tab')) {
                         return reject();
@@ -2090,9 +2253,9 @@
                     resolve();
                 }).catch(_ =>
                     reject()
-                ).finally(_ => {
-                    this._animating = false;
-                });
+                ).finally(_ =>
+                    dom.removeAttribute(this._node, 'data-animating')
+                );
             });
         }
 
@@ -2162,7 +2325,7 @@
             this._clickEvent = e => {
                 e.preventDefault();
 
-                this.show();
+                this.show().catch(_ => { });
             };
 
             dom.addEvent(this._node, 'click.frost.tab', this._clickEvent);
@@ -2191,14 +2354,10 @@
                 ...settings
             };
 
-            this._visible = dom.isVisible(this._node);
-
             if (this._settings.autohide) {
                 setTimeout(
                     _ => {
-                        try {
-                            this.hide();
-                        } catch (e) { }
+                        this.hide().catch(_ => { });
                     },
                     this._settings.delay
                 );
@@ -2221,23 +2380,27 @@
          */
         hide() {
             return new Promise((resolve, reject) => {
-                if (this._animating || !this._visible || !DOM._triggerEvent(this._node, 'hide.frost.toast')) {
+                if (!dom.isVisible(this._node) || dom.getDataset(this._node, 'animating') === 'true') {
                     return reject();
                 }
 
-                this._animating = true;
+                if (!DOM._triggerEvent(this._node, 'hide.frost.toast')) {
+                    return reject();
+                }
+
+                dom.setDataset(this._node, 'animating', 'true');
+
                 return dom.fadeOut(this._node, {
                     duration: this._settings.duration
                 }).then(_ => {
-                    this._visible = false;
                     dom.hide(this._node);
                     dom.triggerEvent(this._node, 'hidden.frost.toast');
                     resolve();
                 }).catch(_ =>
                     reject()
-                ).finally(_ => {
-                    this._animating = false;
-                });
+                ).finally(_ =>
+                    dom.removeAttribute(this._node, 'data-animating')
+                );
             });
         }
 
@@ -2247,12 +2410,16 @@
          */
         show() {
             return new Promise((resolve, reject) => {
-                if (this._animating || this._visible || !DOM._triggerEvent(this._node, 'show.frost.toast')) {
+                if (dom.isVisible(this._node) || dom.getDataset(this._node, 'animating') === 'true') {
                     return reject();
                 }
 
-                this._animating = true;
-                this._visible = true;
+                if (!DOM._triggerEvent(this._node, 'show.frost.toast')) {
+                    return reject();
+                }
+
+                dom.setDataset(this._node, 'animating', 'true');
+
                 dom.show(this._node);
                 return dom.fadeIn(this._node, {
                     duration: this._settings.duration
@@ -2261,9 +2428,9 @@
                     resolve();
                 }).catch(_ =>
                     reject()
-                ).finally(_ => {
-                    this._animating = false;
-                });
+                ).finally(_ =>
+                    dom.removeAttribute(this._node, 'data-animating')
+                );
             });
         }
 
@@ -2295,7 +2462,7 @@
             dom.getData(element, 'toast') :
             new Toast(element);
 
-        toast.hide();
+        toast.hide().catch(_ => { });
     });
 
     // Add Toast QuerySet method
@@ -2417,10 +2584,17 @@
          */
         hide() {
             return new Promise((resolve, reject) => {
-                if (!this._tooltip || !DOM._triggerEvent(this._node, 'hide.frost.tooltip')) {
+                if (!this._tooltip) {
                     return reject();
                 }
 
+                if (!DOM._triggerEvent(this._node, 'hide.frost.tooltip')) {
+                    return reject();
+                }
+
+                dom.setDataset(this._tooltip, 'animating', 'true');
+
+                dom.stop(this._tooltip);
                 dom.fadeOut(this._tooltip, {
                     duration: this._settings.duration
                 }).then(_ => {
@@ -2431,9 +2605,10 @@
 
                     dom.triggerEvent(this._node, 'hidden.frost.tooltip');
                     resolve();
-                }).catch(_ =>
-                    reject()
-                );
+                }).catch(_ => {
+                    dom.removeAttribute(this._tooltip, 'data-animating');
+                    reject();
+                });
             });
         }
 
@@ -2443,11 +2618,17 @@
          */
         show() {
             return new Promise((resolve, reject) => {
-                if (this._tooltip || !DOM._triggerEvent(this._node, 'show.frost.tooltip')) {
+                if (this._tooltip) {
+                    return reject();
+                }
+
+                if (!DOM._triggerEvent(this._node, 'show.frost.tooltip')) {
                     return reject();
                 }
 
                 this._render();
+
+                dom.setDataset(this._tooltip, 'animating', 'true');
 
                 dom.addClass(this._tooltip, 'show');
                 dom.fadeIn(this._tooltip, {
@@ -2457,6 +2638,8 @@
                     resolve();
                 }).catch(_ =>
                     reject()
+                ).finally(_ =>
+                    dom.removeAttribute(this._popover, 'data-animating')
                 );
             });
         }
@@ -2566,9 +2749,7 @@
                     return;
                 }
 
-                try {
-                    this.hide();
-                } catch (e) { }
+                this.hide().catch(_ => { });
             };
 
             this._hoverEvent = _ => {
@@ -2576,11 +2757,11 @@
                     return;
                 }
 
-                try {
-                    this.show();
-
-                    dom.addEventOnce(this._node, 'mouseout.frost.tooltip', this._hideEvent);
-                } catch (e) { }
+                this.show()
+                    .then(_ =>
+                        dom.addEventOnce(this._node, 'mouseout.frost.tooltip', this._hideEvent)
+                    )
+                    .catch(_ => { });
             };
 
             this._focusEvent = _ => {
@@ -2588,11 +2769,11 @@
                     return;
                 }
 
-                try {
-                    this.show();
-
-                    dom.addEventOnce(this._node, 'blur.frost.tooltip', this._hideEvent);
-                } catch (e) { }
+                this.show()
+                    .then(_ =>
+                        dom.addEventOnce(this._node, 'blur.frost.tooltip', this._hideEvent)
+                    )
+                    .catch(_ => { });
             };
 
             this._clickEvent = e => {
@@ -2602,9 +2783,7 @@
                     return;
                 }
 
-                try {
-                    this.toggle();
-                } catch (e) { }
+                this.toggle().catch(_ => { });
             };
 
             if (this._triggers.includes('hover')) {
