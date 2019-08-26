@@ -44,7 +44,7 @@ class Tab {
      */
     hide() {
         return new Promise((resolve, reject) => {
-            if (!dom.hasClass(this._target, 'active') || dom.getDataset(this._node, 'animating') === 'true') {
+            if (!dom.hasClass(this._target, 'active') || dom.getDataset(this._target, 'animating') === 'true') {
                 return reject();
             }
 
@@ -52,7 +52,7 @@ class Tab {
                 return reject();
             }
 
-            dom.setDataset(this._node, 'animating', 'true');
+            dom.setDataset(this._target, 'animating', 'true');
 
             dom.fadeOut(this._target, {
                 duration: this._settings.duration
@@ -64,7 +64,7 @@ class Tab {
             }).catch(_ =>
                 reject()
             ).finally(_ =>
-                dom.removeAttribute(this._node, 'data-animating')
+                dom.removeAttribute(this._target, 'data-animating')
             );
         });
     }
@@ -75,7 +75,7 @@ class Tab {
      */
     show() {
         return new Promise((resolve, reject) => {
-            if (dom.hasClass(this._target, 'active') || dom.getDataset(this._node, 'animating') === 'true') {
+            if (dom.hasClass(this._target, 'active') || dom.getDataset(this._target, 'animating') === 'true') {
                 return reject();
             }
 
@@ -85,7 +85,7 @@ class Tab {
                 return reject();
             }
 
-            dom.setDataset(this._node, 'animating', 'true');
+            dom.setDataset(this._target, 'animating', 'true');
 
             dom.getData(activeTab, 'tab').hide().then(_ => {
                 if (!DOM._triggerEvent(this._node, 'show.frost.tab')) {
@@ -103,7 +103,7 @@ class Tab {
             }).catch(_ =>
                 reject()
             ).finally(_ =>
-                dom.removeAttribute(this._node, 'data-animating')
+                dom.removeAttribute(this._target, 'data-animating')
             );
         });
     }

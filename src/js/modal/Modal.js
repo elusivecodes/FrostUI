@@ -18,7 +18,7 @@ class Modal {
             ...settings
         };
 
-        this._dialog = dom.child(this._node, '.modal-dialog');
+        this._dialog = dom.child(this._node, '.modal-dialog').shift();
 
         this._windowKeyDownEvent = e => {
             if (e.key !== 'Escape') {
@@ -113,17 +113,17 @@ class Modal {
                 return reject();
             }
 
-            dom.setDataset([this._dialog, this._backdrop], 'animating', 'true');
-
-            dom.addClass(this._node, 'show');
-            dom.addClass(document.body, 'modal-open');
-
             if (this._settings.backdrop) {
                 this._backdrop = dom.create('div', {
                     class: 'modal-backdrop'
                 });
                 dom.append(document.body, this._backdrop);
             }
+
+            dom.setDataset([this._dialog, this._backdrop], 'animating', 'true');
+
+            dom.addClass(this._node, 'show');
+            dom.addClass(document.body, 'modal-open');
 
             Promise.all([
                 dom.fadeIn(this._dialog, {

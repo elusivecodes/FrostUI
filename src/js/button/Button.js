@@ -36,7 +36,6 @@ class Button {
      * Toggle the Button.
      */
     toggle() {
-
         if (!this._siblings.length) {
             if (this._input) {
                 dom.setProperty(this._input, 'checked', !dom.getProperty(this._input, 'checked'));

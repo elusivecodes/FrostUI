@@ -1698,15 +1698,11 @@ ul.list-group {
 }
 .page-item.active .page-link {
   z-index: 1;
-  color: #fff;
-  background-color: steelblue;
-  border-color: steelblue;
+  background-color: #495561;
 }
 .page-item.disabled .page-link {
-  color: lightslategray;
+  opacity: 0.5;
   pointer-events: none;
-  cursor: auto;
-  background-color: #fff;
 }
 .page-item:first-child .page-link {
   margin-left: 0;
@@ -1723,14 +1719,14 @@ ul.list-group {
   padding: 0.5rem;
   margin-left: -1px;
   line-height: 1.25;
-  color: steelblue;
-  background-color: #fff;
+  background-color: lightslategray;
+  color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.2);
   transition: color 0.1s ease-in-out, background-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
 }
 .page-link:hover {
-  color: #1b3246;
-  background-color: whitesmoke;
+  background-color: #5f6e7e;
+  color: #fff;
   text-decoration: none;
   z-index: 2;
 }
@@ -2089,6 +2085,18 @@ input.form-input[type="file"] {
 .form-success .valid-feedback {
   display: block;
 }
+.form-success .form-check input:checked + .checkbox::before,
+.form-success .form-check input:checked + .radio::before,
+.form-success .form-radio input:checked + .checkbox::before,
+.form-success .form-radio input:checked + .radio::before,
+.form-success .form-switch input:checked + .slider {
+  background-color: forestgreen;
+}
+.form-success .form-check + label,
+.form-success .form-radio + label,
+.form-success .form-switch + label {
+  color: forestgreen;
+}
 .valid-feedback {
   display: none;
   width: 100%;
@@ -2106,6 +2114,18 @@ input.form-input[type="file"] {
 }
 .form-error .invalid-feedback {
   display: block;
+}
+.form-error .form-check input:checked + .checkbox::before,
+.form-error .form-check input:checked + .radio::before,
+.form-error .form-radio input:checked + .checkbox::before,
+.form-error .form-radio input:checked + .radio::before,
+.form-error .form-switch input:checked + .slider {
+  background-color: crimson;
+}
+.form-error .form-check + label,
+.form-error .form-radio + label,
+.form-error .form-switch + label {
+  color: crimson;
 }
 .invalid-feedback {
   display: none;
@@ -2376,6 +2396,10 @@ button.dropdown-item.active:hover,
 button.dropdown-item.active:focus,
 .dropdown-item.active[href]:focus {
   background-color: #3f75a2;
+}
+.dropdown-item.disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }
 .dropdown-header {
   display: block;

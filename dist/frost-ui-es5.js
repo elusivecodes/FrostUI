@@ -1246,7 +1246,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       this._node = node;
       this._settings = _objectSpread({}, Modal.defaults, {}, dom.getDataset(node), {}, settings);
-      this._dialog = dom.child(this._node, '.modal-dialog');
+      this._dialog = dom.child(this._node, '.modal-dialog').shift();
 
       this._windowKeyDownEvent = function (e) {
         if (e.key !== 'Escape') {
@@ -1347,10 +1347,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             return reject();
           }
 
-          dom.setDataset([_this15._dialog, _this15._backdrop], 'animating', 'true');
-          dom.addClass(_this15._node, 'show');
-          dom.addClass(document.body, 'modal-open');
-
           if (_this15._settings.backdrop) {
             _this15._backdrop = dom.create('div', {
               "class": 'modal-backdrop'
@@ -1358,6 +1354,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             dom.append(document.body, _this15._backdrop);
           }
 
+          dom.setDataset([_this15._dialog, _this15._backdrop], 'animating', 'true');
+          dom.addClass(_this15._node, 'show');
+          dom.addClass(document.body, 'modal-open');
           Promise.all([dom.fadeIn(_this15._dialog, {
             duration: _this15._settings.duration
           }), dom.dropIn(_this15._dialog, {
@@ -2292,7 +2291,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this19 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!dom.hasClass(_this19._target, 'active') || dom.getDataset(_this19._node, 'animating') === 'true') {
+          if (!dom.hasClass(_this19._target, 'active') || dom.getDataset(_this19._target, 'animating') === 'true') {
             return reject();
           }
 
@@ -2300,7 +2299,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             return reject();
           }
 
-          dom.setDataset(_this19._node, 'animating', 'true');
+          dom.setDataset(_this19._target, 'animating', 'true');
           dom.fadeOut(_this19._target, {
             duration: _this19._settings.duration
           }).then(function (_) {
@@ -2311,7 +2310,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeAttribute(_this19._node, 'data-animating');
+            return dom.removeAttribute(_this19._target, 'data-animating');
           });
         });
       }
@@ -2326,7 +2325,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this20 = this;
 
         return new Promise(function (resolve, reject) {
-          if (dom.hasClass(_this20._target, 'active') || dom.getDataset(_this20._node, 'animating') === 'true') {
+          if (dom.hasClass(_this20._target, 'active') || dom.getDataset(_this20._target, 'animating') === 'true') {
             return reject();
           }
 
@@ -2336,7 +2335,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             return reject();
           }
 
-          dom.setDataset(_this20._node, 'animating', 'true');
+          dom.setDataset(_this20._target, 'animating', 'true');
           dom.getData(activeTab, 'tab').hide().then(function (_) {
             if (!DOM._triggerEvent(_this20._node, 'show.frost.tab')) {
               return reject();
@@ -2353,7 +2352,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeAttribute(_this20._node, 'data-animating');
+            return dom.removeAttribute(_this20._target, 'data-animating');
           });
         });
       }

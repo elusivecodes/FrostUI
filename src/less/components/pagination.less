@@ -18,18 +18,15 @@
 }
 
 .page-item {
+
     &.active .page-link {
         z-index: 1;
-        color: @white;
-        background-color: @link;
-        border-color: @link;
+        background-color: darken(@secondary, 20%);
     }
 
     &.disabled .page-link {
-        color: @secondary;
+        opacity: @disabled-opacity;
         pointer-events: none;
-        cursor: auto;
-        background-color: @white;
     }
 
     &:first-child .page-link {
@@ -50,14 +47,14 @@
     padding: @spacing / 2;
     margin-left: -@border-size;
     line-height: 1.25;
-    color: @link;
-    background-color: @white;
+    background-color: @secondary;
+    .text-color(@secondary);
     border: @border-size @border-style @border-color;
     transition: color @transition-time @transition-type, background-color @transition-time @transition-type, box-shadow @transition-time @transition-type;
 
     &:hover {
-        color: darken(@link, 30%);
-        background-color: @light;
+        background-color: darken(@secondary, 10%);
+        .text-color(@secondary);
         text-decoration: none;
         z-index: @z-hover;
     }

@@ -139,7 +139,6 @@
          * Toggle the Button.
          */
         toggle() {
-
             if (!this._siblings.length) {
                 if (this._input) {
                     dom.setProperty(this._input, 'checked', !dom.getProperty(this._input, 'checked'));
@@ -1126,7 +1125,7 @@
                 ...settings
             };
 
-            this._dialog = dom.child(this._node, '.modal-dialog');
+            this._dialog = dom.child(this._node, '.modal-dialog').shift();
 
             this._windowKeyDownEvent = e => {
                 if (e.key !== 'Escape') {
@@ -1221,17 +1220,17 @@
                     return reject();
                 }
 
-                dom.setDataset([this._dialog, this._backdrop], 'animating', 'true');
-
-                dom.addClass(this._node, 'show');
-                dom.addClass(document.body, 'modal-open');
-
                 if (this._settings.backdrop) {
                     this._backdrop = dom.create('div', {
                         class: 'modal-backdrop'
                     });
                     dom.append(document.body, this._backdrop);
                 }
+
+                dom.setDataset([this._dialog, this._backdrop], 'animating', 'true');
+
+                dom.addClass(this._node, 'show');
+                dom.addClass(document.body, 'modal-open');
 
                 Promise.all([
                     dom.fadeIn(this._dialog, {
@@ -2195,7 +2194,7 @@
          */
         hide() {
             return new Promise((resolve, reject) => {
-                if (!dom.hasClass(this._target, 'active') || dom.getDataset(this._node, 'animating') === 'true') {
+                if (!dom.hasClass(this._target, 'active') || dom.getDataset(this._target, 'animating') === 'true') {
                     return reject();
                 }
 
@@ -2203,7 +2202,7 @@
                     return reject();
                 }
 
-                dom.setDataset(this._node, 'animating', 'true');
+                dom.setDataset(this._target, 'animating', 'true');
 
                 dom.fadeOut(this._target, {
                     duration: this._settings.duration
@@ -2215,7 +2214,7 @@
                 }).catch(_ =>
                     reject()
                 ).finally(_ =>
-                    dom.removeAttribute(this._node, 'data-animating')
+                    dom.removeAttribute(this._target, 'data-animating')
                 );
             });
         }
@@ -2226,7 +2225,7 @@
          */
         show() {
             return new Promise((resolve, reject) => {
-                if (dom.hasClass(this._target, 'active') || dom.getDataset(this._node, 'animating') === 'true') {
+                if (dom.hasClass(this._target, 'active') || dom.getDataset(this._target, 'animating') === 'true') {
                     return reject();
                 }
 
@@ -2236,7 +2235,7 @@
                     return reject();
                 }
 
-                dom.setDataset(this._node, 'animating', 'true');
+                dom.setDataset(this._target, 'animating', 'true');
 
                 dom.getData(activeTab, 'tab').hide().then(_ => {
                     if (!DOM._triggerEvent(this._node, 'show.frost.tab')) {
@@ -2254,7 +2253,7 @@
                 }).catch(_ =>
                     reject()
                 ).finally(_ =>
-                    dom.removeAttribute(this._node, 'data-animating')
+                    dom.removeAttribute(this._target, 'data-animating')
                 );
             });
         }
