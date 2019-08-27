@@ -1247,9 +1247,16 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this._node = node;
       this._settings = _objectSpread({}, Modal.defaults, {}, dom.getDataset(node), {}, settings);
       this._dialog = dom.child(this._node, '.modal-dialog').shift();
-      dom.addEvent(this._dialog, 'click.frost.modal', function (e) {
+
+      this._dialogClickEvent = function (e) {
+        if (dom.is(e.target, '[data-dismiss="modal"]') || dom.closest(e.target, '[data-dismiss="modal"]').length) {
+          return;
+        }
+
         e.stopPropagation();
-      });
+      };
+
+      dom.addEvent(this._dialog, 'click.frost.modal', this._dialogClickEvent);
 
       this._windowKeyDownEvent = function (e) {
         if (e.key !== 'Escape') {
@@ -1281,6 +1288,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           dom.removeEvent(window, 'keydown.frost.modal', this._windowKeyDownEvent);
         }
 
+        dom.removeEvent(this._dialog, 'click.frost.modal', this._dialogClickEvent);
         dom.removeData(this._node, 'modal');
       }
       /**

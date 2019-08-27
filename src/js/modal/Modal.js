@@ -20,9 +20,15 @@ class Modal {
 
         this._dialog = dom.child(this._node, '.modal-dialog').shift();
 
-        dom.addEvent(this._dialog, 'click.frost.modal', e => {
+        this._dialogClickEvent = e => {
+            if (dom.is(e.target, '[data-dismiss="modal"]') || dom.closest(e.target, '[data-dismiss="modal"]').length) {
+                return;
+            }
+
             e.stopPropagation();
-        });
+        };
+
+        dom.addEvent(this._dialog, 'click.frost.modal', this._dialogClickEvent);
 
         this._windowKeyDownEvent = e => {
             if (e.key !== 'Escape') {
@@ -50,6 +56,8 @@ class Modal {
         if (this._settings.keyboard) {
             dom.removeEvent(window, 'keydown.frost.modal', this._windowKeyDownEvent);
         }
+
+        dom.removeEvent(this._dialog, 'click.frost.modal', this._dialogClickEvent);
 
         dom.removeData(this._node, 'modal');
     }
