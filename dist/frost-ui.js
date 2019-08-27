@@ -1127,6 +1127,10 @@
 
             this._dialog = dom.child(this._node, '.modal-dialog').shift();
 
+            dom.addEvent(this._dialog, 'click.frost.modal', e => {
+                e.stopPropagation();
+            });
+
             this._windowKeyDownEvent = e => {
                 if (e.key !== 'Escape') {
                     return;
@@ -1244,7 +1248,9 @@
                     })
                 ]).then(_ => {
                     if (this._settings.backdrop) {
-                        dom.addEventOnce(this._backdrop, 'click.frost.modal', _ => this.hide());
+                        dom.addEventOnce(document.body, 'click.frost.modal', _ => {
+                            this.hide();
+                        });
                     }
 
                     if (this._settings.keyboard) {
@@ -1594,10 +1600,11 @@
          */
         _events() {
             this._hideEvent = _ => {
-                if (!this._enabled) {
+                if (!this._enabled || !this._popover) {
                     return;
                 }
 
+                dom.stop(this._popover);
                 this.hide().catch(_ => { });
             };
 
@@ -1606,11 +1613,8 @@
                     return;
                 }
 
-                this.show()
-                    .then(_ =>
-                        dom.addEventOnce(this._node, 'mouseout.frost.popover', this._hideEvent)
-                    )
-                    .catch(_ => { });
+                dom.addEventOnce(this._node, 'mouseout.frost.popover', this._hideEvent);
+                this.show().catch(_ => { });
             };
 
             this._focusEvent = _ => {
@@ -1618,11 +1622,8 @@
                     return;
                 }
 
-                this.show()
-                    .then(_ =>
-                        dom.addEventOnce(this._node, 'blur.frost.popover', this._hideEvent)
-                    )
-                    .catch(_ => { });
+                dom.addEventOnce(this._node, 'blur.frost.popover', this._hideEvent);
+                this.show().catch(_ => { });
             };
 
             this._clickEvent = e => {
@@ -2633,7 +2634,7 @@
                 dom.fadeIn(this._tooltip, {
                     duration: this._settings.duration
                 }).then(_ => {
-                    dom.triggerEvent(this._node, 'shown.frost.tooltip')
+                    dom.triggerEvent(this._node, 'shown.frost.tooltip');
                     resolve();
                 }).catch(_ =>
                     reject()
@@ -2744,10 +2745,11 @@
          */
         _events() {
             this._hideEvent = _ => {
-                if (!this._enabled) {
+                if (!this._enabled || !this._tooltip) {
                     return;
                 }
 
+                dom.stop(this._tooltip);
                 this.hide().catch(_ => { });
             };
 
@@ -2756,11 +2758,8 @@
                     return;
                 }
 
-                this.show()
-                    .then(_ =>
-                        dom.addEventOnce(this._node, 'mouseout.frost.tooltip', this._hideEvent)
-                    )
-                    .catch(_ => { });
+                dom.addEventOnce(this._node, 'mouseout.frost.tooltip', this._hideEvent);
+                this.show().catch(_ => { });
             };
 
             this._focusEvent = _ => {
@@ -2768,11 +2767,8 @@
                     return;
                 }
 
-                this.show()
-                    .then(_ =>
-                        dom.addEventOnce(this._node, 'blur.frost.tooltip', this._hideEvent)
-                    )
-                    .catch(_ => { });
+                dom.addEventOnce(this._node, 'blur.frost.tooltip', this._hideEvent)
+                this.show().catch(_ => { });
             };
 
             this._clickEvent = e => {

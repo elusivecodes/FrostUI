@@ -1,20 +1,24 @@
-[data-toggle="dropdown"]::after {
+.dropdown-toggle::after {
     margin-left: .5rem;
     content: @arrow-down;
 }
 
-[data-placement="top"] [data-toggle="dropdown"]::after,
-[data-placement="top"][data-toggle="dropdown"]::after {
+.dropdown-toggle-split::after {
+    margin-left: 0;
+}
+
+[data-placement="top"] .dropdown-toggle::after,
+[data-placement="top"].dropdown-toggle::after {
     content: @arrow-up;
 }
 
-[data-placement="right"] [data-toggle="dropdown"]::after,
-[data-placement="right"][data-toggle="dropdown"]::after {
+[data-placement="right"] .dropdown-toggle::after,
+[data-placement="right"].dropdown-toggle::after {
     content: @arrow-right;
 }
 
-[data-placement="left"] [data-toggle="dropdown"]::after,
-[data-placement="left"][data-toggle="dropdown"]::after {
+[data-placement="left"] .dropdown-toggle::after,
+[data-placement="left"].dropdown-toggle::after {
     content: @arrow-left;
 }
 

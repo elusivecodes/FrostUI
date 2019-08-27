@@ -14,23 +14,6 @@
     margin-left: -@gutter;
 }
 
-.col {
-    flex-basis: 0;
-    flex-grow: 1;
-    max-width: 100%;
-}
-
-.no-gutters {
-    margin-right: 0;
-    margin-left: 0;
-
-    > .col,
-    > [class*="col-"] {
-        padding-right: 0;
-        padding-left: 0;
-    }
-}
-
 @media (min-width: @break-xs) {
     .container {
         max-width: 540px;

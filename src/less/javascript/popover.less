@@ -47,14 +47,14 @@
         bottom: 0;
 
         &::before {
-            top: 1px;
-            border-width: .5rem .5rem 0;
+            top: @border-size;
+            border-width: (@spacing / 2) (@spacing / 2) 0;
             border-top-color: @border-color;
         }
 
         &::after {
             top: 0;
-            border-width: .5rem .5rem 0;
+            border-width: (@spacing / 2) (@spacing / 2) 0;
             border-top-color: @white;
         }
     }
@@ -63,14 +63,14 @@
         left: 0;
 
         &::before {
-            right: 1px;
-            border-width: .5rem .5rem .5rem 0;
+            right: @border-size;
+            border-width: (@spacing / 2) (@spacing / 2) (@spacing / 2) 0;
             border-right-color: @border-color;
         }
 
         &::after {
             right: 0;
-            border-width: .5rem .5rem .5rem 0;
+            border-width: (@spacing / 2) (@spacing / 2) (@spacing / 2) 0;
             border-right-color: @white;
         }
     }
@@ -79,14 +79,14 @@
         top: 0;
 
         &::before {
-            bottom: 1px;
-            border-width: 0 .5rem .5rem;
+            bottom: @border-size;
+            border-width: 0 (@spacing / 2) (@spacing / 2);
             border-bottom-color: @border-color;
         }
 
         &::after {
             bottom: 0;
-            border-width: 0 .5rem .5rem;
+            border-width: 0 (@spacing / 2) (@spacing / 2);
             border-bottom-color: @white;
         }
     }
@@ -95,14 +95,14 @@
         right: 0;
 
         &::before {
-            left: 0;
-            border-width: .5rem 0 .5rem .5rem;
+            left: @border-size;
+            border-width: (@spacing / 2) 0 (@spacing / 2) (@spacing / 2);
             border-left-color: @border-color;
         }
 
         &::after {
-            left: 1px;
-            border-width: .5rem 0 .5rem .5rem;
+            left: 0;
+            border-width: (@spacing / 2) 0 (@spacing / 2) (@spacing / 2);
             border-left-color: @white;
         }
     }

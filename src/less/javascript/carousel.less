@@ -27,18 +27,30 @@
     }
 }
 
+.carousel-caption {
+    position: absolute;
+    right: 15%;
+    bottom: @spacing * 2;
+    left: 15%;
+    z-index: 10;
+    padding-top: @spacing;
+    padding-bottom: @spacing;
+    color: @white;
+    text-align: center;
+}
+
 .carousel-indicators {
+    display: -webkit-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 0;
     list-style-type: none;
     position: absolute;
     right: 0;
     left: 0;
     bottom: 1rem;
     z-index: 15;
-
-    display: -webkit-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
     & li {
         position: relative;

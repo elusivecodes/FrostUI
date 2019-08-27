@@ -9,10 +9,11 @@ Object.assign(Popover.prototype, {
      */
     _events() {
         this._hideEvent = _ => {
-            if (!this._enabled) {
+            if (!this._enabled || !this._popover) {
                 return;
             }
 
+            dom.stop(this._popover);
             this.hide().catch(_ => { });
         };
 
@@ -21,11 +22,8 @@ Object.assign(Popover.prototype, {
                 return;
             }
 
-            this.show()
-                .then(_ =>
-                    dom.addEventOnce(this._node, 'mouseout.frost.popover', this._hideEvent)
-                )
-                .catch(_ => { });
+            dom.addEventOnce(this._node, 'mouseout.frost.popover', this._hideEvent);
+            this.show().catch(_ => { });
         };
 
         this._focusEvent = _ => {
@@ -33,11 +31,8 @@ Object.assign(Popover.prototype, {
                 return;
             }
 
-            this.show()
-                .then(_ =>
-                    dom.addEventOnce(this._node, 'blur.frost.popover', this._hideEvent)
-                )
-                .catch(_ => { });
+            dom.addEventOnce(this._node, 'blur.frost.popover', this._hideEvent);
+            this.show().catch(_ => { });
         };
 
         this._clickEvent = e => {

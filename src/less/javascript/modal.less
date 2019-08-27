@@ -1,5 +1,10 @@
-body.modal-open {
+.modal-open {
     overflow: hidden;
+
+    & .modal {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
 }
 
 .modal,
@@ -19,7 +24,7 @@ body.modal-open {
 .modal {
     z-index: @z-modal;
     display: none;
-    pointer-events: none;
+    overflow: hidden;
 
     &.show {
         display: block;
@@ -31,6 +36,7 @@ body.modal-open {
     width: auto;
     margin: (@spacing / 2) auto;
     max-width: 500px;
+    pointer-events: none;
 
     &.modal-sm {
         max-width: 300px;
@@ -71,6 +77,8 @@ body.modal-open {
 }
 
 .modal-content {
+    display: flex;
+    flex-direction: column;
     position: relative;
     width: 100%;
     pointer-events: auto;
@@ -107,7 +115,7 @@ body.modal-open {
     }
 
     .modal-dialog-scrollable .modal-content {
-        max-height: calc(100vh - (@spacing * 3));
+        max-height: calc(100vh - (@spacing * 5));
     }
 
     .modal-dialog-centered {

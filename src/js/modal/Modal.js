@@ -20,6 +20,10 @@ class Modal {
 
         this._dialog = dom.child(this._node, '.modal-dialog').shift();
 
+        dom.addEvent(this._dialog, 'click.frost.modal', e => {
+            e.stopPropagation();
+        });
+
         this._windowKeyDownEvent = e => {
             if (e.key !== 'Escape') {
                 return;
@@ -137,7 +141,9 @@ class Modal {
                 })
             ]).then(_ => {
                 if (this._settings.backdrop) {
-                    dom.addEventOnce(this._backdrop, 'click.frost.modal', _ => this.hide());
+                    dom.addEventOnce(document.body, 'click.frost.modal', _ => {
+                        this.hide();
+                    });
                 }
 
                 if (this._settings.keyboard) {

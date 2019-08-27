@@ -1247,6 +1247,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this._node = node;
       this._settings = _objectSpread({}, Modal.defaults, {}, dom.getDataset(node), {}, settings);
       this._dialog = dom.child(this._node, '.modal-dialog').shift();
+      dom.addEvent(this._dialog, 'click.frost.modal', function (e) {
+        e.stopPropagation();
+      });
 
       this._windowKeyDownEvent = function (e) {
         if (e.key !== 'Escape') {
@@ -1365,8 +1368,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             duration: _this15._settings.duration
           })]).then(function (_) {
             if (_this15._settings.backdrop) {
-              dom.addEventOnce(_this15._backdrop, 'click.frost.modal', function (_) {
-                return _this15.hide();
+              dom.addEventOnce(document.body, 'click.frost.modal', function (_) {
+                _this15.hide();
               });
             }
 
@@ -1743,9 +1746,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       var _this18 = this;
 
       this._hideEvent = function (_) {
-        if (!_this18._enabled) {
+        if (!_this18._enabled || !_this18._popover) {
           return;
         }
+
+        dom.stop(_this18._popover);
 
         _this18.hide()["catch"](function (_) {});
       };
@@ -1755,9 +1760,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           return;
         }
 
-        _this18.show().then(function (_) {
-          return dom.addEventOnce(_this18._node, 'mouseout.frost.popover', _this18._hideEvent);
-        })["catch"](function (_) {});
+        dom.addEventOnce(_this18._node, 'mouseout.frost.popover', _this18._hideEvent);
+
+        _this18.show()["catch"](function (_) {});
       };
 
       this._focusEvent = function (_) {
@@ -1765,9 +1770,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           return;
         }
 
-        _this18.show().then(function (_) {
-          return dom.addEventOnce(_this18._node, 'blur.frost.popover', _this18._hideEvent);
-        })["catch"](function (_) {});
+        dom.addEventOnce(_this18._node, 'blur.frost.popover', _this18._hideEvent);
+
+        _this18.show()["catch"](function (_) {});
       };
 
       this._clickEvent = function (e) {
@@ -2911,9 +2916,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       var _this27 = this;
 
       this._hideEvent = function (_) {
-        if (!_this27._enabled) {
+        if (!_this27._enabled || !_this27._tooltip) {
           return;
         }
+
+        dom.stop(_this27._tooltip);
 
         _this27.hide()["catch"](function (_) {});
       };
@@ -2923,9 +2930,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           return;
         }
 
-        _this27.show().then(function (_) {
-          return dom.addEventOnce(_this27._node, 'mouseout.frost.tooltip', _this27._hideEvent);
-        })["catch"](function (_) {});
+        dom.addEventOnce(_this27._node, 'mouseout.frost.tooltip', _this27._hideEvent);
+
+        _this27.show()["catch"](function (_) {});
       };
 
       this._focusEvent = function (_) {
@@ -2933,9 +2940,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           return;
         }
 
-        _this27.show().then(function (_) {
-          return dom.addEventOnce(_this27._node, 'blur.frost.tooltip', _this27._hideEvent);
-        })["catch"](function (_) {});
+        dom.addEventOnce(_this27._node, 'blur.frost.tooltip', _this27._hideEvent);
+
+        _this27.show()["catch"](function (_) {});
       };
 
       this._clickEvent = function (e) {

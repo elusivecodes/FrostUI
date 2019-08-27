@@ -131,7 +131,7 @@ class Tooltip {
             dom.fadeIn(this._tooltip, {
                 duration: this._settings.duration
             }).then(_ => {
-                dom.triggerEvent(this._node, 'shown.frost.tooltip')
+                dom.triggerEvent(this._node, 'shown.frost.tooltip');
                 resolve();
             }).catch(_ =>
                 reject()

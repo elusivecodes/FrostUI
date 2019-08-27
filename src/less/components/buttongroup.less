@@ -13,15 +13,13 @@
             margin-left: -@border-size;
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
+            border-left: 0;
         }
 
         &:not(:last-child):not(.dropdown-toggle) {
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
-        }
-
-        &.dropdown-toggle::after {
-            margin-left: 0;
+            border-right: 0;
         }
     }
 }
@@ -47,11 +45,13 @@
             margin-top: -@border-size;
             border-top-right-radius: 0;
             border-top-left-radius: 0;
+            border-top: 0;
         }
 
         &:not(:last-child):not(.dropdown-toggle) {
             border-bottom-right-radius: 0;
             border-bottom-left-radius: 0;
+            border-bottom: 0;
         }
     }
 }
