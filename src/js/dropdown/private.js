@@ -59,6 +59,9 @@ Object.assign(Dropdown.prototype, {
         dom.addEvent(this._node, 'keyup.frost.dropdown', this._keyUpEvent);
         dom.addEvent(this._node, 'keydown.frost.dropdown', this._keyDownEvent);
         dom.addEventDelegate(this._menuNode, 'keydown.frost.dropdown', '.dropdown-item', this._menuKeyDownEvent);
+        dom.addEvent(this._menuNode, 'click.frost.dropdown', e => {
+            e.stopPropagation();
+        });
     }
 
 });

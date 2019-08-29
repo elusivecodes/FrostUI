@@ -191,13 +191,7 @@ class Carousel {
      * @returns {Promise} A new Promise that resolves when the animation has completed.
      */
     slide(direction = 1) {
-        if (this._sliding) {
-            return this._queue.push({
-                direction
-            });
-        }
-
-        return this.show(this._index + direction)
+        return this.show(this._index + direction);
     }
 
 }

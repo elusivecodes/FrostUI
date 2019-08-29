@@ -23,6 +23,9 @@ class Popper {
             ...settings
         };
 
+        this._relativeParent = dom.closest(this._node, parent => dom.css(parent, 'position') === 'relative', document.body).shift();
+        console.log(this._relativeParent);
+
         const wrapper = dom.create('div', {
             style: {
                 position: 'absolute',
@@ -107,6 +110,12 @@ class Popper {
         // calculate actual offset
         let offsetY = Math.round(referenceBox.y);
         let offsetX = Math.round(referenceBox.x);
+
+        if (this._relativeParent) {
+            const relativeParentBox = dom.rect(this._relativeParent, !this._fixed);
+            offsetY -= Math.round(relativeParentBox.y);
+            offsetX -= Math.round(relativeParentBox.x);
+        }
 
         if (placement === 'top') {
             offsetY -= Math.round(nodeBox.height) + this._settings.spacing;
@@ -198,7 +207,7 @@ class Popper {
             } else {
                 arrowStyles[placement === 'right' ? 'left' : 'right'] = -arrowBox.width;
                 const diff = (referenceBox.height - nodeBox.height) / 2;
-                let offset = (nodeBox.height / 2) - (arrowBox.height);
+                let offset = (nodeBox.height / 2) - arrowBox.height;
                 if (position === 'start') {
                     offset += diff;
                 } else if (position === 'end') {

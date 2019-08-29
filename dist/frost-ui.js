@@ -370,13 +370,7 @@
          * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         slide(direction = 1) {
-            if (this._sliding) {
-                return this._queue.push({
-                    direction
-                });
-            }
-
-            return this.show(this._index + direction)
+            return this.show(this._index + direction);
         }
 
     }
@@ -478,17 +472,13 @@
             this._clickNextEvent = e => {
                 e.preventDefault();
 
-                try {
-                    this.next();
-                } catch (e) { }
+                this.next().catch(_ => { });
             };
 
             this._clickPrevEvent = e => {
                 e.preventDefault();
 
-                try {
-                    this.prev();
-                } catch (e) { }
+                this.prev().catch(_ => { });
             };
 
             this._clickSlideEvent = e => {
@@ -496,9 +486,7 @@
 
                 const slideTo = dom.getDataset(e.currentTarget, 'slideTo');
 
-                try {
-                    this.show(slideTo);
-                } catch (e) { }
+                this.show(slideTo).catch(_ => { });
             };
 
             this._keyDownEvent = e => {
@@ -510,9 +498,9 @@
 
                 try {
                     if (e.key === 'ArrowLeft') {
-                        this.prev();
+                        this.prev().catch(_ => { });
                     } else if (e.key === 'ArrowRight') {
-                        this.next();
+                        this.next().catch(_ => { });
                     }
                 } catch (e) { }
             };
@@ -539,11 +527,12 @@
          * Set a timer for the next Carousel cycle.
          */
         _setTimer() {
+            const interval = dom.getDataset(this._items[this._index], 'interval');
             this._timer = setTimeout(_ => {
                 try {
                     this.cycle();
                 } catch (e) { }
-            }, this._settings.interval);
+            }, interval ? interval : this._settings.interval);
         }
 
     });
@@ -861,20 +850,23 @@
             }
 
             // Attach popper
-            this._popper = new Popper(
-                this._menuNode,
-                this._referenceNode,
-                {
-                    placement: this._settings.placement,
-                    position: this._settings.position,
-                    fixed: this._settings.fixed,
-                    spacing: this._settings.spacing,
-                    width: this._settings.width,
-                    zIndex: this._settings.zIndex
-                }
-            );
-
-            this._getDir = _ => dom.getDataset(this._referenceNode, 'placement');
+            if (!dom.closest(this._node, '.navbar-nav').length) {
+                this._popper = new Popper(
+                    this._menuNode,
+                    this._referenceNode,
+                    {
+                        placement: this._settings.placement,
+                        position: this._settings.position,
+                        fixed: this._settings.fixed,
+                        spacing: this._settings.spacing,
+                        width: this._settings.width,
+                        zIndex: this._settings.zIndex
+                    }
+                );
+                this._getDir = _ => dom.getDataset(this._referenceNode, 'placement');
+            } else {
+                this._getDir = this._settings.placement;
+            }
 
             this._events();
 
@@ -888,7 +880,7 @@
             dom.stop(this._menuNode, true);
             this._popper.destroy();
             dom.removeClass(this._containerNode, 'open');
-            dom.removeEvent(window, 'click.frost.dropdown', this._windowClickEvent);
+            dom.removeEvent(document, 'click.frost.dropdown', this._windowClickEvent);
             dom.removeEvent(this._node, 'click.frost.dropdown', this._clickEvent);
             dom.removeEvent(this._node, 'keyup.frost.dropdown', this._keyUpEvent);
             dom.removeEvent(this._node, 'keydown.frost.dropdown', this._keyDownEvent);
@@ -912,7 +904,7 @@
 
                 dom.setDataset(this._menuNode, 'animating', 'true');
 
-                dom.removeEvent(window, 'click.frost.dropdown', this._windowClickEvent);
+                dom.removeEvent(document, 'click.frost.dropdown', this._windowClickEvent);
                 Promise.all([
                     dom.fadeOut(this._menuNode, {
                         duration: this._settings.duration
@@ -959,7 +951,7 @@
                         duration: this._settings.duration
                     })
                 ]).then(_ => {
-                    dom.addEventOnce(window, 'click.frost.dropdown', this._windowClickEvent);
+                    dom.addEventOnce(document, 'click.frost.dropdown', this._windowClickEvent);
                     dom.triggerEvent(this._node, 'shown.frost.dropdown');
                     resolve();
                 }).catch(_ =>
@@ -981,7 +973,6 @@
         }
 
     }
-
 
     // Default Dropdown options
     Dropdown.defaults = {
@@ -1100,6 +1091,9 @@
             dom.addEvent(this._node, 'keyup.frost.dropdown', this._keyUpEvent);
             dom.addEvent(this._node, 'keydown.frost.dropdown', this._keyDownEvent);
             dom.addEventDelegate(this._menuNode, 'keydown.frost.dropdown', '.dropdown-item', this._menuKeyDownEvent);
+            dom.addEvent(this._menuNode, 'click.frost.dropdown', e => {
+                e.stopPropagation();
+            });
         }
 
     });
@@ -1746,6 +1740,9 @@
                 ...settings
             };
 
+            this._relativeParent = dom.closest(this._node, parent => dom.css(parent, 'position') === 'relative', document.body).shift();
+            console.log(this._relativeParent);
+
             const wrapper = dom.create('div', {
                 style: {
                     position: 'absolute',
@@ -1830,6 +1827,12 @@
             // calculate actual offset
             let offsetY = Math.round(referenceBox.y);
             let offsetX = Math.round(referenceBox.x);
+
+            if (this._relativeParent) {
+                const relativeParentBox = dom.rect(this._relativeParent, !this._fixed);
+                offsetY -= Math.round(relativeParentBox.y);
+                offsetX -= Math.round(relativeParentBox.x);
+            }
 
             if (placement === 'top') {
                 offsetY -= Math.round(nodeBox.height) + this._settings.spacing;
@@ -1921,7 +1924,7 @@
                 } else {
                     arrowStyles[placement === 'right' ? 'left' : 'right'] = -arrowBox.width;
                     const diff = (referenceBox.height - nodeBox.height) / 2;
-                    let offset = (nodeBox.height / 2) - (arrowBox.height);
+                    let offset = (nodeBox.height / 2) - arrowBox.height;
                     if (position === 'start') {
                         offset += diff;
                     } else if (position === 'end') {

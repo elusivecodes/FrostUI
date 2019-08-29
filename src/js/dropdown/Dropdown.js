@@ -34,20 +34,23 @@ class Dropdown {
         }
 
         // Attach popper
-        this._popper = new Popper(
-            this._menuNode,
-            this._referenceNode,
-            {
-                placement: this._settings.placement,
-                position: this._settings.position,
-                fixed: this._settings.fixed,
-                spacing: this._settings.spacing,
-                width: this._settings.width,
-                zIndex: this._settings.zIndex
-            }
-        );
-
-        this._getDir = _ => dom.getDataset(this._referenceNode, 'placement');
+        if (!dom.closest(this._node, '.navbar-nav').length) {
+            this._popper = new Popper(
+                this._menuNode,
+                this._referenceNode,
+                {
+                    placement: this._settings.placement,
+                    position: this._settings.position,
+                    fixed: this._settings.fixed,
+                    spacing: this._settings.spacing,
+                    width: this._settings.width,
+                    zIndex: this._settings.zIndex
+                }
+            );
+            this._getDir = _ => dom.getDataset(this._referenceNode, 'placement');
+        } else {
+            this._getDir = this._settings.placement;
+        }
 
         this._events();
 
@@ -61,7 +64,7 @@ class Dropdown {
         dom.stop(this._menuNode, true);
         this._popper.destroy();
         dom.removeClass(this._containerNode, 'open');
-        dom.removeEvent(window, 'click.frost.dropdown', this._windowClickEvent);
+        dom.removeEvent(document, 'click.frost.dropdown', this._windowClickEvent);
         dom.removeEvent(this._node, 'click.frost.dropdown', this._clickEvent);
         dom.removeEvent(this._node, 'keyup.frost.dropdown', this._keyUpEvent);
         dom.removeEvent(this._node, 'keydown.frost.dropdown', this._keyDownEvent);
@@ -85,7 +88,7 @@ class Dropdown {
 
             dom.setDataset(this._menuNode, 'animating', 'true');
 
-            dom.removeEvent(window, 'click.frost.dropdown', this._windowClickEvent);
+            dom.removeEvent(document, 'click.frost.dropdown', this._windowClickEvent);
             Promise.all([
                 dom.fadeOut(this._menuNode, {
                     duration: this._settings.duration
@@ -132,7 +135,7 @@ class Dropdown {
                     duration: this._settings.duration
                 })
             ]).then(_ => {
-                dom.addEventOnce(window, 'click.frost.dropdown', this._windowClickEvent);
+                dom.addEventOnce(document, 'click.frost.dropdown', this._windowClickEvent);
                 dom.triggerEvent(this._node, 'shown.frost.dropdown');
                 resolve();
             }).catch(_ =>

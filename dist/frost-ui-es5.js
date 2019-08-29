@@ -386,13 +386,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       key: "slide",
       value: function slide() {
         var direction = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-
-        if (this._sliding) {
-          return this._queue.push({
-            direction: direction
-          });
-        }
-
         return this.show(this._index + direction);
       }
     }]);
@@ -504,26 +497,20 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this._clickNextEvent = function (e) {
         e.preventDefault();
 
-        try {
-          _this4.next();
-        } catch (e) {}
+        _this4.next()["catch"](function (_) {});
       };
 
       this._clickPrevEvent = function (e) {
         e.preventDefault();
 
-        try {
-          _this4.prev();
-        } catch (e) {}
+        _this4.prev()["catch"](function (_) {});
       };
 
       this._clickSlideEvent = function (e) {
         e.preventDefault();
         var slideTo = dom.getDataset(e.currentTarget, 'slideTo');
 
-        try {
-          _this4.show(slideTo);
-        } catch (e) {}
+        _this4.show(slideTo)["catch"](function (_) {});
       };
 
       this._keyDownEvent = function (e) {
@@ -535,9 +522,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         try {
           if (e.key === 'ArrowLeft') {
-            _this4.prev();
+            _this4.prev()["catch"](function (_) {});
           } else if (e.key === 'ArrowRight') {
-            _this4.next();
+            _this4.next()["catch"](function (_) {});
           }
         } catch (e) {}
       };
@@ -570,11 +557,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _setTimer: function _setTimer() {
       var _this5 = this;
 
+      var interval = dom.getDataset(this._items[this._index], 'interval');
       this._timer = setTimeout(function (_) {
         try {
           _this5.cycle();
         } catch (e) {}
-      }, this._settings.interval);
+      }, interval ? interval : this._settings.interval);
     }
   });
   /**
@@ -962,18 +950,22 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       } // Attach popper
 
 
-      this._popper = new Popper(this._menuNode, this._referenceNode, {
-        placement: this._settings.placement,
-        position: this._settings.position,
-        fixed: this._settings.fixed,
-        spacing: this._settings.spacing,
-        width: this._settings.width,
-        zIndex: this._settings.zIndex
-      });
+      if (!dom.closest(this._node, '.navbar-nav').length) {
+        this._popper = new Popper(this._menuNode, this._referenceNode, {
+          placement: this._settings.placement,
+          position: this._settings.position,
+          fixed: this._settings.fixed,
+          spacing: this._settings.spacing,
+          width: this._settings.width,
+          zIndex: this._settings.zIndex
+        });
 
-      this._getDir = function (_) {
-        return dom.getDataset(_this9._referenceNode, 'placement');
-      };
+        this._getDir = function (_) {
+          return dom.getDataset(_this9._referenceNode, 'placement');
+        };
+      } else {
+        this._getDir = this._settings.placement;
+      }
 
       this._events();
 
@@ -992,7 +984,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         this._popper.destroy();
 
         dom.removeClass(this._containerNode, 'open');
-        dom.removeEvent(window, 'click.frost.dropdown', this._windowClickEvent);
+        dom.removeEvent(document, 'click.frost.dropdown', this._windowClickEvent);
         dom.removeEvent(this._node, 'click.frost.dropdown', this._clickEvent);
         dom.removeEvent(this._node, 'keyup.frost.dropdown', this._keyUpEvent);
         dom.removeEvent(this._node, 'keydown.frost.dropdown', this._keyDownEvent);
@@ -1019,7 +1011,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           }
 
           dom.setDataset(_this10._menuNode, 'animating', 'true');
-          dom.removeEvent(window, 'click.frost.dropdown', _this10._windowClickEvent);
+          dom.removeEvent(document, 'click.frost.dropdown', _this10._windowClickEvent);
           Promise.all([dom.fadeOut(_this10._menuNode, {
             duration: _this10._settings.duration
           }), dom.squeezeOut(_this10._menuNode, {
@@ -1063,7 +1055,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             direction: _this11._getDir,
             duration: _this11._settings.duration
           })]).then(function (_) {
-            dom.addEventOnce(window, 'click.frost.dropdown', _this11._windowClickEvent);
+            dom.addEventOnce(document, 'click.frost.dropdown', _this11._windowClickEvent);
             dom.triggerEvent(_this11._node, 'shown.frost.dropdown');
             resolve();
           })["catch"](function (_) {
@@ -1223,6 +1215,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       dom.addEvent(this._node, 'keyup.frost.dropdown', this._keyUpEvent);
       dom.addEvent(this._node, 'keydown.frost.dropdown', this._keyDownEvent);
       dom.addEventDelegate(this._menuNode, 'keydown.frost.dropdown', '.dropdown-item', this._menuKeyDownEvent);
+      dom.addEvent(this._menuNode, 'click.frost.dropdown', function (e) {
+        e.stopPropagation();
+      });
     }
   });
   /**
@@ -1879,6 +1874,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this._referenceNode = reference;
       this._fixed = dom.isFixed(this._referenceNode);
       this._settings = _objectSpread({}, Popper.defaults, {}, dom.getDataset(this._node), {}, settings);
+      this._relativeParent = dom.closest(this._node, function (parent) {
+        return dom.css(parent, 'position') === 'relative';
+      }, document.body).shift();
+      console.log(this._relativeParent);
       var wrapper = dom.create('div', {
         style: {
           position: 'absolute',
@@ -1952,6 +1951,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         var offsetY = Math.round(referenceBox.y);
         var offsetX = Math.round(referenceBox.x);
+
+        if (this._relativeParent) {
+          var relativeParentBox = dom.rect(this._relativeParent, !this._fixed);
+          offsetY -= Math.round(relativeParentBox.y);
+          offsetX -= Math.round(relativeParentBox.x);
+        }
 
         if (placement === 'top') {
           offsetY -= Math.round(nodeBox.height) + this._settings.spacing;

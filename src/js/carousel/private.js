@@ -39,17 +39,13 @@ Object.assign(Carousel.prototype, {
         this._clickNextEvent = e => {
             e.preventDefault();
 
-            try {
-                this.next();
-            } catch (e) { }
+            this.next().catch(_ => { });
         };
 
         this._clickPrevEvent = e => {
             e.preventDefault();
 
-            try {
-                this.prev();
-            } catch (e) { }
+            this.prev().catch(_ => { });
         };
 
         this._clickSlideEvent = e => {
@@ -57,9 +53,7 @@ Object.assign(Carousel.prototype, {
 
             const slideTo = dom.getDataset(e.currentTarget, 'slideTo');
 
-            try {
-                this.show(slideTo);
-            } catch (e) { }
+            this.show(slideTo).catch(_ => { });
         };
 
         this._keyDownEvent = e => {
@@ -71,9 +65,9 @@ Object.assign(Carousel.prototype, {
 
             try {
                 if (e.key === 'ArrowLeft') {
-                    this.prev();
+                    this.prev().catch(_ => { });
                 } else if (e.key === 'ArrowRight') {
-                    this.next();
+                    this.next().catch(_ => { });
                 }
             } catch (e) { }
         };
@@ -100,11 +94,12 @@ Object.assign(Carousel.prototype, {
      * Set a timer for the next Carousel cycle.
      */
     _setTimer() {
+        const interval = dom.getDataset(this._items[this._index], 'interval');
         this._timer = setTimeout(_ => {
             try {
                 this.cycle();
             } catch (e) { }
-        }, this._settings.interval);
+        }, interval ? interval : this._settings.interval);
     }
 
 });

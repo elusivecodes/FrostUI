@@ -24,6 +24,7 @@ caption {
   padding: 0.5rem 0;
   text-align: left;
   caption-side: bottom;
+  color: #929292;
 }
 hr {
   box-sizing: content-box;
@@ -317,7 +318,10 @@ u {
   border: 0;
 }
 .table-striped tr:nth-child(even) {
-  background-color: whitesmoke;
+  background-color: #dcdcdc;
+}
+.table-striped.table-dark tr:nth-child(even) {
+  background-color: #426f6f;
 }
 .table-hover tbody tr:hover {
   color: darkslategray;
@@ -327,12 +331,6 @@ u {
 .table-sm th {
   padding: 0.33333333rem;
 }
-.table-responsive {
-  display: block;
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
 .table-dark {
   color: #fff;
   background-color: darkslategray;
@@ -340,6 +338,10 @@ u {
 .table-dark.table-hover tbody tr:hover {
   color: #fff;
   background-color: rgba(255, 255, 255, 0.075);
+}
+.table-dark th,
+.table-dark td {
+  border-color: rgba(255, 255, 255, 0.2);
 }
 .table .thead-dark th {
   color: #fff;
@@ -391,17 +393,43 @@ u {
   background-color: #f2d5d5;
   color: #bc3a3a;
 }
-.table-light,
-.table-light > td,
-.table-light > th {
-  background-color: #ffffff;
-  color: #dcdcdc;
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
-.table-dark,
-.table-dark > td,
-.table-dark > th {
-  background-color: #aac7c7;
-  color: #1c2f2f;
+@media (min-width: 576px) {
+  .table-sm-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+@media (min-width: 768px) {
+  .table-md-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+@media (min-width: 992px) {
+  .table-lg-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+@media (min-width: 1200px) {
+  .table-xl-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 .blockquote {
   margin-bottom: 1rem;
@@ -1737,6 +1765,14 @@ ul.list-group {
 .page-link:not(:disabled):not(.disabled) {
   cursor: pointer;
 }
+@keyframes progress-bar-stripes {
+  from {
+    background-position: 2rem 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
 .progress {
   display: flex;
   height: 1rem;
@@ -1747,11 +1783,10 @@ ul.list-group {
   margin-bottom: 1rem;
 }
 .progress-bar-striped {
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-size: 1rem 1rem;
+  background-image: linear-gradient(-45deg, transparent 50%, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0.25) 70%, transparent 70%);
+  background-size: 2rem 1rem;
 }
 .progress-bar-animated {
-  -webkit-animation: progress-bar-stripes 1s linear infinite;
   animation: progress-bar-stripes 1s linear infinite;
 }
 .progress-vertical {
@@ -2395,6 +2430,10 @@ input.form-input[type="file"] {
   border-bottom-left-radius: inherit;
   border-bottom-right-radius: inherit;
 }
+.navbar-nav .dropdown-menu {
+  position: static;
+  float: none;
+}
 .dropdown-item {
   display: block;
   padding: 0.25rem 2rem;
@@ -2437,6 +2476,27 @@ button.dropdown-item.active:focus,
   margin: 0.5rem 0;
   overflow: hidden;
   border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+@media (min-width: 576px) {
+  .navbar-expand-sm .navbar-nav .dropdown-menu {
+    position: absolute;
+  }
+}
+@media (min-width: 768px) {
+  .navbar-expand-,
+  md .navbar-nav .dropdown-menu {
+    position: absolute;
+  }
+}
+@media (min-width: 992px) {
+  .navbar-expand-lg .navbar-nav .dropdown-menu {
+    position: absolute;
+  }
+}
+@media (min-width: 1200px) {
+  .navbar-expand-xl .navbar-nav .dropdown-menu {
+    position: absolute;
+  }
 }
 .modal-open {
   overflow: hidden;
@@ -2537,7 +2597,7 @@ button.dropdown-item.active:focus,
     max-height: calc(100vh - (1rem * 5));
   }
   .modal-dialog-centered {
-    min-height: calc(100% - (1rem * 2));
+    min-height: calc(100% - (1rem * 4));
   }
 }
 .popover {
@@ -2753,7 +2813,7 @@ button.dropdown-item.active:focus,
   right: 0;
 }
 .tooltip[data-placement="left"] .arrow::before {
-  bottom: 0;
+  left: 0;
   border-width: 0.4rem 0 0.4rem 0.4rem;
   border-left-color: #000;
 }
