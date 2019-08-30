@@ -2421,6 +2421,7 @@ input.form-input[type="file"] {
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.2rem;
+  min-width: 10rem;
 }
 .dropdown-menu > :first-child {
   border-top-left-radius: inherit;
@@ -2436,10 +2437,11 @@ input.form-input[type="file"] {
 }
 .dropdown-item {
   display: block;
-  padding: 0.25rem 2rem;
+  padding: 0.25rem 1rem;
   width: 100%;
   border: 0;
   background-color: #fff;
+  color: #121212;
   text-align: left;
 }
 button.dropdown-item:hover,
@@ -2448,6 +2450,7 @@ button.dropdown-item:focus,
 .dropdown-item[href]:focus {
   background-color: rgba(0, 0, 0, 0.1);
   text-decoration: none;
+  color: #121212;
 }
 .dropdown-item.active {
   background-color: steelblue;
@@ -2476,6 +2479,11 @@ button.dropdown-item.active:focus,
   margin: 0.5rem 0;
   overflow: hidden;
   border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+.dropdown-item-text {
+  display: block;
+  padding: 0.25rem 1rem;
+  color: #121212;
 }
 @media (min-width: 576px) {
   .navbar-expand-sm .navbar-nav .dropdown-menu {
