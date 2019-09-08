@@ -95,8 +95,16 @@ class Dropdown {
                 }),
                 dom.squeezeOut(this._menuNode, {
                     direction: this._getDir,
-                    duration: this._settings.duration
-                })
+                    duration: this._settings.duration,
+                    useGpu: false
+                }),
+                dom.animate(
+                    this._menuNode,
+                    _ => this._popper.update(),
+                    {
+                        duration: this._settings.duration
+                    }
+                )
             ]).then(_ => {
                 dom.removeClass(this._containerNode, 'open');
                 dom.triggerEvent(this._node, 'hidden.frost.dropdown');
@@ -132,9 +140,18 @@ class Dropdown {
                 }),
                 dom.squeezeIn(this._menuNode, {
                     direction: this._getDir,
-                    duration: this._settings.duration
-                })
+                    duration: this._settings.duration,
+                    useGpu: false
+                }),
+                dom.animate(
+                    this._menuNode,
+                    _ => this._popper.update(),
+                    {
+                        duration: this._settings.duration
+                    }
+                )
             ]).then(_ => {
+                this._popper.update();
                 dom.addEventOnce(document, 'click.frost.dropdown', this._windowClickEvent);
                 dom.triggerEvent(this._node, 'shown.frost.dropdown');
                 resolve();
@@ -143,6 +160,7 @@ class Dropdown {
             ).finally(_ =>
                 dom.removeAttribute(this._menuNode, 'data-animating')
             );
+            window.requestAnimationFrame(_ => this._popper.update());
         });
     }
 

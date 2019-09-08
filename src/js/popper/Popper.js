@@ -23,43 +23,52 @@ class Popper {
             ...settings
         };
 
-        this._relativeParent = dom.closest(this._node, parent => dom.css(parent, 'position') === 'relative', document.body).shift();
-        console.log(this._relativeParent);
+        this._relativeParent = dom.closest(
+            this._node,
+            parent =>
+                dom.css(parent, 'position') === 'relative',
+            document.body
+        ).shift();
 
-        const wrapper = dom.create('div', {
-            style: {
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                zIndex: this._settings.zIndex
-            }
+        const overflowTypes = ['overflow', 'overflowX', 'overflowY'];
+        const overflowValues = ['auto', 'scroll'];
+        this._scrollParent = dom.closest(
+            this._node,
+            parent =>
+                !!overflowTypes.find(overflow =>
+                    !!overflowValues.find(value =>
+                        new RegExp(value)
+                            .test(
+                                dom.css(parent, overflow)
+                            )
+                    )
+                ),
+            document.body
+        ).shift();
+
+        dom.setStyle(this._node, {
+            position: 'absolute',
+            top: 0,
+            left: 0
         });
-        if (this._settings.width && this._settings.width !== 'reference') {
-            dom.setStyle(wrapper, 'width', this._settings.width);
-        }
 
-        dom.wrap(this._node, wrapper);
-        this._wrapper = dom.parent(this._node);
-
-        dom.setData(this._node, 'popper', this);
+        this._events();
 
         this.update();
 
-        if (!this._fixed) {
-            Popper._poppers.set(this._node, this);
-            Popper.start();
-        }
+        dom.setData(this._node, 'popper', this);
     }
 
     /**
      * Destroy the Popper.
      */
     destroy() {
-        dom.before(this._wrapper, dom.contents(this._wrapper));
-        dom.remove(this._wrapper);
-
+        dom.removeEvent(window, 'resize.frost.popper', this._updateEvent);
+        dom.removeEvent(window, 'scroll.frost.popper', this._updateEvent);
+        if (this._scrollParent) {
+            dom.removeEvent(this._scrollParent, 'scroll.frost.popper', this._updateEvent);
+        }
         dom.removeData(this._node, 'popper');
-        Popper._poppers.delete(this._node);
     }
 
     /**
@@ -70,25 +79,30 @@ class Popper {
             return;
         }
 
-        if (!this._settings.width) {
-            dom.setStyle(this._node, 'width', '');
-            dom.setStyle(this._wrapper, 'width', '100%');
-        }
-
         // calculate boxes
         const nodeBox = dom.rect(this._node, !this._fixed);
         const referenceBox = dom.rect(this._referenceNode, !this._fixed);
-        const windowY = this._fixed ? 0 : dom.getScrollY(window);
-        const windowX = this._fixed ? 0 : dom.getScrollX(window);
-        const docWidth = dom.width(document);
-        const docHeight = dom.height(document);
+        const windowContainer = this._windowContainer();
 
         // check object could be seen
-        if (windowY > referenceBox.bottom + nodeBox.height + this._settings.spacing ||
-            windowX > referenceBox.right + nodeBox.width + this._settings.spacing ||
-            windowY + docHeight < referenceBox.top - nodeBox.height - this._settings.spacing ||
-            windowX + docWidth < referenceBox.left - nodeBox.width - this._settings.spacing) {
+        if (this._isNodeHidden(nodeBox, referenceBox, windowContainer)) {
             return;
+        }
+
+        const containerBox = this._scrollParent ?
+            dom.rect(this._scrollParent, !this._fixed) :
+            windowContainer;
+
+        // check if reference is visible (within scroll parent)
+        if (this._scrollParent) {
+            if (containerBox.top > referenceBox.bottom ||
+                containerBox.right < referenceBox.left ||
+                containerBox.bottom < referenceBox.top ||
+                containerBox.left > referenceBox.right) {
+                dom.hide(this._node);
+                return;
+            }
+            dom.show(this._node);
         }
 
         // get optimal placement
@@ -96,10 +110,8 @@ class Popper {
             this._settings.placement :
             Popper.getPopperPlacement(
                 nodeBox,
-                referenceBox.top - windowY,
-                windowX + docWidth - referenceBox.right,
-                windowY + docHeight - referenceBox.bottom,
-                referenceBox.left - windowX,
+                referenceBox,
+                containerBox,
                 this._settings.placement,
                 this._settings.spacing + 2
             );
@@ -107,128 +119,60 @@ class Popper {
         dom.setDataset(this._referenceNode, 'placement', placement);
         dom.setDataset(this._node, 'placement', placement);
 
-        // calculate actual offset
-        let offsetY = Math.round(referenceBox.y);
-        let offsetX = Math.round(referenceBox.x);
-
-        if (this._relativeParent) {
-            const relativeParentBox = dom.rect(this._relativeParent, !this._fixed);
-            offsetY -= Math.round(relativeParentBox.y);
-            offsetX -= Math.round(relativeParentBox.x);
-        }
-
-        if (placement === 'top') {
-            offsetY -= Math.round(nodeBox.height) + this._settings.spacing;
-        } else if (placement === 'bottom') {
-            offsetY += Math.round(referenceBox.height) + this._settings.spacing;
-        } else if (placement === 'left') {
-            offsetX -= Math.round(nodeBox.width) + this._settings.spacing;
-        } else if (placement === 'right') {
-            offsetX += Math.round(referenceBox.width) + this._settings.spacing;
-        }
-
-        // adjust position
-        const deltaX = Math.round(nodeBox.width) - Math.round(referenceBox.width);
-        const deltaY = Math.round(nodeBox.height) - Math.round(referenceBox.height);
-
-        const position = this._settings.fixed ?
+        // get auto position
+        const position = this._settings.position !== 'auto' ?
             this._settings.position :
             Popper.getPopperPosition(
+                nodeBox,
                 referenceBox,
-                deltaX,
-                deltaY,
-                docWidth,
-                docHeight,
+                containerBox,
                 placement,
                 this._settings.position
             );
 
-        if (position === 'center') {
-            if (placement === 'top' || placement === 'bottom') {
-                offsetX -= Math.round(deltaX / 2);
-            } else {
-                offsetY -= Math.round(deltaY / 2);
-            }
-        } else if (position === 'end') {
-            if (placement === 'top' || placement === 'bottom') {
-                offsetX -= deltaX;
-            } else {
-                offsetY -= deltaY;
-            }
+        // calculate actual offset
+        const offset = {
+            x: Math.round(referenceBox.x),
+            y: Math.round(referenceBox.y)
+        };
+
+        // offset for relative parent
+        this._adjustRelative(offset, containerBox);
+
+        // offset for placement
+        this._adjustPlacement(offset, nodeBox, referenceBox, placement);
+
+        // offset for position
+        this._adjustPosition(offset, nodeBox, referenceBox, placement, position);
+
+        // compensate for margins
+        offset.x -= parseInt(dom.css(this._node, 'margin-left'));
+        offset.y -= parseInt(dom.css(this._node, 'margin-top'));
+
+        // compensate for fixed position
+        if (this._fixed) {
+            offset.x += dom.getScrollX(window);
+            offset.y += dom.getScrollY(window);
         }
 
         // corrective positioning
-        if (!this._settings.fixed) {
-            if (placement === 'left' || placement === 'right') {
-                if (offsetY + nodeBox.height > windowY + docHeight) {
-                    let diff = (offsetY + nodeBox.height) - (windowY + docHeight);
-                    offsetY = Math.max(referenceBox.top, offsetY - diff);
-                } else if (offsetY < windowY) {
-                    let diff = offsetY - windowY;
-                    offsetY = Math.min(referenceBox.bottom - nodeBox.height, offsetY - diff);
-                }
-            } else {
-                if (offsetX + nodeBox.width > windowX + docWidth) {
-                    let diff = (offsetX + nodeBox.width) - (windowX + docWidth);
-                    offsetX = Math.max(referenceBox.left, offsetX - diff);
-                } else if (offsetX < windowX) {
-                    let diff = offsetX - windowX;
-                    offsetX = Math.min(referenceBox.right - nodeBox.width, offsetX - diff);
-                }
-            }
-        }
+        this._adjustConstrain(offset, nodeBox, referenceBox, containerBox, placement);
 
-        // relative position
-        dom.setStyle(this._wrapper, 'transform', '');
-        const offset = dom.position(this._wrapper, !this._fixed);
-        offsetY -= Math.round(offset.y);
-        offsetX -= Math.round(offset.x);
+        // update arrow
+        this._updateArrow(nodeBox, referenceBox, placement, position);
 
         // update position
+        this._updatePosition(offset);
+
         if (this._settings.arrow) {
-            const arrowBox = dom.rect(this._settings.arrow);
-            const arrowStyles = {
-                top: '',
-                right: '',
-                bottom: '',
-                left: ''
-            };
-
-            if (placement === 'top' || placement === 'bottom') {
-                arrowStyles[placement === 'top' ? 'bottom' : 'top'] = -arrowBox.height;
-                const diff = (referenceBox.width - nodeBox.width) / 2;
-                let offset = (nodeBox.width / 2) - (arrowBox.width / 2);
-                if (position === 'start') {
-                    offset += diff;
-                } else if (position === 'end') {
-                    offset -= diff;
-                }
-                arrowStyles.left = offset;
-            } else {
-                arrowStyles[placement === 'right' ? 'left' : 'right'] = -arrowBox.width;
-                const diff = (referenceBox.height - nodeBox.height) / 2;
-                let offset = (nodeBox.height / 2) - arrowBox.height;
-                if (position === 'start') {
-                    offset += diff;
-                } else if (position === 'end') {
-                    offset -= diff;
-                }
-                arrowStyles.top = Core.clamp(offset, 0, nodeBox.height);
+            const arrowBox = dom.rect(this._settings.arrow, !this._fixed);
+            if (arrowBox.top < containerBox.top ||
+                arrowBox.right > containerBox.right ||
+                arrowBox.bottom > containerBox.bottom ||
+                arrowBox.left < containerBox.left) {
+                dom.hide(this._settings.arrow);
             }
-
-            dom.setStyle(this._settings.arrow, arrowStyles);
         }
-
-        const style = {
-            transform: 'translate3d(' + offsetX + 'px , ' + offsetY + 'px , 0)'
-        };
-        if (!this._settings.width) {
-            dom.setStyle(this._node, 'width', '100%');
-            style.width = Math.ceil(nodeBox.width);
-        } else if (this._settings.width === 'reference') {
-            style.width = Math.ceil(referenceBox.width);
-        }
-        dom.setStyle(this._wrapper, style);
     }
 
 }

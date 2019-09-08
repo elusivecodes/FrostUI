@@ -52,7 +52,7 @@ class Alert {
                 dom.remove(this._node);
                 resolve();
             }).catch(_ => {
-                dom.removeAttribute(this._node, 'data-animating');
+                dom.removeDataset(this._node, 'animating');
                 reject();
             });
         });

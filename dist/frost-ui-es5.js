@@ -90,7 +90,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             dom.remove(_this._node);
             resolve();
           })["catch"](function (_) {
-            dom.removeAttribute(_this._node, 'data-animating');
+            dom.removeDataset(_this._node, 'animating');
             reject();
           });
         });
@@ -636,7 +636,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeAttribute(targets, 'data-animating');
+            return dom.removeDataset(targets, 'animating');
           });
         });
       }
@@ -678,7 +678,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeAttribute(targets, 'data-animating');
+            return dom.removeDataset(targets, 'animating');
           });
         });
       }
@@ -732,7 +732,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeAttribute(targets, 'data-animating');
+            return dom.removeDataset(targets, 'animating');
           });
         });
       }
@@ -1016,6 +1016,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             duration: _this10._settings.duration
           }), dom.squeezeOut(_this10._menuNode, {
             direction: _this10._getDir,
+            duration: _this10._settings.duration,
+            useGpu: false
+          }), dom.animate(_this10._menuNode, function (_) {
+            return _this10._popper.update();
+          }, {
             duration: _this10._settings.duration
           })]).then(function (_) {
             dom.removeClass(_this10._containerNode, 'open');
@@ -1053,8 +1058,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             duration: _this11._settings.duration
           }), dom.squeezeIn(_this11._menuNode, {
             direction: _this11._getDir,
+            duration: _this11._settings.duration,
+            useGpu: false
+          }), dom.animate(_this11._menuNode, function (_) {
+            return _this11._popper.update();
+          }, {
             duration: _this11._settings.duration
           })]).then(function (_) {
+            _this11._popper.update();
+
             dom.addEventOnce(document, 'click.frost.dropdown', _this11._windowClickEvent);
             dom.triggerEvent(_this11._node, 'shown.frost.dropdown');
             resolve();
@@ -1062,6 +1074,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             return reject();
           })["finally"](function (_) {
             return dom.removeAttribute(_this11._menuNode, 'data-animating');
+          });
+          window.requestAnimationFrame(function (_) {
+            return _this11._popper.update();
           });
         });
       }
@@ -1877,30 +1892,25 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this._relativeParent = dom.closest(this._node, function (parent) {
         return dom.css(parent, 'position') === 'relative';
       }, document.body).shift();
-      console.log(this._relativeParent);
-      var wrapper = dom.create('div', {
-        style: {
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          zIndex: this._settings.zIndex
-        }
+      var overflowTypes = ['overflow', 'overflowX', 'overflowY'];
+      var overflowValues = ['auto', 'scroll'];
+      this._scrollParent = dom.closest(this._node, function (parent) {
+        return !!overflowTypes.find(function (overflow) {
+          return !!overflowValues.find(function (value) {
+            return new RegExp(value).test(dom.css(parent, overflow));
+          });
+        });
+      }, document.body).shift();
+      dom.setStyle(this._node, {
+        position: 'absolute',
+        top: 0,
+        left: 0
       });
 
-      if (this._settings.width && this._settings.width !== 'reference') {
-        dom.setStyle(wrapper, 'width', this._settings.width);
-      }
+      this._events();
 
-      dom.wrap(this._node, wrapper);
-      this._wrapper = dom.parent(this._node);
-      dom.setData(this._node, 'popper', this);
       this.update();
-
-      if (!this._fixed) {
-        Popper._poppers.set(this._node, this);
-
-        Popper.start();
-      }
+      dom.setData(this._node, 'popper', this);
     }
     /**
      * Destroy the Popper.
@@ -1910,11 +1920,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Popper, [{
       key: "destroy",
       value: function destroy() {
-        dom.before(this._wrapper, dom.contents(this._wrapper));
-        dom.remove(this._wrapper);
-        dom.removeData(this._node, 'popper');
+        dom.removeEvent(window, 'resize.frost.popper', this._updateEvent);
+        dom.removeEvent(window, 'scroll.frost.popper', this._updateEvent);
 
-        Popper._poppers["delete"](this._node);
+        if (this._scrollParent) {
+          dom.removeEvent(this._scrollParent, 'scroll.frost.popper', this._updateEvent);
+        }
+
+        dom.removeData(this._node, 'popper');
       }
       /**
        * Update the Popper position.
@@ -1925,152 +1938,75 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       value: function update() {
         if (!dom.isConnected(this._node)) {
           return;
-        }
-
-        if (!this._settings.width) {
-          dom.setStyle(this._node, 'width', '');
-          dom.setStyle(this._wrapper, 'width', '100%');
         } // calculate boxes
 
 
         var nodeBox = dom.rect(this._node, !this._fixed);
         var referenceBox = dom.rect(this._referenceNode, !this._fixed);
-        var windowY = this._fixed ? 0 : dom.getScrollY(window);
-        var windowX = this._fixed ? 0 : dom.getScrollX(window);
-        var docWidth = dom.width(document);
-        var docHeight = dom.height(document); // check object could be seen
 
-        if (windowY > referenceBox.bottom + nodeBox.height + this._settings.spacing || windowX > referenceBox.right + nodeBox.width + this._settings.spacing || windowY + docHeight < referenceBox.top - nodeBox.height - this._settings.spacing || windowX + docWidth < referenceBox.left - nodeBox.width - this._settings.spacing) {
+        var windowContainer = this._windowContainer(); // check object could be seen
+
+
+        if (this._isNodeHidden(nodeBox, referenceBox, windowContainer)) {
           return;
+        }
+
+        var containerBox = this._scrollParent ? dom.rect(this._scrollParent, !this._fixed) : windowContainer; // check if reference is visible (within scroll parent)
+
+        if (this._scrollParent) {
+          if (containerBox.top > referenceBox.bottom || containerBox.right < referenceBox.left || containerBox.bottom < referenceBox.top || containerBox.left > referenceBox.right) {
+            dom.hide(this._node);
+            return;
+          }
+
+          dom.show(this._node);
         } // get optimal placement
 
 
-        var placement = this._settings.fixed ? this._settings.placement : Popper.getPopperPlacement(nodeBox, referenceBox.top - windowY, windowX + docWidth - referenceBox.right, windowY + docHeight - referenceBox.bottom, referenceBox.left - windowX, this._settings.placement, this._settings.spacing + 2);
+        var placement = this._settings.fixed ? this._settings.placement : Popper.getPopperPlacement(nodeBox, referenceBox, containerBox, this._settings.placement, this._settings.spacing + 2);
         dom.setDataset(this._referenceNode, 'placement', placement);
-        dom.setDataset(this._node, 'placement', placement); // calculate actual offset
+        dom.setDataset(this._node, 'placement', placement); // get auto position
 
-        var offsetY = Math.round(referenceBox.y);
-        var offsetX = Math.round(referenceBox.x);
+        var position = this._settings.position !== 'auto' ? this._settings.position : Popper.getPopperPosition(nodeBox, referenceBox, containerBox, placement, this._settings.position); // calculate actual offset
 
-        if (this._relativeParent) {
-          var relativeParentBox = dom.rect(this._relativeParent, !this._fixed);
-          offsetY -= Math.round(relativeParentBox.y);
-          offsetX -= Math.round(relativeParentBox.x);
-        }
+        var offset = {
+          x: Math.round(referenceBox.x),
+          y: Math.round(referenceBox.y)
+        }; // offset for relative parent
 
-        if (placement === 'top') {
-          offsetY -= Math.round(nodeBox.height) + this._settings.spacing;
-        } else if (placement === 'bottom') {
-          offsetY += Math.round(referenceBox.height) + this._settings.spacing;
-        } else if (placement === 'left') {
-          offsetX -= Math.round(nodeBox.width) + this._settings.spacing;
-        } else if (placement === 'right') {
-          offsetX += Math.round(referenceBox.width) + this._settings.spacing;
-        } // adjust position
+        this._adjustRelative(offset, containerBox); // offset for placement
 
 
-        var deltaX = Math.round(nodeBox.width) - Math.round(referenceBox.width);
-        var deltaY = Math.round(nodeBox.height) - Math.round(referenceBox.height);
-        var position = this._settings.fixed ? this._settings.position : Popper.getPopperPosition(referenceBox, deltaX, deltaY, docWidth, docHeight, placement, this._settings.position);
+        this._adjustPlacement(offset, nodeBox, referenceBox, placement); // offset for position
 
-        if (position === 'center') {
-          if (placement === 'top' || placement === 'bottom') {
-            offsetX -= Math.round(deltaX / 2);
-          } else {
-            offsetY -= Math.round(deltaY / 2);
-          }
-        } else if (position === 'end') {
-          if (placement === 'top' || placement === 'bottom') {
-            offsetX -= deltaX;
-          } else {
-            offsetY -= deltaY;
-          }
+
+        this._adjustPosition(offset, nodeBox, referenceBox, placement, position); // compensate for margins
+
+
+        offset.x -= parseInt(dom.css(this._node, 'margin-left'));
+        offset.y -= parseInt(dom.css(this._node, 'margin-top')); // compensate for fixed position
+
+        if (this._fixed) {
+          offset.x += dom.getScrollX(window);
+          offset.y += dom.getScrollY(window);
         } // corrective positioning
 
 
-        if (!this._settings.fixed) {
-          if (placement === 'left' || placement === 'right') {
-            if (offsetY + nodeBox.height > windowY + docHeight) {
-              var diff = offsetY + nodeBox.height - (windowY + docHeight);
-              offsetY = Math.max(referenceBox.top, offsetY - diff);
-            } else if (offsetY < windowY) {
-              var _diff = offsetY - windowY;
-
-              offsetY = Math.min(referenceBox.bottom - nodeBox.height, offsetY - _diff);
-            }
-          } else {
-            if (offsetX + nodeBox.width > windowX + docWidth) {
-              var _diff2 = offsetX + nodeBox.width - (windowX + docWidth);
-
-              offsetX = Math.max(referenceBox.left, offsetX - _diff2);
-            } else if (offsetX < windowX) {
-              var _diff3 = offsetX - windowX;
-
-              offsetX = Math.min(referenceBox.right - nodeBox.width, offsetX - _diff3);
-            }
-          }
-        } // relative position
+        this._adjustConstrain(offset, nodeBox, referenceBox, containerBox, placement); // update arrow
 
 
-        dom.setStyle(this._wrapper, 'transform', '');
-        var offset = dom.position(this._wrapper, !this._fixed);
-        offsetY -= Math.round(offset.y);
-        offsetX -= Math.round(offset.x); // update position
+        this._updateArrow(nodeBox, referenceBox, placement, position); // update position
+
+
+        this._updatePosition(offset);
 
         if (this._settings.arrow) {
-          var arrowBox = dom.rect(this._settings.arrow);
-          var arrowStyles = {
-            top: '',
-            right: '',
-            bottom: '',
-            left: ''
-          };
+          var arrowBox = dom.rect(this._settings.arrow, !this._fixed);
 
-          if (placement === 'top' || placement === 'bottom') {
-            arrowStyles[placement === 'top' ? 'bottom' : 'top'] = -arrowBox.height;
-
-            var _diff4 = (referenceBox.width - nodeBox.width) / 2;
-
-            var _offset = nodeBox.width / 2 - arrowBox.width / 2;
-
-            if (position === 'start') {
-              _offset += _diff4;
-            } else if (position === 'end') {
-              _offset -= _diff4;
-            }
-
-            arrowStyles.left = _offset;
-          } else {
-            arrowStyles[placement === 'right' ? 'left' : 'right'] = -arrowBox.width;
-
-            var _diff5 = (referenceBox.height - nodeBox.height) / 2;
-
-            var _offset2 = nodeBox.height / 2 - arrowBox.height;
-
-            if (position === 'start') {
-              _offset2 += _diff5;
-            } else if (position === 'end') {
-              _offset2 -= _diff5;
-            }
-
-            arrowStyles.top = Core.clamp(_offset2, 0, nodeBox.height);
+          if (arrowBox.top < containerBox.top || arrowBox.right > containerBox.right || arrowBox.bottom > containerBox.bottom || arrowBox.left < containerBox.left) {
+            dom.hide(this._settings.arrow);
           }
-
-          dom.setStyle(this._settings.arrow, arrowStyles);
         }
-
-        var style = {
-          transform: 'translate3d(' + offsetX + 'px , ' + offsetY + 'px , 0)'
-        };
-
-        if (!this._settings.width) {
-          dom.setStyle(this._node, 'width', '100%');
-          style.width = Math.ceil(nodeBox.width);
-        } else if (this._settings.width === 'reference') {
-          style.width = Math.ceil(referenceBox.width);
-        }
-
-        dom.setStyle(this._wrapper, style);
       }
     }]);
 
@@ -2083,11 +2019,241 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     position: 'center',
     fixed: false,
     spacing: 0,
-    width: 'auto',
-    zIndex: 1000
+    useGpu: true
   };
-  Popper._poppers = new Map();
   UI.Popper = Popper;
+  /**
+   * Popper Private
+   */
+
+  Object.assign(Popper.prototype, {
+    /**
+     * Constrain the offset within the containerBox.
+     * @param {object} offset The offset object.
+     * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
+     * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
+     * @param {DOMRect} containerBox The computed bounding rectangle of the container.
+     * @param {string} placement The actual placement of the Popper.
+     */
+    _adjustConstrain: function _adjustConstrain(offset, nodeBox, referenceBox, containerBox, placement) {
+      if (this._fixed) {
+        return;
+      }
+
+      if (['left', 'right'].includes(placement)) {
+        var offsetY = this._scrollParent || this._relativeParent ? offset.y + containerBox.top : offset.y;
+
+        if (offsetY + nodeBox.height + this._settings.spacing > containerBox.bottom) {
+          // bottom of offset node is below the container
+          var diff = offsetY + nodeBox.height - containerBox.bottom;
+          offset.y = Math.max(referenceBox.height >= nodeBox.height ? referenceBox.top : referenceBox.top - (nodeBox.height - referenceBox.height), offset.y - diff);
+        } else if (offsetY - this._settings.spacing < containerBox.top) {
+          // top of offset node is above the container
+          var _diff = offsetY - containerBox.top;
+
+          offset.y = Math.min(referenceBox.height >= nodeBox.height ? referenceBox.top - (referenceBox.top - nodeBox.top) : referenceBox.top, offset.y - _diff);
+        }
+      } else {
+        var offsetX = this._scrollParent || this._relativeParent ? offset.x + containerBox.left : offset.x;
+
+        if (offsetX + nodeBox.width + this._settings.spacing > containerBox.right) {
+          // right of offset node is to the right of the container
+          var _diff2 = offsetX + nodeBox.width - containerBox.right;
+
+          offset.x = Math.max(referenceBox.width >= nodeBox.width ? referenceBox.left : referenceBox.left - (nodeBox.width - referenceBox.width), offset.x - _diff2);
+        } else if (offsetX - this._settings.spacing < containerBox.left) {
+          // left of offset node is to the left of the container
+          var _diff3 = offsetX - containerBox.left;
+
+          offset.x = Math.min(referenceBox.width >= nodeBox.width ? referenceBox.left - (referenceBox.width - nodeBox.width) : referenceBox.left, offset.x - _diff3);
+        }
+      }
+    },
+
+    /**
+     * Adjust the offset for the placement.
+     * @param {object} offset The offset object.
+     * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
+     * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
+     * @param {string} placement The actual placement of the Popper.
+     */
+    _adjustPlacement: function _adjustPlacement(offset, nodeBox, referenceBox, placement) {
+      if (placement === 'top') {
+        offset.y -= Math.round(nodeBox.height) + this._settings.spacing;
+      } else if (placement === 'right') {
+        offset.x += Math.round(referenceBox.width) + this._settings.spacing;
+      } else if (placement === 'bottom') {
+        offset.y += Math.round(referenceBox.height) + this._settings.spacing;
+      } else if (placement === 'left') {
+        offset.x -= Math.round(nodeBox.width) + this._settings.spacing;
+      }
+    },
+
+    /**
+     * Adjust the offset for the placement.
+     * @param {object} offset The offset object.
+     * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
+     * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
+     * @param {string} placement The actual placement of the Popper.
+     * @param {string} position The actual position of the Popper.
+     */
+    _adjustPosition: function _adjustPosition(offset, nodeBox, referenceBox, placement, position) {
+      if (position === 'start') {
+        return;
+      }
+
+      if (['top', 'bottom'].includes(placement)) {
+        var deltaX = Math.round(nodeBox.width) - Math.round(referenceBox.width);
+
+        if (position === 'center') {
+          offset.x -= Math.round(deltaX / 2);
+        } else if (position === 'end') {
+          offset.x -= deltaX;
+        }
+      } else {
+        var deltaY = Math.round(nodeBox.height) - Math.round(referenceBox.height);
+
+        if (position === 'center') {
+          offset.y -= Math.round(deltaY / 2);
+        } else if (position === 'end') {
+          offset.y -= deltaY;
+        }
+      }
+    },
+
+    /**
+     * Adjust the offset for a relative positioned parent.
+     * @param {object} offset The offset object.
+     */
+    _adjustRelative: function _adjustRelative(offset) {
+      if (!this._relativeParent) {
+        return;
+      }
+
+      var relativeParentBox = dom.rect(this._relativeParent, !this._fixed);
+      offset.x -= Math.round(relativeParentBox.x);
+      offset.y -= Math.round(relativeParentBox.y);
+    },
+
+    /**
+     * Attach events for the Popper.
+     */
+    _events: function _events() {
+      var _this19 = this;
+
+      this._updateEvent = Core.animation(function (_) {
+        return _this19.update();
+      });
+      dom.addEvent(window, 'resize.frost.popper', this._updateEvent);
+      dom.addEvent(window, 'scroll.frost.popper', this._updateEvent);
+
+      if (this._scrollParent) {
+        dom.addEvent(this._scrollParent, 'scroll.frost.popper', this._updateEvent);
+      }
+    },
+
+    /**
+     * Returns true if the node can not be visible inside the window.
+     * @param {object} offset The offset object.
+     * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
+     * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
+     * @param {object} windowContainer The computed bounding rectangle of the window.
+     * @returns {Boolean} TRUE if the node can not be visible inside the window, otherwise FALSE.
+     */
+    _isNodeHidden: function _isNodeHidden(nodeBox, referenceBox, windowContainer) {
+      return windowContainer.top > referenceBox.bottom + nodeBox.height + this._settings.spacing || windowContainer.left > referenceBox.right + nodeBox.width + this._settings.spacing || windowContainer.bottom < referenceBox.top - nodeBox.height - this._settings.spacing || windowContainer.right < referenceBox.left - nodeBox.width - this._settings.spacing;
+    },
+
+    /**
+     * Update the position of the arrow for the actual placement and position.
+     * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
+     * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
+     * @param {string} placement The actual placement of the Popper.
+     * @param {string} position The actual position of the Popper.
+     */
+    _updateArrow: function _updateArrow(nodeBox, referenceBox, placement, position) {
+      if (!this._settings.arrow) {
+        return;
+      }
+
+      dom.show(this._settings.arrow);
+      var arrowBox = dom.rect(this._settings.arrow, !this._fixed);
+      var arrowStyles = {
+        top: '',
+        right: '',
+        bottom: '',
+        left: ''
+      };
+
+      if (['top', 'bottom'].includes(placement)) {
+        arrowStyles[placement === 'top' ? 'bottom' : 'top'] = -arrowBox.height;
+        var diff = (referenceBox.width - nodeBox.width) / 2;
+        var offset = nodeBox.width / 2 - arrowBox.width / 2;
+
+        if (position === 'start') {
+          offset += diff;
+        } else if (position === 'end') {
+          offset -= diff;
+        }
+
+        arrowStyles.left = offset;
+      } else {
+        arrowStyles[placement === 'right' ? 'left' : 'right'] = -arrowBox.width;
+
+        var _diff4 = (referenceBox.height - nodeBox.height) / 2;
+
+        var _offset = nodeBox.height / 2 - arrowBox.height;
+
+        if (position === 'start') {
+          _offset += _diff4;
+        } else if (position === 'end') {
+          _offset -= _diff4;
+        }
+
+        arrowStyles.top = Core.clamp(_offset, 0, nodeBox.height);
+      }
+
+      dom.setStyle(this._settings.arrow, arrowStyles);
+    },
+
+    /**
+     * Update the position of the node.
+     * @param {object} offset The offset object.
+     */
+    _updatePosition: function _updatePosition(offset) {
+      var style = {};
+
+      if (this._settings.useGpu) {
+        style.transform = 'translate3d(' + offset.x + 'px , ' + offset.y + 'px , 0)';
+      } else {
+        style.marginLeft = offset.x;
+        style.marginTop = offset.y;
+      }
+
+      dom.setStyle(this._node, style);
+    },
+
+    /**
+     * Calculate the computed bounding rectangle of the window.
+     * @returns {object} The computed bounding rectangle of the window.
+     */
+    _windowContainer: function _windowContainer() {
+      var scrollX = this._fixed ? 0 : dom.getScrollX(window);
+      var scrollY = this._fixed ? 0 : dom.getScrollY(window);
+      var windowWidth = dom.width(document);
+      var windowHeight = dom.height(document);
+      return {
+        x: scrollX,
+        y: scrollY,
+        w: windowWidth,
+        h: windowHeight,
+        top: scrollY,
+        right: scrollX + windowWidth,
+        bottom: scrollY + windowHeight,
+        left: scrollX
+      };
+    }
+  });
   /**
    * Popper Static
    */
@@ -2096,15 +2262,18 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     /**
      * Get the actual placement of the Popper.
      * @param {object} nodeBox The computed bounding rectangle of the node.
-     * @param {number} spaceTop Available pixels above the node.
-     * @param {number} spaceRight Available pixels to the right of the node.
-     * @param {number} spaceBottom Available pixels below the node.
-     * @param {number} spaceLeft Available pixels to the left of the node.
+     * @param {object} referenceBox The computed bounding rectangle of the reference.
+     * @param {object} containerBox The computed bounding rectangle of the container.
      * @param {string} placement The initial placement of the Popper.
      * @param {number} spacing The amount of spacing to use.
      * @returns {string} The new placement of the Popper.
      */
-    getPopperPlacement: function getPopperPlacement(nodeBox, spaceTop, spaceRight, spaceBottom, spaceLeft, placement, spacing) {
+    getPopperPlacement: function getPopperPlacement(nodeBox, referenceBox, containerBox, placement, spacing) {
+      var spaceTop = referenceBox.top - containerBox.top;
+      var spaceRight = containerBox.right - referenceBox.right;
+      var spaceBottom = containerBox.bottom - referenceBox.bottom;
+      var spaceLeft = referenceBox.left - containerBox.left;
+
       if (placement === 'top') {
         // if node is bigger than space top and there is more room on bottom
         if (spaceTop < nodeBox.height + spacing && spaceBottom > spaceTop) {
@@ -2126,10 +2295,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           return 'right';
         }
       } else if (placement === 'auto') {
-        var vSpace = Math.max(spaceTop, spaceBottom);
-        var hSpace = Math.max(spaceRight, spaceLeft);
+        var maxVSpace = Math.max(spaceTop, spaceBottom);
+        var maxHSpace = Math.max(spaceRight, spaceLeft);
+        var minVSpace = Math.min(spaceTop, spaceBottom);
 
-        if (hSpace > vSpace && hSpace > nodeBox.width + spacing) {
+        if (maxHSpace > maxVSpace && maxHSpace > nodeBox.width + spacing && minVSpace + referenceBox.height - nodeBox.height > spacing) {
           if (spaceLeft > spaceRight) {
             return 'left';
           }
@@ -2149,111 +2319,90 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Get the actual position of the Popper.
+     * @param {object} nodeBox The computed bounding rectangle of the node.
      * @param {object} referenceBox The computed bounding rectangle of the reference.
-     * @param {number} deltaX The difference between the node and reference widths.
-     * @param {number} deltaY The difference between the node and reference heights.
-     * @param {number} docWidth The width of the document.
-     * @param {number} docHeight The height of the document.
+     * @param {object} containerBox The computed bounding rectangle of the container.
      * @param {string} placement The actual placement of the Popper.
      * @param {string} position The initial position of the Popper.
      * @returns {string} The new position of the Popper.
      */
-    getPopperPosition: function getPopperPosition(referenceBox, deltaX, deltaY, docWidth, docHeight, placement, position) {
-      if (placement === 'top' || placement === 'bottom') {
+    getPopperPosition: function getPopperPosition(nodeBox, referenceBox, containerBox, placement, position) {
+      var deltaX = nodeBox.width - referenceBox.width;
+      var deltaY = nodeBox.height - referenceBox.height;
+
+      if (['bottom', 'top'].includes(placement)) {
+        var spaceLeft = referenceBox.left - containerBox.left;
+        var spaceRight = containerBox.right - referenceBox.right;
+
         if (position === 'start') {
-          if (referenceBox.right > docWidth) {
-            if (referenceBox.right - deltaX < docWidth && referenceBox.left - deltaX > 0) {
-              return 'end';
+          if (spaceRight < deltaX) {
+            if (spaceLeft >= deltaX / 2 && spaceRight >= deltaX / 2) {
+              return 'center';
             }
 
-            if (referenceBox.right - deltaX / 2 < docWidth && referenceBox.left - deltaX / 2 > 0) {
-              return 'center';
+            if (spaceLeft >= deltaX) {
+              return 'end';
             }
           }
         } else if (position === 'center') {
-          if (referenceBox.left - deltaX / 2 < 0 || referenceBox.right - deltaX / 2 > docWidth) {
-            if (referenceBox.right < docWidth && referenceBox.left > 0) {
+          if (spaceLeft < deltaX / 2 || spaceRight < deltaX / 2) {
+            if (spaceRight >= deltaX) {
               return 'start';
             }
 
-            if (referenceBox.right - deltaX < docWidth && referenceBox.left - deltaX > 0) {
+            if (spaceLeft >= deltaX) {
               return 'end';
             }
           }
         } else if (position === 'end') {
-          if (referenceBox.left - deltaX < 0) {
-            if (referenceBox.right < docWidth && referenceBox.left > 0) {
-              return 'start';
+          if (spaceLeft < deltaX) {
+            if (spaceLeft >= deltaX / 2 && spaceRight >= deltaX / 2) {
+              return 'center';
             }
 
-            if (referenceBox.right - deltaX / 2 < docWidth && referenceBox.left - deltaX / 2 > 0) {
-              return 'center';
+            if (spaceRight >= deltaX) {
+              return 'start';
             }
           }
         }
-      } else if (placement === 'left' || placement === 'right') {
+      } else {
+        var spaceTop = referenceBox.top - containerBox.top;
+        var spaceBottom = containerBox.bottom - referenceBox.bottom;
+
         if (position === 'start') {
-          if (referenceBox.bottom > docHeight) {
-            if (referenceBox.bottom - deltaY < docHeight && referenceBox.top - deltaY > 0) {
-              return 'end';
+          if (spaceBottom < deltaY) {
+            if (spaceBottom >= deltaY / 2 && spaceTop >= deltaY / 2) {
+              return 'center';
             }
 
-            if (referenceBox.bottom - deltaY / 2 < docHeight && referenceBox.top - deltaY / 2 > 0) {
-              return 'center';
+            if (spaceTop >= deltaY) {
+              return 'end';
             }
           }
         } else if (position === 'center') {
-          if (referenceBox.top - deltaY / 2 < 0 || referenceBox.bottom - deltaY / 2 > docHeight) {
-            if (referenceBox.bottom < docHeight && referenceBox.top > 0) {
+          if (spaceTop < deltaY / 2 || spaceBottom < deltaY / 2) {
+            if (spaceBottom >= deltaY) {
               return 'start';
             }
 
-            if (referenceBox.bottom - deltaY < docHeight && referenceBox.top - deltaY > 0) {
+            if (spaceTop >= deltaY) {
               return 'end';
             }
           }
         } else if (position === 'end') {
-          if (referenceBox.top - deltaY < 0) {
-            if (referenceBox.bottom < docHeight && referenceBox.top > 0) {
-              return 'start';
+          if (spaceTop < deltaY) {
+            if (spaceTop >= deltaY / 2 && spaceBottom >= deltaY / 2) {
+              return 'center';
             }
 
-            if (referenceBox.bottom - deltaY / 2 < docHeight && referenceBox.top - deltaY / 2 > 0) {
-              return 'center';
+            if (spaceBottom >= deltaY) {
+              return 'start';
             }
           }
         }
       }
 
       return position;
-    },
-
-    /**
-     * Update the position of all Poppers.
-     */
-    run: function run() {
-      this._poppers.forEach(function (popper) {
-        return popper.update();
-      });
-
-      if (this._poppers.size === 0) {
-        dom.removeEvent(window, 'resize.frost.popper scroll.frost.popper');
-        this._running = false;
-      }
-    },
-
-    /**
-     * Start updating the position of all Poppers.
-     */
-    start: function start() {
-      if (this._running) {
-        return;
-      }
-
-      this._running = true;
-      dom.addEvent(window, 'resize.frost.popper scroll.frost.popper', Core.animation(function (_) {
-        return Popper.run();
-      }));
     }
   });
   /**
@@ -2306,29 +2455,29 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "hide",
       value: function hide() {
-        var _this19 = this;
+        var _this20 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!dom.hasClass(_this19._target, 'active') || dom.getDataset(_this19._target, 'animating') === 'true') {
+          if (!dom.hasClass(_this20._target, 'active') || dom.getDataset(_this20._target, 'animating') === 'true') {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this19._node, 'hide.frost.tab')) {
+          if (!DOM._triggerEvent(_this20._node, 'hide.frost.tab')) {
             return reject();
           }
 
-          dom.setDataset(_this19._target, 'animating', 'true');
-          dom.fadeOut(_this19._target, {
-            duration: _this19._settings.duration
+          dom.setDataset(_this20._target, 'animating', 'true');
+          dom.fadeOut(_this20._target, {
+            duration: _this20._settings.duration
           }).then(function (_) {
-            dom.removeClass(_this19._target, 'active');
-            dom.removeClass(_this19._node, 'active');
-            dom.triggerEvent(_this19._node, 'hidden.frost.tab');
+            dom.removeClass(_this20._target, 'active');
+            dom.removeClass(_this20._node, 'active');
+            dom.triggerEvent(_this20._node, 'hidden.frost.tab');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeAttribute(_this19._target, 'data-animating');
+            return dom.removeAttribute(_this20._target, 'data-animating');
           });
         });
       }
@@ -2340,37 +2489,37 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show() {
-        var _this20 = this;
+        var _this21 = this;
 
         return new Promise(function (resolve, reject) {
-          if (dom.hasClass(_this20._target, 'active') || dom.getDataset(_this20._target, 'animating') === 'true') {
+          if (dom.hasClass(_this21._target, 'active') || dom.getDataset(_this21._target, 'animating') === 'true') {
             return reject();
           }
 
-          var activeTab = dom.siblings(_this20._node, '.active').shift();
+          var activeTab = dom.siblings(_this21._node, '.active').shift();
 
           if (!dom.hasData(activeTab, 'tab')) {
             return reject();
           }
 
-          dom.setDataset(_this20._target, 'animating', 'true');
+          dom.setDataset(_this21._target, 'animating', 'true');
           dom.getData(activeTab, 'tab').hide().then(function (_) {
-            if (!DOM._triggerEvent(_this20._node, 'show.frost.tab')) {
+            if (!DOM._triggerEvent(_this21._node, 'show.frost.tab')) {
               return reject();
             }
 
-            dom.addClass(_this20._target, 'active');
-            dom.addClass(_this20._node, 'active');
-            return dom.fadeIn(_this20._target, {
-              duration: _this20._settings.duration
+            dom.addClass(_this21._target, 'active');
+            dom.addClass(_this21._node, 'active');
+            return dom.fadeIn(_this21._target, {
+              duration: _this21._settings.duration
             });
           }).then(function (_) {
-            dom.triggerEvent(_this20._node, 'shown.frost.tab');
+            dom.triggerEvent(_this21._node, 'shown.frost.tab');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeAttribute(_this20._target, 'data-animating');
+            return dom.removeAttribute(_this21._target, 'data-animating');
           });
         });
       }
@@ -2453,12 +2602,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Tab.
      */
     _events: function _events() {
-      var _this21 = this;
+      var _this22 = this;
 
       this._clickEvent = function (e) {
         e.preventDefault();
 
-        _this21.show()["catch"](function (_) {});
+        _this22.show()["catch"](function (_) {});
       };
 
       dom.addEvent(this._node, 'click.frost.tab', this._clickEvent);
@@ -2479,7 +2628,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Toast} A new Toast object.
      */
     function Toast(node, settings) {
-      var _this22 = this;
+      var _this23 = this;
 
       _classCallCheck(this, Toast);
 
@@ -2488,7 +2637,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       if (this._settings.autohide) {
         setTimeout(function (_) {
-          _this22.hide()["catch"](function (_) {});
+          _this23.hide()["catch"](function (_) {});
         }, this._settings.delay);
       }
 
@@ -2513,28 +2662,28 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "hide",
       value: function hide() {
-        var _this23 = this;
+        var _this24 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!dom.isVisible(_this23._node) || dom.getDataset(_this23._node, 'animating') === 'true') {
+          if (!dom.isVisible(_this24._node) || dom.getDataset(_this24._node, 'animating') === 'true') {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this23._node, 'hide.frost.toast')) {
+          if (!DOM._triggerEvent(_this24._node, 'hide.frost.toast')) {
             return reject();
           }
 
-          dom.setDataset(_this23._node, 'animating', 'true');
-          return dom.fadeOut(_this23._node, {
-            duration: _this23._settings.duration
+          dom.setDataset(_this24._node, 'animating', 'true');
+          return dom.fadeOut(_this24._node, {
+            duration: _this24._settings.duration
           }).then(function (_) {
-            dom.hide(_this23._node);
-            dom.triggerEvent(_this23._node, 'hidden.frost.toast');
+            dom.hide(_this24._node);
+            dom.triggerEvent(_this24._node, 'hidden.frost.toast');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeAttribute(_this23._node, 'data-animating');
+            return dom.removeAttribute(_this24._node, 'data-animating');
           });
         });
       }
@@ -2546,28 +2695,28 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show() {
-        var _this24 = this;
+        var _this25 = this;
 
         return new Promise(function (resolve, reject) {
-          if (dom.isVisible(_this24._node) || dom.getDataset(_this24._node, 'animating') === 'true') {
+          if (dom.isVisible(_this25._node) || dom.getDataset(_this25._node, 'animating') === 'true') {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this24._node, 'show.frost.toast')) {
+          if (!DOM._triggerEvent(_this25._node, 'show.frost.toast')) {
             return reject();
           }
 
-          dom.setDataset(_this24._node, 'animating', 'true');
-          dom.show(_this24._node);
-          return dom.fadeIn(_this24._node, {
-            duration: _this24._settings.duration
+          dom.setDataset(_this25._node, 'animating', 'true');
+          dom.show(_this25._node);
+          return dom.fadeIn(_this25._node, {
+            duration: _this25._settings.duration
           }).then(function (_) {
-            dom.triggerEvent(_this24._node, 'shown.frost.toast');
+            dom.triggerEvent(_this25._node, 'shown.frost.toast');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeAttribute(_this24._node, 'data-animating');
+            return dom.removeAttribute(_this25._node, 'data-animating');
           });
         });
       }
@@ -2742,31 +2891,31 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "hide",
       value: function hide() {
-        var _this25 = this;
+        var _this26 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!_this25._tooltip) {
+          if (!_this26._tooltip) {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this25._node, 'hide.frost.tooltip')) {
+          if (!DOM._triggerEvent(_this26._node, 'hide.frost.tooltip')) {
             return reject();
           }
 
-          dom.setDataset(_this25._tooltip, 'animating', 'true');
-          dom.stop(_this25._tooltip);
-          dom.fadeOut(_this25._tooltip, {
-            duration: _this25._settings.duration
+          dom.setDataset(_this26._tooltip, 'animating', 'true');
+          dom.stop(_this26._tooltip);
+          dom.fadeOut(_this26._tooltip, {
+            duration: _this26._settings.duration
           }).then(function (_) {
-            _this25._popper.destroy();
+            _this26._popper.destroy();
 
-            dom.remove(_this25._tooltip);
-            _this25._tooltip = null;
-            _this25._popper = null;
-            dom.triggerEvent(_this25._node, 'hidden.frost.tooltip');
+            dom.remove(_this26._tooltip);
+            _this26._tooltip = null;
+            _this26._popper = null;
+            dom.triggerEvent(_this26._node, 'hidden.frost.tooltip');
             resolve();
           })["catch"](function (_) {
-            dom.removeAttribute(_this25._tooltip, 'data-animating');
+            dom.removeAttribute(_this26._tooltip, 'data-animating');
             reject();
           });
         });
@@ -2779,30 +2928,30 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show() {
-        var _this26 = this;
+        var _this27 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this26._tooltip) {
+          if (_this27._tooltip) {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this26._node, 'show.frost.tooltip')) {
+          if (!DOM._triggerEvent(_this27._node, 'show.frost.tooltip')) {
             return reject();
           }
 
-          _this26._render();
+          _this27._render();
 
-          dom.setDataset(_this26._tooltip, 'animating', 'true');
-          dom.addClass(_this26._tooltip, 'show');
-          dom.fadeIn(_this26._tooltip, {
-            duration: _this26._settings.duration
+          dom.setDataset(_this27._tooltip, 'animating', 'true');
+          dom.addClass(_this27._tooltip, 'show');
+          dom.fadeIn(_this27._tooltip, {
+            duration: _this27._settings.duration
           }).then(function (_) {
-            dom.triggerEvent(_this26._node, 'shown.frost.tooltip');
+            dom.triggerEvent(_this27._node, 'shown.frost.tooltip');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeAttribute(_this26._popover, 'data-animating');
+            return dom.removeAttribute(_this27._popover, 'data-animating');
           });
         });
       }
@@ -2926,46 +3075,46 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Tooltip.
      */
     _events: function _events() {
-      var _this27 = this;
+      var _this28 = this;
 
       this._hideEvent = function (_) {
-        if (!_this27._enabled || !_this27._tooltip) {
+        if (!_this28._enabled || !_this28._tooltip) {
           return;
         }
 
-        dom.stop(_this27._tooltip);
+        dom.stop(_this28._tooltip);
 
-        _this27.hide()["catch"](function (_) {});
+        _this28.hide()["catch"](function (_) {});
       };
 
       this._hoverEvent = function (_) {
-        if (!_this27._enabled) {
+        if (!_this28._enabled) {
           return;
         }
 
-        dom.addEventOnce(_this27._node, 'mouseout.frost.tooltip', _this27._hideEvent);
+        dom.addEventOnce(_this28._node, 'mouseout.frost.tooltip', _this28._hideEvent);
 
-        _this27.show()["catch"](function (_) {});
+        _this28.show()["catch"](function (_) {});
       };
 
       this._focusEvent = function (_) {
-        if (!_this27._enabled) {
+        if (!_this28._enabled) {
           return;
         }
 
-        dom.addEventOnce(_this27._node, 'blur.frost.tooltip', _this27._hideEvent);
+        dom.addEventOnce(_this28._node, 'blur.frost.tooltip', _this28._hideEvent);
 
-        _this27.show()["catch"](function (_) {});
+        _this28.show()["catch"](function (_) {});
       };
 
       this._clickEvent = function (e) {
         e.preventDefault();
 
-        if (!_this27._enabled) {
+        if (!_this28._enabled) {
           return;
         }
 
-        _this27.toggle()["catch"](function (_) {});
+        _this28.toggle()["catch"](function (_) {});
       };
 
       if (this._triggers.includes('hover')) {

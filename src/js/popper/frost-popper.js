@@ -4,10 +4,7 @@ Popper.defaults = {
     position: 'center',
     fixed: false,
     spacing: 0,
-    width: 'auto',
-    zIndex: 1000
+    useGpu: true
 };
-
-Popper._poppers = new Map();
 
 UI.Popper = Popper;

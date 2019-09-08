@@ -62,7 +62,7 @@ class Collapse {
             }).catch(_ =>
                 reject()
             ).finally(_ =>
-                dom.removeAttribute(targets, 'data-animating')
+                dom.removeDataset(targets, 'animating')
             );
         });
     }
@@ -100,7 +100,7 @@ class Collapse {
             }).catch(_ =>
                 reject()
             ).finally(_ =>
-                dom.removeAttribute(targets, 'data-animating')
+                dom.removeDataset(targets, 'animating')
             );
         });
     }
@@ -150,7 +150,7 @@ class Collapse {
             }).catch(_ =>
                 reject()
             ).finally(_ =>
-                dom.removeAttribute(targets, 'data-animating')
+                dom.removeDataset(targets, 'animating')
             );
         });
     }
