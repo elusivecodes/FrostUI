@@ -99,7 +99,7 @@ class Dropdown {
                 }),
                 dom.animate(
                     this._menuNode,
-                    _ => this._popper.update(),
+                    _ => this._popper && this._popper.update(),
                     {
                         duration: this._settings.duration
                     }
@@ -144,13 +144,16 @@ class Dropdown {
                 }),
                 dom.animate(
                     this._menuNode,
-                    _ => this._popper.update(),
+                    _ => this._popper && this._popper.update(),
                     {
                         duration: this._settings.duration
                     }
                 )
             ]).then(_ => {
-                this._popper.update();
+                if (this._popper) {
+                    this._popper.update();
+                }
+
                 dom.addEventOnce(document, 'click.frost.dropdown', this._windowClickEvent);
                 dom.triggerEvent(this._node, 'shown.frost.dropdown');
                 resolve();
@@ -159,7 +162,6 @@ class Dropdown {
             ).finally(_ =>
                 dom.removeAttribute(this._menuNode, 'data-animating')
             );
-            window.requestAnimationFrame(_ => this._popper.update());
         });
     }
 

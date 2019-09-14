@@ -1015,7 +1015,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             duration: _this10._settings.duration,
             useGpu: false
           }), dom.animate(_this10._menuNode, function (_) {
-            return _this10._popper.update();
+            return _this10._popper && _this10._popper.update();
           }, {
             duration: _this10._settings.duration
           })]).then(function (_) {
@@ -1057,11 +1057,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             duration: _this11._settings.duration,
             useGpu: false
           }), dom.animate(_this11._menuNode, function (_) {
-            return _this11._popper.update();
+            return _this11._popper && _this11._popper.update();
           }, {
             duration: _this11._settings.duration
           })]).then(function (_) {
-            _this11._popper.update();
+            if (_this11._popper) {
+              _this11._popper.update();
+            }
 
             dom.addEventOnce(document, 'click.frost.dropdown', _this11._windowClickEvent);
             dom.triggerEvent(_this11._node, 'shown.frost.dropdown');
@@ -1070,9 +1072,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             return reject();
           })["finally"](function (_) {
             return dom.removeAttribute(_this11._menuNode, 'data-animating');
-          });
-          window.requestAnimationFrame(function (_) {
-            return _this11._popper.update();
           });
         });
       }
