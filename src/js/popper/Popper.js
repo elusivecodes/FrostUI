@@ -7,21 +7,18 @@ class Popper {
     /**
      * New Popper constructor.
      * @param {HTMLElement} node The input node.
-     * @param {HTMLElement} reference The reference node.
-     * @param {object} [settings] The options to create the Popper with.
+     * @param {object} settings The options to create the Popper with.
      * @returns {Popper} A new Popper object.
      */
-    constructor(node, reference, settings) {
+    constructor(node, settings) {
         this._node = node;
-        this._referenceNode = reference;
-
-        this._fixed = dom.isFixed(this._referenceNode);
-
         this._settings = {
             ...Popper.defaults,
             ...dom.getDataset(this._node),
             ...settings
         };
+
+        this._fixed = dom.isFixed(this._settings.reference);
 
         this._relativeParent = dom.closest(
             this._node,
@@ -81,28 +78,38 @@ class Popper {
 
         // calculate boxes
         const nodeBox = dom.rect(this._node, !this._fixed);
-        const referenceBox = dom.rect(this._referenceNode, !this._fixed);
-        const windowContainer = this._windowContainer();
+        const referenceBox = dom.rect(this._settings.reference, !this._fixed);
+        const windowBox = Popper.windowContainer(this._fixed);
 
         // check object could be seen
-        if (this._isNodeHidden(nodeBox, referenceBox, windowContainer)) {
+        if (Popper.isNodeHidden(nodeBox, referenceBox, windowBox, this._settings.spacing)) {
             return;
         }
 
-        const containerBox = this._scrollParent ?
+        const scrollBox = this._scrollParent ?
             dom.rect(this._scrollParent, !this._fixed) :
-            windowContainer;
+            null;
 
-        // check if reference is visible (within scroll parent)
-        if (this._scrollParent) {
-            if (containerBox.top > referenceBox.bottom ||
-                containerBox.right < referenceBox.left ||
-                containerBox.bottom < referenceBox.top ||
-                containerBox.left > referenceBox.right) {
-                dom.hide(this._node);
-                return;
-            }
-            dom.show(this._node);
+        const containerBox = this._settings.container ?
+            dom.rect(this._settings.container, !this._fixed) :
+            null;
+
+        const minimumBox = {
+            ...windowBox
+        };
+
+        if (scrollBox) {
+            minimumBox.top = Math.max(minimumBox.top, scrollBox.top);
+            minimumBox.right = Math.min(minimumBox.right, scrollBox.right);
+            minimumBox.bottom = Math.min(minimumBox.bottom, scrollBox.bottom);
+            minimumBox.left = Math.max(minimumBox.left, scrollBox.left);
+        }
+
+        if (containerBox) {
+            minimumBox.top = Math.max(minimumBox.top, containerBox.top);
+            minimumBox.right = Math.min(minimumBox.right, containerBox.right);
+            minimumBox.bottom = Math.min(minimumBox.bottom, containerBox.bottom);
+            minimumBox.left = Math.max(minimumBox.left, containerBox.left);
         }
 
         // get optimal placement
@@ -111,12 +118,12 @@ class Popper {
             Popper.getPopperPlacement(
                 nodeBox,
                 referenceBox,
-                containerBox,
+                minimumBox,
                 this._settings.placement,
                 this._settings.spacing + 2
             );
 
-        dom.setDataset(this._referenceNode, 'placement', placement);
+        dom.setDataset(this._settings.reference, 'placement', placement);
         dom.setDataset(this._node, 'placement', placement);
 
         // get auto position
@@ -125,7 +132,7 @@ class Popper {
             Popper.getPopperPosition(
                 nodeBox,
                 referenceBox,
-                containerBox,
+                minimumBox,
                 placement,
                 this._settings.position
             );
@@ -137,17 +144,37 @@ class Popper {
         };
 
         // offset for relative parent
-        this._adjustRelative(offset, containerBox);
+        const relativeBox = this._relativeParent ?
+            dom.rect(this._relativeParent, !this._fixed) :
+            null;
+
+        if (relativeBox) {
+            offset.x -= Math.round(relativeBox.x);
+            offset.y -= Math.round(relativeBox.y);
+        }
+
+        // update arrow
+        this._updateArrow(nodeBox, referenceBox, placement, position);
 
         // offset for placement
-        this._adjustPlacement(offset, nodeBox, referenceBox, placement);
+        Popper.adjustPlacement(offset, nodeBox, referenceBox, placement, this._settings.spacing);
 
         // offset for position
-        this._adjustPosition(offset, nodeBox, referenceBox, placement, position);
+        Popper.adjustPosition(offset, nodeBox, referenceBox, placement, position);
 
         // compensate for margins
         offset.x -= parseInt(dom.css(this._node, 'margin-left'));
         offset.y -= parseInt(dom.css(this._node, 'margin-top'));
+
+        // corrective positioning
+        console.log(this._settings);
+        Popper.adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, this._settings.minContact);
+
+        // compensate for scroll parent
+        if (this._scrollParent) {
+            offset.x += dom.getScrollX(this._scrollParent);
+            offset.y += dom.getScrollY(this._scrollParent);
+        }
 
         // compensate for fixed position
         if (this._fixed) {
@@ -155,24 +182,16 @@ class Popper {
             offset.y += dom.getScrollY(window);
         }
 
-        // corrective positioning
-        this._adjustConstrain(offset, nodeBox, referenceBox, containerBox, placement);
-
-        // update arrow
-        this._updateArrow(nodeBox, referenceBox, placement, position);
-
         // update position
-        this._updatePosition(offset);
-
-        if (this._settings.arrow) {
-            const arrowBox = dom.rect(this._settings.arrow, !this._fixed);
-            if (arrowBox.top < containerBox.top ||
-                arrowBox.right > containerBox.right ||
-                arrowBox.bottom > containerBox.bottom ||
-                arrowBox.left < containerBox.left) {
-                dom.hide(this._settings.arrow);
-            }
+        const style = {};
+        if (this._settings.useGpu) {
+            style.transform = 'translate3d(' + offset.x + 'px , ' + offset.y + 'px , 0)'
+        } else {
+            style.marginLeft = offset.x;
+            style.marginTop = offset.y;
         }
+
+        dom.setStyle(this._node, style);
     }
 
 }

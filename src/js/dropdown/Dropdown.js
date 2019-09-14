@@ -37,14 +37,13 @@ class Dropdown {
         if (!dom.closest(this._node, '.navbar-nav').length) {
             this._popper = new Popper(
                 this._menuNode,
-                this._referenceNode,
                 {
+                    reference: this._referenceNode,
                     placement: this._settings.placement,
                     position: this._settings.position,
                     fixed: this._settings.fixed,
                     spacing: this._settings.spacing,
-                    width: this._settings.width,
-                    zIndex: this._settings.zIndex
+                    minContact: this._settings.minContact
                 }
             );
             this._getDir = _ => dom.getDataset(this._referenceNode, 'placement');

@@ -15,8 +15,7 @@ Tooltip.defaults = {
     position: 'center',
     fixed: false,
     spacing: 2,
-    width: false,
-    zIndex: 1000
+    minContact: false
 };
 
 // Auto-initialize Tooltip from data-toggle

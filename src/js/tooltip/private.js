@@ -93,15 +93,14 @@ Object.assign(Tooltip.prototype, {
 
         this._popper = new Popper(
             this._tooltip,
-            this._node,
             {
+                reference: this._node,
                 arrow: arrow,
                 placement: this._settings.placement,
                 position: this._settings.position,
                 fixed: this._settings.fixed,
                 spacing: this._settings.spacing,
-                width: this._settings.width,
-                zIndex: this._settings.zIndex
+                minContact: this._settings.minContact
             }
         )
     }

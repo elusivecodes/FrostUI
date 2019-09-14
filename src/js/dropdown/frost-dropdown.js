@@ -5,8 +5,7 @@ Dropdown.defaults = {
     position: 'start',
     fixed: false,
     spacing: 2,
-    width: false,
-    zIndex: 1000
+    minContact: false
 };
 
 // Auto-initialize Dropdown from data-toggle

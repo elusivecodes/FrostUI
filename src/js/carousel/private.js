@@ -63,13 +63,11 @@ Object.assign(Carousel.prototype, {
 
             e.preventDefault();
 
-            try {
-                if (e.key === 'ArrowLeft') {
-                    this.prev().catch(_ => { });
-                } else if (e.key === 'ArrowRight') {
-                    this.next().catch(_ => { });
-                }
-            } catch (e) { }
+            if (e.key === 'ArrowLeft') {
+                this.prev().catch(_ => { });
+            } else if (e.key === 'ArrowRight') {
+                this.next().catch(_ => { });
+            }
         };
 
         this._mouseEnterEvent = _ => this.pause();
@@ -95,11 +93,12 @@ Object.assign(Carousel.prototype, {
      */
     _setTimer() {
         const interval = dom.getDataset(this._items[this._index], 'interval');
-        this._timer = setTimeout(_ => {
-            try {
-                this.cycle();
-            } catch (e) { }
-        }, interval ? interval : this._settings.interval);
+        this._timer = setTimeout(
+            _ => this.cycle(),
+            interval ?
+                interval :
+                this._settings.interval
+        );
     }
 
 });

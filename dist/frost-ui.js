@@ -496,13 +496,11 @@
 
                 e.preventDefault();
 
-                try {
-                    if (e.key === 'ArrowLeft') {
-                        this.prev().catch(_ => { });
-                    } else if (e.key === 'ArrowRight') {
-                        this.next().catch(_ => { });
-                    }
-                } catch (e) { }
+                if (e.key === 'ArrowLeft') {
+                    this.prev().catch(_ => { });
+                } else if (e.key === 'ArrowRight') {
+                    this.next().catch(_ => { });
+                }
             };
 
             this._mouseEnterEvent = _ => this.pause();
@@ -528,11 +526,12 @@
          */
         _setTimer() {
             const interval = dom.getDataset(this._items[this._index], 'interval');
-            this._timer = setTimeout(_ => {
-                try {
-                    this.cycle();
-                } catch (e) { }
-            }, interval ? interval : this._settings.interval);
+            this._timer = setTimeout(
+                _ => this.cycle(),
+                interval ?
+                    interval :
+                    this._settings.interval
+            );
         }
 
     });
@@ -853,14 +852,13 @@
             if (!dom.closest(this._node, '.navbar-nav').length) {
                 this._popper = new Popper(
                     this._menuNode,
-                    this._referenceNode,
                     {
+                        reference: this._referenceNode,
                         placement: this._settings.placement,
                         position: this._settings.position,
                         fixed: this._settings.fixed,
                         spacing: this._settings.spacing,
-                        width: this._settings.width,
-                        zIndex: this._settings.zIndex
+                        minContact: this._settings.minContact
                     }
                 );
                 this._getDir = _ => dom.getDataset(this._referenceNode, 'placement');
@@ -999,8 +997,7 @@
         position: 'start',
         fixed: false,
         spacing: 2,
-        width: false,
-        zIndex: 1000
+        minContact: false
     };
 
     // Auto-initialize Dropdown from data-toggle
@@ -1560,8 +1557,7 @@
         position: 'center',
         fixed: false,
         spacing: 7,
-        width: false,
-        zIndex: 1000
+        minContact: false
     };
 
     // Auto-initialize Popover from data-toggle
@@ -1717,15 +1713,14 @@
 
             this._popper = new Popper(
                 this._popover,
-                this._node,
                 {
+                    reference: this._node,
                     arrow: arrow,
                     placement: this._settings.placement,
                     position: this._settings.position,
                     fixed: this._settings.fixed,
                     spacing: this._settings.spacing,
-                    width: this._settings.width,
-                    zIndex: this._settings.zIndex
+                    minContact: this._settings.minContact
                 }
             )
         }
@@ -1742,21 +1737,18 @@
         /**
          * New Popper constructor.
          * @param {HTMLElement} node The input node.
-         * @param {HTMLElement} reference The reference node.
-         * @param {object} [settings] The options to create the Popper with.
+         * @param {object} settings The options to create the Popper with.
          * @returns {Popper} A new Popper object.
          */
-        constructor(node, reference, settings) {
+        constructor(node, settings) {
             this._node = node;
-            this._referenceNode = reference;
-
-            this._fixed = dom.isFixed(this._referenceNode);
-
             this._settings = {
                 ...Popper.defaults,
                 ...dom.getDataset(this._node),
                 ...settings
             };
+
+            this._fixed = dom.isFixed(this._settings.reference);
 
             this._relativeParent = dom.closest(
                 this._node,
@@ -1816,28 +1808,38 @@
 
             // calculate boxes
             const nodeBox = dom.rect(this._node, !this._fixed);
-            const referenceBox = dom.rect(this._referenceNode, !this._fixed);
-            const windowContainer = this._windowContainer();
+            const referenceBox = dom.rect(this._settings.reference, !this._fixed);
+            const windowBox = Popper.windowContainer(this._fixed);
 
             // check object could be seen
-            if (this._isNodeHidden(nodeBox, referenceBox, windowContainer)) {
+            if (Popper.isNodeHidden(nodeBox, referenceBox, windowBox, this._settings.spacing)) {
                 return;
             }
 
-            const containerBox = this._scrollParent ?
+            const scrollBox = this._scrollParent ?
                 dom.rect(this._scrollParent, !this._fixed) :
-                windowContainer;
+                null;
 
-            // check if reference is visible (within scroll parent)
-            if (this._scrollParent) {
-                if (containerBox.top > referenceBox.bottom ||
-                    containerBox.right < referenceBox.left ||
-                    containerBox.bottom < referenceBox.top ||
-                    containerBox.left > referenceBox.right) {
-                    dom.hide(this._node);
-                    return;
-                }
-                dom.show(this._node);
+            const containerBox = this._settings.container ?
+                dom.rect(this._settings.container, !this._fixed) :
+                null;
+
+            const minimumBox = {
+                ...windowBox
+            };
+
+            if (scrollBox) {
+                minimumBox.top = Math.max(minimumBox.top, scrollBox.top);
+                minimumBox.right = Math.min(minimumBox.right, scrollBox.right);
+                minimumBox.bottom = Math.min(minimumBox.bottom, scrollBox.bottom);
+                minimumBox.left = Math.max(minimumBox.left, scrollBox.left);
+            }
+
+            if (containerBox) {
+                minimumBox.top = Math.max(minimumBox.top, containerBox.top);
+                minimumBox.right = Math.min(minimumBox.right, containerBox.right);
+                minimumBox.bottom = Math.min(minimumBox.bottom, containerBox.bottom);
+                minimumBox.left = Math.max(minimumBox.left, containerBox.left);
             }
 
             // get optimal placement
@@ -1846,12 +1848,12 @@
                 Popper.getPopperPlacement(
                     nodeBox,
                     referenceBox,
-                    containerBox,
+                    minimumBox,
                     this._settings.placement,
                     this._settings.spacing + 2
                 );
 
-            dom.setDataset(this._referenceNode, 'placement', placement);
+            dom.setDataset(this._settings.reference, 'placement', placement);
             dom.setDataset(this._node, 'placement', placement);
 
             // get auto position
@@ -1860,7 +1862,7 @@
                 Popper.getPopperPosition(
                     nodeBox,
                     referenceBox,
-                    containerBox,
+                    minimumBox,
                     placement,
                     this._settings.position
                 );
@@ -1872,17 +1874,37 @@
             };
 
             // offset for relative parent
-            this._adjustRelative(offset, containerBox);
+            const relativeBox = this._relativeParent ?
+                dom.rect(this._relativeParent, !this._fixed) :
+                null;
+
+            if (relativeBox) {
+                offset.x -= Math.round(relativeBox.x);
+                offset.y -= Math.round(relativeBox.y);
+            }
+
+            // update arrow
+            this._updateArrow(nodeBox, referenceBox, placement, position);
 
             // offset for placement
-            this._adjustPlacement(offset, nodeBox, referenceBox, placement);
+            Popper.adjustPlacement(offset, nodeBox, referenceBox, placement, this._settings.spacing);
 
             // offset for position
-            this._adjustPosition(offset, nodeBox, referenceBox, placement, position);
+            Popper.adjustPosition(offset, nodeBox, referenceBox, placement, position);
 
             // compensate for margins
             offset.x -= parseInt(dom.css(this._node, 'margin-left'));
             offset.y -= parseInt(dom.css(this._node, 'margin-top'));
+
+            // corrective positioning
+            console.log(this._settings);
+            Popper.adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, this._settings.minContact);
+
+            // compensate for scroll parent
+            if (this._scrollParent) {
+                offset.x += dom.getScrollX(this._scrollParent);
+                offset.y += dom.getScrollY(this._scrollParent);
+            }
 
             // compensate for fixed position
             if (this._fixed) {
@@ -1890,24 +1912,16 @@
                 offset.y += dom.getScrollY(window);
             }
 
-            // corrective positioning
-            this._adjustConstrain(offset, nodeBox, referenceBox, containerBox, placement);
-
-            // update arrow
-            this._updateArrow(nodeBox, referenceBox, placement, position);
-
             // update position
-            this._updatePosition(offset);
-
-            if (this._settings.arrow) {
-                const arrowBox = dom.rect(this._settings.arrow, !this._fixed);
-                if (arrowBox.top < containerBox.top ||
-                    arrowBox.right > containerBox.right ||
-                    arrowBox.bottom > containerBox.bottom ||
-                    arrowBox.left < containerBox.left) {
-                    dom.hide(this._settings.arrow);
-                }
+            const style = {};
+            if (this._settings.useGpu) {
+                style.transform = 'translate3d(' + offset.x + 'px , ' + offset.y + 'px , 0)'
+            } else {
+                style.marginLeft = offset.x;
+                style.marginTop = offset.y;
             }
+
+            dom.setStyle(this._node, style);
         }
 
     }
@@ -1915,10 +1929,14 @@
 
     // Default Popper options
     Popper.defaults = {
+        reference: null,
+        container: null,
+        arrow: null,
         placement: 'bottom',
         position: 'center',
         fixed: false,
         spacing: 0,
+        minContact: false,
         useGpu: true
     };
 
@@ -1932,133 +1950,6 @@
     Object.assign(Popper.prototype, {
 
         /**
-         * Constrain the offset within the containerBox.
-         * @param {object} offset The offset object.
-         * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
-         * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
-         * @param {DOMRect} containerBox The computed bounding rectangle of the container.
-         * @param {string} placement The actual placement of the Popper.
-         */
-        _adjustConstrain(offset, nodeBox, referenceBox, containerBox, placement) {
-            if (this._fixed) {
-                return;
-            }
-
-            if (['left', 'right'].includes(placement)) {
-                const offsetY = this._scrollParent || this._relativeParent ?
-                    offset.y + containerBox.top :
-                    offset.y;
-                if (offsetY + nodeBox.height + this._settings.spacing > containerBox.bottom) {
-                    // bottom of offset node is below the container
-                    const diff = offsetY + nodeBox.height - (containerBox.bottom);
-                    offset.y = Math.max(
-                        referenceBox.height >= nodeBox.height ?
-                            referenceBox.top :
-                            referenceBox.top - (nodeBox.height - referenceBox.height),
-                        offset.y - diff
-                    );
-                } else if (offsetY - this._settings.spacing < containerBox.top) {
-                    // top of offset node is above the container
-                    const diff = offsetY - containerBox.top;
-                    offset.y = Math.min(
-                        referenceBox.height >= nodeBox.height ?
-                            referenceBox.top - (referenceBox.top - nodeBox.top) :
-                            referenceBox.top,
-                        offset.y - diff
-                    );
-                }
-            } else {
-                const offsetX = this._scrollParent || this._relativeParent ?
-                    offset.x + containerBox.left :
-                    offset.x;
-                if (offsetX + nodeBox.width + this._settings.spacing > containerBox.right) {
-                    // right of offset node is to the right of the container
-                    const diff = offsetX + nodeBox.width - containerBox.right;
-                    offset.x = Math.max(
-                        referenceBox.width >= nodeBox.width ?
-                            referenceBox.left :
-                            referenceBox.left - (nodeBox.width - referenceBox.width),
-                        offset.x - diff
-                    );
-                } else if (offsetX - this._settings.spacing < containerBox.left) {
-                    // left of offset node is to the left of the container
-                    const diff = offsetX - containerBox.left;
-                    offset.x = Math.min(
-                        referenceBox.width >= nodeBox.width ?
-                            referenceBox.left - (referenceBox.width - nodeBox.width) :
-                            referenceBox.left,
-                        offset.x - diff
-                    );
-                }
-            }
-        },
-
-        /**
-         * Adjust the offset for the placement.
-         * @param {object} offset The offset object.
-         * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
-         * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
-         * @param {string} placement The actual placement of the Popper.
-         */
-        _adjustPlacement(offset, nodeBox, referenceBox, placement) {
-            if (placement === 'top') {
-                offset.y -= Math.round(nodeBox.height) + this._settings.spacing;
-            } else if (placement === 'right') {
-                offset.x += Math.round(referenceBox.width) + this._settings.spacing;
-            } else if (placement === 'bottom') {
-                offset.y += Math.round(referenceBox.height) + this._settings.spacing;
-            } else if (placement === 'left') {
-                offset.x -= Math.round(nodeBox.width) + this._settings.spacing;
-            }
-        },
-
-        /**
-         * Adjust the offset for the placement.
-         * @param {object} offset The offset object.
-         * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
-         * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
-         * @param {string} placement The actual placement of the Popper.
-         * @param {string} position The actual position of the Popper.
-         */
-        _adjustPosition(offset, nodeBox, referenceBox, placement, position) {
-            if (position === 'start') {
-                return;
-            }
-
-            if (['top', 'bottom'].includes(placement)) {
-                const deltaX = Math.round(nodeBox.width) - Math.round(referenceBox.width);
-
-                if (position === 'center') {
-                    offset.x -= Math.round(deltaX / 2);
-                } else if (position === 'end') {
-                    offset.x -= deltaX;
-                }
-            } else {
-                const deltaY = Math.round(nodeBox.height) - Math.round(referenceBox.height);
-
-                if (position === 'center') {
-                    offset.y -= Math.round(deltaY / 2);
-                } else if (position === 'end') {
-                    offset.y -= deltaY;
-                }
-            }
-        },
-
-        /**
-         * Adjust the offset for a relative positioned parent.
-         * @param {object} offset The offset object.
-         */
-        _adjustRelative(offset) {
-            if (!this._relativeParent) {
-                return;
-            }
-
-            const relativeParentBox = dom.rect(this._relativeParent, !this._fixed);
-            offset.x -= Math.round(relativeParentBox.x);
-            offset.y -= Math.round(relativeParentBox.y);
-        },
-
-        /**
          * Attach events for the Popper.
          */
         _events() {
@@ -2069,21 +1960,6 @@
             if (this._scrollParent) {
                 dom.addEvent(this._scrollParent, 'scroll.frost.popper', this._updateEvent);
             }
-        },
-
-        /**
-         * Returns true if the node can not be visible inside the window.
-         * @param {object} offset The offset object.
-         * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
-         * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
-         * @param {object} windowContainer The computed bounding rectangle of the window.
-         * @returns {Boolean} TRUE if the node can not be visible inside the window, otherwise FALSE.
-         */
-        _isNodeHidden(nodeBox, referenceBox, windowContainer) {
-            return windowContainer.top > referenceBox.bottom + nodeBox.height + this._settings.spacing ||
-                windowContainer.left > referenceBox.right + nodeBox.width + this._settings.spacing ||
-                windowContainer.bottom < referenceBox.top - nodeBox.height - this._settings.spacing ||
-                windowContainer.right < referenceBox.left - nodeBox.width - this._settings.spacing;
         },
 
         /**
@@ -2131,48 +2007,6 @@
             }
 
             dom.setStyle(this._settings.arrow, arrowStyles);
-        },
-
-        /**
-         * Update the position of the node.
-         * @param {object} offset The offset object.
-         */
-        _updatePosition(offset) {
-            const style = {};
-            if (this._settings.useGpu) {
-                style.transform = 'translate3d(' + offset.x + 'px , ' + offset.y + 'px , 0)'
-            } else {
-                style.marginLeft = offset.x;
-                style.marginTop = offset.y;
-            }
-
-            dom.setStyle(this._node, style);
-        },
-
-        /**
-         * Calculate the computed bounding rectangle of the window.
-         * @returns {object} The computed bounding rectangle of the window.
-         */
-        _windowContainer() {
-            const scrollX = this._fixed ?
-                0 :
-                dom.getScrollX(window);
-            const scrollY = this._fixed ?
-                0 :
-                dom.getScrollY(window);
-            const windowWidth = dom.width(document);
-            const windowHeight = dom.height(document);
-
-            return {
-                x: scrollX,
-                y: scrollY,
-                w: windowWidth,
-                h: windowHeight,
-                top: scrollY,
-                right: scrollX + windowWidth,
-                bottom: scrollY + windowHeight,
-                left: scrollX
-            };
         }
 
     });
@@ -2185,19 +2019,137 @@
     Object.assign(Popper, {
 
         /**
+         * Constrain the offset within the minimumBox.
+         * @param {object} offset The offset object.
+         * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
+         * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
+         * @param {object} minimumBox The computed minimum bounding rectangle of the container.
+         * @param {DOMRect} [relativeBox] The computed bounding rectangle of the relative parent.
+         * @param {string} placement The actual placement of the Popper.
+         * @param {number} [minContact] The minimum amount of contact to make with the reference node.
+         */
+        adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, minContact) {
+            if (['left', 'right'].includes(placement)) {
+                const offsetY = relativeBox ?
+                    offset.y + relativeBox.top :
+                    offset.y;
+                const refTop = relativeBox ?
+                    referenceBox.top - relativeBox.top :
+                    referenceBox.top;
+                const minSize = minContact ?
+                    minContact :
+                    referenceBox.height;
+                if (offsetY + nodeBox.height > minimumBox.bottom) {
+                    // bottom of offset node is below the container
+                    const diff = offsetY + nodeBox.height - (minimumBox.bottom);
+                    offset.y = Math.max(
+                        refTop - nodeBox.height + minSize,
+                        offset.y - diff
+                    );
+                } else if (offsetY < minimumBox.top) {
+                    // top of offset node is above the container
+                    const diff = offsetY - minimumBox.top;
+                    offset.y = Math.min(
+                        refTop + referenceBox.height - minSize,
+                        offset.y - diff
+                    );
+                }
+            } else {
+                const offsetX = relativeBox ?
+                    offset.x + minimumBox.left :
+                    offset.x;
+                const refLeft = relativeBox ?
+                    referenceBox.left - relativeBox.left :
+                    referenceBox.left;
+                const minSize = minContact ?
+                    minContact :
+                    referenceBox.width;
+                if (offsetX + nodeBox.width > minimumBox.right) {
+                    // right of offset node is to the right of the container
+                    const diff = offsetX + nodeBox.width - minimumBox.right;
+                    offset.x = Math.max(
+                        refLeft - nodeBox.width + minSize,
+                        offset.x - diff
+                    );
+                } else if (offsetX < minimumBox.left) {
+                    // left of offset node is to the left of the container
+                    const diff = offsetX - minimumBox.left;
+                    offset.x = Math.min(
+                        referenceBox.width >= nodeBox.width ?
+                            refLeft + referenceBox.width - minSize :
+                            refLeft,
+                        offset.x - diff
+                    );
+                }
+            }
+        },
+
+        /**
+         * Adjust the offset for the placement.
+         * @param {object} offset The offset object.
+         * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
+         * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
+         * @param {string} placement The actual placement of the Popper.
+         * @param {number} spacing The amount of spacing to use.
+         */
+        adjustPlacement(offset, nodeBox, referenceBox, placement, spacing) {
+            if (placement === 'top') {
+                offset.y -= Math.round(nodeBox.height) + spacing
+            } else if (placement === 'right') {
+                offset.x += Math.round(referenceBox.width) + spacing
+            } else if (placement === 'bottom') {
+                offset.y += Math.round(referenceBox.height) + spacing
+            } else if (placement === 'left') {
+                offset.x -= Math.round(nodeBox.width) + spacing
+            }
+        },
+
+        /**
+         * Adjust the offset for the placement.
+         * @param {object} offset The offset object.
+         * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
+         * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
+         * @param {string} placement The actual placement of the Popper.
+         * @param {string} position The actual position of the Popper.
+         */
+        adjustPosition(offset, nodeBox, referenceBox, placement, position) {
+            if (position === 'start') {
+                return;
+            }
+
+            if (['top', 'bottom'].includes(placement)) {
+                const deltaX = Math.round(nodeBox.width) - Math.round(referenceBox.width);
+
+                if (position === 'center') {
+                    offset.x -= Math.round(deltaX / 2);
+                } else if (position === 'end') {
+                    offset.x -= deltaX;
+                }
+            } else {
+                const deltaY = Math.round(nodeBox.height) - Math.round(referenceBox.height);
+
+                if (position === 'center') {
+                    offset.y -= Math.round(deltaY / 2);
+                } else if (position === 'end') {
+                    offset.y -= deltaY;
+                }
+            }
+        },
+
+        /**
          * Get the actual placement of the Popper.
-         * @param {object} nodeBox The computed bounding rectangle of the node.
-         * @param {object} referenceBox The computed bounding rectangle of the reference.
-         * @param {object} containerBox The computed bounding rectangle of the container.
+         * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
+         * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
+         * @param {object} minimumBox The computed minimum bounding rectangle of the container.
          * @param {string} placement The initial placement of the Popper.
          * @param {number} spacing The amount of spacing to use.
          * @returns {string} The new placement of the Popper.
          */
-        getPopperPlacement(nodeBox, referenceBox, containerBox, placement, spacing) {
-            const spaceTop = referenceBox.top - containerBox.top;
-            const spaceRight = containerBox.right - referenceBox.right;
-            const spaceBottom = containerBox.bottom - referenceBox.bottom;
-            const spaceLeft = referenceBox.left - containerBox.left;
+        getPopperPlacement(nodeBox, referenceBox, minimumBox, placement, spacing) {
+            const spaceTop = referenceBox.top - minimumBox.top;
+            const spaceRight = minimumBox.right - referenceBox.right;
+            const spaceBottom = minimumBox.bottom - referenceBox.bottom;
+            const spaceLeft = referenceBox.left - minimumBox.left;
 
             if (placement === 'top') {
                 // if node is bigger than space top and there is more room on bottom
@@ -2230,21 +2182,44 @@
 
                 if (
                     maxHSpace > maxVSpace &&
-                    maxHSpace > nodeBox.width + spacing &&
-                    minVSpace + referenceBox.height - nodeBox.height > spacing
+                    maxHSpace >= nodeBox.width + spacing &&
+                    minVSpace + referenceBox.height >= nodeBox.height + spacing - Math.max(0, nodeBox.height - referenceBox.height)
                 ) {
-                    if (spaceLeft > spaceRight) {
-                        return 'left';
-                    }
-
-                    return 'right';
+                    return spaceLeft > spaceRight ?
+                        'left' :
+                        'right';
                 }
 
-                if (spaceBottom > spaceTop) {
+                const minHSpace = Math.min(spaceRight, spaceLeft);
+
+                if (
+                    maxVSpace >= nodeBox.height + spacing &&
+                    minHSpace + referenceBox.width >= nodeBox.width + spacing - Math.max(0, nodeBox.width - referenceBox.width)
+                ) {
+                    return spaceBottom > spaceTop ?
+                        'bottom' :
+                        'top';
+                }
+
+                const maxSpace = Math.max(maxVSpace, maxHSpace);
+
+                if (spaceBottom === maxSpace && spaceBottom >= nodeBox.height + spacing) {
                     return 'bottom';
                 }
 
-                return 'top';
+                if (spaceTop === maxSpace && spaceTop >= nodeBox.height + spacing) {
+                    return 'top';
+                }
+
+                if (spaceRight === maxSpace && spaceRight >= nodeBox.width + spacing) {
+                    return 'right';
+                }
+
+                if (spaceLeft === maxSpace && spaceLeft >= nodeBox.width + spacing) {
+                    return 'left';
+                }
+
+                return 'bottom';
             }
 
             return placement
@@ -2252,21 +2227,21 @@
 
         /**
          * Get the actual position of the Popper.
-         * @param {object} nodeBox The computed bounding rectangle of the node.
-         * @param {object} referenceBox The computed bounding rectangle of the reference.
-         * @param {object} containerBox The computed bounding rectangle of the container.
+         * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
+         * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
+         * @param {object} minimumBox The computed minimum bounding rectangle of the container.
          * @param {string} placement The actual placement of the Popper.
          * @param {string} position The initial position of the Popper.
          * @returns {string} The new position of the Popper.
          */
-        getPopperPosition(nodeBox, referenceBox, containerBox, placement, position) {
+        getPopperPosition(nodeBox, referenceBox, minimumBox, placement, position) {
 
             const deltaX = nodeBox.width - referenceBox.width;
             const deltaY = nodeBox.height - referenceBox.height;
 
             if (['bottom', 'top'].includes(placement)) {
-                const spaceLeft = referenceBox.left - containerBox.left;
-                const spaceRight = containerBox.right - referenceBox.right;
+                const spaceLeft = referenceBox.left - minimumBox.left;
+                const spaceRight = minimumBox.right - referenceBox.right;
 
                 if (position === 'start') {
                     if (spaceRight < deltaX) {
@@ -2303,8 +2278,8 @@
                 }
 
             } else {
-                const spaceTop = referenceBox.top - containerBox.top;
-                const spaceBottom = containerBox.bottom - referenceBox.bottom;
+                const spaceTop = referenceBox.top - minimumBox.top;
+                const spaceBottom = minimumBox.bottom - referenceBox.bottom;
 
                 if (position === 'start') {
                     if (spaceBottom < deltaY) {
@@ -2344,6 +2319,49 @@
 
             return position;
         },
+
+        /**
+         * Returns true if the node can not be visible inside the window.
+         * @param {object} offset The offset object.
+         * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
+         * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
+         * @param {object} windowContainer The computed bounding rectangle of the window.
+         * @param {number} spacing The amount of spacing to use.
+         * @returns {Boolean} TRUE if the node can not be visible inside the window, otherwise FALSE.
+         */
+        isNodeHidden(nodeBox, referenceBox, windowContainer, spacing) {
+            return windowContainer.top > referenceBox.bottom + nodeBox.height + spacing ||
+                windowContainer.left > referenceBox.right + nodeBox.width + spacing ||
+                windowContainer.bottom < referenceBox.top - nodeBox.height - spacing ||
+                windowContainer.right < referenceBox.left - nodeBox.width - spacing;
+        },
+
+        /**
+         * Calculate the computed bounding rectangle of the window.
+         * @param {Boolean} fixed Whether the Popper is fixed.
+         * @returns {object} The computed bounding rectangle of the window.
+         */
+        windowContainer(fixed) {
+            const scrollX = fixed ?
+                0 :
+                dom.getScrollX(window);
+            const scrollY = fixed ?
+                0 :
+                dom.getScrollY(window);
+            const windowWidth = dom.width(document);
+            const windowHeight = dom.height(document);
+
+            return {
+                x: scrollX,
+                y: scrollY,
+                width: windowWidth,
+                height: windowHeight,
+                top: scrollY,
+                right: scrollX + windowWidth,
+                bottom: scrollY + windowHeight,
+                left: scrollX
+            };
+        }
 
     });
 
@@ -2883,8 +2901,7 @@
         position: 'center',
         fixed: false,
         spacing: 2,
-        width: false,
-        zIndex: 1000
+        minContact: false
     };
 
     // Auto-initialize Tooltip from data-toggle
@@ -3027,15 +3044,14 @@
 
             this._popper = new Popper(
                 this._tooltip,
-                this._node,
                 {
+                    reference: this._node,
                     arrow: arrow,
                     placement: this._settings.placement,
                     position: this._settings.position,
                     fixed: this._settings.fixed,
                     spacing: this._settings.spacing,
-                    width: this._settings.width,
-                    zIndex: this._settings.zIndex
+                    minContact: this._settings.minContact
                 }
             )
         }

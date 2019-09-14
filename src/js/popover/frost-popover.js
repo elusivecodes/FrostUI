@@ -16,8 +16,7 @@ Popover.defaults = {
     position: 'center',
     fixed: false,
     spacing: 7,
-    width: false,
-    zIndex: 1000
+    minContact: false
 };
 
 // Auto-initialize Popover from data-toggle
