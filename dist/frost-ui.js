@@ -28,10 +28,12 @@
          * New Alert constructor.
          * @param {HTMLElement} node The input node.
          * @param {object} [settings] The options to create the Alert with.
+         * @param {number} [settings.duration=100] The duration of the animation.
          * @returns {Alert} A new Alert object.
          */
         constructor(node, settings) {
             this._node = node;
+
             this._settings = {
                 ...Alert.defaults,
                 ...dom.getDataset(this._node),
@@ -45,7 +47,6 @@
          * Destroy the Alert.
          */
         destroy() {
-            dom.stop(this._node, true);
             dom.removeData(this._node, 'alert');
         }
 
@@ -55,7 +56,8 @@
          */
         close() {
             return new Promise((resolve, reject) => {
-                if (dom.getDataset(this._node, 'animating') === 'true') {
+
+                if (dom.getDataset(this._node, 'animating')) {
                     return reject();
                 }
 
@@ -63,16 +65,19 @@
                     return reject();
                 }
 
-                dom.setDataset(this._node, 'animating', 'true');
+                dom.setDataset(this._node, 'animating', true);
 
                 dom.fadeOut(this._node, {
                     duration: this._settings.duration
                 }).then(_ => {
                     dom.triggerEvent(this._node, 'closed.frost.alert');
+
                     dom.remove(this._node);
+
                     resolve();
                 }).catch(_ => {
                     dom.removeDataset(this._node, 'animating');
+
                     reject();
                 });
             });
@@ -115,6 +120,7 @@
          */
         constructor(node, settings) {
             this._node = node;
+
             this._settings = {
                 ...Button.defaults,
                 ...dom.getDataset(this._node),
@@ -123,6 +129,7 @@
 
             const group = dom.closest(this._node, '[data-toggle="buttons"]');
             this._siblings = dom.find('.btn', group).filter(node => !dom.isSame(node, this._node));
+
             this._input = dom.findOne('input[type="checkbox"], input[type="radio"]', this._node);
 
             dom.setData(this._node, 'button', this);
@@ -139,22 +146,10 @@
          * Toggle the Button.
          */
         toggle() {
-            if (!this._siblings.length) {
-                if (this._input) {
-                    dom.setProperty(this._input, 'checked', !dom.getProperty(this._input, 'checked'));
-                }
-                dom.toggleClass(this._node, 'active');
-                return;
-            }
+            this._input && dom.is(this._input, '[type="radio"]') ?
+                this._toggleRadio() :
+                this._toggleCheckbox();
 
-            if (dom.hasClass(this._node, 'active')) {
-                return;
-            }
-            dom.removeClass(this._siblings, 'active');
-            dom.addClass(this._node, 'active');
-            if (this._input) {
-                dom.setProperty(this._input, 'checked', true);
-            }
         }
 
     }
@@ -178,6 +173,37 @@
 
 
     /**
+     * Button Private
+     */
+
+    Object.assign(Button.prototype, {
+
+        _toggleCheckbox() {
+            dom.toggleClass(this._node, 'active');
+
+            if (this._input) {
+                dom.setProperty(this._input, 'checked', !dom.getProperty(this._input, 'checked'));
+            }
+        },
+
+        _toggleRadio() {
+            if (dom.hasClass(this._node, 'active')) {
+                return;
+            }
+
+            dom.addClass(this._node, 'active');
+
+            dom.setProperty(this._input, 'checked', true);
+
+            if (this._siblings.length) {
+                dom.removeClass(this._siblings, 'active');
+            }
+        }
+
+    });
+
+
+    /**
      * Carousel Class
      * @class
      */
@@ -187,10 +213,17 @@
          * New Carousel constructor.
          * @param {HTMLElement} node The input node.
          * @param {object} [settings] The options to create the Carousel with.
+         * @param {number} [settings.interval=5000] The duration of the interval.
+         * @param {number} [settings.transition=500] The duration of the transition.
+         * @param {Boolean} [settings.keyboard=true] Whether to all keyboard navigation.
+         * @param {Boolean|string} [settings.ride=false] Set to "carousel" to automatically start the carousel.
+         * @param {Boolean} [settings.pause=true] Whether to pause the carousel on mouseover.
+         * @param {Boolean} [settings.wrap=true] Whether the carousel should cycle around.
          * @returns {Carousel} A new Carousel object.
          */
         constructor(node, settings) {
             this._node = node;
+
             this._settings = {
                 ...Carousel.defaults,
                 ...dom.getDataset(this._node),
@@ -198,16 +231,18 @@
             };
 
             this._items = dom.find('.carousel-item', this._node);
+
             this._index = this._items.findIndex(item => dom.hasClass(item, 'active'));
+
             this._queue = [];
 
             this._events();
 
+            dom.setData(this._node, 'carousel', this);
+
             if (this._settings.ride === 'carousel') {
                 this._setTimer();
             }
-
-            dom.setData(this._node, 'carousel', this);
         }
 
         /**
@@ -227,14 +262,19 @@
                 clearTimeout(this._timer);
             }
 
-            dom.stop(this._node, true);
-
             dom.removeEvent(this._node, 'click.frost.carousel', this._clickNextEvent);
             dom.removeEvent(this._node, 'click.frost.carousel', this._clickPrevEvent);
             dom.removeEvent(this._node, 'click.frost.carousel', this._clickSlideEvent);
-            dom.removeEvent(this._node, 'keydown.frost.carousel', this._keyDownEvent);
-            dom.removeEvent(this._node, 'mouseenter.frost.carousel', this._mouseEnterEvent);
-            dom.removeEvent(this._node, 'mouseleave.frost.carousel', this._mouseLeaveEvent);
+
+            if (this._settings.keyboard) {
+                dom.removeEvent(this._node, 'keydown.frost.carousel', this._keyDownEvent);
+            }
+
+            if (this._settings.pause) {
+                dom.removeEvent(this._node, 'mouseenter.frost.carousel', this._mouseEnterEvent);
+                dom.removeEvent(this._node, 'mouseleave.frost.carousel', this._mouseLeaveEvent);
+            }
+
             dom.removeData(this._node, 'carousel');
         }
 
@@ -250,10 +290,6 @@
          * Stop the carousel from cycling through items.
          */
         pause() {
-            if (this._sliding) {
-                dom.stop(this._items, true);
-            }
-
             if (this._timer) {
                 clearTimeout(this._timer);
             }
@@ -273,95 +309,7 @@
          * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         show(index) {
-            return new Promise((resolve, reject) => {
-                if (this._sliding) {
-                    this._queue.push({
-                        index: index
-                    });
-
-                    return reject();
-                }
-
-                index = parseInt(index);
-
-                if (!this._settings.wrap &&
-                    (index < 0 || index > this._items.length - 1)
-                ) {
-                    return reject();
-                }
-
-                let dir = 0;
-                if (index < 0) {
-                    dir = -1;
-                } else if (index > this._items.length - 1) {
-                    dir = 1;
-                }
-
-                index %= this._items.length;
-                if (index < 0) {
-                    index = this._items.length + index;
-                }
-
-                if (index === this._index) {
-                    return reject();
-                }
-
-                const direction = dir == -1 || (dir == 0 && index < this._index) ?
-                    'left' :
-                    'right';
-
-                const eventData = {
-                    direction,
-                    relatedTarget: this._items[index],
-                    from: this._index,
-                    to: index
-                };
-
-                if (!DOM._triggerEvent(this._node, 'slide.frost.carousel', eventData)) {
-                    return reject();
-                }
-
-                const oldIndex = this._index;
-                this._index = index;
-                this._sliding = true;
-                this.pause();
-
-                dom.addClass(this._items[this._index], 'active');
-                dom.removeClass(this._items[oldIndex], 'active');
-                dom.animate(
-                    this._items[this._index],
-                    (node, progress, options) =>
-                        this._update(node, this._items[oldIndex], progress, options.direction),
-                    {
-                        direction,
-                        duration: this._settings.transition
-                    }
-                ).then(_ => {
-                    dom.removeClass(
-                        dom.find('.active[data-slide-to]', this._node),
-                        'active'
-                    );
-
-                    dom.addClass(
-                        dom.find('[data-slide-to="' + this._index + '"]', this._node),
-                        'active'
-                    );
-
-                    this._sliding = false;
-
-                    dom.triggerEvent(this._node, 'slid.frost.carousel', eventData);
-
-                    if (!this._queue.length) {
-                        this._setTimer();
-                        return resolve();
-                    }
-
-                    const next = this._queue.shift();
-                    return next.dir ?
-                        this.slide(next.dir) :
-                        this.show(next.index);
-                });
-            });
+            return this._show(index);
         }
 
         /**
@@ -370,7 +318,11 @@
          * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         slide(direction = 1) {
-            return this.show(this._index + direction);
+            const index = this._queue.length ?
+                this._queue[this._queue.length - 1].index :
+                this._index;
+
+            return this.show(index + direction);
         }
 
     }
@@ -438,34 +390,6 @@
     Object.assign(Carousel.prototype, {
 
         /**
-         * Update the position of the Carousel items.
-         * @param {Node} nodeIn The new node.
-         * @param {Node} nodeOut The old node.
-         * @param {number} progress The progress of the cycle.
-         * @param {string} direction The direction to cycle to.
-         */
-        _update(nodeIn, nodeOut, progress, direction) {
-            if (progress < 1) {
-                const inverse = direction === 'right';
-                DOMNode.setStyle(nodeOut, 'display', 'block');
-                DOMNode.setStyle(
-                    nodeOut,
-                    'transform',
-                    `translateX(${Math.round(progress * 100) * (inverse ? -1 : 1)}%)`
-                );
-                DOMNode.setStyle(
-                    nodeIn,
-                    'transform',
-                    `translateX(${Math.round((1 - progress) * 100) * (inverse ? 1 : -1)}%)`
-                );
-            } else {
-                DOMNode.setStyle(nodeOut, 'display', '');
-                DOMNode.setStyle(nodeOut, 'transform', '');
-                DOMNode.setStyle(nodeIn, 'transform', '');
-            }
-        },
-
-        /**
          * Attach events for the Carousel.
          */
         _events() {
@@ -490,7 +414,7 @@
             };
 
             this._keyDownEvent = e => {
-                if (this._sliding || (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')) {
+                if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
                     return;
                 }
 
@@ -526,11 +450,155 @@
          */
         _setTimer() {
             const interval = dom.getDataset(this._items[this._index], 'interval');
+
             this._timer = setTimeout(
                 _ => this.cycle(),
                 interval ?
                     interval :
                     this._settings.interval
+            );
+        },
+
+        /**
+         * Cycle to a specific Carousel item.
+         * @param {number} index The item index to cycle to.
+         * @param {function} [queuedResolve] The queued resolve callback.
+         * @param {function} [queuedReject] The queued reject callback.
+         * @returns {Promise} A new Promise that resolves when the animation has completed.
+         */
+        _show(index, queuedResolve, queuedReject) {
+            return new Promise((resolve, reject) => {
+                if (dom.getDataset(this._node, 'sliding')) {
+                    this._queue.push({
+                        index: index,
+                        resolve: resolve,
+                        reject: reject
+                    });
+
+                    return;
+                }
+
+                const fullResolve = _ => {
+                    queuedResolve && queuedResolve();
+                    resolve();
+                };
+
+                const fullReject = _ => {
+                    queuedReject && queuedReject();
+                    reject();
+                };
+
+                index = parseInt(index);
+
+                if (!this._settings.wrap &&
+                    (index < 0 || index > this._items.length - 1)
+                ) {
+                    return fullReject();
+                }
+
+                let dir = 0;
+                if (index < 0) {
+                    dir = -1;
+                } else if (index > this._items.length - 1) {
+                    dir = 1;
+                }
+
+                index %= this._items.length;
+                if (index < 0) {
+                    index = this._items.length + index;
+                }
+
+                if (index === this._index) {
+                    return fullReject();
+                }
+
+                const direction = dir == -1 || (dir == 0 && index < this._index) ?
+                    'left' :
+                    'right';
+
+                const eventData = {
+                    direction,
+                    relatedTarget: this._items[index],
+                    from: this._index,
+                    to: index
+                };
+
+                if (!DOM._triggerEvent(this._node, 'slide.frost.carousel', eventData)) {
+                    return fullReject();
+                }
+
+                const oldIndex = this._index;
+                this._index = index;
+
+                dom.setDataset(this._node, 'sliding', true);
+
+                this.pause();
+
+                dom.addClass(this._items[this._index], 'active');
+                dom.removeClass(this._items[oldIndex], 'active');
+
+                dom.animate(
+                    this._items[this._index],
+                    (node, progress, options) =>
+                        this._update(node, this._items[oldIndex], progress, options.direction),
+                    {
+                        direction,
+                        duration: this._settings.transition
+                    }
+                ).then(_ => {
+                    dom.removeClass(
+                        dom.find('.active[data-slide-to]', this._node),
+                        'active'
+                    );
+
+                    dom.addClass(
+                        dom.find('[data-slide-to="' + this._index + '"]', this._node),
+                        'active'
+                    );
+
+                    dom.removeDataset(this._node, 'sliding');
+
+                    dom.triggerEvent(this._node, 'slid.frost.carousel', eventData);
+
+                    fullResolve();
+
+                    if (!this._queue.length) {
+                        this._setTimer();
+                        return;
+                    }
+
+                    const next = this._queue.shift();
+                    return this._show(next.index, next.resolve, next.reject);
+                });
+            });
+        },
+
+        /**
+         * Update the position of the Carousel items.
+         * @param {Node} nodeIn The new node.
+         * @param {Node} nodeOut The old node.
+         * @param {number} progress The progress of the cycle.
+         * @param {string} direction The direction to cycle to.
+         */
+        _update(nodeIn, nodeOut, progress, direction) {
+            if (progress >= 1) {
+                DOMNode.setStyle(nodeOut, 'display', '');
+                DOMNode.setStyle(nodeOut, 'transform', '');
+                DOMNode.setStyle(nodeIn, 'transform', '');
+                return;
+            }
+
+            const inverse = direction === 'right';
+            DOMNode.setStyle(nodeOut, 'display', 'block');
+            DOMNode.setStyle(
+                nodeOut,
+                'transform',
+                `translateX(${Math.round(progress * 100) * (inverse ? -1 : 1)}%)`
+            );
+            DOMNode.setStyle(
+                nodeIn,
+                'transform',
+                `translateX(${Math.round((1 - progress) * 100) * (inverse ? 1 : -1)}%)`
             );
         }
 
@@ -547,10 +615,13 @@
          * New Collapse constructor.
          * @param {HTMLElement} node The input node.
          * @param {object} [settings] The options to create the Collapse with.
+         * @param {string} [settings.direction=bottom] The direction to collapse the targets from/to.
+         * @param {number} [settings.duration=300] The duration of the animation.
          * @returns {Collapse} A new Collapse object.
          */
         constructor(node, settings) {
             this._node = node;
+
             this._settings = {
                 ...Collapse.defaults,
                 ...dom.getDataset(this._node),
@@ -558,6 +629,7 @@
             };
 
             this._targets = dom.find(this._settings.target);
+
             this._hasAccordion = this._targets.find(target => dom.getDataset(target, 'parent'));
 
             dom.setData(this._node, 'collapse', this);
@@ -567,8 +639,8 @@
          * Destroy the Collapse.
          */
         destroy() {
-            dom.stop(this._target, true);
             dom.removeEvent(this._node, 'click.frost.collapse', this._clickEvent);
+
             dom.removeData(this._node, 'collapse');
         }
 
@@ -579,7 +651,7 @@
         hide() {
             return new Promise((resolve, reject) => {
                 const targets = this._targets
-                    .filter(target => dom.hasClass(target, 'show') && dom.getDataset(target, 'animating') !== 'true');
+                    .filter(target => dom.hasClass(target, 'show') && !dom.getDataset(target, 'animating'));
 
                 if (!targets.length) {
                     return reject();
@@ -589,14 +661,16 @@
                     return reject();
                 }
 
-                dom.setDataset(targets, 'animating', 'true');
+                dom.setDataset(targets, 'animating', true);
 
                 dom.squeezeOut(targets, {
                     direction: this._settings.direction,
                     duration: this._settings.duration
                 }).then(_ => {
                     dom.removeClass(targets, 'show');
+
                     dom.triggerEvent(this._node, 'hidden.frost.collapse');
+
                     resolve();
                 }).catch(_ =>
                     reject()
@@ -613,7 +687,7 @@
         show() {
             return new Promise((resolve, reject) => {
                 const targets = this._targets
-                    .filter(target => dom.hasClass(target, 'show') && dom.getDataset(target, 'animating') !== 'true');
+                    .filter(target => dom.hasClass(target, 'show') && !dom.getDataset(target, 'animating'));
 
                 if (!targets.length) {
                     return reject();
@@ -623,17 +697,23 @@
                     return reject();
                 }
 
-                if (this._hasAccordion && !this._hideAccordion(targets)) {
+                const accordions = this._hideAccordion(targets);
+
+                if (!accordions) {
                     return reject();
                 }
 
-                dom.setDataset(targets, 'animating', 'true');
+                dom.setDataset(targets, 'animating', true);
 
                 dom.addClass(targets, 'show');
-                dom.squeezeIn(targets, {
-                    direction: this._settings.direction,
-                    duration: this._settings.duration
-                }).then(_ => {
+
+                Promise.all([
+                    dom.squeezeIn(targets, {
+                        direction: this._settings.direction,
+                        duration: this._settings.duration
+                    }),
+                    ...accordions
+                ]).then(_ => {
                     dom.triggerEvent(this._node, 'shown.frost.collapse');
                     resolve();
                 }).catch(_ =>
@@ -650,26 +730,42 @@
          */
         toggle() {
             return new Promise((resolve, reject) => {
-                const targets = this._targets
-                    .filter(target => dom.getDataset(target, 'animating') !== 'true');
+                const targets = [];
+                const hidden = [];
+                const visible = [];
+                for (const target of this._targets) {
+                    if (dom.getDataset(target, 'animating')) {
+                        continue;
+                    }
+
+                    targets.push(target);
+
+                    if (dom.hasClass(target, 'show')) {
+                        visible.push(target);
+                    } else {
+                        hidden.push(target);
+                    }
+                }
 
                 if (!targets.length) {
                     return reject();
                 }
 
-                if (!DOM._triggerEvent(this._node, 'show.frost.collapse')) {
+                if (visible.length && !DOM._triggerEvent(this._node, 'hide.frost.collapse')) {
                     return reject();
                 }
 
-                const hidden = targets.filter(target => !dom.hasClass(target, 'show'));
-
-                if (this._hasAccordion && !this._hideAccordion(hidden)) {
+                if (hidden.length && !DOM._triggerEvent(this._node, 'show.frost.collapse')) {
                     return reject();
                 }
 
-                const visible = targets.filter(target => dom.hasClass(target, 'show'));
+                const accordions = this._hideAccordion(hidden);
 
-                dom.setDataset(targets, 'animating', 'true');
+                if (!accordions) {
+                    return reject();
+                }
+
+                dom.setDataset(targets, 'animating', true);
 
                 const animations = targets.map(target => {
                     const animation = dom.hasClass(target, 'show') ?
@@ -682,9 +778,21 @@
                 });
 
                 dom.addClass(hidden, 'show')
-                Promise.all(animations).then(_ => {
+
+                Promise.all([
+                    ...animations,
+                    ...accordions
+                ]).then(_ => {
                     dom.removeClass(visible, 'show');
-                    dom.triggerEvent(this._node, 'shown.frost.collapse');
+
+                    if (visible.length) {
+                        dom.triggerEvent(this._node, 'hidden.frost.collapse');
+                    }
+
+                    if (hidden.length) {
+                        dom.triggerEvent(this._node, 'shown.frost.collapse');
+                    }
+
                     resolve();
                 }).catch(_ =>
                     reject()
@@ -712,15 +820,6 @@
             new Collapse(e.currentTarget);
 
         collapse.toggle().catch(_ => { });
-    });
-
-    // Auto-initialize Collapse from data-toggle
-    dom.addEvent(window, 'load', _ => {
-        const nodes = dom.find('[data-toggle="collapse"]');
-
-        for (const node of nodes) {
-            new Collapse(node);
-        }
     });
 
     // Add Collapse QuerySet method
@@ -770,6 +869,10 @@
          * @param {array} targets The target nodes.
          */
         _hideAccordion(targets) {
+            if (!this._hasAccordion) {
+                return [];
+            }
+
             const parents = [];
             const collapses = [];
 
@@ -792,9 +895,11 @@
                         continue;
                     }
 
-                    const collapse = dom.getData(toggle, 'collapse');
+                    const collapse = dom.hasData(toggle, 'collapse') ?
+                        dom.getData(toggle, 'collapse') :
+                        new Collapse(toggle);
                     const targets = dom.find(collapse._settings.target);
-                    const animating = targets.find(target => dom.getDataset(target, 'animating') === 'true');
+                    const animating = targets.find(target => dom.getDataset(target, 'animating'));
                     if (animating) {
                         return false;
                     }
@@ -803,11 +908,13 @@
                 }
             }
 
+            const promises = [];
+
             for (const collapse of collapses) {
-                collapse.hide().catch(_ => { });
+                promises.push(collapse.hide());
             }
 
-            return true;
+            return promises;
         }
 
     });
@@ -823,10 +930,17 @@
          * New Dropdown constructor.
          * @param {HTMLElement} node The input node.
          * @param {object} [settings] The options to create the Dropdown with.
+         * @param {number} [settings.duration=100] The duration of the animation.
+         * @param {string} [settings.placement=bottom] The placement of the dropdown relative to the toggle.
+         * @param {string} [settings.position=start] The position of the dropdown relative to the toggle.
+         * @param {Boolean} [settings.fixed=false] Whether the dropdown position is fixed.
+         * @param {number} [settings.spacing=2] The spacing between the dropdown and the toggle.
+         * @param {number} [settings.minContact=false] The minimum amount of contact the dropdown must make with the toggle.
          * @returns {Dropdown} A new Dropdown object.
          */
         constructor(node, settings) {
             this._node = node;
+
             this._settings = {
                 ...Dropdown.defaults,
                 ...dom.getDataset(this._node),
@@ -861,9 +975,6 @@
                         minContact: this._settings.minContact
                     }
                 );
-                this._getDir = _ => dom.getDataset(this._referenceNode, 'placement');
-            } else {
-                this._getDir = this._settings.placement;
             }
 
             this._events();
@@ -876,13 +987,19 @@
          */
         destroy() {
             dom.stop(this._menuNode, true);
-            this._popper.destroy();
+
+            if (this._popper) {
+                this._popper.destroy();
+            }
+
             dom.removeClass(this._containerNode, 'open');
-            dom.removeEvent(document, 'click.frost.dropdown', this._windowClickEvent);
+
+            dom.removeEvent(document, 'click.frost.dropdown', this._documentClickEvent);
             dom.removeEvent(this._node, 'click.frost.dropdown', this._clickEvent);
             dom.removeEvent(this._node, 'keyup.frost.dropdown', this._keyUpEvent);
             dom.removeEvent(this._node, 'keydown.frost.dropdown', this._keyDownEvent);
             dom.removeEventDelegate(this._menuNode, 'keydown.frost.dropdown', '.dropdown-item', this._menuKeyDownEvent);
+
             dom.removeData(this._node, 'dropdown');
         }
 
@@ -892,7 +1009,7 @@
          */
         hide() {
             return new Promise((resolve, reject) => {
-                if (!dom.hasClass(this._containerNode, 'open') || dom.getDataset(this._menuNode, 'animating') === 'true') {
+                if (!dom.hasClass(this._containerNode, 'open') || dom.getDataset(this._menuNode, 'animating')) {
                     return reject();
                 }
 
@@ -900,33 +1017,22 @@
                     return reject();
                 }
 
-                dom.setDataset(this._menuNode, 'animating', 'true');
+                dom.setDataset(this._menuNode, 'animating', true);
 
-                dom.removeEvent(document, 'click.frost.dropdown', this._windowClickEvent);
-                Promise.all([
-                    dom.fadeOut(this._menuNode, {
-                        duration: this._settings.duration
-                    }),
-                    dom.squeezeOut(this._menuNode, {
-                        direction: this._getDir,
-                        duration: this._settings.duration,
-                        useGpu: false
-                    }),
-                    dom.animate(
-                        this._menuNode,
-                        _ => this._popper && this._popper.update(),
-                        {
-                            duration: this._settings.duration
-                        }
-                    )
-                ]).then(_ => {
+                dom.removeEvent(document, 'click.frost.dropdown', this._documentClickEvent);
+
+                dom.fadeOut(this._menuNode, {
+                    duration: this._settings.duration
+                }).then(_ => {
                     dom.removeClass(this._containerNode, 'open');
+
                     dom.triggerEvent(this._node, 'hidden.frost.dropdown');
+
                     resolve();
                 }).catch(_ =>
                     reject()
                 ).finally(_ =>
-                    dom.removeAttribute(this._menuNode, 'data-animating')
+                    dom.removeDataset(this._menuNode, 'animating')
                 );
             });
         }
@@ -937,7 +1043,7 @@
          */
         show() {
             return new Promise((resolve, reject) => {
-                if (dom.hasClass(this._containerNode, 'open') || dom.getDataset(this._menuNode, 'animating') === 'true') {
+                if (dom.hasClass(this._containerNode, 'open') || dom.getDataset(this._menuNode, 'animating')) {
                     return reject();
                 }
 
@@ -945,37 +1051,22 @@
                     return reject();
                 }
 
-                dom.setDataset(this._menuNode, 'animating', 'true');
+                dom.setDataset(this._menuNode, 'animating', true);
 
                 dom.addClass(this._containerNode, 'open');
-                Promise.all([
-                    dom.fadeIn(this._menuNode, {
-                        duration: this._settings.duration
-                    }),
-                    dom.squeezeIn(this._menuNode, {
-                        direction: this._getDir,
-                        duration: this._settings.duration,
-                        useGpu: false
-                    }),
-                    dom.animate(
-                        this._menuNode,
-                        _ => this._popper && this._popper.update(),
-                        {
-                            duration: this._settings.duration
-                        }
-                    )
-                ]).then(_ => {
-                    if (this._popper) {
-                        this._popper.update();
-                    }
 
-                    dom.addEventOnce(document, 'click.frost.dropdown', this._windowClickEvent);
+                dom.fadeIn(this._menuNode, {
+                    duration: this._settings.duration
+                }).then(_ => {
+                    dom.addEvent(document, 'click.frost.dropdown', this._documentClickEvent);
+
                     dom.triggerEvent(this._node, 'shown.frost.dropdown');
+
                     resolve();
                 }).catch(_ =>
                     reject()
                 ).finally(_ =>
-                    dom.removeAttribute(this._menuNode, 'data-animating')
+                    dom.removeDataset(this._menuNode, 'animating')
                 );
             });
         }
@@ -994,7 +1085,7 @@
 
     // Default Dropdown options
     Dropdown.defaults = {
-        duration: 150,
+        duration: 100,
         placement: 'bottom',
         position: 'start',
         fixed: false,
@@ -1083,7 +1174,7 @@
                 this.show().then(_ => {
                     const next = dom.findOne('.dropdown-item', this._menuNode);
                     dom.focus(next);
-                });
+                }).catch(_ => { });
             };
 
             this._menuKeyDownEvent = e => {
@@ -1102,15 +1193,18 @@
                 }
             };
 
-            this._windowClickEvent = _ => this.hide();
+            this._documentClickEvent = e => {
+                if (dom.isSame(e.target, this._menuNode) || dom.hasDescendent(this._menuNode, e.target)) {
+                    return;
+                }
+
+                this.hide().catch(_ => { });
+            };
 
             dom.addEvent(this._node, 'click.frost.dropdown', this._clickEvent);
             dom.addEvent(this._node, 'keyup.frost.dropdown', this._keyUpEvent);
             dom.addEvent(this._node, 'keydown.frost.dropdown', this._keyDownEvent);
             dom.addEventDelegate(this._menuNode, 'keydown.frost.dropdown', '.dropdown-item', this._menuKeyDownEvent);
-            dom.addEvent(this._menuNode, 'click.frost.dropdown', e => {
-                e.stopPropagation();
-            });
         }
 
     });
@@ -1126,10 +1220,16 @@
          * New Modal constructor.
          * @param {HTMLElement} node The input node.
          * @param {object} [settings] The options to create the Modal with.
+         * @param {number} [settings.duration=250] The duration of the animation.
+         * @param {Boolean} [settings.backdrop=true] Whether to display a backdrop for the modal.
+         * @param {Boolean} [settings.focus=true] Whether to set focus on the modal when shown.
+         * @param {Boolean} [settings.show=true] Whether to show the modal on initialization.
+         * @param {Boolean} [settings.keyboard=true] Whether to close the modal when the escape key is pressed.
          * @returns {Modal} A new Modal object.
          */
         constructor(node, settings) {
             this._node = node;
+
             this._settings = {
                 ...Modal.defaults,
                 ...dom.getDataset(node),
@@ -1138,15 +1238,13 @@
 
             this._dialog = dom.child(this._node, '.modal-dialog').shift();
 
-            this._dialogClickEvent = e => {
-                if (dom.is(e.target, '[data-dismiss="modal"]') || dom.closest(e.target, '[data-dismiss="modal"]').length) {
+            this._documentClickEvent = e => {
+                if (dom.isSame(e.target, this._dialog) || dom.hasDescendent(this._dialog, e.target)) {
                     return;
                 }
 
-                e.stopPropagation();
+                this.hide().catch(_ => { });
             };
-
-            dom.addEvent(this._dialog, 'click.frost.modal', this._dialogClickEvent);
 
             this._windowKeyDownEvent = e => {
                 if (e.key !== 'Escape') {
@@ -1155,7 +1253,7 @@
 
                 e.preventDefault();
 
-                this.hide();
+                this.hide().catch(_ => { });
             };
 
             if (this._settings.show) {
@@ -1169,13 +1267,13 @@
          * Destroy the Modal.
          */
         destroy() {
-            dom.stop([this._dialog, this._backdrop], true);
+            if (this._settings.backdrop) {
+                dom.removeEvent(document, 'click.frost.modal', this._documentClickEvent);
+            }
 
             if (this._settings.keyboard) {
                 dom.removeEvent(window, 'keydown.frost.modal', this._windowKeyDownEvent);
             }
-
-            dom.removeEvent(this._dialog, 'click.frost.modal', this._dialogClickEvent);
 
             dom.removeData(this._node, 'modal');
         }
@@ -1186,7 +1284,7 @@
          */
         hide() {
             return new Promise((resolve, reject) => {
-                if (!dom.hasClass(this._node, 'show') || dom.getDataset(this._dialog, 'animating') === 'true') {
+                if (!dom.hasClass(this._node, 'show') || dom.getDataset(this._dialog, 'animating')) {
                     return reject();
                 }
 
@@ -1194,9 +1292,16 @@
                     return reject();
                 }
 
-                dom.setDataset([this._dialog, this._backdrop], 'animating', 'true');
+                dom.setDataset([this._dialog, this._backdrop], 'animating', true);
 
-                dom.removeEvent(this._backdrop, 'click.frost.autocomplete');
+                if (this._settings.backdrop) {
+                    dom.removeEvent(document, 'click.frost.modal', this._documentClickEvent);
+                }
+
+                if (this._settings.keyboard) {
+                    dom.removeEvent(window, 'keydown.frost.modal', this._windowKeyDownEvent);
+                }
+
                 Promise.all([
                     dom.fadeOut(this._dialog, {
                         duration: this._settings.duration
@@ -1213,18 +1318,16 @@
                         this._backdrop = null;
                     }
 
-                    if (this._settings.keyboard) {
-                        dom.removeEvent(window, 'keydown.frost.modal', this._windowKeyDownEvent);
-                    }
-
                     dom.removeClass(this._node, 'show');
                     dom.removeClass(document.body, 'modal-open');
+
                     dom.triggerEvent(this._node, 'hidden.frost.modal');
+
                     resolve();
                 }).catch(_ =>
                     reject()
                 ).finally(_ =>
-                    dom.removeAttribute([this._dialog, this._backdrop], 'data-animating')
+                    dom.removeDataset([this._dialog, this._backdrop], 'animating')
                 );
             });
         }
@@ -1235,7 +1338,7 @@
          */
         show() {
             return new Promise((resolve, reject) => {
-                if (dom.hasClass(this._node, 'show') || dom.getDataset(this._dialog, 'animating') === 'true') {
+                if (dom.hasClass(this._node, 'show') || dom.getDataset(this._dialog, 'animating')) {
                     return reject();
                 }
 
@@ -1250,7 +1353,7 @@
                     dom.append(document.body, this._backdrop);
                 }
 
-                dom.setDataset([this._dialog, this._backdrop], 'animating', 'true');
+                dom.setDataset([this._dialog, this._backdrop], 'animating', true);
 
                 dom.addClass(this._node, 'show');
                 dom.addClass(document.body, 'modal-open');
@@ -1267,9 +1370,7 @@
                     })
                 ]).then(_ => {
                     if (this._settings.backdrop) {
-                        dom.addEventOnce(document.body, 'click.frost.modal', _ => {
-                            this.hide();
-                        });
+                        dom.addEvent(document, 'click.frost.modal', this._documentClickEvent);
                     }
 
                     if (this._settings.keyboard) {
@@ -1281,11 +1382,12 @@
                     }
 
                     dom.triggerEvent(this._node, 'shown.frost.modal');
+
                     resolve();
                 }).catch(_ =>
                     reject()
                 ).finally(_ =>
-                    dom.removeAttribute([this._dialog, this._backdrop], 'data-animating')
+                    dom.removeDataset([this._dialog, this._backdrop], 'animating')
                 );
             });
         }
@@ -1384,19 +1486,31 @@
          * New Popover constructor.
          * @param {HTMLElement} node The input node.
          * @param {object} [settings] The options to create the Popover with.
+         * @param {object} [settings.classes] The CSS classes to style the popover.
+         * @param {string} [settings.classes.popover=popover] The CSS classes for the popover.
+         * @param {string} [settings.classes.popoverHeader=popover-header] The CSS classes for the popover header.
+         * @param {string} [settings.classes.popoverBody=popover-body] The CSS classes for the popover body.
+         * @param {string} [settings.classes.arrow=arrow] The CSS classes for the arrow.
+         * @param {number} [settings.duration=100] The duration of the animation.
+         * @param {Boolean} [settings.enable=true] Whether the popover is enabled.
+         * @param {Boolean} [settings.html=false] Whether to allow HTML in the popover.
+         * @param {function} [settings.sanitize] The HTML sanitization function.
+         * @param {string} [settings.trigger=click] The events to trigger the popover.
+         * @param {string} [settings.placement=auto] The placement of the popover relative to the toggle.
+         * @param {string} [settings.position=center] The position of the popover relative to the toggle.
+         * @param {Boolean} [settings.fixed=false] Whether the popover position is fixed.
+         * @param {number} [settings.spacing=7] The spacing between the popover and the toggle.
+         * @param {number} [settings.minContact=false] The minimum amount of contact the popover must make with the toggle.
          * @returns {Popover} A new Popover object.
          */
         constructor(node, settings) {
             this._node = node;
+
             this._settings = {
                 ...Popover.defaults,
                 ...dom.getDataset(this._node),
                 ...settings
             };
-
-            if (this._settings.container) {
-                this._container = dom.findOne(this._settings.container);
-            }
 
             this._triggers = this._settings.trigger.split(' ');
 
@@ -1415,7 +1529,9 @@
         destroy() {
             if (this._popover) {
                 this._popper.destroy();
+
                 dom.remove(this._popover);
+
                 this._popover = null;
                 this._popper = null;
             }
@@ -1465,21 +1581,26 @@
                     return reject();
                 }
 
-                dom.setDataset(this._popover, 'animating', 'true');
+                dom.setDataset(this._popover, 'animating', true);
 
                 dom.stop(this._popover);
+
                 dom.fadeOut(this._popover, {
                     duration: this._settings.duration
                 }).then(_ => {
                     this._popper.destroy();
+
                     dom.remove(this._popover);
+
                     this._popover = null;
                     this._popper = null;
 
                     dom.triggerEvent(this._node, 'hidden.frost.popover');
+
                     resolve();
                 }).catch(_ => {
-                    dom.removeAttribute(this._popover, 'data-animating');
+                    dom.removeDataset(this._popover, 'animating');
+
                     reject()
                 });
             });
@@ -1501,18 +1622,20 @@
 
                 this._render();
 
-                dom.setDataset(this._popover, 'animating', 'true');
+                dom.setDataset(this._popover, 'animating', true);
 
                 dom.addClass(this._popover, 'show');
+
                 dom.fadeIn(this._popover, {
                     duration: this._settings.duration
                 }).then(_ => {
                     dom.triggerEvent(this._node, 'shown.frost.popover')
+
                     resolve();
                 }).catch(_ =>
                     reject()
                 ).finally(_ =>
-                    dom.removeAttribute(this._popover, 'data-animating')
+                    dom.removeDataset(this._popover, 'animating')
                 );
             });
         }
@@ -1549,16 +1672,15 @@
             popoverBody: 'popover-body',
             arrow: 'arrow'
         },
-        delay: 0,
         duration: 100,
         enable: true,
         html: false,
-        trigger: 'click',
         sanitize: input => dom.sanitize(input),
+        trigger: 'click',
         placement: 'auto',
         position: 'center',
         fixed: false,
-        spacing: 7,
+        spacing: 5,
         minContact: false
     };
 
@@ -1740,10 +1862,20 @@
          * New Popper constructor.
          * @param {HTMLElement} node The input node.
          * @param {object} settings The options to create the Popper with.
+         * @param {HTMLElement} settings.referencee The node to use as the reference.
+         * @param {HTMLElement} [settings.container] The node to use as the container.
+         * @param {HTMLElement} [settings.arrow] The node to use as the arrow.
+         * @param {string} [settings.placement=bottom] The placement of the node relative to the reference.
+         * @param {string} [settings.position=center] The position of the node relative to the reference.
+         * @param {Boolean} [settings.fixed=false] Whether the node position is fixed.
+         * @param {number} [settings.spacing=0] The spacing between the node and the reference.
+         * @param {number} [settings.minContact=false] The minimum amount of contact the node must make with the reference.
+         * @param {Boolean} [settings.useGpu=true] Whether to use GPU acceleration.
          * @returns {Popper} A new Popper object.
          */
         constructor(node, settings) {
             this._node = node;
+
             this._settings = {
                 ...Popper.defaults,
                 ...dom.getDataset(this._node),
@@ -1752,28 +1884,9 @@
 
             this._fixed = dom.isFixed(this._settings.reference);
 
-            this._relativeParent = dom.closest(
-                this._node,
-                parent =>
-                    dom.css(parent, 'position') === 'relative',
-                document.body
-            ).shift();
+            this._relativeParent = Popper.getRelativeParent(this._node);
 
-            const overflowTypes = ['overflow', 'overflowX', 'overflowY'];
-            const overflowValues = ['auto', 'scroll'];
-            this._scrollParent = dom.closest(
-                this._node,
-                parent =>
-                    !!overflowTypes.find(overflow =>
-                        !!overflowValues.find(value =>
-                            new RegExp(value)
-                                .test(
-                                    dom.css(parent, overflow)
-                                )
-                        )
-                    ),
-                document.body
-            ).shift();
+            this._scrollParent = Popper.getScrollParent(this._node);
 
             dom.setStyle(this._node, {
                 position: 'absolute',
@@ -1794,9 +1907,11 @@
         destroy() {
             dom.removeEvent(window, 'resize.frost.popper', this._updateEvent);
             dom.removeEvent(window, 'scroll.frost.popper', this._updateEvent);
+
             if (this._scrollParent) {
                 dom.removeEvent(this._scrollParent, 'scroll.frost.popper', this._updateEvent);
             }
+
             dom.removeData(this._node, 'popper');
         }
 
@@ -1885,9 +2000,6 @@
                 offset.y -= Math.round(relativeBox.y);
             }
 
-            // update arrow
-            this._updateArrow(nodeBox, referenceBox, placement, position);
-
             // offset for placement
             Popper.adjustPlacement(offset, nodeBox, referenceBox, placement, this._settings.spacing);
 
@@ -1899,7 +2011,6 @@
             offset.y -= parseInt(dom.css(this._node, 'margin-top'));
 
             // corrective positioning
-            console.log(this._settings);
             Popper.adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, this._settings.minContact);
 
             // compensate for scroll parent
@@ -1924,6 +2035,11 @@
             }
 
             dom.setStyle(this._node, style);
+
+            // update arrow
+            if (this._settings.arrow) {
+                this._updateArrow(nodeBox, referenceBox, placement, position);
+            }
         }
 
     }
@@ -1942,6 +2058,9 @@
         useGpu: true
     };
 
+    Popper._overflowTypes = ['overflow', 'overflowX', 'overflowY'];
+    Popper._overflowValues = ['auto', 'scroll'];
+
     UI.Popper = Popper;
 
 
@@ -1959,6 +2078,7 @@
 
             dom.addEvent(window, 'resize.frost.popper', this._updateEvent);
             dom.addEvent(window, 'scroll.frost.popper', this._updateEvent);
+
             if (this._scrollParent) {
                 dom.addEvent(this._scrollParent, 'scroll.frost.popper', this._updateEvent);
             }
@@ -1972,12 +2092,6 @@
          * @param {string} position The actual position of the Popper.
          */
         _updateArrow(nodeBox, referenceBox, placement, position) {
-            if (!this._settings.arrow) {
-                return;
-            }
-
-            dom.show(this._settings.arrow);
-
             const arrowBox = dom.rect(this._settings.arrow, !this._fixed);
             const arrowStyles = {
                 top: '',
@@ -2032,15 +2146,18 @@
          */
         adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, minContact) {
             if (['left', 'right'].includes(placement)) {
-                const offsetY = relativeBox ?
-                    offset.y + relativeBox.top :
-                    offset.y;
-                const refTop = relativeBox ?
-                    referenceBox.top - relativeBox.top :
-                    referenceBox.top;
-                const minSize = minContact ?
+                let offsetY = offset.y;
+                let refTop = referenceBox.top;
+
+                if (relativeBox) {
+                    offsetY += relativeBox.top;
+                    refTop -= relativeBox.top;
+                }
+
+                const minSize = minContact !== false ?
                     minContact :
                     referenceBox.height;
+
                 if (offsetY + nodeBox.height > minimumBox.bottom) {
                     // bottom of offset node is below the container
                     const diff = offsetY + nodeBox.height - (minimumBox.bottom);
@@ -2057,15 +2174,18 @@
                     );
                 }
             } else {
-                const offsetX = relativeBox ?
-                    offset.x + minimumBox.left :
-                    offset.x;
-                const refLeft = relativeBox ?
-                    referenceBox.left - relativeBox.left :
-                    referenceBox.left;
-                const minSize = minContact ?
+                let offsetX = offset.x;
+                let refLeft = referenceBox.left;
+
+                if (relativeBox) {
+                    offsetX += relativeBox.left;
+                    refLeft -= relativeBox.left;
+                }
+
+                const minSize = minContact !== false ?
                     minContact :
                     referenceBox.width;
+
                 if (offsetX + nodeBox.width > minimumBox.right) {
                     // right of offset node is to the right of the container
                     const diff = offsetX + nodeBox.width - minimumBox.right;
@@ -2077,9 +2197,7 @@
                     // left of offset node is to the left of the container
                     const diff = offsetX - minimumBox.left;
                     offset.x = Math.min(
-                        referenceBox.width >= nodeBox.width ?
-                            refLeft + referenceBox.width - minSize :
-                            refLeft,
+                        refLeft + referenceBox.width - minSize,
                         offset.x - diff
                     );
                 }
@@ -2323,6 +2441,41 @@
         },
 
         /**
+         * Get the relative parent of the node.
+         * @param {HTMLElement} node The input node.
+         * @return {HTMLElement} The relative parent.
+         */
+        getRelativeParent(node) {
+            return dom.closest(
+                node,
+                parent =>
+                    dom.css(parent, 'position') === 'relative',
+                document.body
+            ).shift();
+        },
+
+        /**
+         * Get the scroll parent of the node.
+         * @param {HTMLElement} node The input node.
+         * @return {HTMLElement} The scroll parent.
+         */
+        getScrollParent(node) {
+            return dom.closest(
+                node,
+                parent =>
+                    !!this._overflowTypes.find(overflow =>
+                        !!this._overflowValues.find(value =>
+                            new RegExp(value)
+                                .test(
+                                    dom.css(parent, overflow)
+                                )
+                        )
+                    ),
+                document.body
+            ).shift();
+        },
+
+        /**
          * Returns true if the node can not be visible inside the window.
          * @param {object} offset The offset object.
          * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
@@ -2377,10 +2530,12 @@
          * New Tab constructor.
          * @param {HTMLElement} node The input node.
          * @param {object} [settings] The options to create the Tab with.
+         * @param {number} [settings.duration=100] The duration of the animation.
          * @returns {Tab} A new Tab object.
          */
         constructor(node, settings) {
             this._node = node;
+
             this._settings = {
                 ...Tab.defaults,
                 ...dom.getDataset(this._node),
@@ -2402,8 +2557,8 @@
          * Destroy the Tab.
          */
         destroy() {
-            dom.stop(this._target, true);
             dom.removeEvent(this._node, 'click.frost.tab', this._clickEvent);
+
             dom.removeData(this._node, 'tab');
         }
 
@@ -2413,7 +2568,8 @@
          */
         hide() {
             return new Promise((resolve, reject) => {
-                if (!dom.hasClass(this._target, 'active') || dom.getDataset(this._target, 'animating') === 'true') {
+                console.log('test');
+                if (!dom.hasClass(this._target, 'active') || dom.getDataset(this._target, 'animating')) {
                     return reject();
                 }
 
@@ -2421,19 +2577,21 @@
                     return reject();
                 }
 
-                dom.setDataset(this._target, 'animating', 'true');
+                dom.setDataset(this._target, 'animating', true);
 
                 dom.fadeOut(this._target, {
                     duration: this._settings.duration
                 }).then(_ => {
                     dom.removeClass(this._target, 'active');
                     dom.removeClass(this._node, 'active');
+
                     dom.triggerEvent(this._node, 'hidden.frost.tab');
+
                     resolve();
                 }).catch(_ =>
                     reject()
                 ).finally(_ =>
-                    dom.removeAttribute(this._target, 'data-animating')
+                    dom.removeDataset(this._target, 'animating')
                 );
             });
         }
@@ -2444,7 +2602,7 @@
          */
         show() {
             return new Promise((resolve, reject) => {
-                if (dom.hasClass(this._target, 'active') || dom.getDataset(this._target, 'animating') === 'true') {
+                if (dom.hasClass(this._target, 'active') || dom.getDataset(this._target, 'animating')) {
                     return reject();
                 }
 
@@ -2454,7 +2612,7 @@
                     return reject();
                 }
 
-                dom.setDataset(this._target, 'animating', 'true');
+                dom.setDataset(this._target, 'animating', true);
 
                 dom.getData(activeTab, 'tab').hide().then(_ => {
                     if (!DOM._triggerEvent(this._node, 'show.frost.tab')) {
@@ -2463,16 +2621,18 @@
 
                     dom.addClass(this._target, 'active');
                     dom.addClass(this._node, 'active');
+
                     return dom.fadeIn(this._target, {
                         duration: this._settings.duration
                     });
                 }).then(_ => {
                     dom.triggerEvent(this._node, 'shown.frost.tab');
+
                     resolve();
                 }).catch(_ =>
                     reject()
                 ).finally(_ =>
-                    dom.removeAttribute(this._target, 'data-animating')
+                    dom.removeDataset(this._target, 'animating')
                 );
             });
         }
@@ -2562,10 +2722,14 @@
          * New Toast constructor.
          * @param {HTMLElement} node The input node.
          * @param {object} [settings] The options to create the Toast with.
+         * @param {Boolean} [autohide=true] Whether to hide the toast after initialization.
+         * @param {number} [settings.delay=5000] The duration to wait before hiding the toast.
+         * @param {number} [settings.duration=100] The duration of the animation.
          * @returns {Toast} A new Toast object.
          */
         constructor(node, settings) {
             this._node = node;
+
             this._settings = {
                 ...Toast.defaults,
                 ...dom.getDataset(this._node),
@@ -2588,7 +2752,6 @@
          * Destroy the Toast.
          */
         destroy() {
-            dom.stop(this._node, true);
             dom.removeData(this._node, 'toast');
         }
 
@@ -2598,7 +2761,7 @@
          */
         hide() {
             return new Promise((resolve, reject) => {
-                if (!dom.isVisible(this._node) || dom.getDataset(this._node, 'animating') === 'true') {
+                if (!dom.isVisible(this._node) || dom.getDataset(this._node, 'animating')) {
                     return reject();
                 }
 
@@ -2606,18 +2769,20 @@
                     return reject();
                 }
 
-                dom.setDataset(this._node, 'animating', 'true');
+                dom.setDataset(this._node, 'animating', true);
 
                 return dom.fadeOut(this._node, {
                     duration: this._settings.duration
                 }).then(_ => {
                     dom.hide(this._node);
+
                     dom.triggerEvent(this._node, 'hidden.frost.toast');
+
                     resolve();
                 }).catch(_ =>
                     reject()
                 ).finally(_ =>
-                    dom.removeAttribute(this._node, 'data-animating')
+                    dom.removeDataset(this._node, 'animating')
                 );
             });
         }
@@ -2628,7 +2793,7 @@
          */
         show() {
             return new Promise((resolve, reject) => {
-                if (dom.isVisible(this._node) || dom.getDataset(this._node, 'animating') === 'true') {
+                if (dom.isVisible(this._node) || dom.getDataset(this._node, 'animating')) {
                     return reject();
                 }
 
@@ -2636,18 +2801,20 @@
                     return reject();
                 }
 
-                dom.setDataset(this._node, 'animating', 'true');
+                dom.setDataset(this._node, 'animating', true);
 
                 dom.show(this._node);
+
                 return dom.fadeIn(this._node, {
                     duration: this._settings.duration
                 }).then(_ => {
                     dom.triggerEvent(this._node, 'shown.frost.toast');
+
                     resolve();
                 }).catch(_ =>
                     reject()
                 ).finally(_ =>
-                    dom.removeAttribute(this._node, 'data-animating')
+                    dom.removeDataset(this._node, 'animating')
                 );
             });
         }
@@ -2729,19 +2896,30 @@
          * New Tooltip constructor.
          * @param {HTMLElement} node The input node.
          * @param {object} [settings] The options to create the Tooltip with.
+         * @param {object} [settings.classes] The CSS classes to style the tooltip.
+         * @param {string} [settings.classes.tooltip=tooltip] The CSS classes for the tooltip.
+         * @param {string} [settings.classes.tooltipInner=tooltip-inner] The CSS classes for the tooltip inner-element.
+         * @param {string} [settings.classes.arrow=arrow] The CSS classes for the arrow.
+         * @param {number} [settings.duration=100] The duration of the animation.
+         * @param {Boolean} [settings.enable=true] Whether the tooltip is enabled.
+         * @param {Boolean} [settings.html=false] Whether to allow HTML in the tooltip.
+         * @param {function} [settings.sanitize] The HTML sanitization function.
+         * @param {string} [settings.trigger=hover focus] The events to trigger the tooltip.
+         * @param {string} [settings.placement=auto] The placement of the tooltip relative to the toggle.
+         * @param {string} [settings.position=center] The position of the tooltip relative to the toggle.
+         * @param {Boolean} [settings.fixed=false] Whether the tooltip position is fixed.
+         * @param {number} [settings.spacing=2] The spacing between the tooltip and the toggle.
+         * @param {number} [settings.minContact=false] The minimum amount of contact the tooltip must make with the toggle.
          * @returns {Tooltip} A new Tooltip object.
          */
         constructor(node, settings) {
             this._node = node;
+
             this._settings = {
                 ...Tooltip.defaults,
                 ...dom.getDataset(this._node),
                 ...settings
             };
-
-            if (this._settings.container) {
-                this._container = dom.findOne(this._settings.container);
-            }
 
             this._triggers = this._settings.trigger.split(' ');
 
@@ -2760,7 +2938,9 @@
         destroy() {
             if (this._tooltip) {
                 this._popper.destroy();
+
                 dom.remove(this._tooltip);
+
                 this._tooltip = null;
                 this._popper = null;
             }
@@ -2810,21 +2990,26 @@
                     return reject();
                 }
 
-                dom.setDataset(this._tooltip, 'animating', 'true');
+                dom.setDataset(this._tooltip, 'animating', true);
 
                 dom.stop(this._tooltip);
+
                 dom.fadeOut(this._tooltip, {
                     duration: this._settings.duration
                 }).then(_ => {
                     this._popper.destroy();
+
                     dom.remove(this._tooltip);
+
                     this._tooltip = null;
                     this._popper = null;
 
                     dom.triggerEvent(this._node, 'hidden.frost.tooltip');
+
                     resolve();
                 }).catch(_ => {
-                    dom.removeAttribute(this._tooltip, 'data-animating');
+                    dom.removeDataset(this._tooltip, 'animating');
+
                     reject();
                 });
             });
@@ -2846,18 +3031,20 @@
 
                 this._render();
 
-                dom.setDataset(this._tooltip, 'animating', 'true');
+                dom.setDataset(this._tooltip, 'animating', true);
 
                 dom.addClass(this._tooltip, 'show');
+
                 dom.fadeIn(this._tooltip, {
                     duration: this._settings.duration
                 }).then(_ => {
                     dom.triggerEvent(this._node, 'shown.frost.tooltip');
+
                     resolve();
                 }).catch(_ =>
                     reject()
                 ).finally(_ =>
-                    dom.removeAttribute(this._popover, 'data-animating')
+                    dom.removeDataset(this._tooltip, 'animating')
                 );
             });
         }
@@ -2893,7 +3080,6 @@
             tooltipInner: 'tooltip-inner',
             arrow: 'arrow'
         },
-        delay: 0,
         duration: 100,
         enable: true,
         html: false,

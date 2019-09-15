@@ -9,6 +9,10 @@ Object.assign(Collapse.prototype, {
      * @param {array} targets The target nodes.
      */
     _hideAccordion(targets) {
+        if (!this._hasAccordion) {
+            return [];
+        }
+
         const parents = [];
         const collapses = [];
 
@@ -31,9 +35,11 @@ Object.assign(Collapse.prototype, {
                     continue;
                 }
 
-                const collapse = dom.getData(toggle, 'collapse');
+                const collapse = dom.hasData(toggle, 'collapse') ?
+                    dom.getData(toggle, 'collapse') :
+                    new Collapse(toggle);
                 const targets = dom.find(collapse._settings.target);
-                const animating = targets.find(target => dom.getDataset(target, 'animating') === 'true');
+                const animating = targets.find(target => dom.getDataset(target, 'animating'));
                 if (animating) {
                     return false;
                 }
@@ -42,11 +48,13 @@ Object.assign(Collapse.prototype, {
             }
         }
 
+        const promises = [];
+
         for (const collapse of collapses) {
-            collapse.hide().catch(_ => { });
+            promises.push(collapse.hide());
         }
 
-        return true;
+        return promises;
     }
 
 });

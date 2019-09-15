@@ -5,7 +5,6 @@ Tooltip.defaults = {
         tooltipInner: 'tooltip-inner',
         arrow: 'arrow'
     },
-    delay: 0,
     duration: 100,
     enable: true,
     html: false,

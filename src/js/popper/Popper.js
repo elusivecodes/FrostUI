@@ -8,10 +8,20 @@ class Popper {
      * New Popper constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} settings The options to create the Popper with.
+     * @param {HTMLElement} settings.referencee The node to use as the reference.
+     * @param {HTMLElement} [settings.container] The node to use as the container.
+     * @param {HTMLElement} [settings.arrow] The node to use as the arrow.
+     * @param {string} [settings.placement=bottom] The placement of the node relative to the reference.
+     * @param {string} [settings.position=center] The position of the node relative to the reference.
+     * @param {Boolean} [settings.fixed=false] Whether the node position is fixed.
+     * @param {number} [settings.spacing=0] The spacing between the node and the reference.
+     * @param {number} [settings.minContact=false] The minimum amount of contact the node must make with the reference.
+     * @param {Boolean} [settings.useGpu=true] Whether to use GPU acceleration.
      * @returns {Popper} A new Popper object.
      */
     constructor(node, settings) {
         this._node = node;
+
         this._settings = {
             ...Popper.defaults,
             ...dom.getDataset(this._node),
@@ -20,28 +30,9 @@ class Popper {
 
         this._fixed = dom.isFixed(this._settings.reference);
 
-        this._relativeParent = dom.closest(
-            this._node,
-            parent =>
-                dom.css(parent, 'position') === 'relative',
-            document.body
-        ).shift();
+        this._relativeParent = Popper.getRelativeParent(this._node);
 
-        const overflowTypes = ['overflow', 'overflowX', 'overflowY'];
-        const overflowValues = ['auto', 'scroll'];
-        this._scrollParent = dom.closest(
-            this._node,
-            parent =>
-                !!overflowTypes.find(overflow =>
-                    !!overflowValues.find(value =>
-                        new RegExp(value)
-                            .test(
-                                dom.css(parent, overflow)
-                            )
-                    )
-                ),
-            document.body
-        ).shift();
+        this._scrollParent = Popper.getScrollParent(this._node);
 
         dom.setStyle(this._node, {
             position: 'absolute',
@@ -62,9 +53,11 @@ class Popper {
     destroy() {
         dom.removeEvent(window, 'resize.frost.popper', this._updateEvent);
         dom.removeEvent(window, 'scroll.frost.popper', this._updateEvent);
+
         if (this._scrollParent) {
             dom.removeEvent(this._scrollParent, 'scroll.frost.popper', this._updateEvent);
         }
+
         dom.removeData(this._node, 'popper');
     }
 
@@ -153,9 +146,6 @@ class Popper {
             offset.y -= Math.round(relativeBox.y);
         }
 
-        // update arrow
-        this._updateArrow(nodeBox, referenceBox, placement, position);
-
         // offset for placement
         Popper.adjustPlacement(offset, nodeBox, referenceBox, placement, this._settings.spacing);
 
@@ -167,7 +157,6 @@ class Popper {
         offset.y -= parseInt(dom.css(this._node, 'margin-top'));
 
         // corrective positioning
-        console.log(this._settings);
         Popper.adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, this._settings.minContact);
 
         // compensate for scroll parent
@@ -192,6 +181,11 @@ class Popper {
         }
 
         dom.setStyle(this._node, style);
+
+        // update arrow
+        if (this._settings.arrow) {
+            this._updateArrow(nodeBox, referenceBox, placement, position);
+        }
     }
 
 }

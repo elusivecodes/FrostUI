@@ -16,15 +16,18 @@ Object.assign(Popper, {
      */
     adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, minContact) {
         if (['left', 'right'].includes(placement)) {
-            const offsetY = relativeBox ?
-                offset.y + relativeBox.top :
-                offset.y;
-            const refTop = relativeBox ?
-                referenceBox.top - relativeBox.top :
-                referenceBox.top;
-            const minSize = minContact ?
+            let offsetY = offset.y;
+            let refTop = referenceBox.top;
+
+            if (relativeBox) {
+                offsetY += relativeBox.top;
+                refTop -= relativeBox.top;
+            }
+
+            const minSize = minContact !== false ?
                 minContact :
                 referenceBox.height;
+
             if (offsetY + nodeBox.height > minimumBox.bottom) {
                 // bottom of offset node is below the container
                 const diff = offsetY + nodeBox.height - (minimumBox.bottom);
@@ -41,15 +44,18 @@ Object.assign(Popper, {
                 );
             }
         } else {
-            const offsetX = relativeBox ?
-                offset.x + minimumBox.left :
-                offset.x;
-            const refLeft = relativeBox ?
-                referenceBox.left - relativeBox.left :
-                referenceBox.left;
-            const minSize = minContact ?
+            let offsetX = offset.x;
+            let refLeft = referenceBox.left;
+
+            if (relativeBox) {
+                offsetX += relativeBox.left;
+                refLeft -= relativeBox.left;
+            }
+
+            const minSize = minContact !== false ?
                 minContact :
                 referenceBox.width;
+
             if (offsetX + nodeBox.width > minimumBox.right) {
                 // right of offset node is to the right of the container
                 const diff = offsetX + nodeBox.width - minimumBox.right;
@@ -61,9 +67,7 @@ Object.assign(Popper, {
                 // left of offset node is to the left of the container
                 const diff = offsetX - minimumBox.left;
                 offset.x = Math.min(
-                    referenceBox.width >= nodeBox.width ?
-                        refLeft + referenceBox.width - minSize :
-                        refLeft,
+                    refLeft + referenceBox.width - minSize,
                     offset.x - diff
                 );
             }
@@ -304,6 +308,41 @@ Object.assign(Popper, {
         }
 
         return position;
+    },
+
+    /**
+     * Get the relative parent of the node.
+     * @param {HTMLElement} node The input node.
+     * @return {HTMLElement} The relative parent.
+     */
+    getRelativeParent(node) {
+        return dom.closest(
+            node,
+            parent =>
+                dom.css(parent, 'position') === 'relative',
+            document.body
+        ).shift();
+    },
+
+    /**
+     * Get the scroll parent of the node.
+     * @param {HTMLElement} node The input node.
+     * @return {HTMLElement} The scroll parent.
+     */
+    getScrollParent(node) {
+        return dom.closest(
+            node,
+            parent =>
+                !!this._overflowTypes.find(overflow =>
+                    !!this._overflowValues.find(value =>
+                        new RegExp(value)
+                            .test(
+                                dom.css(parent, overflow)
+                            )
+                    )
+                ),
+            document.body
+        ).shift();
     },
 
     /**

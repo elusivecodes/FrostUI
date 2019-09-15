@@ -8,10 +8,12 @@ class Alert {
      * New Alert constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Alert with.
+     * @param {number} [settings.duration=100] The duration of the animation.
      * @returns {Alert} A new Alert object.
      */
     constructor(node, settings) {
         this._node = node;
+
         this._settings = {
             ...Alert.defaults,
             ...dom.getDataset(this._node),
@@ -25,7 +27,6 @@ class Alert {
      * Destroy the Alert.
      */
     destroy() {
-        dom.stop(this._node, true);
         dom.removeData(this._node, 'alert');
     }
 
@@ -35,7 +36,8 @@ class Alert {
      */
     close() {
         return new Promise((resolve, reject) => {
-            if (dom.getDataset(this._node, 'animating') === 'true') {
+
+            if (dom.getDataset(this._node, 'animating')) {
                 return reject();
             }
 
@@ -43,16 +45,19 @@ class Alert {
                 return reject();
             }
 
-            dom.setDataset(this._node, 'animating', 'true');
+            dom.setDataset(this._node, 'animating', true);
 
             dom.fadeOut(this._node, {
                 duration: this._settings.duration
             }).then(_ => {
                 dom.triggerEvent(this._node, 'closed.frost.alert');
+
                 dom.remove(this._node);
+
                 resolve();
             }).catch(_ => {
                 dom.removeDataset(this._node, 'animating');
+
                 reject();
             });
         });

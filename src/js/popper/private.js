@@ -12,6 +12,7 @@ Object.assign(Popper.prototype, {
 
         dom.addEvent(window, 'resize.frost.popper', this._updateEvent);
         dom.addEvent(window, 'scroll.frost.popper', this._updateEvent);
+
         if (this._scrollParent) {
             dom.addEvent(this._scrollParent, 'scroll.frost.popper', this._updateEvent);
         }
@@ -25,12 +26,6 @@ Object.assign(Popper.prototype, {
      * @param {string} position The actual position of the Popper.
      */
     _updateArrow(nodeBox, referenceBox, placement, position) {
-        if (!this._settings.arrow) {
-            return;
-        }
-
-        dom.show(this._settings.arrow);
-
         const arrowBox = dom.rect(this._settings.arrow, !this._fixed);
         const arrowStyles = {
             top: '',

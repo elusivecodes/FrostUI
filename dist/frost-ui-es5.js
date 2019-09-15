@@ -1,5 +1,13 @@
 "use strict";
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -43,6 +51,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * New Alert constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Alert with.
+     * @param {number} [settings.duration=100] The duration of the animation.
      * @returns {Alert} A new Alert object.
      */
     function Alert(node, settings) {
@@ -60,7 +69,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Alert, [{
       key: "destroy",
       value: function destroy() {
-        dom.stop(this._node, true);
         dom.removeData(this._node, 'alert');
       }
       /**
@@ -74,7 +82,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this = this;
 
         return new Promise(function (resolve, reject) {
-          if (dom.getDataset(_this._node, 'animating') === 'true') {
+          if (dom.getDataset(_this._node, 'animating')) {
             return reject();
           }
 
@@ -82,7 +90,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             return reject();
           }
 
-          dom.setDataset(_this._node, 'animating', 'true');
+          dom.setDataset(_this._node, 'animating', true);
           dom.fadeOut(_this._node, {
             duration: _this._settings.duration
           }).then(function (_) {
@@ -157,25 +165,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toggle",
       value: function toggle() {
-        if (!this._siblings.length) {
-          if (this._input) {
-            dom.setProperty(this._input, 'checked', !dom.getProperty(this._input, 'checked'));
-          }
-
-          dom.toggleClass(this._node, 'active');
-          return;
-        }
-
-        if (dom.hasClass(this._node, 'active')) {
-          return;
-        }
-
-        dom.removeClass(this._siblings, 'active');
-        dom.addClass(this._node, 'active');
-
-        if (this._input) {
-          dom.setProperty(this._input, 'checked', true);
-        }
+        this._input && dom.is(this._input, '[type="radio"]') ? this._toggleRadio() : this._toggleCheckbox();
       }
     }]);
 
@@ -192,6 +182,31 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   });
   UI.Button = Button;
   /**
+   * Button Private
+   */
+
+  Object.assign(Button.prototype, {
+    _toggleCheckbox: function _toggleCheckbox() {
+      dom.toggleClass(this._node, 'active');
+
+      if (this._input) {
+        dom.setProperty(this._input, 'checked', !dom.getProperty(this._input, 'checked'));
+      }
+    },
+    _toggleRadio: function _toggleRadio() {
+      if (dom.hasClass(this._node, 'active')) {
+        return;
+      }
+
+      dom.addClass(this._node, 'active');
+      dom.setProperty(this._input, 'checked', true);
+
+      if (this._siblings.length) {
+        dom.removeClass(this._siblings, 'active');
+      }
+    }
+  });
+  /**
    * Carousel Class
    * @class
    */
@@ -203,6 +218,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * New Carousel constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Carousel with.
+     * @param {number} [settings.interval=5000] The duration of the interval.
+     * @param {number} [settings.transition=500] The duration of the transition.
+     * @param {Boolean} [settings.keyboard=true] Whether to all keyboard navigation.
+     * @param {Boolean|string} [settings.ride=false] Set to "carousel" to automatically start the carousel.
+     * @param {Boolean} [settings.pause=true] Whether to pause the carousel on mouseover.
+     * @param {Boolean} [settings.wrap=true] Whether the carousel should cycle around.
      * @returns {Carousel} A new Carousel object.
      */
     function Carousel(node, settings) {
@@ -218,11 +239,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       this._events();
 
+      dom.setData(this._node, 'carousel', this);
+
       if (this._settings.ride === 'carousel') {
         this._setTimer();
       }
-
-      dom.setData(this._node, 'carousel', this);
     }
     /**
      * Cycle to the next carousel item.
@@ -245,13 +266,19 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           clearTimeout(this._timer);
         }
 
-        dom.stop(this._node, true);
         dom.removeEvent(this._node, 'click.frost.carousel', this._clickNextEvent);
         dom.removeEvent(this._node, 'click.frost.carousel', this._clickPrevEvent);
         dom.removeEvent(this._node, 'click.frost.carousel', this._clickSlideEvent);
-        dom.removeEvent(this._node, 'keydown.frost.carousel', this._keyDownEvent);
-        dom.removeEvent(this._node, 'mouseenter.frost.carousel', this._mouseEnterEvent);
-        dom.removeEvent(this._node, 'mouseleave.frost.carousel', this._mouseLeaveEvent);
+
+        if (this._settings.keyboard) {
+          dom.removeEvent(this._node, 'keydown.frost.carousel', this._keyDownEvent);
+        }
+
+        if (this._settings.pause) {
+          dom.removeEvent(this._node, 'mouseenter.frost.carousel', this._mouseEnterEvent);
+          dom.removeEvent(this._node, 'mouseleave.frost.carousel', this._mouseLeaveEvent);
+        }
+
         dom.removeData(this._node, 'carousel');
       }
       /**
@@ -271,10 +298,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "pause",
       value: function pause() {
-        if (this._sliding) {
-          dom.stop(this._items, true);
-        }
-
         if (this._timer) {
           clearTimeout(this._timer);
         }
@@ -298,83 +321,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show(index) {
-        var _this3 = this;
-
-        return new Promise(function (resolve, reject) {
-          if (_this3._sliding) {
-            _this3._queue.push({
-              index: index
-            });
-
-            return reject();
-          }
-
-          index = parseInt(index);
-
-          if (!_this3._settings.wrap && (index < 0 || index > _this3._items.length - 1)) {
-            return reject();
-          }
-
-          var dir = 0;
-
-          if (index < 0) {
-            dir = -1;
-          } else if (index > _this3._items.length - 1) {
-            dir = 1;
-          }
-
-          index %= _this3._items.length;
-
-          if (index < 0) {
-            index = _this3._items.length + index;
-          }
-
-          if (index === _this3._index) {
-            return reject();
-          }
-
-          var direction = dir == -1 || dir == 0 && index < _this3._index ? 'left' : 'right';
-          var eventData = {
-            direction: direction,
-            relatedTarget: _this3._items[index],
-            from: _this3._index,
-            to: index
-          };
-
-          if (!DOM._triggerEvent(_this3._node, 'slide.frost.carousel', eventData)) {
-            return reject();
-          }
-
-          var oldIndex = _this3._index;
-          _this3._index = index;
-          _this3._sliding = true;
-
-          _this3.pause();
-
-          dom.addClass(_this3._items[_this3._index], 'active');
-          dom.removeClass(_this3._items[oldIndex], 'active');
-          dom.animate(_this3._items[_this3._index], function (node, progress, options) {
-            return _this3._update(node, _this3._items[oldIndex], progress, options.direction);
-          }, {
-            direction: direction,
-            duration: _this3._settings.transition
-          }).then(function (_) {
-            dom.removeClass(dom.find('.active[data-slide-to]', _this3._node), 'active');
-            dom.addClass(dom.find('[data-slide-to="' + _this3._index + '"]', _this3._node), 'active');
-            _this3._sliding = false;
-            dom.triggerEvent(_this3._node, 'slid.frost.carousel', eventData);
-
-            if (!_this3._queue.length) {
-              _this3._setTimer();
-
-              return resolve();
-            }
-
-            var next = _this3._queue.shift();
-
-            return next.dir ? _this3.slide(next.dir) : _this3.show(next.index);
-          });
-        });
+        return this._show(index);
       }
       /**
        * Slide the Carousel in a specific direction.
@@ -386,7 +333,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       key: "slide",
       value: function slide() {
         var direction = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-        return this.show(this._index + direction);
+        var index = this._queue.length ? this._queue[this._queue.length - 1].index : this._index;
+        return this.show(index + direction);
       }
     }]);
 
@@ -469,70 +417,50 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   Object.assign(Carousel.prototype, {
     /**
-     * Update the position of the Carousel items.
-     * @param {Node} nodeIn The new node.
-     * @param {Node} nodeOut The old node.
-     * @param {number} progress The progress of the cycle.
-     * @param {string} direction The direction to cycle to.
-     */
-    _update: function _update(nodeIn, nodeOut, progress, direction) {
-      if (progress < 1) {
-        var inverse = direction === 'right';
-        DOMNode.setStyle(nodeOut, 'display', 'block');
-        DOMNode.setStyle(nodeOut, 'transform', "translateX(".concat(Math.round(progress * 100) * (inverse ? -1 : 1), "%)"));
-        DOMNode.setStyle(nodeIn, 'transform', "translateX(".concat(Math.round((1 - progress) * 100) * (inverse ? 1 : -1), "%)"));
-      } else {
-        DOMNode.setStyle(nodeOut, 'display', '');
-        DOMNode.setStyle(nodeOut, 'transform', '');
-        DOMNode.setStyle(nodeIn, 'transform', '');
-      }
-    },
-
-    /**
      * Attach events for the Carousel.
      */
     _events: function _events() {
-      var _this4 = this;
+      var _this3 = this;
 
       this._clickNextEvent = function (e) {
         e.preventDefault();
 
-        _this4.next()["catch"](function (_) {});
+        _this3.next()["catch"](function (_) {});
       };
 
       this._clickPrevEvent = function (e) {
         e.preventDefault();
 
-        _this4.prev()["catch"](function (_) {});
+        _this3.prev()["catch"](function (_) {});
       };
 
       this._clickSlideEvent = function (e) {
         e.preventDefault();
         var slideTo = dom.getDataset(e.currentTarget, 'slideTo');
 
-        _this4.show(slideTo)["catch"](function (_) {});
+        _this3.show(slideTo)["catch"](function (_) {});
       };
 
       this._keyDownEvent = function (e) {
-        if (_this4._sliding || e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
           return;
         }
 
         e.preventDefault();
 
         if (e.key === 'ArrowLeft') {
-          _this4.prev()["catch"](function (_) {});
+          _this3.prev()["catch"](function (_) {});
         } else if (e.key === 'ArrowRight') {
-          _this4.next()["catch"](function (_) {});
+          _this3.next()["catch"](function (_) {});
         }
       };
 
       this._mouseEnterEvent = function (_) {
-        return _this4.pause();
+        return _this3.pause();
       };
 
       this._mouseLeaveEvent = function (_) {
-        return _this4._setTimer();
+        return _this3._setTimer();
       };
 
       dom.addEventDelegate(this._node, 'click.frost.carousel', '.carousel-next', this._clickNextEvent);
@@ -553,12 +481,133 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Set a timer for the next Carousel cycle.
      */
     _setTimer: function _setTimer() {
-      var _this5 = this;
+      var _this4 = this;
 
       var interval = dom.getDataset(this._items[this._index], 'interval');
       this._timer = setTimeout(function (_) {
-        return _this5.cycle();
+        return _this4.cycle();
       }, interval ? interval : this._settings.interval);
+    },
+
+    /**
+     * Cycle to a specific Carousel item.
+     * @param {number} index The item index to cycle to.
+     * @param {function} [queuedResolve] The queued resolve callback.
+     * @param {function} [queuedReject] The queued reject callback.
+     * @returns {Promise} A new Promise that resolves when the animation has completed.
+     */
+    _show: function _show(index, queuedResolve, queuedReject) {
+      var _this5 = this;
+
+      return new Promise(function (resolve, reject) {
+        if (dom.getDataset(_this5._node, 'sliding')) {
+          _this5._queue.push({
+            index: index,
+            resolve: resolve,
+            reject: reject
+          });
+
+          return;
+        }
+
+        var fullResolve = function fullResolve(_) {
+          queuedResolve && queuedResolve();
+          resolve();
+        };
+
+        var fullReject = function fullReject(_) {
+          queuedReject && queuedReject();
+          reject();
+        };
+
+        index = parseInt(index);
+
+        if (!_this5._settings.wrap && (index < 0 || index > _this5._items.length - 1)) {
+          return fullReject();
+        }
+
+        var dir = 0;
+
+        if (index < 0) {
+          dir = -1;
+        } else if (index > _this5._items.length - 1) {
+          dir = 1;
+        }
+
+        index %= _this5._items.length;
+
+        if (index < 0) {
+          index = _this5._items.length + index;
+        }
+
+        if (index === _this5._index) {
+          return fullReject();
+        }
+
+        var direction = dir == -1 || dir == 0 && index < _this5._index ? 'left' : 'right';
+        var eventData = {
+          direction: direction,
+          relatedTarget: _this5._items[index],
+          from: _this5._index,
+          to: index
+        };
+
+        if (!DOM._triggerEvent(_this5._node, 'slide.frost.carousel', eventData)) {
+          return fullReject();
+        }
+
+        var oldIndex = _this5._index;
+        _this5._index = index;
+        dom.setDataset(_this5._node, 'sliding', true);
+
+        _this5.pause();
+
+        dom.addClass(_this5._items[_this5._index], 'active');
+        dom.removeClass(_this5._items[oldIndex], 'active');
+        dom.animate(_this5._items[_this5._index], function (node, progress, options) {
+          return _this5._update(node, _this5._items[oldIndex], progress, options.direction);
+        }, {
+          direction: direction,
+          duration: _this5._settings.transition
+        }).then(function (_) {
+          dom.removeClass(dom.find('.active[data-slide-to]', _this5._node), 'active');
+          dom.addClass(dom.find('[data-slide-to="' + _this5._index + '"]', _this5._node), 'active');
+          dom.removeDataset(_this5._node, 'sliding');
+          dom.triggerEvent(_this5._node, 'slid.frost.carousel', eventData);
+          fullResolve();
+
+          if (!_this5._queue.length) {
+            _this5._setTimer();
+
+            return;
+          }
+
+          var next = _this5._queue.shift();
+
+          return _this5._show(next.index, next.resolve, next.reject);
+        });
+      });
+    },
+
+    /**
+     * Update the position of the Carousel items.
+     * @param {Node} nodeIn The new node.
+     * @param {Node} nodeOut The old node.
+     * @param {number} progress The progress of the cycle.
+     * @param {string} direction The direction to cycle to.
+     */
+    _update: function _update(nodeIn, nodeOut, progress, direction) {
+      if (progress >= 1) {
+        DOMNode.setStyle(nodeOut, 'display', '');
+        DOMNode.setStyle(nodeOut, 'transform', '');
+        DOMNode.setStyle(nodeIn, 'transform', '');
+        return;
+      }
+
+      var inverse = direction === 'right';
+      DOMNode.setStyle(nodeOut, 'display', 'block');
+      DOMNode.setStyle(nodeOut, 'transform', "translateX(".concat(Math.round(progress * 100) * (inverse ? -1 : 1), "%)"));
+      DOMNode.setStyle(nodeIn, 'transform', "translateX(".concat(Math.round((1 - progress) * 100) * (inverse ? 1 : -1), "%)"));
     }
   });
   /**
@@ -573,6 +622,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * New Collapse constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Collapse with.
+     * @param {string} [settings.direction=bottom] The direction to collapse the targets from/to.
+     * @param {number} [settings.duration=300] The duration of the animation.
      * @returns {Collapse} A new Collapse object.
      */
     function Collapse(node, settings) {
@@ -594,7 +645,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Collapse, [{
       key: "destroy",
       value: function destroy() {
-        dom.stop(this._target, true);
         dom.removeEvent(this._node, 'click.frost.collapse', this._clickEvent);
         dom.removeData(this._node, 'collapse');
       }
@@ -610,7 +660,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         return new Promise(function (resolve, reject) {
           var targets = _this6._targets.filter(function (target) {
-            return dom.hasClass(target, 'show') && dom.getDataset(target, 'animating') !== 'true';
+            return dom.hasClass(target, 'show') && !dom.getDataset(target, 'animating');
           });
 
           if (!targets.length) {
@@ -621,7 +671,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             return reject();
           }
 
-          dom.setDataset(targets, 'animating', 'true');
+          dom.setDataset(targets, 'animating', true);
           dom.squeezeOut(targets, {
             direction: _this6._settings.direction,
             duration: _this6._settings.duration
@@ -648,7 +698,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         return new Promise(function (resolve, reject) {
           var targets = _this7._targets.filter(function (target) {
-            return dom.hasClass(target, 'show') && dom.getDataset(target, 'animating') !== 'true';
+            return dom.hasClass(target, 'show') && !dom.getDataset(target, 'animating');
           });
 
           if (!targets.length) {
@@ -659,16 +709,18 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             return reject();
           }
 
-          if (_this7._hasAccordion && !_this7._hideAccordion(targets)) {
+          var accordions = _this7._hideAccordion(targets);
+
+          if (!accordions) {
             return reject();
           }
 
-          dom.setDataset(targets, 'animating', 'true');
+          dom.setDataset(targets, 'animating', true);
           dom.addClass(targets, 'show');
-          dom.squeezeIn(targets, {
+          Promise.all([dom.squeezeIn(targets, {
             direction: _this7._settings.direction,
             duration: _this7._settings.duration
-          }).then(function (_) {
+          })].concat(_toConsumableArray(accordions))).then(function (_) {
             dom.triggerEvent(_this7._node, 'shown.frost.collapse');
             resolve();
           })["catch"](function (_) {
@@ -689,30 +741,63 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this8 = this;
 
         return new Promise(function (resolve, reject) {
-          var targets = _this8._targets.filter(function (target) {
-            return dom.getDataset(target, 'animating') !== 'true';
-          });
+          var targets = [];
+          var hidden = [];
+          var visible = [];
+          var _iteratorNormalCompletion2 = true;
+          var _didIteratorError2 = false;
+          var _iteratorError2 = undefined;
+
+          try {
+            for (var _iterator2 = _this8._targets[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+              var target = _step2.value;
+
+              if (dom.getDataset(target, 'animating')) {
+                continue;
+              }
+
+              targets.push(target);
+
+              if (dom.hasClass(target, 'show')) {
+                visible.push(target);
+              } else {
+                hidden.push(target);
+              }
+            }
+          } catch (err) {
+            _didIteratorError2 = true;
+            _iteratorError2 = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+                _iterator2["return"]();
+              }
+            } finally {
+              if (_didIteratorError2) {
+                throw _iteratorError2;
+              }
+            }
+          }
 
           if (!targets.length) {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this8._node, 'show.frost.collapse')) {
+          if (visible.length && !DOM._triggerEvent(_this8._node, 'hide.frost.collapse')) {
             return reject();
           }
 
-          var hidden = targets.filter(function (target) {
-            return !dom.hasClass(target, 'show');
-          });
-
-          if (_this8._hasAccordion && !_this8._hideAccordion(hidden)) {
+          if (hidden.length && !DOM._triggerEvent(_this8._node, 'show.frost.collapse')) {
             return reject();
           }
 
-          var visible = targets.filter(function (target) {
-            return dom.hasClass(target, 'show');
-          });
-          dom.setDataset(targets, 'animating', 'true');
+          var accordions = _this8._hideAccordion(hidden);
+
+          if (!accordions) {
+            return reject();
+          }
+
+          dom.setDataset(targets, 'animating', true);
           var animations = targets.map(function (target) {
             var animation = dom.hasClass(target, 'show') ? 'squeezeOut' : 'squeezeIn';
             return dom[animation](target, {
@@ -721,9 +806,17 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             });
           });
           dom.addClass(hidden, 'show');
-          Promise.all(animations).then(function (_) {
+          Promise.all([].concat(_toConsumableArray(animations), _toConsumableArray(accordions))).then(function (_) {
             dom.removeClass(visible, 'show');
-            dom.triggerEvent(_this8._node, 'shown.frost.collapse');
+
+            if (visible.length) {
+              dom.triggerEvent(_this8._node, 'hidden.frost.collapse');
+            }
+
+            if (hidden.length) {
+              dom.triggerEvent(_this8._node, 'shown.frost.collapse');
+            }
+
             resolve();
           })["catch"](function (_) {
             return reject();
@@ -747,33 +840,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     e.preventDefault();
     var collapse = dom.hasData(e.currentTarget, 'collapse') ? dom.getData(e.currentTarget, 'collapse') : new Collapse(e.currentTarget);
     collapse.toggle()["catch"](function (_) {});
-  }); // Auto-initialize Collapse from data-toggle
-
-  dom.addEvent(window, 'load', function (_) {
-    var nodes = dom.find('[data-toggle="collapse"]');
-    var _iteratorNormalCompletion2 = true;
-    var _didIteratorError2 = false;
-    var _iteratorError2 = undefined;
-
-    try {
-      for (var _iterator2 = nodes[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-        var node = _step2.value;
-        new Collapse(node);
-      }
-    } catch (err) {
-      _didIteratorError2 = true;
-      _iteratorError2 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-          _iterator2["return"]();
-        }
-      } finally {
-        if (_didIteratorError2) {
-          throw _iteratorError2;
-        }
-      }
-    }
   }); // Add Collapse QuerySet method
 
   if (QuerySet) {
@@ -819,6 +885,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @param {array} targets The target nodes.
      */
     _hideAccordion: function _hideAccordion(targets) {
+      if (!this._hasAccordion) {
+        return [];
+      }
+
       var parents = [];
       var collapses = [];
       var _iteratorNormalCompletion3 = true;
@@ -870,12 +940,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
               continue;
             }
 
-            var collapse = dom.getData(toggle, 'collapse');
+            var collapse = dom.hasData(toggle, 'collapse') ? dom.getData(toggle, 'collapse') : new Collapse(toggle);
 
             var _targets = dom.find(collapse._settings.target);
 
             var animating = _targets.find(function (target) {
-              return dom.getDataset(target, 'animating') === 'true';
+              return dom.getDataset(target, 'animating');
             });
 
             if (animating) {
@@ -900,13 +970,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         }
       }
 
+      var promises = [];
+
       for (var _i2 = 0, _collapses = collapses; _i2 < _collapses.length; _i2++) {
         var _collapse = _collapses[_i2];
-
-        _collapse.hide()["catch"](function (_) {});
+        promises.push(_collapse.hide());
       }
 
-      return true;
+      return promises;
     }
   });
   /**
@@ -921,11 +992,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * New Dropdown constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Dropdown with.
+     * @param {number} [settings.duration=100] The duration of the animation.
+     * @param {string} [settings.placement=bottom] The placement of the dropdown relative to the toggle.
+     * @param {string} [settings.position=start] The position of the dropdown relative to the toggle.
+     * @param {Boolean} [settings.fixed=false] Whether the dropdown position is fixed.
+     * @param {number} [settings.spacing=2] The spacing between the dropdown and the toggle.
+     * @param {number} [settings.minContact=false] The minimum amount of contact the dropdown must make with the toggle.
      * @returns {Dropdown} A new Dropdown object.
      */
     function Dropdown(node, settings) {
-      var _this9 = this;
-
       _classCallCheck(this, Dropdown);
 
       this._node = node;
@@ -955,12 +1030,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           spacing: this._settings.spacing,
           minContact: this._settings.minContact
         });
-
-        this._getDir = function (_) {
-          return dom.getDataset(_this9._referenceNode, 'placement');
-        };
-      } else {
-        this._getDir = this._settings.placement;
       }
 
       this._events();
@@ -977,10 +1046,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       value: function destroy() {
         dom.stop(this._menuNode, true);
 
-        this._popper.destroy();
+        if (this._popper) {
+          this._popper.destroy();
+        }
 
         dom.removeClass(this._containerNode, 'open');
-        dom.removeEvent(document, 'click.frost.dropdown', this._windowClickEvent);
+        dom.removeEvent(document, 'click.frost.dropdown', this._documentClickEvent);
         dom.removeEvent(this._node, 'click.frost.dropdown', this._clickEvent);
         dom.removeEvent(this._node, 'keyup.frost.dropdown', this._keyUpEvent);
         dom.removeEvent(this._node, 'keydown.frost.dropdown', this._keyDownEvent);
@@ -995,37 +1066,29 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "hide",
       value: function hide() {
-        var _this10 = this;
+        var _this9 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!dom.hasClass(_this10._containerNode, 'open') || dom.getDataset(_this10._menuNode, 'animating') === 'true') {
+          if (!dom.hasClass(_this9._containerNode, 'open') || dom.getDataset(_this9._menuNode, 'animating')) {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this10._node, 'hide.frost.dropdown')) {
+          if (!DOM._triggerEvent(_this9._node, 'hide.frost.dropdown')) {
             return reject();
           }
 
-          dom.setDataset(_this10._menuNode, 'animating', 'true');
-          dom.removeEvent(document, 'click.frost.dropdown', _this10._windowClickEvent);
-          Promise.all([dom.fadeOut(_this10._menuNode, {
-            duration: _this10._settings.duration
-          }), dom.squeezeOut(_this10._menuNode, {
-            direction: _this10._getDir,
-            duration: _this10._settings.duration,
-            useGpu: false
-          }), dom.animate(_this10._menuNode, function (_) {
-            return _this10._popper && _this10._popper.update();
-          }, {
-            duration: _this10._settings.duration
-          })]).then(function (_) {
-            dom.removeClass(_this10._containerNode, 'open');
-            dom.triggerEvent(_this10._node, 'hidden.frost.dropdown');
+          dom.setDataset(_this9._menuNode, 'animating', true);
+          dom.removeEvent(document, 'click.frost.dropdown', _this9._documentClickEvent);
+          dom.fadeOut(_this9._menuNode, {
+            duration: _this9._settings.duration
+          }).then(function (_) {
+            dom.removeClass(_this9._containerNode, 'open');
+            dom.triggerEvent(_this9._node, 'hidden.frost.dropdown');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeAttribute(_this10._menuNode, 'data-animating');
+            return dom.removeDataset(_this9._menuNode, 'animating');
           });
         });
       }
@@ -1037,41 +1100,29 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show() {
-        var _this11 = this;
+        var _this10 = this;
 
         return new Promise(function (resolve, reject) {
-          if (dom.hasClass(_this11._containerNode, 'open') || dom.getDataset(_this11._menuNode, 'animating') === 'true') {
+          if (dom.hasClass(_this10._containerNode, 'open') || dom.getDataset(_this10._menuNode, 'animating')) {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this11._node, 'show.frost.dropdown')) {
+          if (!DOM._triggerEvent(_this10._node, 'show.frost.dropdown')) {
             return reject();
           }
 
-          dom.setDataset(_this11._menuNode, 'animating', 'true');
-          dom.addClass(_this11._containerNode, 'open');
-          Promise.all([dom.fadeIn(_this11._menuNode, {
-            duration: _this11._settings.duration
-          }), dom.squeezeIn(_this11._menuNode, {
-            direction: _this11._getDir,
-            duration: _this11._settings.duration,
-            useGpu: false
-          }), dom.animate(_this11._menuNode, function (_) {
-            return _this11._popper && _this11._popper.update();
-          }, {
-            duration: _this11._settings.duration
-          })]).then(function (_) {
-            if (_this11._popper) {
-              _this11._popper.update();
-            }
-
-            dom.addEventOnce(document, 'click.frost.dropdown', _this11._windowClickEvent);
-            dom.triggerEvent(_this11._node, 'shown.frost.dropdown');
+          dom.setDataset(_this10._menuNode, 'animating', true);
+          dom.addClass(_this10._containerNode, 'open');
+          dom.fadeIn(_this10._menuNode, {
+            duration: _this10._settings.duration
+          }).then(function (_) {
+            dom.addEvent(document, 'click.frost.dropdown', _this10._documentClickEvent);
+            dom.triggerEvent(_this10._node, 'shown.frost.dropdown');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeAttribute(_this11._menuNode, 'data-animating');
+            return dom.removeDataset(_this10._menuNode, 'animating');
           });
         });
       }
@@ -1092,7 +1143,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 
   Dropdown.defaults = {
-    duration: 150,
+    duration: 100,
     placement: 'bottom',
     position: 'start',
     fixed: false,
@@ -1169,12 +1220,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Dropdown.
      */
     _events: function _events() {
-      var _this12 = this;
+      var _this11 = this;
 
       this._clickEvent = function (e) {
         e.preventDefault();
 
-        _this12.toggle()["catch"](function (_) {});
+        _this11.toggle()["catch"](function (_) {});
       };
 
       this._keyUpEvent = function (e) {
@@ -1184,7 +1235,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         e.preventDefault();
 
-        _this12.toggle()["catch"](function (_) {});
+        _this11.toggle()["catch"](function (_) {});
       };
 
       this._keyDownEvent = function (e) {
@@ -1194,10 +1245,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         e.preventDefault();
 
-        _this12.show().then(function (_) {
-          var next = dom.findOne('.dropdown-item', _this12._menuNode);
+        _this11.show().then(function (_) {
+          var next = dom.findOne('.dropdown-item', _this11._menuNode);
           dom.focus(next);
-        });
+        })["catch"](function (_) {});
       };
 
       this._menuKeyDownEvent = function (e) {
@@ -1216,17 +1267,18 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         }
       };
 
-      this._windowClickEvent = function (_) {
-        return _this12.hide();
+      this._documentClickEvent = function (e) {
+        if (dom.isSame(e.target, _this11._menuNode) || dom.hasDescendent(_this11._menuNode, e.target)) {
+          return;
+        }
+
+        _this11.hide()["catch"](function (_) {});
       };
 
       dom.addEvent(this._node, 'click.frost.dropdown', this._clickEvent);
       dom.addEvent(this._node, 'keyup.frost.dropdown', this._keyUpEvent);
       dom.addEvent(this._node, 'keydown.frost.dropdown', this._keyDownEvent);
       dom.addEventDelegate(this._menuNode, 'keydown.frost.dropdown', '.dropdown-item', this._menuKeyDownEvent);
-      dom.addEvent(this._menuNode, 'click.frost.dropdown', function (e) {
-        e.stopPropagation();
-      });
     }
   });
   /**
@@ -1241,10 +1293,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * New Modal constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Modal with.
+     * @param {number} [settings.duration=250] The duration of the animation.
+     * @param {Boolean} [settings.backdrop=true] Whether to display a backdrop for the modal.
+     * @param {Boolean} [settings.focus=true] Whether to set focus on the modal when shown.
+     * @param {Boolean} [settings.show=true] Whether to show the modal on initialization.
+     * @param {Boolean} [settings.keyboard=true] Whether to close the modal when the escape key is pressed.
      * @returns {Modal} A new Modal object.
      */
     function Modal(node, settings) {
-      var _this13 = this;
+      var _this12 = this;
 
       _classCallCheck(this, Modal);
 
@@ -1252,15 +1309,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this._settings = _objectSpread({}, Modal.defaults, {}, dom.getDataset(node), {}, settings);
       this._dialog = dom.child(this._node, '.modal-dialog').shift();
 
-      this._dialogClickEvent = function (e) {
-        if (dom.is(e.target, '[data-dismiss="modal"]') || dom.closest(e.target, '[data-dismiss="modal"]').length) {
+      this._documentClickEvent = function (e) {
+        if (dom.isSame(e.target, _this12._dialog) || dom.hasDescendent(_this12._dialog, e.target)) {
           return;
         }
 
-        e.stopPropagation();
+        _this12.hide()["catch"](function (_) {});
       };
-
-      dom.addEvent(this._dialog, 'click.frost.modal', this._dialogClickEvent);
 
       this._windowKeyDownEvent = function (e) {
         if (e.key !== 'Escape') {
@@ -1269,7 +1324,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         e.preventDefault();
 
-        _this13.hide();
+        _this12.hide()["catch"](function (_) {});
       };
 
       if (this._settings.show) {
@@ -1286,13 +1341,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Modal, [{
       key: "destroy",
       value: function destroy() {
-        dom.stop([this._dialog, this._backdrop], true);
+        if (this._settings.backdrop) {
+          dom.removeEvent(document, 'click.frost.modal', this._documentClickEvent);
+        }
 
         if (this._settings.keyboard) {
           dom.removeEvent(window, 'keydown.frost.modal', this._windowKeyDownEvent);
         }
 
-        dom.removeEvent(this._dialog, 'click.frost.modal', this._dialogClickEvent);
         dom.removeData(this._node, 'modal');
       }
       /**
@@ -1303,43 +1359,47 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "hide",
       value: function hide() {
-        var _this14 = this;
+        var _this13 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!dom.hasClass(_this14._node, 'show') || dom.getDataset(_this14._dialog, 'animating') === 'true') {
+          if (!dom.hasClass(_this13._node, 'show') || dom.getDataset(_this13._dialog, 'animating')) {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this14._node, 'hide.frost.modal')) {
+          if (!DOM._triggerEvent(_this13._node, 'hide.frost.modal')) {
             return reject();
           }
 
-          dom.setDataset([_this14._dialog, _this14._backdrop], 'animating', 'true');
-          dom.removeEvent(_this14._backdrop, 'click.frost.autocomplete');
-          Promise.all([dom.fadeOut(_this14._dialog, {
-            duration: _this14._settings.duration
-          }), dom.dropOut(_this14._dialog, {
-            duration: _this14._settings.duration
-          }), dom.fadeOut(_this14._backdrop, {
-            duration: _this14._settings.duration
+          dom.setDataset([_this13._dialog, _this13._backdrop], 'animating', true);
+
+          if (_this13._settings.backdrop) {
+            dom.removeEvent(document, 'click.frost.modal', _this13._documentClickEvent);
+          }
+
+          if (_this13._settings.keyboard) {
+            dom.removeEvent(window, 'keydown.frost.modal', _this13._windowKeyDownEvent);
+          }
+
+          Promise.all([dom.fadeOut(_this13._dialog, {
+            duration: _this13._settings.duration
+          }), dom.dropOut(_this13._dialog, {
+            duration: _this13._settings.duration
+          }), dom.fadeOut(_this13._backdrop, {
+            duration: _this13._settings.duration
           })]).then(function (_) {
-            if (_this14._settings.backdrop) {
-              dom.remove(_this14._backdrop);
-              _this14._backdrop = null;
+            if (_this13._settings.backdrop) {
+              dom.remove(_this13._backdrop);
+              _this13._backdrop = null;
             }
 
-            if (_this14._settings.keyboard) {
-              dom.removeEvent(window, 'keydown.frost.modal', _this14._windowKeyDownEvent);
-            }
-
-            dom.removeClass(_this14._node, 'show');
+            dom.removeClass(_this13._node, 'show');
             dom.removeClass(document.body, 'modal-open');
-            dom.triggerEvent(_this14._node, 'hidden.frost.modal');
+            dom.triggerEvent(_this13._node, 'hidden.frost.modal');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeAttribute([_this14._dialog, _this14._backdrop], 'data-animating');
+            return dom.removeDataset([_this13._dialog, _this13._backdrop], 'animating');
           });
         });
       }
@@ -1351,54 +1411,52 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show() {
-        var _this15 = this;
+        var _this14 = this;
 
         return new Promise(function (resolve, reject) {
-          if (dom.hasClass(_this15._node, 'show') || dom.getDataset(_this15._dialog, 'animating') === 'true') {
+          if (dom.hasClass(_this14._node, 'show') || dom.getDataset(_this14._dialog, 'animating')) {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this15._node, 'show.frost.modal')) {
+          if (!DOM._triggerEvent(_this14._node, 'show.frost.modal')) {
             return reject();
           }
 
-          if (_this15._settings.backdrop) {
-            _this15._backdrop = dom.create('div', {
+          if (_this14._settings.backdrop) {
+            _this14._backdrop = dom.create('div', {
               "class": 'modal-backdrop'
             });
-            dom.append(document.body, _this15._backdrop);
+            dom.append(document.body, _this14._backdrop);
           }
 
-          dom.setDataset([_this15._dialog, _this15._backdrop], 'animating', 'true');
-          dom.addClass(_this15._node, 'show');
+          dom.setDataset([_this14._dialog, _this14._backdrop], 'animating', true);
+          dom.addClass(_this14._node, 'show');
           dom.addClass(document.body, 'modal-open');
-          Promise.all([dom.fadeIn(_this15._dialog, {
-            duration: _this15._settings.duration
-          }), dom.dropIn(_this15._dialog, {
-            duration: _this15._settings.duration
-          }), dom.fadeIn(_this15._backdrop, {
-            duration: _this15._settings.duration
+          Promise.all([dom.fadeIn(_this14._dialog, {
+            duration: _this14._settings.duration
+          }), dom.dropIn(_this14._dialog, {
+            duration: _this14._settings.duration
+          }), dom.fadeIn(_this14._backdrop, {
+            duration: _this14._settings.duration
           })]).then(function (_) {
-            if (_this15._settings.backdrop) {
-              dom.addEventOnce(document.body, 'click.frost.modal', function (_) {
-                _this15.hide();
-              });
+            if (_this14._settings.backdrop) {
+              dom.addEvent(document, 'click.frost.modal', _this14._documentClickEvent);
             }
 
-            if (_this15._settings.keyboard) {
-              dom.addEvent(window, 'keydown.frost.modal', _this15._windowKeyDownEvent);
+            if (_this14._settings.keyboard) {
+              dom.addEvent(window, 'keydown.frost.modal', _this14._windowKeyDownEvent);
             }
 
-            if (_this15._settings.focus) {
-              dom.focus(_this15._node);
+            if (_this14._settings.focus) {
+              dom.focus(_this14._node);
             }
 
-            dom.triggerEvent(_this15._node, 'shown.frost.modal');
+            dom.triggerEvent(_this14._node, 'shown.frost.modal');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeAttribute([_this15._dialog, _this15._backdrop], 'data-animating');
+            return dom.removeDataset([_this14._dialog, _this14._backdrop], 'animating');
           });
         });
       }
@@ -1490,6 +1548,21 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * New Popover constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Popover with.
+     * @param {object} [settings.classes] The CSS classes to style the popover.
+     * @param {string} [settings.classes.popover=popover] The CSS classes for the popover.
+     * @param {string} [settings.classes.popoverHeader=popover-header] The CSS classes for the popover header.
+     * @param {string} [settings.classes.popoverBody=popover-body] The CSS classes for the popover body.
+     * @param {string} [settings.classes.arrow=arrow] The CSS classes for the arrow.
+     * @param {number} [settings.duration=100] The duration of the animation.
+     * @param {Boolean} [settings.enable=true] Whether the popover is enabled.
+     * @param {Boolean} [settings.html=false] Whether to allow HTML in the popover.
+     * @param {function} [settings.sanitize] The HTML sanitization function.
+     * @param {string} [settings.trigger=click] The events to trigger the popover.
+     * @param {string} [settings.placement=auto] The placement of the popover relative to the toggle.
+     * @param {string} [settings.position=center] The position of the popover relative to the toggle.
+     * @param {Boolean} [settings.fixed=false] Whether the popover position is fixed.
+     * @param {number} [settings.spacing=7] The spacing between the popover and the toggle.
+     * @param {number} [settings.minContact=false] The minimum amount of contact the popover must make with the toggle.
      * @returns {Popover} A new Popover object.
      */
     function Popover(node, settings) {
@@ -1497,11 +1570,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       this._node = node;
       this._settings = _objectSpread({}, Popover.defaults, {}, dom.getDataset(this._node), {}, settings);
-
-      if (this._settings.container) {
-        this._container = dom.findOne(this._settings.container);
-      }
-
       this._triggers = this._settings.trigger.split(' ');
 
       this._events();
@@ -1570,31 +1638,31 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "hide",
       value: function hide() {
-        var _this16 = this;
+        var _this15 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!_this16._popover) {
+          if (!_this15._popover) {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this16._node, 'hide.frost.popover')) {
+          if (!DOM._triggerEvent(_this15._node, 'hide.frost.popover')) {
             return reject();
           }
 
-          dom.setDataset(_this16._popover, 'animating', 'true');
-          dom.stop(_this16._popover);
-          dom.fadeOut(_this16._popover, {
-            duration: _this16._settings.duration
+          dom.setDataset(_this15._popover, 'animating', true);
+          dom.stop(_this15._popover);
+          dom.fadeOut(_this15._popover, {
+            duration: _this15._settings.duration
           }).then(function (_) {
-            _this16._popper.destroy();
+            _this15._popper.destroy();
 
-            dom.remove(_this16._popover);
-            _this16._popover = null;
-            _this16._popper = null;
-            dom.triggerEvent(_this16._node, 'hidden.frost.popover');
+            dom.remove(_this15._popover);
+            _this15._popover = null;
+            _this15._popper = null;
+            dom.triggerEvent(_this15._node, 'hidden.frost.popover');
             resolve();
           })["catch"](function (_) {
-            dom.removeAttribute(_this16._popover, 'data-animating');
+            dom.removeDataset(_this15._popover, 'animating');
             reject();
           });
         });
@@ -1607,30 +1675,30 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show() {
-        var _this17 = this;
+        var _this16 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this17._popover) {
+          if (_this16._popover) {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this17._node, 'show.frost.popover')) {
+          if (!DOM._triggerEvent(_this16._node, 'show.frost.popover')) {
             return reject();
           }
 
-          _this17._render();
+          _this16._render();
 
-          dom.setDataset(_this17._popover, 'animating', 'true');
-          dom.addClass(_this17._popover, 'show');
-          dom.fadeIn(_this17._popover, {
-            duration: _this17._settings.duration
+          dom.setDataset(_this16._popover, 'animating', true);
+          dom.addClass(_this16._popover, 'show');
+          dom.fadeIn(_this16._popover, {
+            duration: _this16._settings.duration
           }).then(function (_) {
-            dom.triggerEvent(_this17._node, 'shown.frost.popover');
+            dom.triggerEvent(_this16._node, 'shown.frost.popover');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeAttribute(_this17._popover, 'data-animating');
+            return dom.removeDataset(_this16._popover, 'animating');
           });
         });
       }
@@ -1670,18 +1738,17 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       popoverBody: 'popover-body',
       arrow: 'arrow'
     },
-    delay: 0,
     duration: 100,
     enable: true,
     html: false,
-    trigger: 'click',
     sanitize: function sanitize(input) {
       return dom.sanitize(input);
     },
+    trigger: 'click',
     placement: 'auto',
     position: 'center',
     fixed: false,
-    spacing: 7,
+    spacing: 5,
     minContact: false
   }; // Auto-initialize Popover from data-toggle
 
@@ -1754,46 +1821,46 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Popover.
      */
     _events: function _events() {
-      var _this18 = this;
+      var _this17 = this;
 
       this._hideEvent = function (_) {
-        if (!_this18._enabled || !_this18._popover) {
+        if (!_this17._enabled || !_this17._popover) {
           return;
         }
 
-        dom.stop(_this18._popover);
+        dom.stop(_this17._popover);
 
-        _this18.hide()["catch"](function (_) {});
+        _this17.hide()["catch"](function (_) {});
       };
 
       this._hoverEvent = function (_) {
-        if (!_this18._enabled) {
+        if (!_this17._enabled) {
           return;
         }
 
-        dom.addEventOnce(_this18._node, 'mouseout.frost.popover', _this18._hideEvent);
+        dom.addEventOnce(_this17._node, 'mouseout.frost.popover', _this17._hideEvent);
 
-        _this18.show()["catch"](function (_) {});
+        _this17.show()["catch"](function (_) {});
       };
 
       this._focusEvent = function (_) {
-        if (!_this18._enabled) {
+        if (!_this17._enabled) {
           return;
         }
 
-        dom.addEventOnce(_this18._node, 'blur.frost.popover', _this18._hideEvent);
+        dom.addEventOnce(_this17._node, 'blur.frost.popover', _this17._hideEvent);
 
-        _this18.show()["catch"](function (_) {});
+        _this17.show()["catch"](function (_) {});
       };
 
       this._clickEvent = function (e) {
         e.preventDefault();
 
-        if (!_this18._enabled) {
+        if (!_this17._enabled) {
           return;
         }
 
-        _this18.toggle()["catch"](function (_) {});
+        _this17.toggle()["catch"](function (_) {});
       };
 
       if (this._triggers.includes('hover')) {
@@ -1872,6 +1939,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * New Popper constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} settings The options to create the Popper with.
+     * @param {HTMLElement} settings.referencee The node to use as the reference.
+     * @param {HTMLElement} [settings.container] The node to use as the container.
+     * @param {HTMLElement} [settings.arrow] The node to use as the arrow.
+     * @param {string} [settings.placement=bottom] The placement of the node relative to the reference.
+     * @param {string} [settings.position=center] The position of the node relative to the reference.
+     * @param {Boolean} [settings.fixed=false] Whether the node position is fixed.
+     * @param {number} [settings.spacing=0] The spacing between the node and the reference.
+     * @param {number} [settings.minContact=false] The minimum amount of contact the node must make with the reference.
+     * @param {Boolean} [settings.useGpu=true] Whether to use GPU acceleration.
      * @returns {Popper} A new Popper object.
      */
     function Popper(node, settings) {
@@ -1880,18 +1956,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this._node = node;
       this._settings = _objectSpread({}, Popper.defaults, {}, dom.getDataset(this._node), {}, settings);
       this._fixed = dom.isFixed(this._settings.reference);
-      this._relativeParent = dom.closest(this._node, function (parent) {
-        return dom.css(parent, 'position') === 'relative';
-      }, document.body).shift();
-      var overflowTypes = ['overflow', 'overflowX', 'overflowY'];
-      var overflowValues = ['auto', 'scroll'];
-      this._scrollParent = dom.closest(this._node, function (parent) {
-        return !!overflowTypes.find(function (overflow) {
-          return !!overflowValues.find(function (value) {
-            return new RegExp(value).test(dom.css(parent, overflow));
-          });
-        });
-      }, document.body).shift();
+      this._relativeParent = Popper.getRelativeParent(this._node);
+      this._scrollParent = Popper.getScrollParent(this._node);
       dom.setStyle(this._node, {
         position: 'absolute',
         top: 0,
@@ -1976,10 +2042,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         if (relativeBox) {
           offset.x -= Math.round(relativeBox.x);
           offset.y -= Math.round(relativeBox.y);
-        } // update arrow
-
-
-        this._updateArrow(nodeBox, referenceBox, placement, position); // offset for placement
+        } // offset for placement
 
 
         Popper.adjustPlacement(offset, nodeBox, referenceBox, placement, this._settings.spacing); // offset for position
@@ -1989,7 +2052,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         offset.x -= parseInt(dom.css(this._node, 'margin-left'));
         offset.y -= parseInt(dom.css(this._node, 'margin-top')); // corrective positioning
 
-        console.log(this._settings);
         Popper.adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, this._settings.minContact); // compensate for scroll parent
 
         if (this._scrollParent) {
@@ -2013,7 +2075,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           style.marginTop = offset.y;
         }
 
-        dom.setStyle(this._node, style);
+        dom.setStyle(this._node, style); // update arrow
+
+        if (this._settings.arrow) {
+          this._updateArrow(nodeBox, referenceBox, placement, position);
+        }
       }
     }]);
 
@@ -2032,6 +2098,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     minContact: false,
     useGpu: true
   };
+  Popper._overflowTypes = ['overflow', 'overflowX', 'overflowY'];
+  Popper._overflowValues = ['auto', 'scroll'];
   UI.Popper = Popper;
   /**
    * Popper Private
@@ -2042,10 +2110,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Popper.
      */
     _events: function _events() {
-      var _this19 = this;
+      var _this18 = this;
 
       this._updateEvent = Core.animation(function (_) {
-        return _this19.update();
+        return _this18.update();
       });
       dom.addEvent(window, 'resize.frost.popper', this._updateEvent);
       dom.addEvent(window, 'scroll.frost.popper', this._updateEvent);
@@ -2063,11 +2131,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @param {string} position The actual position of the Popper.
      */
     _updateArrow: function _updateArrow(nodeBox, referenceBox, placement, position) {
-      if (!this._settings.arrow) {
-        return;
-      }
-
-      dom.show(this._settings.arrow);
       var arrowBox = dom.rect(this._settings.arrow, !this._fixed);
       var arrowStyles = {
         top: '',
@@ -2124,9 +2187,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      */
     adjustConstrain: function adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, minContact) {
       if (['left', 'right'].includes(placement)) {
-        var offsetY = relativeBox ? offset.y + relativeBox.top : offset.y;
-        var refTop = relativeBox ? referenceBox.top - relativeBox.top : referenceBox.top;
-        var minSize = minContact ? minContact : referenceBox.height;
+        var offsetY = offset.y;
+        var refTop = referenceBox.top;
+
+        if (relativeBox) {
+          offsetY += relativeBox.top;
+          refTop -= relativeBox.top;
+        }
+
+        var minSize = minContact !== false ? minContact : referenceBox.height;
 
         if (offsetY + nodeBox.height > minimumBox.bottom) {
           // bottom of offset node is below the container
@@ -2139,10 +2208,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           offset.y = Math.min(refTop + referenceBox.height - minSize, offset.y - _diff2);
         }
       } else {
-        var offsetX = relativeBox ? offset.x + minimumBox.left : offset.x;
-        var refLeft = relativeBox ? referenceBox.left - relativeBox.left : referenceBox.left;
+        var offsetX = offset.x;
+        var refLeft = referenceBox.left;
 
-        var _minSize = minContact ? minContact : referenceBox.width;
+        if (relativeBox) {
+          offsetX += relativeBox.left;
+          refLeft -= relativeBox.left;
+        }
+
+        var _minSize = minContact !== false ? minContact : referenceBox.width;
 
         if (offsetX + nodeBox.width > minimumBox.right) {
           // right of offset node is to the right of the container
@@ -2153,7 +2227,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           // left of offset node is to the left of the container
           var _diff4 = offsetX - minimumBox.left;
 
-          offset.x = Math.min(referenceBox.width >= nodeBox.width ? refLeft + referenceBox.width - _minSize : refLeft, offset.x - _diff4);
+          offset.x = Math.min(refLeft + referenceBox.width - _minSize, offset.x - _diff4);
         }
       }
     },
@@ -2373,6 +2447,34 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     },
 
     /**
+     * Get the relative parent of the node.
+     * @param {HTMLElement} node The input node.
+     * @return {HTMLElement} The relative parent.
+     */
+    getRelativeParent: function getRelativeParent(node) {
+      return dom.closest(node, function (parent) {
+        return dom.css(parent, 'position') === 'relative';
+      }, document.body).shift();
+    },
+
+    /**
+     * Get the scroll parent of the node.
+     * @param {HTMLElement} node The input node.
+     * @return {HTMLElement} The scroll parent.
+     */
+    getScrollParent: function getScrollParent(node) {
+      var _this19 = this;
+
+      return dom.closest(node, function (parent) {
+        return !!_this19._overflowTypes.find(function (overflow) {
+          return !!_this19._overflowValues.find(function (value) {
+            return new RegExp(value).test(dom.css(parent, overflow));
+          });
+        });
+      }, document.body).shift();
+    },
+
+    /**
      * Returns true if the node can not be visible inside the window.
      * @param {object} offset The offset object.
      * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
@@ -2419,6 +2521,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * New Tab constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Tab with.
+     * @param {number} [settings.duration=100] The duration of the animation.
      * @returns {Tab} A new Tab object.
      */
     function Tab(node, settings) {
@@ -2445,7 +2548,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Tab, [{
       key: "destroy",
       value: function destroy() {
-        dom.stop(this._target, true);
         dom.removeEvent(this._node, 'click.frost.tab', this._clickEvent);
         dom.removeData(this._node, 'tab');
       }
@@ -2460,7 +2562,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this20 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!dom.hasClass(_this20._target, 'active') || dom.getDataset(_this20._target, 'animating') === 'true') {
+          console.log('test');
+
+          if (!dom.hasClass(_this20._target, 'active') || dom.getDataset(_this20._target, 'animating')) {
             return reject();
           }
 
@@ -2468,7 +2572,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             return reject();
           }
 
-          dom.setDataset(_this20._target, 'animating', 'true');
+          dom.setDataset(_this20._target, 'animating', true);
           dom.fadeOut(_this20._target, {
             duration: _this20._settings.duration
           }).then(function (_) {
@@ -2479,7 +2583,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeAttribute(_this20._target, 'data-animating');
+            return dom.removeDataset(_this20._target, 'animating');
           });
         });
       }
@@ -2494,7 +2598,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this21 = this;
 
         return new Promise(function (resolve, reject) {
-          if (dom.hasClass(_this21._target, 'active') || dom.getDataset(_this21._target, 'animating') === 'true') {
+          if (dom.hasClass(_this21._target, 'active') || dom.getDataset(_this21._target, 'animating')) {
             return reject();
           }
 
@@ -2504,7 +2608,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             return reject();
           }
 
-          dom.setDataset(_this21._target, 'animating', 'true');
+          dom.setDataset(_this21._target, 'animating', true);
           dom.getData(activeTab, 'tab').hide().then(function (_) {
             if (!DOM._triggerEvent(_this21._node, 'show.frost.tab')) {
               return reject();
@@ -2521,7 +2625,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeAttribute(_this21._target, 'data-animating');
+            return dom.removeDataset(_this21._target, 'animating');
           });
         });
       }
@@ -2627,6 +2731,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * New Toast constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Toast with.
+     * @param {Boolean} [autohide=true] Whether to hide the toast after initialization.
+     * @param {number} [settings.delay=5000] The duration to wait before hiding the toast.
+     * @param {number} [settings.duration=100] The duration of the animation.
      * @returns {Toast} A new Toast object.
      */
     function Toast(node, settings) {
@@ -2653,7 +2760,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Toast, [{
       key: "destroy",
       value: function destroy() {
-        dom.stop(this._node, true);
         dom.removeData(this._node, 'toast');
       }
       /**
@@ -2667,7 +2773,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this24 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!dom.isVisible(_this24._node) || dom.getDataset(_this24._node, 'animating') === 'true') {
+          if (!dom.isVisible(_this24._node) || dom.getDataset(_this24._node, 'animating')) {
             return reject();
           }
 
@@ -2675,7 +2781,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             return reject();
           }
 
-          dom.setDataset(_this24._node, 'animating', 'true');
+          dom.setDataset(_this24._node, 'animating', true);
           return dom.fadeOut(_this24._node, {
             duration: _this24._settings.duration
           }).then(function (_) {
@@ -2685,7 +2791,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeAttribute(_this24._node, 'data-animating');
+            return dom.removeDataset(_this24._node, 'animating');
           });
         });
       }
@@ -2700,7 +2806,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this25 = this;
 
         return new Promise(function (resolve, reject) {
-          if (dom.isVisible(_this25._node) || dom.getDataset(_this25._node, 'animating') === 'true') {
+          if (dom.isVisible(_this25._node) || dom.getDataset(_this25._node, 'animating')) {
             return reject();
           }
 
@@ -2708,7 +2814,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             return reject();
           }
 
-          dom.setDataset(_this25._node, 'animating', 'true');
+          dom.setDataset(_this25._node, 'animating', true);
           dom.show(_this25._node);
           return dom.fadeIn(_this25._node, {
             duration: _this25._settings.duration
@@ -2718,7 +2824,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeAttribute(_this25._node, 'data-animating');
+            return dom.removeDataset(_this25._node, 'animating');
           });
         });
       }
@@ -2813,6 +2919,20 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * New Tooltip constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Tooltip with.
+     * @param {object} [settings.classes] The CSS classes to style the tooltip.
+     * @param {string} [settings.classes.tooltip=tooltip] The CSS classes for the tooltip.
+     * @param {string} [settings.classes.tooltipInner=tooltip-inner] The CSS classes for the tooltip inner-element.
+     * @param {string} [settings.classes.arrow=arrow] The CSS classes for the arrow.
+     * @param {number} [settings.duration=100] The duration of the animation.
+     * @param {Boolean} [settings.enable=true] Whether the tooltip is enabled.
+     * @param {Boolean} [settings.html=false] Whether to allow HTML in the tooltip.
+     * @param {function} [settings.sanitize] The HTML sanitization function.
+     * @param {string} [settings.trigger=hover focus] The events to trigger the tooltip.
+     * @param {string} [settings.placement=auto] The placement of the tooltip relative to the toggle.
+     * @param {string} [settings.position=center] The position of the tooltip relative to the toggle.
+     * @param {Boolean} [settings.fixed=false] Whether the tooltip position is fixed.
+     * @param {number} [settings.spacing=2] The spacing between the tooltip and the toggle.
+     * @param {number} [settings.minContact=false] The minimum amount of contact the tooltip must make with the toggle.
      * @returns {Tooltip} A new Tooltip object.
      */
     function Tooltip(node, settings) {
@@ -2820,11 +2940,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       this._node = node;
       this._settings = _objectSpread({}, Tooltip.defaults, {}, dom.getDataset(this._node), {}, settings);
-
-      if (this._settings.container) {
-        this._container = dom.findOne(this._settings.container);
-      }
-
       this._triggers = this._settings.trigger.split(' ');
 
       this._events();
@@ -2904,7 +3019,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             return reject();
           }
 
-          dom.setDataset(_this26._tooltip, 'animating', 'true');
+          dom.setDataset(_this26._tooltip, 'animating', true);
           dom.stop(_this26._tooltip);
           dom.fadeOut(_this26._tooltip, {
             duration: _this26._settings.duration
@@ -2917,7 +3032,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             dom.triggerEvent(_this26._node, 'hidden.frost.tooltip');
             resolve();
           })["catch"](function (_) {
-            dom.removeAttribute(_this26._tooltip, 'data-animating');
+            dom.removeDataset(_this26._tooltip, 'animating');
             reject();
           });
         });
@@ -2943,7 +3058,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
           _this27._render();
 
-          dom.setDataset(_this27._tooltip, 'animating', 'true');
+          dom.setDataset(_this27._tooltip, 'animating', true);
           dom.addClass(_this27._tooltip, 'show');
           dom.fadeIn(_this27._tooltip, {
             duration: _this27._settings.duration
@@ -2953,7 +3068,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeAttribute(_this27._popover, 'data-animating');
+            return dom.removeDataset(_this27._tooltip, 'animating');
           });
         });
       }
@@ -2992,7 +3107,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       tooltipInner: 'tooltip-inner',
       arrow: 'arrow'
     },
-    delay: 0,
     duration: 100,
     enable: true,
     html: false,

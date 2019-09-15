@@ -8,10 +8,12 @@ class Tab {
      * New Tab constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Tab with.
+     * @param {number} [settings.duration=100] The duration of the animation.
      * @returns {Tab} A new Tab object.
      */
     constructor(node, settings) {
         this._node = node;
+
         this._settings = {
             ...Tab.defaults,
             ...dom.getDataset(this._node),
@@ -33,8 +35,8 @@ class Tab {
      * Destroy the Tab.
      */
     destroy() {
-        dom.stop(this._target, true);
         dom.removeEvent(this._node, 'click.frost.tab', this._clickEvent);
+
         dom.removeData(this._node, 'tab');
     }
 
@@ -44,7 +46,8 @@ class Tab {
      */
     hide() {
         return new Promise((resolve, reject) => {
-            if (!dom.hasClass(this._target, 'active') || dom.getDataset(this._target, 'animating') === 'true') {
+            console.log('test');
+            if (!dom.hasClass(this._target, 'active') || dom.getDataset(this._target, 'animating')) {
                 return reject();
             }
 
@@ -52,19 +55,21 @@ class Tab {
                 return reject();
             }
 
-            dom.setDataset(this._target, 'animating', 'true');
+            dom.setDataset(this._target, 'animating', true);
 
             dom.fadeOut(this._target, {
                 duration: this._settings.duration
             }).then(_ => {
                 dom.removeClass(this._target, 'active');
                 dom.removeClass(this._node, 'active');
+
                 dom.triggerEvent(this._node, 'hidden.frost.tab');
+
                 resolve();
             }).catch(_ =>
                 reject()
             ).finally(_ =>
-                dom.removeAttribute(this._target, 'data-animating')
+                dom.removeDataset(this._target, 'animating')
             );
         });
     }
@@ -75,7 +80,7 @@ class Tab {
      */
     show() {
         return new Promise((resolve, reject) => {
-            if (dom.hasClass(this._target, 'active') || dom.getDataset(this._target, 'animating') === 'true') {
+            if (dom.hasClass(this._target, 'active') || dom.getDataset(this._target, 'animating')) {
                 return reject();
             }
 
@@ -85,7 +90,7 @@ class Tab {
                 return reject();
             }
 
-            dom.setDataset(this._target, 'animating', 'true');
+            dom.setDataset(this._target, 'animating', true);
 
             dom.getData(activeTab, 'tab').hide().then(_ => {
                 if (!DOM._triggerEvent(this._node, 'show.frost.tab')) {
@@ -94,16 +99,18 @@ class Tab {
 
                 dom.addClass(this._target, 'active');
                 dom.addClass(this._node, 'active');
+
                 return dom.fadeIn(this._target, {
                     duration: this._settings.duration
                 });
             }).then(_ => {
                 dom.triggerEvent(this._node, 'shown.frost.tab');
+
                 resolve();
             }).catch(_ =>
                 reject()
             ).finally(_ =>
-                dom.removeAttribute(this._target, 'data-animating')
+                dom.removeDataset(this._target, 'animating')
             );
         });
     }

@@ -34,7 +34,7 @@ Object.assign(Dropdown.prototype, {
             this.show().then(_ => {
                 const next = dom.findOne('.dropdown-item', this._menuNode);
                 dom.focus(next);
-            });
+            }).catch(_ => { });
         };
 
         this._menuKeyDownEvent = e => {
@@ -53,15 +53,18 @@ Object.assign(Dropdown.prototype, {
             }
         };
 
-        this._windowClickEvent = _ => this.hide();
+        this._documentClickEvent = e => {
+            if (dom.isSame(e.target, this._menuNode) || dom.hasDescendent(this._menuNode, e.target)) {
+                return;
+            }
+
+            this.hide().catch(_ => { });
+        };
 
         dom.addEvent(this._node, 'click.frost.dropdown', this._clickEvent);
         dom.addEvent(this._node, 'keyup.frost.dropdown', this._keyUpEvent);
         dom.addEvent(this._node, 'keydown.frost.dropdown', this._keyDownEvent);
         dom.addEventDelegate(this._menuNode, 'keydown.frost.dropdown', '.dropdown-item', this._menuKeyDownEvent);
-        dom.addEvent(this._menuNode, 'click.frost.dropdown', e => {
-            e.stopPropagation();
-        });
     }
 
 });

@@ -1,6 +1,6 @@
 // Default Dropdown options
 Dropdown.defaults = {
-    duration: 150,
+    duration: 100,
     placement: 'bottom',
     position: 'start',
     fixed: false,

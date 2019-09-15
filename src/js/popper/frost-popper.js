@@ -11,4 +11,7 @@ Popper.defaults = {
     useGpu: true
 };
 
+Popper._overflowTypes = ['overflow', 'overflowX', 'overflowY'];
+Popper._overflowValues = ['auto', 'scroll'];
+
 UI.Popper = Popper;

@@ -6,16 +6,15 @@ Popover.defaults = {
         popoverBody: 'popover-body',
         arrow: 'arrow'
     },
-    delay: 0,
     duration: 100,
     enable: true,
     html: false,
-    trigger: 'click',
     sanitize: input => dom.sanitize(input),
+    trigger: 'click',
     placement: 'auto',
     position: 'center',
     fixed: false,
-    spacing: 7,
+    spacing: 5,
     minContact: false
 };
 

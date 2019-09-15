@@ -15,15 +15,6 @@ dom.addEventDelegate(document, 'click', '[data-toggle="collapse"]', e => {
     collapse.toggle().catch(_ => { });
 });
 
-// Auto-initialize Collapse from data-toggle
-dom.addEvent(window, 'load', _ => {
-    const nodes = dom.find('[data-toggle="collapse"]');
-
-    for (const node of nodes) {
-        new Collapse(node);
-    }
-});
-
 // Add Collapse QuerySet method
 if (QuerySet) {
     QuerySet.prototype.collapse = function(a, ...args) {

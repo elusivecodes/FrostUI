@@ -8,10 +8,13 @@ class Collapse {
      * New Collapse constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Collapse with.
+     * @param {string} [settings.direction=bottom] The direction to collapse the targets from/to.
+     * @param {number} [settings.duration=300] The duration of the animation.
      * @returns {Collapse} A new Collapse object.
      */
     constructor(node, settings) {
         this._node = node;
+
         this._settings = {
             ...Collapse.defaults,
             ...dom.getDataset(this._node),
@@ -19,6 +22,7 @@ class Collapse {
         };
 
         this._targets = dom.find(this._settings.target);
+
         this._hasAccordion = this._targets.find(target => dom.getDataset(target, 'parent'));
 
         dom.setData(this._node, 'collapse', this);
@@ -28,8 +32,8 @@ class Collapse {
      * Destroy the Collapse.
      */
     destroy() {
-        dom.stop(this._target, true);
         dom.removeEvent(this._node, 'click.frost.collapse', this._clickEvent);
+
         dom.removeData(this._node, 'collapse');
     }
 
@@ -40,7 +44,7 @@ class Collapse {
     hide() {
         return new Promise((resolve, reject) => {
             const targets = this._targets
-                .filter(target => dom.hasClass(target, 'show') && dom.getDataset(target, 'animating') !== 'true');
+                .filter(target => dom.hasClass(target, 'show') && !dom.getDataset(target, 'animating'));
 
             if (!targets.length) {
                 return reject();
@@ -50,14 +54,16 @@ class Collapse {
                 return reject();
             }
 
-            dom.setDataset(targets, 'animating', 'true');
+            dom.setDataset(targets, 'animating', true);
 
             dom.squeezeOut(targets, {
                 direction: this._settings.direction,
                 duration: this._settings.duration
             }).then(_ => {
                 dom.removeClass(targets, 'show');
+
                 dom.triggerEvent(this._node, 'hidden.frost.collapse');
+
                 resolve();
             }).catch(_ =>
                 reject()
@@ -74,7 +80,7 @@ class Collapse {
     show() {
         return new Promise((resolve, reject) => {
             const targets = this._targets
-                .filter(target => dom.hasClass(target, 'show') && dom.getDataset(target, 'animating') !== 'true');
+                .filter(target => dom.hasClass(target, 'show') && !dom.getDataset(target, 'animating'));
 
             if (!targets.length) {
                 return reject();
@@ -84,17 +90,23 @@ class Collapse {
                 return reject();
             }
 
-            if (this._hasAccordion && !this._hideAccordion(targets)) {
+            const accordions = this._hideAccordion(targets);
+
+            if (!accordions) {
                 return reject();
             }
 
-            dom.setDataset(targets, 'animating', 'true');
+            dom.setDataset(targets, 'animating', true);
 
             dom.addClass(targets, 'show');
-            dom.squeezeIn(targets, {
-                direction: this._settings.direction,
-                duration: this._settings.duration
-            }).then(_ => {
+
+            Promise.all([
+                dom.squeezeIn(targets, {
+                    direction: this._settings.direction,
+                    duration: this._settings.duration
+                }),
+                ...accordions
+            ]).then(_ => {
                 dom.triggerEvent(this._node, 'shown.frost.collapse');
                 resolve();
             }).catch(_ =>
@@ -111,26 +123,42 @@ class Collapse {
      */
     toggle() {
         return new Promise((resolve, reject) => {
-            const targets = this._targets
-                .filter(target => dom.getDataset(target, 'animating') !== 'true');
+            const targets = [];
+            const hidden = [];
+            const visible = [];
+            for (const target of this._targets) {
+                if (dom.getDataset(target, 'animating')) {
+                    continue;
+                }
+
+                targets.push(target);
+
+                if (dom.hasClass(target, 'show')) {
+                    visible.push(target);
+                } else {
+                    hidden.push(target);
+                }
+            }
 
             if (!targets.length) {
                 return reject();
             }
 
-            if (!DOM._triggerEvent(this._node, 'show.frost.collapse')) {
+            if (visible.length && !DOM._triggerEvent(this._node, 'hide.frost.collapse')) {
                 return reject();
             }
 
-            const hidden = targets.filter(target => !dom.hasClass(target, 'show'));
-
-            if (this._hasAccordion && !this._hideAccordion(hidden)) {
+            if (hidden.length && !DOM._triggerEvent(this._node, 'show.frost.collapse')) {
                 return reject();
             }
 
-            const visible = targets.filter(target => dom.hasClass(target, 'show'));
+            const accordions = this._hideAccordion(hidden);
 
-            dom.setDataset(targets, 'animating', 'true');
+            if (!accordions) {
+                return reject();
+            }
+
+            dom.setDataset(targets, 'animating', true);
 
             const animations = targets.map(target => {
                 const animation = dom.hasClass(target, 'show') ?
@@ -143,9 +171,21 @@ class Collapse {
             });
 
             dom.addClass(hidden, 'show')
-            Promise.all(animations).then(_ => {
+
+            Promise.all([
+                ...animations,
+                ...accordions
+            ]).then(_ => {
                 dom.removeClass(visible, 'show');
-                dom.triggerEvent(this._node, 'shown.frost.collapse');
+
+                if (visible.length) {
+                    dom.triggerEvent(this._node, 'hidden.frost.collapse');
+                }
+
+                if (hidden.length) {
+                    dom.triggerEvent(this._node, 'shown.frost.collapse');
+                }
+
                 resolve();
             }).catch(_ =>
                 reject()

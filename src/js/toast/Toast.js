@@ -8,10 +8,14 @@ class Toast {
      * New Toast constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Toast with.
+     * @param {Boolean} [autohide=true] Whether to hide the toast after initialization.
+     * @param {number} [settings.delay=5000] The duration to wait before hiding the toast.
+     * @param {number} [settings.duration=100] The duration of the animation.
      * @returns {Toast} A new Toast object.
      */
     constructor(node, settings) {
         this._node = node;
+
         this._settings = {
             ...Toast.defaults,
             ...dom.getDataset(this._node),
@@ -34,7 +38,6 @@ class Toast {
      * Destroy the Toast.
      */
     destroy() {
-        dom.stop(this._node, true);
         dom.removeData(this._node, 'toast');
     }
 
@@ -44,7 +47,7 @@ class Toast {
      */
     hide() {
         return new Promise((resolve, reject) => {
-            if (!dom.isVisible(this._node) || dom.getDataset(this._node, 'animating') === 'true') {
+            if (!dom.isVisible(this._node) || dom.getDataset(this._node, 'animating')) {
                 return reject();
             }
 
@@ -52,18 +55,20 @@ class Toast {
                 return reject();
             }
 
-            dom.setDataset(this._node, 'animating', 'true');
+            dom.setDataset(this._node, 'animating', true);
 
             return dom.fadeOut(this._node, {
                 duration: this._settings.duration
             }).then(_ => {
                 dom.hide(this._node);
+
                 dom.triggerEvent(this._node, 'hidden.frost.toast');
+
                 resolve();
             }).catch(_ =>
                 reject()
             ).finally(_ =>
-                dom.removeAttribute(this._node, 'data-animating')
+                dom.removeDataset(this._node, 'animating')
             );
         });
     }
@@ -74,7 +79,7 @@ class Toast {
      */
     show() {
         return new Promise((resolve, reject) => {
-            if (dom.isVisible(this._node) || dom.getDataset(this._node, 'animating') === 'true') {
+            if (dom.isVisible(this._node) || dom.getDataset(this._node, 'animating')) {
                 return reject();
             }
 
@@ -82,18 +87,20 @@ class Toast {
                 return reject();
             }
 
-            dom.setDataset(this._node, 'animating', 'true');
+            dom.setDataset(this._node, 'animating', true);
 
             dom.show(this._node);
+
             return dom.fadeIn(this._node, {
                 duration: this._settings.duration
             }).then(_ => {
                 dom.triggerEvent(this._node, 'shown.frost.toast');
+
                 resolve();
             }).catch(_ =>
                 reject()
             ).finally(_ =>
-                dom.removeAttribute(this._node, 'data-animating')
+                dom.removeDataset(this._node, 'animating')
             );
         });
     }

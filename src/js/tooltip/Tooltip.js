@@ -8,19 +8,30 @@ class Tooltip {
      * New Tooltip constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Tooltip with.
+     * @param {object} [settings.classes] The CSS classes to style the tooltip.
+     * @param {string} [settings.classes.tooltip=tooltip] The CSS classes for the tooltip.
+     * @param {string} [settings.classes.tooltipInner=tooltip-inner] The CSS classes for the tooltip inner-element.
+     * @param {string} [settings.classes.arrow=arrow] The CSS classes for the arrow.
+     * @param {number} [settings.duration=100] The duration of the animation.
+     * @param {Boolean} [settings.enable=true] Whether the tooltip is enabled.
+     * @param {Boolean} [settings.html=false] Whether to allow HTML in the tooltip.
+     * @param {function} [settings.sanitize] The HTML sanitization function.
+     * @param {string} [settings.trigger=hover focus] The events to trigger the tooltip.
+     * @param {string} [settings.placement=auto] The placement of the tooltip relative to the toggle.
+     * @param {string} [settings.position=center] The position of the tooltip relative to the toggle.
+     * @param {Boolean} [settings.fixed=false] Whether the tooltip position is fixed.
+     * @param {number} [settings.spacing=2] The spacing between the tooltip and the toggle.
+     * @param {number} [settings.minContact=false] The minimum amount of contact the tooltip must make with the toggle.
      * @returns {Tooltip} A new Tooltip object.
      */
     constructor(node, settings) {
         this._node = node;
+
         this._settings = {
             ...Tooltip.defaults,
             ...dom.getDataset(this._node),
             ...settings
         };
-
-        if (this._settings.container) {
-            this._container = dom.findOne(this._settings.container);
-        }
 
         this._triggers = this._settings.trigger.split(' ');
 
@@ -39,7 +50,9 @@ class Tooltip {
     destroy() {
         if (this._tooltip) {
             this._popper.destroy();
+
             dom.remove(this._tooltip);
+
             this._tooltip = null;
             this._popper = null;
         }
@@ -89,21 +102,26 @@ class Tooltip {
                 return reject();
             }
 
-            dom.setDataset(this._tooltip, 'animating', 'true');
+            dom.setDataset(this._tooltip, 'animating', true);
 
             dom.stop(this._tooltip);
+
             dom.fadeOut(this._tooltip, {
                 duration: this._settings.duration
             }).then(_ => {
                 this._popper.destroy();
+
                 dom.remove(this._tooltip);
+
                 this._tooltip = null;
                 this._popper = null;
 
                 dom.triggerEvent(this._node, 'hidden.frost.tooltip');
+
                 resolve();
             }).catch(_ => {
-                dom.removeAttribute(this._tooltip, 'data-animating');
+                dom.removeDataset(this._tooltip, 'animating');
+
                 reject();
             });
         });
@@ -125,18 +143,20 @@ class Tooltip {
 
             this._render();
 
-            dom.setDataset(this._tooltip, 'animating', 'true');
+            dom.setDataset(this._tooltip, 'animating', true);
 
             dom.addClass(this._tooltip, 'show');
+
             dom.fadeIn(this._tooltip, {
                 duration: this._settings.duration
             }).then(_ => {
                 dom.triggerEvent(this._node, 'shown.frost.tooltip');
+
                 resolve();
             }).catch(_ =>
                 reject()
             ).finally(_ =>
-                dom.removeAttribute(this._popover, 'data-animating')
+                dom.removeDataset(this._tooltip, 'animating')
             );
         });
     }

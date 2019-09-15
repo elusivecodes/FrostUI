@@ -8,19 +8,31 @@ class Popover {
      * New Popover constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Popover with.
+     * @param {object} [settings.classes] The CSS classes to style the popover.
+     * @param {string} [settings.classes.popover=popover] The CSS classes for the popover.
+     * @param {string} [settings.classes.popoverHeader=popover-header] The CSS classes for the popover header.
+     * @param {string} [settings.classes.popoverBody=popover-body] The CSS classes for the popover body.
+     * @param {string} [settings.classes.arrow=arrow] The CSS classes for the arrow.
+     * @param {number} [settings.duration=100] The duration of the animation.
+     * @param {Boolean} [settings.enable=true] Whether the popover is enabled.
+     * @param {Boolean} [settings.html=false] Whether to allow HTML in the popover.
+     * @param {function} [settings.sanitize] The HTML sanitization function.
+     * @param {string} [settings.trigger=click] The events to trigger the popover.
+     * @param {string} [settings.placement=auto] The placement of the popover relative to the toggle.
+     * @param {string} [settings.position=center] The position of the popover relative to the toggle.
+     * @param {Boolean} [settings.fixed=false] Whether the popover position is fixed.
+     * @param {number} [settings.spacing=7] The spacing between the popover and the toggle.
+     * @param {number} [settings.minContact=false] The minimum amount of contact the popover must make with the toggle.
      * @returns {Popover} A new Popover object.
      */
     constructor(node, settings) {
         this._node = node;
+
         this._settings = {
             ...Popover.defaults,
             ...dom.getDataset(this._node),
             ...settings
         };
-
-        if (this._settings.container) {
-            this._container = dom.findOne(this._settings.container);
-        }
 
         this._triggers = this._settings.trigger.split(' ');
 
@@ -39,7 +51,9 @@ class Popover {
     destroy() {
         if (this._popover) {
             this._popper.destroy();
+
             dom.remove(this._popover);
+
             this._popover = null;
             this._popper = null;
         }
@@ -89,21 +103,26 @@ class Popover {
                 return reject();
             }
 
-            dom.setDataset(this._popover, 'animating', 'true');
+            dom.setDataset(this._popover, 'animating', true);
 
             dom.stop(this._popover);
+
             dom.fadeOut(this._popover, {
                 duration: this._settings.duration
             }).then(_ => {
                 this._popper.destroy();
+
                 dom.remove(this._popover);
+
                 this._popover = null;
                 this._popper = null;
 
                 dom.triggerEvent(this._node, 'hidden.frost.popover');
+
                 resolve();
             }).catch(_ => {
-                dom.removeAttribute(this._popover, 'data-animating');
+                dom.removeDataset(this._popover, 'animating');
+
                 reject()
             });
         });
@@ -125,18 +144,20 @@ class Popover {
 
             this._render();
 
-            dom.setDataset(this._popover, 'animating', 'true');
+            dom.setDataset(this._popover, 'animating', true);
 
             dom.addClass(this._popover, 'show');
+
             dom.fadeIn(this._popover, {
                 duration: this._settings.duration
             }).then(_ => {
                 dom.triggerEvent(this._node, 'shown.frost.popover')
+
                 resolve();
             }).catch(_ =>
                 reject()
             ).finally(_ =>
-                dom.removeAttribute(this._popover, 'data-animating')
+                dom.removeDataset(this._popover, 'animating')
             );
         });
     }

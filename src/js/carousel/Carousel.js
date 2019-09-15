@@ -8,10 +8,17 @@ class Carousel {
      * New Carousel constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Carousel with.
+     * @param {number} [settings.interval=5000] The duration of the interval.
+     * @param {number} [settings.transition=500] The duration of the transition.
+     * @param {Boolean} [settings.keyboard=true] Whether to all keyboard navigation.
+     * @param {Boolean|string} [settings.ride=false] Set to "carousel" to automatically start the carousel.
+     * @param {Boolean} [settings.pause=true] Whether to pause the carousel on mouseover.
+     * @param {Boolean} [settings.wrap=true] Whether the carousel should cycle around.
      * @returns {Carousel} A new Carousel object.
      */
     constructor(node, settings) {
         this._node = node;
+
         this._settings = {
             ...Carousel.defaults,
             ...dom.getDataset(this._node),
@@ -19,16 +26,18 @@ class Carousel {
         };
 
         this._items = dom.find('.carousel-item', this._node);
+
         this._index = this._items.findIndex(item => dom.hasClass(item, 'active'));
+
         this._queue = [];
 
         this._events();
 
+        dom.setData(this._node, 'carousel', this);
+
         if (this._settings.ride === 'carousel') {
             this._setTimer();
         }
-
-        dom.setData(this._node, 'carousel', this);
     }
 
     /**
@@ -48,14 +57,19 @@ class Carousel {
             clearTimeout(this._timer);
         }
 
-        dom.stop(this._node, true);
-
         dom.removeEvent(this._node, 'click.frost.carousel', this._clickNextEvent);
         dom.removeEvent(this._node, 'click.frost.carousel', this._clickPrevEvent);
         dom.removeEvent(this._node, 'click.frost.carousel', this._clickSlideEvent);
-        dom.removeEvent(this._node, 'keydown.frost.carousel', this._keyDownEvent);
-        dom.removeEvent(this._node, 'mouseenter.frost.carousel', this._mouseEnterEvent);
-        dom.removeEvent(this._node, 'mouseleave.frost.carousel', this._mouseLeaveEvent);
+
+        if (this._settings.keyboard) {
+            dom.removeEvent(this._node, 'keydown.frost.carousel', this._keyDownEvent);
+        }
+
+        if (this._settings.pause) {
+            dom.removeEvent(this._node, 'mouseenter.frost.carousel', this._mouseEnterEvent);
+            dom.removeEvent(this._node, 'mouseleave.frost.carousel', this._mouseLeaveEvent);
+        }
+
         dom.removeData(this._node, 'carousel');
     }
 
@@ -71,10 +85,6 @@ class Carousel {
      * Stop the carousel from cycling through items.
      */
     pause() {
-        if (this._sliding) {
-            dom.stop(this._items, true);
-        }
-
         if (this._timer) {
             clearTimeout(this._timer);
         }
@@ -94,95 +104,7 @@ class Carousel {
      * @returns {Promise} A new Promise that resolves when the animation has completed.
      */
     show(index) {
-        return new Promise((resolve, reject) => {
-            if (this._sliding) {
-                this._queue.push({
-                    index: index
-                });
-
-                return reject();
-            }
-
-            index = parseInt(index);
-
-            if (!this._settings.wrap &&
-                (index < 0 || index > this._items.length - 1)
-            ) {
-                return reject();
-            }
-
-            let dir = 0;
-            if (index < 0) {
-                dir = -1;
-            } else if (index > this._items.length - 1) {
-                dir = 1;
-            }
-
-            index %= this._items.length;
-            if (index < 0) {
-                index = this._items.length + index;
-            }
-
-            if (index === this._index) {
-                return reject();
-            }
-
-            const direction = dir == -1 || (dir == 0 && index < this._index) ?
-                'left' :
-                'right';
-
-            const eventData = {
-                direction,
-                relatedTarget: this._items[index],
-                from: this._index,
-                to: index
-            };
-
-            if (!DOM._triggerEvent(this._node, 'slide.frost.carousel', eventData)) {
-                return reject();
-            }
-
-            const oldIndex = this._index;
-            this._index = index;
-            this._sliding = true;
-            this.pause();
-
-            dom.addClass(this._items[this._index], 'active');
-            dom.removeClass(this._items[oldIndex], 'active');
-            dom.animate(
-                this._items[this._index],
-                (node, progress, options) =>
-                    this._update(node, this._items[oldIndex], progress, options.direction),
-                {
-                    direction,
-                    duration: this._settings.transition
-                }
-            ).then(_ => {
-                dom.removeClass(
-                    dom.find('.active[data-slide-to]', this._node),
-                    'active'
-                );
-
-                dom.addClass(
-                    dom.find('[data-slide-to="' + this._index + '"]', this._node),
-                    'active'
-                );
-
-                this._sliding = false;
-
-                dom.triggerEvent(this._node, 'slid.frost.carousel', eventData);
-
-                if (!this._queue.length) {
-                    this._setTimer();
-                    return resolve();
-                }
-
-                const next = this._queue.shift();
-                return next.dir ?
-                    this.slide(next.dir) :
-                    this.show(next.index);
-            });
-        });
+        return this._show(index);
     }
 
     /**
@@ -191,7 +113,11 @@ class Carousel {
      * @returns {Promise} A new Promise that resolves when the animation has completed.
      */
     slide(direction = 1) {
-        return this.show(this._index + direction);
+        const index = this._queue.length ?
+            this._queue[this._queue.length - 1].index :
+            this._index;
+
+        return this.show(index + direction);
     }
 
 }
