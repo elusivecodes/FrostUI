@@ -2131,13 +2131,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @param {string} position The actual position of the Popper.
      */
     _updateArrow: function _updateArrow(nodeBox, referenceBox, placement, position) {
-      var arrowBox = dom.rect(this._settings.arrow, !this._fixed);
       var arrowStyles = {
+        position: 'absolute',
         top: '',
         right: '',
         bottom: '',
         left: ''
       };
+      dom.setStyle(this._settings.arrow, arrowStyles);
+      var arrowBox = dom.rect(this._settings.arrow, !this._fixed);
 
       if (['top', 'bottom'].includes(placement)) {
         arrowStyles[placement === 'top' ? 'bottom' : 'top'] = -arrowBox.height;
@@ -2150,7 +2152,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           offset -= diff;
         }
 
-        arrowStyles.left = offset;
+        arrowStyles.left = Core.clamp(offset, Math.max(referenceBox.left, nodeBox.left) - arrowBox.left, Math.min(referenceBox.right, nodeBox.right) - arrowBox.left - arrowBox.width);
       } else {
         arrowStyles[placement === 'right' ? 'left' : 'right'] = -arrowBox.width;
 
@@ -2164,7 +2166,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           _offset -= _diff;
         }
 
-        arrowStyles.top = Core.clamp(_offset, 0, nodeBox.height);
+        arrowStyles.top = Core.clamp(_offset, Math.max(referenceBox.top, nodeBox.top) - arrowBox.top, Math.min(referenceBox.bottom, nodeBox.bottom) - arrowBox.top - arrowBox.height);
       }
 
       dom.setStyle(this._settings.arrow, arrowStyles);

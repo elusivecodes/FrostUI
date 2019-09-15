@@ -26,13 +26,16 @@ Object.assign(Popper.prototype, {
      * @param {string} position The actual position of the Popper.
      */
     _updateArrow(nodeBox, referenceBox, placement, position) {
-        const arrowBox = dom.rect(this._settings.arrow, !this._fixed);
         const arrowStyles = {
+            position: 'absolute',
             top: '',
             right: '',
             bottom: '',
             left: ''
         };
+        dom.setStyle(this._settings.arrow, arrowStyles);
+
+        const arrowBox = dom.rect(this._settings.arrow, !this._fixed);
 
         if (['top', 'bottom'].includes(placement)) {
             arrowStyles[placement === 'top' ? 'bottom' : 'top'] = -arrowBox.height;
@@ -43,7 +46,11 @@ Object.assign(Popper.prototype, {
             } else if (position === 'end') {
                 offset -= diff;
             }
-            arrowStyles.left = offset;
+            arrowStyles.left = Core.clamp(
+                offset,
+                Math.max(referenceBox.left, nodeBox.left) - arrowBox.left,
+                Math.min(referenceBox.right, nodeBox.right) - arrowBox.left - arrowBox.width
+            );
         } else {
             arrowStyles[placement === 'right' ? 'left' : 'right'] = -arrowBox.width;
             const diff = (referenceBox.height - nodeBox.height) / 2;
@@ -53,7 +60,11 @@ Object.assign(Popper.prototype, {
             } else if (position === 'end') {
                 offset -= diff;
             }
-            arrowStyles.top = Core.clamp(offset, 0, nodeBox.height);
+            arrowStyles.top = Core.clamp(
+                offset,
+                Math.max(referenceBox.top, nodeBox.top) - arrowBox.top,
+                Math.min(referenceBox.bottom, nodeBox.bottom) - arrowBox.top - arrowBox.height
+            );
         }
 
         dom.setStyle(this._settings.arrow, arrowStyles);
