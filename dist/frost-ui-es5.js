@@ -2023,6 +2023,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           minimumBox.right = Math.min(minimumBox.right, containerBox.right);
           minimumBox.bottom = Math.min(minimumBox.bottom, containerBox.bottom);
           minimumBox.left = Math.max(minimumBox.left, containerBox.left);
+        }
+
+        if (scrollBox || containerBox) {
+          minimumBox.x = minimumBox.left;
+          minimumBox.y = minimumBox.top;
+          minimumBox.width = minimumBox.right - minimumBox.left;
+          minimumBox.height = minimumBox.bottom - minimumBox.top;
         } // get optimal placement
 
 
@@ -2078,7 +2085,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         dom.setStyle(this._node, style); // update arrow
 
         if (this._settings.arrow) {
-          this._updateArrow(nodeBox, referenceBox, placement, position);
+          var newNodeBox = dom.rect(this._node, !this._fixed);
+
+          this._updateArrow(newNodeBox, referenceBox, placement, position);
         }
       }
     }]);

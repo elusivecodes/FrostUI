@@ -1959,6 +1959,13 @@
                 minimumBox.left = Math.max(minimumBox.left, containerBox.left);
             }
 
+            if (scrollBox || containerBox) {
+                minimumBox.x = minimumBox.left;
+                minimumBox.y = minimumBox.top;
+                minimumBox.width = minimumBox.right - minimumBox.left;
+                minimumBox.height = minimumBox.bottom - minimumBox.top;
+            }
+
             // get optimal placement
             const placement = this._settings.fixed ?
                 this._settings.placement :
@@ -2038,7 +2045,8 @@
 
             // update arrow
             if (this._settings.arrow) {
-                this._updateArrow(nodeBox, referenceBox, placement, position);
+                const newNodeBox = dom.rect(this._node, !this._fixed);
+                this._updateArrow(newNodeBox, referenceBox, placement, position);
             }
         }
 
@@ -2106,12 +2114,14 @@
             if (['top', 'bottom'].includes(placement)) {
                 arrowStyles[placement === 'top' ? 'bottom' : 'top'] = -arrowBox.height;
                 const diff = (referenceBox.width - nodeBox.width) / 2;
+
                 let offset = (nodeBox.width / 2) - (arrowBox.width / 2);
                 if (position === 'start') {
                     offset += diff;
                 } else if (position === 'end') {
                     offset -= diff;
                 }
+
                 arrowStyles.left = Core.clamp(
                     offset,
                     Math.max(referenceBox.left, nodeBox.left) - arrowBox.left,
@@ -2120,12 +2130,14 @@
             } else {
                 arrowStyles[placement === 'right' ? 'left' : 'right'] = -arrowBox.width;
                 const diff = (referenceBox.height - nodeBox.height) / 2;
+
                 let offset = (nodeBox.height / 2) - arrowBox.height;
                 if (position === 'start') {
                     offset += diff;
                 } else if (position === 'end') {
                     offset -= diff;
                 }
+
                 arrowStyles.top = Core.clamp(
                     offset,
                     Math.max(referenceBox.top, nodeBox.top) - arrowBox.top,

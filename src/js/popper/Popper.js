@@ -105,6 +105,13 @@ class Popper {
             minimumBox.left = Math.max(minimumBox.left, containerBox.left);
         }
 
+        if (scrollBox || containerBox) {
+            minimumBox.x = minimumBox.left;
+            minimumBox.y = minimumBox.top;
+            minimumBox.width = minimumBox.right - minimumBox.left;
+            minimumBox.height = minimumBox.bottom - minimumBox.top;
+        }
+
         // get optimal placement
         const placement = this._settings.fixed ?
             this._settings.placement :
@@ -184,7 +191,8 @@ class Popper {
 
         // update arrow
         if (this._settings.arrow) {
-            this._updateArrow(nodeBox, referenceBox, placement, position);
+            const newNodeBox = dom.rect(this._node, !this._fixed);
+            this._updateArrow(newNodeBox, referenceBox, placement, position);
         }
     }
 
