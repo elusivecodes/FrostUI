@@ -1,3 +1,7 @@
+/**
+ * FrostUI v1.0
+ * https://github.com/elusivecodes/FrostUI
+ */
 (function(global, factory) {
     'use strict';
 
@@ -10,11 +14,19 @@
 })(window, function(window) {
     'use strict';
 
-    const document = window.document;
+    if (!window) {
+        throw new Error('FrostUI requires a Window.');
+    }
+
+    if (!('DOM' in window)) {
+        throw new Error('FrostUI requires FrostDOM.');
+    }
+
     const Core = window.Core;
     const DOM = window.DOM;
     const dom = window.dom;
     const QuerySet = window.QuerySet;
+    const document = window.document;
 
     const UI = {};
 
@@ -1194,7 +1206,21 @@
             };
 
             this._documentClickEvent = e => {
-                if (dom.isSame(e.target, this._menuNode) || dom.hasDescendent(this._menuNode, e.target)) {
+                if (
+                    (
+                        dom.isSame(e.target, this._menuNode) ||
+                        dom.hasDescendent(this._menuNode, e.target)
+                    ) &&
+                    (
+                        dom.getDataset(e.target, 'dropdownClose') === false ||
+                        dom.closest(
+                            e.target,
+                            parent =>
+                                dom.getDataset(parent, 'dropdownClose') === false,
+                            this._menuNode
+                        ).length
+                    )
+                ) {
                     return;
                 }
 

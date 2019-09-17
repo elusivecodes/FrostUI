@@ -54,7 +54,21 @@ Object.assign(Dropdown.prototype, {
         };
 
         this._documentClickEvent = e => {
-            if (dom.isSame(e.target, this._menuNode) || dom.hasDescendent(this._menuNode, e.target)) {
+            if (
+                (
+                    dom.isSame(e.target, this._menuNode) ||
+                    dom.hasDescendent(this._menuNode, e.target)
+                ) &&
+                (
+                    dom.getDataset(e.target, 'dropdownClose') === false ||
+                    dom.closest(
+                        e.target,
+                        parent =>
+                            dom.getDataset(parent, 'dropdownClose') === false,
+                        this._menuNode
+                    ).length
+                )
+            ) {
                 return;
             }
 

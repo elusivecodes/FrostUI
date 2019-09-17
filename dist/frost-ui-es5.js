@@ -22,6 +22,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+/**
+ * FrostUI v1.0
+ * https://github.com/elusivecodes/FrostUI
+ */
 (function (global, factory) {
   'use strict';
 
@@ -33,11 +37,19 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 })(window, function (window) {
   'use strict';
 
-  var document = window.document;
+  if (!window) {
+    throw new Error('FrostUI requires a Window.');
+  }
+
+  if (!('DOM' in window)) {
+    throw new Error('FrostUI requires FrostDOM.');
+  }
+
   var Core = window.Core;
   var DOM = window.DOM;
   var dom = window.dom;
   var QuerySet = window.QuerySet;
+  var document = window.document;
   var UI = {};
   /**
    * Alert Class
@@ -1268,7 +1280,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       };
 
       this._documentClickEvent = function (e) {
-        if (dom.isSame(e.target, _this11._menuNode) || dom.hasDescendent(_this11._menuNode, e.target)) {
+        if ((dom.isSame(e.target, _this11._menuNode) || dom.hasDescendent(_this11._menuNode, e.target)) && (dom.getDataset(e.target, 'dropdownClose') === false || dom.closest(e.target, function (parent) {
+          return dom.getDataset(parent, 'dropdownClose') === false;
+        }, _this11._menuNode).length)) {
           return;
         }
 
