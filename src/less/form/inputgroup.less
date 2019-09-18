@@ -5,7 +5,7 @@
     align-items: stretch;
     width: 100%;
 
-    & .form-input {
+    & .form-control {
         position: relative;
         flex: 1 1 auto;
         width: 1%;
@@ -46,16 +46,16 @@
     }
 }
 
-.input-prepend,
-.input-append {
+.input-group-prepend,
+.input-group-append {
     display: flex;
 }
 
-.input-prepend {
+.input-group-prepend {
     margin-right: -@border-size;
 }
 
-.input-append {
+.input-group-append {
     margin-left: -@border-size;
 }
 
@@ -72,13 +72,11 @@
 }
 
 .input-group-sm {
-    & > .custom-select,
-    & > .form-input:not(textarea) {
+    & > .form-control:not(textarea) {
         height: calc(1.5em + (@spacing / 2) + (@border-size * 2));
     }
 
-    & > .custom-select,
-    & > .form-input,
+    & > .form-control,
     & > .input-group-append > .btn,
     & > .input-group-append > .input-group-text,
     & > .input-group-prepend > .btn,
@@ -91,13 +89,11 @@
 }
 
 .input-group-lg {
-    & > .custom-select,
-    & > .form-input:not(textarea) {
+    & > .form-control:not(textarea) {
         height: calc(1.5em + @spacing + (@border-size * 2));
     }
 
-    & > .custom-select,
-    & > .form-input,
+    & > .form-control,
     & > .input-group-append > .btn,
     & > .input-group-append > .input-group-text,
     & > .input-group-prepend > .btn,
