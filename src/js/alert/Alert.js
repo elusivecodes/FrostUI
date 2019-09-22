@@ -20,6 +20,10 @@ class Alert {
             ...settings
         };
 
+        this._dismiss = dom.find('[data-dismiss="alert"]', this._node);
+
+        this._events();
+
         dom.setData(this._node, 'alert', this);
     }
 
@@ -27,6 +31,10 @@ class Alert {
      * Destroy the Alert.
      */
     destroy() {
+        if (this._dismiss.length) {
+            dom.removeEvent(this._dismiss, 'click.frost.alert', this._dismissEvent);
+        }
+
         dom.removeData(this._node, 'alert');
     }
 
@@ -55,10 +63,10 @@ class Alert {
                 dom.remove(this._node);
 
                 resolve();
-            }).catch(_ => {
+            }).catch(e => {
                 dom.removeDataset(this._node, 'animating');
 
-                reject();
+                reject(e);
             });
         });
     }

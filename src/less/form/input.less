@@ -1,42 +1,26 @@
-.form-group {
-    position: relative;
-    margin-bottom: @spacing;
-}
-
-.form-row {
-    display: flex;
-    flex-wrap: wrap;
-    margin-right: -5px;
-    margin-left: -5px;
-
-    & > .col {
-        padding-left: 5px;
-        padding-right: 5px;
-    }
-}
-
-.form-inline {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-}
-
 .form-control {
     border: @border-size @border-style @border-color;
     border-radius: @border-radius;
     background-color: @white;
+
+    &:not(:disabled) {
+        &:focus,
+        &:active {
+            box-shadow: @shadow-xs;
+        }
+    }
 }
 
 .form-minimal {
     border: 0;
     border-bottom: @border-size @border-style @border-color;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: @form-minimal;
 }
 
 .form-plain-text {
     display: block;
     width: 100%;
-    padding: (@spacing / 2) 0;
+    padding: @half-spacing 0;
     margin-bottom: 0;
     line-height: @line-height;
     color: @text;
@@ -48,12 +32,12 @@
 .form-control, .form-minimal {
     display: block;
     width: 100%;
-    padding: @spacing / 2;
+    padding: @half-spacing;
     font-size: 1rem;
     line-height: @line-height;
 
     &::placeholder {
-        color: rgba(0, 0, 0, .5);
+        color: @form-placeholder;
     }
 
     &:hover {
@@ -71,27 +55,72 @@
         z-index: @z-focus;
     }
 
-    &:disabled,
-    &[readonly] {
-        background-color: #e9ecef;
+    &:not([type=file]) {
+        &:disabled,
+        &[readonly] {
+            background-color: @form-disabled;
+        }
+    }
+
+    &:disabled {
+        cursor: not-allowed;
     }
 }
 
-.form-control-lg {
-    padding: (@spacing / 2) @spacing;
+.form-control-lg,
+.form-minimal-lg {
+    padding: @half-spacing @spacing;
     font-size: 1.25rem;
 }
 
-.form-control-sm {
-    padding: (@spacing / 4) (@spacing / 2);
+.form-control-sm,
+.form-minimal-sm {
+    padding: @quarter-spacing @half-spacing;
     font-size: .875rem;
 }
 
-.outline-0 {
-    outline: 0 !important;
-    box-shadow: none !important;
+.form-check {
+    position: relative;
+    display: block;
+    padding-left: @spacing * 1.25;
 }
 
-input.form-control[type="file"] {
+.form-check-input {
+    position: absolute;
+    margin-top: @third-spacing;
+    margin-left: -@spacing * 1.25;
+
+    &:disabled {
+        cursor: not-allowed;
+
+        & ~ .form-check-label {
+            opacity: @disabled-opacity;
+            cursor: not-allowed;
+        }
+    }
+}
+
+.form-check-inline .form-check-input {
+    position: static;
+    margin-top: 0;
+    margin-right: @third-spacing;
+    margin-left: 0;
+}
+
+select.form-control[multiple] {
+    padding: 0;
+
+    & option {
+        padding: @half-spacing;
+    }
+}
+
+.form-control[type="file"] {
     border: 0;
+    padding-left: 0;
+
+    &:focus,
+    &:active {
+        box-shadow: none;
+    }
 }

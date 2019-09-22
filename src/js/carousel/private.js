@@ -184,7 +184,7 @@ Object.assign(Carousel.prototype, {
 
                 const next = this._queue.shift();
                 return this._show(next.index, next.resolve, next.reject);
-            });
+            }).catch(reject);
         });
     },
 

@@ -19,7 +19,7 @@ Popover.defaults = {
 };
 
 // Auto-initialize Popover from data-toggle
-dom.addEvent(window, 'load', _ => {
+dom.addEventOnce(window, 'load', _ => {
     const nodes = dom.find('[data-toggle="popover"]');
 
     for (const node of nodes) {
@@ -47,16 +47,18 @@ if (QuerySet) {
                 dom.getData(node, 'popover') :
                 new Popover(node, options);
 
-            if (index || !method) {
+            if (index) {
                 return;
             }
 
-            result = popover[method](...args);
+            if (!method) {
+                result = popover;
+            } else {
+                result = popover[method](...args);
+            }
         });
 
-        return method ?
-            result :
-            this;
+        return result;
     };
 }
 

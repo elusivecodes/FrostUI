@@ -4,15 +4,13 @@ Collapse.defaults = {
     duration: 300
 };
 
-// Trigger Collapse from data-toggle
-dom.addEventDelegate(document, 'click', '[data-toggle="collapse"]', e => {
-    e.preventDefault();
+// Auto-initialize Collapse from data-ride
+dom.addEventOnce(window, 'load', _ => {
+    const nodes = dom.find('[data-toggle="collapse"]');
 
-    const collapse = dom.hasData(e.currentTarget, 'collapse') ?
-        dom.getData(e.currentTarget, 'collapse') :
-        new Collapse(e.currentTarget);
-
-    collapse.toggle().catch(_ => { });
+    for (const node of nodes) {
+        new Collapse(node);
+    }
 });
 
 // Add Collapse QuerySet method
@@ -35,16 +33,18 @@ if (QuerySet) {
                 dom.getData(node, 'collapse') :
                 new Collapse(node, options);
 
-            if (index || !method) {
+            if (index) {
                 return;
             }
 
-            result = collapse[method](...args);
+            if (!method) {
+                result = collapse;
+            } else {
+                result = collapse[method](...args);
+            }
         });
 
-        return method ?
-            result :
-            this;
+        return result;
     };
 }
 

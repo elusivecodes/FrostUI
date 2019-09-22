@@ -5,7 +5,7 @@
 
 .nav-link {
     display: block;
-    padding: (@spacing / 2) @spacing;
+    padding: @half-spacing @spacing;
 
     &:focus,
     &:hover {
@@ -36,7 +36,7 @@
         border-radius: @border-radius;
 
         &:not(:last-child) {
-            margin-right: (@spacing / 4);
+            margin-right: @quarter-spacing;
         }
 
         &.active {
@@ -112,14 +112,14 @@
 }
 
 .card-header-tabs {
-    margin-left: -(@spacing / 2);
-    margin-right: -(@spacing / 2);
-    margin-bottom: -(@spacing / 2);
+    margin-left: -@half-spacing;
+    margin-right: -@half-spacing;
+    margin-bottom: -@half-spacing;
     border-bottom: 0;
 }
 
 .card-header-pills {
-    margin-left: -(@spacing / 2);
-    margin-right: -(@spacing / 2);
+    margin-left: -@half-spacing;
+    margin-right: -@half-spacing;
     margin-bottom: 0;
 }

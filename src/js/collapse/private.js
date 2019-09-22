@@ -5,6 +5,19 @@
 Object.assign(Collapse.prototype, {
 
     /**
+     * Attach events for the Collapse.
+     */
+    _events() {
+        this._clickEvent = e => {
+            e.preventDefault();
+
+            this.toggle().catch(_ => { });
+        };
+
+        dom.addEvent(this._node, 'click.frost.collapse', this._clickEvent);
+    },
+
+    /**
      * Hide accordion nodes for all targets.
      * @param {array} targets The target nodes.
      */
@@ -35,9 +48,11 @@ Object.assign(Collapse.prototype, {
                     continue;
                 }
 
-                const collapse = dom.hasData(toggle, 'collapse') ?
-                    dom.getData(toggle, 'collapse') :
-                    new Collapse(toggle);
+                if (!dom.hasData(toggle, 'collapse')) {
+                    continue;
+                }
+
+                const collapse = dom.getData(toggle, 'collapse');
                 const targets = dom.find(collapse._settings.target);
                 const animating = targets.find(target => dom.getDataset(target, 'animating'));
                 if (animating) {

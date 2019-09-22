@@ -66,9 +66,7 @@ class Tab {
                 dom.triggerEvent(this._node, 'hidden.frost.tab');
 
                 resolve();
-            }).catch(_ =>
-                reject()
-            ).finally(_ =>
+            }).catch(reject).finally(_ =>
                 dom.removeDataset(this._target, 'animating')
             );
         });
@@ -107,9 +105,7 @@ class Tab {
                 dom.triggerEvent(this._node, 'shown.frost.tab');
 
                 resolve();
-            }).catch(_ =>
-                reject()
-            ).finally(_ =>
+            }).catch(reject).finally(_ =>
                 dom.removeDataset(this._target, 'animating')
             );
         });

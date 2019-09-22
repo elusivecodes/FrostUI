@@ -18,17 +18,16 @@
         <form>
             <h4>Success</h4>
             <div class="form-group form-success">
-                <label for="form-success">Text</label>
-                <input type="text" id="form-success" class="form-control" placeholder="Input" />
+                <label for="form-success">Label</label>
+                <input type="text" id="form-success" class="form-control" placeholder="Placeholder" />
                 <div class="valid-feedback">This is validation feedback.</div>
             </div>
             <div class="form-group form-success">
-                <label for="form-success-textarea">Textarea</label>
-                <textarea id="form-success-textarea" class="form-control" placeholder="Input"></textarea>
-                <div class="valid-feedback">This is validation feedback.</div>
+                <label for="form-success-textarea">Label</label>
+                <textarea id="form-success-textarea" class="form-control" placeholder="Placeholder"></textarea>
             </div>
             <div class="form-group form-success">
-                <label for="form-success-select">Select</label>
+                <label for="form-success-select">Label</label>
                 <select id="form-success-select" class="form-control">
                     <option>Option 1</option>
                     <option>Option 2</option>
@@ -37,10 +36,9 @@
                     <option>Option 5</option>
                     <option>Option 6</option>
                 </select>
-                <div class="valid-feedback">This is validation feedback.</div>
             </div>
             <div class="form-group form-success">
-                <label for="form-success-multi-select">Multi-Select</label>
+                <label for="form-success-multi-select">Label</label>
                 <select id="form-success-multi-select" class="form-control" multiple="true">
                     <option>Option 1</option>
                     <option>Option 2</option>
@@ -49,53 +47,140 @@
                     <option>Option 5</option>
                     <option>Option 6</option>
                 </select>
-                <div class="valid-feedback">This is validation feedback.</div>
             </div>
             <div class="form-group form-success">
-                <label for="input-group-success">Input Group</label>
+                <label for="input-group-success">Label</label>
                 <div class="input-group">
-                    <input type="text" id="input-group-success" class="form-control" placeholder="Input" />
+                    <input type="text" id="input-group-success" class="form-control" placeholder="Placeholder" />
                     <div class="input-group-append">
                         <div class="input-group-text">Text</div>
                     </div>
                 </div>
-                <div class="valid-feedback">This is validation feedback.</div>
             </div>
             <div class="form-group form-success">
-                <label>Checkbox</label>
-                <div>
-                    <label class="custom-check">
-                        <input type="checkbox" id="checkbox" name="checkbox" checked />
-                        <span class="checkbox"></span>
-                    </label>
-                    <label for="checkbox">Option</label>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="checkbox-checked-success" checked>
+                    <label class="custom-control-label" for="checkbox-checked-success">Checked</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="checkbox-success">
+                    <label class="custom-control-label" for="checkbox-success">Option</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="checkbox-disabled-success" disabled>
+                    <label class="custom-control-label" for="checkbox-disabled-success">Disabled</label>
                 </div>
             </div>
             <div class="form-group form-success">
-                <label>Radio</label>
-                <div>
-                    <label class="custom-radio">
-                        <input type="radio" id="radio1" name="radio" checked />
-                        <span class="radio"></span>
-                    </label>
-                    <label for="radio1">Option 1</label>
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="radio-selected-success" checked>
+                    <label class="custom-control-label" for="radio-selected-success">Selected</label>
                 </div>
-                <div>
-                    <label class="custom-radio">
-                        <input type="radio" id="radio2" name="radio" />
-                        <span class="radio"></span>
-                    </label>
-                    <label for="radio2">Option 2</label>
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="radio-success">
+                    <label class="custom-control-label" for="radio-success">Option</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="radio-disabled-success" disabled>
+                    <label class="custom-control-label" for="radio-disabled-success">Disabled</label>
                 </div>
             </div>
             <div class="form-group form-success">
-                <label>Switch</label>
-                <div>
-                    <label class="custom-switch">
-                        <input type="checkbox" id="switch" name="switch" checked />
-                        <span class="slider rounded"></span>
-                    </label>
-                    <label for="switch">Option</label>
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="switch-selected-success" checked>
+                    <label class="custom-control-label" for="switch-selected-success">Selected</label>
+                </div>
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="switch-success">
+                    <label class="custom-control-label" for="switch-success">Option</label>
+                </div>
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="switch-disabled-success" disabled>
+                    <label class="custom-control-label" for="switch-disabled-success">Disabled</label>
+                </div>
+            </div>
+
+            <h4>Error</h4>
+            <div class="form-group form-error">
+                <label for="form-error">Label</label>
+                <input type="text" id="form-error" class="form-control" placeholder="Placeholder" />
+                <div class="invalid-feedback">This is validation feedback.</div>
+            </div>
+            <div class="form-group form-error">
+                <label for="form-error-textarea">Label</label>
+                <textarea id="form-error-textarea" class="form-control" placeholder="Placeholder"></textarea>
+            </div>
+            <div class="form-group form-error">
+                <label for="form-error-select">Label</label>
+                <select id="form-error-select" class="form-control">
+                    <option>Option 1</option>
+                    <option>Option 2</option>
+                    <option>Option 3</option>
+                    <option>Option 4</option>
+                    <option>Option 5</option>
+                    <option>Option 6</option>
+                </select>
+            </div>
+            <div class="form-group form-error">
+                <label for="form-error-multi-select">Label</label>
+                <select id="form-error-multi-select" class="form-control" multiple="true">
+                    <option>Option 1</option>
+                    <option>Option 2</option>
+                    <option>Option 3</option>
+                    <option>Option 4</option>
+                    <option>Option 5</option>
+                    <option>Option 6</option>
+                </select>
+            </div>
+            <div class="form-group form-error">
+                <label for="input-group-error">Label</label>
+                <div class="input-group">
+                    <input type="text" id="input-group-error" class="form-control" placeholder="Placeholder" />
+                    <div class="input-group-append">
+                        <div class="input-group-text">Text</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group form-error">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="checkbox-checked-error" checked>
+                    <label class="custom-control-label" for="checkbox-checked-error">Checked</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="checkbox-error">
+                    <label class="custom-control-label" for="checkbox-error">Option</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="checkbox-disabled-error" disabled>
+                    <label class="custom-control-label" for="checkbox-disabled-error">Disabled</label>
+                </div>
+            </div>
+            <div class="form-group form-error">
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="radio-selected-error" checked>
+                    <label class="custom-control-label" for="radio-selected-error">Selected</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="radio-error">
+                    <label class="custom-control-label" for="radio-error">Option</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="radio-disabled-error" disabled>
+                    <label class="custom-control-label" for="radio-disabled-error">Disabled</label>
+                </div>
+            </div>
+            <div class="form-group form-error">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="switch-selected-error" checked>
+                    <label class="custom-control-label" for="switch-selected-error">Selected</label>
+                </div>
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="switch-error">
+                    <label class="custom-control-label" for="switch-error">Option</label>
+                </div>
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="switch-disabled-error" disabled>
+                    <label class="custom-control-label" for="switch-disabled-error">Disabled</label>
                 </div>
             </div>
         </form>

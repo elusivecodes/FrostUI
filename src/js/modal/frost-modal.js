@@ -7,30 +7,21 @@ Modal.defaults = {
     keyboard: true
 };
 
-// Initialize Modal from data-toggle
-dom.addEventDelegate(document, 'click', '[data-toggle="modal"]', e => {
-    e.preventDefault();
+// Auto-initialize Modal from data-toggle
+dom.addEventOnce(window, 'load', _ => {
+    const nodes = dom.find('[data-toggle="modal"]');
 
-    const target = dom.getDataset(e.currentTarget, 'target');
-    const element = dom.findOne(target);
+    for (const node of nodes) {
+        const target = dom.getDataset(node, 'target');
+        const element = dom.findOne(target);
+        const modal = dom.hasData(element, 'modal') ?
+            dom.getData(element, 'modal') :
+            new Modal(element, {
+                show: false
+            });
 
-    if (dom.hasData(element, 'modal')) {
-        dom.getData(element, 'modal').show().catch(_ => { });
-    } else {
-        new Modal(element);
+        modal._eventToggle(node);
     }
-});
-
-// Hide Modal from data-dismiss
-dom.addEventDelegate(document, 'click', '[data-dismiss="modal"]', e => {
-    e.preventDefault();
-
-    const element = dom.closest(e.currentTarget, '.modal');
-    const modal = dom.hasData(element, 'modal') ?
-        dom.getData(element, 'modal') :
-        new Modal(element);
-
-    modal.hide().catch(_ => { });
 });
 
 // Add Modal QuerySet method
@@ -53,16 +44,18 @@ if (QuerySet) {
                 dom.getData(node, 'modal') :
                 new Modal(node, options);
 
-            if (index || !method) {
+            if (index) {
                 return;
             }
 
-            result = modal[method](...args);
+            if (!method) {
+                result = modal;
+            } else {
+                result = modal[method](...args);
+            }
         });
 
-        return method ?
-            result :
-            this;
+        return result;
     };
 }
 

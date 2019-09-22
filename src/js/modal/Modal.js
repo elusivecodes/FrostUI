@@ -26,23 +26,11 @@ class Modal {
 
         this._dialog = dom.child(this._node, '.modal-dialog').shift();
 
-        this._documentClickEvent = e => {
-            if (dom.isSame(e.target, this._dialog) || dom.hasDescendent(this._dialog, e.target)) {
-                return;
-            }
+        this._dismiss = dom.find('[data-dismiss="modal"]', this._node);
 
-            this.hide().catch(_ => { });
-        };
+        this._toggles = [];
 
-        this._windowKeyDownEvent = e => {
-            if (e.key !== 'Escape') {
-                return;
-            }
-
-            e.preventDefault();
-
-            this.hide().catch(_ => { });
-        };
+        this._events();
 
         if (this._settings.show) {
             this.show();
@@ -55,6 +43,14 @@ class Modal {
      * Destroy the Modal.
      */
     destroy() {
+        if (this._toggles.length) {
+            dom.removeEvent(this._toggles, 'click.frost.modal', this._clickEvent);
+        }
+
+        if (this._dismiss.length) {
+            dom.removeEvent(this._dismiss, 'click.frost.modal', this._dismissEvent);
+        }
+
         if (this._settings.backdrop) {
             dom.removeEvent(document, 'click.frost.modal', this._documentClickEvent);
         }
@@ -112,9 +108,7 @@ class Modal {
                 dom.triggerEvent(this._node, 'hidden.frost.modal');
 
                 resolve();
-            }).catch(_ =>
-                reject()
-            ).finally(_ =>
+            }).catch(reject).finally(_ =>
                 dom.removeDataset([this._dialog, this._backdrop], 'animating')
             );
         });
@@ -172,9 +166,7 @@ class Modal {
                 dom.triggerEvent(this._node, 'shown.frost.modal');
 
                 resolve();
-            }).catch(_ =>
-                reject()
-            ).finally(_ =>
+            }).catch(reject).finally(_ =>
                 dom.removeDataset([this._dialog, this._backdrop], 'animating')
             );
         });

@@ -16,16 +16,16 @@
     <div class="container">
         <h1>Inputs</h1>
         <form>
-            <h4>Text</h4>
             <div class="form-group">
-                <input type="text" id="textinput" class="form-control" placeholder="Input" />
+                <label for="text">Label</label>
+                <input type="text" id="text" class="form-control" placeholder="Placeholder" />
             </div>
-            <h4>Textarea</h4>
             <div class="form-group">
-                <textarea id="textarea" class="form-control" placeholder="Input"></textarea>
+                <label for="textarea">Label</label>
+                <textarea id="textarea" class="form-control" placeholder="Placeholder"></textarea>
             </div>
-            <h4>Select</h4>
             <div class="form-group">
+                <label for="select">Label</label>
                 <select id="select" class="form-control">
                     <option>Option 1</option>
                     <option>Option 2</option>
@@ -35,9 +35,9 @@
                     <option>Option 6</option>
                 </select>
             </div>
-            <h4>Multi-Select</h4>
             <div class="form-group">
-                <select id="multiselect" class="form-control" multiple="true">
+                <label for="multi-select">Label</label>
+                <select id="multi-select" class="form-control" multiple="true">
                     <option>Option 1</option>
                     <option>Option 2</option>
                     <option>Option 3</option>
@@ -46,19 +46,118 @@
                     <option>Option 6</option>
                 </select>
             </div>
-            <h4>File</h4>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="checkbox">
+                <label class="form-check-label" for="checkbox">Checkbox</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="radio" id="radio-1" value="option1" checked>
+                <label class="form-check-label" for="radio-1">
+                    Radio 1
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="radio" id="radio-2" value="option2">
+                <label class="form-check-label" for="radio-2">
+                    Radio 2
+                </label>
+            </div>
             <div class="form-group">
-                <input type="file" id="upload" class="form-control" />
+                <label for="file">Label</label>
+                <input type="file" id="file" class="form-control" />
+            </div>
+            <hr />
+
+            <h4>Readonly</h4>
+            <div class="form-group">
+                <label for="text-readonly">Label</label>
+                <input type="text" id="text-readonly" class="form-control" placeholder="Placeholder" readonly />
+            </div>
+            <div class="form-group">
+                <label for="textarea-readonly">Label</label>
+                <textarea id="textarea-readonly" class="form-control" placeholder="Placeholder" readonly></textarea>
+            </div>
+            <hr />
+
+            <h4>Disabled</h4>
+            <div class="form-group">
+                <label for="text-disabled">Label</label>
+                <input type="text" id="text-disabled" class="form-control" placeholder="Placeholder" disabled />
+            </div>
+            <div class="form-group">
+                <label for="textarea-disabled">Label</label>
+                <textarea id="textarea-disabled" class="form-control" placeholder="Placeholder" disabled></textarea>
+            </div>
+            <div class="form-group">
+                <label for="select-disabled">Label</label>
+                <select id="select-disabled" class="form-control" disabled>
+                    <option>Option 1</option>
+                    <option>Option 2</option>
+                    <option>Option 3</option>
+                    <option>Option 4</option>
+                    <option>Option 5</option>
+                    <option>Option 6</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="multi-select-disabled">Label</label>
+                <select id="multi-select-disabled" class="form-control" multiple="true" disabled>
+                    <option>Option 1</option>
+                    <option>Option 2</option>
+                    <option>Option 3</option>
+                    <option>Option 4</option>
+                    <option>Option 5</option>
+                    <option>Option 6</option>
+                </select>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="checkbox-disabled" disabled>
+                <label class="form-check-label" for="checkbox-disabled">Checkbox</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="radio-disabled" id="radio-1-disabled" value="option1"
+                    checked disabled>
+                <label class="form-check-label" for="radio-1-disabled">
+                    Radio 1
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="radio-disabled" id="radio-2-disabled" value="option2"
+                    disabled>
+                <label class="form-check-label" for="radio-2-disabled">
+                    Radio 2
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="file-disabled">File</label>
+                <input type="file" id="file-disabled" class="form-control" disabled />
             </div>
             <hr />
 
             <h3>Sizes</h3>
             <h4>Small</h4>
             <div class="form-group">
-                <input type="text" id="textinput" class="form-control form-control-sm" placeholder="Input" />
+                <label for="text-sm">Label</label>
+                <input type="text" id="text-sm" class="form-control form-control-sm" placeholder="Placeholder" />
             </div>
             <div class="form-group">
-                <select id="select" class="form-control form-control-sm">
+                <label for="textarea-sm">Label</label>
+                <textarea id="textarea-sm" class="form-control form-control-sm" placeholder="Placeholder"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="select-sm">Label</label>
+                <select id="select-sm" class="form-control form-control-sm">
+                    <option>Option 1</option>
+                    <option>Option 2</option>
+                    <option>Option 3</option>
+                    <option>Option 4</option>
+                    <option>Option 5</option>
+                    <option>Option 6</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="multi-select-sm">Label</label>
+                <select id="multi-select-sm" class="form-control form-control-sm" multiple="true">
                     <option>Option 1</option>
                     <option>Option 2</option>
                     <option>Option 3</option>
@@ -70,10 +169,16 @@
 
             <h4>Large</h4>
             <div class="form-group">
-                <input type="text" id="textinput" class="form-control form-control-lg" placeholder="Input" />
+                <label for="text-lg">Label</label>
+                <input type="text" id="text-lg" class="form-control form-control-lg" placeholder="Placeholder" />
             </div>
             <div class="form-group">
-                <select id="select" class="form-control form-control-lg">
+                <label for="textarea-lg">Label</label>
+                <textarea id="textarea-lg" class="form-control form-control-lg" placeholder="Placeholder"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="select-lg">Label</label>
+                <select id="select-lg" class="form-control form-control-lg">
                     <option>Option 1</option>
                     <option>Option 2</option>
                     <option>Option 3</option>
@@ -82,20 +187,9 @@
                     <option>Option 6</option>
                 </select>
             </div>
-            <hr />
-
-            <h4>Readonly</h4>
             <div class="form-group">
-                <input type="text" id="textinput" class="form-control" placeholder="Input" readonly />
-            </div>
-            <hr />
-
-            <h4>Disabled</h4>
-            <div class="form-group">
-                <input type="text" id="textinput" class="form-control" placeholder="Input" disabled />
-            </div>
-            <div class="form-group">
-                <select id="select" class="form-control" disabled>
+                <label for="multi-select-lg">Label</label>
+                <select id="multi-select-lg" class="form-control form-control-lg" multiple="true">
                     <option>Option 1</option>
                     <option>Option 2</option>
                     <option>Option 3</option>
@@ -103,17 +197,6 @@
                     <option>Option 5</option>
                     <option>Option 6</option>
                 </select>
-            </div>
-            <hr />
-
-            <h3>Minimal Inputs</h3>
-            <h4>Text</h4>
-            <div class="form-group">
-                <input type="text" id="textminimal" class="form-minimal" placeholder="Input" />
-            </div>
-            <h4>Textarea</h4>
-            <div class="form-group">
-                <textarea id="textareaminimal" class="form-minimal" placeholder="Input"></textarea>
             </div>
         </form>
     </div>

@@ -9,8 +9,8 @@ Carousel.defaults = {
 };
 
 // Auto-initialize Carousel from data-ride
-dom.addEvent(window, 'load', _ => {
-    const nodes = dom.find('[data-ride="carousel"]');
+dom.addEventOnce(window, 'load', _ => {
+    const nodes = dom.find('[data-toggle="carousel"], [data-ride="carousel"]');
 
     for (const node of nodes) {
         new Carousel(node);
@@ -37,16 +37,18 @@ if (QuerySet) {
                 dom.getData(node, 'carousel') :
                 new Carousel(node, options);
 
-            if (index || !method) {
+            if (index) {
                 return;
             }
 
-            result = carousel[method](...args);
+            if (!method) {
+                result = carousel;
+            } else {
+                result = carousel[method](...args);
+            }
         });
 
-        return method ?
-            result :
-            this;
+        return result;
     };
 }
 

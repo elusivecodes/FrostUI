@@ -22,6 +22,10 @@ class Toast {
             ...settings
         };
 
+        this._dismiss = dom.find('[data-dismiss="toast"]', this._node);
+
+        this._events();
+
         if (this._settings.autohide) {
             setTimeout(
                 _ => {
@@ -38,6 +42,10 @@ class Toast {
      * Destroy the Toast.
      */
     destroy() {
+        if (this._dismiss.length) {
+            dom.removeEvent(this._dismiss, 'click.frost.toast', this._dismissEvent);
+        }
+
         dom.removeData(this._node, 'toast');
     }
 
@@ -65,9 +73,7 @@ class Toast {
                 dom.triggerEvent(this._node, 'hidden.frost.toast');
 
                 resolve();
-            }).catch(_ =>
-                reject()
-            ).finally(_ =>
+            }).catch(reject).finally(_ =>
                 dom.removeDataset(this._node, 'animating')
             );
         });
@@ -97,9 +103,7 @@ class Toast {
                 dom.triggerEvent(this._node, 'shown.frost.toast');
 
                 resolve();
-            }).catch(_ =>
-                reject()
-            ).finally(_ =>
+            }).catch(reject).finally(_ =>
                 dom.removeDataset(this._node, 'animating')
             );
         });

@@ -1,5 +1,5 @@
 .mix-spacing(@n, @b: -, @i: 0) when (@i =< @n) {
-    @amount: @spacing / 2 * @i;
+    @amount: @half-spacing * @i;
 
     .p@{b}@{i} {
         padding: @amount !important;
@@ -73,3 +73,23 @@
 }
 
 .create-spacing(5);
+
+@media (min-width: @break-xs) {
+    .create-spacing(5, -sm-);
+}
+
+@media (min-width: @break-sm) {
+    .create-spacing(5, -md-);
+}
+
+@media (min-width: @break-md) {
+    .create-spacing(5, -lg-);
+}
+
+@media (min-width: @break-lg) {
+    .create-spacing(5, -xl-);
+}
+
+@media only print {
+    .create-spacing(5, -print-);
+}

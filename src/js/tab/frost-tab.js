@@ -4,7 +4,7 @@ Tab.defaults = {
 };
 
 // Auto-initialize Tab from data-toggle
-dom.addEvent(window, 'load', _ => {
+dom.addEventOnce(window, 'load', _ => {
     const nodes = dom.find('[data-toggle="tab"]');
 
     for (const node of nodes) {
@@ -32,16 +32,18 @@ if (QuerySet) {
                 dom.getData(node, 'tab') :
                 new Tab(node, options);
 
-            if (index || !method) {
+            if (index) {
                 return;
             }
 
-            result = tab[method](...args);
+            if (!method) {
+                result = tab;
+            } else {
+                result = tab[method](...args);
+            }
         });
 
-        return method ?
-            result :
-            this;
+        return result;
     };
 }
 

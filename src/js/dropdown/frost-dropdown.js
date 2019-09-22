@@ -9,7 +9,7 @@ Dropdown.defaults = {
 };
 
 // Auto-initialize Dropdown from data-toggle
-dom.addEvent(window, 'load', _ => {
+dom.addEventOnce(window, 'load', _ => {
     const nodes = dom.find('[data-toggle="dropdown"]');
 
     for (const node of nodes) {
@@ -37,16 +37,18 @@ if (QuerySet) {
                 dom.getData(node, 'dropdown') :
                 new Dropdown(node, options);
 
-            if (index || !method) {
+            if (index) {
                 return;
             }
 
-            result = dropdown[method](...args);
+            if (!method) {
+                result = dropdown;
+            } else {
+                result = dropdown[method](...args);
+            }
         });
 
-        return method ?
-            result :
-            this;
+        return result;
     };
 }
 

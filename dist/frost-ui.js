@@ -52,6 +52,10 @@
                 ...settings
             };
 
+            this._dismiss = dom.find('[data-dismiss="alert"]', this._node);
+
+            this._events();
+
             dom.setData(this._node, 'alert', this);
         }
 
@@ -59,6 +63,10 @@
          * Destroy the Alert.
          */
         destroy() {
+            if (this._dismiss.length) {
+                dom.removeEvent(this._dismiss, 'click.frost.alert', this._dismissEvent);
+            }
+
             dom.removeData(this._node, 'alert');
         }
 
@@ -87,10 +95,10 @@
                     dom.remove(this._node);
 
                     resolve();
-                }).catch(_ => {
+                }).catch(e => {
                     dom.removeDataset(this._node, 'animating');
 
-                    reject();
+                    reject(e);
                 });
             });
         }
@@ -103,19 +111,76 @@
         duration: 100
     };
 
-    // Remove Alert from data-dismiss
-    dom.addEventDelegate(document, 'click', '[data-dismiss="alert"]', e => {
-        e.preventDefault();
+    // Auto-initialize Alert from data-toggle
+    dom.addEventOnce(window, 'load', _ => {
+        const nodes = dom.find('[data-toggle="alert"]');
 
-        const element = dom.closest(e.currentTarget, '.alert').shift();
-        const alert = dom.hasData(element, 'alert') ?
-            dom.getData(element, 'alert') :
-            new Alert(element);
-
-        alert.close().catch(_ => { });
+        for (const node of nodes) {
+            new Alert(node);
+        }
     });
 
+    // Add Alert QuerySet method
+    if (QuerySet) {
+        QuerySet.prototype.alert = function(a, ...args) {
+            let options, method;
+            if (Core.isObject(a)) {
+                options = a;
+            } else if (Core.isString(a)) {
+                method = a;
+            }
+
+            let result;
+            this.each((node, index) => {
+                if (!Core.isElement(node)) {
+                    return;
+                }
+
+                const alert = dom.hasData(node, 'alert') ?
+                    dom.getData(node, 'alert') :
+                    new Alert(node, options);
+
+                if (index) {
+                    return;
+                }
+
+                if (!method) {
+                    result = alert;
+                } else {
+                    result = alert[method](...args);
+                }
+            });
+
+            return result;
+        };
+    }
+
     UI.Alert = Alert;
+
+
+    /**
+     * Alert Private
+     */
+
+    Object.assign(Alert.prototype, {
+
+        /**
+         * Attach events for the Alert.
+         */
+        _events() {
+            this._dismissEvent = e => {
+                e.preventDefault();
+
+                this.close().catch(_ => { });
+            };
+
+            if (this._dismiss.length) {
+                dom.addEvent(this._dismiss, 'click.frost.alert', this._dismissEvent);
+            }
+
+        }
+
+    });
 
 
     /**
@@ -143,6 +208,9 @@
             this._siblings = dom.find('.btn', group).filter(node => !dom.isSame(node, this._node));
 
             this._input = dom.findOne('input[type="checkbox"], input[type="radio"]', this._node);
+            this._isRadio = this._input && dom.is(this._input, '[type="radio"]');
+
+            this._events();
 
             dom.setData(this._node, 'button', this);
         }
@@ -151,6 +219,8 @@
          * Destroy the Button.
          */
         destroy() {
+            dom.removeEvent(this._node, 'frost.click.button', this._clickEvent);
+
             dom.removeData(this._node, 'button');
         }
 
@@ -158,7 +228,7 @@
          * Toggle the Button.
          */
         toggle() {
-            this._input && dom.is(this._input, '[type="radio"]') ?
+            this._isRadio ?
                 this._toggleRadio() :
                 this._toggleCheckbox();
 
@@ -170,16 +240,49 @@
     // Default Button options
     Button.defaults = {};
 
-    // Trigger Button from data-toggle
-    dom.addEventDelegate(document, 'click', '[data-toggle="buttons"] > .btn, [data-toggle="button"]', e => {
-        e.preventDefault();
+    // Auto-initialize Button from data-toggle
+    dom.addEventOnce(window, 'load', _ => {
+        const nodes = dom.find('[data-toggle="buttons"] > .btn, [data-toggle="button"]');
 
-        const button = dom.hasData(e.currentTarget, 'button') ?
-            dom.getData(e.currentTarget, 'button') :
-            new Button(e.currentTarget);
-
-        button.toggle();
+        for (const node of nodes) {
+            new Button(node);
+        }
     });
+
+    // Add Button QuerySet method
+    if (QuerySet) {
+        QuerySet.prototype.button = function(a, ...args) {
+            let options, method;
+            if (Core.isObject(a)) {
+                options = a;
+            } else if (Core.isString(a)) {
+                method = a;
+            }
+
+            let result;
+            this.each((node, index) => {
+                if (!Core.isElement(node)) {
+                    return;
+                }
+
+                const button = dom.hasData(node, 'button') ?
+                    dom.getData(node, 'button') :
+                    new Button(node, options);
+
+                if (index) {
+                    return;
+                }
+
+                if (!method) {
+                    result = button;
+                } else {
+                    result = button[method](...args);
+                }
+            });
+
+            return result;
+        };
+    }
 
     UI.Button = Button;
 
@@ -190,6 +293,22 @@
 
     Object.assign(Button.prototype, {
 
+        /**
+         * Attach events for the Button.
+         */
+        _events() {
+            this._clickEvent = e => {
+                e.preventDefault();
+
+                this.toggle();
+            };
+
+            dom.addEvent(this._node, 'click.frost.button', this._clickEvent);
+        },
+
+        /**
+         * Toggle a checkbox-type Button.
+         */
         _toggleCheckbox() {
             dom.toggleClass(this._node, 'active');
 
@@ -198,11 +317,10 @@
             }
         },
 
+        /**
+         * Toggle a radio-type Button.
+         */
         _toggleRadio() {
-            if (dom.hasClass(this._node, 'active')) {
-                return;
-            }
-
             dom.addClass(this._node, 'active');
 
             dom.setProperty(this._input, 'checked', true);
@@ -351,8 +469,8 @@
     };
 
     // Auto-initialize Carousel from data-ride
-    dom.addEvent(window, 'load', _ => {
-        const nodes = dom.find('[data-ride="carousel"]');
+    dom.addEventOnce(window, 'load', _ => {
+        const nodes = dom.find('[data-toggle="carousel"], [data-ride="carousel"]');
 
         for (const node of nodes) {
             new Carousel(node);
@@ -379,16 +497,18 @@
                     dom.getData(node, 'carousel') :
                     new Carousel(node, options);
 
-                if (index || !method) {
+                if (index) {
                     return;
                 }
 
-                result = carousel[method](...args);
+                if (!method) {
+                    result = carousel;
+                } else {
+                    result = carousel[method](...args);
+                }
             });
 
-            return method ?
-                result :
-                this;
+            return result;
         };
     }
 
@@ -581,7 +701,7 @@
 
                     const next = this._queue.shift();
                     return this._show(next.index, next.resolve, next.reject);
-                });
+                }).catch(reject);
             });
         },
 
@@ -644,6 +764,8 @@
 
             this._hasAccordion = this._targets.find(target => dom.getDataset(target, 'parent'));
 
+            this._events();
+
             dom.setData(this._node, 'collapse', this);
         }
 
@@ -684,9 +806,7 @@
                     dom.triggerEvent(this._node, 'hidden.frost.collapse');
 
                     resolve();
-                }).catch(_ =>
-                    reject()
-                ).finally(_ =>
+                }).catch(reject).finally(_ =>
                     dom.removeDataset(targets, 'animating')
                 );
             });
@@ -728,9 +848,7 @@
                 ]).then(_ => {
                     dom.triggerEvent(this._node, 'shown.frost.collapse');
                     resolve();
-                }).catch(_ =>
-                    reject()
-                ).finally(_ =>
+                }).catch(reject).finally(_ =>
                     dom.removeDataset(targets, 'animating')
                 );
             });
@@ -806,9 +924,7 @@
                     }
 
                     resolve();
-                }).catch(_ =>
-                    reject()
-                ).finally(_ =>
+                }).catch(reject).finally(_ =>
                     dom.removeDataset(targets, 'animating')
                 );
             });
@@ -823,15 +939,13 @@
         duration: 300
     };
 
-    // Trigger Collapse from data-toggle
-    dom.addEventDelegate(document, 'click', '[data-toggle="collapse"]', e => {
-        e.preventDefault();
+    // Auto-initialize Collapse from data-ride
+    dom.addEventOnce(window, 'load', _ => {
+        const nodes = dom.find('[data-toggle="collapse"]');
 
-        const collapse = dom.hasData(e.currentTarget, 'collapse') ?
-            dom.getData(e.currentTarget, 'collapse') :
-            new Collapse(e.currentTarget);
-
-        collapse.toggle().catch(_ => { });
+        for (const node of nodes) {
+            new Collapse(node);
+        }
     });
 
     // Add Collapse QuerySet method
@@ -854,16 +968,18 @@
                     dom.getData(node, 'collapse') :
                     new Collapse(node, options);
 
-                if (index || !method) {
+                if (index) {
                     return;
                 }
 
-                result = collapse[method](...args);
+                if (!method) {
+                    result = collapse;
+                } else {
+                    result = collapse[method](...args);
+                }
             });
 
-            return method ?
-                result :
-                this;
+            return result;
         };
     }
 
@@ -875,6 +991,19 @@
      */
 
     Object.assign(Collapse.prototype, {
+
+        /**
+         * Attach events for the Collapse.
+         */
+        _events() {
+            this._clickEvent = e => {
+                e.preventDefault();
+
+                this.toggle().catch(_ => { });
+            };
+
+            dom.addEvent(this._node, 'click.frost.collapse', this._clickEvent);
+        },
 
         /**
          * Hide accordion nodes for all targets.
@@ -907,9 +1036,11 @@
                         continue;
                     }
 
-                    const collapse = dom.hasData(toggle, 'collapse') ?
-                        dom.getData(toggle, 'collapse') :
-                        new Collapse(toggle);
+                    if (!dom.hasData(toggle, 'collapse')) {
+                        continue;
+                    }
+
+                    const collapse = dom.getData(toggle, 'collapse');
                     const targets = dom.find(collapse._settings.target);
                     const animating = targets.find(target => dom.getDataset(target, 'animating'));
                     if (animating) {
@@ -1041,9 +1172,7 @@
                     dom.triggerEvent(this._node, 'hidden.frost.dropdown');
 
                     resolve();
-                }).catch(_ =>
-                    reject()
-                ).finally(_ =>
+                }).catch(reject).finally(_ =>
                     dom.removeDataset(this._menuNode, 'animating')
                 );
             });
@@ -1075,9 +1204,7 @@
                     dom.triggerEvent(this._node, 'shown.frost.dropdown');
 
                     resolve();
-                }).catch(_ =>
-                    reject()
-                ).finally(_ =>
+                }).catch(reject).finally(_ =>
                     dom.removeDataset(this._menuNode, 'animating')
                 );
             });
@@ -1106,7 +1233,7 @@
     };
 
     // Auto-initialize Dropdown from data-toggle
-    dom.addEvent(window, 'load', _ => {
+    dom.addEventOnce(window, 'load', _ => {
         const nodes = dom.find('[data-toggle="dropdown"]');
 
         for (const node of nodes) {
@@ -1134,16 +1261,18 @@
                     dom.getData(node, 'dropdown') :
                     new Dropdown(node, options);
 
-                if (index || !method) {
+                if (index) {
                     return;
                 }
 
-                result = dropdown[method](...args);
+                if (!method) {
+                    result = dropdown;
+                } else {
+                    result = dropdown[method](...args);
+                }
             });
 
-            return method ?
-                result :
-                this;
+            return result;
         };
     }
 
@@ -1264,23 +1393,11 @@
 
             this._dialog = dom.child(this._node, '.modal-dialog').shift();
 
-            this._documentClickEvent = e => {
-                if (dom.isSame(e.target, this._dialog) || dom.hasDescendent(this._dialog, e.target)) {
-                    return;
-                }
+            this._dismiss = dom.find('[data-dismiss="modal"]', this._node);
 
-                this.hide().catch(_ => { });
-            };
+            this._toggles = [];
 
-            this._windowKeyDownEvent = e => {
-                if (e.key !== 'Escape') {
-                    return;
-                }
-
-                e.preventDefault();
-
-                this.hide().catch(_ => { });
-            };
+            this._events();
 
             if (this._settings.show) {
                 this.show();
@@ -1293,6 +1410,14 @@
          * Destroy the Modal.
          */
         destroy() {
+            if (this._toggles.length) {
+                dom.removeEvent(this._toggles, 'click.frost.modal', this._clickEvent);
+            }
+
+            if (this._dismiss.length) {
+                dom.removeEvent(this._dismiss, 'click.frost.modal', this._dismissEvent);
+            }
+
             if (this._settings.backdrop) {
                 dom.removeEvent(document, 'click.frost.modal', this._documentClickEvent);
             }
@@ -1350,9 +1475,7 @@
                     dom.triggerEvent(this._node, 'hidden.frost.modal');
 
                     resolve();
-                }).catch(_ =>
-                    reject()
-                ).finally(_ =>
+                }).catch(reject).finally(_ =>
                     dom.removeDataset([this._dialog, this._backdrop], 'animating')
                 );
             });
@@ -1410,9 +1533,7 @@
                     dom.triggerEvent(this._node, 'shown.frost.modal');
 
                     resolve();
-                }).catch(_ =>
-                    reject()
-                ).finally(_ =>
+                }).catch(reject).finally(_ =>
                     dom.removeDataset([this._dialog, this._backdrop], 'animating')
                 );
             });
@@ -1440,30 +1561,21 @@
         keyboard: true
     };
 
-    // Initialize Modal from data-toggle
-    dom.addEventDelegate(document, 'click', '[data-toggle="modal"]', e => {
-        e.preventDefault();
+    // Auto-initialize Modal from data-toggle
+    dom.addEventOnce(window, 'load', _ => {
+        const nodes = dom.find('[data-toggle="modal"]');
 
-        const target = dom.getDataset(e.currentTarget, 'target');
-        const element = dom.findOne(target);
+        for (const node of nodes) {
+            const target = dom.getDataset(node, 'target');
+            const element = dom.findOne(target);
+            const modal = dom.hasData(element, 'modal') ?
+                dom.getData(element, 'modal') :
+                new Modal(element, {
+                    show: false
+                });
 
-        if (dom.hasData(element, 'modal')) {
-            dom.getData(element, 'modal').show().catch(_ => { });
-        } else {
-            new Modal(element);
+            modal._eventToggle(node);
         }
-    });
-
-    // Hide Modal from data-dismiss
-    dom.addEventDelegate(document, 'click', '[data-dismiss="modal"]', e => {
-        e.preventDefault();
-
-        const element = dom.closest(e.currentTarget, '.modal');
-        const modal = dom.hasData(element, 'modal') ?
-            dom.getData(element, 'modal') :
-            new Modal(element);
-
-        modal.hide().catch(_ => { });
     });
 
     // Add Modal QuerySet method
@@ -1486,20 +1598,76 @@
                     dom.getData(node, 'modal') :
                     new Modal(node, options);
 
-                if (index || !method) {
+                if (index) {
                     return;
                 }
 
-                result = modal[method](...args);
+                if (!method) {
+                    result = modal;
+                } else {
+                    result = modal[method](...args);
+                }
             });
 
-            return method ?
-                result :
-                this;
+            return result;
         };
     }
 
     UI.Modal = Modal;
+
+
+    /**
+     * Modal Private
+     */
+
+    Object.assign(Modal.prototype, {
+
+        /**
+         * Attach events for the Modal.
+         */
+        _events() {
+            this._clickEvent = e => {
+                e.preventDefault();
+
+                this.show().catch(_ => { });
+            };
+
+            this._dismissEvent = e => {
+                e.preventDefault();
+
+                this.hide().catch(_ => { });
+            };
+
+            this._documentClickEvent = e => {
+                if (dom.isSame(e.target, this._dialog) || dom.hasDescendent(this._dialog, e.target)) {
+                    return;
+                }
+
+                this.hide().catch(_ => { });
+            };
+
+            this._windowKeyDownEvent = e => {
+                if (e.key !== 'Escape') {
+                    return;
+                }
+
+                e.preventDefault();
+
+                this.hide().catch(_ => { });
+            };
+
+            if (this._dismiss.length) {
+                dom.addEvent(this._dismiss, 'click.frost.modal', this._dismissEvent);
+            }
+        },
+
+        _eventToggle(toggle) {
+            dom.addEvent(toggle, 'click.frost.modal', this._clickEvent);
+
+            this._toggles.push(toggle);
+        }
+
+    });
 
 
     /**
@@ -1624,10 +1792,10 @@
                     dom.triggerEvent(this._node, 'hidden.frost.popover');
 
                     resolve();
-                }).catch(_ => {
+                }).catch(e => {
                     dom.removeDataset(this._popover, 'animating');
 
-                    reject()
+                    reject(e)
                 });
             });
         }
@@ -1658,9 +1826,7 @@
                     dom.triggerEvent(this._node, 'shown.frost.popover')
 
                     resolve();
-                }).catch(_ =>
-                    reject()
-                ).finally(_ =>
+                }).catch(reject).finally(_ =>
                     dom.removeDataset(this._popover, 'animating')
                 );
             });
@@ -1711,7 +1877,7 @@
     };
 
     // Auto-initialize Popover from data-toggle
-    dom.addEvent(window, 'load', _ => {
+    dom.addEventOnce(window, 'load', _ => {
         const nodes = dom.find('[data-toggle="popover"]');
 
         for (const node of nodes) {
@@ -1739,16 +1905,18 @@
                     dom.getData(node, 'popover') :
                     new Popover(node, options);
 
-                if (index || !method) {
+                if (index) {
                     return;
                 }
 
-                result = popover[method](...args);
+                if (!method) {
+                    result = popover;
+                } else {
+                    result = popover[method](...args);
+                }
             });
 
-            return method ?
-                result :
-                this;
+            return result;
         };
     }
 
@@ -2637,9 +2805,7 @@
                     dom.triggerEvent(this._node, 'hidden.frost.tab');
 
                     resolve();
-                }).catch(_ =>
-                    reject()
-                ).finally(_ =>
+                }).catch(reject).finally(_ =>
                     dom.removeDataset(this._target, 'animating')
                 );
             });
@@ -2678,9 +2844,7 @@
                     dom.triggerEvent(this._node, 'shown.frost.tab');
 
                     resolve();
-                }).catch(_ =>
-                    reject()
-                ).finally(_ =>
+                }).catch(reject).finally(_ =>
                     dom.removeDataset(this._target, 'animating')
                 );
             });
@@ -2695,7 +2859,7 @@
     };
 
     // Auto-initialize Tab from data-toggle
-    dom.addEvent(window, 'load', _ => {
+    dom.addEventOnce(window, 'load', _ => {
         const nodes = dom.find('[data-toggle="tab"]');
 
         for (const node of nodes) {
@@ -2723,16 +2887,18 @@
                     dom.getData(node, 'tab') :
                     new Tab(node, options);
 
-                if (index || !method) {
+                if (index) {
                     return;
                 }
 
-                result = tab[method](...args);
+                if (!method) {
+                    result = tab;
+                } else {
+                    result = tab[method](...args);
+                }
             });
 
-            return method ?
-                result :
-                this;
+            return result;
         };
     }
 
@@ -2785,6 +2951,10 @@
                 ...settings
             };
 
+            this._dismiss = dom.find('[data-dismiss="toast"]', this._node);
+
+            this._events();
+
             if (this._settings.autohide) {
                 setTimeout(
                     _ => {
@@ -2801,6 +2971,10 @@
          * Destroy the Toast.
          */
         destroy() {
+            if (this._dismiss.length) {
+                dom.removeEvent(this._dismiss, 'click.frost.toast', this._dismissEvent);
+            }
+
             dom.removeData(this._node, 'toast');
         }
 
@@ -2828,9 +3002,7 @@
                     dom.triggerEvent(this._node, 'hidden.frost.toast');
 
                     resolve();
-                }).catch(_ =>
-                    reject()
-                ).finally(_ =>
+                }).catch(reject).finally(_ =>
                     dom.removeDataset(this._node, 'animating')
                 );
             });
@@ -2860,9 +3032,7 @@
                     dom.triggerEvent(this._node, 'shown.frost.toast');
 
                     resolve();
-                }).catch(_ =>
-                    reject()
-                ).finally(_ =>
+                }).catch(reject).finally(_ =>
                     dom.removeDataset(this._node, 'animating')
                 );
             });
@@ -2879,24 +3049,12 @@
     };
 
     // Auto-initialize Toast from data-toggle
-    dom.addEvent(window, 'load', _ => {
+    dom.addEventOnce(window, 'load', _ => {
         const nodes = dom.find('[data-toggle="toast"]');
 
         for (const node of nodes) {
             new Toast(node);
         }
-    });
-
-    // Hide Toast from data-dismiss
-    dom.addEventDelegate(document, 'click', '[data-dismiss="toast"]', e => {
-        e.preventDefault();
-
-        const element = dom.closest(e.currentTarget, '.toast');
-        const toast = dom.hasData(element, 'toast') ?
-            dom.getData(element, 'toast') :
-            new Toast(element);
-
-        toast.hide().catch(_ => { });
     });
 
     // Add Toast QuerySet method
@@ -2919,20 +3077,47 @@
                     dom.getData(node, 'toast') :
                     new Toast(node, options);
 
-                if (index || !method) {
+                if (index) {
                     return;
                 }
 
-                result = toast[method](...args);
+                if (!method) {
+                    result = toast;
+                } else {
+                    result = toast[method](...args);
+                }
             });
 
-            return method ?
-                result :
-                this;
+            return result;
         };
     }
 
     UI.Toast = Toast;
+
+
+    /**
+     * Toast Private
+     */
+
+    Object.assign(Toast.prototype, {
+
+        /**
+         * Attach events for the Toast.
+         */
+        _events() {
+            this._dismissEvent = e => {
+                e.preventDefault();
+
+                this.hide().catch(_ => { });
+            };
+
+            if (this._dismiss.length) {
+                dom.addEvent(this._dismiss, 'click.frost.toast', this._dismissEvent);
+            }
+
+        }
+
+    });
 
 
     /**
@@ -3142,7 +3327,7 @@
     };
 
     // Auto-initialize Tooltip from data-toggle
-    dom.addEvent(window, 'load', _ => {
+    dom.addEventOnce(window, 'load', _ => {
         const nodes = dom.find('[data-toggle="tooltip"]');
 
         for (const node of nodes) {
@@ -3170,16 +3355,18 @@
                     dom.getData(node, 'tooltip') :
                     new Tooltip(node, options);
 
-                if (index || !method) {
+                if (index) {
                     return;
                 }
 
-                result = tooltip[method](...args);
+                if (!method) {
+                    result = tooltip;
+                } else {
+                    result = tooltip[method](...args);
+                }
             });
 
-            return method ?
-                result :
-                this;
+            return result;
         };
     }
 

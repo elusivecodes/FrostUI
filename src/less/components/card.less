@@ -22,7 +22,7 @@
 }
 
 .card-header {
-    padding: (@spacing / 2) @spacing;
+    padding: @half-spacing @spacing;
     margin-bottom: 0;
     background-color: rgba(0, 0, 0, .1);
     border-bottom: @border-size @border-style @border-color;
@@ -39,7 +39,7 @@
 }
 
 .card-footer {
-    padding: (@spacing / 2) @spacing;
+    padding: @half-spacing @spacing;
     background-color: rgba(0, 0, 0, .05);
     border-top: @border-size @border-style @border-color;
 }
@@ -59,22 +59,22 @@
 
 .card-img-top {
     width: 100%;
-    border-top-left-radius: calc((@spacing / 4) - @border-size);
-    border-top-right-radius: calc((@spacing / 4) - @border-size);
+    border-top-left-radius: calc(@quarter-spacing - @border-size);
+    border-top-right-radius: calc(@quarter-spacing - @border-size);
 }
 
 .card-img-bottom {
     width: 100%;
-    border-bottom-right-radius: calc((@spacing / 4) - @border-size);
-    border-bottom-left-radius: calc((@spacing / 4) - @border-size);
+    border-bottom-right-radius: calc(@quarter-spacing - @border-size);
+    border-bottom-left-radius: calc(@quarter-spacing - @border-size);
 }
 
 .card-title {
-    margin-bottom: @spacing / 2;
+    margin-bottom: ;
 }
 
 .card-subtitle {
-    margin-top: -(@spacing / 3);
+    margin-top: -@third-spacing;
     margin-bottom: 0;
 }
 

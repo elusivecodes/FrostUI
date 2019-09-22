@@ -6,24 +6,12 @@ Toast.defaults = {
 };
 
 // Auto-initialize Toast from data-toggle
-dom.addEvent(window, 'load', _ => {
+dom.addEventOnce(window, 'load', _ => {
     const nodes = dom.find('[data-toggle="toast"]');
 
     for (const node of nodes) {
         new Toast(node);
     }
-});
-
-// Hide Toast from data-dismiss
-dom.addEventDelegate(document, 'click', '[data-dismiss="toast"]', e => {
-    e.preventDefault();
-
-    const element = dom.closest(e.currentTarget, '.toast');
-    const toast = dom.hasData(element, 'toast') ?
-        dom.getData(element, 'toast') :
-        new Toast(element);
-
-    toast.hide().catch(_ => { });
 });
 
 // Add Toast QuerySet method
@@ -46,16 +34,18 @@ if (QuerySet) {
                 dom.getData(node, 'toast') :
                 new Toast(node, options);
 
-            if (index || !method) {
+            if (index) {
                 return;
             }
 
-            result = toast[method](...args);
+            if (!method) {
+                result = toast;
+            } else {
+                result = toast[method](...args);
+            }
         });
 
-        return method ?
-            result :
-            this;
+        return result;
     };
 }
 

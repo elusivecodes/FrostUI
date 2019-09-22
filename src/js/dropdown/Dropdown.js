@@ -107,9 +107,7 @@ class Dropdown {
                 dom.triggerEvent(this._node, 'hidden.frost.dropdown');
 
                 resolve();
-            }).catch(_ =>
-                reject()
-            ).finally(_ =>
+            }).catch(reject).finally(_ =>
                 dom.removeDataset(this._menuNode, 'animating')
             );
         });
@@ -141,9 +139,7 @@ class Dropdown {
                 dom.triggerEvent(this._node, 'shown.frost.dropdown');
 
                 resolve();
-            }).catch(_ =>
-                reject()
-            ).finally(_ =>
+            }).catch(reject).finally(_ =>
                 dom.removeDataset(this._menuNode, 'animating')
             );
         });

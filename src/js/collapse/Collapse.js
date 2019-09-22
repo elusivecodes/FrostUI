@@ -25,6 +25,8 @@ class Collapse {
 
         this._hasAccordion = this._targets.find(target => dom.getDataset(target, 'parent'));
 
+        this._events();
+
         dom.setData(this._node, 'collapse', this);
     }
 
@@ -65,9 +67,7 @@ class Collapse {
                 dom.triggerEvent(this._node, 'hidden.frost.collapse');
 
                 resolve();
-            }).catch(_ =>
-                reject()
-            ).finally(_ =>
+            }).catch(reject).finally(_ =>
                 dom.removeDataset(targets, 'animating')
             );
         });
@@ -109,9 +109,7 @@ class Collapse {
             ]).then(_ => {
                 dom.triggerEvent(this._node, 'shown.frost.collapse');
                 resolve();
-            }).catch(_ =>
-                reject()
-            ).finally(_ =>
+            }).catch(reject).finally(_ =>
                 dom.removeDataset(targets, 'animating')
             );
         });
@@ -187,9 +185,7 @@ class Collapse {
                 }
 
                 resolve();
-            }).catch(_ =>
-                reject()
-            ).finally(_ =>
+            }).catch(reject).finally(_ =>
                 dom.removeDataset(targets, 'animating')
             );
         });

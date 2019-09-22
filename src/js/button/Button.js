@@ -23,6 +23,9 @@ class Button {
         this._siblings = dom.find('.btn', group).filter(node => !dom.isSame(node, this._node));
 
         this._input = dom.findOne('input[type="checkbox"], input[type="radio"]', this._node);
+        this._isRadio = this._input && dom.is(this._input, '[type="radio"]');
+
+        this._events();
 
         dom.setData(this._node, 'button', this);
     }
@@ -31,6 +34,8 @@ class Button {
      * Destroy the Button.
      */
     destroy() {
+        dom.removeEvent(this._node, 'frost.click.button', this._clickEvent);
+
         dom.removeData(this._node, 'button');
     }
 
@@ -38,7 +43,7 @@ class Button {
      * Toggle the Button.
      */
     toggle() {
-        this._input && dom.is(this._input, '[type="radio"]') ?
+        this._isRadio ?
             this._toggleRadio() :
             this._toggleCheckbox();
 

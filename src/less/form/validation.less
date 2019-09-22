@@ -1,3 +1,11 @@
+.valid-feedback,
+.invalid-feedback {
+    display: none;
+    width: 100%;
+    margin-top: @quarter-spacing;
+    font-size: 80%;
+}
+
 .form-success {
     & .input-group-text {
         background-color: tint(lighten(@form-success, 25%), 75%);
@@ -5,7 +13,8 @@
         color: @form-success;
     }
 
-    & .form-control {
+    & .form-control,
+    & .form-minimal {
         border-color: @form-success;
     }
 
@@ -13,26 +22,19 @@
         display: block;
     }
 
-    & .custom-check input:checked + .checkbox::before,
-    & .custom-check input:checked + .radio::before,
-    & .custom-radio input:checked + .checkbox::before,
-    & .custom-radio input:checked + .radio::before,
-    & .custom-switch input:checked + .slider {
+    & .custom-control-input:checked ~ .custom-control-label::before,
+    &.custom-switch .custom-control-input:checked ~ .custom-control-label::before,
+    & .custom-switch .custom-control-input:checked ~ .custom-control-label::before {
         background-color: @form-success;
+        border-color: @form-success;
     }
 
-    & .custom-check + label,
-    & .custom-radio + label,
-    & .custom-switch + label {
+    & .custom-control-input ~ .custom-control-label {
         color: @form-success;
     }
 }
 
 .valid-feedback {
-    display: none;
-    width: 100%;
-    margin-top: @spacing / 4;
-    font-size: 80%;
     color: @form-success;
 }
 
@@ -43,7 +45,8 @@
         color: @form-error;
     }
 
-    & .form-control {
+    & .form-control,
+    & .form-minimal {
         border-color: @form-error;
     }
 
@@ -51,25 +54,18 @@
         display: block;
     }
 
-    & .custom-check input:checked + .checkbox::before,
-    & .custom-check input:checked + .radio::before,
-    & .custom-radio input:checked + .checkbox::before,
-    & .custom-radio input:checked + .radio::before,
-    & .custom-switch input:checked + .slider {
+    & .custom-control-input:checked ~ .custom-control-label::before,
+    &.custom-switch .custom-control-input:checked ~ .custom-control-label::before,
+    & .custom-switch .custom-control-input:checked ~ .custom-control-label::before {
         background-color: @form-error;
+        border-color: @form-error;
     }
 
-    & .custom-check + label,
-    & .custom-radio + label,
-    & .custom-switch + label {
+    & .custom-control-input ~ .custom-control-label {
         color: @form-error;
     }
 }
 
 .invalid-feedback {
-    display: none;
-    width: 100%;
-    margin-top: @spacing / 4;
-    font-size: 80%;
     color: @form-error;
 }

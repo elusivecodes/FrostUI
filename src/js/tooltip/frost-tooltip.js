@@ -18,7 +18,7 @@ Tooltip.defaults = {
 };
 
 // Auto-initialize Tooltip from data-toggle
-dom.addEvent(window, 'load', _ => {
+dom.addEventOnce(window, 'load', _ => {
     const nodes = dom.find('[data-toggle="tooltip"]');
 
     for (const node of nodes) {
@@ -46,16 +46,18 @@ if (QuerySet) {
                 dom.getData(node, 'tooltip') :
                 new Tooltip(node, options);
 
-            if (index || !method) {
+            if (index) {
                 return;
             }
 
-            result = tooltip[method](...args);
+            if (!method) {
+                result = tooltip;
+            } else {
+                result = tooltip[method](...args);
+            }
         });
 
-        return method ?
-            result :
-            this;
+        return result;
     };
 }
 

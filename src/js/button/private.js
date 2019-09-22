@@ -4,6 +4,22 @@
 
 Object.assign(Button.prototype, {
 
+    /**
+     * Attach events for the Button.
+     */
+    _events() {
+        this._clickEvent = e => {
+            e.preventDefault();
+
+            this.toggle();
+        };
+
+        dom.addEvent(this._node, 'click.frost.button', this._clickEvent);
+    },
+
+    /**
+     * Toggle a checkbox-type Button.
+     */
     _toggleCheckbox() {
         dom.toggleClass(this._node, 'active');
 
@@ -12,11 +28,10 @@ Object.assign(Button.prototype, {
         }
     },
 
+    /**
+     * Toggle a radio-type Button.
+     */
     _toggleRadio() {
-        if (dom.hasClass(this._node, 'active')) {
-            return;
-        }
-
         dom.addClass(this._node, 'active');
 
         dom.setProperty(this._input, 'checked', true);

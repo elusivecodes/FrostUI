@@ -16,6 +16,164 @@
     <div class="container">
         <h1>Form</h1>
         <form>
+            <div class="form-group">
+                <label for="text-group-1">Label</label>
+                <input type="text" class="form-control" id="text-group-1" placeholder="Placeholder">
+            </div>
+            <div class="form-group">
+                <label for="text-group-2">Label</label>
+                <input type="text" class="form-control" id="text-group-2" placeholder="Placeholder">
+            </div>
+        </form>
+        <h3>Grid</h3>
+        <form>
+            <div class="form-group row">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Placeholder">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Placeholder">
+                </div>
+            </div>
+        </form>
+        <h3>Row</h3>
+        <form>
+            <div class="form-group form-row">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Placeholder">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Placeholder">
+                </div>
+            </div>
+        </form>
+        <h3>Columns</h3>
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="text-column-1">Label</label>
+                    <input type="email" class="form-control" id="text-column-1" placeholder="Placeholder">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="text-column-2">Label</label>
+                    <input type="text" class="form-control" id="text-column-2" placeholder="Placeholder">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="textarea-column">Label</label>
+                <textarea class="form-control" id="textarea-column" placeholder="Placeholder"></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="text-column-3">Label</label>
+                    <input type="text" class="form-control" id="text-column-3" placeholder="Placeholder">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="select-column">Label</label>
+                    <select id="select-column" class="form-control">
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                        <option>Option 3</option>
+                        <option>Option 4</option>
+                        <option>Option 5</option>
+                        <option>Option 6</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="text-column-4">Label</label>
+                    <input type="text" class="form-control" id="text-column-4" placeholder="Placeholder">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="text-column-checkbox">
+                    <label class="form-check-label" for="text-column-checkbox">
+                        Option
+                    </label>
+                </div>
+            </div>
+        </form>
+        <h3>Horizontal</h3>
+        <form>
+            <div class="form-group row">
+                <label for="text-horizontal" class="col-sm-2 col-form-label">Label</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="text-horizontal" placeholder="Placeholder">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="textarea-horizontal" class="col-sm-2 col-form-label">Label</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="textarea-horizontal" placeholder="Placeholder"></textarea>
+                </div>
+            </div>
+            <fieldset class="form-group">
+                <div class="row">
+                    <legend class="col-form-label col-sm-2 pt-0">Label</legend>
+                    <div class="col-sm-10">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radio-horizontal" id="radio-horizontal-1"
+                                value="option1" checked>
+                            <label class="form-check-label" for="radio-horizontal-1">
+                                Selected
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radio-horizontal" id="radio-horizontal-2"
+                                value="option2">
+                            <label class="form-check-label" for="radio-horizontal-2">
+                                Option
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radio-horizontal" id="radio-horizontal-3"
+                                value="option3" disabled>
+                            <label class="form-check-label" for="radio-horizontal-3">
+                                Disabled
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="form-group row">
+                <div class="col-sm-2">Label</div>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkbox-horizontal">
+                        <label class="form-check-label" for="checkbox-horizontal">
+                            Option
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <h4>Inline</h4>
+        <form class="form-inline">
+            <label class="sr-only" for="text-inline-1">Label</label>
+            <input type="text" class="form-control mb-2 mr-sm-2" id="text-inline-1" placeholder="Placeholder">
+
+            <label class="sr-only" for="text-inline-2">Label</label>
+            <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">@</div>
+                </div>
+                <input type="text" class="form-control" id="text-inline-2" placeholder="Placeholder">
+            </div>
+
+            <div class="form-check mb-2 mr-sm-2">
+                <input class="form-check-input" type="checkbox" id="checkbox-inline">
+                <label class="form-check-label" for="checkbox-inline">
+                    Option
+                </label>
+            </div>
+        </form>
+        <h4>Help Text</h4>
+        <form>
+            <div class="form-group">
+                <label for="text-help-1">Label</label>
+                <input type="text" class="form-control" id="text-help-1" placeholder="Placeholder">
+                <small class="form-text text-muted">This is help text for the form.</small>
+            </div>
         </form>
     </div>
 </body>

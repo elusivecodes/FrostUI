@@ -34,7 +34,7 @@
 .modal-dialog {
     position: relative;
     width: auto;
-    margin: (@spacing / 2) auto;
+    margin: @half-spacing auto;
     max-width: 500px;
     pointer-events: none;
 
@@ -107,18 +107,18 @@
 
 @media (min-width: @break-xs) {
     .modal-dialog {
-        margin: (@spacing * 2) auto;
+        margin: @double-spacing auto;
     }
 
     .modal-dialog-scrollable {
-        max-height: calc(100% - (@spacing * 3));
+        max-height: calc(100% - @triple-spacing);
     }
 
     .modal-dialog-scrollable .modal-content {
-        max-height: calc(100vh - (@spacing * 5));
+        max-height: calc(100vh - @penta-spacing);
     }
 
     .modal-dialog-centered {
-        min-height: calc(100% - (@spacing * 4));
+        min-height: calc(100% - @quad-spacing);
     }
 }

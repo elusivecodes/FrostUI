@@ -16,52 +16,54 @@
     <div class="container">
         <h1>Custom Inputs</h1>
         <form>
+            <h4>Minimal</h4>
+            <div class="form-group">
+                <input type="text" id="text-minimal" class="form-minimal" placeholder="Text" />
+            </div>
+            <div class="form-group">
+                <textarea id="textarea-minimal" class="form-minimal" placeholder="Textarea"></textarea>
+            </div>
+
             <h4>Checkbox</h4>
-            <div class="form-group">
-                <div>
-                    <label class="custom-check">
-                        <input type="checkbox" id="checkbox" name="checkbox" />
-                        <span class="checkbox"></span>
-                    </label>
-                    <label for="checkbox">Option</label>
-                </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="checkbox-checked" checked>
+                <label class="custom-control-label" for="checkbox-checked">Checked</label>
             </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="checkbox">
+                <label class="custom-control-label" for="checkbox">Option</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="checkbox-disabled" disabled>
+                <label class="custom-control-label" for="checkbox-disabled">Disabled</label>
+            </div>
+
             <h4>Radio</h4>
-            <div class="form-group">
-                <div>
-                    <label class="custom-radio">
-                        <input type="radio" id="radio1" name="radio" />
-                        <span class="radio"></span>
-                    </label>
-                    <label for="radio1">Option 1</label>
-                </div>
-                <div>
-                    <label class="custom-radio">
-                        <input type="radio" id="radio2" name="radio" />
-                        <span class="radio"></span>
-                    </label>
-                    <label for="radio2">Option 2</label>
-                </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="radio-selected" checked>
+                <label class="custom-control-label" for="radio-selected">Selected</label>
             </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="radio">
+                <label class="custom-control-label" for="radio">Option</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="radio-disabled" disabled>
+                <label class="custom-control-label" for="radio-disabled">Disabled</label>
+            </div>
+
             <h4>Switch</h4>
-            <div class="form-group">
-                <div>
-                    <label class="custom-switch">
-                        <input type="checkbox" id="switch" />
-                        <span class="slider rounded"></span>
-                    </label>
-                    <label for="switch">Option</label>
-                </div>
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="switch-selected" checked>
+                <label class="custom-control-label" for="switch-selected">Selected</label>
             </div>
-            <h4>Large Switch</h4>
-            <div class="form-group">
-                <div>
-                    <label class="custom-switch switch-lg">
-                        <input type="checkbox" id="switch-lg" />
-                        <span class="slider rounded"></span>
-                    </label>
-                    <label for="switch-lg">Option</label>
-                </div>
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="switch">
+                <label class="custom-control-label" for="switch">Option</label>
+            </div>
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="switch-disabled" disabled>
+                <label class="custom-control-label" for="switch-disabled">Disabled</label>
             </div>
         </form>
     </div>

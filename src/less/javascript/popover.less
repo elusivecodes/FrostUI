@@ -30,7 +30,7 @@
         position: absolute;
         display: block;
         width: @spacing;
-        height: @spacing / 2;
+        height: @half-spacing;
         pointer-events: none;
 
         &::before,
@@ -48,13 +48,13 @@
 
         &::before {
             top: @border-size;
-            border-width: (@spacing / 2) (@spacing / 2) 0;
+            border-width: @half-spacing @half-spacing 0;
             border-top-color: @border-color;
         }
 
         &::after {
             top: 0;
-            border-width: (@spacing / 2) (@spacing / 2) 0;
+            border-width: @half-spacing @half-spacing 0;
             border-top-color: @white;
         }
     }
@@ -64,13 +64,13 @@
 
         &::before {
             right: @border-size;
-            border-width: (@spacing / 2) (@spacing / 2) (@spacing / 2) 0;
+            border-width: @half-spacing @half-spacing @half-spacing 0;
             border-right-color: @border-color;
         }
 
         &::after {
             right: 0;
-            border-width: (@spacing / 2) (@spacing / 2) (@spacing / 2) 0;
+            border-width: @half-spacing @half-spacing @half-spacing 0;
             border-right-color: @white;
         }
     }
@@ -80,13 +80,13 @@
 
         &::before {
             bottom: @border-size;
-            border-width: 0 (@spacing / 2) (@spacing / 2);
+            border-width: 0 @half-spacing @half-spacing;
             border-bottom-color: @border-color;
         }
 
         &::after {
             bottom: 0;
-            border-width: 0 (@spacing / 2) (@spacing / 2);
+            border-width: 0 @half-spacing @half-spacing;
             border-bottom-color: @white;
         }
     }
@@ -96,20 +96,20 @@
 
         &::before {
             left: @border-size;
-            border-width: (@spacing / 2) 0 (@spacing / 2) (@spacing / 2);
+            border-width: @half-spacing 0 @half-spacing @half-spacing;
             border-left-color: @border-color;
         }
 
         &::after {
             left: 0;
-            border-width: (@spacing / 2) 0 (@spacing / 2) (@spacing / 2);
+            border-width: @half-spacing 0 @half-spacing @half-spacing;
             border-left-color: @white;
         }
     }
 }
 
 .popover-header {
-    padding: (@spacing / 2) @spacing;
+    padding: @half-spacing @spacing;
     margin-bottom: 0;
     font-size: 1rem;
     color: inherit;
@@ -120,6 +120,6 @@
 }
 
 .popover-body {
-    padding: (@spacing / 2) @spacing;
+    padding: @half-spacing @spacing;
     color: @dark;
 }

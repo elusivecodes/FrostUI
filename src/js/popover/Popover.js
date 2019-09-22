@@ -120,10 +120,10 @@ class Popover {
                 dom.triggerEvent(this._node, 'hidden.frost.popover');
 
                 resolve();
-            }).catch(_ => {
+            }).catch(e => {
                 dom.removeDataset(this._popover, 'animating');
 
-                reject()
+                reject(e)
             });
         });
     }
@@ -154,9 +154,7 @@ class Popover {
                 dom.triggerEvent(this._node, 'shown.frost.popover')
 
                 resolve();
-            }).catch(_ =>
-                reject()
-            ).finally(_ =>
+            }).catch(reject).finally(_ =>
                 dom.removeDataset(this._popover, 'animating')
             );
         });
