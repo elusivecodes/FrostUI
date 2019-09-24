@@ -7,7 +7,7 @@
         background-color: darken(@color, 20%);
     }
 
-    &:hover {
+    &:hover:not(:disabled) {
         background-color: darken(@color, 10%);
         .text-color(@color);
     }
@@ -51,12 +51,6 @@
         background-color @transition-time @transition-type,
         box-shadow @transition-time @transition-type;
 
-    &:disabled,
-    &.disabled {
-        opacity: @disabled-opacity;
-        pointer-events: none;
-    }
-
     &:hover {
         z-index: @z-hover;
     }
@@ -79,6 +73,21 @@
 
     &:not(.btn-link):hover {
         text-decoration: none;
+    }
+
+    button& {
+        outline: 0;
+        cursor: pointer;
+
+        &:disabled {
+            opacity: @disabled-opacity;
+            cursor: not-allowed;
+        }
+    }
+
+    &.disabled {
+        opacity: @disabled-opacity;
+        pointer-events: none;
     }
 }
 

@@ -59,10 +59,11 @@
     border: 0;
     color: @text;
     text-align: left;
+    background-color: transparent;
 
     button&,
     &[href] {
-        &:hover,
+        &:hover:not(:disabled),
         &:focus {
             background-color: rgba(0, 0, 0, .1);
             text-decoration: none;
@@ -76,11 +77,21 @@
 
         button&,
         &[href] {
-            &:hover,
+            &:hover:not(:disabled),
             &:focus {
                 background-color: darken(@link, 5%);
                 .text-color(@link);
             }
+        }
+    }
+
+    button& {
+        outline: 0;
+        cursor: pointer;
+
+        &:disabled {
+            opacity: @disabled-opacity;
+            cursor: not-allowed;
         }
     }
 

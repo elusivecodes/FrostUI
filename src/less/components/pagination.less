@@ -18,15 +18,17 @@
 }
 
 .page-item {
-
     &.active .page-link {
         z-index: 1;
         background-color: darken(@secondary, 20%);
     }
 
-    &.disabled .page-link {
-        opacity: @disabled-opacity;
-        pointer-events: none;
+    &.disabled {
+        & button.page-link,
+        & .page-link[href] {
+            opacity: @disabled-opacity;
+            pointer-events: none;
+        }
     }
 
     &:first-child .page-link {
@@ -52,7 +54,7 @@
     border: @border-size @border-style @border-color;
     transition: color @transition-time @transition-type, background-color @transition-time @transition-type, box-shadow @transition-time @transition-type;
 
-    &:hover {
+    &:hover:not(:disabled) {
         background-color: darken(@secondary, 10%);
         .text-color(@secondary);
         text-decoration: none;
@@ -70,7 +72,13 @@
         box-shadow: @shadow;
     }
 
-    &:not(:disabled):not(.disabled) {
+    button& {
+        outline: 0;
         cursor: pointer;
+
+        &:disabled {
+            opacity: @disabled-opacity;
+            cursor: not-allowed;
+        }
     }
 }
