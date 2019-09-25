@@ -1045,10 +1045,6 @@
          * @param {array} targets The target nodes.
          */
         _hideAccordion(targets) {
-            if (!this._hasAccordion) {
-                return [];
-            }
-
             const parents = [];
             const nodes = [];
             const newTargets = [];

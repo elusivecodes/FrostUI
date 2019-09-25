@@ -1183,10 +1183,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @param {array} targets The target nodes.
      */
     _hideAccordion: function _hideAccordion(targets) {
-      if (!this._hasAccordion) {
-        return [];
-      }
-
       var parents = [];
       var nodes = [];
       var newTargets = [];
