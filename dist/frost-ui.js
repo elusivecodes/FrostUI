@@ -825,28 +825,50 @@
                     return reject();
                 }
 
+                const collapse = this._hideAccordion(hidden);
+
+                if (!collapse) {
+                    return reject();
+                }
+
+                for (const node of collapse.nodes) {
+                    if (!DOM._triggerEvent(node, 'hide.frost.collapse')) {
+                        return reject();
+                    }
+                }
+
                 if (!DOM._triggerEvent(this._node, 'show.frost.collapse')) {
                     return reject();
                 }
 
-                const accordions = this._hideAccordion(targets);
-
-                if (!accordions) {
-                    return reject();
-                }
+                targets.push(...collapse.targets);
 
                 dom.setDataset(targets, 'animating', true);
 
+                const animations = targets.map(target => {
+                    const animation = collapse.targets.includes(target) ?
+                        'squeezeOut' : 'squeezeIn';
+
+                    return dom[animation](target, {
+                        direction: this._settings.direction,
+                        duration: this._settings.duration,
+                        type: 'linear'
+                    });
+                });
+
                 dom.addClass(targets, 'show');
 
-                Promise.all([
-                    dom.squeezeIn(targets, {
-                        direction: this._settings.direction,
-                        duration: this._settings.duration
-                    }),
-                    ...accordions
-                ]).then(_ => {
+                Promise.all(animations).then(_ => {
+                    if (collapseTargets.length) {
+                        dom.removeClass(collapse.targets, 'show');
+                    }
+
+                    if (collapse.nodes.length) {
+                        dom.triggerEvent(collapseNodes, 'hidden.frost.collapse');
+                    }
+
                     dom.triggerEvent(this._node, 'shown.frost.collapse');
+
                     resolve();
                 }).catch(reject).finally(_ =>
                     dom.removeDataset(targets, 'animating')
@@ -885,37 +907,50 @@
                     return reject();
                 }
 
+                const collapse = this._hideAccordion(hidden);
+
+                if (!collapse) {
+                    return reject();
+                }
+
+                for (const node of collapse.nodes) {
+                    if (!DOM._triggerEvent(node, 'hide.frost.collapse')) {
+                        return reject();
+                    }
+                }
+
                 if (hidden.length && !DOM._triggerEvent(this._node, 'show.frost.collapse')) {
                     return reject();
                 }
 
-                const accordions = this._hideAccordion(hidden);
-
-                if (!accordions) {
-                    return reject();
-                }
+                targets.push(...collapse.targets);
 
                 dom.setDataset(targets, 'animating', true);
 
                 const animations = targets.map(target => {
-                    const animation = dom.hasClass(target, 'show') ?
+                    const animation = visible.includes(target) || collapse.targets.includes(target) ?
                         'squeezeOut' : 'squeezeIn';
 
                     return dom[animation](target, {
                         direction: this._settings.direction,
-                        duration: this._settings.duration
+                        duration: this._settings.duration,
+                        type: 'linear'
                     });
                 });
 
                 dom.addClass(hidden, 'show')
 
-                Promise.all([
-                    ...animations,
-                    ...accordions
-                ]).then(_ => {
-                    dom.removeClass(visible, 'show');
+                Promise.all(animations).then(_ => {
+                    if (collapse.targets.length) {
+                        dom.removeClass(collapse.targets, 'show');
+                    }
+
+                    if (collapse.nodes.length) {
+                        dom.triggerEvent(collapseNodes, 'hidden.frost.collapse');
+                    }
 
                     if (visible.length) {
+                        dom.removeClass(visible, 'show');
                         dom.triggerEvent(this._node, 'hidden.frost.collapse');
                     }
 
@@ -936,7 +971,7 @@
     // Default Collapse options
     Collapse.defaults = {
         direction: 'bottom',
-        duration: 300
+        duration: 250
     };
 
     // Auto-initialize Collapse from data-ride
@@ -1015,7 +1050,8 @@
             }
 
             const parents = [];
-            const collapses = [];
+            const nodes = [];
+            const newTargets = [];
 
             for (const target of targets) {
                 const parent = dom.getDataset(target, 'parent');
@@ -1041,23 +1077,25 @@
                     }
 
                     const collapse = dom.getData(toggle, 'collapse');
-                    const targets = dom.find(collapse._settings.target);
-                    const animating = targets.find(target => dom.getDataset(target, 'animating'));
+
+                    const collapseTargets = dom.find(collapse._settings.target)
+                        .filter(target => dom.hasClass(target, 'show'));
+                    if (!collapseTargets.length) {
+                        continue;
+                    }
+                    const animating = collapseTargets.find(target => dom.getDataset(target, 'animating'));
                     if (animating) {
                         return false;
                     }
-
-                    collapses.push(collapse);
+                    nodes.push(collapse._node);
+                    newTargets.push(...collapseTargets);
                 }
             }
 
-            const promises = [];
-
-            for (const collapse of collapses) {
-                promises.push(collapse.hide());
-            }
-
-            return promises;
+            return {
+                nodes,
+                targets: newTargets
+            };
         }
 
     });

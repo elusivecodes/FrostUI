@@ -1088,7 +1088,6 @@ button.btn:disabled {
 .card > :last-child {
   border-bottom-left-radius: inherit;
   border-bottom-right-radius: inherit;
-  margin-bottom: -1px;
 }
 .card-header {
   padding: 0.5rem 1rem;
@@ -1131,7 +1130,7 @@ button.btn:disabled {
   border-bottom-left-radius: calc(0.25rem - 1px);
 }
 .card-title {
-  margin-bottom: ;
+  margin-bottom: 0.25rem;
 }
 .card-subtitle {
   margin-top: -0.33333333rem;
@@ -1177,7 +1176,7 @@ button.btn:disabled {
   border-radius: 0.2rem;
 }
 .accordion > .card {
-  margin-bottom: 0;
+  margin-bottom: -1px;
   overflow: hidden;
 }
 .accordion > .card:first-of-type {

@@ -890,22 +890,63 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             return reject();
           }
 
+          var collapse = _this9._hideAccordion(hidden);
+
+          if (!collapse) {
+            return reject();
+          }
+
+          var _iteratorNormalCompletion4 = true;
+          var _didIteratorError4 = false;
+          var _iteratorError4 = undefined;
+
+          try {
+            for (var _iterator4 = collapse.nodes[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+              var node = _step4.value;
+
+              if (!DOM._triggerEvent(node, 'hide.frost.collapse')) {
+                return reject();
+              }
+            }
+          } catch (err) {
+            _didIteratorError4 = true;
+            _iteratorError4 = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
+                _iterator4["return"]();
+              }
+            } finally {
+              if (_didIteratorError4) {
+                throw _iteratorError4;
+              }
+            }
+          }
+
           if (!DOM._triggerEvent(_this9._node, 'show.frost.collapse')) {
             return reject();
           }
 
-          var accordions = _this9._hideAccordion(targets);
-
-          if (!accordions) {
-            return reject();
-          }
-
+          targets.push.apply(targets, _toConsumableArray(collapse.targets));
           dom.setDataset(targets, 'animating', true);
+          var animations = targets.map(function (target) {
+            var animation = collapse.targets.includes(target) ? 'squeezeOut' : 'squeezeIn';
+            return dom[animation](target, {
+              direction: _this9._settings.direction,
+              duration: _this9._settings.duration,
+              type: 'linear'
+            });
+          });
           dom.addClass(targets, 'show');
-          Promise.all([dom.squeezeIn(targets, {
-            direction: _this9._settings.direction,
-            duration: _this9._settings.duration
-          })].concat(_toConsumableArray(accordions))).then(function (_) {
+          Promise.all(animations).then(function (_) {
+            if (collapseTargets.length) {
+              dom.removeClass(collapse.targets, 'show');
+            }
+
+            if (collapse.nodes.length) {
+              dom.triggerEvent(collapseNodes, 'hidden.frost.collapse');
+            }
+
             dom.triggerEvent(_this9._node, 'shown.frost.collapse');
             resolve();
           })["catch"](reject)["finally"](function (_) {
@@ -927,13 +968,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           var targets = [];
           var hidden = [];
           var visible = [];
-          var _iteratorNormalCompletion4 = true;
-          var _didIteratorError4 = false;
-          var _iteratorError4 = undefined;
+          var _iteratorNormalCompletion5 = true;
+          var _didIteratorError5 = false;
+          var _iteratorError5 = undefined;
 
           try {
-            for (var _iterator4 = _this10._targets[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-              var target = _step4.value;
+            for (var _iterator5 = _this10._targets[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+              var target = _step5.value;
 
               if (dom.getDataset(target, 'animating')) {
                 continue;
@@ -948,16 +989,16 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
               }
             }
           } catch (err) {
-            _didIteratorError4 = true;
-            _iteratorError4 = err;
+            _didIteratorError5 = true;
+            _iteratorError5 = err;
           } finally {
             try {
-              if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
-                _iterator4["return"]();
+              if (!_iteratorNormalCompletion5 && _iterator5["return"] != null) {
+                _iterator5["return"]();
               }
             } finally {
-              if (_didIteratorError4) {
-                throw _iteratorError4;
+              if (_didIteratorError5) {
+                throw _iteratorError5;
               }
             }
           }
@@ -970,29 +1011,65 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             return reject();
           }
 
+          var collapse = _this10._hideAccordion(hidden);
+
+          if (!collapse) {
+            return reject();
+          }
+
+          var _iteratorNormalCompletion6 = true;
+          var _didIteratorError6 = false;
+          var _iteratorError6 = undefined;
+
+          try {
+            for (var _iterator6 = collapse.nodes[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+              var node = _step6.value;
+
+              if (!DOM._triggerEvent(node, 'hide.frost.collapse')) {
+                return reject();
+              }
+            }
+          } catch (err) {
+            _didIteratorError6 = true;
+            _iteratorError6 = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion6 && _iterator6["return"] != null) {
+                _iterator6["return"]();
+              }
+            } finally {
+              if (_didIteratorError6) {
+                throw _iteratorError6;
+              }
+            }
+          }
+
           if (hidden.length && !DOM._triggerEvent(_this10._node, 'show.frost.collapse')) {
             return reject();
           }
 
-          var accordions = _this10._hideAccordion(hidden);
-
-          if (!accordions) {
-            return reject();
-          }
-
+          targets.push.apply(targets, _toConsumableArray(collapse.targets));
           dom.setDataset(targets, 'animating', true);
           var animations = targets.map(function (target) {
-            var animation = dom.hasClass(target, 'show') ? 'squeezeOut' : 'squeezeIn';
+            var animation = visible.includes(target) || collapse.targets.includes(target) ? 'squeezeOut' : 'squeezeIn';
             return dom[animation](target, {
               direction: _this10._settings.direction,
-              duration: _this10._settings.duration
+              duration: _this10._settings.duration,
+              type: 'linear'
             });
           });
           dom.addClass(hidden, 'show');
-          Promise.all([].concat(_toConsumableArray(animations), _toConsumableArray(accordions))).then(function (_) {
-            dom.removeClass(visible, 'show');
+          Promise.all(animations).then(function (_) {
+            if (collapse.targets.length) {
+              dom.removeClass(collapse.targets, 'show');
+            }
+
+            if (collapse.nodes.length) {
+              dom.triggerEvent(collapseNodes, 'hidden.frost.collapse');
+            }
 
             if (visible.length) {
+              dom.removeClass(visible, 'show');
               dom.triggerEvent(_this10._node, 'hidden.frost.collapse');
             }
 
@@ -1014,31 +1091,31 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   Collapse.defaults = {
     direction: 'bottom',
-    duration: 300
+    duration: 250
   }; // Auto-initialize Collapse from data-ride
 
   dom.addEventOnce(window, 'load', function (_) {
     var nodes = dom.find('[data-toggle="collapse"]');
-    var _iteratorNormalCompletion5 = true;
-    var _didIteratorError5 = false;
-    var _iteratorError5 = undefined;
+    var _iteratorNormalCompletion7 = true;
+    var _didIteratorError7 = false;
+    var _iteratorError7 = undefined;
 
     try {
-      for (var _iterator5 = nodes[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-        var node = _step5.value;
+      for (var _iterator7 = nodes[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+        var node = _step7.value;
         new Collapse(node);
       }
     } catch (err) {
-      _didIteratorError5 = true;
-      _iteratorError5 = err;
+      _didIteratorError7 = true;
+      _iteratorError7 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion5 && _iterator5["return"] != null) {
-          _iterator5["return"]();
+        if (!_iteratorNormalCompletion7 && _iterator7["return"] != null) {
+          _iterator7["return"]();
         }
       } finally {
-        if (_didIteratorError5) {
-          throw _iteratorError5;
+        if (_didIteratorError7) {
+          throw _iteratorError7;
         }
       }
     }
@@ -1111,14 +1188,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
 
       var parents = [];
-      var collapses = [];
-      var _iteratorNormalCompletion6 = true;
-      var _didIteratorError6 = false;
-      var _iteratorError6 = undefined;
+      var nodes = [];
+      var newTargets = [];
+      var _iteratorNormalCompletion8 = true;
+      var _didIteratorError8 = false;
+      var _iteratorError8 = undefined;
 
       try {
-        for (var _iterator6 = targets[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-          var target = _step6.value;
+        for (var _iterator8 = targets[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
+          var target = _step8.value;
           var parent = dom.getDataset(target, 'parent');
 
           if (!parent) {
@@ -1132,16 +1210,16 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           }
         }
       } catch (err) {
-        _didIteratorError6 = true;
-        _iteratorError6 = err;
+        _didIteratorError8 = true;
+        _iteratorError8 = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion6 && _iterator6["return"] != null) {
-            _iterator6["return"]();
+          if (!_iteratorNormalCompletion8 && _iterator8["return"] != null) {
+            _iterator8["return"]();
           }
         } finally {
-          if (_didIteratorError6) {
-            throw _iteratorError6;
+          if (_didIteratorError8) {
+            throw _iteratorError8;
           }
         }
       }
@@ -1149,13 +1227,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       for (var _i = 0, _parents = parents; _i < _parents.length; _i++) {
         var _parent = _parents[_i];
         var collapseToggle = dom.find('[data-toggle="collapse"]', _parent);
-        var _iteratorNormalCompletion7 = true;
-        var _didIteratorError7 = false;
-        var _iteratorError7 = undefined;
+        var _iteratorNormalCompletion9 = true;
+        var _didIteratorError9 = false;
+        var _iteratorError9 = undefined;
 
         try {
-          for (var _iterator7 = collapseToggle[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
-            var toggle = _step7.value;
+          for (var _iterator9 = collapseToggle[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
+            var toggle = _step9.value;
 
             if (dom.isSame(this._node, toggle)) {
               continue;
@@ -1167,9 +1245,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
             var collapse = dom.getData(toggle, 'collapse');
 
-            var _targets = dom.find(collapse._settings.target);
+            var _collapseTargets = dom.find(collapse._settings.target).filter(function (target) {
+              return dom.hasClass(target, 'show');
+            });
 
-            var animating = _targets.find(function (target) {
+            if (!_collapseTargets.length) {
+              continue;
+            }
+
+            var animating = _collapseTargets.find(function (target) {
               return dom.getDataset(target, 'animating');
             });
 
@@ -1177,32 +1261,29 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
               return false;
             }
 
-            collapses.push(collapse);
+            nodes.push(collapse._node);
+            newTargets.push.apply(newTargets, _toConsumableArray(_collapseTargets));
           }
         } catch (err) {
-          _didIteratorError7 = true;
-          _iteratorError7 = err;
+          _didIteratorError9 = true;
+          _iteratorError9 = err;
         } finally {
           try {
-            if (!_iteratorNormalCompletion7 && _iterator7["return"] != null) {
-              _iterator7["return"]();
+            if (!_iteratorNormalCompletion9 && _iterator9["return"] != null) {
+              _iterator9["return"]();
             }
           } finally {
-            if (_didIteratorError7) {
-              throw _iteratorError7;
+            if (_didIteratorError9) {
+              throw _iteratorError9;
             }
           }
         }
       }
 
-      var promises = [];
-
-      for (var _i2 = 0, _collapses = collapses; _i2 < _collapses.length; _i2++) {
-        var _collapse = _collapses[_i2];
-        promises.push(_collapse.hide());
-      }
-
-      return promises;
+      return {
+        nodes: nodes,
+        targets: newTargets
+      };
     }
   });
   /**
@@ -1374,26 +1455,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   dom.addEventOnce(window, 'load', function (_) {
     var nodes = dom.find('[data-toggle="dropdown"]');
-    var _iteratorNormalCompletion8 = true;
-    var _didIteratorError8 = false;
-    var _iteratorError8 = undefined;
+    var _iteratorNormalCompletion10 = true;
+    var _didIteratorError10 = false;
+    var _iteratorError10 = undefined;
 
     try {
-      for (var _iterator8 = nodes[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
-        var node = _step8.value;
+      for (var _iterator10 = nodes[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
+        var node = _step10.value;
         new Dropdown(node);
       }
     } catch (err) {
-      _didIteratorError8 = true;
-      _iteratorError8 = err;
+      _didIteratorError10 = true;
+      _iteratorError10 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion8 && _iterator8["return"] != null) {
-          _iterator8["return"]();
+        if (!_iteratorNormalCompletion10 && _iterator10["return"] != null) {
+          _iterator10["return"]();
         }
       } finally {
-        if (_didIteratorError8) {
-          throw _iteratorError8;
+        if (_didIteratorError10) {
+          throw _iteratorError10;
         }
       }
     }
@@ -1701,13 +1782,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   dom.addEventOnce(window, 'load', function (_) {
     var nodes = dom.find('[data-toggle="modal"]');
-    var _iteratorNormalCompletion9 = true;
-    var _didIteratorError9 = false;
-    var _iteratorError9 = undefined;
+    var _iteratorNormalCompletion11 = true;
+    var _didIteratorError11 = false;
+    var _iteratorError11 = undefined;
 
     try {
-      for (var _iterator9 = nodes[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
-        var node = _step9.value;
+      for (var _iterator11 = nodes[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
+        var node = _step11.value;
         var target = dom.getDataset(node, 'target');
         var element = dom.findOne(target);
         var modal = dom.hasData(element, 'modal') ? dom.getData(element, 'modal') : new Modal(element, {
@@ -1717,16 +1798,16 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         modal._eventToggle(node);
       }
     } catch (err) {
-      _didIteratorError9 = true;
-      _iteratorError9 = err;
+      _didIteratorError11 = true;
+      _iteratorError11 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion9 && _iterator9["return"] != null) {
-          _iterator9["return"]();
+        if (!_iteratorNormalCompletion11 && _iterator11["return"] != null) {
+          _iterator11["return"]();
         }
       } finally {
-        if (_didIteratorError9) {
-          throw _iteratorError9;
+        if (_didIteratorError11) {
+          throw _iteratorError11;
         }
       }
     }
@@ -2036,26 +2117,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   dom.addEventOnce(window, 'load', function (_) {
     var nodes = dom.find('[data-toggle="popover"]');
-    var _iteratorNormalCompletion10 = true;
-    var _didIteratorError10 = false;
-    var _iteratorError10 = undefined;
+    var _iteratorNormalCompletion12 = true;
+    var _didIteratorError12 = false;
+    var _iteratorError12 = undefined;
 
     try {
-      for (var _iterator10 = nodes[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
-        var node = _step10.value;
+      for (var _iterator12 = nodes[Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
+        var node = _step12.value;
         new Popover(node);
       }
     } catch (err) {
-      _didIteratorError10 = true;
-      _iteratorError10 = err;
+      _didIteratorError12 = true;
+      _iteratorError12 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion10 && _iterator10["return"] != null) {
-          _iterator10["return"]();
+        if (!_iteratorNormalCompletion12 && _iterator12["return"] != null) {
+          _iterator12["return"]();
         }
       } finally {
-        if (_didIteratorError10) {
-          throw _iteratorError10;
+        if (_didIteratorError12) {
+          throw _iteratorError12;
         }
       }
     }
@@ -2934,26 +3015,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   dom.addEventOnce(window, 'load', function (_) {
     var nodes = dom.find('[data-toggle="tab"]');
-    var _iteratorNormalCompletion11 = true;
-    var _didIteratorError11 = false;
-    var _iteratorError11 = undefined;
+    var _iteratorNormalCompletion13 = true;
+    var _didIteratorError13 = false;
+    var _iteratorError13 = undefined;
 
     try {
-      for (var _iterator11 = nodes[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
-        var node = _step11.value;
+      for (var _iterator13 = nodes[Symbol.iterator](), _step13; !(_iteratorNormalCompletion13 = (_step13 = _iterator13.next()).done); _iteratorNormalCompletion13 = true) {
+        var node = _step13.value;
         new Tab(node);
       }
     } catch (err) {
-      _didIteratorError11 = true;
-      _iteratorError11 = err;
+      _didIteratorError13 = true;
+      _iteratorError13 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion11 && _iterator11["return"] != null) {
-          _iterator11["return"]();
+        if (!_iteratorNormalCompletion13 && _iterator13["return"] != null) {
+          _iterator13["return"]();
         }
       } finally {
-        if (_didIteratorError11) {
-          throw _iteratorError11;
+        if (_didIteratorError13) {
+          throw _iteratorError13;
         }
       }
     }
@@ -3142,26 +3223,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   dom.addEventOnce(window, 'load', function (_) {
     var nodes = dom.find('[data-toggle="toast"]');
-    var _iteratorNormalCompletion12 = true;
-    var _didIteratorError12 = false;
-    var _iteratorError12 = undefined;
+    var _iteratorNormalCompletion14 = true;
+    var _didIteratorError14 = false;
+    var _iteratorError14 = undefined;
 
     try {
-      for (var _iterator12 = nodes[Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
-        var node = _step12.value;
+      for (var _iterator14 = nodes[Symbol.iterator](), _step14; !(_iteratorNormalCompletion14 = (_step14 = _iterator14.next()).done); _iteratorNormalCompletion14 = true) {
+        var node = _step14.value;
         new Toast(node);
       }
     } catch (err) {
-      _didIteratorError12 = true;
-      _iteratorError12 = err;
+      _didIteratorError14 = true;
+      _iteratorError14 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion12 && _iterator12["return"] != null) {
-          _iterator12["return"]();
+        if (!_iteratorNormalCompletion14 && _iterator14["return"] != null) {
+          _iterator14["return"]();
         }
       } finally {
-        if (_didIteratorError12) {
-          throw _iteratorError12;
+        if (_didIteratorError14) {
+          throw _iteratorError14;
         }
       }
     }
@@ -3442,26 +3523,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   dom.addEventOnce(window, 'load', function (_) {
     var nodes = dom.find('[data-toggle="tooltip"]');
-    var _iteratorNormalCompletion13 = true;
-    var _didIteratorError13 = false;
-    var _iteratorError13 = undefined;
+    var _iteratorNormalCompletion15 = true;
+    var _didIteratorError15 = false;
+    var _iteratorError15 = undefined;
 
     try {
-      for (var _iterator13 = nodes[Symbol.iterator](), _step13; !(_iteratorNormalCompletion13 = (_step13 = _iterator13.next()).done); _iteratorNormalCompletion13 = true) {
-        var node = _step13.value;
+      for (var _iterator15 = nodes[Symbol.iterator](), _step15; !(_iteratorNormalCompletion15 = (_step15 = _iterator15.next()).done); _iteratorNormalCompletion15 = true) {
+        var node = _step15.value;
         new Tooltip(node);
       }
     } catch (err) {
-      _didIteratorError13 = true;
-      _iteratorError13 = err;
+      _didIteratorError15 = true;
+      _iteratorError15 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion13 && _iterator13["return"] != null) {
-          _iterator13["return"]();
+        if (!_iteratorNormalCompletion15 && _iterator15["return"] != null) {
+          _iterator15["return"]();
         }
       } finally {
-        if (_didIteratorError13) {
-          throw _iteratorError13;
+        if (_didIteratorError15) {
+          throw _iteratorError15;
         }
       }
     }

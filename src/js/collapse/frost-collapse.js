@@ -1,7 +1,7 @@
 // Default Collapse options
 Collapse.defaults = {
     direction: 'bottom',
-    duration: 300
+    duration: 250
 };
 
 // Auto-initialize Collapse from data-ride

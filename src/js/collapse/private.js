@@ -27,7 +27,8 @@ Object.assign(Collapse.prototype, {
         }
 
         const parents = [];
-        const collapses = [];
+        const nodes = [];
+        const newTargets = [];
 
         for (const target of targets) {
             const parent = dom.getDataset(target, 'parent');
@@ -53,23 +54,25 @@ Object.assign(Collapse.prototype, {
                 }
 
                 const collapse = dom.getData(toggle, 'collapse');
-                const targets = dom.find(collapse._settings.target);
-                const animating = targets.find(target => dom.getDataset(target, 'animating'));
+
+                const collapseTargets = dom.find(collapse._settings.target)
+                    .filter(target => dom.hasClass(target, 'show'));
+                if (!collapseTargets.length) {
+                    continue;
+                }
+                const animating = collapseTargets.find(target => dom.getDataset(target, 'animating'));
                 if (animating) {
                     return false;
                 }
-
-                collapses.push(collapse);
+                nodes.push(collapse._node);
+                newTargets.push(...collapseTargets);
             }
         }
 
-        const promises = [];
-
-        for (const collapse of collapses) {
-            promises.push(collapse.hide());
-        }
-
-        return promises;
+        return {
+            nodes,
+            targets: newTargets
+        };
     }
 
 });
