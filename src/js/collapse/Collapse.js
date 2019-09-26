@@ -28,6 +28,14 @@ class Collapse {
         this._events();
 
         dom.setData(this._node, 'collapse', this);
+
+        for (const target of this._targets) {
+            if (!dom.hasData(target, 'collapses')) {
+                dom.setData(target, 'collapses', []);
+            }
+
+            dom.getData(target, 'collapses').push(this);
+        }
     }
 
     /**
@@ -64,6 +72,7 @@ class Collapse {
             }).then(_ => {
                 dom.removeClass(targets, 'show');
 
+                this._setExpanded(targets, false);
                 dom.triggerEvent(this._node, 'hidden.frost.collapse');
 
                 resolve();
@@ -102,11 +111,12 @@ class Collapse {
                 return reject();
             }
 
-            targets.push(...collapse.targets);
+            const allTargets = [...targets];
+            allTargets.push(...collapse.targets);
 
-            dom.setDataset(targets, 'animating', true);
+            dom.setDataset(allTargets, 'animating', true);
 
-            const animations = targets.map(target => {
+            const animations = allTargets.map(target => {
                 const animation = collapse.targets.includes(target) ?
                     'squeezeOut' : 'squeezeIn';
 
@@ -120,19 +130,21 @@ class Collapse {
             dom.addClass(targets, 'show');
 
             Promise.all(animations).then(_ => {
-                if (collapseTargets.length) {
+                if (collapse.targets.length) {
                     dom.removeClass(collapse.targets, 'show');
+                    this._setExpanded(collapse.targets, false);
                 }
 
                 if (collapse.nodes.length) {
-                    dom.triggerEvent(collapseNodes, 'hidden.frost.collapse');
+                    dom.triggerEvent(collapse.nodes, 'hidden.frost.collapse');
                 }
 
+                this._setExpanded(targets);
                 dom.triggerEvent(this._node, 'shown.frost.collapse');
 
                 resolve();
             }).catch(reject).finally(_ =>
-                dom.removeDataset(targets, 'animating')
+                dom.removeDataset(allTargets, 'animating')
             );
         });
     }
@@ -184,11 +196,12 @@ class Collapse {
                 return reject();
             }
 
-            targets.push(...collapse.targets);
+            const allTargets = [...targets];
+            allTargets.push(...collapse.targets);
 
-            dom.setDataset(targets, 'animating', true);
+            dom.setDataset(allTargets, 'animating', true);
 
-            const animations = targets.map(target => {
+            const animations = allTargets.map(target => {
                 const animation = visible.includes(target) || collapse.targets.includes(target) ?
                     'squeezeOut' : 'squeezeIn';
 
@@ -204,24 +217,27 @@ class Collapse {
             Promise.all(animations).then(_ => {
                 if (collapse.targets.length) {
                     dom.removeClass(collapse.targets, 'show');
+                    this._setExpanded(collapse.targets, false);
                 }
 
                 if (collapse.nodes.length) {
-                    dom.triggerEvent(collapseNodes, 'hidden.frost.collapse');
+                    dom.triggerEvent(collapse.nodes, 'hidden.frost.collapse');
                 }
 
                 if (visible.length) {
                     dom.removeClass(visible, 'show');
+                    this._setExpanded(visible, false);
                     dom.triggerEvent(this._node, 'hidden.frost.collapse');
                 }
 
                 if (hidden.length) {
+                    this._setExpanded(hidden);
                     dom.triggerEvent(this._node, 'shown.frost.collapse');
                 }
 
                 resolve();
             }).catch(reject).finally(_ =>
-                dom.removeDataset(targets, 'animating')
+                dom.removeDataset(allTargets, 'animating')
             );
         });
     }

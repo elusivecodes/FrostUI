@@ -21,13 +21,18 @@
                     Hello
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1"
-                    aria-controls="navbar1" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    aria-expanded="false" aria-controls="navbar1" aria-label="Open Menu">
+                    <span class="navbar-toggler-icon" aria-hidden="true"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbar1">
                     <div class="navbar-nav">
-                        <a href="#" class="nav-link active">Active</a>
-                        <a href="#" class="nav-link">Link</a>
+                        <a href="#" class="nav-link active">
+                            Active
+                            <span class="sr-only">(Current)</span>
+                        </a>
+                        <a href="#" class="nav-link">
+                            Link
+                        </a>
                         <div class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
                                 data-reference="parent">Dropdown</a>
@@ -37,7 +42,7 @@
                                 <a href="#" class="dropdown-item">Link</a>
                             </div>
                         </div>
-                        <a href="#" class="nav-link disabled">Disabled</a>
+                        <a href="#" class="nav-link disabled" aria-disabled="true" tabindex="-1">Disabled</a>
                     </div>
                 </div>
             </div>
@@ -50,13 +55,18 @@
                     Hello
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar2"
-                    aria-controls="navbar2" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    aria-expanded="false" aria-controls="navbar2" aria-label="Open Menu">
+                    <span class="navbar-toggler-icon" aria-hidden="true"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbar2">
                     <div class="navbar-nav">
-                        <a href="#" class="nav-link active">Active</a>
-                        <a href="#" class="nav-link">Link</a>
+                        <a href="#" class="nav-link active">
+                            Active
+                            <span class="sr-only">(Current)</span>
+                        </a>
+                        <a href="#" class="nav-link">
+                            Link
+                        </a>
                         <div class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
                                 data-reference="parent">Dropdown</a>
@@ -66,7 +76,7 @@
                                 <a href="#" class="dropdown-item">Link</a>
                             </div>
                         </div>
-                        <a href="#" class="nav-link disabled">Disabled</a>
+                        <a href="#" class="nav-link disabled" aria-disabled="true" tabindex="-1">Disabled</a>
                     </div>
                 </div>
             </div>

@@ -53,13 +53,16 @@ Object.assign(Collapse.prototype, {
 
                 const collapseTargets = dom.find(collapse._settings.target)
                     .filter(target => dom.hasClass(target, 'show'));
+
                 if (!collapseTargets.length) {
                     continue;
                 }
                 const animating = collapseTargets.find(target => dom.getDataset(target, 'animating'));
+
                 if (animating) {
                     return false;
                 }
+
                 nodes.push(collapse._node);
                 newTargets.push(...collapseTargets);
             }
@@ -69,6 +72,20 @@ Object.assign(Collapse.prototype, {
             nodes,
             targets: newTargets
         };
+    },
+
+    /**
+     * Set the ARIA expanded attribute for all targets.
+     * @param {array} targets The targets array.
+     * @param {Boolean} [expanded=true] Whether the target is expanded.
+     */
+    _setExpanded(targets, expanded = true) {
+        for (const target of targets) {
+            const collapses = dom.getData(target, 'collapses');
+            for (const collapse of collapses) {
+                dom.setAttribute(collapse._node, 'aria-expanded', expanded);
+            }
+        }
     }
 
 });

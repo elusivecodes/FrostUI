@@ -102,6 +102,9 @@ class Modal {
                     this._backdrop = null;
                 }
 
+                dom.removeAttribute(this._node, 'aria-modal');
+                dom.setAttribute(this._node, 'aria-hidden', true);
+
                 dom.removeClass(this._node, 'show');
                 dom.removeClass(document.body, 'modal-open');
 
@@ -151,6 +154,9 @@ class Modal {
                     duration: this._settings.duration
                 })
             ]).then(_ => {
+                dom.removeAttribute(this._node, 'aria-hidden');
+                dom.setAttribute(this._node, 'aria-modal', true);
+
                 if (this._settings.backdrop) {
                     dom.addEvent(document, 'click.frost.modal', this._documentClickEvent);
                 }

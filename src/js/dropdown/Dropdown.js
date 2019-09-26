@@ -103,6 +103,7 @@ class Dropdown {
                 duration: this._settings.duration
             }).then(_ => {
                 dom.removeClass(this._containerNode, 'open');
+                dom.setAttribute(this._node, 'aria-expanded', false);
 
                 dom.triggerEvent(this._node, 'hidden.frost.dropdown');
 
@@ -134,6 +135,8 @@ class Dropdown {
             dom.fadeIn(this._menuNode, {
                 duration: this._settings.duration
             }).then(_ => {
+                dom.setAttribute(this._node, 'aria-expanded', true);
+
                 dom.addEvent(document, 'click.frost.dropdown', this._documentClickEvent);
 
                 dom.triggerEvent(this._node, 'shown.frost.dropdown');

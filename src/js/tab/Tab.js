@@ -62,6 +62,7 @@ class Tab {
             }).then(_ => {
                 dom.removeClass(this._target, 'active');
                 dom.removeClass(this._node, 'active');
+                dom.setAttribute(this._node, 'aria-selected', false);
 
                 dom.triggerEvent(this._node, 'hidden.frost.tab');
 
@@ -102,6 +103,8 @@ class Tab {
                     duration: this._settings.duration
                 });
             }).then(_ => {
+                dom.setAttribute(this._node, 'aria-selected', true);
+
                 dom.triggerEvent(this._node, 'shown.frost.tab');
 
                 resolve();

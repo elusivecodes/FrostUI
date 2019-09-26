@@ -597,6 +597,7 @@ button.badge:hover {
 button.badge:focus {
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
   z-index: 4;
+  outline: 0;
 }
 .badge[href]:active,
 button.badge:active {
@@ -1495,6 +1496,9 @@ button.list-group-item-dark:hover:not(:disabled),
 .nav-link:hover {
   text-decoration: none;
 }
+.nav-link:focus {
+  outline: 0;
+}
 .nav-link.disabled {
   opacity: 0.5;
   pointer-events: none;
@@ -1769,7 +1773,7 @@ button.list-group-item-dark:hover:not(:disabled),
   background-color: #495561;
 }
 .page-item.disabled button.page-link,
-.page-item.disabled .page-link[href] {
+.page-item.disabled .page-link {
   opacity: 0.5;
   pointer-events: none;
 }
@@ -2570,6 +2574,10 @@ button.dropdown-item:focus,
   background-color: rgba(0, 0, 0, 0.1);
   text-decoration: none;
   color: #121212;
+}
+button.dropdown-item:focus,
+.dropdown-item[href]:focus {
+  outline: 0;
 }
 .dropdown-item.active {
   background-color: steelblue;

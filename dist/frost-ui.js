@@ -767,6 +767,14 @@
             this._events();
 
             dom.setData(this._node, 'collapse', this);
+
+            for (const target of this._targets) {
+                if (!dom.hasData(target, 'collapses')) {
+                    dom.setData(target, 'collapses', []);
+                }
+
+                dom.getData(target, 'collapses').push(this);
+            }
         }
 
         /**
@@ -803,6 +811,7 @@
                 }).then(_ => {
                     dom.removeClass(targets, 'show');
 
+                    this._setExpanded(targets, false);
                     dom.triggerEvent(this._node, 'hidden.frost.collapse');
 
                     resolve();
@@ -841,11 +850,12 @@
                     return reject();
                 }
 
-                targets.push(...collapse.targets);
+                const allTargets = [...targets];
+                allTargets.push(...collapse.targets);
 
-                dom.setDataset(targets, 'animating', true);
+                dom.setDataset(allTargets, 'animating', true);
 
-                const animations = targets.map(target => {
+                const animations = allTargets.map(target => {
                     const animation = collapse.targets.includes(target) ?
                         'squeezeOut' : 'squeezeIn';
 
@@ -859,19 +869,21 @@
                 dom.addClass(targets, 'show');
 
                 Promise.all(animations).then(_ => {
-                    if (collapseTargets.length) {
+                    if (collapse.targets.length) {
                         dom.removeClass(collapse.targets, 'show');
+                        this._setExpanded(collapse.targets, false);
                     }
 
                     if (collapse.nodes.length) {
-                        dom.triggerEvent(collapseNodes, 'hidden.frost.collapse');
+                        dom.triggerEvent(collapse.nodes, 'hidden.frost.collapse');
                     }
 
+                    this._setExpanded(targets);
                     dom.triggerEvent(this._node, 'shown.frost.collapse');
 
                     resolve();
                 }).catch(reject).finally(_ =>
-                    dom.removeDataset(targets, 'animating')
+                    dom.removeDataset(allTargets, 'animating')
                 );
             });
         }
@@ -923,11 +935,12 @@
                     return reject();
                 }
 
-                targets.push(...collapse.targets);
+                const allTargets = [...targets];
+                allTargets.push(...collapse.targets);
 
-                dom.setDataset(targets, 'animating', true);
+                dom.setDataset(allTargets, 'animating', true);
 
-                const animations = targets.map(target => {
+                const animations = allTargets.map(target => {
                     const animation = visible.includes(target) || collapse.targets.includes(target) ?
                         'squeezeOut' : 'squeezeIn';
 
@@ -943,24 +956,27 @@
                 Promise.all(animations).then(_ => {
                     if (collapse.targets.length) {
                         dom.removeClass(collapse.targets, 'show');
+                        this._setExpanded(collapse.targets, false);
                     }
 
                     if (collapse.nodes.length) {
-                        dom.triggerEvent(collapseNodes, 'hidden.frost.collapse');
+                        dom.triggerEvent(collapse.nodes, 'hidden.frost.collapse');
                     }
 
                     if (visible.length) {
                         dom.removeClass(visible, 'show');
+                        this._setExpanded(visible, false);
                         dom.triggerEvent(this._node, 'hidden.frost.collapse');
                     }
 
                     if (hidden.length) {
+                        this._setExpanded(hidden);
                         dom.triggerEvent(this._node, 'shown.frost.collapse');
                     }
 
                     resolve();
                 }).catch(reject).finally(_ =>
-                    dom.removeDataset(targets, 'animating')
+                    dom.removeDataset(allTargets, 'animating')
                 );
             });
         }
@@ -1076,13 +1092,16 @@
 
                     const collapseTargets = dom.find(collapse._settings.target)
                         .filter(target => dom.hasClass(target, 'show'));
+
                     if (!collapseTargets.length) {
                         continue;
                     }
                     const animating = collapseTargets.find(target => dom.getDataset(target, 'animating'));
+
                     if (animating) {
                         return false;
                     }
+
                     nodes.push(collapse._node);
                     newTargets.push(...collapseTargets);
                 }
@@ -1092,6 +1111,20 @@
                 nodes,
                 targets: newTargets
             };
+        },
+
+        /**
+         * Set the ARIA expanded attribute for all targets.
+         * @param {array} targets The targets array.
+         * @param {Boolean} [expanded=true] Whether the target is expanded.
+         */
+        _setExpanded(targets, expanded = true) {
+            for (const target of targets) {
+                const collapses = dom.getData(target, 'collapses');
+                for (const collapse of collapses) {
+                    dom.setAttribute(collapse._node, 'aria-expanded', expanded);
+                }
+            }
         }
 
     });
@@ -1202,6 +1235,7 @@
                     duration: this._settings.duration
                 }).then(_ => {
                     dom.removeClass(this._containerNode, 'open');
+                    dom.setAttribute(this._node, 'aria-expanded', false);
 
                     dom.triggerEvent(this._node, 'hidden.frost.dropdown');
 
@@ -1233,6 +1267,8 @@
                 dom.fadeIn(this._menuNode, {
                     duration: this._settings.duration
                 }).then(_ => {
+                    dom.setAttribute(this._node, 'aria-expanded', true);
+
                     dom.addEvent(document, 'click.frost.dropdown', this._documentClickEvent);
 
                     dom.triggerEvent(this._node, 'shown.frost.dropdown');
@@ -1255,6 +1291,7 @@
         }
 
     }
+
 
     // Default Dropdown options
     Dropdown.defaults = {
@@ -1503,6 +1540,9 @@
                         this._backdrop = null;
                     }
 
+                    dom.removeAttribute(this._node, 'aria-modal');
+                    dom.setAttribute(this._node, 'aria-hidden', true);
+
                     dom.removeClass(this._node, 'show');
                     dom.removeClass(document.body, 'modal-open');
 
@@ -1552,6 +1592,9 @@
                         duration: this._settings.duration
                     })
                 ]).then(_ => {
+                    dom.removeAttribute(this._node, 'aria-hidden');
+                    dom.setAttribute(this._node, 'aria-modal', true);
+
                     if (this._settings.backdrop) {
                         dom.addEvent(document, 'click.frost.modal', this._documentClickEvent);
                     }
@@ -2835,6 +2878,7 @@
                 }).then(_ => {
                     dom.removeClass(this._target, 'active');
                     dom.removeClass(this._node, 'active');
+                    dom.setAttribute(this._node, 'aria-selected', false);
 
                     dom.triggerEvent(this._node, 'hidden.frost.tab');
 
@@ -2875,6 +2919,8 @@
                         duration: this._settings.duration
                     });
                 }).then(_ => {
+                    dom.setAttribute(this._node, 'aria-selected', true);
+
                     dom.triggerEvent(this._node, 'shown.frost.tab');
 
                     resolve();
