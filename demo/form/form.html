@@ -17,22 +17,24 @@
         <h1>Form</h1>
         <form>
             <div class="form-group">
-                <label for="text-group-1">Label</label>
-                <input type="text" class="form-control" id="text-group-1" placeholder="Placeholder">
+                <label id="text1Label" for="text1">Label</label>
+                <input type="text" id="text1" class="form-control" placeholder="Placeholder"
+                    aria-labelledby="text1Label" />
             </div>
             <div class="form-group">
-                <label for="text-group-2">Label</label>
-                <input type="text" class="form-control" id="text-group-2" placeholder="Placeholder">
+                <label id="text2Label" for="text2">Label</label>
+                <input type="text" id="text2" class="form-control" placeholder="Placeholder"
+                    aria-labelledby="text2Label" />
             </div>
         </form>
         <h3>Grid</h3>
         <form>
             <div class="form-group row">
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="Placeholder">
+                    <input type="text" class="form-control" placeholder="Placeholder" aria-label="Label" />
                 </div>
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="Placeholder">
+                    <input type="text" class="form-control" placeholder="Placeholder" aria-label="Label" />
                 </div>
             </div>
         </form>
@@ -40,10 +42,10 @@
         <form>
             <div class="form-group form-row">
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="Placeholder">
+                    <input type="text" class="form-control" placeholder="Placeholder" aria-label="Label" />
                 </div>
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="Placeholder">
+                    <input type="text" class="form-control" placeholder="Placeholder" aria-label="Label" />
                 </div>
             </div>
         </form>
@@ -51,26 +53,30 @@
         <form>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="text-column-1">Label</label>
-                    <input type="email" class="form-control" id="text-column-1" placeholder="Placeholder">
+                    <label id="textColumn1Label" for="textColumn1">Label</label>
+                    <input type="email" id="textColumn1" class="form-control" placeholder="Placeholder"
+                        aria-labelledby="textColumn1Label" />
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="text-column-2">Label</label>
-                    <input type="text" class="form-control" id="text-column-2" placeholder="Placeholder">
+                    <label id="textColumn2Label" for="textColumn2">Label</label>
+                    <input type="text" id="textColumn2" class="form-control" placeholder="Placeholder"
+                        aria-labelledby="textColumn2Label" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="textarea-column">Label</label>
-                <textarea class="form-control" id="textarea-column" placeholder="Placeholder"></textarea>
+                <label id="textareaColumnLabel" for="textareaColumn">Label</label>
+                <textarea id="textareaColumn" class="form-control" placeholder="Placeholder"
+                    aria-labelledby="textareColumnLabel"></textarea>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="text-column-3">Label</label>
-                    <input type="text" class="form-control" id="text-column-3" placeholder="Placeholder">
+                    <label id="textColumn3Label" for="textColumn3">Label</label>
+                    <input type="text" id="textColumn3" class="form-control" placeholder="Placeholder"
+                        aria-labelledby="textColumn3Label" />
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="select-column">Label</label>
-                    <select id="select-column" class="form-control">
+                    <label id="selectColumnLabel" for="selectColumn">Label</label>
+                    <select id="selectColumn" class="form-control" aria-labelledby="selectColumnLabel">
                         <option>Option 1</option>
                         <option>Option 2</option>
                         <option>Option 3</option>
@@ -80,14 +86,16 @@
                     </select>
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="text-column-4">Label</label>
-                    <input type="text" class="form-control" id="text-column-4" placeholder="Placeholder">
+                    <label id="textColumn4Label" for="textColumn4">Label</label>
+                    <input type="text" id="textColumn4" class="form-control" placeholder="Placeholder"
+                        aria-labelledby="textColumn4Label" />
                 </div>
             </div>
             <div class="form-group">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="text-column-checkbox">
-                    <label class="form-check-label" for="text-column-checkbox">
+                    <input type="checkbox" id="textColumnCheckbox" class="form-check-input"
+                        aria-labelledby="textColumnCheckboxLabel" />
+                    <label id="textColumnCheckboxLabel" class="form-check-label" for="textColumnCheckbox">
                         Option
                     </label>
                 </div>
@@ -96,15 +104,17 @@
         <h3>Horizontal</h3>
         <form>
             <div class="form-group row">
-                <label for="text-horizontal" class="col-sm-2 col-form-label">Label</label>
+                <label for="textHorizontal" class="col-sm-2 col-form-label">Label</label>
                 <div class="col-sm-10">
-                    <input type="email" class="form-control" id="text-horizontal" placeholder="Placeholder">
+                    <input type="email" id="textHorizontal" class="form-control" placeholder="Placeholder" />
                 </div>
             </div>
             <div class="form-group row">
-                <label for="textarea-horizontal" class="col-sm-2 col-form-label">Label</label>
+                <label id="textareaHorizontalLabel" for="textareaHorizontal"
+                    class="col-sm-2 col-form-label">Label</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="textarea-horizontal" placeholder="Placeholder"></textarea>
+                    <textarea id="textareaHorizontal" class="form-control" placeholder="Placeholder"
+                        aria-labelledby="textareaHorizontalLabel"></textarea>
                 </div>
             </div>
             <fieldset class="form-group">
@@ -112,23 +122,23 @@
                     <legend class="col-form-label col-sm-2 pt-0">Label</legend>
                     <div class="col-sm-10">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="radio-horizontal" id="radio-horizontal-1"
-                                value="option1" checked>
-                            <label class="form-check-label" for="radio-horizontal-1">
+                            <input type="radio" name="radioHorizontal" id="radioHorizontal1" class="form-check-input"
+                                value="option1" aria-labelledby="radioHorizontal1Label" checked />
+                            <label id="radioHorizontal1Label" class="form-check-label" for="radioHorizontal1">
                                 Selected
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="radio-horizontal" id="radio-horizontal-2"
-                                value="option2">
-                            <label class="form-check-label" for="radio-horizontal-2">
+                            <input type="radio" name="radioHorizontal" id="radioHorizontal2" class="form-check-input"
+                                value="option2" aria-labelledby="radioHorizontal2Label" />
+                            <label id="radioHorizontal2Label" class="form-check-label" for="radioHorizontal2">
                                 Option
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="radio-horizontal" id="radio-horizontal-3"
-                                value="option3" disabled>
-                            <label class="form-check-label" for="radio-horizontal-3">
+                            <input type="radio" name="radioHorizontal" id="radioHorizontal3" class="form-check-input"
+                                value="option3" aria-labelledby="radioHorizontal3Label" disabled />
+                            <label id="radioHorizontal3Label" class="form-check-label" for="radioHorizontal3">
                                 Disabled
                             </label>
                         </div>
@@ -139,8 +149,9 @@
                 <div class="col-sm-2">Label</div>
                 <div class="col-sm-10">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="checkbox-horizontal">
-                        <label class="form-check-label" for="checkbox-horizontal">
+                        <input type="checkbox" id="checkboxHorizontal" class="form-check-input"
+                            aria-labelledby="checkboxHorizontalLabel" />
+                        <label id="checkboxHorizontalLabel" class="form-check-label" for="checkboxHorizontal">
                             Option
                         </label>
                     </div>
@@ -149,20 +160,23 @@
         </form>
         <h4>Inline</h4>
         <form class="form-inline">
-            <label class="sr-only" for="text-inline-1">Label</label>
-            <input type="text" class="form-control mb-2 mr-sm-2" id="text-inline-1" placeholder="Placeholder">
+            <label id="textInline1Label" class="sr-only" for="textInline1">Label</label>
+            <input type="text" id="textInline1" class="form-control mb-2 mr-sm-2" placeholder="Placeholder"
+                aria-labelledby="textInline1Label" />
 
-            <label class="sr-only" for="text-inline-2">Label</label>
+            <label id="textInline2Label" class="sr-only" for="textInline2">Label</label>
             <div class="input-group mb-2 mr-sm-2">
                 <div class="input-group-prepend">
-                    <div class="input-group-text">@</div>
+                    <div id="textInline2Prefix" class="input-group-text">@</div>
                 </div>
-                <input type="text" class="form-control" id="text-inline-2" placeholder="Placeholder">
+                <input type="text" class="form-control" id="textInline2" placeholder="Placeholder"
+                    aria-labelledby="textInline2Label" aria-describedby="textInline2Prefix" />
             </div>
 
             <div class="form-check mb-2 mr-sm-2">
-                <input class="form-check-input" type="checkbox" id="checkbox-inline">
-                <label class="form-check-label" for="checkbox-inline">
+                <input type="checkbox" id="checkboxInline" class="form-check-input"
+                    aria-labelledby="checkboxInlineLabel" />
+                <label id="checkboxInlineLabel" class="form-check-label" for="checkboxInline">
                     Option
                 </label>
             </div>
@@ -170,9 +184,10 @@
         <h4>Help Text</h4>
         <form>
             <div class="form-group">
-                <label for="text-help-1">Label</label>
-                <input type="text" class="form-control" id="text-help-1" placeholder="Placeholder">
-                <small class="form-text text-muted">This is help text for the form.</small>
+                <label id="textHelp1Label" for="textHelp1">Label</label>
+                <input type="text" id="textHelp1" class="form-control" placeholder="Placeholder"
+                    aria-labelledby="textHelp1Label" aria-describedby="textHelp1Description" />
+                <small id="textHelp1Description" class="form-text text-muted">This is help text for the form.</small>
             </div>
         </form>
     </div>

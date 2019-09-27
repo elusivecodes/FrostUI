@@ -17,27 +17,31 @@
         <h1>Input Groups</h1>
         <form>
             <div class="form-group">
-                <label for="input-group-text">Label</label>
+                <label id="inputGroupTextLabel" for="inputGroupText">Label</label>
                 <div class="input-group">
-                    <input type="text" id="input-group-text" class="form-control" placeholder="Placeholder" />
+                    <input type="text" id="inputGroupText" class="form-control" placeholder="Placeholder"
+                        aria-labelledby="inputGroupTextLabel" aria-describedby="inputGroupTextSuffix" />
                     <div class="input-group-append">
-                        <div class="input-group-text">Text</div>
+                        <div id="inputGroupTextSuffix" class="input-group-text">Text</div>
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="input-group-textarea">Label</label>
+                <label id="inputGroupTextareaLabel" for="inputGroupTextarea">Label</label>
                 <div class="input-group">
-                    <textarea id="input-group-textarea" class="form-control" placeholder="Placeholder"></textarea>
+                    <textarea id="inputGroupTextarea" class="form-control" placeholder="Placeholder"
+                        aria-labelledby="inputGroupTextareaLabel"
+                        aria-describedby="inputGroupTextareaSuffix"></textarea>
                     <div class="input-group-append">
-                        <div class="input-group-text">Text</div>
+                        <div id="inputGroupTextareaSuffix" class="input-group-text">Text</div>
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="input-group-select">Label</label>
+                <label id="inputGroupSelectLabel" for="inputGroupSelect">Label</label>
                 <div class="input-group">
-                    <select id="input-group-select" class="form-control">
+                    <select id="inputGroupSelect" class="form-control" aria-labelledby="inputGroupSelectLabel"
+                        aria-describedby="inputGroupSelectSuffix">
                         <option>Option 1</option>
                         <option>Option 1</option>
                         <option>Option 1</option>
@@ -46,61 +50,67 @@
                         <option>Option 1</option>
                     </select>
                     <div class="input-group-append">
-                        <div class="input-group-text">Text</div>
+                        <div id="inputGroupSelectSuffix" class="input-group-text">Text</div>
                     </div>
                 </div>
             </div>
 
             <h4>Append/Prepend</h4>
             <div class="form-group">
-                <label for="input-group-append">Label</label>
+                <label id="inputGroupAppendLabel" for="inputGroupAppend">Label</label>
                 <div class="input-group">
-                    <input type="text" id="input-group-append" class="form-control" placeholder="Placeholder" />
+                    <input type="text" id="inputGroupAppend" class="form-control" placeholder="Placeholder"
+                        aria-labelledby="inputGroupAppendLabel" aria-describedby="inputGroupAppendSuffix" />
                     <div class="input-group-append">
-                        <div class="input-group-text">Text</div>
+                        <div id="inputGroupAppendSuffix" class="input-group-text">Text</div>
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="input-group-prepend">Label</label>
+                <label id="inputGroupPrependLabel" for="inputGroupPrepend">Label</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <div class="input-group-text">Text</div>
+                        <div id="inputGroupPrependPrefix" class="input-group-text">Text</div>
                     </div>
-                    <input type="text" id="input-group-prepend" class="form-control" placeholder="Placeholder" />
+                    <input type="text" id="inputGroupPrepend" class="form-control" placeholder="Placeholder"
+                        aria-labelledby="inputGroupPrependLabel" aria-describedby="inputGroupPrependSuffix" />
                 </div>
             </div>
 
             <h4>Buttons</h4>
             <div class="form-group">
-                <label for="input-group-btn">Label</label>
+                <label id="inputGroupBtnLabel" for="inputGroupBtn">Label</label>
                 <div class="input-group">
-                    <input type="text" id="input-group-btn" class="form-control" placeholder="Placeholder" />
+                    <input type="text" id="inputGroupBtn" class="form-control" placeholder="Placeholder"
+                        aria-labelledby="inputGroupBtnLabel" />
                     <div class="input-group-append">
-                        <a href="#" class="btn btn-outline btn-dark">Button</a>
+                        <a href="#" class="btn btn-outline btn-dark" role="button">Button</a>
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="input-group-multiple-btns" class="form-label">Label</label>
+                <label id="inputGroupMultipleBtnsLabel" for="inputGroupMultipleBtns" class="form-label">Label</label>
                 <div class="input-group">
-                    <input type="text" id="input-group-multiple-btns" class="form-control" placeholder="Placeholder" />
+                    <input type="text" id="inputGroupMultipleBtns" class="form-control" placeholder="Placeholder"
+                        aria-labelledby="inputGroupMultipleBtnsLabel" />
                     <div class="input-group-append">
-                        <a href="#" class="btn btn-dark">Button</a>
+                        <a href="#" class="btn btn-dark" role="button">Button</a>
                     </div>
                     <div class="input-group-append">
-                        <a href="#" class="btn btn-outline-dark">Button</a>
+                        <a href="#" class="btn btn-outline-dark" role="button">Button</a>
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="input-group-dropdown" class="form-label">Label</label>
+                <label id="inputGroupDropdownLabel" for="inputGroupDropdown" class="form-label">Label</label>
                 <div class="input-group">
-                    <input type="text" id="input-group-dropdown" class="form-control" placeholder="Placeholder" />
+                    <input type="text" id="inputGroupDropdown" class="form-control" placeholder="Placeholder"
+                        aria-labelledby="inputGroupDropdownLabel" />
                     <div class="input-group-append">
-                        <a href="#" class="btn btn-outline btn-success dropdown-toggle" data-toggle="dropdown"
-                            data-position="end">Button</a>
-                        <div class="dropdown-menu shadow-sm">
+                        <a href="#" id="dropdownLink" class="btn btn-outline btn-success dropdown-toggle" role="button"
+                            data-toggle="dropdown" data-position="end" aria-haspopup="true"
+                            aria-expanded="false">Button</a>
+                        <div class="dropdown-menu shadow-sm" id="dropdownLink">
                             <a href="#" class="dropdown-item">Link</a>
                             <a href="#" class="dropdown-item">Link</a>
                             <a href="#" class="dropdown-item">Link</a>
@@ -114,39 +124,43 @@
             <h3>Sizes</h3>
             <h4>Small</h4>
             <div class="form-group">
-                <label for="input-group-text-sm">Label</label>
+                <label id="inputGroupTextSmLabel" for="inputGroupTextSm">Label</label>
                 <div class="input-group input-group-sm">
-                    <input type="text" id="input-group-text-sm" class="form-control" placeholder="Placeholder" />
+                    <input type="text" id="inputGroupTextSm" class="form-control" placeholder="Placeholder"
+                        aria-labelledby="inputGroupTextSmLabel" aria-describedby="inputGroupTextSmSuffix" />
                     <div class="input-group-append">
-                        <div class="input-group-text">Text</div>
+                        <div id="inputGroupTextSmSuffix" class="input-group-text">Text</div>
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="input-group-btn-sm">Label</label>
+                <label label="inputGroupBtnSmLabel" for="inputGroupBtnSm">Label</label>
                 <div class="input-group input-group-sm">
-                    <input type="text" id="input-group-btn-sm" class="form-control" placeholder="Placeholder" />
+                    <input type="text" id="inputGroupBtnSm" class="form-control" placeholder="Placeholder"
+                        aria-labelledby="inputGroupBtnSmLabel" />
                     <div class="input-group-append">
-                        <a href="#" class="btn btn-outline btn-dark">Button</a>
+                        <a href="#" class="btn btn-outline btn-dark" role="button">Button</a>
                     </div>
                 </div>
             </div>
             <h4>Large</h4>
             <div class="form-group">
-                <label for="input-group-text-lg">Label</label>
+                <label id="inputGroupTextLgLabel" for="inputGroupTextLg">Label</label>
                 <div class="input-group input-group-lg">
-                    <input type="text" id="input-group-text-lg" class="form-control" placeholder="Placeholder" />
+                    <input type="text" id="inputGroupTextLg" class="form-control" placeholder="Placeholder"
+                        aria-labelledby="inputGroupTextLgLabel" aria-describedby="inputGroupTextLgSuffix" />
                     <div class="input-group-append">
-                        <div class="input-group-text">Text</div>
+                        <div id="inputGroupTextLgSuffix" class="input-group-text">Text</div>
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="input-group-btn-lg">Label</label>
+                <label id="inputGroupBtnLgLabel" for="inputGroupBtnLg">Label</label>
                 <div class="input-group input-group-lg">
-                    <input type="text" id="input-group-btn-lg" class="form-control" placeholder="Placeholder" />
+                    <input type="text" id="inputGroupBtnLg" class="form-control" placeholder="Placeholder"
+                        aria-labelledby="inputGroupBtnLgLabel" />
                     <div class="input-group-append">
-                        <a href="#" class="btn btn-outline btn-dark">Button</a>
+                        <a href="#" class="btn btn-outline btn-dark" role="button">Button</a>
                     </div>
                 </div>
             </div>

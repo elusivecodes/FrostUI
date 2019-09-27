@@ -18,17 +18,19 @@
         <form>
             <h4>Success</h4>
             <div class="form-group form-success">
-                <label for="form-success">Label</label>
-                <input type="text" id="form-success" class="form-control" placeholder="Placeholder" />
+                <label id="formSuccessLabel" for="formSuccess">Label</label>
+                <input type="text" id="formSuccess" class="form-control" placeholder="Placeholder"
+                    aria-labelledby="formSuccessLabel" />
                 <div class="valid-feedback">This is validation feedback.</div>
             </div>
             <div class="form-group form-success">
-                <label for="form-success-textarea">Label</label>
-                <textarea id="form-success-textarea" class="form-control" placeholder="Placeholder"></textarea>
+                <label id="formSuccessTextareaLabel" for="formSuccessTextarea">Label</label>
+                <textarea id="formSuccessTextarea" class="form-control" placeholder="Placeholder"
+                    aria-labelledby="formSuccessTextareaLabel"></textarea>
             </div>
             <div class="form-group form-success">
-                <label for="form-success-select">Label</label>
-                <select id="form-success-select" class="form-control">
+                <label id="formSuccessSelectLabel" for="formSuccessSelect">Label</label>
+                <select id="formSuccessSelect" class="form-control" aria-labelledby="formSuccessSelectLabel">
                     <option>Option 1</option>
                     <option>Option 2</option>
                     <option>Option 3</option>
@@ -38,8 +40,9 @@
                 </select>
             </div>
             <div class="form-group form-success">
-                <label for="form-success-multi-select">Label</label>
-                <select id="form-success-multi-select" class="form-control" multiple="true">
+                <label id="formSuccessMultiSelectLabel" for="formSuccessMultiSelect">Label</label>
+                <select id="formSuccessMultiSelect" class="form-control" multiple="true"
+                    aria-labelledby="formSuccessMultiSelectLabel">
                     <option>Option 1</option>
                     <option>Option 2</option>
                     <option>Option 3</option>
@@ -49,70 +52,88 @@
                 </select>
             </div>
             <div class="form-group form-success">
-                <label for="input-group-success">Label</label>
+                <label id="inputGroupSuccessLabel" for="inputGroupSuccess">Label</label>
                 <div class="input-group">
-                    <input type="text" id="input-group-success" class="form-control" placeholder="Placeholder" />
+                    <input type="text" id="inputGroupSuccess" class="form-control" placeholder="Placeholder"
+                        aria-labelledby="inputGroupSuccessLabel" aria-describedby="inputGroupSuccessSuffix" />
                     <div class="input-group-append">
-                        <div class="input-group-text">Text</div>
+                        <div id="inputGroupSuccessSuffix" class="input-group-text">Text</div>
                     </div>
                 </div>
             </div>
             <div class="form-group form-success">
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="checkbox-checked-success" checked>
-                    <label class="custom-control-label" for="checkbox-checked-success">Checked</label>
+                    <input type="checkbox" id="checkboxCheckedSuccess" class="custom-control-input"
+                        aria-labelledby="checkboxCheckedSuccessLabel" checked />
+                    <label id="checkboxCheckedSuccessLabel" class="custom-control-label"
+                        for="checkboxCheckedSuccess">Checked</label>
                 </div>
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="checkbox-success">
-                    <label class="custom-control-label" for="checkbox-success">Option</label>
+                    <input type="checkbox" id="checkboxSuccess" class="custom-control-input"
+                        aria-labelledby="checkboxSuccessLabel" />
+                    <label id="checkboxSuccessLabel" class="custom-control-label" for="checkboxSuccess">Option</label>
                 </div>
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="checkbox-disabled-success" disabled>
-                    <label class="custom-control-label" for="checkbox-disabled-success">Disabled</label>
+                    <input type="checkbox" id="checkboxDisabledSuccess" class="custom-control-input"
+                        aria-labelledby="checkboxDisabledSuccessLabel" disabled />
+                    <label id="checkboxDisabledSuccessLabel" class="custom-control-label"
+                        for="checkboxDisabledSuccess">Disabled</label>
                 </div>
             </div>
             <div class="form-group form-success">
                 <div class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" id="radio-selected-success" checked>
-                    <label class="custom-control-label" for="radio-selected-success">Selected</label>
+                    <input type="radio" id="radioSelectedSuccess" class="custom-control-input"
+                        aria-labelledby="radioSelectedSuccessLabel" checked />
+                    <label id="radioSelectedSuccessLabel" class="custom-control-label"
+                        for="radioSelectedSuccess">Selected</label>
                 </div>
                 <div class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" id="radio-success">
-                    <label class="custom-control-label" for="radio-success">Option</label>
+                    <input type="radio" id="radioSuccess" class="custom-control-input"
+                        aria-labelledby="radioSuccessLabel" />
+                    <label id="radioSuccessLabel" class="custom-control-label" for="radioSuccess">Option</label>
                 </div>
                 <div class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" id="radio-disabled-success" disabled>
-                    <label class="custom-control-label" for="radio-disabled-success">Disabled</label>
+                    <input type="radio" id="radioDisabledSuccess" class="custom-control-input"
+                        aria-labelledby="radioDisabledSuccessLabel" disabled />
+                    <label id="radioDisabledSuccessLabel" class="custom-control-label"
+                        for="radioDisabledSuccess">Disabled</label>
                 </div>
             </div>
             <div class="form-group form-success">
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="switch-selected-success" checked>
-                    <label class="custom-control-label" for="switch-selected-success">Selected</label>
+                    <input type="checkbox" id="switchSelectedSuccess" class="custom-control-input"
+                        aria-labelledby="switchSelectedSuccessLabel" checked />
+                    <label id="switchSelectedSuccessLabel" class="custom-control-label"
+                        for="switchSelectedSuccess">Selected</label>
                 </div>
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="switch-success">
-                    <label class="custom-control-label" for="switch-success">Option</label>
+                    <input type="checkbox" id="switchSuccess" class="custom-control-input"
+                        aria-labelledby="switchSuccessLabel" />
+                    <label id="switchSuccessLabel" class="custom-control-label" for="switchSuccess">Option</label>
                 </div>
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="switch-disabled-success" disabled>
-                    <label class="custom-control-label" for="switch-disabled-success">Disabled</label>
+                    <input type="checkbox" id="switchDisabledSuccess" class="custom-control-input"
+                        aria-labelledby="switchDisabledSuccessLabel" disabled />
+                    <label id="switchDisabledSuccessLabel" class="custom-control-label"
+                        for="switchDisabledSuccess">Disabled</label>
                 </div>
             </div>
 
             <h4>Error</h4>
             <div class="form-group form-error">
-                <label for="form-error">Label</label>
-                <input type="text" id="form-error" class="form-control" placeholder="Placeholder" />
+                <label id="formErrorLabel" for="formError">Label</label>
+                <input type="text" id="formError" class="form-control" placeholder="Placeholder"
+                    aria-labelledby="formErrorLabel" />
                 <div class="invalid-feedback">This is validation feedback.</div>
             </div>
             <div class="form-group form-error">
-                <label for="form-error-textarea">Label</label>
-                <textarea id="form-error-textarea" class="form-control" placeholder="Placeholder"></textarea>
+                <label id="formErrorTextareaLabel" for="formErrorTextarea">Label</label>
+                <textarea id="formErrorTextarea" class="form-control" placeholder="Placeholder"
+                    aria-labelledby="formErrorTextareaLabel"></textarea>
             </div>
             <div class="form-group form-error">
-                <label for="form-error-select">Label</label>
-                <select id="form-error-select" class="form-control">
+                <label id="formErrorSelectLabel" for="formErrorSelect">Label</label>
+                <select id="formErrorSelect" class="form-control" aria-labelledby="formErrorSelectLabel">
                     <option>Option 1</option>
                     <option>Option 2</option>
                     <option>Option 3</option>
@@ -122,8 +143,9 @@
                 </select>
             </div>
             <div class="form-group form-error">
-                <label for="form-error-multi-select">Label</label>
-                <select id="form-error-multi-select" class="form-control" multiple="true">
+                <label id="formErrorMultiSelectLabel" for="formErrorMultiSelect">Label</label>
+                <select id="formErrorMultiSelect" class="form-control" multiple="true"
+                    aria-labelledby="formErrorMultiSelectLabel">
                     <option>Option 1</option>
                     <option>Option 2</option>
                     <option>Option 3</option>
@@ -133,54 +155,70 @@
                 </select>
             </div>
             <div class="form-group form-error">
-                <label for="input-group-error">Label</label>
+                <label id="inputGroupErrorLabel" for="inputGroupError">Label</label>
                 <div class="input-group">
-                    <input type="text" id="input-group-error" class="form-control" placeholder="Placeholder" />
+                    <input type="text" id="inputGroupError" class="form-control" placeholder="Placeholder"
+                        aria-labelledby="inputGroupErrorLabel" aria-describedby="inputGroupErrorSuffix" />
                     <div class="input-group-append">
-                        <div class="input-group-text">Text</div>
+                        <div id="inputGroupErrorSuffix" class="input-group-text">Text</div>
                     </div>
                 </div>
             </div>
             <div class="form-group form-error">
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="checkbox-checked-error" checked>
-                    <label class="custom-control-label" for="checkbox-checked-error">Checked</label>
+                    <input type="checkbox" id="checkboxCheckedError" class="custom-control-input"
+                        aria-labelledby="checkboxCheckedErrorLabel" checked />
+                    <label id="checkboxCheckedErrorLabel" class="custom-control-label"
+                        for="checkboxCheckedError">Checked</label>
                 </div>
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="checkbox-error">
-                    <label class="custom-control-label" for="checkbox-error">Option</label>
+                    <input type="checkbox" id="checkboxError" class="custom-control-input"
+                        aria-labelledby="checkboxErrorLabel" />
+                    <label id="checkboxErrorLabel" class="custom-control-label" for="checkboxError">Option</label>
                 </div>
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="checkbox-disabled-error" disabled>
-                    <label class="custom-control-label" for="checkbox-disabled-error">Disabled</label>
+                    <input type="checkbox" id="checkboxDisabledError" class="custom-control-input"
+                        aria-labelledby="checkboxDisabledErrorLabel" disabled />
+                    <label id="checkboxDisabledErrorLabel" class="custom-control-label"
+                        for="checkboxDisabledError">Disabled</label>
                 </div>
             </div>
             <div class="form-group form-error">
                 <div class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" id="radio-selected-error" checked>
-                    <label class="custom-control-label" for="radio-selected-error">Selected</label>
+                    <input type="radio" id="radioSelectedError" class="custom-control-input"
+                        aria-labelledby="radioSelectedErrorLabel" checked />
+                    <label id="radioSelectedErrorLabel" class="custom-control-label"
+                        for="radioSelectedError">Selected</label>
                 </div>
                 <div class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" id="radio-error">
-                    <label class="custom-control-label" for="radio-error">Option</label>
+                    <input type="radio" id="radioError" class="custom-control-input"
+                        aria-labelledby="radioErrorLabel" />
+                    <label id="radioErrorLabel" class="custom-control-label" for="radioError">Option</label>
                 </div>
                 <div class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" id="radio-disabled-error" disabled>
-                    <label class="custom-control-label" for="radio-disabled-error">Disabled</label>
+                    <input type="radio" id="radioDisabledError" class="custom-control-input"
+                        aria-labelledby="radioDisabledErrorLabel" disabled />
+                    <label id="radioDisabledErrorLabel" class="custom-control-label"
+                        for="radioDisabledError">Disabled</label>
                 </div>
             </div>
             <div class="form-group form-error">
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="switch-selected-error" checked>
-                    <label class="custom-control-label" for="switch-selected-error">Selected</label>
+                    <input type="checkbox" id="switchSelectedError" class="custom-control-input"
+                        aria-labelledby="switchSelectedErrorLabel" checked />
+                    <label id="switchSelectedErrorLabel" class="custom-control-label"
+                        for="switchSelectedError">Selected</label>
                 </div>
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="switch-error">
-                    <label class="custom-control-label" for="switch-error">Option</label>
+                    <input type="checkbox" id="switchError" class="custom-control-input"
+                        aria-labelledby="switchErrorLabel" />
+                    <label id="switchErrorLabel" class="custom-control-label" for="switchError">Option</label>
                 </div>
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="switch-disabled-error" disabled>
-                    <label class="custom-control-label" for="switch-disabled-error">Disabled</label>
+                    <input type="checkbox" id="switchDisabledError" class="custom-control-input"
+                        aria-labelledby="switchDisabledErrorLabel" disabled />
+                    <label id="switchDisabledErrorLabel" class="custom-control-label"
+                        for="switchDisabledError">Disabled</label>
                 </div>
             </div>
         </form>

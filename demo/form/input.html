@@ -17,16 +17,18 @@
         <h1>Inputs</h1>
         <form>
             <div class="form-group">
-                <label for="text">Label</label>
-                <input type="text" id="text" class="form-control" placeholder="Placeholder" />
+                <label id="textLabel" for="text">Label</label>
+                <input type="text" id="text" class="form-control" placeholder="Placeholder"
+                    aria-labelledby="textLabel" />
             </div>
             <div class="form-group">
-                <label for="textarea">Label</label>
-                <textarea id="textarea" class="form-control" placeholder="Placeholder"></textarea>
+                <label id="textareaLabel" for="textarea">Label</label>
+                <textarea id="textarea" class="form-control" placeholder="Placeholder"
+                    aria-labelledby="textareaLabel"></textarea>
             </div>
             <div class="form-group">
-                <label for="select">Label</label>
-                <select id="select" class="form-control">
+                <label id="selectLabel" for="select">Label</label>
+                <select id="select" class="form-control" aria-labelledby="selectLabel">
                     <option>Option 1</option>
                     <option>Option 2</option>
                     <option>Option 3</option>
@@ -36,8 +38,8 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="multi-select">Label</label>
-                <select id="multi-select" class="form-control" multiple="true">
+                <label id="multiSelectLabel" for="multiSelect">Label</label>
+                <select id="multiSelect" class="form-control" multiple="true" aria-labelledby="multiSelectLabel">
                     <option>Option 1</option>
                     <option>Option 2</option>
                     <option>Option 3</option>
@@ -47,50 +49,56 @@
                 </select>
             </div>
             <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="checkbox">
-                <label class="form-check-label" for="checkbox">Checkbox</label>
+                <input type="checkbox" id="checkbox" class="form-check-input" aria-labelledby="checkboxLabel" />
+                <label id="checkboxLabel" class="form-check-label" for="checkbox">Checkbox</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="radio" id="radio-1" value="option1" checked>
-                <label class="form-check-label" for="radio-1">
+                <input type="radio" name="radio" id="radio1" class="form-check-input" value="option1"
+                    aria-labelledby="radio1Label" checked />
+                <label id="radio1Label" class="form-check-label" for="radio1">
                     Radio 1
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="radio" id="radio-2" value="option2">
-                <label class="form-check-label" for="radio-2">
+                <input type="radio" name="radio" id="radio2" class="form-check-input" value="option2"
+                    aria-labelledby="radio2Label" />
+                <label id="radio2Label" class="form-check-label" for="radio2">
                     Radio 2
                 </label>
             </div>
             <div class="form-group">
-                <label for="file">Label</label>
-                <input type="file" id="file" class="form-control" />
+                <label id="fileLabel" for="file">Label</label>
+                <input type="file" id="file" class="form-control" aria-labelledby="fileLabel" />
             </div>
             <hr />
 
             <h4>Readonly</h4>
             <div class="form-group">
-                <label for="text-readonly">Label</label>
-                <input type="text" id="text-readonly" class="form-control" placeholder="Placeholder" readonly />
+                <label id="textReadonlyLabel" for="textReadonly">Label</label>
+                <input type="text" id="textReadonly" class="form-control" placeholder="Placeholder"
+                    aria-labelledby="textReadonlyLabel" readonly />
             </div>
             <div class="form-group">
-                <label for="textarea-readonly">Label</label>
-                <textarea id="textarea-readonly" class="form-control" placeholder="Placeholder" readonly></textarea>
+                <label id="textareaReadonlyLabel" for="textareaReadonly">Label</label>
+                <textarea id="textareaReadonly" class="form-control" placeholder="Placeholder"
+                    aria-labelledby="textareReadonlyLabel" readonly></textarea>
             </div>
             <hr />
 
             <h4>Disabled</h4>
             <div class="form-group">
-                <label for="text-disabled">Label</label>
-                <input type="text" id="text-disabled" class="form-control" placeholder="Placeholder" disabled />
+                <label id="textDisabledLabel" for="textDisabled">Label</label>
+                <input type="text" id="textDisabled" class="form-control" placeholder="Placeholder"
+                    aria-labelledby="textDisabledLabel" disabled />
             </div>
             <div class="form-group">
-                <label for="textarea-disabled">Label</label>
-                <textarea id="textarea-disabled" class="form-control" placeholder="Placeholder" disabled></textarea>
+                <label id="textareaDisabledLabel" for="textareaDisabled">Label</label>
+                <textarea id="textareaDisabled" class="form-control" placeholder="Placeholder"
+                    aria-labelledby="textareaDisabledLabel" disabled></textarea>
             </div>
             <div class="form-group">
-                <label for="select-disabled">Label</label>
-                <select id="select-disabled" class="form-control" disabled>
+                <label id="selectDisabledLabel" for="selectDisabled">Label</label>
+                <select id="selectDisabled" class="form-control" aria-labelledby="selectDisabledLabel" disabled>
                     <option>Option 1</option>
                     <option>Option 2</option>
                     <option>Option 3</option>
@@ -100,8 +108,9 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="multi-select-disabled">Label</label>
-                <select id="multi-select-disabled" class="form-control" multiple="true" disabled>
+                <label id="multiSelectDisabledLabel" for="multiSelectDisabled">Label</label>
+                <select id="multiSelectDisabled" class="form-control" multiple="true"
+                    aria-labelledby="multiSelectDisabledLabel" disabled>
                     <option>Option 1</option>
                     <option>Option 2</option>
                     <option>Option 3</option>
@@ -111,42 +120,46 @@
                 </select>
             </div>
             <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="checkbox-disabled" disabled>
-                <label class="form-check-label" for="checkbox-disabled">Checkbox</label>
+                <input type="checkbox" id="checkboxDisabled" class="form-check-input"
+                    aria-labelledby="checkboxDisabledLabel" disabled />
+                <label id="checkboxDisabledLabel" class="form-check-label" for="checkboxDisabled">Checkbox</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="radio-disabled" id="radio-1-disabled" value="option1"
-                    checked disabled>
-                <label class="form-check-label" for="radio-1-disabled">
+                <input type="radio" name="radioDisabled" id="radio1Disabled" class="form-check-input" value="option1"
+                    aria-labelledby="radio1DisabledLabel" checked disabled />
+                <label id="radio1DisabledLabel" class="form-check-label" for="radio1Disabled">
                     Radio 1
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="radio-disabled" id="radio-2-disabled" value="option2"
-                    disabled>
-                <label class="form-check-label" for="radio-2-disabled">
+                <input type="radio" name="radioDisabled" id="radio2Disabled" class="form-check-input" value="option2"
+                    aria-labelledby="radio2DisabledLabel" disabled />
+                <label id="radio2DisabledLabel" class="form-check-label" for="radio2Disabled">
                     Radio 2
                 </label>
             </div>
             <div class="form-group">
-                <label for="file-disabled">File</label>
-                <input type="file" id="file-disabled" class="form-control" disabled />
+                <label id="fileDisabledLabel" for="fileDisabled">File</label>
+                <input type="file" id="fileDisabled" class="form-control" aria-disabledby="fileDisabledLabel"
+                    disabled />
             </div>
             <hr />
 
             <h3>Sizes</h3>
             <h4>Small</h4>
             <div class="form-group">
-                <label for="text-sm">Label</label>
-                <input type="text" id="text-sm" class="form-control form-control-sm" placeholder="Placeholder" />
+                <label id="textSmLabel" for="textSm">Label</label>
+                <input type="text" id="textSm" class="form-control form-control-sm" placeholder="Placeholder"
+                    aria-labelledby="textSmLabel" />
             </div>
             <div class="form-group">
-                <label for="textarea-sm">Label</label>
-                <textarea id="textarea-sm" class="form-control form-control-sm" placeholder="Placeholder"></textarea>
+                <label id="textareaSmLabel" for="textareaSm">Label</label>
+                <textarea id="textareaSm" class="form-control form-control-sm" placeholder="Placeholder"
+                    aria-labelledby="textareaSmLabel"></textarea>
             </div>
             <div class="form-group">
-                <label for="select-sm">Label</label>
-                <select id="select-sm" class="form-control form-control-sm">
+                <label id="selectSmLabel" for="selectSm">Label</label>
+                <select id="selectSm" class="form-control form-control-sm" aria-labelledby="selectSmLabel">
                     <option>Option 1</option>
                     <option>Option 2</option>
                     <option>Option 3</option>
@@ -156,8 +169,9 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="multi-select-sm">Label</label>
-                <select id="multi-select-sm" class="form-control form-control-sm" multiple="true">
+                <label id="multiSelectSmLabel" for="multiSelectSm">Label</label>
+                <select id="multiSelectSm" class="form-control form-control-sm" multiple="true"
+                    aria-labelledby="multiSelectSmLabel">
                     <option>Option 1</option>
                     <option>Option 2</option>
                     <option>Option 3</option>
@@ -169,16 +183,18 @@
 
             <h4>Large</h4>
             <div class="form-group">
-                <label for="text-lg">Label</label>
-                <input type="text" id="text-lg" class="form-control form-control-lg" placeholder="Placeholder" />
+                <label id="textLgLabel" for="textLg">Label</label>
+                <input type="text" id="textLg" class="form-control form-control-lg" placeholder="Placeholder"
+                    aria-labelledby="textLgLabel" />
             </div>
             <div class="form-group">
-                <label for="textarea-lg">Label</label>
-                <textarea id="textarea-lg" class="form-control form-control-lg" placeholder="Placeholder"></textarea>
+                <label id="textareaLgLabel" for="textareaLg">Label</label>
+                <textarea id="textareaLg" class="form-control form-control-lg" placeholder="Placeholder"
+                    aria-labelledby="textareaLgLabel"></textarea>
             </div>
             <div class="form-group">
-                <label for="select-lg">Label</label>
-                <select id="select-lg" class="form-control form-control-lg">
+                <label id="selectLgLabel" for="selectLg">Label</label>
+                <select id="selectLg" class="form-control form-control-lg" aria-labelledby="selectLgLabel">
                     <option>Option 1</option>
                     <option>Option 2</option>
                     <option>Option 3</option>
@@ -188,8 +204,9 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="multi-select-lg">Label</label>
-                <select id="multi-select-lg" class="form-control form-control-lg" multiple="true">
+                <label id="multiSelectLgLabel" for="multiSelectLg">Label</label>
+                <select id="multiSelectLg" class="form-control form-control-lg" multiple="true"
+                    aria-labelledby="multiSelectLgLabel">
                     <option>Option 1</option>
                     <option>Option 2</option>
                     <option>Option 3</option>
