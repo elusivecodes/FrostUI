@@ -51,12 +51,16 @@
         background-color @transition-time @transition-type,
         box-shadow @transition-time @transition-type;
 
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+
     &:hover {
         z-index: @z-hover;
     }
 
     &:focus {
-        outline: 0;
         z-index: @z-focus;
         box-shadow: @shadow-xs;
     }

@@ -27,15 +27,19 @@
 
     &[href],
     button& {
-        &:hover {
+
+        &:hover,
+        &:focus {
             text-decoration: none;
+        }
+
+        &:hover {
             z-index: @z-hover;
         }
 
         &:focus {
             box-shadow: @shadow-xs;
             z-index: @z-focus;
-            outline: 0;
         }
 
         &:active {

@@ -87,14 +87,17 @@ ul.list-group {
     &[href] {
         display: flex;
 
+        &:hover,
+        &:focus {
+            text-decoration: none;
+        }
+    
         &:hover:not(:disabled) {
             z-index: @z-hover;
-            text-decoration: none;
             background-color: @shadow-color;
         }
 
         &:focus {
-            outline: 0;
             box-shadow: @shadow-xs;
         }
 

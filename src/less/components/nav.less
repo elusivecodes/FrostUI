@@ -7,13 +7,8 @@
     display: block;
     padding: @half-spacing @spacing;
 
-    &:focus,
-    &:hover {
+    &:hover:not(:focus) {
         text-decoration: none;
-    }
-
-    &:focus {
-        outline: 0;
     }
 
     &.disabled {
@@ -53,8 +48,8 @@
     
             &:focus {
                 z-index: @z-focus;
-                outline: 0;
                 box-shadow: @shadow-xs;
+                text-decoration: none;
             }
     
             &:active {
@@ -64,7 +59,6 @@
         }
 
         &:hover {
-            text-decoration: none;
             z-index: @z-hover;
         }
     }
@@ -75,7 +69,8 @@
 
     & .open .nav-link,
     & .nav-link.active,
-    & .nav-link:hover {
+    & .nav-link:hover,  
+    & .nav-link:focus {
         background-color: @white;
         border-color: @border-color;
         border-bottom-color: transparent;
@@ -93,12 +88,12 @@
         }
 
         &:hover {
-            text-decoration: none;
             z-index: @z-hover;
         }
 
         &:focus {
             z-index: @z-focus;
+            text-decoration: none
         }
     
         &:active {

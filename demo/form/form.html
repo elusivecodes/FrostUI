@@ -92,12 +92,11 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="form-check">
-                    <input type="checkbox" id="textColumnCheckbox" class="form-check-input"
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" id="textColumnCheckbox" class="custom-control-input"
                         aria-labelledby="textColumnCheckboxLabel" />
-                    <label id="textColumnCheckboxLabel" class="form-check-label" for="textColumnCheckbox">
-                        Option
-                    </label>
+                    <label id="textColumnCheckboxLabel" class="custom-control-label"
+                        for="textColumnCheckbox">Option</label>
                 </div>
             </div>
         </form>
@@ -121,26 +120,23 @@
                 <div class="row">
                     <legend class="col-form-label col-sm-2 pt-0">Label</legend>
                     <div class="col-sm-10">
-                        <div class="form-check">
-                            <input type="radio" name="radioHorizontal" id="radioHorizontal1" class="form-check-input"
-                                value="option1" aria-labelledby="radioHorizontal1Label" checked />
-                            <label id="radioHorizontal1Label" class="form-check-label" for="radioHorizontal1">
-                                Selected
-                            </label>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" name="radioHorizontal" id="radioHorizontal1"
+                                class="custom-control-input" aria-labelledby="radioHorizontal1Label" checked />
+                            <label id="radioHorizontal1Label" class="custom-control-label"
+                                for="radioHorizontal1">Selected</label>
                         </div>
-                        <div class="form-check">
-                            <input type="radio" name="radioHorizontal" id="radioHorizontal2" class="form-check-input"
-                                value="option2" aria-labelledby="radioHorizontal2Label" />
-                            <label id="radioHorizontal2Label" class="form-check-label" for="radioHorizontal2">
-                                Option
-                            </label>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" name="radioHorizontal" id="radioHorizontal2"
+                                class="custom-control-input" aria-labelledby="radioLabel" />
+                            <label id="radioHorizontal2Label" class="custom-control-label"
+                                for="radioHorizontal2">Option</label>
                         </div>
-                        <div class="form-check">
-                            <input type="radio" name="radioHorizontal" id="radioHorizontal3" class="form-check-input"
-                                value="option3" aria-labelledby="radioHorizontal3Label" disabled />
-                            <label id="radioHorizontal3Label" class="form-check-label" for="radioHorizontal3">
-                                Disabled
-                            </label>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" name="radioHorizontal" id="radioHorizontal3"
+                                class="custom-control-input" aria-labelledby="radioHorizontal3Label" disabled />
+                            <label id="radioHorizontal3Label" class="custom-control-label"
+                                for="radioHorizontal3">Disabled</label>
                         </div>
                     </div>
                 </div>
@@ -148,12 +144,11 @@
             <div class="form-group row">
                 <div class="col-sm-2">Label</div>
                 <div class="col-sm-10">
-                    <div class="form-check">
-                        <input type="checkbox" id="checkboxHorizontal" class="form-check-input"
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" id="checkboxHorizontal" class="custom-control-input"
                             aria-labelledby="checkboxHorizontalLabel" />
-                        <label id="checkboxHorizontalLabel" class="form-check-label" for="checkboxHorizontal">
-                            Option
-                        </label>
+                        <label id="checkboxHorizontalLabel" class="custom-control-label"
+                            for="checkboxHorizontal">Option</label>
                     </div>
                 </div>
             </div>
@@ -163,7 +158,6 @@
             <label id="textInline1Label" class="sr-only" for="textInline1">Label</label>
             <input type="text" id="textInline1" class="form-control mb-2 mr-sm-2" placeholder="Placeholder"
                 aria-labelledby="textInline1Label" />
-
             <label id="textInline2Label" class="sr-only" for="textInline2">Label</label>
             <div class="input-group mb-2 mr-sm-2">
                 <div class="input-group-prepend">
@@ -172,22 +166,19 @@
                 <input type="text" class="form-control" id="textInline2" placeholder="Placeholder"
                     aria-labelledby="textInline2Label" aria-describedby="textInline2Prefix" />
             </div>
-
-            <div class="form-check mb-2 mr-sm-2">
-                <input type="checkbox" id="checkboxInline" class="form-check-input"
+            <div class="custom-control custom-checkbox mb-2">
+                <input type="checkbox" id="checkboxInline" class="custom-control-input"
                     aria-labelledby="checkboxInlineLabel" />
-                <label id="checkboxInlineLabel" class="form-check-label" for="checkboxInline">
-                    Option
-                </label>
+                <label id="checkboxInlineLabel" class="custom-control-label" for="checkboxInline">Option</label>
             </div>
         </form>
         <h4>Help Text</h4>
         <form>
             <div class="form-group">
-                <label id="textHelp1Label" for="textHelp1">Label</label>
-                <input type="text" id="textHelp1" class="form-control" placeholder="Placeholder"
-                    aria-labelledby="textHelp1Label" aria-describedby="textHelp1Description" />
-                <small id="textHelp1Description" class="form-text text-muted">This is help text for the form.</small>
+                <label id="textHelpLabel" for="textHelp">Label</label>
+                <input type="text" id="textHelp" class="form-control" placeholder="Placeholder"
+                    aria-labelledby="textHelpLabel" aria-describedby="textHelpDescription" />
+                <small id="textHelpDescription" class="form-text text-muted">This is help text for the form.</small>
             </div>
         </form>
     </div>

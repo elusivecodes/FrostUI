@@ -378,12 +378,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      */
     _toggleRadio: function _toggleRadio() {
       dom.addClass(this._node, 'active');
-      dom.setProperty(this._input, 'checked', true);
-      dom.triggerEvent(this._input, 'change');
 
       if (this._siblings) {
         dom.removeClass(this._siblings, 'active');
       }
+
+      dom.setProperty(this._input, 'checked', true);
+      dom.triggerEvent(this._input, 'change');
     }
   });
   /**
