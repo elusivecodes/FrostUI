@@ -28,8 +28,6 @@ class Modal {
 
         this._dismiss = dom.find('[data-dismiss="modal"]', this._node);
 
-        this._toggles = [];
-
         this._events();
 
         if (this._settings.show) {
@@ -43,8 +41,10 @@ class Modal {
      * Destroy the Modal.
      */
     destroy() {
-        if (this._toggles.length) {
-            dom.removeEvent(this._toggles, 'click.frost.modal', this._clickEvent);
+        if (Modal._toggles.has(this._node)) {
+            const toggles = Modal._toggles.get(this._node);
+            dom.removeEvent(toggles, 'click.frost.modal', this._clickEvent);
+            Modal._toggles.delete(this._node);
         }
 
         if (this._dismiss.length) {
@@ -186,6 +186,25 @@ class Modal {
         return dom.hasClass(this._node, 'show') ?
             this.hide() :
             this.show();
+    }
+
+    static fromToggle(toggle, show = false) {
+        const target = dom.getDataset(toggle, 'target');
+        const element = dom.findOne(target);
+        const modal = dom.hasData(element, 'modal') ?
+            dom.getData(element, 'modal') :
+            new this(element, {
+                show
+            });
+
+        if (!this._toggles.has(element)) {
+            this._toggles.set(element, []);
+        }
+
+        this._toggles.get(element)
+            .push(toggle);
+
+        dom.addEvent(toggle, 'click.frost.modal', modal._clickEvent);
     }
 
 }

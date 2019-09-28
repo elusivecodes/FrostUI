@@ -7,20 +7,14 @@ Modal.defaults = {
     keyboard: true
 };
 
+Modal._toggles = new WeakMap;
+
 // Auto-initialize Modal from data-toggle
 dom.addEventOnce(window, 'load', _ => {
     const nodes = dom.find('[data-toggle="modal"]');
 
     for (const node of nodes) {
-        const target = dom.getDataset(node, 'target');
-        const element = dom.findOne(target);
-        const modal = dom.hasData(element, 'modal') ?
-            dom.getData(element, 'modal') :
-            new Modal(element, {
-                show: false
-            });
-
-        modal._eventToggle(node);
+        Modal.fromToggle(node);
     }
 });
 

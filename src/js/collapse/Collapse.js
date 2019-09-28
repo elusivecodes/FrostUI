@@ -23,18 +23,17 @@ class Collapse {
 
         this._targets = dom.find(this._settings.target);
 
-        this._hasAccordion = this._targets.find(target => dom.getDataset(target, 'parent'));
-
         this._events();
 
         dom.setData(this._node, 'collapse', this);
 
         for (const target of this._targets) {
-            if (!dom.hasData(target, 'collapses')) {
-                dom.setData(target, 'collapses', []);
+            if (!Collapse._toggles.has(target)) {
+                Collapse._toggles.set(target, []);
             }
 
-            dom.getData(target, 'collapses').push(this);
+            Collapse._toggles.get(target)
+                .push(this._node);
         }
     }
 
@@ -42,6 +41,17 @@ class Collapse {
      * Destroy the Collapse.
      */
     destroy() {
+        for (const target of this._targets) {
+            const toggles = Collapse._toggles.get(target)
+                .filter(toggle => !dom.isSame(toggle, this._node));
+
+            if (toggles.length) {
+                Collapse._toggles.set(target, toggles);
+            } else {
+                Collapse._toggles.delete(target);
+            }
+        }
+
         dom.removeEvent(this._node, 'click.frost.collapse', this._clickEvent);
 
         dom.removeData(this._node, 'collapse');
@@ -95,13 +105,13 @@ class Collapse {
                 return reject();
             }
 
-            const collapse = this._hideAccordion(hidden);
+            const accordion = this._getAccordion(hidden);
 
-            if (!collapse) {
+            if (!accordion) {
                 return reject();
             }
 
-            for (const node of collapse.nodes) {
+            for (const node of accordion.nodes) {
                 if (!DOM._triggerEvent(node, 'hide.frost.collapse')) {
                     return reject();
                 }
@@ -112,12 +122,12 @@ class Collapse {
             }
 
             const allTargets = [...targets];
-            allTargets.push(...collapse.targets);
+            allTargets.push(...accordion.targets);
 
             dom.setDataset(allTargets, 'animating', true);
 
             const animations = allTargets.map(target => {
-                const animation = collapse.targets.includes(target) ?
+                const animation = accordion.targets.includes(target) ?
                     'squeezeOut' : 'squeezeIn';
 
                 return dom[animation](target, {
@@ -130,13 +140,13 @@ class Collapse {
             dom.addClass(targets, 'show');
 
             Promise.all(animations).then(_ => {
-                if (collapse.targets.length) {
-                    dom.removeClass(collapse.targets, 'show');
-                    this._setExpanded(collapse.targets, false);
+                if (accordion.targets.length) {
+                    dom.removeClass(accordion.targets, 'show');
+                    this._setExpanded(accordion.targets, false);
                 }
 
-                if (collapse.nodes.length) {
-                    dom.triggerEvent(collapse.nodes, 'hidden.frost.collapse');
+                if (accordion.nodes.length) {
+                    dom.triggerEvent(accordion.nodes, 'hidden.frost.collapse');
                 }
 
                 this._setExpanded(targets);
@@ -180,13 +190,13 @@ class Collapse {
                 return reject();
             }
 
-            const collapse = this._hideAccordion(hidden);
+            const accordion = this._getAccordion(hidden);
 
-            if (!collapse) {
+            if (!accordion) {
                 return reject();
             }
 
-            for (const node of collapse.nodes) {
+            for (const node of accordion.nodes) {
                 if (!DOM._triggerEvent(node, 'hide.frost.collapse')) {
                     return reject();
                 }
@@ -197,12 +207,12 @@ class Collapse {
             }
 
             const allTargets = [...targets];
-            allTargets.push(...collapse.targets);
+            allTargets.push(...accordion.targets);
 
             dom.setDataset(allTargets, 'animating', true);
 
             const animations = allTargets.map(target => {
-                const animation = visible.includes(target) || collapse.targets.includes(target) ?
+                const animation = visible.includes(target) || accordion.targets.includes(target) ?
                     'squeezeOut' : 'squeezeIn';
 
                 return dom[animation](target, {
@@ -215,13 +225,13 @@ class Collapse {
             dom.addClass(hidden, 'show')
 
             Promise.all(animations).then(_ => {
-                if (collapse.targets.length) {
-                    dom.removeClass(collapse.targets, 'show');
-                    this._setExpanded(collapse.targets, false);
+                if (accordion.targets.length) {
+                    dom.removeClass(accordion.targets, 'show');
+                    this._setExpanded(accordion.targets, false);
                 }
 
-                if (collapse.nodes.length) {
-                    dom.triggerEvent(collapse.nodes, 'hidden.frost.collapse');
+                if (accordion.nodes.length) {
+                    dom.triggerEvent(accordion.nodes, 'hidden.frost.collapse');
                 }
 
                 if (visible.length) {

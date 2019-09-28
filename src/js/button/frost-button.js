@@ -3,7 +3,7 @@ Button.defaults = {};
 
 // Auto-initialize Button from data-toggle
 dom.addEventOnce(window, 'load', _ => {
-    const nodes = dom.find('[data-toggle="buttons"] > .btn, [data-toggle="button"]');
+    const nodes = dom.find('[data-toggle="buttons"] > *, [data-toggle="button"]');
 
     for (const node of nodes) {
         new Button(node);

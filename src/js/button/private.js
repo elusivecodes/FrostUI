@@ -25,6 +25,7 @@ Object.assign(Button.prototype, {
 
         if (this._input) {
             dom.setProperty(this._input, 'checked', !dom.getProperty(this._input, 'checked'));
+            dom.triggerEvent(this._input, 'change');
         }
     },
 
@@ -34,11 +35,12 @@ Object.assign(Button.prototype, {
     _toggleRadio() {
         dom.addClass(this._node, 'active');
 
-        dom.setProperty(this._input, 'checked', true);
-
-        if (this._siblings.length) {
+        if (this._siblings) {
             dom.removeClass(this._siblings, 'active');
         }
+
+        dom.setProperty(this._input, 'checked', true);
+        dom.triggerEvent(this._input, 'change');
     }
 
 });

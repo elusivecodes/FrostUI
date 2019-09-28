@@ -19,11 +19,12 @@ class Button {
             ...settings
         };
 
-        const group = dom.closest(this._node, '[data-toggle="buttons"]');
-        this._siblings = dom.find('.btn', group).filter(node => !dom.isSame(node, this._node));
-
         this._input = dom.findOne('input[type="checkbox"], input[type="radio"]', this._node);
         this._isRadio = this._input && dom.is(this._input, '[type="radio"]');
+
+        if (this._isRadio) {
+            this._siblings = dom.siblings(this._node);
+        }
 
         this._events();
 

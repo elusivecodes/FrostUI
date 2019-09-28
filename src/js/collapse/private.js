@@ -18,13 +18,13 @@ Object.assign(Collapse.prototype, {
     },
 
     /**
-     * Hide accordion nodes for all targets.
+     * Get accordion toggles and targets for the target nodes.
      * @param {array} targets The target nodes.
+     * @return {object} The accordion toggles and targets.
      */
-    _hideAccordion(targets) {
-        const parents = [];
-        const nodes = [];
-        const newTargets = [];
+    _getAccordion(targets) {
+        const accordionToggles = [];
+        const accordionTargets = [];
 
         for (const target of targets) {
             const parent = dom.getDataset(target, 'parent');
@@ -33,44 +33,34 @@ Object.assign(Collapse.prototype, {
             }
 
             const parentNode = dom.closest(target, parent);
-            if (!parents.includes(parentNode)) {
-                parents.push(parentNode);
-            }
-        }
+            const collapseToggles = dom.find('[data-toggle="collapse"]', parentNode)
+                .filter(toggle => !dom.isSame(toggle, this._node) && dom.hasData(toggle, 'collapse'));
 
-        for (const parent of parents) {
-            const collapseToggle = dom.find('[data-toggle="collapse"]', parent);
-            for (const toggle of collapseToggle) {
-                if (dom.isSame(this._node, toggle)) {
-                    continue;
-                }
-
-                if (!dom.hasData(toggle, 'collapse')) {
+            for (const toggle of collapseToggles) {
+                if (accordionToggles.includes(toggle)) {
                     continue;
                 }
 
                 const collapse = dom.getData(toggle, 'collapse');
-
                 const collapseTargets = dom.find(collapse._settings.target)
-                    .filter(target => dom.hasClass(target, 'show'));
+                    .filter(target => !targets.includes(target) && !accordionTargets.includes(target) && dom.hasClass(target, 'show'));
 
                 if (!collapseTargets.length) {
                     continue;
                 }
-                const animating = collapseTargets.find(target => dom.getDataset(target, 'animating'));
 
-                if (animating) {
+                if (collapseTargets.find(target => dom.getDataset(target, 'animating'))) {
                     return false;
                 }
 
-                nodes.push(collapse._node);
-                newTargets.push(...collapseTargets);
+                accordionToggles.push(toggle);
+                accordionTargets.push(...collapseTargets);
             }
         }
 
         return {
-            nodes,
-            targets: newTargets
+            nodes: accordionToggles,
+            targets: accordionTargets
         };
     },
 
@@ -81,9 +71,9 @@ Object.assign(Collapse.prototype, {
      */
     _setExpanded(targets, expanded = true) {
         for (const target of targets) {
-            const collapses = dom.getData(target, 'collapses');
-            for (const collapse of collapses) {
-                dom.setAttribute(collapse._node, 'aria-expanded', expanded);
+            const toggles = Collapse._toggles.get(target);
+            for (const toggle of toggles) {
+                dom.setAttribute(toggle, 'aria-expanded', expanded);
             }
         }
     }

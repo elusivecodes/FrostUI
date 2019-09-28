@@ -41,12 +41,6 @@ Object.assign(Modal.prototype, {
         if (this._dismiss.length) {
             dom.addEvent(this._dismiss, 'click.frost.modal', this._dismissEvent);
         }
-    },
-
-    _eventToggle(toggle) {
-        dom.addEvent(toggle, 'click.frost.modal', this._clickEvent);
-
-        this._toggles.push(toggle);
     }
 
 });

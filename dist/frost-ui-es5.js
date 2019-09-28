@@ -234,18 +234,16 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Button} A new Button object.
      */
     function Button(node, settings) {
-      var _this3 = this;
-
       _classCallCheck(this, Button);
 
       this._node = node;
       this._settings = _objectSpread({}, Button.defaults, {}, dom.getDataset(this._node), {}, settings);
-      var group = dom.closest(this._node, '[data-toggle="buttons"]');
-      this._siblings = dom.find('.btn', group).filter(function (node) {
-        return !dom.isSame(node, _this3._node);
-      });
       this._input = dom.findOne('input[type="checkbox"], input[type="radio"]', this._node);
       this._isRadio = this._input && dom.is(this._input, '[type="radio"]');
+
+      if (this._isRadio) {
+        this._siblings = dom.siblings(this._node);
+      }
 
       this._events();
 
@@ -280,7 +278,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   Button.defaults = {}; // Auto-initialize Button from data-toggle
 
   dom.addEventOnce(window, 'load', function (_) {
-    var nodes = dom.find('[data-toggle="buttons"] > .btn, [data-toggle="button"]');
+    var nodes = dom.find('[data-toggle="buttons"] > *, [data-toggle="button"]');
     var _iteratorNormalCompletion2 = true;
     var _didIteratorError2 = false;
     var _iteratorError2 = undefined;
@@ -352,12 +350,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Button.
      */
     _events: function _events() {
-      var _this4 = this;
+      var _this3 = this;
 
       this._clickEvent = function (e) {
         e.preventDefault();
 
-        _this4.toggle();
+        _this3.toggle();
       };
 
       dom.addEvent(this._node, 'click.frost.button', this._clickEvent);
@@ -371,6 +369,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       if (this._input) {
         dom.setProperty(this._input, 'checked', !dom.getProperty(this._input, 'checked'));
+        dom.triggerEvent(this._input, 'change');
       }
     },
 
@@ -380,8 +379,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _toggleRadio: function _toggleRadio() {
       dom.addClass(this._node, 'active');
       dom.setProperty(this._input, 'checked', true);
+      dom.triggerEvent(this._input, 'change');
 
-      if (this._siblings.length) {
+      if (this._siblings) {
         dom.removeClass(this._siblings, 'active');
       }
     }
@@ -604,25 +604,25 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Carousel.
      */
     _events: function _events() {
-      var _this5 = this;
+      var _this4 = this;
 
       this._clickNextEvent = function (e) {
         e.preventDefault();
 
-        _this5.next()["catch"](function (_) {});
+        _this4.next()["catch"](function (_) {});
       };
 
       this._clickPrevEvent = function (e) {
         e.preventDefault();
 
-        _this5.prev()["catch"](function (_) {});
+        _this4.prev()["catch"](function (_) {});
       };
 
       this._clickSlideEvent = function (e) {
         e.preventDefault();
         var slideTo = dom.getDataset(e.currentTarget, 'slideTo');
 
-        _this5.show(slideTo)["catch"](function (_) {});
+        _this4.show(slideTo)["catch"](function (_) {});
       };
 
       this._keyDownEvent = function (e) {
@@ -633,18 +633,18 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         e.preventDefault();
 
         if (e.key === 'ArrowLeft') {
-          _this5.prev()["catch"](function (_) {});
+          _this4.prev()["catch"](function (_) {});
         } else if (e.key === 'ArrowRight') {
-          _this5.next()["catch"](function (_) {});
+          _this4.next()["catch"](function (_) {});
         }
       };
 
       this._mouseEnterEvent = function (_) {
-        return _this5.pause();
+        return _this4.pause();
       };
 
       this._mouseLeaveEvent = function (_) {
-        return _this5._setTimer();
+        return _this4._setTimer();
       };
 
       dom.addEventDelegate(this._node, 'click.frost.carousel', '.carousel-next', this._clickNextEvent);
@@ -665,110 +665,94 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Set a timer for the next Carousel cycle.
      */
     _setTimer: function _setTimer() {
-      var _this6 = this;
+      var _this5 = this;
 
       var interval = dom.getDataset(this._items[this._index], 'interval');
       this._timer = setTimeout(function (_) {
-        return _this6.cycle();
+        return _this5.cycle();
       }, interval ? interval : this._settings.interval);
     },
 
     /**
      * Cycle to a specific Carousel item.
      * @param {number} index The item index to cycle to.
-     * @param {function} [queuedResolve] The queued resolve callback.
-     * @param {function} [queuedReject] The queued reject callback.
      * @returns {Promise} A new Promise that resolves when the animation has completed.
      */
-    _show: function _show(index, queuedResolve, queuedReject) {
-      var _this7 = this;
+    _show: function _show(index) {
+      var _this6 = this;
 
       return new Promise(function (resolve, reject) {
-        if (dom.getDataset(_this7._node, 'sliding')) {
-          _this7._queue.push({
-            index: index,
-            resolve: resolve,
-            reject: reject
-          });
+        if (dom.getDataset(_this6._node, 'sliding')) {
+          _this6._queue.push(index);
 
           return;
         }
 
-        var fullResolve = function fullResolve(_) {
-          queuedResolve && queuedResolve();
-          resolve();
-        };
-
-        var fullReject = function fullReject(_) {
-          queuedReject && queuedReject();
-          reject();
-        };
-
         index = parseInt(index);
 
-        if (!_this7._settings.wrap && (index < 0 || index > _this7._items.length - 1)) {
-          return fullReject();
+        if (!_this6._settings.wrap && (index < 0 || index > _this6._items.length - 1)) {
+          return reject();
         }
 
         var dir = 0;
 
         if (index < 0) {
           dir = -1;
-        } else if (index > _this7._items.length - 1) {
+        } else if (index > _this6._items.length - 1) {
           dir = 1;
         }
 
-        index %= _this7._items.length;
+        index %= _this6._items.length;
 
         if (index < 0) {
-          index = _this7._items.length + index;
+          index = _this6._items.length + index;
         }
 
-        if (index === _this7._index) {
-          return fullReject();
+        if (index === _this6._index) {
+          return reject();
         }
 
-        var direction = dir == -1 || dir == 0 && index < _this7._index ? 'left' : 'right';
+        var direction = dir == -1 || dir == 0 && index < _this6._index ? 'left' : 'right';
         var eventData = {
           direction: direction,
-          relatedTarget: _this7._items[index],
-          from: _this7._index,
+          relatedTarget: _this6._items[index],
+          from: _this6._index,
           to: index
         };
 
-        if (!DOM._triggerEvent(_this7._node, 'slide.frost.carousel', eventData)) {
-          return fullReject();
+        if (!DOM._triggerEvent(_this6._node, 'slide.frost.carousel', eventData)) {
+          return reject();
         }
 
-        var oldIndex = _this7._index;
-        _this7._index = index;
-        dom.setDataset(_this7._node, 'sliding', true);
+        var oldIndex = _this6._index;
+        _this6._index = index;
+        dom.setDataset(_this6._node, 'sliding', true);
 
-        _this7.pause();
+        _this6.pause();
 
-        dom.addClass(_this7._items[_this7._index], 'active');
-        dom.removeClass(_this7._items[oldIndex], 'active');
-        dom.animate(_this7._items[_this7._index], function (node, progress, options) {
-          return _this7._update(node, _this7._items[oldIndex], progress, options.direction);
+        dom.addClass(_this6._items[_this6._index], 'active');
+        dom.removeClass(_this6._items[oldIndex], 'active');
+        dom.animate(_this6._items[_this6._index], function (node, progress, options) {
+          return _this6._update(node, _this6._items[oldIndex], progress, options.direction);
         }, {
           direction: direction,
-          duration: _this7._settings.transition
+          duration: _this6._settings.transition
         }).then(function (_) {
-          dom.removeClass(dom.find('.active[data-slide-to]', _this7._node), 'active');
-          dom.addClass(dom.find('[data-slide-to="' + _this7._index + '"]', _this7._node), 'active');
-          dom.removeDataset(_this7._node, 'sliding');
-          dom.triggerEvent(_this7._node, 'slid.frost.carousel', eventData);
-          fullResolve();
+          dom.removeClass(dom.find('.active[data-slide-to]', _this6._node), 'active');
+          dom.addClass(dom.find('[data-slide-to="' + _this6._index + '"]', _this6._node), 'active');
+          dom.removeDataset(_this6._node, 'sliding');
+          dom.triggerEvent(_this6._node, 'slid.frost.carousel', eventData);
+          resolve();
 
-          if (!_this7._queue.length) {
-            _this7._setTimer();
+          if (!_this6._queue.length) {
+            _this6._setTimer();
 
             return;
           }
 
-          var next = _this7._queue.shift();
+          var next = _this6._queue.shift();
 
-          return _this7._show(next.index, next.resolve, next.reject);
+          return _this6._show(next);
         })["catch"](reject);
       });
     },
@@ -816,9 +800,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this._node = node;
       this._settings = _objectSpread({}, Collapse.defaults, {}, dom.getDataset(this._node), {}, settings);
       this._targets = dom.find(this._settings.target);
-      this._hasAccordion = this._targets.find(function (target) {
-        return dom.getDataset(target, 'parent');
-      });
 
       this._events();
 
@@ -831,11 +812,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         for (var _iterator4 = this._targets[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
           var target = _step4.value;
 
-          if (!dom.hasData(target, 'collapses')) {
-            dom.setData(target, 'collapses', []);
+          if (!Collapse._toggles.has(target)) {
+            Collapse._toggles.set(target, []);
           }
 
-          dom.getData(target, 'collapses').push(this);
+          Collapse._toggles.get(target).push(this._node);
         }
       } catch (err) {
         _didIteratorError4 = true;
@@ -860,6 +841,41 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Collapse, [{
       key: "destroy",
       value: function destroy() {
+        var _this7 = this;
+
+        var _iteratorNormalCompletion5 = true;
+        var _didIteratorError5 = false;
+        var _iteratorError5 = undefined;
+
+        try {
+          for (var _iterator5 = this._targets[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+            var target = _step5.value;
+
+            var toggles = Collapse._toggles.get(target).filter(function (toggle) {
+              return !dom.isSame(toggle, _this7._node);
+            });
+
+            if (toggles.length) {
+              Collapse._toggles.set(target, toggles);
+            } else {
+              Collapse._toggles["delete"](target);
+            }
+          }
+        } catch (err) {
+          _didIteratorError5 = true;
+          _iteratorError5 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion5 && _iterator5["return"] != null) {
+              _iterator5["return"]();
+            }
+          } finally {
+            if (_didIteratorError5) {
+              throw _iteratorError5;
+            }
+          }
+        }
+
         dom.removeEvent(this._node, 'click.frost.collapse', this._clickEvent);
         dom.removeData(this._node, 'collapse');
       }
@@ -921,35 +937,35 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             return reject();
           }
 
-          var collapse = _this9._hideAccordion(hidden);
+          var accordion = _this9._getAccordion(hidden);
 
-          if (!collapse) {
+          if (!accordion) {
             return reject();
           }
 
-          var _iteratorNormalCompletion5 = true;
-          var _didIteratorError5 = false;
-          var _iteratorError5 = undefined;
+          var _iteratorNormalCompletion6 = true;
+          var _didIteratorError6 = false;
+          var _iteratorError6 = undefined;
 
           try {
-            for (var _iterator5 = collapse.nodes[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-              var node = _step5.value;
+            for (var _iterator6 = accordion.nodes[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+              var node = _step6.value;
 
               if (!DOM._triggerEvent(node, 'hide.frost.collapse')) {
                 return reject();
               }
             }
           } catch (err) {
-            _didIteratorError5 = true;
-            _iteratorError5 = err;
+            _didIteratorError6 = true;
+            _iteratorError6 = err;
           } finally {
             try {
-              if (!_iteratorNormalCompletion5 && _iterator5["return"] != null) {
-                _iterator5["return"]();
+              if (!_iteratorNormalCompletion6 && _iterator6["return"] != null) {
+                _iterator6["return"]();
               }
             } finally {
-              if (_didIteratorError5) {
-                throw _iteratorError5;
+              if (_didIteratorError6) {
+                throw _iteratorError6;
               }
             }
           }
@@ -960,10 +976,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
           var allTargets = _toConsumableArray(targets);
 
-          allTargets.push.apply(allTargets, _toConsumableArray(collapse.targets));
+          allTargets.push.apply(allTargets, _toConsumableArray(accordion.targets));
           dom.setDataset(allTargets, 'animating', true);
           var animations = allTargets.map(function (target) {
-            var animation = collapse.targets.includes(target) ? 'squeezeOut' : 'squeezeIn';
+            var animation = accordion.targets.includes(target) ? 'squeezeOut' : 'squeezeIn';
             return dom[animation](target, {
               direction: _this9._settings.direction,
               duration: _this9._settings.duration,
@@ -972,14 +988,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           });
           dom.addClass(targets, 'show');
           Promise.all(animations).then(function (_) {
-            if (collapse.targets.length) {
-              dom.removeClass(collapse.targets, 'show');
+            if (accordion.targets.length) {
+              dom.removeClass(accordion.targets, 'show');
 
-              _this9._setExpanded(collapse.targets, false);
+              _this9._setExpanded(accordion.targets, false);
             }
 
-            if (collapse.nodes.length) {
-              dom.triggerEvent(collapse.nodes, 'hidden.frost.collapse');
+            if (accordion.nodes.length) {
+              dom.triggerEvent(accordion.nodes, 'hidden.frost.collapse');
             }
 
             _this9._setExpanded(targets);
@@ -1005,13 +1021,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           var targets = [];
           var hidden = [];
           var visible = [];
-          var _iteratorNormalCompletion6 = true;
-          var _didIteratorError6 = false;
-          var _iteratorError6 = undefined;
+          var _iteratorNormalCompletion7 = true;
+          var _didIteratorError7 = false;
+          var _iteratorError7 = undefined;
 
           try {
-            for (var _iterator6 = _this10._targets[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-              var target = _step6.value;
+            for (var _iterator7 = _this10._targets[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+              var target = _step7.value;
 
               if (dom.getDataset(target, 'animating')) {
                 continue;
@@ -1023,47 +1039,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
                 visible.push(target);
               } else {
                 hidden.push(target);
-              }
-            }
-          } catch (err) {
-            _didIteratorError6 = true;
-            _iteratorError6 = err;
-          } finally {
-            try {
-              if (!_iteratorNormalCompletion6 && _iterator6["return"] != null) {
-                _iterator6["return"]();
-              }
-            } finally {
-              if (_didIteratorError6) {
-                throw _iteratorError6;
-              }
-            }
-          }
-
-          if (!targets.length) {
-            return reject();
-          }
-
-          if (visible.length && !DOM._triggerEvent(_this10._node, 'hide.frost.collapse')) {
-            return reject();
-          }
-
-          var collapse = _this10._hideAccordion(hidden);
-
-          if (!collapse) {
-            return reject();
-          }
-
-          var _iteratorNormalCompletion7 = true;
-          var _didIteratorError7 = false;
-          var _iteratorError7 = undefined;
-
-          try {
-            for (var _iterator7 = collapse.nodes[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
-              var node = _step7.value;
-
-              if (!DOM._triggerEvent(node, 'hide.frost.collapse')) {
-                return reject();
               }
             }
           } catch (err) {
@@ -1081,15 +1056,56 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             }
           }
 
+          if (!targets.length) {
+            return reject();
+          }
+
+          if (visible.length && !DOM._triggerEvent(_this10._node, 'hide.frost.collapse')) {
+            return reject();
+          }
+
+          var accordion = _this10._getAccordion(hidden);
+
+          if (!accordion) {
+            return reject();
+          }
+
+          var _iteratorNormalCompletion8 = true;
+          var _didIteratorError8 = false;
+          var _iteratorError8 = undefined;
+
+          try {
+            for (var _iterator8 = accordion.nodes[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
+              var node = _step8.value;
+
+              if (!DOM._triggerEvent(node, 'hide.frost.collapse')) {
+                return reject();
+              }
+            }
+          } catch (err) {
+            _didIteratorError8 = true;
+            _iteratorError8 = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion8 && _iterator8["return"] != null) {
+                _iterator8["return"]();
+              }
+            } finally {
+              if (_didIteratorError8) {
+                throw _iteratorError8;
+              }
+            }
+          }
+
           if (hidden.length && !DOM._triggerEvent(_this10._node, 'show.frost.collapse')) {
             return reject();
           }
 
           var allTargets = [].concat(targets);
-          allTargets.push.apply(allTargets, _toConsumableArray(collapse.targets));
+          allTargets.push.apply(allTargets, _toConsumableArray(accordion.targets));
           dom.setDataset(allTargets, 'animating', true);
           var animations = allTargets.map(function (target) {
-            var animation = visible.includes(target) || collapse.targets.includes(target) ? 'squeezeOut' : 'squeezeIn';
+            var animation = visible.includes(target) || accordion.targets.includes(target) ? 'squeezeOut' : 'squeezeIn';
             return dom[animation](target, {
               direction: _this10._settings.direction,
               duration: _this10._settings.duration,
@@ -1098,14 +1114,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           });
           dom.addClass(hidden, 'show');
           Promise.all(animations).then(function (_) {
-            if (collapse.targets.length) {
-              dom.removeClass(collapse.targets, 'show');
+            if (accordion.targets.length) {
+              dom.removeClass(accordion.targets, 'show');
 
-              _this10._setExpanded(collapse.targets, false);
+              _this10._setExpanded(accordion.targets, false);
             }
 
-            if (collapse.nodes.length) {
-              dom.triggerEvent(collapse.nodes, 'hidden.frost.collapse');
+            if (accordion.nodes.length) {
+              dom.triggerEvent(accordion.nodes, 'hidden.frost.collapse');
             }
 
             if (visible.length) {
@@ -1137,30 +1153,31 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   Collapse.defaults = {
     direction: 'bottom',
     duration: 250
-  }; // Auto-initialize Collapse from data-ride
+  };
+  Collapse._toggles = new WeakMap(); // Auto-initialize Collapse from data-ride
 
   dom.addEventOnce(window, 'load', function (_) {
     var nodes = dom.find('[data-toggle="collapse"]');
-    var _iteratorNormalCompletion8 = true;
-    var _didIteratorError8 = false;
-    var _iteratorError8 = undefined;
+    var _iteratorNormalCompletion9 = true;
+    var _didIteratorError9 = false;
+    var _iteratorError9 = undefined;
 
     try {
-      for (var _iterator8 = nodes[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
-        var node = _step8.value;
+      for (var _iterator9 = nodes[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
+        var node = _step9.value;
         new Collapse(node);
       }
     } catch (err) {
-      _didIteratorError8 = true;
-      _iteratorError8 = err;
+      _didIteratorError9 = true;
+      _iteratorError9 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion8 && _iterator8["return"] != null) {
-          _iterator8["return"]();
+        if (!_iteratorNormalCompletion9 && _iterator9["return"] != null) {
+          _iterator9["return"]();
         }
       } finally {
-        if (_didIteratorError8) {
-          throw _iteratorError8;
+        if (_didIteratorError9) {
+          throw _iteratorError9;
         }
       }
     }
@@ -1224,20 +1241,22 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     },
 
     /**
-     * Hide accordion nodes for all targets.
+     * Get accordion toggles and targets for the target nodes.
      * @param {array} targets The target nodes.
+     * @return {object} The accordion toggles and targets.
      */
-    _hideAccordion: function _hideAccordion(targets) {
-      var parents = [];
-      var nodes = [];
-      var newTargets = [];
-      var _iteratorNormalCompletion9 = true;
-      var _didIteratorError9 = false;
-      var _iteratorError9 = undefined;
+    _getAccordion: function _getAccordion(targets) {
+      var _this12 = this;
+
+      var accordionToggles = [];
+      var accordionTargets = [];
+      var _iteratorNormalCompletion10 = true;
+      var _didIteratorError10 = false;
+      var _iteratorError10 = undefined;
 
       try {
-        for (var _iterator9 = targets[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
-          var target = _step9.value;
+        for (var _iterator10 = targets[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
+          var target = _step10.value;
           var parent = dom.getDataset(target, 'parent');
 
           if (!parent) {
@@ -1245,84 +1264,72 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           }
 
           var parentNode = dom.closest(target, parent);
+          var collapseToggles = dom.find('[data-toggle="collapse"]', parentNode).filter(function (toggle) {
+            return !dom.isSame(toggle, _this12._node) && dom.hasData(toggle, 'collapse');
+          });
+          var _iteratorNormalCompletion11 = true;
+          var _didIteratorError11 = false;
+          var _iteratorError11 = undefined;
 
-          if (!parents.includes(parentNode)) {
-            parents.push(parentNode);
+          try {
+            for (var _iterator11 = collapseToggles[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
+              var toggle = _step11.value;
+
+              if (accordionToggles.includes(toggle)) {
+                continue;
+              }
+
+              var collapse = dom.getData(toggle, 'collapse');
+              var collapseTargets = dom.find(collapse._settings.target).filter(function (target) {
+                return !targets.includes(target) && !accordionTargets.includes(target) && dom.hasClass(target, 'show');
+              });
+
+              if (!collapseTargets.length) {
+                continue;
+              }
+
+              if (collapseTargets.find(function (target) {
+                return dom.getDataset(target, 'animating');
+              })) {
+                return false;
+              }
+
+              accordionToggles.push(toggle);
+              accordionTargets.push.apply(accordionTargets, _toConsumableArray(collapseTargets));
+            }
+          } catch (err) {
+            _didIteratorError11 = true;
+            _iteratorError11 = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion11 && _iterator11["return"] != null) {
+                _iterator11["return"]();
+              }
+            } finally {
+              if (_didIteratorError11) {
+                throw _iteratorError11;
+              }
+            }
           }
         }
       } catch (err) {
-        _didIteratorError9 = true;
-        _iteratorError9 = err;
+        _didIteratorError10 = true;
+        _iteratorError10 = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion9 && _iterator9["return"] != null) {
-            _iterator9["return"]();
+          if (!_iteratorNormalCompletion10 && _iterator10["return"] != null) {
+            _iterator10["return"]();
           }
         } finally {
-          if (_didIteratorError9) {
-            throw _iteratorError9;
-          }
-        }
-      }
-
-      for (var _i = 0, _parents = parents; _i < _parents.length; _i++) {
-        var _parent = _parents[_i];
-        var collapseToggle = dom.find('[data-toggle="collapse"]', _parent);
-        var _iteratorNormalCompletion10 = true;
-        var _didIteratorError10 = false;
-        var _iteratorError10 = undefined;
-
-        try {
-          for (var _iterator10 = collapseToggle[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
-            var toggle = _step10.value;
-
-            if (dom.isSame(this._node, toggle)) {
-              continue;
-            }
-
-            if (!dom.hasData(toggle, 'collapse')) {
-              continue;
-            }
-
-            var collapse = dom.getData(toggle, 'collapse');
-            var collapseTargets = dom.find(collapse._settings.target).filter(function (target) {
-              return dom.hasClass(target, 'show');
-            });
-
-            if (!collapseTargets.length) {
-              continue;
-            }
-
-            var animating = collapseTargets.find(function (target) {
-              return dom.getDataset(target, 'animating');
-            });
-
-            if (animating) {
-              return false;
-            }
-
-            nodes.push(collapse._node);
-            newTargets.push.apply(newTargets, _toConsumableArray(collapseTargets));
-          }
-        } catch (err) {
-          _didIteratorError10 = true;
-          _iteratorError10 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion10 && _iterator10["return"] != null) {
-              _iterator10["return"]();
-            }
-          } finally {
-            if (_didIteratorError10) {
-              throw _iteratorError10;
-            }
+          if (_didIteratorError10) {
+            throw _iteratorError10;
           }
         }
       }
 
       return {
-        nodes: nodes,
-        targets: newTargets
+        nodes: accordionToggles,
+        targets: accordionTargets
       };
     },
 
@@ -1333,49 +1340,51 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      */
     _setExpanded: function _setExpanded(targets) {
       var expanded = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-      var _iteratorNormalCompletion11 = true;
-      var _didIteratorError11 = false;
-      var _iteratorError11 = undefined;
+      var _iteratorNormalCompletion12 = true;
+      var _didIteratorError12 = false;
+      var _iteratorError12 = undefined;
 
       try {
-        for (var _iterator11 = targets[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
-          var target = _step11.value;
-          var collapses = dom.getData(target, 'collapses');
-          var _iteratorNormalCompletion12 = true;
-          var _didIteratorError12 = false;
-          var _iteratorError12 = undefined;
+        for (var _iterator12 = targets[Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
+          var target = _step12.value;
+
+          var toggles = Collapse._toggles.get(target);
+
+          var _iteratorNormalCompletion13 = true;
+          var _didIteratorError13 = false;
+          var _iteratorError13 = undefined;
 
           try {
-            for (var _iterator12 = collapses[Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
-              var collapse = _step12.value;
-              dom.setAttribute(collapse._node, 'aria-expanded', expanded);
+            for (var _iterator13 = toggles[Symbol.iterator](), _step13; !(_iteratorNormalCompletion13 = (_step13 = _iterator13.next()).done); _iteratorNormalCompletion13 = true) {
+              var toggle = _step13.value;
+              dom.setAttribute(toggle, 'aria-expanded', expanded);
             }
           } catch (err) {
-            _didIteratorError12 = true;
-            _iteratorError12 = err;
+            _didIteratorError13 = true;
+            _iteratorError13 = err;
           } finally {
             try {
-              if (!_iteratorNormalCompletion12 && _iterator12["return"] != null) {
-                _iterator12["return"]();
+              if (!_iteratorNormalCompletion13 && _iterator13["return"] != null) {
+                _iterator13["return"]();
               }
             } finally {
-              if (_didIteratorError12) {
-                throw _iteratorError12;
+              if (_didIteratorError13) {
+                throw _iteratorError13;
               }
             }
           }
         }
       } catch (err) {
-        _didIteratorError11 = true;
-        _iteratorError11 = err;
+        _didIteratorError12 = true;
+        _iteratorError12 = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion11 && _iterator11["return"] != null) {
-            _iterator11["return"]();
+          if (!_iteratorNormalCompletion12 && _iterator12["return"] != null) {
+            _iterator12["return"]();
           }
         } finally {
-          if (_didIteratorError11) {
-            throw _iteratorError11;
+          if (_didIteratorError12) {
+            throw _iteratorError12;
           }
         }
       }
@@ -1467,28 +1476,28 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "hide",
       value: function hide() {
-        var _this12 = this;
+        var _this13 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!dom.hasClass(_this12._containerNode, 'open') || dom.getDataset(_this12._menuNode, 'animating')) {
+          if (!dom.hasClass(_this13._containerNode, 'open') || dom.getDataset(_this13._menuNode, 'animating')) {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this12._node, 'hide.frost.dropdown')) {
+          if (!DOM._triggerEvent(_this13._node, 'hide.frost.dropdown')) {
             return reject();
           }
 
-          dom.setDataset(_this12._menuNode, 'animating', true);
-          dom.removeEvent(document, 'click.frost.dropdown', _this12._documentClickEvent);
-          dom.fadeOut(_this12._menuNode, {
-            duration: _this12._settings.duration
+          dom.setDataset(_this13._menuNode, 'animating', true);
+          dom.removeEvent(document, 'click.frost.dropdown', _this13._documentClickEvent);
+          dom.fadeOut(_this13._menuNode, {
+            duration: _this13._settings.duration
           }).then(function (_) {
-            dom.removeClass(_this12._containerNode, 'open');
-            dom.setAttribute(_this12._node, 'aria-expanded', false);
-            dom.triggerEvent(_this12._node, 'hidden.frost.dropdown');
+            dom.removeClass(_this13._containerNode, 'open');
+            dom.setAttribute(_this13._node, 'aria-expanded', false);
+            dom.triggerEvent(_this13._node, 'hidden.frost.dropdown');
             resolve();
           })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset(_this12._menuNode, 'animating');
+            return dom.removeDataset(_this13._menuNode, 'animating');
           });
         });
       }
@@ -1500,28 +1509,28 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show() {
-        var _this13 = this;
+        var _this14 = this;
 
         return new Promise(function (resolve, reject) {
-          if (dom.hasClass(_this13._containerNode, 'open') || dom.getDataset(_this13._menuNode, 'animating')) {
+          if (dom.hasClass(_this14._containerNode, 'open') || dom.getDataset(_this14._menuNode, 'animating')) {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this13._node, 'show.frost.dropdown')) {
+          if (!DOM._triggerEvent(_this14._node, 'show.frost.dropdown')) {
             return reject();
           }
 
-          dom.setDataset(_this13._menuNode, 'animating', true);
-          dom.addClass(_this13._containerNode, 'open');
-          dom.fadeIn(_this13._menuNode, {
-            duration: _this13._settings.duration
+          dom.setDataset(_this14._menuNode, 'animating', true);
+          dom.addClass(_this14._containerNode, 'open');
+          dom.fadeIn(_this14._menuNode, {
+            duration: _this14._settings.duration
           }).then(function (_) {
-            dom.setAttribute(_this13._node, 'aria-expanded', true);
-            dom.addEvent(document, 'click.frost.dropdown', _this13._documentClickEvent);
-            dom.triggerEvent(_this13._node, 'shown.frost.dropdown');
+            dom.setAttribute(_this14._node, 'aria-expanded', true);
+            dom.addEvent(document, 'click.frost.dropdown', _this14._documentClickEvent);
+            dom.triggerEvent(_this14._node, 'shown.frost.dropdown');
             resolve();
           })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset(_this13._menuNode, 'animating');
+            return dom.removeDataset(_this14._menuNode, 'animating');
           });
         });
       }
@@ -1552,26 +1561,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   dom.addEventOnce(window, 'load', function (_) {
     var nodes = dom.find('[data-toggle="dropdown"]');
-    var _iteratorNormalCompletion13 = true;
-    var _didIteratorError13 = false;
-    var _iteratorError13 = undefined;
+    var _iteratorNormalCompletion14 = true;
+    var _didIteratorError14 = false;
+    var _iteratorError14 = undefined;
 
     try {
-      for (var _iterator13 = nodes[Symbol.iterator](), _step13; !(_iteratorNormalCompletion13 = (_step13 = _iterator13.next()).done); _iteratorNormalCompletion13 = true) {
-        var node = _step13.value;
+      for (var _iterator14 = nodes[Symbol.iterator](), _step14; !(_iteratorNormalCompletion14 = (_step14 = _iterator14.next()).done); _iteratorNormalCompletion14 = true) {
+        var node = _step14.value;
         new Dropdown(node);
       }
     } catch (err) {
-      _didIteratorError13 = true;
-      _iteratorError13 = err;
+      _didIteratorError14 = true;
+      _iteratorError14 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion13 && _iterator13["return"] != null) {
-          _iterator13["return"]();
+        if (!_iteratorNormalCompletion14 && _iterator14["return"] != null) {
+          _iterator14["return"]();
         }
       } finally {
-        if (_didIteratorError13) {
-          throw _iteratorError13;
+        if (_didIteratorError14) {
+          throw _iteratorError14;
         }
       }
     }
@@ -1623,12 +1632,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Dropdown.
      */
     _events: function _events() {
-      var _this14 = this;
+      var _this15 = this;
 
       this._clickEvent = function (e) {
         e.preventDefault();
 
-        _this14.toggle()["catch"](function (_) {});
+        _this15.toggle()["catch"](function (_) {});
       };
 
       this._keyUpEvent = function (e) {
@@ -1638,7 +1647,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         e.preventDefault();
 
-        _this14.toggle()["catch"](function (_) {});
+        _this15.toggle()["catch"](function (_) {});
       };
 
       this._keyDownEvent = function (e) {
@@ -1648,8 +1657,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         e.preventDefault();
 
-        _this14.show().then(function (_) {
-          var next = dom.findOne('.dropdown-item', _this14._menuNode);
+        _this15.show().then(function (_) {
+          var next = dom.findOne('.dropdown-item', _this15._menuNode);
           dom.focus(next);
         })["catch"](function (_) {});
       };
@@ -1671,13 +1680,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       };
 
       this._documentClickEvent = function (e) {
-        if ((dom.isSame(e.target, _this14._menuNode) || dom.hasDescendent(_this14._menuNode, e.target)) && (dom.getDataset(e.target, 'dropdownClose') === false || dom.closest(e.target, function (parent) {
+        if ((dom.isSame(e.target, _this15._menuNode) || dom.hasDescendent(_this15._menuNode, e.target)) && (dom.getDataset(e.target, 'dropdownClose') === false || dom.closest(e.target, function (parent) {
           return dom.getDataset(parent, 'dropdownClose') === false;
-        }, _this14._menuNode).length)) {
+        }, _this15._menuNode).length)) {
           return;
         }
 
-        _this14.hide()["catch"](function (_) {});
+        _this15.hide()["catch"](function (_) {});
       };
 
       dom.addEvent(this._node, 'click.frost.dropdown', this._clickEvent);
@@ -1712,7 +1721,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this._settings = _objectSpread({}, Modal.defaults, {}, dom.getDataset(node), {}, settings);
       this._dialog = dom.child(this._node, '.modal-dialog').shift();
       this._dismiss = dom.find('[data-dismiss="modal"]', this._node);
-      this._toggles = [];
 
       this._events();
 
@@ -1730,8 +1738,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Modal, [{
       key: "destroy",
       value: function destroy() {
-        if (this._toggles.length) {
-          dom.removeEvent(this._toggles, 'click.frost.modal', this._clickEvent);
+        if (Modal._toggles.has(this._node)) {
+          var toggles = Modal._toggles.get(this._node);
+
+          dom.removeEvent(toggles, 'click.frost.modal', this._clickEvent);
+
+          Modal._toggles["delete"](this._node);
         }
 
         if (this._dismiss.length) {
@@ -1756,47 +1768,47 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "hide",
       value: function hide() {
-        var _this15 = this;
+        var _this16 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!dom.hasClass(_this15._node, 'show') || dom.getDataset(_this15._dialog, 'animating')) {
+          if (!dom.hasClass(_this16._node, 'show') || dom.getDataset(_this16._dialog, 'animating')) {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this15._node, 'hide.frost.modal')) {
+          if (!DOM._triggerEvent(_this16._node, 'hide.frost.modal')) {
             return reject();
           }
 
-          dom.setDataset([_this15._dialog, _this15._backdrop], 'animating', true);
+          dom.setDataset([_this16._dialog, _this16._backdrop], 'animating', true);
 
-          if (_this15._settings.backdrop) {
-            dom.removeEvent(document, 'click.frost.modal', _this15._documentClickEvent);
+          if (_this16._settings.backdrop) {
+            dom.removeEvent(document, 'click.frost.modal', _this16._documentClickEvent);
           }
 
-          if (_this15._settings.keyboard) {
-            dom.removeEvent(window, 'keydown.frost.modal', _this15._windowKeyDownEvent);
+          if (_this16._settings.keyboard) {
+            dom.removeEvent(window, 'keydown.frost.modal', _this16._windowKeyDownEvent);
           }
 
-          Promise.all([dom.fadeOut(_this15._dialog, {
-            duration: _this15._settings.duration
-          }), dom.dropOut(_this15._dialog, {
-            duration: _this15._settings.duration
-          }), dom.fadeOut(_this15._backdrop, {
-            duration: _this15._settings.duration
+          Promise.all([dom.fadeOut(_this16._dialog, {
+            duration: _this16._settings.duration
+          }), dom.dropOut(_this16._dialog, {
+            duration: _this16._settings.duration
+          }), dom.fadeOut(_this16._backdrop, {
+            duration: _this16._settings.duration
           })]).then(function (_) {
-            if (_this15._settings.backdrop) {
-              dom.remove(_this15._backdrop);
-              _this15._backdrop = null;
+            if (_this16._settings.backdrop) {
+              dom.remove(_this16._backdrop);
+              _this16._backdrop = null;
             }
 
-            dom.removeAttribute(_this15._node, 'aria-modal');
-            dom.setAttribute(_this15._node, 'aria-hidden', true);
-            dom.removeClass(_this15._node, 'show');
+            dom.removeAttribute(_this16._node, 'aria-modal');
+            dom.setAttribute(_this16._node, 'aria-hidden', true);
+            dom.removeClass(_this16._node, 'show');
             dom.removeClass(document.body, 'modal-open');
-            dom.triggerEvent(_this15._node, 'hidden.frost.modal');
+            dom.triggerEvent(_this16._node, 'hidden.frost.modal');
             resolve();
           })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset([_this15._dialog, _this15._backdrop], 'animating');
+            return dom.removeDataset([_this16._dialog, _this16._backdrop], 'animating');
           });
         });
       }
@@ -1808,53 +1820,53 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show() {
-        var _this16 = this;
+        var _this17 = this;
 
         return new Promise(function (resolve, reject) {
-          if (dom.hasClass(_this16._node, 'show') || dom.getDataset(_this16._dialog, 'animating')) {
+          if (dom.hasClass(_this17._node, 'show') || dom.getDataset(_this17._dialog, 'animating')) {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this16._node, 'show.frost.modal')) {
+          if (!DOM._triggerEvent(_this17._node, 'show.frost.modal')) {
             return reject();
           }
 
-          if (_this16._settings.backdrop) {
-            _this16._backdrop = dom.create('div', {
+          if (_this17._settings.backdrop) {
+            _this17._backdrop = dom.create('div', {
               "class": 'modal-backdrop'
             });
-            dom.append(document.body, _this16._backdrop);
+            dom.append(document.body, _this17._backdrop);
           }
 
-          dom.setDataset([_this16._dialog, _this16._backdrop], 'animating', true);
-          dom.addClass(_this16._node, 'show');
+          dom.setDataset([_this17._dialog, _this17._backdrop], 'animating', true);
+          dom.addClass(_this17._node, 'show');
           dom.addClass(document.body, 'modal-open');
-          Promise.all([dom.fadeIn(_this16._dialog, {
-            duration: _this16._settings.duration
-          }), dom.dropIn(_this16._dialog, {
-            duration: _this16._settings.duration
-          }), dom.fadeIn(_this16._backdrop, {
-            duration: _this16._settings.duration
+          Promise.all([dom.fadeIn(_this17._dialog, {
+            duration: _this17._settings.duration
+          }), dom.dropIn(_this17._dialog, {
+            duration: _this17._settings.duration
+          }), dom.fadeIn(_this17._backdrop, {
+            duration: _this17._settings.duration
           })]).then(function (_) {
-            dom.removeAttribute(_this16._node, 'aria-hidden');
-            dom.setAttribute(_this16._node, 'aria-modal', true);
+            dom.removeAttribute(_this17._node, 'aria-hidden');
+            dom.setAttribute(_this17._node, 'aria-modal', true);
 
-            if (_this16._settings.backdrop) {
-              dom.addEvent(document, 'click.frost.modal', _this16._documentClickEvent);
+            if (_this17._settings.backdrop) {
+              dom.addEvent(document, 'click.frost.modal', _this17._documentClickEvent);
             }
 
-            if (_this16._settings.keyboard) {
-              dom.addEvent(window, 'keydown.frost.modal', _this16._windowKeyDownEvent);
+            if (_this17._settings.keyboard) {
+              dom.addEvent(window, 'keydown.frost.modal', _this17._windowKeyDownEvent);
             }
 
-            if (_this16._settings.focus) {
-              dom.focus(_this16._node);
+            if (_this17._settings.focus) {
+              dom.focus(_this17._node);
             }
 
-            dom.triggerEvent(_this16._node, 'shown.frost.modal');
+            dom.triggerEvent(_this17._node, 'shown.frost.modal');
             resolve();
           })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset([_this16._dialog, _this16._backdrop], 'animating');
+            return dom.removeDataset([_this17._dialog, _this17._backdrop], 'animating');
           });
         });
       }
@@ -1868,6 +1880,24 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       value: function toggle() {
         return dom.hasClass(this._node, 'show') ? this.hide() : this.show();
       }
+    }], [{
+      key: "fromToggle",
+      value: function fromToggle(toggle) {
+        var show = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+        var target = dom.getDataset(toggle, 'target');
+        var element = dom.findOne(target);
+        var modal = dom.hasData(element, 'modal') ? dom.getData(element, 'modal') : new this(element, {
+          show: show
+        });
+
+        if (!this._toggles.has(element)) {
+          this._toggles.set(element, []);
+        }
+
+        this._toggles.get(element).push(toggle);
+
+        dom.addEvent(toggle, 'click.frost.modal', modal._clickEvent);
+      }
     }]);
 
     return Modal;
@@ -1880,36 +1910,31 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     focus: true,
     show: true,
     keyboard: true
-  }; // Auto-initialize Modal from data-toggle
+  };
+  Modal._toggles = new WeakMap(); // Auto-initialize Modal from data-toggle
 
   dom.addEventOnce(window, 'load', function (_) {
     var nodes = dom.find('[data-toggle="modal"]');
-    var _iteratorNormalCompletion14 = true;
-    var _didIteratorError14 = false;
-    var _iteratorError14 = undefined;
+    var _iteratorNormalCompletion15 = true;
+    var _didIteratorError15 = false;
+    var _iteratorError15 = undefined;
 
     try {
-      for (var _iterator14 = nodes[Symbol.iterator](), _step14; !(_iteratorNormalCompletion14 = (_step14 = _iterator14.next()).done); _iteratorNormalCompletion14 = true) {
-        var node = _step14.value;
-        var target = dom.getDataset(node, 'target');
-        var element = dom.findOne(target);
-        var modal = dom.hasData(element, 'modal') ? dom.getData(element, 'modal') : new Modal(element, {
-          show: false
-        });
-
-        modal._eventToggle(node);
+      for (var _iterator15 = nodes[Symbol.iterator](), _step15; !(_iteratorNormalCompletion15 = (_step15 = _iterator15.next()).done); _iteratorNormalCompletion15 = true) {
+        var node = _step15.value;
+        Modal.fromToggle(node);
       }
     } catch (err) {
-      _didIteratorError14 = true;
-      _iteratorError14 = err;
+      _didIteratorError15 = true;
+      _iteratorError15 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion14 && _iterator14["return"] != null) {
-          _iterator14["return"]();
+        if (!_iteratorNormalCompletion15 && _iterator15["return"] != null) {
+          _iterator15["return"]();
         }
       } finally {
-        if (_didIteratorError14) {
-          throw _iteratorError14;
+        if (_didIteratorError15) {
+          throw _iteratorError15;
         }
       }
     }
@@ -1961,26 +1986,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Modal.
      */
     _events: function _events() {
-      var _this17 = this;
+      var _this18 = this;
 
       this._clickEvent = function (e) {
         e.preventDefault();
 
-        _this17.show()["catch"](function (_) {});
+        _this18.show()["catch"](function (_) {});
       };
 
       this._dismissEvent = function (e) {
         e.preventDefault();
 
-        _this17.hide()["catch"](function (_) {});
+        _this18.hide()["catch"](function (_) {});
       };
 
       this._documentClickEvent = function (e) {
-        if (dom.isSame(e.target, _this17._dialog) || dom.hasDescendent(_this17._dialog, e.target)) {
+        if (dom.isSame(e.target, _this18._dialog) || dom.hasDescendent(_this18._dialog, e.target)) {
           return;
         }
 
-        _this17.hide()["catch"](function (_) {});
+        _this18.hide()["catch"](function (_) {});
       };
 
       this._windowKeyDownEvent = function (e) {
@@ -1990,17 +2015,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         e.preventDefault();
 
-        _this17.hide()["catch"](function (_) {});
+        _this18.hide()["catch"](function (_) {});
       };
 
       if (this._dismiss.length) {
         dom.addEvent(this._dismiss, 'click.frost.modal', this._dismissEvent);
       }
-    },
-    _eventToggle: function _eventToggle(toggle) {
-      dom.addEvent(toggle, 'click.frost.modal', this._clickEvent);
-
-      this._toggles.push(toggle);
     }
   });
   /**
@@ -2105,31 +2125,31 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "hide",
       value: function hide() {
-        var _this18 = this;
+        var _this19 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!_this18._popover) {
+          if (!_this19._popover) {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this18._node, 'hide.frost.popover')) {
+          if (!DOM._triggerEvent(_this19._node, 'hide.frost.popover')) {
             return reject();
           }
 
-          dom.setDataset(_this18._popover, 'animating', true);
-          dom.stop(_this18._popover);
-          dom.fadeOut(_this18._popover, {
-            duration: _this18._settings.duration
+          dom.setDataset(_this19._popover, 'animating', true);
+          dom.stop(_this19._popover);
+          dom.fadeOut(_this19._popover, {
+            duration: _this19._settings.duration
           }).then(function (_) {
-            _this18._popper.destroy();
+            _this19._popper.destroy();
 
-            dom.remove(_this18._popover);
-            _this18._popover = null;
-            _this18._popper = null;
-            dom.triggerEvent(_this18._node, 'hidden.frost.popover');
+            dom.remove(_this19._popover);
+            _this19._popover = null;
+            _this19._popper = null;
+            dom.triggerEvent(_this19._node, 'hidden.frost.popover');
             resolve();
           })["catch"](function (e) {
-            dom.removeDataset(_this18._popover, 'animating');
+            dom.removeDataset(_this19._popover, 'animating');
             reject(e);
           });
         });
@@ -2142,28 +2162,28 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show() {
-        var _this19 = this;
+        var _this20 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this19._popover) {
+          if (_this20._popover) {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this19._node, 'show.frost.popover')) {
+          if (!DOM._triggerEvent(_this20._node, 'show.frost.popover')) {
             return reject();
           }
 
-          _this19._render();
+          _this20._render();
 
-          dom.setDataset(_this19._popover, 'animating', true);
-          dom.addClass(_this19._popover, 'show');
-          dom.fadeIn(_this19._popover, {
-            duration: _this19._settings.duration
+          dom.setDataset(_this20._popover, 'animating', true);
+          dom.addClass(_this20._popover, 'show');
+          dom.fadeIn(_this20._popover, {
+            duration: _this20._settings.duration
           }).then(function (_) {
-            dom.triggerEvent(_this19._node, 'shown.frost.popover');
+            dom.triggerEvent(_this20._node, 'shown.frost.popover');
             resolve();
           })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset(_this19._popover, 'animating');
+            return dom.removeDataset(_this20._popover, 'animating');
           });
         });
       }
@@ -2219,26 +2239,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   dom.addEventOnce(window, 'load', function (_) {
     var nodes = dom.find('[data-toggle="popover"]');
-    var _iteratorNormalCompletion15 = true;
-    var _didIteratorError15 = false;
-    var _iteratorError15 = undefined;
+    var _iteratorNormalCompletion16 = true;
+    var _didIteratorError16 = false;
+    var _iteratorError16 = undefined;
 
     try {
-      for (var _iterator15 = nodes[Symbol.iterator](), _step15; !(_iteratorNormalCompletion15 = (_step15 = _iterator15.next()).done); _iteratorNormalCompletion15 = true) {
-        var node = _step15.value;
+      for (var _iterator16 = nodes[Symbol.iterator](), _step16; !(_iteratorNormalCompletion16 = (_step16 = _iterator16.next()).done); _iteratorNormalCompletion16 = true) {
+        var node = _step16.value;
         new Popover(node);
       }
     } catch (err) {
-      _didIteratorError15 = true;
-      _iteratorError15 = err;
+      _didIteratorError16 = true;
+      _iteratorError16 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion15 && _iterator15["return"] != null) {
-          _iterator15["return"]();
+        if (!_iteratorNormalCompletion16 && _iterator16["return"] != null) {
+          _iterator16["return"]();
         }
       } finally {
-        if (_didIteratorError15) {
-          throw _iteratorError15;
+        if (_didIteratorError16) {
+          throw _iteratorError16;
         }
       }
     }
@@ -2290,46 +2310,46 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Popover.
      */
     _events: function _events() {
-      var _this20 = this;
+      var _this21 = this;
 
       this._hideEvent = function (_) {
-        if (!_this20._enabled || !_this20._popover) {
+        if (!_this21._enabled || !_this21._popover) {
           return;
         }
 
-        dom.stop(_this20._popover);
+        dom.stop(_this21._popover);
 
-        _this20.hide()["catch"](function (_) {});
+        _this21.hide()["catch"](function (_) {});
       };
 
       this._hoverEvent = function (_) {
-        if (!_this20._enabled) {
+        if (!_this21._enabled) {
           return;
         }
 
-        dom.addEventOnce(_this20._node, 'mouseout.frost.popover', _this20._hideEvent);
+        dom.addEventOnce(_this21._node, 'mouseout.frost.popover', _this21._hideEvent);
 
-        _this20.show()["catch"](function (_) {});
+        _this21.show()["catch"](function (_) {});
       };
 
       this._focusEvent = function (_) {
-        if (!_this20._enabled) {
+        if (!_this21._enabled) {
           return;
         }
 
-        dom.addEventOnce(_this20._node, 'blur.frost.popover', _this20._hideEvent);
+        dom.addEventOnce(_this21._node, 'blur.frost.popover', _this21._hideEvent);
 
-        _this20.show()["catch"](function (_) {});
+        _this21.show()["catch"](function (_) {});
       };
 
       this._clickEvent = function (e) {
         e.preventDefault();
 
-        if (!_this20._enabled) {
+        if (!_this21._enabled) {
           return;
         }
 
-        _this20.toggle()["catch"](function (_) {});
+        _this21.toggle()["catch"](function (_) {});
       };
 
       if (this._triggers.includes('hover')) {
@@ -2588,10 +2608,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Popper.
      */
     _events: function _events() {
-      var _this21 = this;
+      var _this22 = this;
 
       this._updateEvent = Core.animation(function (_) {
-        return _this21.update();
+        return _this22.update();
       });
       dom.addEvent(window, 'resize.frost.popper', this._updateEvent);
       dom.addEvent(window, 'scroll.frost.popper', this._updateEvent);
@@ -2943,11 +2963,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @return {HTMLElement} The scroll parent.
      */
     getScrollParent: function getScrollParent(node) {
-      var _this22 = this;
+      var _this23 = this;
 
       return dom.closest(node, function (parent) {
-        return !!_this22._overflowTypes.find(function (overflow) {
-          return !!_this22._overflowValues.find(function (value) {
+        return !!_this23._overflowTypes.find(function (overflow) {
+          return !!_this23._overflowValues.find(function (value) {
             return new RegExp(value).test(dom.css(parent, overflow));
           });
         });
@@ -3014,7 +3034,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         this._settings.target = dom.getAttribute(this._node, 'href');
       }
 
-      this._target = dom.find(this._settings.target);
+      this._target = dom.findOne(this._settings.target);
+      this._siblings = dom.siblings(this._node);
 
       this._events();
 
@@ -3039,30 +3060,28 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "hide",
       value: function hide() {
-        var _this23 = this;
+        var _this24 = this;
 
         return new Promise(function (resolve, reject) {
-          console.log('test');
-
-          if (!dom.hasClass(_this23._target, 'active') || dom.getDataset(_this23._target, 'animating')) {
+          if (!dom.hasClass(_this24._target, 'active') || dom.getDataset(_this24._target, 'animating')) {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this23._node, 'hide.frost.tab')) {
+          if (!DOM._triggerEvent(_this24._node, 'hide.frost.tab')) {
             return reject();
           }
 
-          dom.setDataset(_this23._target, 'animating', true);
-          dom.fadeOut(_this23._target, {
-            duration: _this23._settings.duration
+          dom.setDataset(_this24._target, 'animating', true);
+          dom.fadeOut(_this24._target, {
+            duration: _this24._settings.duration
           }).then(function (_) {
-            dom.removeClass(_this23._target, 'active');
-            dom.removeClass(_this23._node, 'active');
-            dom.setAttribute(_this23._node, 'aria-selected', false);
-            dom.triggerEvent(_this23._node, 'hidden.frost.tab');
+            dom.removeClass(_this24._target, 'active');
+            dom.removeClass(_this24._node, 'active');
+            dom.setAttribute(_this24._node, 'aria-selected', false);
+            dom.triggerEvent(_this24._node, 'hidden.frost.tab');
             resolve();
           })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset(_this23._target, 'animating');
+            return dom.removeDataset(_this24._target, 'animating');
           });
         });
       }
@@ -3074,36 +3093,38 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show() {
-        var _this24 = this;
+        var _this25 = this;
 
         return new Promise(function (resolve, reject) {
-          if (dom.hasClass(_this24._target, 'active') || dom.getDataset(_this24._target, 'animating')) {
+          if (dom.hasClass(_this25._target, 'active') || dom.getDataset(_this25._target, 'animating')) {
             return reject();
           }
 
-          var activeTab = dom.siblings(_this24._node, '.active').shift();
+          var activeTab = _this25._siblings.find(function (sibling) {
+            return dom.hasClass(sibling, 'active');
+          });
 
-          if (!dom.hasData(activeTab, 'tab')) {
+          if (activeTab && !dom.hasData(activeTab, 'tab')) {
             return reject();
           }
 
-          dom.setDataset(_this24._target, 'animating', true);
-          dom.getData(activeTab, 'tab').hide().then(function (_) {
-            if (!DOM._triggerEvent(_this24._node, 'show.frost.tab')) {
+          (activeTab ? dom.getData(activeTab, 'tab').hide() : Promise.resolve()).then(function (_) {
+            if (!DOM._triggerEvent(_this25._node, 'show.frost.tab')) {
               return reject();
             }
 
-            dom.addClass(_this24._target, 'active');
-            dom.addClass(_this24._node, 'active');
-            return dom.fadeIn(_this24._target, {
-              duration: _this24._settings.duration
+            dom.setDataset(_this25._target, 'animating', true);
+            dom.addClass(_this25._target, 'active');
+            dom.addClass(_this25._node, 'active');
+            return dom.fadeIn(_this25._target, {
+              duration: _this25._settings.duration
             });
           }).then(function (_) {
-            dom.setAttribute(_this24._node, 'aria-selected', true);
-            dom.triggerEvent(_this24._node, 'shown.frost.tab');
+            dom.setAttribute(_this25._node, 'aria-selected', true);
+            dom.triggerEvent(_this25._node, 'shown.frost.tab');
             resolve();
           })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset(_this24._target, 'animating');
+            return dom.removeDataset(_this25._target, 'animating');
           });
         });
       }
@@ -3119,26 +3140,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   dom.addEventOnce(window, 'load', function (_) {
     var nodes = dom.find('[data-toggle="tab"]');
-    var _iteratorNormalCompletion16 = true;
-    var _didIteratorError16 = false;
-    var _iteratorError16 = undefined;
+    var _iteratorNormalCompletion17 = true;
+    var _didIteratorError17 = false;
+    var _iteratorError17 = undefined;
 
     try {
-      for (var _iterator16 = nodes[Symbol.iterator](), _step16; !(_iteratorNormalCompletion16 = (_step16 = _iterator16.next()).done); _iteratorNormalCompletion16 = true) {
-        var node = _step16.value;
+      for (var _iterator17 = nodes[Symbol.iterator](), _step17; !(_iteratorNormalCompletion17 = (_step17 = _iterator17.next()).done); _iteratorNormalCompletion17 = true) {
+        var node = _step17.value;
         new Tab(node);
       }
     } catch (err) {
-      _didIteratorError16 = true;
-      _iteratorError16 = err;
+      _didIteratorError17 = true;
+      _iteratorError17 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion16 && _iterator16["return"] != null) {
-          _iterator16["return"]();
+        if (!_iteratorNormalCompletion17 && _iterator17["return"] != null) {
+          _iterator17["return"]();
         }
       } finally {
-        if (_didIteratorError16) {
-          throw _iteratorError16;
+        if (_didIteratorError17) {
+          throw _iteratorError17;
         }
       }
     }
@@ -3190,12 +3211,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Tab.
      */
     _events: function _events() {
-      var _this25 = this;
+      var _this26 = this;
 
       this._clickEvent = function (e) {
         e.preventDefault();
 
-        _this25.show()["catch"](function (_) {});
+        _this26.show()["catch"](function (_) {});
       };
 
       dom.addEvent(this._node, 'click.frost.tab', this._clickEvent);
@@ -3219,7 +3240,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Toast} A new Toast object.
      */
     function Toast(node, settings) {
-      var _this26 = this;
+      var _this27 = this;
 
       _classCallCheck(this, Toast);
 
@@ -3231,7 +3252,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       if (this._settings.autohide) {
         setTimeout(function (_) {
-          _this26.hide()["catch"](function (_) {});
+          _this27.hide()["catch"](function (_) {});
         }, this._settings.delay);
       }
 
@@ -3259,26 +3280,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "hide",
       value: function hide() {
-        var _this27 = this;
+        var _this28 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!dom.isVisible(_this27._node) || dom.getDataset(_this27._node, 'animating')) {
+          if (!dom.isVisible(_this28._node) || dom.getDataset(_this28._node, 'animating')) {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this27._node, 'hide.frost.toast')) {
+          if (!DOM._triggerEvent(_this28._node, 'hide.frost.toast')) {
             return reject();
           }
 
-          dom.setDataset(_this27._node, 'animating', true);
-          return dom.fadeOut(_this27._node, {
-            duration: _this27._settings.duration
+          dom.setDataset(_this28._node, 'animating', true);
+          return dom.fadeOut(_this28._node, {
+            duration: _this28._settings.duration
           }).then(function (_) {
-            dom.hide(_this27._node);
-            dom.triggerEvent(_this27._node, 'hidden.frost.toast');
+            dom.hide(_this28._node);
+            dom.triggerEvent(_this28._node, 'hidden.frost.toast');
             resolve();
           })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset(_this27._node, 'animating');
+            return dom.removeDataset(_this28._node, 'animating');
           });
         });
       }
@@ -3290,26 +3311,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show() {
-        var _this28 = this;
+        var _this29 = this;
 
         return new Promise(function (resolve, reject) {
-          if (dom.isVisible(_this28._node) || dom.getDataset(_this28._node, 'animating')) {
+          if (dom.isVisible(_this29._node) || dom.getDataset(_this29._node, 'animating')) {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this28._node, 'show.frost.toast')) {
+          if (!DOM._triggerEvent(_this29._node, 'show.frost.toast')) {
             return reject();
           }
 
-          dom.setDataset(_this28._node, 'animating', true);
-          dom.show(_this28._node);
-          return dom.fadeIn(_this28._node, {
-            duration: _this28._settings.duration
+          dom.setDataset(_this29._node, 'animating', true);
+          dom.show(_this29._node);
+          return dom.fadeIn(_this29._node, {
+            duration: _this29._settings.duration
           }).then(function (_) {
-            dom.triggerEvent(_this28._node, 'shown.frost.toast');
+            dom.triggerEvent(_this29._node, 'shown.frost.toast');
             resolve();
           })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset(_this28._node, 'animating');
+            return dom.removeDataset(_this29._node, 'animating');
           });
         });
       }
@@ -3327,26 +3348,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   dom.addEventOnce(window, 'load', function (_) {
     var nodes = dom.find('[data-toggle="toast"]');
-    var _iteratorNormalCompletion17 = true;
-    var _didIteratorError17 = false;
-    var _iteratorError17 = undefined;
+    var _iteratorNormalCompletion18 = true;
+    var _didIteratorError18 = false;
+    var _iteratorError18 = undefined;
 
     try {
-      for (var _iterator17 = nodes[Symbol.iterator](), _step17; !(_iteratorNormalCompletion17 = (_step17 = _iterator17.next()).done); _iteratorNormalCompletion17 = true) {
-        var node = _step17.value;
+      for (var _iterator18 = nodes[Symbol.iterator](), _step18; !(_iteratorNormalCompletion18 = (_step18 = _iterator18.next()).done); _iteratorNormalCompletion18 = true) {
+        var node = _step18.value;
         new Toast(node);
       }
     } catch (err) {
-      _didIteratorError17 = true;
-      _iteratorError17 = err;
+      _didIteratorError18 = true;
+      _iteratorError18 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion17 && _iterator17["return"] != null) {
-          _iterator17["return"]();
+        if (!_iteratorNormalCompletion18 && _iterator18["return"] != null) {
+          _iterator18["return"]();
         }
       } finally {
-        if (_didIteratorError17) {
-          throw _iteratorError17;
+        if (_didIteratorError18) {
+          throw _iteratorError18;
         }
       }
     }
@@ -3398,12 +3419,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Toast.
      */
     _events: function _events() {
-      var _this29 = this;
+      var _this30 = this;
 
       this._dismissEvent = function (e) {
         e.preventDefault();
 
-        _this29.hide()["catch"](function (_) {});
+        _this30.hide()["catch"](function (_) {});
       };
 
       if (this._dismiss.length) {
@@ -3512,31 +3533,31 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "hide",
       value: function hide() {
-        var _this30 = this;
+        var _this31 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!_this30._tooltip) {
+          if (!_this31._tooltip) {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this30._node, 'hide.frost.tooltip')) {
+          if (!DOM._triggerEvent(_this31._node, 'hide.frost.tooltip')) {
             return reject();
           }
 
-          dom.setDataset(_this30._tooltip, 'animating', true);
-          dom.stop(_this30._tooltip);
-          dom.fadeOut(_this30._tooltip, {
-            duration: _this30._settings.duration
+          dom.setDataset(_this31._tooltip, 'animating', true);
+          dom.stop(_this31._tooltip);
+          dom.fadeOut(_this31._tooltip, {
+            duration: _this31._settings.duration
           }).then(function (_) {
-            _this30._popper.destroy();
+            _this31._popper.destroy();
 
-            dom.remove(_this30._tooltip);
-            _this30._tooltip = null;
-            _this30._popper = null;
-            dom.triggerEvent(_this30._node, 'hidden.frost.tooltip');
+            dom.remove(_this31._tooltip);
+            _this31._tooltip = null;
+            _this31._popper = null;
+            dom.triggerEvent(_this31._node, 'hidden.frost.tooltip');
             resolve();
           })["catch"](function (_) {
-            dom.removeDataset(_this30._tooltip, 'animating');
+            dom.removeDataset(_this31._tooltip, 'animating');
             reject();
           });
         });
@@ -3549,30 +3570,30 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "show",
       value: function show() {
-        var _this31 = this;
+        var _this32 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this31._tooltip) {
+          if (_this32._tooltip) {
             return reject();
           }
 
-          if (!DOM._triggerEvent(_this31._node, 'show.frost.tooltip')) {
+          if (!DOM._triggerEvent(_this32._node, 'show.frost.tooltip')) {
             return reject();
           }
 
-          _this31._render();
+          _this32._render();
 
-          dom.setDataset(_this31._tooltip, 'animating', true);
-          dom.addClass(_this31._tooltip, 'show');
-          dom.fadeIn(_this31._tooltip, {
-            duration: _this31._settings.duration
+          dom.setDataset(_this32._tooltip, 'animating', true);
+          dom.addClass(_this32._tooltip, 'show');
+          dom.fadeIn(_this32._tooltip, {
+            duration: _this32._settings.duration
           }).then(function (_) {
-            dom.triggerEvent(_this31._node, 'shown.frost.tooltip');
+            dom.triggerEvent(_this32._node, 'shown.frost.tooltip');
             resolve();
           })["catch"](function (_) {
             return reject();
           })["finally"](function (_) {
-            return dom.removeDataset(_this31._tooltip, 'animating');
+            return dom.removeDataset(_this32._tooltip, 'animating');
           });
         });
       }
@@ -3627,26 +3648,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   dom.addEventOnce(window, 'load', function (_) {
     var nodes = dom.find('[data-toggle="tooltip"]');
-    var _iteratorNormalCompletion18 = true;
-    var _didIteratorError18 = false;
-    var _iteratorError18 = undefined;
+    var _iteratorNormalCompletion19 = true;
+    var _didIteratorError19 = false;
+    var _iteratorError19 = undefined;
 
     try {
-      for (var _iterator18 = nodes[Symbol.iterator](), _step18; !(_iteratorNormalCompletion18 = (_step18 = _iterator18.next()).done); _iteratorNormalCompletion18 = true) {
-        var node = _step18.value;
+      for (var _iterator19 = nodes[Symbol.iterator](), _step19; !(_iteratorNormalCompletion19 = (_step19 = _iterator19.next()).done); _iteratorNormalCompletion19 = true) {
+        var node = _step19.value;
         new Tooltip(node);
       }
     } catch (err) {
-      _didIteratorError18 = true;
-      _iteratorError18 = err;
+      _didIteratorError19 = true;
+      _iteratorError19 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion18 && _iterator18["return"] != null) {
-          _iterator18["return"]();
+        if (!_iteratorNormalCompletion19 && _iterator19["return"] != null) {
+          _iterator19["return"]();
         }
       } finally {
-        if (_didIteratorError18) {
-          throw _iteratorError18;
+        if (_didIteratorError19) {
+          throw _iteratorError19;
         }
       }
     }
@@ -3698,46 +3719,46 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Tooltip.
      */
     _events: function _events() {
-      var _this32 = this;
+      var _this33 = this;
 
       this._hideEvent = function (_) {
-        if (!_this32._enabled || !_this32._tooltip) {
+        if (!_this33._enabled || !_this33._tooltip) {
           return;
         }
 
-        dom.stop(_this32._tooltip);
+        dom.stop(_this33._tooltip);
 
-        _this32.hide()["catch"](function (_) {});
+        _this33.hide()["catch"](function (_) {});
       };
 
       this._hoverEvent = function (_) {
-        if (!_this32._enabled) {
+        if (!_this33._enabled) {
           return;
         }
 
-        dom.addEventOnce(_this32._node, 'mouseout.frost.tooltip', _this32._hideEvent);
+        dom.addEventOnce(_this33._node, 'mouseout.frost.tooltip', _this33._hideEvent);
 
-        _this32.show()["catch"](function (_) {});
+        _this33.show()["catch"](function (_) {});
       };
 
       this._focusEvent = function (_) {
-        if (!_this32._enabled) {
+        if (!_this33._enabled) {
           return;
         }
 
-        dom.addEventOnce(_this32._node, 'blur.frost.tooltip', _this32._hideEvent);
+        dom.addEventOnce(_this33._node, 'blur.frost.tooltip', _this33._hideEvent);
 
-        _this32.show()["catch"](function (_) {});
+        _this33.show()["catch"](function (_) {});
       };
 
       this._clickEvent = function (e) {
         e.preventDefault();
 
-        if (!_this32._enabled) {
+        if (!_this33._enabled) {
           return;
         }
 
-        _this32.toggle()["catch"](function (_) {});
+        _this33.toggle()["catch"](function (_) {});
       };
 
       if (this._triggers.includes('hover')) {

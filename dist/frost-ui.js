@@ -204,11 +204,12 @@
                 ...settings
             };
 
-            const group = dom.closest(this._node, '[data-toggle="buttons"]');
-            this._siblings = dom.find('.btn', group).filter(node => !dom.isSame(node, this._node));
-
             this._input = dom.findOne('input[type="checkbox"], input[type="radio"]', this._node);
             this._isRadio = this._input && dom.is(this._input, '[type="radio"]');
+
+            if (this._isRadio) {
+                this._siblings = dom.siblings(this._node);
+            }
 
             this._events();
 
@@ -242,7 +243,7 @@
 
     // Auto-initialize Button from data-toggle
     dom.addEventOnce(window, 'load', _ => {
-        const nodes = dom.find('[data-toggle="buttons"] > .btn, [data-toggle="button"]');
+        const nodes = dom.find('[data-toggle="buttons"] > *, [data-toggle="button"]');
 
         for (const node of nodes) {
             new Button(node);
@@ -314,6 +315,7 @@
 
             if (this._input) {
                 dom.setProperty(this._input, 'checked', !dom.getProperty(this._input, 'checked'));
+                dom.triggerEvent(this._input, 'change');
             }
         },
 
@@ -324,8 +326,9 @@
             dom.addClass(this._node, 'active');
 
             dom.setProperty(this._input, 'checked', true);
+            dom.triggerEvent(this._input, 'change');
 
-            if (this._siblings.length) {
+            if (this._siblings) {
                 dom.removeClass(this._siblings, 'active');
             }
         }
@@ -594,38 +597,22 @@
         /**
          * Cycle to a specific Carousel item.
          * @param {number} index The item index to cycle to.
-         * @param {function} [queuedResolve] The queued resolve callback.
-         * @param {function} [queuedReject] The queued reject callback.
          * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
-        _show(index, queuedResolve, queuedReject) {
+        _show(index) {
             return new Promise((resolve, reject) => {
                 if (dom.getDataset(this._node, 'sliding')) {
-                    this._queue.push({
-                        index: index,
-                        resolve: resolve,
-                        reject: reject
-                    });
+                    this._queue.push(index);
 
                     return;
                 }
-
-                const fullResolve = _ => {
-                    queuedResolve && queuedResolve();
-                    resolve();
-                };
-
-                const fullReject = _ => {
-                    queuedReject && queuedReject();
-                    reject();
-                };
 
                 index = parseInt(index);
 
                 if (!this._settings.wrap &&
                     (index < 0 || index > this._items.length - 1)
                 ) {
-                    return fullReject();
+                    return reject();
                 }
 
                 let dir = 0;
@@ -641,7 +628,7 @@
                 }
 
                 if (index === this._index) {
-                    return fullReject();
+                    return reject();
                 }
 
                 const direction = dir == -1 || (dir == 0 && index < this._index) ?
@@ -656,7 +643,7 @@
                 };
 
                 if (!DOM._triggerEvent(this._node, 'slide.frost.carousel', eventData)) {
-                    return fullReject();
+                    return reject();
                 }
 
                 const oldIndex = this._index;
@@ -692,7 +679,7 @@
 
                     dom.triggerEvent(this._node, 'slid.frost.carousel', eventData);
 
-                    fullResolve();
+                    resolve();
 
                     if (!this._queue.length) {
                         this._setTimer();
@@ -700,7 +687,7 @@
                     }
 
                     const next = this._queue.shift();
-                    return this._show(next.index, next.resolve, next.reject);
+                    return this._show(next);
                 }).catch(reject);
             });
         },
@@ -762,18 +749,17 @@
 
             this._targets = dom.find(this._settings.target);
 
-            this._hasAccordion = this._targets.find(target => dom.getDataset(target, 'parent'));
-
             this._events();
 
             dom.setData(this._node, 'collapse', this);
 
             for (const target of this._targets) {
-                if (!dom.hasData(target, 'collapses')) {
-                    dom.setData(target, 'collapses', []);
+                if (!Collapse._toggles.has(target)) {
+                    Collapse._toggles.set(target, []);
                 }
 
-                dom.getData(target, 'collapses').push(this);
+                Collapse._toggles.get(target)
+                    .push(this._node);
             }
         }
 
@@ -781,6 +767,17 @@
          * Destroy the Collapse.
          */
         destroy() {
+            for (const target of this._targets) {
+                const toggles = Collapse._toggles.get(target)
+                    .filter(toggle => !dom.isSame(toggle, this._node));
+
+                if (toggles.length) {
+                    Collapse._toggles.set(target, toggles);
+                } else {
+                    Collapse._toggles.delete(target);
+                }
+            }
+
             dom.removeEvent(this._node, 'click.frost.collapse', this._clickEvent);
 
             dom.removeData(this._node, 'collapse');
@@ -834,13 +831,13 @@
                     return reject();
                 }
 
-                const collapse = this._hideAccordion(hidden);
+                const accordion = this._getAccordion(hidden);
 
-                if (!collapse) {
+                if (!accordion) {
                     return reject();
                 }
 
-                for (const node of collapse.nodes) {
+                for (const node of accordion.nodes) {
                     if (!DOM._triggerEvent(node, 'hide.frost.collapse')) {
                         return reject();
                     }
@@ -851,12 +848,12 @@
                 }
 
                 const allTargets = [...targets];
-                allTargets.push(...collapse.targets);
+                allTargets.push(...accordion.targets);
 
                 dom.setDataset(allTargets, 'animating', true);
 
                 const animations = allTargets.map(target => {
-                    const animation = collapse.targets.includes(target) ?
+                    const animation = accordion.targets.includes(target) ?
                         'squeezeOut' : 'squeezeIn';
 
                     return dom[animation](target, {
@@ -869,13 +866,13 @@
                 dom.addClass(targets, 'show');
 
                 Promise.all(animations).then(_ => {
-                    if (collapse.targets.length) {
-                        dom.removeClass(collapse.targets, 'show');
-                        this._setExpanded(collapse.targets, false);
+                    if (accordion.targets.length) {
+                        dom.removeClass(accordion.targets, 'show');
+                        this._setExpanded(accordion.targets, false);
                     }
 
-                    if (collapse.nodes.length) {
-                        dom.triggerEvent(collapse.nodes, 'hidden.frost.collapse');
+                    if (accordion.nodes.length) {
+                        dom.triggerEvent(accordion.nodes, 'hidden.frost.collapse');
                     }
 
                     this._setExpanded(targets);
@@ -919,13 +916,13 @@
                     return reject();
                 }
 
-                const collapse = this._hideAccordion(hidden);
+                const accordion = this._getAccordion(hidden);
 
-                if (!collapse) {
+                if (!accordion) {
                     return reject();
                 }
 
-                for (const node of collapse.nodes) {
+                for (const node of accordion.nodes) {
                     if (!DOM._triggerEvent(node, 'hide.frost.collapse')) {
                         return reject();
                     }
@@ -936,12 +933,12 @@
                 }
 
                 const allTargets = [...targets];
-                allTargets.push(...collapse.targets);
+                allTargets.push(...accordion.targets);
 
                 dom.setDataset(allTargets, 'animating', true);
 
                 const animations = allTargets.map(target => {
-                    const animation = visible.includes(target) || collapse.targets.includes(target) ?
+                    const animation = visible.includes(target) || accordion.targets.includes(target) ?
                         'squeezeOut' : 'squeezeIn';
 
                     return dom[animation](target, {
@@ -954,13 +951,13 @@
                 dom.addClass(hidden, 'show')
 
                 Promise.all(animations).then(_ => {
-                    if (collapse.targets.length) {
-                        dom.removeClass(collapse.targets, 'show');
-                        this._setExpanded(collapse.targets, false);
+                    if (accordion.targets.length) {
+                        dom.removeClass(accordion.targets, 'show');
+                        this._setExpanded(accordion.targets, false);
                     }
 
-                    if (collapse.nodes.length) {
-                        dom.triggerEvent(collapse.nodes, 'hidden.frost.collapse');
+                    if (accordion.nodes.length) {
+                        dom.triggerEvent(accordion.nodes, 'hidden.frost.collapse');
                     }
 
                     if (visible.length) {
@@ -989,6 +986,8 @@
         direction: 'bottom',
         duration: 250
     };
+
+    Collapse._toggles = new WeakMap;
 
     // Auto-initialize Collapse from data-ride
     dom.addEventOnce(window, 'load', _ => {
@@ -1057,13 +1056,13 @@
         },
 
         /**
-         * Hide accordion nodes for all targets.
+         * Get accordion toggles and targets for the target nodes.
          * @param {array} targets The target nodes.
+         * @return {object} The accordion toggles and targets.
          */
-        _hideAccordion(targets) {
-            const parents = [];
-            const nodes = [];
-            const newTargets = [];
+        _getAccordion(targets) {
+            const accordionToggles = [];
+            const accordionTargets = [];
 
             for (const target of targets) {
                 const parent = dom.getDataset(target, 'parent');
@@ -1072,44 +1071,34 @@
                 }
 
                 const parentNode = dom.closest(target, parent);
-                if (!parents.includes(parentNode)) {
-                    parents.push(parentNode);
-                }
-            }
+                const collapseToggles = dom.find('[data-toggle="collapse"]', parentNode)
+                    .filter(toggle => !dom.isSame(toggle, this._node) && dom.hasData(toggle, 'collapse'));
 
-            for (const parent of parents) {
-                const collapseToggle = dom.find('[data-toggle="collapse"]', parent);
-                for (const toggle of collapseToggle) {
-                    if (dom.isSame(this._node, toggle)) {
-                        continue;
-                    }
-
-                    if (!dom.hasData(toggle, 'collapse')) {
+                for (const toggle of collapseToggles) {
+                    if (accordionToggles.includes(toggle)) {
                         continue;
                     }
 
                     const collapse = dom.getData(toggle, 'collapse');
-
                     const collapseTargets = dom.find(collapse._settings.target)
-                        .filter(target => dom.hasClass(target, 'show'));
+                        .filter(target => !targets.includes(target) && !accordionTargets.includes(target) && dom.hasClass(target, 'show'));
 
                     if (!collapseTargets.length) {
                         continue;
                     }
-                    const animating = collapseTargets.find(target => dom.getDataset(target, 'animating'));
 
-                    if (animating) {
+                    if (collapseTargets.find(target => dom.getDataset(target, 'animating'))) {
                         return false;
                     }
 
-                    nodes.push(collapse._node);
-                    newTargets.push(...collapseTargets);
+                    accordionToggles.push(toggle);
+                    accordionTargets.push(...collapseTargets);
                 }
             }
 
             return {
-                nodes,
-                targets: newTargets
+                nodes: accordionToggles,
+                targets: accordionTargets
             };
         },
 
@@ -1120,9 +1109,9 @@
          */
         _setExpanded(targets, expanded = true) {
             for (const target of targets) {
-                const collapses = dom.getData(target, 'collapses');
-                for (const collapse of collapses) {
-                    dom.setAttribute(collapse._node, 'aria-expanded', expanded);
+                const toggles = Collapse._toggles.get(target);
+                for (const toggle of toggles) {
+                    dom.setAttribute(toggle, 'aria-expanded', expanded);
                 }
             }
         }
@@ -1466,8 +1455,6 @@
 
             this._dismiss = dom.find('[data-dismiss="modal"]', this._node);
 
-            this._toggles = [];
-
             this._events();
 
             if (this._settings.show) {
@@ -1481,8 +1468,10 @@
          * Destroy the Modal.
          */
         destroy() {
-            if (this._toggles.length) {
-                dom.removeEvent(this._toggles, 'click.frost.modal', this._clickEvent);
+            if (Modal._toggles.has(this._node)) {
+                const toggles = Modal._toggles.get(this._node);
+                dom.removeEvent(toggles, 'click.frost.modal', this._clickEvent);
+                Modal._toggles.delete(this._node);
             }
 
             if (this._dismiss.length) {
@@ -1626,6 +1615,25 @@
                 this.show();
         }
 
+        static fromToggle(toggle, show = false) {
+            const target = dom.getDataset(toggle, 'target');
+            const element = dom.findOne(target);
+            const modal = dom.hasData(element, 'modal') ?
+                dom.getData(element, 'modal') :
+                new this(element, {
+                    show
+                });
+
+            if (!this._toggles.has(element)) {
+                this._toggles.set(element, []);
+            }
+
+            this._toggles.get(element)
+                .push(toggle);
+
+            dom.addEvent(toggle, 'click.frost.modal', modal._clickEvent);
+        }
+
     }
 
 
@@ -1638,20 +1646,14 @@
         keyboard: true
     };
 
+    Modal._toggles = new WeakMap;
+
     // Auto-initialize Modal from data-toggle
     dom.addEventOnce(window, 'load', _ => {
         const nodes = dom.find('[data-toggle="modal"]');
 
         for (const node of nodes) {
-            const target = dom.getDataset(node, 'target');
-            const element = dom.findOne(target);
-            const modal = dom.hasData(element, 'modal') ?
-                dom.getData(element, 'modal') :
-                new Modal(element, {
-                    show: false
-                });
-
-            modal._eventToggle(node);
+            Modal.fromToggle(node);
         }
     });
 
@@ -1736,12 +1738,6 @@
             if (this._dismiss.length) {
                 dom.addEvent(this._dismiss, 'click.frost.modal', this._dismissEvent);
             }
-        },
-
-        _eventToggle(toggle) {
-            dom.addEvent(toggle, 'click.frost.modal', this._clickEvent);
-
-            this._toggles.push(toggle);
         }
 
     });
@@ -2840,7 +2836,8 @@
                 this._settings.target = dom.getAttribute(this._node, 'href');
             }
 
-            this._target = dom.find(this._settings.target);
+            this._target = dom.findOne(this._settings.target);
+            this._siblings = dom.siblings(this._node);
 
             this._events();
 
@@ -2862,7 +2859,6 @@
          */
         hide() {
             return new Promise((resolve, reject) => {
-                console.log('test');
                 if (!dom.hasClass(this._target, 'active') || dom.getDataset(this._target, 'animating')) {
                     return reject();
                 }
@@ -2899,18 +2895,21 @@
                     return reject();
                 }
 
-                const activeTab = dom.siblings(this._node, '.active').shift();
+                const activeTab = this._siblings.find(sibling => dom.hasClass(sibling, 'active'));
 
-                if (!dom.hasData(activeTab, 'tab')) {
+                if (activeTab && !dom.hasData(activeTab, 'tab')) {
                     return reject();
                 }
 
-                dom.setDataset(this._target, 'animating', true);
-
-                dom.getData(activeTab, 'tab').hide().then(_ => {
+                (activeTab ?
+                    dom.getData(activeTab, 'tab').hide() :
+                    Promise.resolve()
+                ).then(_ => {
                     if (!DOM._triggerEvent(this._node, 'show.frost.tab')) {
                         return reject();
                     }
+
+                    dom.setDataset(this._target, 'animating', true);
 
                     dom.addClass(this._target, 'active');
                     dom.addClass(this._node, 'active');

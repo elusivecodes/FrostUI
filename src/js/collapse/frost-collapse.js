@@ -4,6 +4,8 @@ Collapse.defaults = {
     duration: 250
 };
 
+Collapse._toggles = new WeakMap;
+
 // Auto-initialize Collapse from data-ride
 dom.addEventOnce(window, 'load', _ => {
     const nodes = dom.find('[data-toggle="collapse"]');

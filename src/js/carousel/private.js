@@ -77,38 +77,22 @@ Object.assign(Carousel.prototype, {
     /**
      * Cycle to a specific Carousel item.
      * @param {number} index The item index to cycle to.
-     * @param {function} [queuedResolve] The queued resolve callback.
-     * @param {function} [queuedReject] The queued reject callback.
      * @returns {Promise} A new Promise that resolves when the animation has completed.
      */
-    _show(index, queuedResolve, queuedReject) {
+    _show(index) {
         return new Promise((resolve, reject) => {
             if (dom.getDataset(this._node, 'sliding')) {
-                this._queue.push({
-                    index: index,
-                    resolve: resolve,
-                    reject: reject
-                });
+                this._queue.push(index);
 
                 return;
             }
-
-            const fullResolve = _ => {
-                queuedResolve && queuedResolve();
-                resolve();
-            };
-
-            const fullReject = _ => {
-                queuedReject && queuedReject();
-                reject();
-            };
 
             index = parseInt(index);
 
             if (!this._settings.wrap &&
                 (index < 0 || index > this._items.length - 1)
             ) {
-                return fullReject();
+                return reject();
             }
 
             let dir = 0;
@@ -124,7 +108,7 @@ Object.assign(Carousel.prototype, {
             }
 
             if (index === this._index) {
-                return fullReject();
+                return reject();
             }
 
             const direction = dir == -1 || (dir == 0 && index < this._index) ?
@@ -139,7 +123,7 @@ Object.assign(Carousel.prototype, {
             };
 
             if (!DOM._triggerEvent(this._node, 'slide.frost.carousel', eventData)) {
-                return fullReject();
+                return reject();
             }
 
             const oldIndex = this._index;
@@ -175,7 +159,7 @@ Object.assign(Carousel.prototype, {
 
                 dom.triggerEvent(this._node, 'slid.frost.carousel', eventData);
 
-                fullResolve();
+                resolve();
 
                 if (!this._queue.length) {
                     this._setTimer();
@@ -183,7 +167,7 @@ Object.assign(Carousel.prototype, {
                 }
 
                 const next = this._queue.shift();
-                return this._show(next.index, next.resolve, next.reject);
+                return this._show(next);
             }).catch(reject);
         });
     },

@@ -24,7 +24,8 @@ class Tab {
             this._settings.target = dom.getAttribute(this._node, 'href');
         }
 
-        this._target = dom.find(this._settings.target);
+        this._target = dom.findOne(this._settings.target);
+        this._siblings = dom.siblings(this._node);
 
         this._events();
 
@@ -46,7 +47,6 @@ class Tab {
      */
     hide() {
         return new Promise((resolve, reject) => {
-            console.log('test');
             if (!dom.hasClass(this._target, 'active') || dom.getDataset(this._target, 'animating')) {
                 return reject();
             }
@@ -83,18 +83,21 @@ class Tab {
                 return reject();
             }
 
-            const activeTab = dom.siblings(this._node, '.active').shift();
+            const activeTab = this._siblings.find(sibling => dom.hasClass(sibling, 'active'));
 
-            if (!dom.hasData(activeTab, 'tab')) {
+            if (activeTab && !dom.hasData(activeTab, 'tab')) {
                 return reject();
             }
 
-            dom.setDataset(this._target, 'animating', true);
-
-            dom.getData(activeTab, 'tab').hide().then(_ => {
+            (activeTab ?
+                dom.getData(activeTab, 'tab').hide() :
+                Promise.resolve()
+            ).then(_ => {
                 if (!DOM._triggerEvent(this._node, 'show.frost.tab')) {
                     return reject();
                 }
+
+                dom.setDataset(this._target, 'animating', true);
 
                 dom.addClass(this._target, 'active');
                 dom.addClass(this._node, 'active');
