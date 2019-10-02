@@ -114,7 +114,7 @@ class Carousel {
      */
     slide(direction = 1) {
         const index = this._queue.length ?
-            this._queue[this._queue.length - 1].index :
+            this._queue[this._queue.length - 1] :
             this._index;
 
         return this.show(index + direction);

@@ -61,8 +61,8 @@
     text-align: left;
     background-color: transparent;
 
-    button&,
-    &[href] {
+    a&,
+    button& {
         &:hover,
         &:focus {
             text-decoration: none;
@@ -79,8 +79,8 @@
         background-color: @link;
         .text-color(@link);
 
-        button&,
-        &[href] {
+        a&,
+        button& {
             &:hover:not(:disabled),
             &:focus {
                 background-color: darken(@link, 5%);

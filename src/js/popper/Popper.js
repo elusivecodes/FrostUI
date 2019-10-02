@@ -35,7 +35,9 @@ class Popper {
         this._scrollParent = Popper.getScrollParent(this._node);
 
         dom.setStyle(this._node, {
-            position: 'absolute',
+            position: this._fixed ?
+                'fixed' :
+                'absolute',
             top: 0,
             left: 0
         });
@@ -170,12 +172,6 @@ class Popper {
         if (this._scrollParent) {
             offset.x += dom.getScrollX(this._scrollParent);
             offset.y += dom.getScrollY(this._scrollParent);
-        }
-
-        // compensate for fixed position
-        if (this._fixed) {
-            offset.x += dom.getScrollX(window);
-            offset.y += dom.getScrollY(window);
         }
 
         // update position

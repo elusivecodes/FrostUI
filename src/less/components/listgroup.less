@@ -3,8 +3,8 @@
     background-color: @background;
     color: darken(@color, 25%);
 
-    button&,
-    &[href] {
+    a&,
+    button& {
         &:hover:not(:disabled) {
             background-color: darken(@background, 5%);
             color: darken(@color, 40%);
@@ -83,8 +83,8 @@ ul.list-group {
     border: @border-size @border-style @border-color;
     transition: color @transition-time @transition-type, background-color @transition-time @transition-type, box-shadow @transition-time @transition-type;
 
-    button&,
-    &[href] {
+    a&,
+    button& {
         display: flex;
 
         &:hover,
@@ -120,8 +120,8 @@ ul.list-group {
         background-color: @link;
         .text-color(@link);
 
-        button&,
-        &[href] {
+        a&,
+        button& {
             &:hover:not(:disabled) {
                 background-color: darken(@link, 5%);
             }

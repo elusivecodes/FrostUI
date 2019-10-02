@@ -2,7 +2,7 @@
     background-color: @color;
     .text-color(@color);
 
-    &[href],
+    a&,
     button& {
         &:hover:not(:disabled) {
             background-color: darken(@color, 10%);
@@ -25,7 +25,7 @@
         background-color @transition-time @transition-type,
         box-shadow @transition-time @transition-type;
 
-    &[href],
+    a&,
     button& {
 
         &:hover,
@@ -68,7 +68,7 @@
 .badge-pill {
     padding-right: @half-spacing;
     padding-left: @half-spacing;
-    border-radius: @spacing * 10;
+    border-radius: @spacing;
 }
 
 .badge-primary {

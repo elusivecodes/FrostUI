@@ -514,7 +514,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       key: "slide",
       value: function slide() {
         var direction = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-        var index = this._queue.length ? this._queue[this._queue.length - 1].index : this._index;
+        var index = this._queue.length ? this._queue[this._queue.length - 1] : this._index;
         return this.show(index + direction);
       }
     }]);
@@ -2449,7 +2449,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this._relativeParent = Popper.getRelativeParent(this._node);
       this._scrollParent = Popper.getScrollParent(this._node);
       dom.setStyle(this._node, {
-        position: 'absolute',
+        position: this._fixed ? 'fixed' : 'absolute',
         top: 0,
         left: 0
       });
@@ -2554,12 +2554,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         if (this._scrollParent) {
           offset.x += dom.getScrollX(this._scrollParent);
           offset.y += dom.getScrollY(this._scrollParent);
-        } // compensate for fixed position
-
-
-        if (this._fixed) {
-          offset.x += dom.getScrollX(window);
-          offset.y += dom.getScrollY(window);
         } // update position
 
 
