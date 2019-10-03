@@ -14,11 +14,12 @@ class Tab {
     constructor(node, settings) {
         this._node = node;
 
-        this._settings = {
-            ...Tab.defaults,
-            ...dom.getDataset(this._node),
-            ...settings
-        };
+        this._settings = Core.extend(
+            {},
+            Tab.defaults,
+            dom.getDataset(this._node),
+            settings
+        );
 
         if (!this._settings.target) {
             this._settings.target = dom.getAttribute(this._node, 'href');

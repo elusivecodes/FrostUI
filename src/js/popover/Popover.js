@@ -28,11 +28,12 @@ class Popover {
     constructor(node, settings) {
         this._node = node;
 
-        this._settings = {
-            ...Popover.defaults,
-            ...dom.getDataset(this._node),
-            ...settings
-        };
+        this._settings = Core.extend(
+            {},
+            Popover.defaults,
+            dom.getDataset(this._node),
+            settings
+        );
 
         this._triggers = this._settings.trigger.split(' ');
 

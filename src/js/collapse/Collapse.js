@@ -15,11 +15,12 @@ class Collapse {
     constructor(node, settings) {
         this._node = node;
 
-        this._settings = {
-            ...Collapse.defaults,
-            ...dom.getDataset(this._node),
-            ...settings
-        };
+        this._settings = Core.extend(
+            {},
+            Collapse.defaults,
+            dom.getDataset(this._node),
+            settings
+        );
 
         this._targets = dom.find(this._settings.target);
 

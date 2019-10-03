@@ -46,11 +46,12 @@
         constructor(node, settings) {
             this._node = node;
 
-            this._settings = {
-                ...Alert.defaults,
-                ...dom.getDataset(this._node),
-                ...settings
-            };
+            this._settings = Core.extend(
+                {},
+                Alert.defaults,
+                dom.getDataset(this._node),
+                settings
+            );
 
             this._dismiss = dom.find('[data-dismiss="alert"]', this._node);
 
@@ -198,11 +199,12 @@
         constructor(node, settings) {
             this._node = node;
 
-            this._settings = {
-                ...Button.defaults,
-                ...dom.getDataset(this._node),
-                ...settings
-            };
+            this._settings = Core.extend(
+                {},
+                Button.defaults,
+                dom.getDataset(this._node),
+                settings
+            );
 
             this._input = dom.findOne('input[type="checkbox"], input[type="radio"]', this._node);
             this._isRadio = this._input && dom.is(this._input, '[type="radio"]');
@@ -357,11 +359,12 @@
         constructor(node, settings) {
             this._node = node;
 
-            this._settings = {
-                ...Carousel.defaults,
-                ...dom.getDataset(this._node),
-                ...settings
-            };
+            this._settings = Core.extend(
+                {},
+                Carousel.defaults,
+                dom.getDataset(this._node),
+                settings
+            );
 
             this._items = dom.find('.carousel-item', this._node);
 
@@ -741,11 +744,12 @@
         constructor(node, settings) {
             this._node = node;
 
-            this._settings = {
-                ...Collapse.defaults,
-                ...dom.getDataset(this._node),
-                ...settings
-            };
+            this._settings = Core.extend(
+                {},
+                Collapse.defaults,
+                dom.getDataset(this._node),
+                settings
+            );
 
             this._targets = dom.find(this._settings.target);
 
@@ -1140,11 +1144,12 @@
         constructor(node, settings) {
             this._node = node;
 
-            this._settings = {
-                ...Dropdown.defaults,
-                ...dom.getDataset(this._node),
-                ...settings
-            };
+            this._settings = Core.extend(
+                {},
+                Dropdown.defaults,
+                dom.getDataset(this._node),
+                settings
+            );
 
             this._containerNode = dom.parent(this._node);
 
@@ -1445,11 +1450,12 @@
         constructor(node, settings) {
             this._node = node;
 
-            this._settings = {
-                ...Modal.defaults,
-                ...dom.getDataset(node),
-                ...settings
-            };
+            this._settings = Core.extend(
+                {},
+                Modal.defaults,
+                dom.getDataset(node),
+                settings
+            );
 
             this._dialog = dom.child(this._node, '.modal-dialog').shift();
 
@@ -1773,11 +1779,12 @@
         constructor(node, settings) {
             this._node = node;
 
-            this._settings = {
-                ...Popover.defaults,
-                ...dom.getDataset(this._node),
-                ...settings
-            };
+            this._settings = Core.extend(
+                {},
+                Popover.defaults,
+                dom.getDataset(this._node),
+                settings
+            );
 
             this._triggers = this._settings.trigger.split(' ');
 
@@ -2070,6 +2077,7 @@
             const arrow = dom.create('div', {
                 class: this._settings.classes.arrow
             });
+
             dom.append(this._popover, arrow);
 
             const method = this._settings.html ? 'html' : 'text';
@@ -2086,15 +2094,13 @@
             }
 
             const content = this._settings.content;
-            if (content) {
-                const popoverBody = dom.create('div', {
-                    [method]: this._settings.html && this._settings.sanitize ?
-                        this._settings.sanitize(content) :
-                        content,
-                    class: this._settings.classes.popoverBody
-                });
-                dom.append(this._popover, popoverBody);
-            }
+            const popoverBody = dom.create('div', {
+                [method]: this._settings.html && this._settings.sanitize ?
+                    this._settings.sanitize(content) :
+                    content,
+                class: this._settings.classes.popoverBody
+            });
+            dom.append(this._popover, popoverBody);
 
             if (this._container) {
                 dom.append(this._container, this._popover);
@@ -2143,11 +2149,12 @@
         constructor(node, settings) {
             this._node = node;
 
-            this._settings = {
-                ...Popper.defaults,
-                ...dom.getDataset(this._node),
-                ...settings
-            };
+            this._settings = Core.extend(
+                {},
+                Popper.defaults,
+                dom.getDataset(this._node),
+                settings
+            );
 
             this._fixed = dom.isFixed(this._settings.reference);
 
@@ -2267,7 +2274,7 @@
             };
 
             // offset for relative parent
-            const relativeBox = this._relativeParent ?
+            const relativeBox = this._relativeParent && !this._fixed ?
                 dom.rect(this._relativeParent, !this._fixed) :
                 null;
 
@@ -2822,11 +2829,12 @@
         constructor(node, settings) {
             this._node = node;
 
-            this._settings = {
-                ...Tab.defaults,
-                ...dom.getDataset(this._node),
-                ...settings
-            };
+            this._settings = Core.extend(
+                {},
+                Tab.defaults,
+                dom.getDataset(this._node),
+                settings
+            );
 
             if (!this._settings.target) {
                 this._settings.target = dom.getAttribute(this._node, 'href');
@@ -3020,11 +3028,12 @@
         constructor(node, settings) {
             this._node = node;
 
-            this._settings = {
-                ...Toast.defaults,
-                ...dom.getDataset(this._node),
-                ...settings
-            };
+            this._settings = Core.extend(
+                {},
+                Toast.defaults,
+                dom.getDataset(this._node),
+                settings
+            );
 
             this._dismiss = dom.find('[data-dismiss="toast"]', this._node);
 
@@ -3224,11 +3233,12 @@
         constructor(node, settings) {
             this._node = node;
 
-            this._settings = {
-                ...Tooltip.defaults,
-                ...dom.getDataset(this._node),
-                ...settings
-            };
+            this._settings = Core.extend(
+                {},
+                Tooltip.defaults,
+                dom.getDataset(this._node),
+                settings
+            );
 
             this._triggers = this._settings.trigger.split(' ');
 
@@ -3522,6 +3532,7 @@
             const arrow = dom.create('div', {
                 class: this._settings.classes.arrow
             });
+
             dom.append(this._tooltip, arrow);
 
             const title = dom.getAttribute(this._node, 'title') || this._settings.title;
@@ -3533,6 +3544,7 @@
                     title,
                 class: this._settings.classes.tooltipInner
             });
+
             dom.append(this._tooltip, tooltipInner);
 
             if (this._container) {

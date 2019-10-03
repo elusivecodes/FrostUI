@@ -1,5 +1,11 @@
 "use strict";
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -7,12 +13,6 @@ function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread n
 function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -70,7 +70,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Alert);
 
       this._node = node;
-      this._settings = _objectSpread({}, Alert.defaults, {}, dom.getDataset(this._node), {}, settings);
+      this._settings = Core.extend({}, Alert.defaults, dom.getDataset(this._node), settings);
       this._dismiss = dom.find('[data-dismiss="alert"]', this._node);
 
       this._events();
@@ -237,7 +237,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Button);
 
       this._node = node;
-      this._settings = _objectSpread({}, Button.defaults, {}, dom.getDataset(this._node), {}, settings);
+      this._settings = Core.extend({}, Button.defaults, dom.getDataset(this._node), settings);
       this._input = dom.findOne('input[type="checkbox"], input[type="radio"]', this._node);
       this._isRadio = this._input && dom.is(this._input, '[type="radio"]');
 
@@ -411,7 +411,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Carousel);
 
       this._node = node;
-      this._settings = _objectSpread({}, Carousel.defaults, {}, dom.getDataset(this._node), {}, settings);
+      this._settings = Core.extend({}, Carousel.defaults, dom.getDataset(this._node), settings);
       this._items = dom.find('.carousel-item', this._node);
       this._index = this._items.findIndex(function (item) {
         return dom.hasClass(item, 'active');
@@ -799,7 +799,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Collapse);
 
       this._node = node;
-      this._settings = _objectSpread({}, Collapse.defaults, {}, dom.getDataset(this._node), {}, settings);
+      this._settings = Core.extend({}, Collapse.defaults, dom.getDataset(this._node), settings);
       this._targets = dom.find(this._settings.target);
 
       this._events();
@@ -1415,7 +1415,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Dropdown);
 
       this._node = node;
-      this._settings = _objectSpread({}, Dropdown.defaults, {}, dom.getDataset(this._node), {}, settings);
+      this._settings = Core.extend({}, Dropdown.defaults, dom.getDataset(this._node), settings);
       this._containerNode = dom.parent(this._node);
       this._menuNode = dom.siblings(this._node).find(function (child) {
         return dom.hasClass(child, 'dropdown-menu');
@@ -1719,7 +1719,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Modal);
 
       this._node = node;
-      this._settings = _objectSpread({}, Modal.defaults, {}, dom.getDataset(node), {}, settings);
+      this._settings = Core.extend({}, Modal.defaults, dom.getDataset(node), settings);
       this._dialog = dom.child(this._node, '.modal-dialog').shift();
       this._dismiss = dom.find('[data-dismiss="modal"]', this._node);
 
@@ -2057,7 +2057,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Popover);
 
       this._node = node;
-      this._settings = _objectSpread({}, Popover.defaults, {}, dom.getDataset(this._node), {}, settings);
+      this._settings = Core.extend({}, Popover.defaults, dom.getDataset(this._node), settings);
       this._triggers = this._settings.trigger.split(' ');
 
       this._events();
@@ -2370,6 +2370,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Render the Popover element.
      */
     _render: function _render() {
+      var _dom$create2;
+
       this._popover = dom.create('div', {
         "class": this._settings.classes.popover,
         attributes: {
@@ -2392,13 +2394,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
 
       var content = this._settings.content;
-
-      if (content) {
-        var _dom$create2;
-
-        var popoverBody = dom.create('div', (_dom$create2 = {}, _defineProperty(_dom$create2, method, this._settings.html && this._settings.sanitize ? this._settings.sanitize(content) : content), _defineProperty(_dom$create2, "class", this._settings.classes.popoverBody), _dom$create2));
-        dom.append(this._popover, popoverBody);
-      }
+      var popoverBody = dom.create('div', (_dom$create2 = {}, _defineProperty(_dom$create2, method, this._settings.html && this._settings.sanitize ? this._settings.sanitize(content) : content), _defineProperty(_dom$create2, "class", this._settings.classes.popoverBody), _dom$create2));
+      dom.append(this._popover, popoverBody);
 
       if (this._container) {
         dom.append(this._container, this._popover);
@@ -2444,7 +2441,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Popper);
 
       this._node = node;
-      this._settings = _objectSpread({}, Popper.defaults, {}, dom.getDataset(this._node), {}, settings);
+      this._settings = Core.extend({}, Popper.defaults, dom.getDataset(this._node), settings);
       this._fixed = dom.isFixed(this._settings.reference);
       this._relativeParent = Popper.getRelativeParent(this._node);
       this._scrollParent = Popper.getScrollParent(this._node);
@@ -2534,7 +2531,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           y: Math.round(referenceBox.y)
         }; // offset for relative parent
 
-        var relativeBox = this._relativeParent ? dom.rect(this._relativeParent, !this._fixed) : null;
+        var relativeBox = this._relativeParent && !this._fixed ? dom.rect(this._relativeParent, !this._fixed) : null;
 
         if (relativeBox) {
           offset.x -= Math.round(relativeBox.x);
@@ -3023,7 +3020,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Tab);
 
       this._node = node;
-      this._settings = _objectSpread({}, Tab.defaults, {}, dom.getDataset(this._node), {}, settings);
+      this._settings = Core.extend({}, Tab.defaults, dom.getDataset(this._node), settings);
 
       if (!this._settings.target) {
         this._settings.target = dom.getAttribute(this._node, 'href');
@@ -3240,7 +3237,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Toast);
 
       this._node = node;
-      this._settings = _objectSpread({}, Toast.defaults, {}, dom.getDataset(this._node), {}, settings);
+      this._settings = Core.extend({}, Toast.defaults, dom.getDataset(this._node), settings);
       this._dismiss = dom.find('[data-dismiss="toast"]', this._node);
 
       this._events();
@@ -3459,7 +3456,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Tooltip);
 
       this._node = node;
-      this._settings = _objectSpread({}, Tooltip.defaults, {}, dom.getDataset(this._node), {}, settings);
+      this._settings = Core.extend({}, Tooltip.defaults, dom.getDataset(this._node), settings);
       this._triggers = this._settings.trigger.split(' ');
 
       this._events();

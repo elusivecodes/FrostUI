@@ -19,11 +19,12 @@ class Dropdown {
     constructor(node, settings) {
         this._node = node;
 
-        this._settings = {
-            ...Dropdown.defaults,
-            ...dom.getDataset(this._node),
-            ...settings
-        };
+        this._settings = Core.extend(
+            {},
+            Dropdown.defaults,
+            dom.getDataset(this._node),
+            settings
+        );
 
         this._containerNode = dom.parent(this._node);
 

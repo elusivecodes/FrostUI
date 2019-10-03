@@ -18,11 +18,12 @@ class Modal {
     constructor(node, settings) {
         this._node = node;
 
-        this._settings = {
-            ...Modal.defaults,
-            ...dom.getDataset(node),
-            ...settings
-        };
+        this._settings = Core.extend(
+            {},
+            Modal.defaults,
+            dom.getDataset(node),
+            settings
+        );
 
         this._dialog = dom.child(this._node, '.modal-dialog').shift();
 

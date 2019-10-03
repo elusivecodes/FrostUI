@@ -14,11 +14,12 @@ class Alert {
     constructor(node, settings) {
         this._node = node;
 
-        this._settings = {
-            ...Alert.defaults,
-            ...dom.getDataset(this._node),
-            ...settings
-        };
+        this._settings = Core.extend(
+            {},
+            Alert.defaults,
+            dom.getDataset(this._node),
+            settings
+        );
 
         this._dismiss = dom.find('[data-dismiss="alert"]', this._node);
 

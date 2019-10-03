@@ -27,11 +27,12 @@ class Tooltip {
     constructor(node, settings) {
         this._node = node;
 
-        this._settings = {
-            ...Tooltip.defaults,
-            ...dom.getDataset(this._node),
-            ...settings
-        };
+        this._settings = Core.extend(
+            {},
+            Tooltip.defaults,
+            dom.getDataset(this._node),
+            settings
+        );
 
         this._triggers = this._settings.trigger.split(' ');
 

@@ -22,11 +22,12 @@ class Popper {
     constructor(node, settings) {
         this._node = node;
 
-        this._settings = {
-            ...Popper.defaults,
-            ...dom.getDataset(this._node),
-            ...settings
-        };
+        this._settings = Core.extend(
+            {},
+            Popper.defaults,
+            dom.getDataset(this._node),
+            settings
+        );
 
         this._fixed = dom.isFixed(this._settings.reference);
 
@@ -146,7 +147,7 @@ class Popper {
         };
 
         // offset for relative parent
-        const relativeBox = this._relativeParent ?
+        const relativeBox = this._relativeParent && !this._fixed ?
             dom.rect(this._relativeParent, !this._fixed) :
             null;
 

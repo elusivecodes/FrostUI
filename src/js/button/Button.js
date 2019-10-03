@@ -13,11 +13,12 @@ class Button {
     constructor(node, settings) {
         this._node = node;
 
-        this._settings = {
-            ...Button.defaults,
-            ...dom.getDataset(this._node),
-            ...settings
-        };
+        this._settings = Core.extend(
+            {},
+            Button.defaults,
+            dom.getDataset(this._node),
+            settings
+        );
 
         this._input = dom.findOne('input[type="checkbox"], input[type="radio"]', this._node);
         this._isRadio = this._input && dom.is(this._input, '[type="radio"]');

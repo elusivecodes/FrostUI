@@ -72,6 +72,7 @@ Object.assign(Tooltip.prototype, {
         const arrow = dom.create('div', {
             class: this._settings.classes.arrow
         });
+
         dom.append(this._tooltip, arrow);
 
         const title = dom.getAttribute(this._node, 'title') || this._settings.title;
@@ -83,6 +84,7 @@ Object.assign(Tooltip.prototype, {
                 title,
             class: this._settings.classes.tooltipInner
         });
+
         dom.append(this._tooltip, tooltipInner);
 
         if (this._container) {

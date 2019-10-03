@@ -19,11 +19,12 @@ class Carousel {
     constructor(node, settings) {
         this._node = node;
 
-        this._settings = {
-            ...Carousel.defaults,
-            ...dom.getDataset(this._node),
-            ...settings
-        };
+        this._settings = Core.extend(
+            {},
+            Carousel.defaults,
+            dom.getDataset(this._node),
+            settings
+        );
 
         this._items = dom.find('.carousel-item', this._node);
 

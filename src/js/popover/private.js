@@ -72,6 +72,7 @@ Object.assign(Popover.prototype, {
         const arrow = dom.create('div', {
             class: this._settings.classes.arrow
         });
+
         dom.append(this._popover, arrow);
 
         const method = this._settings.html ? 'html' : 'text';
@@ -88,15 +89,13 @@ Object.assign(Popover.prototype, {
         }
 
         const content = this._settings.content;
-        if (content) {
-            const popoverBody = dom.create('div', {
-                [method]: this._settings.html && this._settings.sanitize ?
-                    this._settings.sanitize(content) :
-                    content,
-                class: this._settings.classes.popoverBody
-            });
-            dom.append(this._popover, popoverBody);
-        }
+        const popoverBody = dom.create('div', {
+            [method]: this._settings.html && this._settings.sanitize ?
+                this._settings.sanitize(content) :
+                content,
+            class: this._settings.classes.popoverBody
+        });
+        dom.append(this._popover, popoverBody);
 
         if (this._container) {
             dom.append(this._container, this._popover);

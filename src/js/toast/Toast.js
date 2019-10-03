@@ -16,11 +16,12 @@ class Toast {
     constructor(node, settings) {
         this._node = node;
 
-        this._settings = {
-            ...Toast.defaults,
-            ...dom.getDataset(this._node),
-            ...settings
-        };
+        this._settings = Core.extend(
+            {},
+            Toast.defaults,
+            dom.getDataset(this._node),
+            settings
+        );
 
         this._dismiss = dom.find('[data-dismiss="toast"]', this._node);
 
