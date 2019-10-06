@@ -95,7 +95,7 @@ class Tooltip {
      */
     hide() {
         return new Promise((resolve, reject) => {
-            if (!this._tooltip) {
+            if (!this._tooltip || dom.getDataset(this._tooltip, 'animating')) {
                 return reject();
             }
 

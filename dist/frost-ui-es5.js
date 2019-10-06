@@ -2129,7 +2129,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this19 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!_this19._popover) {
+          if (!_this19._popover || dom.getDataset(_this19._popover, 'animating')) {
             return reject();
           }
 
@@ -2493,6 +2493,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           return;
         }
 
+        dom.triggerEvent(this._node, 'update.frost.popper');
         var scrollBox = this._scrollParent ? dom.rect(this._scrollParent, !this._fixed) : null;
         var containerBox = this._settings.container ? dom.rect(this._settings.container, !this._fixed) : null;
 
@@ -2570,6 +2571,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
           this._updateArrow(newNodeBox, referenceBox, placement, position);
         }
+
+        dom.triggerEvent(this._node, 'updated.frost.popper');
       }
     }]);
 
@@ -3528,7 +3531,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this31 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!_this31._tooltip) {
+          if (!_this31._tooltip || dom.getDataset(_this31._tooltip, 'animating')) {
             return reject();
           }
 

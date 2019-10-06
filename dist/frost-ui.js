@@ -1847,7 +1847,7 @@
          */
         hide() {
             return new Promise((resolve, reject) => {
-                if (!this._popover) {
+                if (!this._popover || dom.getDataset(this._popover, 'animating')) {
                     return reject();
                 }
 
@@ -2209,6 +2209,8 @@
                 return;
             }
 
+            dom.triggerEvent(this._node, 'update.frost.popper');
+
             const scrollBox = this._scrollParent ?
                 dom.rect(this._scrollParent, !this._fixed) :
                 null;
@@ -2318,6 +2320,8 @@
                 const newNodeBox = dom.rect(this._node, !this._fixed);
                 this._updateArrow(newNodeBox, referenceBox, placement, position);
             }
+
+            dom.triggerEvent(this._node, 'updated.frost.popper');
         }
 
     }
@@ -3301,7 +3305,7 @@
          */
         hide() {
             return new Promise((resolve, reject) => {
-                if (!this._tooltip) {
+                if (!this._tooltip || dom.getDataset(this._tooltip, 'animating')) {
                     return reject();
                 }
 

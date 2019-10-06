@@ -82,6 +82,8 @@ class Popper {
             return;
         }
 
+        dom.triggerEvent(this._node, 'update.frost.popper');
+
         const scrollBox = this._scrollParent ?
             dom.rect(this._scrollParent, !this._fixed) :
             null;
@@ -191,6 +193,8 @@ class Popper {
             const newNodeBox = dom.rect(this._node, !this._fixed);
             this._updateArrow(newNodeBox, referenceBox, placement, position);
         }
+
+        dom.triggerEvent(this._node, 'updated.frost.popper');
     }
 
 }

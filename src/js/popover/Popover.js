@@ -96,7 +96,7 @@ class Popover {
      */
     hide() {
         return new Promise((resolve, reject) => {
-            if (!this._popover) {
+            if (!this._popover || dom.getDataset(this._popover, 'animating')) {
                 return reject();
             }
 
