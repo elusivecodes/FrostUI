@@ -5,7 +5,7 @@
 
     a&,
     button& {
-        &:hover:not(:disabled) {
+        &:hover {
             background-color: darken(@background, 5%);
             color: darken(@color, 40%);
         }
@@ -15,7 +15,7 @@
 .list-group {
     display: flex;
     flex-direction: column;
-    margin-bottom: @spacing;
+    margin-bottom: 0;
     border-radius: @border-radius;
 
     & > :first-child {
@@ -92,7 +92,7 @@ ul.list-group {
             text-decoration: none;
         }
     
-        &:hover:not(:disabled) {
+        &:hover {
             z-index: @z-hover;
             background-color: @shadow-color;
         }
@@ -122,7 +122,7 @@ ul.list-group {
 
         a&,
         button& {
-            &:hover:not(:disabled) {
+            &:hover {
                 background-color: darken(@link, 5%);
             }
         }
@@ -135,14 +135,10 @@ ul.list-group {
     button& {
         outline: 0;
         cursor: pointer;
-
-        &:disabled {
-            opacity: @disabled-opacity;
-            cursor: not-allowed;
-        }
     }
 
-    &.disabled {
+    &.disabled,
+    &:disabled {
         opacity: @disabled-opacity;
         pointer-events: none;
     }

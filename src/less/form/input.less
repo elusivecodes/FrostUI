@@ -1,40 +1,12 @@
 .form-control {
-    border: @border-size @border-style @border-color;
-    border-radius: @border-radius;
-    background-color: @white;
-
-    &:not(:disabled) {
-        &:focus,
-        &:active {
-            box-shadow: @shadow-xs;
-        }
-    }
-}
-
-.form-minimal {
-    border: 0;
-    border-bottom: @border-size @border-style @border-color;
-    background-color: @form-minimal;
-}
-
-.form-plain-text {
-    display: block;
-    width: 100%;
-    padding: @half-spacing 0;
-    margin-bottom: 0;
-    line-height: @line-height;
-    color: @text;
-    background-color: transparent;
-    border: solid transparent;
-    border-width: @border-size 0;
-}
-
-.form-control, .form-minimal {
     display: block;
     width: 100%;
     padding: @half-spacing;
     font-size: 1rem;
     line-height: @line-height;
+    border: @border-size @border-style @border-color;
+    border-radius: @border-radius;
+    background-color: @white;
 
     &::placeholder {
         color: @form-placeholder;
@@ -62,9 +34,59 @@
         }
     }
 
-    &:disabled {
-        cursor: not-allowed;
+    &:focus,
+    &:active {
+        box-shadow: @shadow-xs;
     }
+}
+
+.form-minimal {
+    display: block;
+    width: 100%;
+    padding: @half-spacing;
+    font-size: 1rem;
+    line-height: @line-height;
+    border: 0;
+    border-bottom: @border-size @border-style @border-color;
+    background-color: @form-minimal;
+
+    &::placeholder {
+        color: @form-placeholder;
+    }
+
+    &:hover {
+        border-color: tint(lighten(@primary, 5%), 50%);
+        z-index: @z-hover;
+    }
+
+    &:active {
+        z-index: @z-active;
+    }
+
+    &:focus {
+        outline: 0;
+        border-color: @primary;
+        z-index: @z-focus;
+    }
+
+    &:not([type=file]) {
+        &:disabled,
+        &[readonly] {
+            background-color: @form-disabled;
+        }
+    }
+}
+
+.form-plain-text {
+    display: block;
+    width: 100%;
+    padding: @half-spacing 0;
+    margin-bottom: 0;
+    line-height: @line-height;
+    color: @text;
+    background-color: transparent;
+    border: solid transparent;
+    border-width: @border-size 0;
 }
 
 .form-control-lg,
@@ -90,13 +112,8 @@
     margin-top: @third-spacing;
     margin-left: -@spacing * 1.25;
 
-    &:disabled {
-        cursor: not-allowed;
-
-        & ~ .form-check-label {
-            opacity: @disabled-opacity;
-            cursor: not-allowed;
-        }
+    &:disabled  ~ .form-check-label {
+        opacity: @disabled-opacity;
     }
 }
 

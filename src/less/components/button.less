@@ -7,7 +7,7 @@
         background-color: darken(@color, 20%);
     }
 
-    &:hover:not(:disabled) {
+    &:hover {
         background-color: darken(@color, 10%);
         .text-color(@color);
     }
@@ -35,7 +35,6 @@
 .btn {
     display: inline-block;
     padding: @quarter-spacing @half-spacing;
-    margin-bottom: @spacing;
     text-align: center;
     white-space: nowrap;
     vertical-align: middle;
@@ -82,14 +81,10 @@
     button& {
         outline: 0;
         cursor: pointer;
-
-        &:disabled {
-            opacity: @disabled-opacity;
-            cursor: not-allowed;
-        }
     }
 
-    &.disabled {
+    &.disabled,
+    &:disabled {
         opacity: @disabled-opacity;
         pointer-events: none;
     }

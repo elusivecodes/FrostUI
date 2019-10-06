@@ -1,6 +1,6 @@
 .nav {
     display: flex;
-    margin-bottom: @spacing;
+    margin-bottom: 0;
 }
 
 .nav-link {
@@ -76,7 +76,9 @@
     & .open .nav-link,
     & .nav-link:hover,  
     & .nav-link:focus {
-        border-color: @border-color;
+        &:not(.active) {
+            border-color: @shadow-color;
+        }
         border-bottom-color: transparent;
     }
 
@@ -124,5 +126,4 @@
 .card-header-pills {
     margin-left: -@half-spacing;
     margin-right: -@half-spacing;
-    margin-bottom: 0;
 }

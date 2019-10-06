@@ -101,8 +101,19 @@
 }
 
 .modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     padding: @spacing;
     border-top: @border-size @border-style @border-color;
+
+    & > :not(:last-child) {
+        margin-right: @quarter-spacing;
+    }
+
+    & > :not(:first-child) {
+        margin-left: @quarter-spacing;
+    }
 }
 
 @media (min-width: @break-xs) {

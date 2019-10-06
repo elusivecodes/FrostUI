@@ -4,7 +4,7 @@
 
     a&,
     button& {
-        &:hover:not(:disabled) {
+        &:hover {
             background-color: darken(@color, 10%);
             .text-color(@color);
         }
@@ -52,14 +52,10 @@
         border: 0;
         outline: 0;
         cursor: pointer;
-
-        &:disabled {
-            opacity: @disabled-opacity;
-            cursor: not-allowed;
-        }
     }
 
-    &.disabled {
+    &.disabled,
+    &:disabled {
         opacity: @disabled-opacity;
         pointer-events: none;
     }

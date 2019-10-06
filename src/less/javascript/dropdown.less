@@ -68,7 +68,7 @@
             text-decoration: none;
         }
 
-        &:hover:not(:disabled),
+        &:hover,
         &:focus {
             background-color: rgba(0, 0, 0, .1);
             color: @text;
@@ -81,7 +81,7 @@
 
         a&,
         button& {
-            &:hover:not(:disabled),
+            &:hover,
             &:focus {
                 background-color: darken(@link, 5%);
                 .text-color(@link);
@@ -92,14 +92,10 @@
     button& {
         outline: 0;
         cursor: pointer;
-
-        &:disabled {
-            opacity: @disabled-opacity;
-            cursor: not-allowed;
-        }
     }
 
-    &.disabled {
+    &.disabled,
+    &:disabled {
         opacity: @disabled-opacity;
         pointer-events: none;
     }
