@@ -37,6 +37,7 @@ class Popover {
 
         this._triggers = this._settings.trigger.split(' ');
 
+        this._render();
         this._events();
 
         if (this._settings.enable) {
@@ -50,14 +51,9 @@ class Popover {
      * Destroy the Popover.
      */
     destroy() {
-        if (this._popover) {
-            this._popper.destroy();
+        this._popper.destroy();
 
-            dom.remove(this._popover);
-
-            this._popover = null;
-            this._popper = null;
-        }
+        dom.remove(this._popover);
 
         if (this._triggers.includes('hover')) {
             dom.removeEvent(this._node, 'mouseover.frost.popover', this._hoverEvent);
@@ -96,7 +92,11 @@ class Popover {
      */
     hide() {
         return new Promise((resolve, reject) => {
-            if (!this._popover || dom.getDataset(this._popover, 'animating')) {
+            if (dom.getDataset(this._popover, 'animating')) {
+                dom.stop(this._tooltip);
+            }
+
+            if (!dom.isConnected(this._popover)) {
                 return reject();
             }
 
@@ -106,26 +106,19 @@ class Popover {
 
             dom.setDataset(this._popover, 'animating', true);
 
-            dom.stop(this._popover);
-
             dom.fadeOut(this._popover, {
                 duration: this._settings.duration
             }).then(_ => {
-                this._popper.destroy();
+                dom.removeClass(this._popover, 'show');
 
-                dom.remove(this._popover);
-
-                this._popover = null;
-                this._popper = null;
+                dom.detach(this._popover);
 
                 dom.triggerEvent(this._node, 'hidden.frost.popover');
 
                 resolve();
-            }).catch(e => {
-                dom.removeDataset(this._popover, 'animating');
-
-                reject(e)
-            });
+            }).catch(reject).finally(_ =>
+                dom.removeDataset(this._popover, 'animating')
+            );
         });
     }
 
@@ -135,7 +128,11 @@ class Popover {
      */
     show() {
         return new Promise((resolve, reject) => {
-            if (this._popover) {
+            if (dom.getDataset(this._popover, 'animating')) {
+                dom.stop(this._tooltip);
+            }
+
+            if (dom.isConnected(this._popover)) {
                 return reject();
             }
 
@@ -143,7 +140,7 @@ class Popover {
                 return reject();
             }
 
-            this._render();
+            this._show();
 
             dom.setDataset(this._popover, 'animating', true);
 
@@ -166,7 +163,7 @@ class Popover {
      * @returns {Promise} A new Promise that resolves when the animation has completed.
      */
     toggle() {
-        return this._popover ?
+        return dom.isConnected(this._popover) ?
             this.hide() :
             this.show();
     }
@@ -175,10 +172,6 @@ class Popover {
      * Update the Popover position.
      */
     update() {
-        if (!this._popper) {
-            return;
-        }
-
         this._popper.update();
     }
 

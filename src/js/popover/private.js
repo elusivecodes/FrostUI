@@ -9,11 +9,10 @@ Object.assign(Popover.prototype, {
      */
     _events() {
         this._hideEvent = _ => {
-            if (!this._enabled || !this._popover) {
+            if (!this._enabled || !dom.isConnected(this._tooltip)) {
                 return;
             }
 
-            dom.stop(this._popover);
             this.hide().catch(_ => { });
         };
 
@@ -23,6 +22,7 @@ Object.assign(Popover.prototype, {
             }
 
             dom.addEventOnce(this._node, 'mouseout.frost.popover', this._hideEvent);
+
             this.show().catch(_ => { });
         };
 
@@ -32,6 +32,7 @@ Object.assign(Popover.prototype, {
             }
 
             dom.addEventOnce(this._node, 'blur.frost.popover', this._hideEvent);
+
             this.show().catch(_ => { });
         };
 
@@ -73,35 +74,18 @@ Object.assign(Popover.prototype, {
             class: this._settings.classes.arrow
         });
 
-        dom.append(this._popover, arrow);
 
-        const method = this._settings.html ? 'html' : 'text';
+        this._popoverHeader = dom.create('h3', {
+            class: this._settings.classes.popoverHeader
+        });
 
-        const title = dom.getAttribute(this._node, 'title') || this._settings.title;
-        if (title) {
-            const popoverHeader = dom.create('h3', {
-                [method]: this._settings.html && this._settings.sanitize ?
-                    this._settings.sanitize(title) :
-                    title,
-                class: this._settings.classes.popoverHeader
-            });
-            dom.append(this._popover, popoverHeader);
-        }
-
-        const content = this._settings.content;
-        const popoverBody = dom.create('div', {
-            [method]: this._settings.html && this._settings.sanitize ?
-                this._settings.sanitize(content) :
-                content,
+        this._popoverBody = dom.create('div', {
             class: this._settings.classes.popoverBody
         });
-        dom.append(this._popover, popoverBody);
 
-        if (this._container) {
-            dom.append(this._container, this._popover);
-        } else {
-            dom.before(this._node, this._popover);
-        }
+        dom.append(this._popover, arrow);
+        dom.append(this._popover, this._popoverHeader);
+        dom.append(this._popover, this._popoverBody);
 
         this._popper = new Popper(
             this._popover,
@@ -115,6 +99,43 @@ Object.assign(Popover.prototype, {
                 minContact: this._settings.minContact
             }
         )
+    },
+
+    /**
+     * Update the Popover and append to the DOM.
+     */
+    _show() {
+        const method = this._settings.html ? 'setHTML' : 'setText';
+        const title = dom.getAttribute(this._node, 'title') || this._settings.title;
+        const content = this._settings.content;
+
+        dom[method](
+            this._popoverHeader,
+            this._settings.html && this._settings.sanitize ?
+                this._settings.sanitize(title) :
+                title
+        );
+
+        if (!title) {
+            dom.hide(this._popoverHeader);
+        } else {
+            dom.show(this._popoverHeader);
+        }
+
+        dom[method](
+            this._popoverBody,
+            this._settings.html && this._settings.sanitize ?
+                this._settings.sanitize(content) :
+                content
+        );
+
+        if (this._container) {
+            dom.append(this._container, this._popover);
+        } else {
+            dom.before(this._node, this._popover);
+        }
+
+        this._popper.update();
     }
 
 });

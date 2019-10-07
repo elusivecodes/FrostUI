@@ -9,11 +9,10 @@ Object.assign(Tooltip.prototype, {
      */
     _events() {
         this._hideEvent = _ => {
-            if (!this._enabled || !this._tooltip) {
+            if (!this._enabled || !dom.isConnected(this._tooltip)) {
                 return;
             }
 
-            dom.stop(this._tooltip);
             this.hide().catch(_ => { });
         };
 
@@ -23,6 +22,7 @@ Object.assign(Tooltip.prototype, {
             }
 
             dom.addEventOnce(this._node, 'mouseout.frost.tooltip', this._hideEvent);
+
             this.show().catch(_ => { });
         };
 
@@ -32,6 +32,7 @@ Object.assign(Tooltip.prototype, {
             }
 
             dom.addEventOnce(this._node, 'blur.frost.tooltip', this._hideEvent)
+
             this.show().catch(_ => { });
         };
 
@@ -73,25 +74,13 @@ Object.assign(Tooltip.prototype, {
             class: this._settings.classes.arrow
         });
 
-        dom.append(this._tooltip, arrow);
 
-        const title = dom.getAttribute(this._node, 'title') || this._settings.title;
-        const method = this._settings.html ? 'html' : 'text';
-
-        const tooltipInner = dom.create('div', {
-            [method]: this._settings.html && this._settings.sanitize ?
-                this._settings.sanitize(title) :
-                title,
+        this._tooltipInner = dom.create('div', {
             class: this._settings.classes.tooltipInner
         });
 
-        dom.append(this._tooltip, tooltipInner);
-
-        if (this._container) {
-            dom.append(this._container, this._tooltip);
-        } else {
-            dom.before(this._node, this._tooltip);
-        }
+        dom.append(this._tooltip, arrow);
+        dom.append(this._tooltip, this._tooltipInner);
 
         this._popper = new Popper(
             this._tooltip,
@@ -105,6 +94,29 @@ Object.assign(Tooltip.prototype, {
                 minContact: this._settings.minContact
             }
         )
+    },
+
+    /**
+     * Update the Tooltip and append to the DOM.
+     */
+    _show() {
+        const title = dom.getAttribute(this._node, 'title') || this._settings.title;
+        const method = this._settings.html ? 'setHTML' : 'setText';
+
+        dom[method](
+            this._tooltipInner,
+            this._settings.html && this._settings.sanitize ?
+                this._settings.sanitize(title) :
+                title
+        );
+
+        if (this._container) {
+            dom.append(this._container, this._tooltip);
+        } else {
+            dom.before(this._node, this._tooltip);
+        }
+
+        this._popper.update();
     }
 
 });

@@ -2060,6 +2060,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this._settings = Core.extend({}, Popover.defaults, dom.getDataset(this._node), settings);
       this._triggers = this._settings.trigger.split(' ');
 
+      this._render();
+
       this._events();
 
       if (this._settings.enable) {
@@ -2076,13 +2078,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Popover, [{
       key: "destroy",
       value: function destroy() {
-        if (this._popover) {
-          this._popper.destroy();
+        this._popper.destroy();
 
-          dom.remove(this._popover);
-          this._popover = null;
-          this._popper = null;
-        }
+        dom.remove(this._popover);
 
         if (this._triggers.includes('hover')) {
           dom.removeEvent(this._node, 'mouseover.frost.popover', this._hoverEvent);
@@ -2129,7 +2127,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this19 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!_this19._popover || dom.getDataset(_this19._popover, 'animating')) {
+          if (dom.getDataset(_this19._popover, 'animating')) {
+            dom.stop(_this19._tooltip);
+          }
+
+          if (!dom.isConnected(_this19._popover)) {
             return reject();
           }
 
@@ -2138,20 +2140,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           }
 
           dom.setDataset(_this19._popover, 'animating', true);
-          dom.stop(_this19._popover);
           dom.fadeOut(_this19._popover, {
             duration: _this19._settings.duration
           }).then(function (_) {
-            _this19._popper.destroy();
-
-            dom.remove(_this19._popover);
-            _this19._popover = null;
-            _this19._popper = null;
+            dom.removeClass(_this19._popover, 'show');
+            dom.detach(_this19._popover);
             dom.triggerEvent(_this19._node, 'hidden.frost.popover');
             resolve();
-          })["catch"](function (e) {
-            dom.removeDataset(_this19._popover, 'animating');
-            reject(e);
+          })["catch"](reject)["finally"](function (_) {
+            return dom.removeDataset(_this19._popover, 'animating');
           });
         });
       }
@@ -2166,7 +2163,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this20 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this20._popover) {
+          if (dom.getDataset(_this20._popover, 'animating')) {
+            dom.stop(_this20._tooltip);
+          }
+
+          if (dom.isConnected(_this20._popover)) {
             return reject();
           }
 
@@ -2174,7 +2175,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             return reject();
           }
 
-          _this20._render();
+          _this20._show();
 
           dom.setDataset(_this20._popover, 'animating', true);
           dom.addClass(_this20._popover, 'show');
@@ -2196,7 +2197,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toggle",
       value: function toggle() {
-        return this._popover ? this.hide() : this.show();
+        return dom.isConnected(this._popover) ? this.hide() : this.show();
       }
       /**
        * Update the Popover position.
@@ -2205,10 +2206,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "update",
       value: function update() {
-        if (!this._popper) {
-          return;
-        }
-
         this._popper.update();
       }
     }]);
@@ -2234,7 +2231,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     placement: 'auto',
     position: 'center',
     fixed: false,
-    spacing: 5,
+    spacing: 3,
     minContact: false
   }; // Auto-initialize Popover from data-toggle
 
@@ -2314,11 +2311,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       var _this21 = this;
 
       this._hideEvent = function (_) {
-        if (!_this21._enabled || !_this21._popover) {
+        if (!_this21._enabled || !dom.isConnected(_this21._tooltip)) {
           return;
         }
-
-        dom.stop(_this21._popover);
 
         _this21.hide()["catch"](function (_) {});
       };
@@ -2370,8 +2365,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Render the Popover element.
      */
     _render: function _render() {
-      var _dom$create2;
-
       this._popover = dom.create('div', {
         "class": this._settings.classes.popover,
         attributes: {
@@ -2381,28 +2374,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       var arrow = dom.create('div', {
         "class": this._settings.classes.arrow
       });
+      this._popoverHeader = dom.create('h3', {
+        "class": this._settings.classes.popoverHeader
+      });
+      this._popoverBody = dom.create('div', {
+        "class": this._settings.classes.popoverBody
+      });
       dom.append(this._popover, arrow);
-      var method = this._settings.html ? 'html' : 'text';
-
-      var title = dom.getAttribute(this._node, 'title') || this._settings.title;
-
-      if (title) {
-        var _dom$create;
-
-        var popoverHeader = dom.create('h3', (_dom$create = {}, _defineProperty(_dom$create, method, this._settings.html && this._settings.sanitize ? this._settings.sanitize(title) : title), _defineProperty(_dom$create, "class", this._settings.classes.popoverHeader), _dom$create));
-        dom.append(this._popover, popoverHeader);
-      }
-
-      var content = this._settings.content;
-      var popoverBody = dom.create('div', (_dom$create2 = {}, _defineProperty(_dom$create2, method, this._settings.html && this._settings.sanitize ? this._settings.sanitize(content) : content), _defineProperty(_dom$create2, "class", this._settings.classes.popoverBody), _dom$create2));
-      dom.append(this._popover, popoverBody);
-
-      if (this._container) {
-        dom.append(this._container, this._popover);
-      } else {
-        dom.before(this._node, this._popover);
-      }
-
+      dom.append(this._popover, this._popoverHeader);
+      dom.append(this._popover, this._popoverBody);
       this._popper = new Popper(this._popover, {
         reference: this._node,
         arrow: arrow,
@@ -2412,6 +2392,34 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         spacing: this._settings.spacing,
         minContact: this._settings.minContact
       });
+    },
+
+    /**
+     * Update the Popover and append to the DOM.
+     */
+    _show: function _show() {
+      var method = this._settings.html ? 'setHTML' : 'setText';
+
+      var title = dom.getAttribute(this._node, 'title') || this._settings.title;
+
+      var content = this._settings.content;
+      dom[method](this._popoverHeader, this._settings.html && this._settings.sanitize ? this._settings.sanitize(title) : title);
+
+      if (!title) {
+        dom.hide(this._popoverHeader);
+      } else {
+        dom.show(this._popoverHeader);
+      }
+
+      dom[method](this._popoverBody, this._settings.html && this._settings.sanitize ? this._settings.sanitize(content) : content);
+
+      if (this._container) {
+        dom.append(this._container, this._popover);
+      } else {
+        dom.before(this._node, this._popover);
+      }
+
+      this._popper.update();
     }
   });
   /**
@@ -3462,6 +3470,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this._settings = Core.extend({}, Tooltip.defaults, dom.getDataset(this._node), settings);
       this._triggers = this._settings.trigger.split(' ');
 
+      this._render();
+
       this._events();
 
       if (this._settings.enable) {
@@ -3478,13 +3488,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Tooltip, [{
       key: "destroy",
       value: function destroy() {
-        if (this._tooltip) {
-          this._popper.destroy();
+        this._popper.destroy();
 
-          dom.remove(this._tooltip);
-          this._tooltip = null;
-          this._popper = null;
-        }
+        dom.remove(this._tooltip);
 
         if (this._triggers.includes('hover')) {
           dom.removeEvent(this._node, 'mouseover.frost.tooltip', this._hoverEvent);
@@ -3531,7 +3537,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this31 = this;
 
         return new Promise(function (resolve, reject) {
-          if (!_this31._tooltip || dom.getDataset(_this31._tooltip, 'animating')) {
+          if (dom.getDataset(_this31._tooltip, 'animating')) {
+            dom.stop(_this31._tooltip);
+          }
+
+          if (!dom.isConnected(_this31._tooltip)) {
             return reject();
           }
 
@@ -3540,20 +3550,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           }
 
           dom.setDataset(_this31._tooltip, 'animating', true);
-          dom.stop(_this31._tooltip);
           dom.fadeOut(_this31._tooltip, {
             duration: _this31._settings.duration
           }).then(function (_) {
-            _this31._popper.destroy();
-
-            dom.remove(_this31._tooltip);
-            _this31._tooltip = null;
-            _this31._popper = null;
+            dom.removeClass(_this31._tooltip, 'show');
+            dom.detach(_this31._tooltip);
             dom.triggerEvent(_this31._node, 'hidden.frost.tooltip');
             resolve();
-          })["catch"](function (_) {
-            dom.removeDataset(_this31._tooltip, 'animating');
-            reject();
+          })["catch"](reject)["finally"](function (_) {
+            return dom.removeDataset(_this31._tooltip, 'animating');
           });
         });
       }
@@ -3568,7 +3573,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var _this32 = this;
 
         return new Promise(function (resolve, reject) {
-          if (_this32._tooltip) {
+          if (dom.getDataset(_this32._tooltip, 'animating')) {
+            dom.stop(_this32._tooltip);
+          }
+
+          if (dom.isConnected(_this32._tooltip)) {
             return reject();
           }
 
@@ -3576,7 +3585,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             return reject();
           }
 
-          _this32._render();
+          _this32._show();
 
           dom.setDataset(_this32._tooltip, 'animating', true);
           dom.addClass(_this32._tooltip, 'show');
@@ -3585,9 +3594,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           }).then(function (_) {
             dom.triggerEvent(_this32._node, 'shown.frost.tooltip');
             resolve();
-          })["catch"](function (_) {
-            return reject();
-          })["finally"](function (_) {
+          })["catch"](reject)["finally"](function (_) {
             return dom.removeDataset(_this32._tooltip, 'animating');
           });
         });
@@ -3600,7 +3607,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toggle",
       value: function toggle() {
-        return this._tooltip ? this.hide() : this.show();
+        return dom.isConnected(this._tooltip) ? this.hide() : this.show();
       }
       /**
        * Update the Tooltip position.
@@ -3609,10 +3616,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "update",
       value: function update() {
-        if (!this._popper) {
-          return;
-        }
-
         this._popper.update();
       }
     }]);
@@ -3717,11 +3720,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       var _this33 = this;
 
       this._hideEvent = function (_) {
-        if (!_this33._enabled || !_this33._tooltip) {
+        if (!_this33._enabled || !dom.isConnected(_this33._tooltip)) {
           return;
         }
-
-        dom.stop(_this33._tooltip);
 
         _this33.hide()["catch"](function (_) {});
       };
@@ -3773,8 +3774,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Render the Tooltip element.
      */
     _render: function _render() {
-      var _dom$create3;
-
       this._tooltip = dom.create('div', {
         "class": this._settings.classes.tooltip,
         attributes: {
@@ -3784,20 +3783,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       var arrow = dom.create('div', {
         "class": this._settings.classes.arrow
       });
+      this._tooltipInner = dom.create('div', {
+        "class": this._settings.classes.tooltipInner
+      });
       dom.append(this._tooltip, arrow);
-
-      var title = dom.getAttribute(this._node, 'title') || this._settings.title;
-
-      var method = this._settings.html ? 'html' : 'text';
-      var tooltipInner = dom.create('div', (_dom$create3 = {}, _defineProperty(_dom$create3, method, this._settings.html && this._settings.sanitize ? this._settings.sanitize(title) : title), _defineProperty(_dom$create3, "class", this._settings.classes.tooltipInner), _dom$create3));
-      dom.append(this._tooltip, tooltipInner);
-
-      if (this._container) {
-        dom.append(this._container, this._tooltip);
-      } else {
-        dom.before(this._node, this._tooltip);
-      }
-
+      dom.append(this._tooltip, this._tooltipInner);
       this._popper = new Popper(this._tooltip, {
         reference: this._node,
         arrow: arrow,
@@ -3807,6 +3797,24 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         spacing: this._settings.spacing,
         minContact: this._settings.minContact
       });
+    },
+
+    /**
+     * Update the Tooltip and append to the DOM.
+     */
+    _show: function _show() {
+      var title = dom.getAttribute(this._node, 'title') || this._settings.title;
+
+      var method = this._settings.html ? 'setHTML' : 'setText';
+      dom[method](this._tooltipInner, this._settings.html && this._settings.sanitize ? this._settings.sanitize(title) : title);
+
+      if (this._container) {
+        dom.append(this._container, this._tooltip);
+      } else {
+        dom.before(this._node, this._tooltip);
+      }
+
+      this._popper.update();
     }
   });
   return {

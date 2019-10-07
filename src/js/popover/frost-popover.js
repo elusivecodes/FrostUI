@@ -14,7 +14,7 @@ Popover.defaults = {
     placement: 'auto',
     position: 'center',
     fixed: false,
-    spacing: 5,
+    spacing: 3,
     minContact: false
 };
 

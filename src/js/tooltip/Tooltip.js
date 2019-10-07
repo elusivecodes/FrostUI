@@ -36,6 +36,7 @@ class Tooltip {
 
         this._triggers = this._settings.trigger.split(' ');
 
+        this._render();
         this._events();
 
         if (this._settings.enable) {
@@ -49,14 +50,9 @@ class Tooltip {
      * Destroy the Tooltip.
      */
     destroy() {
-        if (this._tooltip) {
-            this._popper.destroy();
+        this._popper.destroy();
 
-            dom.remove(this._tooltip);
-
-            this._tooltip = null;
-            this._popper = null;
-        }
+        dom.remove(this._tooltip);
 
         if (this._triggers.includes('hover')) {
             dom.removeEvent(this._node, 'mouseover.frost.tooltip', this._hoverEvent);
@@ -95,7 +91,11 @@ class Tooltip {
      */
     hide() {
         return new Promise((resolve, reject) => {
-            if (!this._tooltip || dom.getDataset(this._tooltip, 'animating')) {
+            if (dom.getDataset(this._tooltip, 'animating')) {
+                dom.stop(this._tooltip);
+            }
+
+            if (!dom.isConnected(this._tooltip)) {
                 return reject();
             }
 
@@ -105,26 +105,19 @@ class Tooltip {
 
             dom.setDataset(this._tooltip, 'animating', true);
 
-            dom.stop(this._tooltip);
-
             dom.fadeOut(this._tooltip, {
                 duration: this._settings.duration
             }).then(_ => {
-                this._popper.destroy();
+                dom.removeClass(this._tooltip, 'show');
 
-                dom.remove(this._tooltip);
-
-                this._tooltip = null;
-                this._popper = null;
+                dom.detach(this._tooltip);
 
                 dom.triggerEvent(this._node, 'hidden.frost.tooltip');
 
                 resolve();
-            }).catch(_ => {
-                dom.removeDataset(this._tooltip, 'animating');
-
-                reject();
-            });
+            }).catch(reject).finally(_ =>
+                dom.removeDataset(this._tooltip, 'animating')
+            );
         });
     }
 
@@ -134,7 +127,11 @@ class Tooltip {
      */
     show() {
         return new Promise((resolve, reject) => {
-            if (this._tooltip) {
+            if (dom.getDataset(this._tooltip, 'animating')) {
+                dom.stop(this._tooltip);
+            }
+
+            if (dom.isConnected(this._tooltip)) {
                 return reject();
             }
 
@@ -142,7 +139,7 @@ class Tooltip {
                 return reject();
             }
 
-            this._render();
+            this._show();
 
             dom.setDataset(this._tooltip, 'animating', true);
 
@@ -154,9 +151,7 @@ class Tooltip {
                 dom.triggerEvent(this._node, 'shown.frost.tooltip');
 
                 resolve();
-            }).catch(_ =>
-                reject()
-            ).finally(_ =>
+            }).catch(reject).finally(_ =>
                 dom.removeDataset(this._tooltip, 'animating')
             );
         });
@@ -167,7 +162,7 @@ class Tooltip {
      * @returns {Promise} A new Promise that resolves when the animation has completed.
      */
     toggle() {
-        return this._tooltip ?
+        return dom.isConnected(this._tooltip) ?
             this.hide() :
             this.show();
     }
@@ -176,10 +171,6 @@ class Tooltip {
      * Update the Tooltip position.
      */
     update() {
-        if (!this._popper) {
-            return;
-        }
-
         this._popper.update();
     }
 

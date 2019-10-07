@@ -1788,6 +1788,7 @@
 
             this._triggers = this._settings.trigger.split(' ');
 
+            this._render();
             this._events();
 
             if (this._settings.enable) {
@@ -1801,14 +1802,9 @@
          * Destroy the Popover.
          */
         destroy() {
-            if (this._popover) {
-                this._popper.destroy();
+            this._popper.destroy();
 
-                dom.remove(this._popover);
-
-                this._popover = null;
-                this._popper = null;
-            }
+            dom.remove(this._popover);
 
             if (this._triggers.includes('hover')) {
                 dom.removeEvent(this._node, 'mouseover.frost.popover', this._hoverEvent);
@@ -1847,7 +1843,11 @@
          */
         hide() {
             return new Promise((resolve, reject) => {
-                if (!this._popover || dom.getDataset(this._popover, 'animating')) {
+                if (dom.getDataset(this._popover, 'animating')) {
+                    dom.stop(this._tooltip);
+                }
+
+                if (!dom.isConnected(this._popover)) {
                     return reject();
                 }
 
@@ -1857,26 +1857,19 @@
 
                 dom.setDataset(this._popover, 'animating', true);
 
-                dom.stop(this._popover);
-
                 dom.fadeOut(this._popover, {
                     duration: this._settings.duration
                 }).then(_ => {
-                    this._popper.destroy();
+                    dom.removeClass(this._popover, 'show');
 
-                    dom.remove(this._popover);
-
-                    this._popover = null;
-                    this._popper = null;
+                    dom.detach(this._popover);
 
                     dom.triggerEvent(this._node, 'hidden.frost.popover');
 
                     resolve();
-                }).catch(e => {
-                    dom.removeDataset(this._popover, 'animating');
-
-                    reject(e)
-                });
+                }).catch(reject).finally(_ =>
+                    dom.removeDataset(this._popover, 'animating')
+                );
             });
         }
 
@@ -1886,7 +1879,11 @@
          */
         show() {
             return new Promise((resolve, reject) => {
-                if (this._popover) {
+                if (dom.getDataset(this._popover, 'animating')) {
+                    dom.stop(this._tooltip);
+                }
+
+                if (dom.isConnected(this._popover)) {
                     return reject();
                 }
 
@@ -1894,7 +1891,7 @@
                     return reject();
                 }
 
-                this._render();
+                this._show();
 
                 dom.setDataset(this._popover, 'animating', true);
 
@@ -1917,7 +1914,7 @@
          * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         toggle() {
-            return this._popover ?
+            return dom.isConnected(this._popover) ?
                 this.hide() :
                 this.show();
         }
@@ -1926,10 +1923,6 @@
          * Update the Popover position.
          */
         update() {
-            if (!this._popper) {
-                return;
-            }
-
             this._popper.update();
         }
 
@@ -1952,7 +1945,7 @@
         placement: 'auto',
         position: 'center',
         fixed: false,
-        spacing: 5,
+        spacing: 3,
         minContact: false
     };
 
@@ -2014,11 +2007,10 @@
          */
         _events() {
             this._hideEvent = _ => {
-                if (!this._enabled || !this._popover) {
+                if (!this._enabled || !dom.isConnected(this._tooltip)) {
                     return;
                 }
 
-                dom.stop(this._popover);
                 this.hide().catch(_ => { });
             };
 
@@ -2028,6 +2020,7 @@
                 }
 
                 dom.addEventOnce(this._node, 'mouseout.frost.popover', this._hideEvent);
+
                 this.show().catch(_ => { });
             };
 
@@ -2037,6 +2030,7 @@
                 }
 
                 dom.addEventOnce(this._node, 'blur.frost.popover', this._hideEvent);
+
                 this.show().catch(_ => { });
             };
 
@@ -2078,35 +2072,18 @@
                 class: this._settings.classes.arrow
             });
 
-            dom.append(this._popover, arrow);
 
-            const method = this._settings.html ? 'html' : 'text';
+            this._popoverHeader = dom.create('h3', {
+                class: this._settings.classes.popoverHeader
+            });
 
-            const title = dom.getAttribute(this._node, 'title') || this._settings.title;
-            if (title) {
-                const popoverHeader = dom.create('h3', {
-                    [method]: this._settings.html && this._settings.sanitize ?
-                        this._settings.sanitize(title) :
-                        title,
-                    class: this._settings.classes.popoverHeader
-                });
-                dom.append(this._popover, popoverHeader);
-            }
-
-            const content = this._settings.content;
-            const popoverBody = dom.create('div', {
-                [method]: this._settings.html && this._settings.sanitize ?
-                    this._settings.sanitize(content) :
-                    content,
+            this._popoverBody = dom.create('div', {
                 class: this._settings.classes.popoverBody
             });
-            dom.append(this._popover, popoverBody);
 
-            if (this._container) {
-                dom.append(this._container, this._popover);
-            } else {
-                dom.before(this._node, this._popover);
-            }
+            dom.append(this._popover, arrow);
+            dom.append(this._popover, this._popoverHeader);
+            dom.append(this._popover, this._popoverBody);
 
             this._popper = new Popper(
                 this._popover,
@@ -2120,6 +2097,43 @@
                     minContact: this._settings.minContact
                 }
             )
+        },
+
+        /**
+         * Update the Popover and append to the DOM.
+         */
+        _show() {
+            const method = this._settings.html ? 'setHTML' : 'setText';
+            const title = dom.getAttribute(this._node, 'title') || this._settings.title;
+            const content = this._settings.content;
+
+            dom[method](
+                this._popoverHeader,
+                this._settings.html && this._settings.sanitize ?
+                    this._settings.sanitize(title) :
+                    title
+            );
+
+            if (!title) {
+                dom.hide(this._popoverHeader);
+            } else {
+                dom.show(this._popoverHeader);
+            }
+
+            dom[method](
+                this._popoverBody,
+                this._settings.html && this._settings.sanitize ?
+                    this._settings.sanitize(content) :
+                    content
+            );
+
+            if (this._container) {
+                dom.append(this._container, this._popover);
+            } else {
+                dom.before(this._node, this._popover);
+            }
+
+            this._popper.update();
         }
 
     });
@@ -3246,6 +3260,7 @@
 
             this._triggers = this._settings.trigger.split(' ');
 
+            this._render();
             this._events();
 
             if (this._settings.enable) {
@@ -3259,14 +3274,9 @@
          * Destroy the Tooltip.
          */
         destroy() {
-            if (this._tooltip) {
-                this._popper.destroy();
+            this._popper.destroy();
 
-                dom.remove(this._tooltip);
-
-                this._tooltip = null;
-                this._popper = null;
-            }
+            dom.remove(this._tooltip);
 
             if (this._triggers.includes('hover')) {
                 dom.removeEvent(this._node, 'mouseover.frost.tooltip', this._hoverEvent);
@@ -3305,7 +3315,11 @@
          */
         hide() {
             return new Promise((resolve, reject) => {
-                if (!this._tooltip || dom.getDataset(this._tooltip, 'animating')) {
+                if (dom.getDataset(this._tooltip, 'animating')) {
+                    dom.stop(this._tooltip);
+                }
+
+                if (!dom.isConnected(this._tooltip)) {
                     return reject();
                 }
 
@@ -3315,26 +3329,19 @@
 
                 dom.setDataset(this._tooltip, 'animating', true);
 
-                dom.stop(this._tooltip);
-
                 dom.fadeOut(this._tooltip, {
                     duration: this._settings.duration
                 }).then(_ => {
-                    this._popper.destroy();
+                    dom.removeClass(this._tooltip, 'show');
 
-                    dom.remove(this._tooltip);
-
-                    this._tooltip = null;
-                    this._popper = null;
+                    dom.detach(this._tooltip);
 
                     dom.triggerEvent(this._node, 'hidden.frost.tooltip');
 
                     resolve();
-                }).catch(_ => {
-                    dom.removeDataset(this._tooltip, 'animating');
-
-                    reject();
-                });
+                }).catch(reject).finally(_ =>
+                    dom.removeDataset(this._tooltip, 'animating')
+                );
             });
         }
 
@@ -3344,7 +3351,11 @@
          */
         show() {
             return new Promise((resolve, reject) => {
-                if (this._tooltip) {
+                if (dom.getDataset(this._tooltip, 'animating')) {
+                    dom.stop(this._tooltip);
+                }
+
+                if (dom.isConnected(this._tooltip)) {
                     return reject();
                 }
 
@@ -3352,7 +3363,7 @@
                     return reject();
                 }
 
-                this._render();
+                this._show();
 
                 dom.setDataset(this._tooltip, 'animating', true);
 
@@ -3364,9 +3375,7 @@
                     dom.triggerEvent(this._node, 'shown.frost.tooltip');
 
                     resolve();
-                }).catch(_ =>
-                    reject()
-                ).finally(_ =>
+                }).catch(reject).finally(_ =>
                     dom.removeDataset(this._tooltip, 'animating')
                 );
             });
@@ -3377,7 +3386,7 @@
          * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         toggle() {
-            return this._tooltip ?
+            return dom.isConnected(this._tooltip) ?
                 this.hide() :
                 this.show();
         }
@@ -3386,10 +3395,6 @@
          * Update the Tooltip position.
          */
         update() {
-            if (!this._popper) {
-                return;
-            }
-
             this._popper.update();
         }
 
@@ -3473,11 +3478,10 @@
          */
         _events() {
             this._hideEvent = _ => {
-                if (!this._enabled || !this._tooltip) {
+                if (!this._enabled || !dom.isConnected(this._tooltip)) {
                     return;
                 }
 
-                dom.stop(this._tooltip);
                 this.hide().catch(_ => { });
             };
 
@@ -3487,6 +3491,7 @@
                 }
 
                 dom.addEventOnce(this._node, 'mouseout.frost.tooltip', this._hideEvent);
+
                 this.show().catch(_ => { });
             };
 
@@ -3496,6 +3501,7 @@
                 }
 
                 dom.addEventOnce(this._node, 'blur.frost.tooltip', this._hideEvent)
+
                 this.show().catch(_ => { });
             };
 
@@ -3537,25 +3543,13 @@
                 class: this._settings.classes.arrow
             });
 
-            dom.append(this._tooltip, arrow);
 
-            const title = dom.getAttribute(this._node, 'title') || this._settings.title;
-            const method = this._settings.html ? 'html' : 'text';
-
-            const tooltipInner = dom.create('div', {
-                [method]: this._settings.html && this._settings.sanitize ?
-                    this._settings.sanitize(title) :
-                    title,
+            this._tooltipInner = dom.create('div', {
                 class: this._settings.classes.tooltipInner
             });
 
-            dom.append(this._tooltip, tooltipInner);
-
-            if (this._container) {
-                dom.append(this._container, this._tooltip);
-            } else {
-                dom.before(this._node, this._tooltip);
-            }
+            dom.append(this._tooltip, arrow);
+            dom.append(this._tooltip, this._tooltipInner);
 
             this._popper = new Popper(
                 this._tooltip,
@@ -3569,6 +3563,29 @@
                     minContact: this._settings.minContact
                 }
             )
+        },
+
+        /**
+         * Update the Tooltip and append to the DOM.
+         */
+        _show() {
+            const title = dom.getAttribute(this._node, 'title') || this._settings.title;
+            const method = this._settings.html ? 'setHTML' : 'setText';
+
+            dom[method](
+                this._tooltipInner,
+                this._settings.html && this._settings.sanitize ?
+                    this._settings.sanitize(title) :
+                    title
+            );
+
+            if (this._container) {
+                dom.append(this._container, this._tooltip);
+            } else {
+                dom.before(this._node, this._tooltip);
+            }
+
+            this._popper.update();
         }
 
     });
