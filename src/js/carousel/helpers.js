@@ -1,5 +1,5 @@
 /**
- * Carousel Private
+ * Carousel Helpers
  */
 
 Object.assign(Carousel.prototype, {

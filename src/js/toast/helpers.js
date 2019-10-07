@@ -1,5 +1,5 @@
 /**
- * Toast Private
+ * Toast Helpers
  */
 
 Object.assign(Toast.prototype, {

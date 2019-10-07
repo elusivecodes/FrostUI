@@ -1,5 +1,5 @@
 /**
- * Popover Private
+ * Popover Helpers
  */
 
 Object.assign(Popover.prototype, {

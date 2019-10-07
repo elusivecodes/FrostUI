@@ -1,5 +1,5 @@
 /**
- * Button Private
+ * Button Helpers
  */
 
 Object.assign(Button.prototype, {

@@ -160,7 +160,7 @@
 
 
     /**
-     * Alert Private
+     * Alert Helpers
      */
 
     Object.assign(Alert.prototype, {
@@ -291,7 +291,7 @@
 
 
     /**
-     * Button Private
+     * Button Helpers
      */
 
     Object.assign(Button.prototype, {
@@ -522,7 +522,7 @@
 
 
     /**
-     * Carousel Private
+     * Carousel Helpers
      */
 
     Object.assign(Carousel.prototype, {
@@ -1041,7 +1041,7 @@
 
 
     /**
-     * Collapse Private
+     * Collapse Helpers
      */
 
     Object.assign(Collapse.prototype, {
@@ -1345,7 +1345,7 @@
 
 
     /**
-     * Dropdown Private
+     * Dropdown Helpers
      */
 
     Object.assign(Dropdown.prototype, {
@@ -1702,7 +1702,7 @@
 
 
     /**
-     * Modal Private
+     * Modal Helpers
      */
 
     Object.assign(Modal.prototype, {
@@ -1997,7 +1997,7 @@
 
 
     /**
-     * Popover Private
+     * Popover Helpers
      */
 
     Object.assign(Popover.prototype, {
@@ -2361,7 +2361,7 @@
 
 
     /**
-     * Popper Private
+     * Popper Helpers
      */
 
     Object.assign(Popper.prototype, {
@@ -3007,7 +3007,7 @@
 
 
     /**
-     * Tab Private
+     * Tab Helpers
      */
 
     Object.assign(Tab.prototype, {
@@ -3198,7 +3198,7 @@
 
 
     /**
-     * Toast Private
+     * Toast Helpers
      */
 
     Object.assign(Toast.prototype, {
@@ -3468,7 +3468,7 @@
 
 
     /**
-     * Tooltip Private
+     * Tooltip Helpers
      */
 
     Object.assign(Tooltip.prototype, {

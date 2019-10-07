@@ -1,5 +1,5 @@
 /**
- * Popper Private
+ * Popper Helpers
  */
 
 Object.assign(Popper.prototype, {

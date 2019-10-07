@@ -1,5 +1,5 @@
 /**
- * Tooltip Private
+ * Tooltip Helpers
  */
 
 Object.assign(Tooltip.prototype, {

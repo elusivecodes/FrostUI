@@ -1,5 +1,5 @@
 /**
- * Tab Private
+ * Tab Helpers
  */
 
 Object.assign(Tab.prototype, {

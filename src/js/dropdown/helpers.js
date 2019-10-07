@@ -1,5 +1,5 @@
 /**
- * Dropdown Private
+ * Dropdown Helpers
  */
 
 Object.assign(Dropdown.prototype, {

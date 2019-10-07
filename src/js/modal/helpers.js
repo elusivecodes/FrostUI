@@ -1,5 +1,5 @@
 /**
- * Modal Private
+ * Modal Helpers
  */
 
 Object.assign(Modal.prototype, {

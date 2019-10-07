@@ -1,5 +1,5 @@
 /**
- * Collapse Private
+ * Collapse Helpers
  */
 
 Object.assign(Collapse.prototype, {

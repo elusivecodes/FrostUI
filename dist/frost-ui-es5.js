@@ -198,7 +198,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   UI.Alert = Alert;
   /**
-   * Alert Private
+   * Alert Helpers
    */
 
   Object.assign(Alert.prototype, {
@@ -342,7 +342,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   UI.Button = Button;
   /**
-   * Button Private
+   * Button Helpers
    */
 
   Object.assign(Button.prototype, {
@@ -597,7 +597,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   UI.Carousel = Carousel;
   /**
-   * Carousel Private
+   * Carousel Helpers
    */
 
   Object.assign(Carousel.prototype, {
@@ -1222,7 +1222,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   UI.Collapse = Collapse;
   /**
-   * Collapse Private
+   * Collapse Helpers
    */
 
   Object.assign(Collapse.prototype, {
@@ -1625,7 +1625,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   UI.Dropdown = Dropdown;
   /**
-   * Dropdown Private
+   * Dropdown Helpers
    */
 
   Object.assign(Dropdown.prototype, {
@@ -1979,7 +1979,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   UI.Modal = Modal;
   /**
-   * Modal Private
+   * Modal Helpers
    */
 
   Object.assign(Modal.prototype, {
@@ -2300,7 +2300,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   UI.Popover = Popover;
   /**
-   * Popover Private
+   * Popover Helpers
    */
 
   Object.assign(Popover.prototype, {
@@ -2603,7 +2603,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   Popper._overflowValues = ['auto', 'scroll'];
   UI.Popper = Popper;
   /**
-   * Popper Private
+   * Popper Helpers
    */
 
   Object.assign(Popper.prototype, {
@@ -3206,7 +3206,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   UI.Tab = Tab;
   /**
-   * Tab Private
+   * Tab Helpers
    */
 
   Object.assign(Tab.prototype, {
@@ -3414,7 +3414,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   UI.Toast = Toast;
   /**
-   * Toast Private
+   * Toast Helpers
    */
 
   Object.assign(Toast.prototype, {
@@ -3709,7 +3709,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   UI.Tooltip = Tooltip;
   /**
-   * Tooltip Private
+   * Tooltip Helpers
    */
 
   Object.assign(Tooltip.prototype, {

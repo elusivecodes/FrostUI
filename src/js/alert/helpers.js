@@ -1,5 +1,5 @@
 /**
- * Alert Private
+ * Alert Helpers
  */
 
 Object.assign(Alert.prototype, {
