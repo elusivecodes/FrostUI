@@ -1862,6 +1862,8 @@
                 }).then(_ => {
                     dom.removeClass(this._popover, 'show');
 
+                    this._popper.destroy();
+
                     dom.detach(this._popover);
 
                     dom.triggerEvent(this._node, 'hidden.frost.popover');
@@ -2068,7 +2070,7 @@
                 }
             });
 
-            const arrow = dom.create('div', {
+            this._arrow = dom.create('div', {
                 class: this._settings.classes.arrow
             });
 
@@ -2081,22 +2083,9 @@
                 class: this._settings.classes.popoverBody
             });
 
-            dom.append(this._popover, arrow);
+            dom.append(this._popover, this._arrow);
             dom.append(this._popover, this._popoverHeader);
             dom.append(this._popover, this._popoverBody);
-
-            this._popper = new Popper(
-                this._popover,
-                {
-                    reference: this._node,
-                    arrow: arrow,
-                    placement: this._settings.placement,
-                    position: this._settings.position,
-                    fixed: this._settings.fixed,
-                    spacing: this._settings.spacing,
-                    minContact: this._settings.minContact
-                }
-            )
         },
 
         /**
@@ -2133,7 +2122,18 @@
                 dom.before(this._node, this._popover);
             }
 
-            this._popper.update();
+            this._popper = new Popper(
+                this._popover,
+                {
+                    reference: this._node,
+                    arrow: this._arrow,
+                    placement: this._settings.placement,
+                    position: this._settings.position,
+                    fixed: this._settings.fixed,
+                    spacing: this._settings.spacing,
+                    minContact: this._settings.minContact
+                }
+            );
         }
 
     });
@@ -2172,9 +2172,9 @@
 
             this._fixed = dom.isFixed(this._settings.reference);
 
-            this._relativeParent = Popper.getRelativeParent(this._node);
-
             this._scrollParent = Popper.getScrollParent(this._node);
+
+            this._relativeParent = Popper.getRelativeParent(this._node);
 
             dom.setStyle(this._node, {
                 position: this._fixed ?
@@ -3334,6 +3334,8 @@
                 }).then(_ => {
                     dom.removeClass(this._tooltip, 'show');
 
+                    this._popper.destroy();
+
                     dom.detach(this._tooltip);
 
                     dom.triggerEvent(this._node, 'hidden.frost.tooltip');
@@ -3492,7 +3494,7 @@
 
                 dom.addEventOnce(this._node, 'mouseout.frost.tooltip', this._hideEvent);
 
-                this.show().catch(_ => { });
+                this.show().catch(console.error);
             };
 
             this._focusEvent = _ => {
@@ -3512,7 +3514,7 @@
                     return;
                 }
 
-                this.toggle().catch(_ => { });
+                this.toggle().catch(console.error);
             };
 
             if (this._triggers.includes('hover')) {
@@ -3539,7 +3541,7 @@
                 }
             });
 
-            const arrow = dom.create('div', {
+            this._arrow = dom.create('div', {
                 class: this._settings.classes.arrow
             });
 
@@ -3548,21 +3550,8 @@
                 class: this._settings.classes.tooltipInner
             });
 
-            dom.append(this._tooltip, arrow);
+            dom.append(this._tooltip, this._arrow);
             dom.append(this._tooltip, this._tooltipInner);
-
-            this._popper = new Popper(
-                this._tooltip,
-                {
-                    reference: this._node,
-                    arrow: arrow,
-                    placement: this._settings.placement,
-                    position: this._settings.position,
-                    fixed: this._settings.fixed,
-                    spacing: this._settings.spacing,
-                    minContact: this._settings.minContact
-                }
-            )
         },
 
         /**
@@ -3585,7 +3574,18 @@
                 dom.before(this._node, this._tooltip);
             }
 
-            this._popper.update();
+            this._popper = new Popper(
+                this._tooltip,
+                {
+                    reference: this._node,
+                    arrow: this._arrow,
+                    placement: this._settings.placement,
+                    position: this._settings.position,
+                    fixed: this._settings.fixed,
+                    spacing: this._settings.spacing,
+                    minContact: this._settings.minContact
+                }
+            );
         }
 
     });

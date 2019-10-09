@@ -2144,6 +2144,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             duration: _this19._settings.duration
           }).then(function (_) {
             dom.removeClass(_this19._popover, 'show');
+
+            _this19._popper.destroy();
+
             dom.detach(_this19._popover);
             dom.triggerEvent(_this19._node, 'hidden.frost.popover');
             resolve();
@@ -2371,7 +2374,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           role: 'tooltip'
         }
       });
-      var arrow = dom.create('div', {
+      this._arrow = dom.create('div', {
         "class": this._settings.classes.arrow
       });
       this._popoverHeader = dom.create('h3', {
@@ -2380,18 +2383,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this._popoverBody = dom.create('div', {
         "class": this._settings.classes.popoverBody
       });
-      dom.append(this._popover, arrow);
+      dom.append(this._popover, this._arrow);
       dom.append(this._popover, this._popoverHeader);
       dom.append(this._popover, this._popoverBody);
-      this._popper = new Popper(this._popover, {
-        reference: this._node,
-        arrow: arrow,
-        placement: this._settings.placement,
-        position: this._settings.position,
-        fixed: this._settings.fixed,
-        spacing: this._settings.spacing,
-        minContact: this._settings.minContact
-      });
     },
 
     /**
@@ -2419,7 +2413,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         dom.before(this._node, this._popover);
       }
 
-      this._popper.update();
+      this._popper = new Popper(this._popover, {
+        reference: this._node,
+        arrow: this._arrow,
+        placement: this._settings.placement,
+        position: this._settings.position,
+        fixed: this._settings.fixed,
+        spacing: this._settings.spacing,
+        minContact: this._settings.minContact
+      });
     }
   });
   /**
@@ -2451,8 +2453,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       this._node = node;
       this._settings = Core.extend({}, Popper.defaults, dom.getDataset(this._node), settings);
       this._fixed = dom.isFixed(this._settings.reference);
-      this._relativeParent = Popper.getRelativeParent(this._node);
       this._scrollParent = Popper.getScrollParent(this._node);
+      this._relativeParent = Popper.getRelativeParent(this._node);
       dom.setStyle(this._node, {
         position: this._fixed ? 'fixed' : 'absolute',
         top: 0,
@@ -3554,6 +3556,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             duration: _this31._settings.duration
           }).then(function (_) {
             dom.removeClass(_this31._tooltip, 'show');
+
+            _this31._popper.destroy();
+
             dom.detach(_this31._tooltip);
             dom.triggerEvent(_this31._node, 'hidden.frost.tooltip');
             resolve();
@@ -3734,7 +3739,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         dom.addEventOnce(_this33._node, 'mouseout.frost.tooltip', _this33._hideEvent);
 
-        _this33.show()["catch"](function (_) {});
+        _this33.show()["catch"](console.error);
       };
 
       this._focusEvent = function (_) {
@@ -3754,7 +3759,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           return;
         }
 
-        _this33.toggle()["catch"](function (_) {});
+        _this33.toggle()["catch"](console.error);
       };
 
       if (this._triggers.includes('hover')) {
@@ -3780,23 +3785,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           role: 'tooltip'
         }
       });
-      var arrow = dom.create('div', {
+      this._arrow = dom.create('div', {
         "class": this._settings.classes.arrow
       });
       this._tooltipInner = dom.create('div', {
         "class": this._settings.classes.tooltipInner
       });
-      dom.append(this._tooltip, arrow);
+      dom.append(this._tooltip, this._arrow);
       dom.append(this._tooltip, this._tooltipInner);
-      this._popper = new Popper(this._tooltip, {
-        reference: this._node,
-        arrow: arrow,
-        placement: this._settings.placement,
-        position: this._settings.position,
-        fixed: this._settings.fixed,
-        spacing: this._settings.spacing,
-        minContact: this._settings.minContact
-      });
     },
 
     /**
@@ -3814,7 +3810,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         dom.before(this._node, this._tooltip);
       }
 
-      this._popper.update();
+      this._popper = new Popper(this._tooltip, {
+        reference: this._node,
+        arrow: this._arrow,
+        placement: this._settings.placement,
+        position: this._settings.position,
+        fixed: this._settings.fixed,
+        spacing: this._settings.spacing,
+        minContact: this._settings.minContact
+      });
     }
   });
   return {

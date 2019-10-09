@@ -23,7 +23,7 @@ Object.assign(Tooltip.prototype, {
 
             dom.addEventOnce(this._node, 'mouseout.frost.tooltip', this._hideEvent);
 
-            this.show().catch(_ => { });
+            this.show().catch(console.error);
         };
 
         this._focusEvent = _ => {
@@ -43,7 +43,7 @@ Object.assign(Tooltip.prototype, {
                 return;
             }
 
-            this.toggle().catch(_ => { });
+            this.toggle().catch(console.error);
         };
 
         if (this._triggers.includes('hover')) {
@@ -70,7 +70,7 @@ Object.assign(Tooltip.prototype, {
             }
         });
 
-        const arrow = dom.create('div', {
+        this._arrow = dom.create('div', {
             class: this._settings.classes.arrow
         });
 
@@ -79,21 +79,8 @@ Object.assign(Tooltip.prototype, {
             class: this._settings.classes.tooltipInner
         });
 
-        dom.append(this._tooltip, arrow);
+        dom.append(this._tooltip, this._arrow);
         dom.append(this._tooltip, this._tooltipInner);
-
-        this._popper = new Popper(
-            this._tooltip,
-            {
-                reference: this._node,
-                arrow: arrow,
-                placement: this._settings.placement,
-                position: this._settings.position,
-                fixed: this._settings.fixed,
-                spacing: this._settings.spacing,
-                minContact: this._settings.minContact
-            }
-        )
     },
 
     /**
@@ -116,7 +103,18 @@ Object.assign(Tooltip.prototype, {
             dom.before(this._node, this._tooltip);
         }
 
-        this._popper.update();
+        this._popper = new Popper(
+            this._tooltip,
+            {
+                reference: this._node,
+                arrow: this._arrow,
+                placement: this._settings.placement,
+                position: this._settings.position,
+                fixed: this._settings.fixed,
+                spacing: this._settings.spacing,
+                minContact: this._settings.minContact
+            }
+        );
     }
 
 });

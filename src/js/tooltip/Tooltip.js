@@ -110,6 +110,8 @@ class Tooltip {
             }).then(_ => {
                 dom.removeClass(this._tooltip, 'show');
 
+                this._popper.destroy();
+
                 dom.detach(this._tooltip);
 
                 dom.triggerEvent(this._node, 'hidden.frost.tooltip');

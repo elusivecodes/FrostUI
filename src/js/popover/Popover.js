@@ -111,6 +111,8 @@ class Popover {
             }).then(_ => {
                 dom.removeClass(this._popover, 'show');
 
+                this._popper.destroy();
+
                 dom.detach(this._popover);
 
                 dom.triggerEvent(this._node, 'hidden.frost.popover');

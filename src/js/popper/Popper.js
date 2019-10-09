@@ -31,9 +31,9 @@ class Popper {
 
         this._fixed = dom.isFixed(this._settings.reference);
 
-        this._relativeParent = Popper.getRelativeParent(this._node);
-
         this._scrollParent = Popper.getScrollParent(this._node);
+
+        this._relativeParent = Popper.getRelativeParent(this._node);
 
         dom.setStyle(this._node, {
             position: this._fixed ?

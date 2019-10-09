@@ -70,7 +70,7 @@ Object.assign(Popover.prototype, {
             }
         });
 
-        const arrow = dom.create('div', {
+        this._arrow = dom.create('div', {
             class: this._settings.classes.arrow
         });
 
@@ -83,22 +83,9 @@ Object.assign(Popover.prototype, {
             class: this._settings.classes.popoverBody
         });
 
-        dom.append(this._popover, arrow);
+        dom.append(this._popover, this._arrow);
         dom.append(this._popover, this._popoverHeader);
         dom.append(this._popover, this._popoverBody);
-
-        this._popper = new Popper(
-            this._popover,
-            {
-                reference: this._node,
-                arrow: arrow,
-                placement: this._settings.placement,
-                position: this._settings.position,
-                fixed: this._settings.fixed,
-                spacing: this._settings.spacing,
-                minContact: this._settings.minContact
-            }
-        )
     },
 
     /**
@@ -135,7 +122,18 @@ Object.assign(Popover.prototype, {
             dom.before(this._node, this._popover);
         }
 
-        this._popper.update();
+        this._popper = new Popper(
+            this._popover,
+            {
+                reference: this._node,
+                arrow: this._arrow,
+                placement: this._settings.placement,
+                position: this._settings.position,
+                fixed: this._settings.fixed,
+                spacing: this._settings.spacing,
+                minContact: this._settings.minContact
+            }
+        );
     }
 
 });
