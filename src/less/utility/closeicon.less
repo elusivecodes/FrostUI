@@ -16,18 +16,23 @@
         opacity: 1;
     }
 
-    &:not(.disabled) {
+    &.disabled,
+    &:disabled {
+        opacity: 0.25;
+        pointer-events: none;
+    }
+
+    &:not(.disabled):not(:disabled) {
         cursor: pointer;
+    }
+
+    button& {
+        padding: 0;
+        background: transparent;
+        border: 0;
     }
 }
 
 .close-x::before {
     content: @cancel;
-}
-
-button.close {
-    padding: 0;
-    background: transparent;
-    border: 0;
-    appearance: none;
 }
