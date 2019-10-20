@@ -1637,6 +1637,13 @@ button.list-group-item-dark:hover {
   border: 1px solid transparent;
   border-radius: 0.2rem;
 }
+.navbar-toggler:focus {
+  outline: 0;
+}
+.navbar-toggler .navbar-toggler-icon {
+  position: relative;
+  top: -1px;
+}
 .navbar-toggler-icon::before {
   content: '\2630';
 }
@@ -1656,6 +1663,12 @@ button.list-group-item-dark:hover {
 .navbar-light .navbar-text {
   color: rgba(0, 0, 0, 0.5);
 }
+.navbar-light .navbar-toggler:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.navbar-light .navbar-toggler:focus {
+  background-color: rgba(0, 0, 0, 0.1);
+}
 .navbar-dark .navbar-brand {
   color: white;
 }
@@ -1674,6 +1687,12 @@ button.list-group-item-dark:hover {
 }
 .navbar-dark .navbar-text {
   color: rgba(255, 255, 255, 0.5);
+}
+.navbar-dark .navbar-toggler:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.navbar-dark .navbar-toggler:focus {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 .navbar-expand .navbar-collapse {
   display: flex !important;
