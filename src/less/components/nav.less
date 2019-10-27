@@ -7,7 +7,10 @@
     display: block;
     padding: @half-spacing @spacing;
 
-    &:hover:not(:focus) {
+    &:hover:not(:focus),
+    &:hover:not(.focus),
+    &.hover:not(:focus),
+    &.hover:not(.focus) {
         text-decoration: none;
     }
 
@@ -42,11 +45,13 @@
             background-color: @link;
             .text-color(@link);
 
-            &:hover {
+            &:hover,
+            &.hover {
                 background-color: darken(@link, 5%);
             }
     
-            &:focus {
+            &:focus,
+            &.focus {
                 z-index: @z-focus;
                 box-shadow: @shadow-xs;
                 text-decoration: none;
@@ -58,7 +63,8 @@
             }
         }
 
-        &:hover {
+        &:hover,
+        &.hover {
             z-index: @z-hover;
         }
     }
@@ -74,8 +80,10 @@
     }
 
     & .open .nav-link,
-    & .nav-link:hover,  
-    & .nav-link:focus {
+    & .nav-link:hover,
+    & .nav-link.hover,
+    & .nav-link:focus,
+    & .nav-link.focus {
         &:not(.active) {
             border-color: @shadow-color;
         }
@@ -93,16 +101,19 @@
             margin-right: @spacing / 10;
         }
 
-        &:hover {
+        &:hover,
+        &.hover {
             z-index: @z-hover;
         }
 
-        &:focus {
+        &:focus,
+        &.focus {
             z-index: @z-focus;
             text-decoration: none
         }
     
-        &:active {
+        &:active,
+        &.active {
             z-index: @z-active;
         }
     }

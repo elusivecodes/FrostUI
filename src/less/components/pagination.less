@@ -55,34 +55,38 @@
     transition: color @transition-time @transition-type, background-color @transition-time @transition-type, box-shadow @transition-time @transition-type;
 
     &:hover,
-    &:focus {
+    &.hover {
         text-decoration: none;
-    }
-
-    &:hover {
         background-color: darken(@secondary, 10%);
         .text-color(@secondary);
         z-index: @z-hover;
     }
 
-    &:focus {
+    &:focus,
+    &.focus {
+        text-decoration: none;
         outline: 0;
         z-index: @z-focus;
         box-shadow: @shadow-xs;
     }
 
-    &:active {
+    &:active,
+    &.active {
         z-index: @z-active;
+    }
+
+    &:active {
         box-shadow: @shadow;
     }
 
     button& {
         outline: 0;
         cursor: pointer;
+    }
 
-        &:disabled {
-            opacity: @disabled-opacity;
-            pointer-events: none;
-        }
+    &:disabled,
+    &.disabled {
+        opacity: @disabled-opacity;
+        pointer-events: none;
     }
 }

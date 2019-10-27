@@ -12,31 +12,36 @@
         color: @form-placeholder;
     }
 
-    &:hover {
+    &:hover,
+    &.hover {
         border-color: tint(lighten(@primary, 5%), 50%);
         z-index: @z-hover;
     }
 
-    &:active {
+    &:active,
+    &.active {
         z-index: @z-active;
     }
 
-    &:focus {
+    &:active {
+        box-shadow: @shadow-xs;
+    }
+
+    &:focus,
+    &.focus {
         outline: 0;
         border-color: @primary;
         z-index: @z-focus;
+        box-shadow: @shadow-xs;
     }
 
     &:not([type=file]) {
         &:disabled,
+        &.disabled,
         &[readonly] {
+            pointer-events: none;
             background-color: @form-disabled;
         }
-    }
-
-    &:focus,
-    &:active {
-        box-shadow: @shadow-xs;
     }
 }
 
@@ -54,16 +59,19 @@
         color: @form-placeholder;
     }
 
-    &:hover {
+    &:hover,
+    &.hover {
         border-color: tint(lighten(@primary, 5%), 50%);
         z-index: @z-hover;
     }
 
-    &:active {
+    &:active,
+    &.active {
         z-index: @z-active;
     }
 
-    &:focus {
+    &:focus,
+    &.focus {
         outline: 0;
         border-color: @primary;
         z-index: @z-focus;
@@ -71,7 +79,9 @@
 
     &:not([type=file]) {
         &:disabled,
+        &.disabled,
         &[readonly] {
+            pointer-events: none;
             background-color: @form-disabled;
         }
     }
@@ -112,8 +122,11 @@
     margin-top: @third-spacing;
     margin-left: -@spacing * 1.25;
 
-    &:disabled  ~ .form-check-label {
-        opacity: @disabled-opacity;
+    &:disabled,
+    &.disabled {
+        & ~ .form-check-label {
+            opacity: @disabled-opacity;
+        }
     }
 }
 
@@ -145,6 +158,7 @@ select.form-control-lg[multiple] option {
     padding-left: 0;
 
     &:focus,
+    &.focus,
     &:active {
         box-shadow: none;
     }

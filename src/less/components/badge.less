@@ -4,7 +4,8 @@
 
     a&,
     button& {
-        &:hover {
+        &:hover,
+        &.hover {
             background-color: darken(@color, 10%);
             .text-color(@color);
         }
@@ -29,22 +30,25 @@
     button& {
 
         &:hover,
-        &:focus {
+        &.hover {
+            z-index: @z-hover;
             text-decoration: none;
         }
 
-        &:hover {
-            z-index: @z-hover;
-        }
-
-        &:focus {
+        &:focus,
+        &.focus {
+            text-decoration: none;
             box-shadow: @shadow-xs;
             z-index: @z-focus;
         }
 
+        &:active,
+        &.active {
+            z-index: @z-active;
+        }
+
         &:active {
             box-shadow: @shadow;
-            z-index: @z-active;
         }
     }
 
@@ -54,8 +58,8 @@
         cursor: pointer;
     }
 
-    &.disabled,
-    &:disabled {
+    &:disabled,
+    &.disabled {
         opacity: @disabled-opacity;
         pointer-events: none;
     }

@@ -3,11 +3,13 @@
     .text-color(@color);
 
     &.active,
-    &.active:hover {
+    &.active:hover,
+    &.active.hover {
         background-color: darken(@color, 20%);
     }
 
-    &:hover {
+    &:hover,
+    &.hover {
         background-color: darken(@color, 10%);
         .text-color(@color);
     }
@@ -18,14 +20,16 @@
     color: @color;
     border-color: @color;
 
-    &.active ,
-    &.active:hover {
+    &.active,
+    &.active:hover,
+    &.active.hover {
         background-color: transparent;
         color: darken(@color, 20%);
         border-color: darken(@color, 20%);
     }
 
-    &:hover {
+    &:hover,
+    &.hover {
         background-color: @color;
         .text-color(@color);
         border-color: @border-color;
@@ -51,31 +55,25 @@
         box-shadow @transition-time @transition-type;
 
     &:hover,
-    &:focus {
+    &.hover {
         text-decoration: none;
-    }
-
-    &:hover {
         z-index: @z-hover;
     }
 
-    &:focus {
+    &:focus,
+    &.focus {
+        text-decoration: none;
         z-index: @z-focus;
         box-shadow: @shadow-xs;
     }
 
-    &:active {
-        box-shadow: @shadow;
-    }
-
     &:active,
-    &.active,
-    &.active:hover {
+    &.active {
         z-index: @z-active;
     }
 
-    &:not(.btn-link):hover {
-        text-decoration: none;
+    &:active {
+        box-shadow: @shadow;
     }
 
     button& {
@@ -83,8 +81,8 @@
         cursor: pointer;
     }
 
-    &.disabled,
-    &:disabled {
+    &:disabled,
+    &.disabled {
         opacity: @disabled-opacity;
         pointer-events: none;
     }
@@ -113,7 +111,8 @@
     color: @link;
     box-shadow: none !important;
 
-    &:hover {
+    &:hover,
+    &.hover {
         box-shadow: none;
         text-decoration: underline;
     }

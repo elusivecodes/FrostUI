@@ -22,11 +22,16 @@
         display: block;
     }
 
-    & .custom-control-input:checked ~ .custom-control-label::before,
-    &.custom-switch .custom-control-input:checked ~ .custom-control-label::before,
-    & .custom-switch .custom-control-input:checked ~ .custom-control-label::before {
-        background-color: @form-success;
-        border-color: @form-success;
+    & .custom-control-input,
+    &.custom-switch .custom-control-input,
+    & .custom-switch .custom-control-input {
+        &:checked,
+        &.checked {
+            & ~ .custom-control-label::before {
+                background-color: @form-success;
+                border-color: @form-success;
+            }
+        }
     }
 
     & .custom-control-input ~ .custom-control-label {
@@ -54,11 +59,16 @@
         display: block;
     }
 
-    & .custom-control-input:checked ~ .custom-control-label::before,
-    &.custom-switch .custom-control-input:checked ~ .custom-control-label::before,
-    & .custom-switch .custom-control-input:checked ~ .custom-control-label::before {
-        background-color: @form-error;
-        border-color: @form-error;
+    & .custom-control-input,
+    &.custom-switch .custom-control-input,
+    & .custom-switch .custom-control-input {
+        &:checked,
+        &.checked {
+            & ~ .custom-control-label::before {
+                background-color: @form-error;
+                border-color: @form-error;
+            }
+        }
     }
 
     & .custom-control-input ~ .custom-control-label {

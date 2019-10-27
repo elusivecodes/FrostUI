@@ -64,12 +64,10 @@
     a&,
     button& {
         &:hover,
-        &:focus {
+        &.hover,
+        &:focus,
+        &.focus {
             text-decoration: none;
-        }
-
-        &:hover,
-        &:focus {
             background-color: rgba(0, 0, 0, .1);
             color: @text;
         }
@@ -82,7 +80,9 @@
         a&,
         button& {
             &:hover,
-            &:focus {
+            &.hover,
+            &:focus,
+            &.focus {
                 background-color: darken(@link, 5%);
                 .text-color(@link);
             }
@@ -94,8 +94,8 @@
         cursor: pointer;
     }
 
-    &.disabled,
-    &:disabled {
+    &:disabled,
+    &.disabled {
         opacity: @disabled-opacity;
         pointer-events: none;
     }

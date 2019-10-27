@@ -3,12 +3,14 @@ a {
     text-decoration: none;
     background-color: transparent;
 
-    &:hover {
+    &:hover,
+    &.hover {
         color: tint(@link, 25%);
         text-decoration: underline;
     }
 
-    &:focus {
+    &:focus,
+    &.focus {
         text-decoration: underline;
         outline: 0;
     }

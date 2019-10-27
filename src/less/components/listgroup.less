@@ -5,7 +5,8 @@
 
     a&,
     button& {
-        &:hover {
+        &:hover,
+        &.hover {
             background-color: darken(@background, 5%);
             color: darken(@color, 40%);
         }
@@ -88,16 +89,15 @@ ul.list-group {
         display: flex;
 
         &:hover,
-        &:focus {
+        &.hover {
             text-decoration: none;
-        }
-    
-        &:hover {
             z-index: @z-hover;
             background-color: @shadow-color;
         }
 
-        &:focus {
+        &:focus,
+        &.focus {
+            text-decoration: none;
             box-shadow: @shadow-xs;
         }
 
@@ -106,13 +106,13 @@ ul.list-group {
         }
     }
 
-    &:focus {
+    &:focus,
+    &.focus {
         z-index: @z-focus;
     }
 
     &:active,
-    &.active,
-    &.active:hover {
+    &.active {
         z-index: @z-active;
     }
 
@@ -122,7 +122,8 @@ ul.list-group {
 
         a&,
         button& {
-            &:hover {
+            &:hover,
+            &.hover {
                 background-color: darken(@link, 5%);
             }
         }
@@ -137,8 +138,8 @@ ul.list-group {
         cursor: pointer;
     }
 
-    &.disabled,
-    &:disabled {
+    &:disabled,
+    &.disabled {
         opacity: @disabled-opacity;
         pointer-events: none;
     }

@@ -10,7 +10,10 @@
     z-index: -1;
     opacity: 0;
 
-    &:disabled {
+    &:disabled,
+    &.disabled {
+        pointer-events: none;
+
         & ~ .form-check-label {
             opacity: @disabled-opacity;
         }
@@ -24,13 +27,17 @@
         }
     }
 
-    &:checked ~ .custom-control-label::before {
-        color: @white;
-        border-color: @primary;
-        background-color: @primary;
+    &:checked,
+    &.checked {
+        & ~ .custom-control-label::before {
+            color: @white;
+            border-color: @primary;
+            background-color: @primary;
+        }
     }
 
     &:focus,
+    &.focus,
     &:active {
         & ~ .custom-control-label::before {
             box-shadow: @shadow-sm;
@@ -83,9 +90,14 @@
         border-radius: @quarter-spacing;
     }
 
-    & .custom-control-input:checked ~ .custom-control-label::after {
-        margin-top: @border-size;
-        content: @check-tick;
+    & .custom-control-input {
+        &:checked,
+        &.checked {
+            & ~ .custom-control-label::after {
+                margin-top: @border-size;
+                content: @check-tick;
+            }
+        }
     }
 }
 
@@ -94,8 +106,13 @@
         border-radius: 50%;
     }
 
-    & .custom-control-input:checked ~ .custom-control-label::after {
-        content: @radio-dot;
+    & .custom-control-input {
+        &:checked,
+        &.checked {
+            & ~ .custom-control-label::after {
+                content: @radio-dot;
+            }
+        }
     }
 }
 
@@ -109,15 +126,25 @@
         border-radius: @half-spacing;
     }
 
-    & .custom-control-input:checked ~ .custom-control-label::before {
-        color: @white;
-        border-color: @primary;
-        background-color: @primary;
+    & .custom-control-input {
+        &:checked,
+        &.checked {
+            & ~ .custom-control-label::before {
+                color: @white;
+                border-color: @primary;
+                background-color: @primary;
+            }
+        }
     }
 
-    & .custom-control-input:checked ~ .custom-control-label::after {
-        background-color: @white;
-        transform: translateX(@spacing * .75);
+    & .custom-control-input {
+        &:checked,
+        &.checked {
+            & ~ .custom-control-label::after {
+                background-color: @white;
+                transform: translateX(@spacing * .75);
+            }
+        }
     }
 
     & .custom-control-label::after {

@@ -74,7 +74,8 @@
     border: @border-size @border-style transparent;
     border-radius: @border-radius;
 
-    &:focus {
+    &:focus,
+    &.focus {
         outline: 0;
     }
 
@@ -112,11 +113,13 @@
     }
 
     .navbar-toggler {
-        &:hover {
+        &:hover,
+        &.hover {
             background-color: fade(@black, 5%);
         }
     
-        &:focus {
+        &:focus,
+        &.focus {
             background-color: fade(@black, 10%);
         }
     }
@@ -150,11 +153,13 @@
     }
 
     .navbar-toggler {
-        &:hover {
+        &:hover,
+        &.hover {
             background-color: fade(@white, 5%);
         }
     
-        &:focus {
+        &:focus,
+        &.focus {
             background-color: fade(@white, 10%);
         }
     }
