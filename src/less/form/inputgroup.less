@@ -21,7 +21,7 @@
     }
 
     & .btn {
-        padding: @half-spacing @spacing;
+        padding: (@spacing / 2) @spacing;
         margin: 0;
         border-radius: 0;
     }
@@ -62,7 +62,7 @@
 }
 
 .input-group-text {
-    padding: @half-spacing;
+    padding: @spacing / 2;
     text-align: center;
     white-space: nowrap;
     font-size: 1rem;
@@ -81,7 +81,7 @@
     & > .input-group-append > .input-group-text,
     & > .input-group-prepend > .btn,
     & > .input-group-prepend > .input-group-text {
-        padding: @quarter-spacing @half-spacing;
+        padding: (@spacing / 4) (@spacing / 2);
         font-size: .875rem;
         line-height: @line-height;
     }
@@ -95,7 +95,7 @@
     & > .input-group-append > .input-group-text,
     & > .input-group-prepend > .btn,
     & > .input-group-prepend > .input-group-text {
-        padding: @half-spacing @spacing;
+        padding: (@spacing / 2) @spacing;
         font-size: 1.25rem;
         line-height: @line-height;
     }

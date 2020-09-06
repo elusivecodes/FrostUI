@@ -1,0 +1,111 @@
+.carousel {
+    position: relative;
+    background-color: @dark;
+}
+
+.carousel-inner {
+    position: relative;
+    overflow: hidden;
+    min-height: 200px;
+}
+
+.carousel-item {
+    display: none;
+    text-align: center;
+
+    &:not(.active) {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    &.active {
+        display: block;
+        width: 100%;
+    }
+}
+
+.carousel-caption {
+    position: absolute;
+    right: 15%;
+    bottom: @spacing * 2;
+    left: 15%;
+    z-index: 10;
+    padding-top: @spacing;
+    padding-bottom: @spacing;
+    color: @white;
+    text-align: center;
+}
+
+.carousel-indicators {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 0;
+    list-style-type: none;
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 1rem;
+    z-index: 15;
+
+    & li {
+        position: relative;
+        flex: 0 1 auto;
+        width: @spacing;
+        height: @spacing / 4;
+        margin: 0 (@spacing / 4);
+        background-color: @white;
+        border-radius: @border-radius;
+        opacity: 0.5;
+
+        &.active {
+            opacity: 1;
+        }
+    }
+}
+
+.carousel-prev,
+.carousel-next {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: @spacing;
+    opacity: 0.5;
+    color: @white;
+    font-size: 2em;
+
+    &:hover,
+    &.hover {
+        color: @white;
+        text-decoration: none;
+        opacity: 1;
+    }
+
+    &:focus,
+    &.focus {
+        opacity: 0.75;
+        text-decoration: none;
+    }
+}
+
+.carousel-prev {
+    left: 0;
+}
+
+.carousel-next {
+    right: 0;
+}
+
+.carousel-prev-arrow::before {
+    content: @arrow-left;
+}
+
+.carousel-next-arrow::before {
+    content: @arrow-right;
+}

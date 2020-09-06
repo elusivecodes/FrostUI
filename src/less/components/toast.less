@@ -1,0 +1,42 @@
+.toast {
+    max-width: 350px;
+    overflow: hidden;
+    font-size: .875rem;
+    background-color: @toast-color;
+    background-clip: padding-box;
+    border: @border-size @border-style @border-color;
+    border-radius: @border-radius;
+    backdrop-filter: blur(10px);
+    opacity: 0;
+
+    &.show {
+        display: block;
+        opacity: 1;
+    }
+
+    &.toast-sm {
+        max-width: 250px;
+    }
+
+    &.toast-lg {
+        max-width: 450px;
+    }
+
+    &.toast-xl {
+        max-width: 550px;
+    }
+}
+
+.toast-header {
+    display: flex;
+    align-items: center;
+    padding: (@spacing / 2) (@spacing / 1.5);
+    color: @dark;
+    background-color: @toast-color;
+    background-clip: padding-box;
+    border-bottom: @border-size @border-style @shadow-color;
+}
+
+.toast-body {
+    padding: .75rem;
+}

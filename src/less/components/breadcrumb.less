@@ -3,7 +3,7 @@
     flex-wrap: wrap;
     list-style: none;
     margin-bottom: @spacing;
-    padding: @half-spacing @spacing;
+    padding: (@spacing / 2) @spacing;
     background-color: @light;
     border: @border-size @border-style @border-color;
     border-radius: @border-radius;
@@ -19,7 +19,7 @@
 
     &:not(:last-child)::after {
         display: inline-block;
-        padding: 0 @half-spacing;
+        padding: 0 (@spacing / 2);
         color: @divider-color;
         content: @breadcrumb-divider;
     }

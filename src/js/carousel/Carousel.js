@@ -21,14 +21,16 @@ class Carousel {
 
         this._settings = Core.extend(
             {},
-            Carousel.defaults,
+            this.constructor.defaults,
             dom.getDataset(this._node),
             settings
         );
 
         this._items = dom.find('.carousel-item', this._node);
 
-        this._index = this._items.findIndex(item => dom.hasClass(item, 'active'));
+        this._index = this._items.findIndex(item =>
+            dom.hasClass(item, 'active')
+        );
 
         this._queue = [];
 
@@ -54,32 +56,31 @@ class Carousel {
      * Destroy the Carousel.
      */
     destroy() {
+        this._queue = [];
+
         if (this._timer) {
             clearTimeout(this._timer);
         }
 
-        dom.removeEvent(this._node, 'click.frost.carousel', this._clickNextEvent);
-        dom.removeEvent(this._node, 'click.frost.carousel', this._clickPrevEvent);
-        dom.removeEvent(this._node, 'click.frost.carousel', this._clickSlideEvent);
-
         if (this._settings.keyboard) {
-            dom.removeEvent(this._node, 'keydown.frost.carousel', this._keyDownEvent);
+            dom.removeEvent(this._node, 'keydown.frost.carousel');
         }
 
         if (this._settings.pause) {
-            dom.removeEvent(this._node, 'mouseenter.frost.carousel', this._mouseEnterEvent);
-            dom.removeEvent(this._node, 'mouseleave.frost.carousel', this._mouseLeaveEvent);
+            dom.removeEvent(this._node, 'mouseenter.frost.carousel');
+            dom.removeEvent(this._node, 'mouseleave.frost.carousel');
         }
+
+        dom.removeEvent(this._node, 'remove.frost.carousel');
 
         dom.removeData(this._node, 'carousel');
     }
 
     /**
      * Cycle to the next Carousel item.
-     * @returns {Promise} A new Promise that resolves when the animation has completed.
      */
     next() {
-        return this.slide();
+        this.slide();
     }
 
     /**
@@ -93,32 +94,47 @@ class Carousel {
 
     /**
      * Cycle to the previous Carousel item.
-     * @returns {Promise} A new Promise that resolves when the animation has completed.
      */
     prev() {
-        return this.slide(-1);
+        this.slide(-1);
     }
 
     /**
      * Cycle to a specific Carousel item.
      * @param {number} index The item index to cycle to.
-     * @returns {Promise} A new Promise that resolves when the animation has completed.
      */
     show(index) {
-        return this._show(index);
+        this._show(index);
     }
 
     /**
      * Slide the Carousel in a specific direction.
      * @param {number} [direction=1] The direction to slide to.
-     * @returns {Promise} A new Promise that resolves when the animation has completed.
      */
     slide(direction = 1) {
         const index = this._queue.length ?
             this._queue[this._queue.length - 1] :
             this._index;
 
-        return this.show(index + direction);
+        this.show(index + direction);
+    }
+
+    /**
+     * Initialize a Carousel.
+     * @param {HTMLElement} node The input node.
+     * @param {object} [settings] The options to create the Carousel with.
+     * @param {number} [settings.interval=5000] The duration of the interval.
+     * @param {number} [settings.transition=500] The duration of the transition.
+     * @param {Boolean} [settings.keyboard=true] Whether to all keyboard navigation.
+     * @param {Boolean|string} [settings.ride=false] Set to "carousel" to automatically start the carousel.
+     * @param {Boolean} [settings.pause=true] Whether to pause the carousel on mouseover.
+     * @param {Boolean} [settings.wrap=true] Whether the carousel should cycle around.
+     * @returns {Carousel} A new Carousel object.
+     */
+    static init(node, settings) {
+        return dom.hasData(node, 'carousel') ?
+            dom.getData(node, 'carousel') :
+            new this(node, settings);
     }
 
 }

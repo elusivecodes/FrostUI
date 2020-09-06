@@ -1,3 +1,12 @@
+* {
+    margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
 *,
 *::before,
 *::after {
@@ -11,13 +20,29 @@ html {
 }
 
 body {
-    margin: 0;
     font-family: @font-family;
     font-weight: @font-weight;
     line-height: @line-height;
     color: @text;
     text-align: left;
     background-color: @white;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
 [tabindex="-1"]:focus {

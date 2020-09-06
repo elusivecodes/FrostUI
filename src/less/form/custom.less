@@ -57,7 +57,7 @@
 
     &::before {
         position: absolute;
-        top: @quarter-spacing;
+        top: @spacing / 4;
         left: -@spacing * 1.5;
         display: block;
         width: @spacing;
@@ -87,7 +87,7 @@
 
 .custom-checkbox {
     & .custom-control-label::before {
-        border-radius: @quarter-spacing;
+        border-radius: @spacing / 4;
     }
 
     & .custom-control-input {
@@ -121,9 +121,9 @@
 
     & .custom-control-label::before {
         left: -@spacing * 2.5;
-        width: @double-spacing;
+        width: @spacing * 2;
         pointer-events: all;
-        border-radius: @half-spacing;
+        border-radius: @spacing / 2;
     }
 
     & .custom-control-input {
@@ -148,12 +148,12 @@
     }
 
     & .custom-control-label::after {
-        top: @quarter-spacing;
+        top: @spacing / 4;
         left: -@spacing * 2.5;
         width: calc(@spacing - 4px);
         height: calc(@spacing - 4px);
         background-color: @secondary;
-        border-radius: @half-spacing;
+        border-radius: @spacing / 2;
         margin-top: 2px;
         margin-left: 4px;
     }

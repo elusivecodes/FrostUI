@@ -40,7 +40,7 @@
          * New Alert constructor.
          * @param {HTMLElement} node The input node.
          * @param {object} [settings] The options to create the Alert with.
-         * @param {number} [settings.duration=100] The duration of the animation.
+         * @param {number} [settings.duration=250] The duration of the animation.
          * @returns {Alert} A new Alert object.
          */
         constructor(node, settings) {
@@ -48,14 +48,10 @@
 
             this._settings = Core.extend(
                 {},
-                Alert.defaults,
+                this.constructor.defaults,
                 dom.getDataset(this._node),
                 settings
             );
-
-            this._dismiss = dom.find('[data-dismiss="alert"]', this._node);
-
-            this._events();
 
             dom.setData(this._node, 'alert', this);
         }
@@ -64,124 +60,91 @@
          * Destroy the Alert.
          */
         destroy() {
-            if (this._dismiss.length) {
-                dom.removeEvent(this._dismiss, 'click.frost.alert', this._dismissEvent);
-            }
-
             dom.removeData(this._node, 'alert');
         }
 
         /**
          * Close the Alert.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         close() {
-            return new Promise((resolve, reject) => {
+            if (
+                this._animating ||
+                !dom.triggerOne(this._node, 'close.frost.alert')
+            ) {
+                return;
+            }
 
-                if (dom.getDataset(this._node, 'animating')) {
-                    return reject();
-                }
+            this._animating = true;
 
-                if (!DOM._triggerEvent(this._node, 'close.frost.alert')) {
-                    return reject();
-                }
-
-                dom.setDataset(this._node, 'animating', true);
-
-                dom.fadeOut(this._node, {
-                    duration: this._settings.duration
-                }).then(_ => {
-                    dom.triggerEvent(this._node, 'closed.frost.alert');
-
-                    dom.remove(this._node);
-
-                    resolve();
-                }).catch(e => {
-                    dom.removeDataset(this._node, 'animating');
-
-                    reject(e);
-                });
+            dom.fadeOut(this._node, {
+                duration: this._settings.duration
+            }).then(_ => {
+                dom.triggerEvent(this._node, 'closed.frost.alert');
+                dom.remove(this._node);
+            }).catch(_ => { }).finally(_ => {
+                this._animating = false;
             });
+        }
+
+        /**
+         * Initialize an Alert.
+         * @param {HTMLElement} node The input node.
+         * @param {object} [settings] The options to create the Alert with.
+         * @param {number} [settings.duration=250] The duration of the animation.
+         * @returns {Alert} A new Alert object.
+         */
+        static init(node, settings) {
+            return dom.hasData(node, 'alert') ?
+                dom.getData(node, 'alert') :
+                new this(node, settings);
         }
 
     }
 
 
-    // Default Alert options
-    Alert.defaults = {
-        duration: 100
-    };
+    // Alert events
+    dom.addEventDelegate(document, 'click.frost.alert', '[data-dismiss="alert"]', e => {
+        e.preventDefault();
 
-    // Auto-initialize Alert from data-toggle
-    dom.addEventOnce(window, 'load', _ => {
-        const nodes = dom.find('[data-toggle="alert"]');
-
-        for (const node of nodes) {
-            new Alert(node);
-        }
+        const target = UI.getTarget(e.currentTarget, '.alert');
+        const alert = Alert.init(target);
+        alert.close();
     });
 
-    // Add Alert QuerySet method
+
+    // Alert default options
+    Alert.defaults = {
+        duration: 250
+    };
+
+    // Alert QuerySet method
     if (QuerySet) {
         QuerySet.prototype.alert = function(a, ...args) {
-            let options, method;
+            let settings, method;
+
             if (Core.isObject(a)) {
-                options = a;
+                settings = a;
             } else if (Core.isString(a)) {
                 method = a;
             }
 
-            let result;
-            this.each((node, index) => {
+            for (const node of this) {
                 if (!Core.isElement(node)) {
-                    return;
+                    continue;
                 }
 
-                const alert = dom.hasData(node, 'alert') ?
-                    dom.getData(node, 'alert') :
-                    new Alert(node, options);
+                const alert = Alert.init(node, settings);
 
-                if (index) {
-                    return;
+                if (method) {
+                    alert[method](...args);
                 }
+            }
 
-                if (!method) {
-                    result = alert;
-                } else {
-                    result = alert[method](...args);
-                }
-            });
-
-            return result;
+            return this;
         };
     }
 
     UI.Alert = Alert;
-
-
-    /**
-     * Alert Helpers
-     */
-
-    Object.assign(Alert.prototype, {
-
-        /**
-         * Attach events for the Alert.
-         */
-        _events() {
-            this._dismissEvent = e => {
-                e.preventDefault();
-
-                this.close().catch(_ => { });
-            };
-
-            if (this._dismiss.length) {
-                dom.addEvent(this._dismiss, 'click.frost.alert', this._dismissEvent);
-            }
-
-        }
-
-    });
 
 
     /**
@@ -201,19 +164,17 @@
 
             this._settings = Core.extend(
                 {},
-                Button.defaults,
+                this.constructor.defaults,
                 dom.getDataset(this._node),
                 settings
             );
 
-            this._input = dom.findOne('input[type="checkbox"], input[type="radio"]', this._node);
+            this._input = dom.findOne('input', this._node);
             this._isRadio = this._input && dom.is(this._input, '[type="radio"]');
 
             if (this._isRadio) {
                 this._siblings = dom.siblings(this._node);
             }
-
-            this._events();
 
             dom.setData(this._node, 'button', this);
         }
@@ -222,8 +183,6 @@
          * Destroy the Button.
          */
         destroy() {
-            dom.removeEvent(this._node, 'frost.click.button', this._clickEvent);
-
             dom.removeData(this._node, 'button');
         }
 
@@ -234,80 +193,7 @@
             this._isRadio ?
                 this._toggleRadio() :
                 this._toggleCheckbox();
-
         }
-
-    }
-
-
-    // Default Button options
-    Button.defaults = {};
-
-    // Auto-initialize Button from data-toggle
-    dom.addEventOnce(window, 'load', _ => {
-        const nodes = dom.find('[data-toggle="buttons"] > *, [data-toggle="button"]');
-
-        for (const node of nodes) {
-            new Button(node);
-        }
-    });
-
-    // Add Button QuerySet method
-    if (QuerySet) {
-        QuerySet.prototype.button = function(a, ...args) {
-            let options, method;
-            if (Core.isObject(a)) {
-                options = a;
-            } else if (Core.isString(a)) {
-                method = a;
-            }
-
-            let result;
-            this.each((node, index) => {
-                if (!Core.isElement(node)) {
-                    return;
-                }
-
-                const button = dom.hasData(node, 'button') ?
-                    dom.getData(node, 'button') :
-                    new Button(node, options);
-
-                if (index) {
-                    return;
-                }
-
-                if (!method) {
-                    result = button;
-                } else {
-                    result = button[method](...args);
-                }
-            });
-
-            return result;
-        };
-    }
-
-    UI.Button = Button;
-
-
-    /**
-     * Button Helpers
-     */
-
-    Object.assign(Button.prototype, {
-
-        /**
-         * Attach events for the Button.
-         */
-        _events() {
-            this._clickEvent = e => {
-                e.preventDefault();
-
-                this.toggle();
-            };
-
-            dom.addEvent(this._node, 'click.frost.button', this._clickEvent);
-        },
 
         /**
          * Toggle a checkbox-type Button.
@@ -316,26 +202,77 @@
             dom.toggleClass(this._node, 'active');
 
             if (this._input) {
-                dom.setProperty(this._input, 'checked', !dom.getProperty(this._input, 'checked'));
+                const isChecked = dom.getProperty(this._input, 'checked');
+                dom.setProperty(this._input, 'checked', !isChecked);
                 dom.triggerEvent(this._input, 'change');
             }
-        },
+        }
 
         /**
          * Toggle a radio-type Button.
          */
         _toggleRadio() {
             dom.addClass(this._node, 'active');
-
-            if (this._siblings) {
-                dom.removeClass(this._siblings, 'active');
-            }
-
+            dom.removeClass(this._siblings, 'active');
             dom.setProperty(this._input, 'checked', true);
             dom.triggerEvent(this._input, 'change');
         }
 
+        /**
+         * Initialize a Button.
+         * @param {HTMLElement} node The input node.
+         * @param {object} [settings] The options to create the Button with.
+         * @returns {Button} A new Button object.
+         */
+        static init(node, settings) {
+            return dom.hasData(node, 'button') ?
+                dom.getData(node, 'button') :
+                new this(node, settings);
+        }
+
+    }
+
+
+    // Button events
+    dom.addEventDelegate(document, 'click.frost.button', '[data-toggle="buttons"] > *, [data-toggle="button"]', e => {
+        e.preventDefault();
+
+        const button = Button.init(e.currentTarget);
+        button.toggle();
     });
+
+
+    // Button default settings
+    Button.defaults = {};
+
+    // Button QuerySet method
+    if (QuerySet) {
+        QuerySet.prototype.button = function(a, ...args) {
+            let settings, method;
+
+            if (Core.isObject(a)) {
+                settings = a;
+            } else if (Core.isString(a)) {
+                method = a;
+            }
+
+            for (const node of this) {
+                if (!Core.isElement(node)) {
+                    continue;
+                }
+
+                const button = Button.init(node, settings);
+
+                if (method) {
+                    button[method](...args);
+                }
+            }
+
+            return this;
+        };
+    }
+
+    UI.Button = Button;
 
 
     /**
@@ -361,14 +298,16 @@
 
             this._settings = Core.extend(
                 {},
-                Carousel.defaults,
+                this.constructor.defaults,
                 dom.getDataset(this._node),
                 settings
             );
 
             this._items = dom.find('.carousel-item', this._node);
 
-            this._index = this._items.findIndex(item => dom.hasClass(item, 'active'));
+            this._index = this._items.findIndex(item =>
+                dom.hasClass(item, 'active')
+            );
 
             this._queue = [];
 
@@ -394,32 +333,31 @@
          * Destroy the Carousel.
          */
         destroy() {
+            this._queue = [];
+
             if (this._timer) {
                 clearTimeout(this._timer);
             }
 
-            dom.removeEvent(this._node, 'click.frost.carousel', this._clickNextEvent);
-            dom.removeEvent(this._node, 'click.frost.carousel', this._clickPrevEvent);
-            dom.removeEvent(this._node, 'click.frost.carousel', this._clickSlideEvent);
-
             if (this._settings.keyboard) {
-                dom.removeEvent(this._node, 'keydown.frost.carousel', this._keyDownEvent);
+                dom.removeEvent(this._node, 'keydown.frost.carousel');
             }
 
             if (this._settings.pause) {
-                dom.removeEvent(this._node, 'mouseenter.frost.carousel', this._mouseEnterEvent);
-                dom.removeEvent(this._node, 'mouseleave.frost.carousel', this._mouseLeaveEvent);
+                dom.removeEvent(this._node, 'mouseenter.frost.carousel');
+                dom.removeEvent(this._node, 'mouseleave.frost.carousel');
             }
+
+            dom.removeEvent(this._node, 'remove.frost.carousel');
 
             dom.removeData(this._node, 'carousel');
         }
 
         /**
          * Cycle to the next Carousel item.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         next() {
-            return this.slide();
+            this.slide();
         }
 
         /**
@@ -433,92 +371,68 @@
 
         /**
          * Cycle to the previous Carousel item.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         prev() {
-            return this.slide(-1);
+            this.slide(-1);
         }
 
         /**
          * Cycle to a specific Carousel item.
          * @param {number} index The item index to cycle to.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         show(index) {
-            return this._show(index);
+            this._show(index);
         }
 
         /**
          * Slide the Carousel in a specific direction.
          * @param {number} [direction=1] The direction to slide to.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         slide(direction = 1) {
             const index = this._queue.length ?
                 this._queue[this._queue.length - 1] :
                 this._index;
 
-            return this.show(index + direction);
+            this.show(index + direction);
+        }
+
+        /**
+         * Initialize a Carousel.
+         * @param {HTMLElement} node The input node.
+         * @param {object} [settings] The options to create the Carousel with.
+         * @param {number} [settings.interval=5000] The duration of the interval.
+         * @param {number} [settings.transition=500] The duration of the transition.
+         * @param {Boolean} [settings.keyboard=true] Whether to all keyboard navigation.
+         * @param {Boolean|string} [settings.ride=false] Set to "carousel" to automatically start the carousel.
+         * @param {Boolean} [settings.pause=true] Whether to pause the carousel on mouseover.
+         * @param {Boolean} [settings.wrap=true] Whether the carousel should cycle around.
+         * @returns {Carousel} A new Carousel object.
+         */
+        static init(node, settings) {
+            return dom.hasData(node, 'carousel') ?
+                dom.getData(node, 'carousel') :
+                new this(node, settings);
         }
 
     }
 
 
-    // Default Carousel options
-    Carousel.defaults = {
-        interval: 5000,
-        transition: 500,
-        keyboard: true,
-        ride: false,
-        pause: true,
-        wrap: true
-    };
+    // Carousel events
+    dom.addEventDelegate(document, 'click.frost.carousel', '.carousel-next, .carousel-prev, [data-slide], [data-slide-to]', e => {
+        e.preventDefault();
 
-    // Auto-initialize Carousel from data-ride
-    dom.addEventOnce(window, 'load', _ => {
-        const nodes = dom.find('[data-toggle="carousel"], [data-ride="carousel"]');
+        const target = UI.getTarget(e.currentTarget, '.carousel');
+        const carousel = Carousel.init(target);
+        const slideTo = dom.getDataset(e.currentTarget, 'slideTo');
 
-        for (const node of nodes) {
-            new Carousel(node);
+        if (!Core.isUndefined(slideTo)) {
+            carousel.show(slideTo);
+        } else if (dom.hasClass(e.currentTarget, 'carousel-prev')) {
+            carousel.prev();
+        } else {
+            carousel.next();
         }
     });
-
-    // Add Carousel QuerySet method
-    if (QuerySet) {
-        QuerySet.prototype.carousel = function(a, ...args) {
-            let options, method;
-            if (Core.isObject(a)) {
-                options = a;
-            } else if (Core.isString(a)) {
-                method = a;
-            }
-
-            let result;
-            this.each((node, index) => {
-                if (!Core.isElement(node)) {
-                    return;
-                }
-
-                const carousel = dom.hasData(node, 'carousel') ?
-                    dom.getData(node, 'carousel') :
-                    new Carousel(node, options);
-
-                if (index) {
-                    return;
-                }
-
-                if (!method) {
-                    result = carousel;
-                } else {
-                    result = carousel[method](...args);
-                }
-            });
-
-            return result;
-        };
-    }
-
-    UI.Carousel = Carousel;
 
 
     /**
@@ -531,56 +445,34 @@
          * Attach events for the Carousel.
          */
         _events() {
-            this._clickNextEvent = e => {
-                e.preventDefault();
-
-                this.next().catch(_ => { });
-            };
-
-            this._clickPrevEvent = e => {
-                e.preventDefault();
-
-                this.prev().catch(_ => { });
-            };
-
-            this._clickSlideEvent = e => {
-                e.preventDefault();
-
-                const slideTo = dom.getDataset(e.currentTarget, 'slideTo');
-
-                this.show(slideTo).catch(_ => { });
-            };
-
-            this._keyDownEvent = e => {
-                if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
-                    return;
-                }
-
-                e.preventDefault();
-
-                if (e.key === 'ArrowLeft') {
-                    this.prev().catch(_ => { });
-                } else if (e.key === 'ArrowRight') {
-                    this.next().catch(_ => { });
-                }
-            };
-
-            this._mouseEnterEvent = _ => this.pause();
-
-            this._mouseLeaveEvent = _ => this._setTimer();
-
-            dom.addEventDelegate(this._node, 'click.frost.carousel', '.carousel-next', this._clickNextEvent);
-            dom.addEventDelegate(this._node, 'click.frost.carousel', '.carousel-prev', this._clickPrevEvent);
-            dom.addEventDelegate(this._node, 'click.frost.carousel', '[data-slide-to]', this._clickSlideEvent);
-
             if (this._settings.keyboard) {
-                dom.addEvent(this._node, 'keydown.frost.carousel', this._keyDownEvent);
+                dom.addEvent(this._node, 'keydown.frost.carousel', e => {
+                    switch (e.key) {
+                        case 'ArrowLeft':
+                            e.preventDefault();
+                            this.prev().catch(_ => { });
+                            break;
+                        case 'ArrowRight':
+                            e.preventDefault();
+                            this.next().catch(_ => { });
+                            break;
+                    }
+                });
             }
 
             if (this._settings.pause) {
-                dom.addEvent(this._node, 'mouseenter.frost.carousel', this._mouseEnterEvent);
-                dom.addEvent(this._node, 'mouseleave.frost.carousel', this._mouseLeaveEvent);
+                dom.addEvent(this._node, 'mouseenter.frost.carousel', _ => {
+                    this.pause();
+                });
+
+                dom.addEvent(this._node, 'mouseleave.frost.carousel', _ => {
+                    this._setTimer();
+                });
             }
+
+            dom.addEvent(this._node, 'remove.frost.carousel', _ => {
+                this.destroy();
+            });
         },
 
         /**
@@ -591,107 +483,97 @@
 
             this._timer = setTimeout(
                 _ => this.cycle(),
-                interval ?
-                    interval :
-                    this._settings.interval
+                interval || this._settings.interval
             );
         },
 
         /**
          * Cycle to a specific Carousel item.
          * @param {number} index The item index to cycle to.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         _show(index) {
-            return new Promise((resolve, reject) => {
-                if (dom.getDataset(this._node, 'sliding')) {
-                    this._queue.push(index);
+            if (this._sliding) {
+                this._queue.push(index);
+                return;
+            }
 
-                    return;
-                }
+            index = parseInt(index);
 
-                index = parseInt(index);
+            if (!this._settings.wrap &&
+                (
+                    index < 0 ||
+                    index > this._items.length - 1
+                )
+            ) {
+                return;
+            }
 
-                if (!this._settings.wrap &&
-                    (index < 0 || index > this._items.length - 1)
-                ) {
-                    return reject();
-                }
+            let dir = 0;
+            if (index < 0) {
+                dir = -1;
+            } else if (index > this._items.length - 1) {
+                dir = 1;
+            }
 
-                let dir = 0;
-                if (index < 0) {
-                    dir = -1;
-                } else if (index > this._items.length - 1) {
-                    dir = 1;
-                }
+            index %= this._items.length;
+            if (index < 0) {
+                index = this._items.length + index;
+            }
 
-                index %= this._items.length;
-                if (index < 0) {
-                    index = this._items.length + index;
-                }
+            if (index === this._index) {
+                return;
+            }
 
-                if (index === this._index) {
-                    return reject();
-                }
+            const direction = dir == -1 || (dir == 0 && index < this._index) ?
+                'left' :
+                'right';
 
-                const direction = dir == -1 || (dir == 0 && index < this._index) ?
-                    'left' :
-                    'right';
+            const eventData = {
+                direction,
+                relatedTarget: this._items[index],
+                from: this._index,
+                to: index
+            };
 
-                const eventData = {
+            if (!dom.triggerOne(this._node, 'slide.frost.carousel', eventData)) {
+                return;
+            }
+
+            const oldIndex = this._index;
+            this._index = index;
+
+            this._sliding = true
+
+            this.pause();
+
+            dom.addClass(this._items[this._index], 'active');
+            dom.removeClass(this._items[oldIndex], 'active');
+
+            dom.animate(
+                this._items[this._index],
+                (node, progress, options) =>
+                    this._update(node, this._items[oldIndex], progress, options.direction),
+                {
                     direction,
-                    relatedTarget: this._items[index],
-                    from: this._index,
-                    to: index
-                };
-
-                if (!DOM._triggerEvent(this._node, 'slide.frost.carousel', eventData)) {
-                    return reject();
+                    duration: this._settings.transition
                 }
+            ).then(_ => {
+                const oldIndicator = dom.find('.active[data-slide-to]', this._node);
+                const newIndicator = dom.find('[data-slide-to="' + this._index + '"]', this._node);
+                dom.removeClass(oldIndicator, 'active');
+                dom.addClass(newIndicator, 'active');
+                dom.triggerEvent(this._node, 'slid.frost.carousel', eventData);
 
-                const oldIndex = this._index;
-                this._index = index;
+                this._sliding = false;
 
-                dom.setDataset(this._node, 'sliding', true);
-
-                this.pause();
-
-                dom.addClass(this._items[this._index], 'active');
-                dom.removeClass(this._items[oldIndex], 'active');
-
-                dom.animate(
-                    this._items[this._index],
-                    (node, progress, options) =>
-                        this._update(node, this._items[oldIndex], progress, options.direction),
-                    {
-                        direction,
-                        duration: this._settings.transition
-                    }
-                ).then(_ => {
-                    dom.removeClass(
-                        dom.find('.active[data-slide-to]', this._node),
-                        'active'
-                    );
-
-                    dom.addClass(
-                        dom.find('[data-slide-to="' + this._index + '"]', this._node),
-                        'active'
-                    );
-
-                    dom.removeDataset(this._node, 'sliding');
-
-                    dom.triggerEvent(this._node, 'slid.frost.carousel', eventData);
-
-                    resolve();
-
-                    if (!this._queue.length) {
-                        this._setTimer();
-                        return;
-                    }
-
+                if (!this._queue.length) {
+                    this._setTimer();
+                } else {
                     const next = this._queue.shift();
-                    return this._show(next);
-                }).catch(reject);
+                    this._show(next);
+                }
+            }).catch(_ => {
+                this._sliding = false;
             });
         },
 
@@ -704,27 +586,74 @@
          */
         _update(nodeIn, nodeOut, progress, direction) {
             if (progress >= 1) {
-                DOMNode.setStyle(nodeOut, 'display', '');
-                DOMNode.setStyle(nodeOut, 'transform', '');
-                DOMNode.setStyle(nodeIn, 'transform', '');
+                nodeOut.style.setProperty('display', '');
+                nodeOut.style.setProperty('transform', '');
+                nodeIn.style.setProperty('transform', '');
                 return;
             }
 
             const inverse = direction === 'right';
-            DOMNode.setStyle(nodeOut, 'display', 'block');
-            DOMNode.setStyle(
-                nodeOut,
+            nodeOut.style.setProperty('display', 'block');
+            nodeOut.style.setProperty(
                 'transform',
                 `translateX(${Math.round(progress * 100) * (inverse ? -1 : 1)}%)`
             );
-            DOMNode.setStyle(
-                nodeIn,
+            nodeIn.style.setProperty(
                 'transform',
                 `translateX(${Math.round((1 - progress) * 100) * (inverse ? 1 : -1)}%)`
             );
         }
 
     });
+
+
+    // Carousel default options
+    Carousel.defaults = {
+        interval: 5000,
+        transition: 500,
+        keyboard: true,
+        ride: false,
+        pause: true,
+        wrap: true
+    };
+
+    // Carousel init
+    dom.addEventOnce(window, 'load', _ => {
+        const nodes = dom.find('[data-ride="carousel"]');
+
+        for (const node of nodes) {
+            Carousel.init(node);
+        }
+    });
+
+    // Carousel QuerySet method
+    if (QuerySet) {
+        QuerySet.prototype.carousel = function(a, ...args) {
+            let settings, method;
+
+            if (Core.isObject(a)) {
+                settings = a;
+            } else if (Core.isString(a)) {
+                method = a;
+            }
+
+            for (const node of this) {
+                if (!Core.isElement(node)) {
+                    continue;
+                }
+
+                const carousel = Carousel.init(node, settings);
+
+                if (method) {
+                    carousel[method](...args);
+                }
+            }
+
+            return this;
+        };
+    }
+
+    UI.Carousel = Carousel;
 
 
     /**
@@ -744,383 +673,184 @@
         constructor(node, settings) {
             this._node = node;
 
+            const id = this._node.getAttribute('id');
+            this._triggers = dom.find(
+                `[data-toggle="collapse"][data-target="#${id}"]`
+            );
+            console.log(this._triggers);
+
             this._settings = Core.extend(
                 {},
-                Collapse.defaults,
+                this.constructor.defaults,
                 dom.getDataset(this._node),
                 settings
             );
 
-            this._targets = dom.find(this._settings.target);
-
-            this._events();
+            if (this._settings.parent) {
+                this._parent = dom.findOne(this._settings.parent);
+            }
 
             dom.setData(this._node, 'collapse', this);
-
-            for (const target of this._targets) {
-                if (!Collapse._toggles.has(target)) {
-                    Collapse._toggles.set(target, []);
-                }
-
-                Collapse._toggles.get(target)
-                    .push(this._node);
-            }
         }
 
         /**
          * Destroy the Collapse.
          */
         destroy() {
-            for (const target of this._targets) {
-                const toggles = Collapse._toggles.get(target)
-                    .filter(toggle => !dom.isSame(toggle, this._node));
-
-                if (toggles.length) {
-                    Collapse._toggles.set(target, toggles);
-                } else {
-                    Collapse._toggles.delete(target);
-                }
-            }
-
-            dom.removeEvent(this._node, 'click.frost.collapse', this._clickEvent);
-
             dom.removeData(this._node, 'collapse');
         }
 
         /**
-         * Hide the target element.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
+         * Hide the element.
          */
         hide() {
-            return new Promise((resolve, reject) => {
-                const targets = this._targets
-                    .filter(target => dom.hasClass(target, 'show') && !dom.getDataset(target, 'animating'));
+            if (
+                this._animating ||
+                !dom.hasClass(this._node, 'show') ||
+                !dom.triggerOne(this._node, 'hide.frost.collapse')
+            ) {
+                return;
+            }
 
-                if (!targets.length) {
-                    return reject();
-                }
+            this._animating = true;
 
-                if (!DOM._triggerEvent(this._node, 'hide.frost.collapse')) {
-                    return reject();
-                }
-
-                dom.setDataset(targets, 'animating', true);
-
-                dom.squeezeOut(targets, {
-                    direction: this._settings.direction,
-                    duration: this._settings.duration
-                }).then(_ => {
-                    dom.removeClass(targets, 'show');
-
-                    this._setExpanded(targets, false);
-                    dom.triggerEvent(this._node, 'hidden.frost.collapse');
-
-                    resolve();
-                }).catch(reject).finally(_ =>
-                    dom.removeDataset(targets, 'animating')
-                );
+            dom.squeezeOut(this._node, {
+                direction: this._settings.direction,
+                duration: this._settings.duration
+            }).then(_ => {
+                dom.removeClass(this._node, 'show');
+                dom.setAttribute(this._triggers, 'aria-expanded', false);
+                dom.triggerEvent(this._node, 'hidden.frost.collapse');
+            }).catch(_ => { }).finally(_ => {
+                this._animating = false;
             });
         }
 
         /**
-         * Show the target element.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
+         * Show the element.
          */
         show() {
-            return new Promise((resolve, reject) => {
-                const targets = this._targets
-                    .filter(target => dom.hasClass(target, 'show') && !dom.getDataset(target, 'animating'));
+            if (
+                this._animating ||
+                dom.hasClass(this._node, 'show')
+            ) {
+                return;
+            }
 
-                if (!targets.length) {
-                    return reject();
-                }
+            const collapses = [];
+            if (this._parent) {
+                const siblings = dom.find('.collapse.show', this._parent);
+                for (const sibling of siblings) {
+                    const collapse = this.constructor.init(sibling);
 
-                const accordion = this._getAccordion(hidden);
-
-                if (!accordion) {
-                    return reject();
-                }
-
-                for (const node of accordion.nodes) {
-                    if (!DOM._triggerEvent(node, 'hide.frost.collapse')) {
-                        return reject();
-                    }
-                }
-
-                if (!DOM._triggerEvent(this._node, 'show.frost.collapse')) {
-                    return reject();
-                }
-
-                const allTargets = [...targets];
-                allTargets.push(...accordion.targets);
-
-                dom.setDataset(allTargets, 'animating', true);
-
-                const animations = allTargets.map(target => {
-                    const animation = accordion.targets.includes(target) ?
-                        'squeezeOut' : 'squeezeIn';
-
-                    return dom[animation](target, {
-                        direction: this._settings.direction,
-                        duration: this._settings.duration,
-                        type: 'linear'
-                    });
-                });
-
-                dom.addClass(targets, 'show');
-
-                Promise.all(animations).then(_ => {
-                    if (accordion.targets.length) {
-                        dom.removeClass(accordion.targets, 'show');
-                        this._setExpanded(accordion.targets, false);
-                    }
-
-                    if (accordion.nodes.length) {
-                        dom.triggerEvent(accordion.nodes, 'hidden.frost.collapse');
-                    }
-
-                    this._setExpanded(targets);
-                    dom.triggerEvent(this._node, 'shown.frost.collapse');
-
-                    resolve();
-                }).catch(reject).finally(_ =>
-                    dom.removeDataset(allTargets, 'animating')
-                );
-            });
-        }
-
-        /**
-         * Toggle the target element.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
-         */
-        toggle() {
-            return new Promise((resolve, reject) => {
-                const targets = [];
-                const hidden = [];
-                const visible = [];
-                for (const target of this._targets) {
-                    if (dom.getDataset(target, 'animating')) {
+                    if (this._parent !== collapse._parent) {
                         continue;
                     }
 
-                    targets.push(target);
-
-                    if (dom.hasClass(target, 'show')) {
-                        visible.push(target);
-                    } else {
-                        hidden.push(target);
-                    }
-                }
-
-                if (!targets.length) {
-                    return reject();
-                }
-
-                if (visible.length && !DOM._triggerEvent(this._node, 'hide.frost.collapse')) {
-                    return reject();
-                }
-
-                const accordion = this._getAccordion(hidden);
-
-                if (!accordion) {
-                    return reject();
-                }
-
-                for (const node of accordion.nodes) {
-                    if (!DOM._triggerEvent(node, 'hide.frost.collapse')) {
-                        return reject();
-                    }
-                }
-
-                if (hidden.length && !DOM._triggerEvent(this._node, 'show.frost.collapse')) {
-                    return reject();
-                }
-
-                const allTargets = [...targets];
-                allTargets.push(...accordion.targets);
-
-                dom.setDataset(allTargets, 'animating', true);
-
-                const animations = allTargets.map(target => {
-                    const animation = visible.includes(target) || accordion.targets.includes(target) ?
-                        'squeezeOut' : 'squeezeIn';
-
-                    return dom[animation](target, {
-                        direction: this._settings.direction,
-                        duration: this._settings.duration,
-                        type: 'linear'
-                    });
-                });
-
-                dom.addClass(hidden, 'show')
-
-                Promise.all(animations).then(_ => {
-                    if (accordion.targets.length) {
-                        dom.removeClass(accordion.targets, 'show');
-                        this._setExpanded(accordion.targets, false);
+                    if (collapse._animating) {
+                        return;
                     }
 
-                    if (accordion.nodes.length) {
-                        dom.triggerEvent(accordion.nodes, 'hidden.frost.collapse');
-                    }
+                    collapses.push(collapse);
+                }
+            }
 
-                    if (visible.length) {
-                        dom.removeClass(visible, 'show');
-                        this._setExpanded(visible, false);
-                        dom.triggerEvent(this._node, 'hidden.frost.collapse');
-                    }
+            if (!dom.triggerOne(this._node, 'show.frost.collapse')) {
+                return;
+            }
 
-                    if (hidden.length) {
-                        this._setExpanded(hidden);
-                        dom.triggerEvent(this._node, 'shown.frost.collapse');
-                    }
+            for (const collapse of collapses) {
+                collapse.hide();
+            }
 
-                    resolve();
-                }).catch(reject).finally(_ =>
-                    dom.removeDataset(allTargets, 'animating')
-                );
+            this._animating = true;
+            dom.addClass(this._node, 'show');
+
+            dom.squeezeIn(this._node, {
+                direction: this._settings.direction,
+                duration: this._settings.duration
+            }).then(_ => {
+                dom.setAttribute(this._triggers, 'aria-expanded', true);
+                dom.triggerEvent(this._node, 'shown.frost.collapse');
+            }).catch(_ => { }).finally(_ => {
+                this._animating = false;
             });
+        }
+
+        /**
+         * Toggle the element.
+         */
+        toggle() {
+            dom.hasClass(this._node, 'show') ?
+                this.hide() :
+                this.show();
+        }
+
+        /**
+         * Initialize a Collapse.
+         * @param {HTMLElement} node The input node.
+         * @param {object} [settings] The options to create the Collapse with.
+         * @param {string} [settings.direction=bottom] The direction to collapse the targets from/to.
+         * @param {number} [settings.duration=300] The duration of the animation.
+         * @returns {Collapse} A new Collapse object.
+         */
+        static init(node, settings) {
+            return dom.hasData(node, 'collapse') ?
+                dom.getData(node, 'collapse') :
+                new this(node, settings);
         }
 
     }
 
 
-    // Default Collapse options
+    // Collapse events
+    dom.addEventDelegate(document, 'click.frost.collapse', '[data-toggle="collapse"]', e => {
+        e.preventDefault();
+
+        const selector = UI.getTargetSelector(e.currentTarget);
+        const targets = dom.find(selector);
+
+        for (const target of targets) {
+            const collapse = Collapse.init(target);
+            collapse.toggle();
+        }
+    });
+
+
+    // Collapse default options
     Collapse.defaults = {
         direction: 'bottom',
         duration: 250
     };
 
-    Collapse._toggles = new WeakMap;
-
-    // Auto-initialize Collapse from data-ride
-    dom.addEventOnce(window, 'load', _ => {
-        const nodes = dom.find('[data-toggle="collapse"]');
-
-        for (const node of nodes) {
-            new Collapse(node);
-        }
-    });
-
-    // Add Collapse QuerySet method
+    // Collapse QuerySet method
     if (QuerySet) {
         QuerySet.prototype.collapse = function(a, ...args) {
             let options, method;
+
             if (Core.isObject(a)) {
                 options = a;
             } else if (Core.isString(a)) {
                 method = a;
             }
 
-            let result;
-            this.each((node, index) => {
+            for (const node of this) {
                 if (!Core.isElement(node)) {
-                    return;
+                    continue;
                 }
 
-                const collapse = dom.hasData(node, 'collapse') ?
-                    dom.getData(node, 'collapse') :
-                    new Collapse(node, options);
+                const collapse = Collapse.init(node, options);
 
-                if (index) {
-                    return;
+                if (method) {
+                    collapse[method](...args);
                 }
+            }
 
-                if (!method) {
-                    result = collapse;
-                } else {
-                    result = collapse[method](...args);
-                }
-            });
-
-            return result;
+            return this;
         };
     }
 
     UI.Collapse = Collapse;
-
-
-    /**
-     * Collapse Helpers
-     */
-
-    Object.assign(Collapse.prototype, {
-
-        /**
-         * Attach events for the Collapse.
-         */
-        _events() {
-            this._clickEvent = e => {
-                e.preventDefault();
-
-                this.toggle().catch(_ => { });
-            };
-
-            dom.addEvent(this._node, 'click.frost.collapse', this._clickEvent);
-        },
-
-        /**
-         * Get accordion toggles and targets for the target nodes.
-         * @param {array} targets The target nodes.
-         * @return {object} The accordion toggles and targets.
-         */
-        _getAccordion(targets) {
-            const accordionToggles = [];
-            const accordionTargets = [];
-
-            for (const target of targets) {
-                const parent = dom.getDataset(target, 'parent');
-                if (!parent) {
-                    continue;
-                }
-
-                const parentNode = dom.closest(target, parent);
-                const collapseToggles = dom.find('[data-toggle="collapse"]', parentNode)
-                    .filter(toggle => !dom.isSame(toggle, this._node) && dom.hasData(toggle, 'collapse'));
-
-                for (const toggle of collapseToggles) {
-                    if (accordionToggles.includes(toggle)) {
-                        continue;
-                    }
-
-                    const collapse = dom.getData(toggle, 'collapse');
-                    const collapseTargets = dom.find(collapse._settings.target)
-                        .filter(target => !targets.includes(target) && !accordionTargets.includes(target) && dom.hasClass(target, 'show'));
-
-                    if (!collapseTargets.length) {
-                        continue;
-                    }
-
-                    if (collapseTargets.find(target => dom.getDataset(target, 'animating'))) {
-                        return false;
-                    }
-
-                    accordionToggles.push(toggle);
-                    accordionTargets.push(...collapseTargets);
-                }
-            }
-
-            return {
-                nodes: accordionToggles,
-                targets: accordionTargets
-            };
-        },
-
-        /**
-         * Set the ARIA expanded attribute for all targets.
-         * @param {array} targets The targets array.
-         * @param {Boolean} [expanded=true] Whether the target is expanded.
-         */
-        _setExpanded(targets, expanded = true) {
-            for (const target of targets) {
-                const toggles = Collapse._toggles.get(target);
-                for (const toggle of toggles) {
-                    dom.setAttribute(toggle, 'aria-expanded', expanded);
-                }
-            }
-        }
-
-    });
 
 
     /**
@@ -1146,15 +876,14 @@
 
             this._settings = Core.extend(
                 {},
-                Dropdown.defaults,
+                this.constructor.defaults,
                 dom.getDataset(this._node),
                 settings
             );
 
-            this._containerNode = dom.parent(this._node);
+            this._containerNode = dom.parent(this._node).shift();
 
-            this._menuNode = dom.siblings(this._node)
-                .find(child => dom.hasClass(child, 'dropdown-menu'));
+            this._menuNode = dom.next(this._node, '.dropdown-menu').shift();
 
             if (this._settings.reference) {
                 if (this._settings.reference === 'parent') {
@@ -1181,7 +910,9 @@
                 );
             }
 
-            this._events();
+            dom.addEvent(this._node, 'remove.frost.dropdown', _ => {
+                this.destroy();
+            });
 
             dom.setData(this._node, 'dropdown', this);
         }
@@ -1190,104 +921,195 @@
          * Destroy the Dropdown.
          */
         destroy() {
-            dom.stop(this._menuNode, true);
-
             if (this._popper) {
                 this._popper.destroy();
             }
 
-            dom.removeClass(this._containerNode, 'open');
-
-            dom.removeEvent(document, 'click.frost.dropdown', this._documentClickEvent);
-            dom.removeEvent(this._node, 'click.frost.dropdown', this._clickEvent);
-            dom.removeEvent(this._node, 'keyup.frost.dropdown', this._keyUpEvent);
-            dom.removeEvent(this._node, 'keydown.frost.dropdown', this._keyDownEvent);
-            dom.removeEventDelegate(this._menuNode, 'keydown.frost.dropdown', '.dropdown-item', this._menuKeyDownEvent);
-
+            dom.removeEvent(this._node, 'keyup.frost.dropdown');
+            dom.removeEvent(this._node, 'remove.frost.dropdown');
             dom.removeData(this._node, 'dropdown');
         }
 
         /**
          * Hide the Dropdown.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         hide() {
-            return new Promise((resolve, reject) => {
-                if (!dom.hasClass(this._containerNode, 'open') || dom.getDataset(this._menuNode, 'animating')) {
-                    return reject();
-                }
+            if (
+                this._animating ||
+                !dom.hasClass(this._containerNode, 'open') ||
+                !dom.triggerOne(this._node, 'hide.frost.dropdown')
+            ) {
+                return;
+            }
 
-                if (!DOM._triggerEvent(this._node, 'hide.frost.dropdown')) {
-                    return reject();
-                }
+            this._animating = true;
 
-                dom.setDataset(this._menuNode, 'animating', true);
-
-                dom.removeEvent(document, 'click.frost.dropdown', this._documentClickEvent);
-
-                dom.fadeOut(this._menuNode, {
-                    duration: this._settings.duration
-                }).then(_ => {
-                    dom.removeClass(this._containerNode, 'open');
-                    dom.setAttribute(this._node, 'aria-expanded', false);
-
-                    dom.triggerEvent(this._node, 'hidden.frost.dropdown');
-
-                    resolve();
-                }).catch(reject).finally(_ =>
-                    dom.removeDataset(this._menuNode, 'animating')
-                );
+            dom.fadeOut(this._menuNode, {
+                duration: this._settings.duration
+            }).then(_ => {
+                dom.removeClass(this._containerNode, 'open');
+                dom.setAttribute(this._node, 'aria-expanded', false);
+                dom.triggerEvent(this._node, 'hidden.frost.dropdown');
+            }).catch(_ => { }).finally(_ => {
+                this._animating = false;
             });
         }
 
         /**
          * Show the Dropdown.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         show() {
-            return new Promise((resolve, reject) => {
-                if (dom.hasClass(this._containerNode, 'open') || dom.getDataset(this._menuNode, 'animating')) {
-                    return reject();
-                }
+            if (
+                this._animating ||
+                dom.hasClass(this._containerNode, 'open') ||
+                !dom.triggerOne(this._node, 'show.frost.dropdown')
+            ) {
+                return;
+            }
 
-                if (!DOM._triggerEvent(this._node, 'show.frost.dropdown')) {
-                    return reject();
-                }
+            this._animating = true;
+            dom.addClass(this._containerNode, 'open');
 
-                dom.setDataset(this._menuNode, 'animating', true);
-
-                dom.addClass(this._containerNode, 'open');
-
-                dom.fadeIn(this._menuNode, {
-                    duration: this._settings.duration
-                }).then(_ => {
-                    dom.setAttribute(this._node, 'aria-expanded', true);
-
-                    dom.addEvent(document, 'click.frost.dropdown', this._documentClickEvent);
-
-                    dom.triggerEvent(this._node, 'shown.frost.dropdown');
-
-                    resolve();
-                }).catch(reject).finally(_ =>
-                    dom.removeDataset(this._menuNode, 'animating')
-                );
+            dom.fadeIn(this._menuNode, {
+                duration: this._settings.duration
+            }).then(_ => {
+                dom.setAttribute(this._node, 'aria-expanded', true);
+                dom.triggerEvent(this._node, 'shown.frost.dropdown');
+            }).catch(_ => { }).finally(_ => {
+                this._animating = false;
             });
         }
 
         /**
          * Toggle the Dropdown.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         toggle() {
-            return dom.hasClass(this._containerNode, 'open') ?
+            dom.hasClass(this._containerNode, 'open') ?
                 this.hide() :
                 this.show();
+        }
+
+        /**
+         * Auto-hide all visible dropdowns.
+         * @param {HTMLElement} [target] The target node.
+         * @param {Boolean} [noHideSelf=false] Whether to force prevent hiding self.
+         */
+        static autoHide(target, noHideSelf = false) {
+            if (!noHideSelf) {
+                noHideSelf = dom.is(target, 'form');
+            }
+
+            const menus = dom.find('.open > .dropdown-menu');
+
+            for (const menu of menus) {
+                if (
+                    target &&
+                    dom.hasDescendent(menu, target) &&
+                    (
+                        noHideSelf ||
+                        dom.closest(target, 'form', menu).length
+                    )
+                ) {
+                    continue;
+                }
+
+                const trigger = dom.prev(menu).shift();
+
+                if (trigger === target) {
+                    continue;
+                }
+
+                const dropdown = this.init(trigger);
+                dropdown.hide();
+            }
+        }
+
+        /**
+         * Initialize a Dropdown.
+         * @param {HTMLElement} node The input node.
+         * @param {object} [settings] The options to create the Dropdown with.
+         * @param {number} [settings.duration=100] The duration of the animation.
+         * @param {string} [settings.placement=bottom] The placement of the dropdown relative to the toggle.
+         * @param {string} [settings.position=start] The position of the dropdown relative to the toggle.
+         * @param {Boolean} [settings.fixed=false] Whether the dropdown position is fixed.
+         * @param {number} [settings.spacing=2] The spacing between the dropdown and the toggle.
+         * @param {number} [settings.minContact=false] The minimum amount of contact the dropdown must make with the toggle.
+         * @returns {Dropdown} A new Dropdown object.
+         */
+        static init(node, settings) {
+            return dom.hasData(node, 'dropdown') ?
+                dom.getData(node, 'dropdown') :
+                new this(node, settings);
         }
 
     }
 
 
-    // Default Dropdown options
+    // Dropdown events
+    dom.addEventDelegate(document, 'click.frost.dropdown keyup.frost.dropdown', '[data-toggle="dropdown"]', e => {
+        if (e.key && e.key !== ' ') {
+            return;
+        }
+
+        e.preventDefault();
+
+        const dropdown = Dropdown.init(e.currentTarget);
+        dropdown.toggle();
+    });
+
+    dom.addEventDelegate(document, 'keydown.frost.dropdown', '[data-toggle="dropdown"]', e => {
+        switch (e.key) {
+            case 'ArrowDown':
+            case 'ArrowUp':
+                e.preventDefault();
+
+                const node = e.currentTarget;
+                const dropdown = Dropdown.init(node);
+
+                if (!dom.hasClass(dropdown._containerNode, 'open')) {
+                    dropdown.show();
+                }
+
+                const focusNode = dom.findOne('.dropdown-item:not([tabindex="-1"])', dropdown._menuNode);
+                dom.focus(focusNode);
+                break;
+        }
+    });
+
+    dom.addEventDelegate(document, 'keydown.frost.dropdown', '.open > .dropdown-menu .dropdown-item', e => {
+        let focusNode;
+
+        switch (e.key) {
+            case 'ArrowDown':
+                focusNode = dom.nextAll(e.currentTarget, '.dropdown-item:not([tabindex="-1"])').shift();
+                break;
+            case 'ArrowUp':
+                focusNode = dom.prevAll(e.currentTarget, '.dropdown-item:not([tabindex="-1"])').pop();
+                break;
+            default:
+                return;
+        }
+
+        e.preventDefault();
+
+        dom.focus(focusNode);
+    });
+
+    dom.addEvent(document, 'click.frost.dropdown', e => {
+        Dropdown.autoHide(e.target);
+    });
+
+    dom.addEvent(document, 'keyup.frost.dropdown', e => {
+        switch (e.key) {
+            case 'Tab':
+                Dropdown.autoHide(e.target, true);
+            case 'Escape':
+                Dropdown.autoHide();
+        }
+    });
+
+
+    // Dropdown default options
     Dropdown.defaults = {
         duration: 100,
         placement: 'bottom',
@@ -1297,47 +1119,30 @@
         minContact: false
     };
 
-    // Auto-initialize Dropdown from data-toggle
-    dom.addEventOnce(window, 'load', _ => {
-        const nodes = dom.find('[data-toggle="dropdown"]');
-
-        for (const node of nodes) {
-            new Dropdown(node);
-        }
-    });
-
-    // Add Dropdown QuerySet method
+    // Dropdown QuerySet method
     if (QuerySet) {
         QuerySet.prototype.dropdown = function(a, ...args) {
-            let options, method;
+            let settings, method;
+
             if (Core.isObject(a)) {
-                options = a;
+                settings = a;
             } else if (Core.isString(a)) {
                 method = a;
             }
 
-            let result;
-            this.each((node, index) => {
+            for (const node of this) {
                 if (!Core.isElement(node)) {
-                    return;
+                    continue;
                 }
 
-                const dropdown = dom.hasData(node, 'dropdown') ?
-                    dom.getData(node, 'dropdown') :
-                    new Dropdown(node, options);
+                const dropdown = Dropdown.init(node, settings);
 
-                if (index) {
-                    return;
+                if (method) {
+                    dropdown[method](...args);
                 }
+            }
 
-                if (!method) {
-                    result = dropdown;
-                } else {
-                    result = dropdown[method](...args);
-                }
-            });
-
-            return result;
+            return this;
         };
     }
 
@@ -1345,89 +1150,36 @@
 
 
     /**
-     * Dropdown Helpers
+     * Get a target from a node.
+     * @param {HTMLElement} node The input node.
+     * @param {string} [closestSelector] The default closest selector.
+     * @return {HTMLElement} The target node.
      */
+    UI.getTarget = (node, closestSelector) => {
+        const selector = UI.getTargetSelector(node);
 
-    Object.assign(Dropdown.prototype, {
+        let target;
 
-        /**
-         * Attach events for the Dropdown.
-         */
-        _events() {
-            this._clickEvent = e => {
-                e.preventDefault();
-
-                this.toggle().catch(_ => { });
-            };
-
-            this._keyUpEvent = e => {
-                if (e.key !== ' ') {
-                    return;
-                }
-
-                e.preventDefault();
-
-                this.toggle().catch(_ => { });
-            };
-
-            this._keyDownEvent = e => {
-                if (!['ArrowDown', 'ArrowUp'].includes(e.key)) {
-                    return;
-                }
-
-                e.preventDefault();
-
-                this.show().then(_ => {
-                    const next = dom.findOne('.dropdown-item', this._menuNode);
-                    dom.focus(next);
-                }).catch(_ => { });
-            };
-
-            this._menuKeyDownEvent = e => {
-                if (!['ArrowDown', 'ArrowUp'].includes(e.key)) {
-                    return;
-                }
-
-                e.preventDefault();
-
-                if (e.key === 'ArrowDown') {
-                    const next = dom.nextAll(e.currentTarget, '.dropdown-item').shift();
-                    dom.focus(next);
-                } else if (e.key === 'ArrowUp') {
-                    const prev = dom.prevAll(e.currentTarget, '.dropdown-item').shift();
-                    dom.focus(prev);
-                }
-            };
-
-            this._documentClickEvent = e => {
-                if (
-                    (
-                        dom.isSame(e.target, this._menuNode) ||
-                        dom.hasDescendent(this._menuNode, e.target)
-                    ) &&
-                    (
-                        dom.getDataset(e.target, 'dropdownClose') === false ||
-                        dom.closest(
-                            e.target,
-                            parent =>
-                                dom.getDataset(parent, 'dropdownClose') === false,
-                            this._menuNode
-                        ).length
-                    )
-                ) {
-                    return;
-                }
-
-                this.hide().catch(_ => { });
-            };
-
-            dom.addEvent(this._node, 'click.frost.dropdown', this._clickEvent);
-            dom.addEvent(this._node, 'keyup.frost.dropdown', this._keyUpEvent);
-            dom.addEvent(this._node, 'keydown.frost.dropdown', this._keyDownEvent);
-            dom.addEventDelegate(this._menuNode, 'keydown.frost.dropdown', '.dropdown-item', this._menuKeyDownEvent);
+        if (selector && selector !== '#') {
+            target = dom.findOne(selector);
+        } else if (closestSelector) {
+            target = dom.closest(node, closestSelector).shift();
         }
 
-    });
+        if (!target) {
+            throw new Error('Target not found');
+        }
+
+        return target;
+    };
+
+    /**
+     * Get the target selector from a node.
+     * @param {HTMLElement} node The input node.
+     * @return {string} The target selector.
+     */
+    UI.getTargetSelector = node =>
+        dom.getDataset(node, 'target') || dom.getAttribute(node, 'href');
 
 
     /**
@@ -1452,16 +1204,12 @@
 
             this._settings = Core.extend(
                 {},
-                Modal.defaults,
+                this.constructor.defaults,
                 dom.getDataset(node),
                 settings
             );
 
             this._dialog = dom.child(this._node, '.modal-dialog').shift();
-
-            this._dismiss = dom.find('[data-dismiss="modal"]', this._node);
-
-            this._events();
 
             if (this._settings.show) {
                 this.show();
@@ -1474,279 +1222,231 @@
          * Destroy the Modal.
          */
         destroy() {
-            if (Modal._toggles.has(this._node)) {
-                const toggles = Modal._toggles.get(this._node);
-                dom.removeEvent(toggles, 'click.frost.modal', this._clickEvent);
-                Modal._toggles.delete(this._node);
-            }
-
-            if (this._dismiss.length) {
-                dom.removeEvent(this._dismiss, 'click.frost.modal', this._dismissEvent);
-            }
-
-            if (this._settings.backdrop) {
-                dom.removeEvent(document, 'click.frost.modal', this._documentClickEvent);
-            }
-
-            if (this._settings.keyboard) {
-                dom.removeEvent(window, 'keydown.frost.modal', this._windowKeyDownEvent);
-            }
-
             dom.removeData(this._node, 'modal');
         }
 
         /**
          * Hide the Modal.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         hide() {
-            return new Promise((resolve, reject) => {
-                if (!dom.hasClass(this._node, 'show') || dom.getDataset(this._dialog, 'animating')) {
-                    return reject();
-                }
+            if (
+                this._animating ||
+                !dom.hasClass(this._node, 'show') ||
+                !dom.triggerOne(this._node, 'hide.frost.modal')
+            ) {
+                return;
+            }
 
-                if (!DOM._triggerEvent(this._node, 'hide.frost.modal')) {
-                    return reject();
-                }
+            this._animating = true;
 
-                dom.setDataset([this._dialog, this._backdrop], 'animating', true);
-
+            Promise.all([
+                dom.fadeOut(this._dialog, {
+                    duration: this._settings.duration
+                }),
+                dom.dropOut(this._dialog, {
+                    duration: this._settings.duration
+                }),
+                dom.fadeOut(this._backdrop, {
+                    duration: this._settings.duration
+                })
+            ]).then(_ => {
                 if (this._settings.backdrop) {
-                    dom.removeEvent(document, 'click.frost.modal', this._documentClickEvent);
+                    dom.remove(this._backdrop);
+                    this._backdrop = null;
                 }
 
-                if (this._settings.keyboard) {
-                    dom.removeEvent(window, 'keydown.frost.modal', this._windowKeyDownEvent);
+                dom.removeAttribute(this._node, 'aria-modal');
+                dom.setAttribute(this._node, 'aria-hidden', true);
+
+                dom.removeClass(this._node, 'show');
+                dom.removeClass(document.body, 'modal-open');
+
+                if (this._activeTarget) {
+                    dom.focus(this._activeTarget);
                 }
 
-                Promise.all([
-                    dom.fadeOut(this._dialog, {
-                        duration: this._settings.duration
-                    }),
-                    dom.dropOut(this._dialog, {
-                        duration: this._settings.duration
-                    }),
-                    dom.fadeOut(this._backdrop, {
-                        duration: this._settings.duration
-                    })
-                ]).then(_ => {
-                    if (this._settings.backdrop) {
-                        dom.remove(this._backdrop);
-                        this._backdrop = null;
-                    }
-
-                    dom.removeAttribute(this._node, 'aria-modal');
-                    dom.setAttribute(this._node, 'aria-hidden', true);
-
-                    dom.removeClass(this._node, 'show');
-                    dom.removeClass(document.body, 'modal-open');
-
-                    dom.triggerEvent(this._node, 'hidden.frost.modal');
-
-                    resolve();
-                }).catch(reject).finally(_ =>
-                    dom.removeDataset([this._dialog, this._backdrop], 'animating')
-                );
+                dom.triggerEvent(this._node, 'hidden.frost.modal');
+            }).catch(_ => { }).finally(_ => {
+                this._animating = false;
             });
         }
 
         /**
          * Show the Modal.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
+         * @param {HTMLElement} [activeTarget] The active target.
          */
-        show() {
-            return new Promise((resolve, reject) => {
-                if (dom.hasClass(this._node, 'show') || dom.getDataset(this._dialog, 'animating')) {
-                    return reject();
+        show(activeTarget) {
+            if (
+                this._animating ||
+                dom.hasClass(this._node, 'show') ||
+                !dom.triggerOne(this._node, 'show.frost.modal')
+            ) {
+                return;
+            }
+
+            if (this._settings.backdrop) {
+                this._backdrop = dom.create('div', {
+                    class: 'modal-backdrop'
+                });
+                dom.append(document.body, this._backdrop);
+            }
+
+            this._activeTarget = activeTarget;
+            this._animating = true;
+
+            dom.addClass(this._node, 'show');
+            dom.addClass(document.body, 'modal-open');
+
+            Promise.all([
+                dom.fadeIn(this._dialog, {
+                    duration: this._settings.duration
+                }),
+                dom.dropIn(this._dialog, {
+                    duration: this._settings.duration
+                }),
+                dom.fadeIn(this._backdrop, {
+                    duration: this._settings.duration
+                })
+            ]).then(_ => {
+                dom.removeAttribute(this._node, 'aria-hidden');
+                dom.setAttribute(this._node, 'aria-modal', true);
+
+                if (this._settings.focus) {
+                    dom.focus(this._node);
                 }
 
-                if (!DOM._triggerEvent(this._node, 'show.frost.modal')) {
-                    return reject();
-                }
-
-                if (this._settings.backdrop) {
-                    this._backdrop = dom.create('div', {
-                        class: 'modal-backdrop'
-                    });
-                    dom.append(document.body, this._backdrop);
-                }
-
-                dom.setDataset([this._dialog, this._backdrop], 'animating', true);
-
-                dom.addClass(this._node, 'show');
-                dom.addClass(document.body, 'modal-open');
-
-                Promise.all([
-                    dom.fadeIn(this._dialog, {
-                        duration: this._settings.duration
-                    }),
-                    dom.dropIn(this._dialog, {
-                        duration: this._settings.duration
-                    })
-                    , dom.fadeIn(this._backdrop, {
-                        duration: this._settings.duration
-                    })
-                ]).then(_ => {
-                    dom.removeAttribute(this._node, 'aria-hidden');
-                    dom.setAttribute(this._node, 'aria-modal', true);
-
-                    if (this._settings.backdrop) {
-                        dom.addEvent(document, 'click.frost.modal', this._documentClickEvent);
-                    }
-
-                    if (this._settings.keyboard) {
-                        dom.addEvent(window, 'keydown.frost.modal', this._windowKeyDownEvent);
-                    }
-
-                    if (this._settings.focus) {
-                        dom.focus(this._node);
-                    }
-
-                    dom.triggerEvent(this._node, 'shown.frost.modal');
-
-                    resolve();
-                }).catch(reject).finally(_ =>
-                    dom.removeDataset([this._dialog, this._backdrop], 'animating')
-                );
+                dom.triggerEvent(this._node, 'shown.frost.modal');
+            }).catch(_ => { }).finally(_ => {
+                this._animating = false;
             });
         }
 
         /**
          * Toggle the Modal.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         toggle() {
-            return dom.hasClass(this._node, 'show') ?
+            dom.hasClass(this._node, 'show') ?
                 this.hide() :
                 this.show();
         }
 
-        static fromToggle(toggle, show = false) {
-            const target = dom.getDataset(toggle, 'target');
-            const element = dom.findOne(target);
-            const modal = dom.hasData(element, 'modal') ?
-                dom.getData(element, 'modal') :
-                new this(element, {
-                    show
-                });
-
-            if (!this._toggles.has(element)) {
-                this._toggles.set(element, []);
-            }
-
-            this._toggles.get(element)
-                .push(toggle);
-
-            dom.addEvent(toggle, 'click.frost.modal', modal._clickEvent);
+        /**
+         * Initialize a Modal.
+         * @param {HTMLElement} node The input node.
+         * @param {object} [settings] The options to create the Modal with.
+         * @param {number} [settings.duration=250] The duration of the animation.
+         * @param {Boolean} [settings.backdrop=true] Whether to display a backdrop for the modal.
+         * @param {Boolean} [settings.focus=true] Whether to set focus on the modal when shown.
+         * @param {Boolean} [settings.show=true] Whether to show the modal on initialization.
+         * @param {Boolean} [settings.keyboard=true] Whether to close the modal when the escape key is pressed.
+         * @returns {Modal} A new Modal object.
+         */
+        static init(node, settings) {
+            return dom.hasData(node, 'modal') ?
+                dom.getData(node, 'modal') :
+                new this(node, settings);
         }
 
     }
 
 
-    // Default Modal options
+    // Modal events
+    dom.addEventDelegate(document, 'click.frost.modal', '[data-toggle="modal"]', e => {
+        e.preventDefault();
+
+        const target = UI.getTarget(e.currentTarget, '.modal');
+        const modal = Modal.init(target);
+        modal.show(e.currentTarget);
+    });
+
+    dom.addEventDelegate(document, 'click.frost.modal', '[data-dismiss="modal"]', e => {
+        e.preventDefault();
+
+        const target = UI.getTarget(e.currentTarget, '.modal');
+        const modal = Modal.init(target);
+        modal.hide();
+    });
+
+    dom.addEvent(document, 'click.frost.modal', e => {
+        const backdrop = dom.findOne('.modal-backdrop');
+
+        if (!backdrop) {
+            return;
+        }
+
+        const targets = dom.find('.modal.show');
+
+        for (const target of targets) {
+            if (target !== e.target && dom.hasDescendent(target, e.target)) {
+                continue;
+            }
+
+            const modal = Modal.init(target);
+
+            if (modal._settings.backdrop === 'static') {
+                continue;
+            }
+
+            modal.hide();
+        }
+    });
+
+    dom.addEvent(document, 'keyup.frost.modal', e => {
+        if (e.key !== 'Escape') {
+            return;
+        }
+
+        const targets = dom.find('.modal.show');
+
+        for (const target of targets) {
+            const modal = Modal.init(target);
+
+            if (!modal._settings.keyboard) {
+                continue;
+            }
+
+            modal.hide();
+        }
+    });
+
+
+    // Modal default options
     Modal.defaults = {
         duration: 250,
         backdrop: true,
         focus: true,
-        show: true,
+        show: false,
         keyboard: true
     };
 
-    Modal._toggles = new WeakMap;
-
-    // Auto-initialize Modal from data-toggle
-    dom.addEventOnce(window, 'load', _ => {
-        const nodes = dom.find('[data-toggle="modal"]');
-
-        for (const node of nodes) {
-            Modal.fromToggle(node);
-        }
-    });
-
-    // Add Modal QuerySet method
+    // Modal QuerySet method
     if (QuerySet) {
         QuerySet.prototype.modal = function(a, ...args) {
-            let options, method;
+            let settings, method;
+
             if (Core.isObject(a)) {
-                options = a;
+                settings = a;
             } else if (Core.isString(a)) {
                 method = a;
             }
 
-            let result;
-            this.each((node, index) => {
+            for (const node of this) {
                 if (!Core.isElement(node)) {
-                    return;
+                    continue;
                 }
 
-                const modal = dom.hasData(node, 'modal') ?
-                    dom.getData(node, 'modal') :
-                    new Modal(node, options);
+                const modal = Modal.init(node, settings);
 
-                if (index) {
-                    return;
+                if (method) {
+                    modal[method](...args);
                 }
+            }
 
-                if (!method) {
-                    result = modal;
-                } else {
-                    result = modal[method](...args);
-                }
-            });
-
-            return result;
+            return this;
         };
     }
 
     UI.Modal = Modal;
-
-
-    /**
-     * Modal Helpers
-     */
-
-    Object.assign(Modal.prototype, {
-
-        /**
-         * Attach events for the Modal.
-         */
-        _events() {
-            this._clickEvent = e => {
-                e.preventDefault();
-
-                this.show().catch(_ => { });
-            };
-
-            this._dismissEvent = e => {
-                e.preventDefault();
-
-                this.hide().catch(_ => { });
-            };
-
-            this._documentClickEvent = e => {
-                if (dom.isSame(e.target, this._dialog) || dom.hasDescendent(this._dialog, e.target)) {
-                    return;
-                }
-
-                this.hide().catch(_ => { });
-            };
-
-            this._windowKeyDownEvent = e => {
-                if (e.key !== 'Escape') {
-                    return;
-                }
-
-                e.preventDefault();
-
-                this.hide().catch(_ => { });
-            };
-
-            if (this._dismiss.length) {
-                dom.addEvent(this._dismiss, 'click.frost.modal', this._dismissEvent);
-            }
-        }
-
-    });
 
 
     /**
@@ -1759,11 +1459,7 @@
          * New Popover constructor.
          * @param {HTMLElement} node The input node.
          * @param {object} [settings] The options to create the Popover with.
-         * @param {object} [settings.classes] The CSS classes to style the popover.
-         * @param {string} [settings.classes.popover=popover] The CSS classes for the popover.
-         * @param {string} [settings.classes.popoverHeader=popover-header] The CSS classes for the popover header.
-         * @param {string} [settings.classes.popoverBody=popover-body] The CSS classes for the popover body.
-         * @param {string} [settings.classes.arrow=arrow] The CSS classes for the arrow.
+         * @param {string} [settings.template] The HTML template for the popover.
          * @param {number} [settings.duration=100] The duration of the animation.
          * @param {Boolean} [settings.enable=true] Whether the popover is enabled.
          * @param {Boolean} [settings.html=false] Whether to allow HTML in the popover.
@@ -1781,7 +1477,7 @@
 
             this._settings = Core.extend(
                 {},
-                Popover.defaults,
+                this.constructor.defaults,
                 dom.getDataset(this._node),
                 settings
             );
@@ -1802,22 +1498,24 @@
          * Destroy the Popover.
          */
         destroy() {
-            this._popper.destroy();
+            if (this._popper) {
+                this._popper.destroy();
+            }
 
             dom.remove(this._popover);
 
             if (this._triggers.includes('hover')) {
-                dom.removeEvent(this._node, 'mouseover.frost.popover', this._hoverEvent);
-                dom.removeEvent(this._node, 'mouseout.frost.popover', this._hideEvent);
+                dom.removeEvent(this._node, 'mouseover.frost.popover');
+                dom.removeEvent(this._node, 'mouseout.frost.popover');
             }
 
             if (this._triggers.includes('focus')) {
-                dom.removeEvent(this._node, 'focus.frost.popover', this._focusEvent);
-                dom.removeEvent(this._node, 'blur.frost.popover', this._hideEvent);
+                dom.removeEvent(this._node, 'focus.frost.popover');
+                dom.removeEvent(this._node, 'blur.frost.popover');
             }
 
             if (this._triggers.includes('click')) {
-                dom.removeEvent(this._node, 'click.frost.popover', this._clickEvent);
+                dom.removeEvent(this._node, 'click.frost.popover');
             }
 
             dom.removeData(this._node, 'popover', this);
@@ -1839,84 +1537,67 @@
 
         /**
          * Hide the Popover.
-         * @returns {Promise}
          */
         hide() {
-            return new Promise((resolve, reject) => {
-                if (dom.getDataset(this._popover, 'animating')) {
-                    dom.stop(this._tooltip);
-                }
+            if (this._animating) {
+                dom.stop(this._popover);
+            }
 
-                if (!dom.isConnected(this._popover)) {
-                    return reject();
-                }
+            if (
+                !dom.isConnected(this._popover) ||
+                !dom.triggerOne(this._node, 'hide.frost.popover')
+            ) {
+                return;
+            }
 
-                if (!DOM._triggerEvent(this._node, 'hide.frost.popover')) {
-                    return reject();
-                }
+            this._animating = true;
 
-                dom.setDataset(this._popover, 'animating', true);
-
-                dom.fadeOut(this._popover, {
-                    duration: this._settings.duration
-                }).then(_ => {
-                    dom.removeClass(this._popover, 'show');
-
-                    this._popper.destroy();
-
-                    dom.detach(this._popover);
-
-                    dom.triggerEvent(this._node, 'hidden.frost.popover');
-
-                    resolve();
-                }).catch(reject).finally(_ =>
-                    dom.removeDataset(this._popover, 'animating')
-                );
+            dom.fadeOut(this._popover, {
+                duration: this._settings.duration
+            }).then(_ => {
+                this._popper.destroy();
+                dom.removeClass(this._popover, 'show');
+                dom.detach(this._popover);
+                dom.triggerEvent(this._node, 'hidden.frost.popover');
+            }).catch(_ => { }).finally(_ => {
+                this._animating = false;
             });
         }
 
         /**
          * Show the Popover.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         show() {
-            return new Promise((resolve, reject) => {
-                if (dom.getDataset(this._popover, 'animating')) {
-                    dom.stop(this._tooltip);
-                }
+            if (this._animating) {
+                dom.stop(this._popover);
+            }
 
-                if (dom.isConnected(this._popover)) {
-                    return reject();
-                }
+            if (
+                dom.isConnected(this._popover) ||
+                !dom.triggerOne(this._node, 'show.frost.popover')
+            ) {
+                return;
+            }
 
-                if (!DOM._triggerEvent(this._node, 'show.frost.popover')) {
-                    return reject();
-                }
+            this._show();
 
-                this._show();
+            this._animating = true;
+            dom.addClass(this._popover, 'show');
 
-                dom.setDataset(this._popover, 'animating', true);
-
-                dom.addClass(this._popover, 'show');
-
-                dom.fadeIn(this._popover, {
-                    duration: this._settings.duration
-                }).then(_ => {
-                    dom.triggerEvent(this._node, 'shown.frost.popover')
-
-                    resolve();
-                }).catch(reject).finally(_ =>
-                    dom.removeDataset(this._popover, 'animating')
-                );
+            dom.fadeIn(this._popover, {
+                duration: this._settings.duration
+            }).then(_ => {
+                dom.triggerEvent(this._node, 'shown.frost.popover');
+            }).catch(_ => { }).finally(_ => {
+                this._animating = false;
             });
         }
 
         /**
          * Toggle the Popover.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         toggle() {
-            return dom.isConnected(this._popover) ?
+            dom.isConnected(this._popover) ?
                 this.hide() :
                 this.show();
         }
@@ -1925,77 +1606,35 @@
          * Update the Popover position.
          */
         update() {
-            this._popper.update();
-        }
-
-    }
-
-
-    // Default Popover options
-    Popover.defaults = {
-        classes: {
-            popover: 'popover',
-            popoverHeader: 'popover-header',
-            popoverBody: 'popover-body',
-            arrow: 'arrow'
-        },
-        duration: 100,
-        enable: true,
-        html: false,
-        sanitize: input => dom.sanitize(input),
-        trigger: 'click',
-        placement: 'auto',
-        position: 'center',
-        fixed: false,
-        spacing: 3,
-        minContact: false
-    };
-
-    // Auto-initialize Popover from data-toggle
-    dom.addEventOnce(window, 'load', _ => {
-        const nodes = dom.find('[data-toggle="popover"]');
-
-        for (const node of nodes) {
-            new Popover(node);
-        }
-    });
-
-    // Add Popover QuerySet method
-    if (QuerySet) {
-        QuerySet.prototype.popover = function(a, ...args) {
-            let options, method;
-            if (Core.isObject(a)) {
-                options = a;
-            } else if (Core.isString(a)) {
-                method = a;
+            if (this._popper) {
+                this._popper.update();
             }
+        }
 
-            let result;
-            this.each((node, index) => {
-                if (!Core.isElement(node)) {
-                    return;
-                }
+        /**
+         * Initialize a Popover.
+         * @param {HTMLElement} node The input node.
+         * @param {object} [settings] The options to create the Popover with.
+         * @param {string} [settings.template] The HTML template for the popover.
+         * @param {number} [settings.duration=100] The duration of the animation.
+         * @param {Boolean} [settings.enable=true] Whether the popover is enabled.
+         * @param {Boolean} [settings.html=false] Whether to allow HTML in the popover.
+         * @param {function} [settings.sanitize] The HTML sanitization function.
+         * @param {string} [settings.trigger=click] The events to trigger the popover.
+         * @param {string} [settings.placement=auto] The placement of the popover relative to the toggle.
+         * @param {string} [settings.position=center] The position of the popover relative to the toggle.
+         * @param {Boolean} [settings.fixed=false] Whether the popover position is fixed.
+         * @param {number} [settings.spacing=7] The spacing between the popover and the toggle.
+         * @param {number} [settings.minContact=false] The minimum amount of contact the popover must make with the toggle.
+         * @returns {Popover} A new Popover object.
+         */
+        static init(node, settings) {
+            return dom.hasData(node, 'popover') ?
+                dom.getData(node, 'popover') :
+                new this(node, settings);
+        }
 
-                const popover = dom.hasData(node, 'popover') ?
-                    dom.getData(node, 'popover') :
-                    new Popover(node, options);
-
-                if (index) {
-                    return;
-                }
-
-                if (!method) {
-                    result = popover;
-                } else {
-                    result = popover[method](...args);
-                }
-            });
-
-            return result;
-        };
     }
-
-    UI.Popover = Popover;
 
 
     /**
@@ -2008,54 +1647,52 @@
          * Attach events for the Popover.
          */
         _events() {
-            this._hideEvent = _ => {
-                if (!this._enabled || !dom.isConnected(this._tooltip)) {
-                    return;
-                }
-
-                this.hide().catch(_ => { });
-            };
-
-            this._hoverEvent = _ => {
-                if (!this._enabled) {
-                    return;
-                }
-
-                dom.addEventOnce(this._node, 'mouseout.frost.popover', this._hideEvent);
-
-                this.show().catch(_ => { });
-            };
-
-            this._focusEvent = _ => {
-                if (!this._enabled) {
-                    return;
-                }
-
-                dom.addEventOnce(this._node, 'blur.frost.popover', this._hideEvent);
-
-                this.show().catch(_ => { });
-            };
-
-            this._clickEvent = e => {
-                e.preventDefault();
-
-                if (!this._enabled) {
-                    return;
-                }
-
-                this.toggle().catch(_ => { });
-            };
-
             if (this._triggers.includes('hover')) {
-                dom.addEvent(this._node, 'mouseover.frost.popover', this._hoverEvent);
+                dom.addEvent(this._node, 'mouseover.frost.popover', _ => {
+                    if (!this._enabled) {
+                        return;
+                    }
+
+                    this.show();
+                });
+
+                dom.addEvent(this._node, 'mouseout.frost.popover', _ => {
+                    if (!this._enabled) {
+                        return;
+                    }
+
+                    this.hide();
+                });
             }
 
             if (this._triggers.includes('focus')) {
-                dom.addEvent(this._node, 'focus.frost.popover', this._focusEvent);
+                dom.addEvent(this._node, 'focus.frost.popover', _ => {
+                    if (!this._enabled) {
+                        return;
+                    }
+
+                    this.show();
+                });
+
+                dom.addEvent(this._node, 'blur.frost.popover', _ => {
+                    if (!this._enabled) {
+                        return;
+                    }
+
+                    this.hide();
+                });
             }
 
             if (this._triggers.includes('click')) {
-                dom.addEvent(this._node, 'click.frost.popover', this._clickEvent);
+                dom.addEvent(this._node, 'click.frost.popover', e => {
+                    e.preventDefault();
+
+                    if (!this._enabled) {
+                        return;
+                    }
+
+                    this.toggle();
+                });
             }
         },
 
@@ -2063,29 +1700,10 @@
          * Render the Popover element.
          */
         _render() {
-            this._popover = dom.create('div', {
-                class: this._settings.classes.popover,
-                attributes: {
-                    role: 'tooltip'
-                }
-            });
-
-            this._arrow = dom.create('div', {
-                class: this._settings.classes.arrow
-            });
-
-
-            this._popoverHeader = dom.create('h3', {
-                class: this._settings.classes.popoverHeader
-            });
-
-            this._popoverBody = dom.create('div', {
-                class: this._settings.classes.popoverBody
-            });
-
-            dom.append(this._popover, this._arrow);
-            dom.append(this._popover, this._popoverHeader);
-            dom.append(this._popover, this._popoverBody);
+            this._popover = dom.parseHTML(this._settings.template).shift();
+            this._arrow = dom.find('.popover-arrow', this._popover);
+            this._popoverHeader = dom.find('.popover-header', this._popover);
+            this._popoverBody = dom.find('.popover-body', this._popover);
         },
 
         /**
@@ -2139,6 +1757,55 @@
     });
 
 
+    // Popover default options
+    Popover.defaults = {
+        template: '<div class="popover" role="tooltip">' +
+            '<div class="popover-arrow"></div>' +
+            '<h3 class="popover-header"></h3>' +
+            '<div class="popover-body"></div>' +
+            '</div>',
+        duration: 100,
+        enable: true,
+        html: false,
+        sanitize: input => dom.sanitize(input),
+        trigger: 'click',
+        placement: 'auto',
+        position: 'center',
+        fixed: false,
+        spacing: 3,
+        minContact: false
+    };
+
+    // Add Popover QuerySet method
+    if (QuerySet) {
+        QuerySet.prototype.popover = function(a, ...args) {
+            let settings, method;
+
+            if (Core.isObject(a)) {
+                settings = a;
+            } else if (Core.isString(a)) {
+                method = a;
+            }
+
+            for (const node of this) {
+                if (!Core.isElement(node)) {
+                    continue;
+                }
+
+                const popover = Popover.init(node, settings);
+
+                if (method) {
+                    popover[method](...args);
+                }
+            }
+
+            return this;
+        };
+    }
+
+    UI.Popover = Popover;
+
+
     /**
      * Popper Class
      * @class
@@ -2165,16 +1832,14 @@
 
             this._settings = Core.extend(
                 {},
-                Popper.defaults,
+                this.constructor.defaults,
                 dom.getDataset(this._node),
                 settings
             );
 
             this._fixed = dom.isFixed(this._settings.reference);
-
-            this._scrollParent = Popper.getScrollParent(this._node);
-
-            this._relativeParent = Popper.getRelativeParent(this._node);
+            this._scrollParent = this.constructor.getScrollParent(this._node);
+            this._relativeParent = this.constructor.getRelativeParent(this._node);
 
             dom.setStyle(this._node, {
                 position: this._fixed ?
@@ -2184,7 +1849,15 @@
                 left: 0
             });
 
-            this._events();
+            PopperSet.add(this);
+
+            if (this._scrollParent) {
+                PopperSet.addOverflow(this._scrollParent, this);
+            }
+
+            dom.addEvent(this._node, 'remove.frost.popper', _ => {
+                this.destroy();
+            });
 
             this.update();
 
@@ -2195,11 +1868,10 @@
          * Destroy the Popper.
          */
         destroy() {
-            dom.removeEvent(window, 'resize.frost.popper', this._updateEvent);
-            dom.removeEvent(window, 'scroll.frost.popper', this._updateEvent);
+            PopperSet.remove(this);
 
             if (this._scrollParent) {
-                dom.removeEvent(this._scrollParent, 'scroll.frost.popper', this._updateEvent);
+                PopperSet.removeOverflow(this._scrollParent, this);
             }
 
             dom.removeData(this._node, 'popper');
@@ -2216,14 +1888,12 @@
             // calculate boxes
             const nodeBox = dom.rect(this._node, !this._fixed);
             const referenceBox = dom.rect(this._settings.reference, !this._fixed);
-            const windowBox = Popper.windowContainer(this._fixed);
+            const windowBox = this.constructor.windowContainer(this._fixed);
 
             // check object could be seen
-            if (Popper.isNodeHidden(nodeBox, referenceBox, windowBox, this._settings.spacing)) {
+            if (this.constructor.isNodeHidden(nodeBox, referenceBox, windowBox, this._settings.spacing)) {
                 return;
             }
-
-            dom.triggerEvent(this._node, 'update.frost.popper');
 
             const scrollBox = this._scrollParent ?
                 dom.rect(this._scrollParent, !this._fixed) :
@@ -2261,7 +1931,7 @@
             // get optimal placement
             const placement = this._settings.fixed ?
                 this._settings.placement :
-                Popper.getPopperPlacement(
+                this.constructor.getPopperPlacement(
                     nodeBox,
                     referenceBox,
                     minimumBox,
@@ -2275,7 +1945,7 @@
             // get auto position
             const position = this._settings.position !== 'auto' ?
                 this._settings.position :
-                Popper.getPopperPosition(
+                this.constructor.getPopperPosition(
                     nodeBox,
                     referenceBox,
                     minimumBox,
@@ -2300,17 +1970,17 @@
             }
 
             // offset for placement
-            Popper.adjustPlacement(offset, nodeBox, referenceBox, placement, this._settings.spacing);
+            this.constructor.adjustPlacement(offset, nodeBox, referenceBox, placement, this._settings.spacing);
 
             // offset for position
-            Popper.adjustPosition(offset, nodeBox, referenceBox, placement, position);
+            this.constructor.adjustPosition(offset, nodeBox, referenceBox, placement, position);
 
             // compensate for margins
             offset.x -= parseInt(dom.css(this._node, 'margin-left'));
             offset.y -= parseInt(dom.css(this._node, 'margin-top'));
 
             // corrective positioning
-            Popper.adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, this._settings.minContact);
+            this.constructor.adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, this._settings.minContact);
 
             // compensate for scroll parent
             if (this._scrollParent) {
@@ -2334,51 +2004,7 @@
                 const newNodeBox = dom.rect(this._node, !this._fixed);
                 this._updateArrow(newNodeBox, referenceBox, placement, position);
             }
-
-            dom.triggerEvent(this._node, 'updated.frost.popper');
         }
-
-    }
-
-
-    // Default Popper options
-    Popper.defaults = {
-        reference: null,
-        container: null,
-        arrow: null,
-        placement: 'bottom',
-        position: 'center',
-        fixed: false,
-        spacing: 0,
-        minContact: false,
-        useGpu: true
-    };
-
-    Popper._overflowTypes = ['overflow', 'overflowX', 'overflowY'];
-    Popper._overflowValues = ['auto', 'scroll'];
-
-    UI.Popper = Popper;
-
-
-    /**
-     * Popper Helpers
-     */
-
-    Object.assign(Popper.prototype, {
-
-        /**
-         * Attach events for the Popper.
-         */
-        _events() {
-            this._updateEvent = Core.animation(_ => this.update());
-
-            dom.addEvent(window, 'resize.frost.popper', this._updateEvent);
-            dom.addEvent(window, 'scroll.frost.popper', this._updateEvent);
-
-            if (this._scrollParent) {
-                dom.addEvent(this._scrollParent, 'scroll.frost.popper', this._updateEvent);
-            }
-        },
 
         /**
          * Update the position of the arrow for the actual placement and position.
@@ -2436,7 +2062,97 @@
             dom.setStyle(this._settings.arrow, arrowStyles);
         }
 
-    });
+    }
+
+
+    /**
+     * PopperSet Class
+     * @class
+     */
+    class PopperSet {
+
+        /**
+         * Add a Popper to the set.
+         * @param {Popper} popper The popper to add.
+         */
+        static add(popper) {
+            this._poppers.push(popper);
+
+            if (this._running) {
+                return;
+            }
+
+            dom.addEvent(
+                window,
+                'resize.frost.popper scroll.frost.popper',
+                Core.animation(_ => {
+                    for (const popper of this._poppers) {
+                        popper.update();
+                    }
+                })
+            );
+            this._running = true;
+        }
+
+        /**
+         * Add a Popper to a scrolling parent set.
+         * @param {HTMLElement} scrollParent The scrolling container element.
+         * @param {Popper} popper The popper to add.
+         */
+        static addOverflow(scrollParent, popper) {
+            if (!this._popperOverflows.has(scrollParent)) {
+                this._popperOverflows.set(scrollParent, []);
+                dom.addEvent(
+                    scrollParent,
+                    'scroll.frost.popper',
+                    Core.animation(_ => {
+                        for (const popper of this._popperOverflows.get(scrollParent)) {
+                            popper.update();
+                        }
+                    })
+                );
+            }
+
+            this._popperOverflows.get(scrollParent).push(popper);
+        }
+
+        /**
+         * Remove a Popper from the set.
+         * @param {Popper} popper The popper to remove.
+         */
+        static remove(popper) {
+            this._poppers = this._poppers.filter(oldPopper => oldPopper !== popper);
+
+            if (this._poppers.length) {
+                return;
+            }
+
+            dom.removeEvent(window, 'resize.frost.popper scroll.frost.popper');
+            this._running = false;
+        }
+
+        /**
+         * Remove a Popper from a scrolling parent set.
+         * @param {HTMLElement} scrollParent The scrolling container element.
+         * @param {Popper} popper The popper to remove.
+         */
+        static removeOverflow(scrollParent, popper) {
+            if (!this._popperOverflows.has(scrollParent)) {
+                return;
+            }
+
+            const poppers = this._popperOverflows.get(scrollParent).filter(oldPopper => oldPopper !== popper);
+
+            if (poppers.length) {
+                this._popperOverflows.set(scrollParent, poppers);
+                return;
+            }
+
+            this._popperOverflows.delete(scrollParent);
+            dom.removeEvent(scrollParent, 'scroll.frost.popper');
+        }
+
+    }
 
 
     /**
@@ -2536,7 +2252,7 @@
         },
 
         /**
-         * Adjust the offset for the placement.
+         * Adjust the offset for the position.
          * @param {object} offset The offset object.
          * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
          * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
@@ -2774,8 +2490,8 @@
             return dom.closest(
                 node,
                 parent =>
-                    !!this._overflowTypes.find(overflow =>
-                        !!this._overflowValues.find(value =>
+                    !!['overflow', 'overflowX', 'overflowY'].find(overflow =>
+                        !!['auto', 'scroll'].find(value =>
                             new RegExp(value)
                                 .test(
                                     dom.css(parent, overflow)
@@ -2831,6 +2547,72 @@
 
     });
 
+    // Popper default options
+    Popper.defaults = {
+        reference: null,
+        container: null,
+        arrow: null,
+        placement: 'bottom',
+        position: 'center',
+        fixed: false,
+        spacing: 0,
+        minContact: false,
+        useGpu: true
+    };
+
+    PopperSet._poppers = [];
+    PopperSet._popperOverflows = new Map;
+
+    UI.Popper = Popper;
+    UI.PopperSet = PopperSet;
+
+
+    // Ripple events
+    dom.addEventDelegate(document, 'mousedown.frost.ripple', '.ripple', e => {
+        const pos = dom.position(e.currentTarget, true);
+
+        UI.ripple(e.currentTarget, e.pageX - pos.x, e.pageY - pos.y);
+    });
+
+
+    /**
+     * Create a ripple effect on a node.
+     * @param {HTMLElement} node The input node.
+     * @param {number} x The x position to start the ripple from.
+     * @param {number} y The y position to start the ripple from.
+     * @param {number} [duration=500] The duration of the ripple.
+     */
+    UI.ripple = (node, x, y, duration = 500) => {
+        const width = dom.width(node);
+        const height = dom.height(node);
+        const scaleMultiple = Math.max(width, height);
+
+        const ripple = dom.create('span', {
+            class: 'ripple-effect',
+            style: {
+                left: x,
+                top: y
+            }
+        });
+        dom.append(node, ripple);
+
+        dom.animate(
+            ripple,
+            (node, progress) => {
+                dom.setStyle(node, {
+                    scale: Math.floor(progress * scaleMultiple),
+                    opacity: 1 - progress
+                });
+            },
+            {
+                duration
+            }
+        ).finally(_ => {
+            dom.remove(ripple);
+        })
+    };
+
+
     /**
      * Tab Class
      * @class
@@ -2849,19 +2631,14 @@
 
             this._settings = Core.extend(
                 {},
-                Tab.defaults,
+                this.constructor.defaults,
                 dom.getDataset(this._node),
                 settings
             );
 
-            if (!this._settings.target) {
-                this._settings.target = dom.getAttribute(this._node, 'href');
-            }
-
-            this._target = dom.findOne(this._settings.target);
+            const selector = UI.getTargetSelector(this._node);
+            this._target = dom.findOne(selector);
             this._siblings = dom.siblings(this._node);
-
-            this._events();
 
             dom.setData(this._node, 'tab', this);
         }
@@ -2870,162 +2647,150 @@
          * Destroy the Tab.
          */
         destroy() {
-            dom.removeEvent(this._node, 'click.frost.tab', this._clickEvent);
-
             dom.removeData(this._node, 'tab');
         }
 
         /**
          * Hide the current Tab.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         hide() {
-            return new Promise((resolve, reject) => {
-                if (!dom.hasClass(this._target, 'active') || dom.getDataset(this._target, 'animating')) {
-                    return reject();
-                }
+            if (
+                this._animating ||
+                !dom.hasClass(this._target, 'active') ||
+                !dom.triggerOne(this._node, 'hide.frost.tab')
+            ) {
+                return;
+            }
 
-                if (!DOM._triggerEvent(this._node, 'hide.frost.tab')) {
-                    return reject();
-                }
+            this._animating = true;
 
-                dom.setDataset(this._target, 'animating', true);
-
-                dom.fadeOut(this._target, {
-                    duration: this._settings.duration
-                }).then(_ => {
-                    dom.removeClass(this._target, 'active');
-                    dom.removeClass(this._node, 'active');
-                    dom.setAttribute(this._node, 'aria-selected', false);
-
-                    dom.triggerEvent(this._node, 'hidden.frost.tab');
-
-                    resolve();
-                }).catch(reject).finally(_ =>
-                    dom.removeDataset(this._target, 'animating')
-                );
+            dom.fadeOut(this._target, {
+                duration: this._settings.duration
+            }).then(_ => {
+                dom.removeClass(this._target, 'active');
+                dom.removeClass(this._node, 'active');
+                dom.setAttribute(this._node, 'aria-selected', false);
+                dom.triggerEvent(this._node, 'hidden.frost.tab');
+            }).catch(_ => { }).finally(_ => {
+                this._animating = false;
             });
         }
 
         /**
          * Hide any active Tabs, and show the current Tab.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         show() {
-            return new Promise((resolve, reject) => {
-                if (dom.hasClass(this._target, 'active') || dom.getDataset(this._target, 'animating')) {
-                    return reject();
+            if (
+                this._animating ||
+                dom.hasClass(this._target, 'active') ||
+                !dom.triggerOne(this._node, 'show.frost.tab')
+            ) {
+                return;
+            }
+
+            const active = this._siblings.find(sibling =>
+                dom.hasClass(sibling, 'active')
+            );
+
+            let activeTab;
+            if (active) {
+                activeTab = this.constructor.init(active);
+                if (activeTab._animating) {
+                    return;
                 }
+            }
 
-                const activeTab = this._siblings.find(sibling => dom.hasClass(sibling, 'active'));
+            if (!dom.triggerOne(this._node, 'show.frost.tab')) {
+                return;
+            }
 
-                if (activeTab && !dom.hasData(activeTab, 'tab')) {
-                    return reject();
-                }
+            const show = _ => {
+                this._animating = true;
+                dom.addClass(this._target, 'active');
+                dom.addClass(this._node, 'active');
 
-                (activeTab ?
-                    dom.getData(activeTab, 'tab').hide() :
-                    Promise.resolve()
-                ).then(_ => {
-                    if (!DOM._triggerEvent(this._node, 'show.frost.tab')) {
-                        return reject();
-                    }
-
-                    dom.setDataset(this._target, 'animating', true);
-
-                    dom.addClass(this._target, 'active');
-                    dom.addClass(this._node, 'active');
-
-                    return dom.fadeIn(this._target, {
-                        duration: this._settings.duration
-                    });
+                dom.fadeIn(this._target, {
+                    duration: this._settings.duration
                 }).then(_ => {
                     dom.setAttribute(this._node, 'aria-selected', true);
-
                     dom.triggerEvent(this._node, 'shown.frost.tab');
+                }).catch(_ => { }).finally(_ => {
+                    this._animating = false;
+                });
+            };
 
-                    resolve();
-                }).catch(reject).finally(_ =>
-                    dom.removeDataset(this._target, 'animating')
-                );
+            if (!activeTab) {
+                return show();
+            }
+
+            if (!dom.triggerOne(active, 'hide.frost.tab')) {
+                return;
+            }
+
+            dom.addEventOnce(active, 'hidden.frost.tab', _ => {
+                show();
             });
+
+            activeTab.hide();
+        }
+
+        /**
+         * Initialize a Tab.
+         * @param {HTMLElement} node The input node.
+         * @param {object} [settings] The options to create the Tab with.
+         * @param {number} [settings.duration=100] The duration of the animation.
+         * @returns {Tab} A new Tab object.
+         */
+        static init(node, settings) {
+            return dom.hasData(node, 'tab') ?
+                dom.getData(node, 'tab') :
+                new this(node, settings);
         }
 
     }
 
 
-    // Default Tab options
+    // Tab default options
     Tab.defaults = {
         duration: 100
     };
 
-    // Auto-initialize Tab from data-toggle
-    dom.addEventOnce(window, 'load', _ => {
-        const nodes = dom.find('[data-toggle="tab"]');
+    // Tab events
+    dom.addEventDelegate(document, 'click.frost.tab', '[data-toggle="tab"]', e => {
+        e.preventDefault();
 
-        for (const node of nodes) {
-            new Tab(node);
-        }
+        const tab = Tab.init(e.currentTarget);
+        tab.show();
     });
 
-    // Add Tab QuerySet method
+    // Tab QuerySet method
     if (QuerySet) {
         QuerySet.prototype.tab = function(a, ...args) {
-            let options, method;
+            let settings, method;
+
             if (Core.isObject(a)) {
-                options = a;
+                settings = a;
             } else if (Core.isString(a)) {
                 method = a;
             }
 
-            let result;
-            this.each((node, index) => {
+            for (const node of this) {
                 if (!Core.isElement(node)) {
-                    return;
+                    continue;
                 }
 
-                const tab = dom.hasData(node, 'tab') ?
-                    dom.getData(node, 'tab') :
-                    new Tab(node, options);
+                const tab = Tab.init(node, settings);
 
-                if (index) {
-                    return;
+                if (method) {
+                    tab[method](...args);
                 }
+            }
 
-                if (!method) {
-                    result = tab;
-                } else {
-                    result = tab[method](...args);
-                }
-            });
-
-            return result;
+            return this;
         };
     }
 
     UI.Tab = Tab;
-
-
-    /**
-     * Tab Helpers
-     */
-
-    Object.assign(Tab.prototype, {
-
-        /**
-         * Attach events for the Tab.
-         */
-        _events() {
-            this._clickEvent = e => {
-                e.preventDefault();
-
-                this.show().catch(_ => { });
-            };
-
-            dom.addEvent(this._node, 'click.frost.tab', this._clickEvent);
-        }
-
-    });
 
 
     /**
@@ -3048,20 +2813,14 @@
 
             this._settings = Core.extend(
                 {},
-                Toast.defaults,
+                this.constructor.defaults,
                 dom.getDataset(this._node),
                 settings
             );
 
-            this._dismiss = dom.find('[data-dismiss="toast"]', this._node);
-
-            this._events();
-
             if (this._settings.autohide) {
                 setTimeout(
-                    _ => {
-                        this.hide().catch(_ => { });
-                    },
+                    _ => this.hide(),
                     this._settings.delay
                 );
             }
@@ -3073,77 +2832,76 @@
          * Destroy the Toast.
          */
         destroy() {
-            if (this._dismiss.length) {
-                dom.removeEvent(this._dismiss, 'click.frost.toast', this._dismissEvent);
-            }
-
             dom.removeData(this._node, 'toast');
         }
 
         /**
          * Hide the Toast.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         hide() {
-            return new Promise((resolve, reject) => {
-                if (!dom.isVisible(this._node) || dom.getDataset(this._node, 'animating')) {
-                    return reject();
-                }
+            if (
+                this._animating ||
+                !dom.isVisible(this._node) ||
+                !dom.triggerOne(this._node, 'hide.frost.toast')
+            ) {
+                return;
+            }
 
-                if (!DOM._triggerEvent(this._node, 'hide.frost.toast')) {
-                    return reject();
-                }
+            this._animating = true;
 
-                dom.setDataset(this._node, 'animating', true);
-
-                return dom.fadeOut(this._node, {
-                    duration: this._settings.duration
-                }).then(_ => {
-                    dom.hide(this._node);
-
-                    dom.triggerEvent(this._node, 'hidden.frost.toast');
-
-                    resolve();
-                }).catch(reject).finally(_ =>
-                    dom.removeDataset(this._node, 'animating')
-                );
+            dom.fadeOut(this._node, {
+                duration: this._settings.duration
+            }).then(_ => {
+                dom.hide(this._node);
+                dom.triggerEvent(this._node, 'hidden.frost.toast');
+            }).catch(_ => { }).finally(_ => {
+                this._animating = false;
             });
         }
 
         /**
          * Show the Toast.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         show() {
-            return new Promise((resolve, reject) => {
-                if (dom.isVisible(this._node) || dom.getDataset(this._node, 'animating')) {
-                    return reject();
-                }
+            if (
+                this._animating ||
+                dom.isVisible(this._node) ||
+                !dom.triggerOne(this._node, 'show.frost.toast')
+            ) {
+                return;
+            }
 
-                if (!DOM._triggerEvent(this._node, 'show.frost.toast')) {
-                    return reject();
-                }
+            this._animating = true;
+            dom.show(this._node);
 
-                dom.setDataset(this._node, 'animating', true);
-
-                dom.show(this._node);
-
-                return dom.fadeIn(this._node, {
-                    duration: this._settings.duration
-                }).then(_ => {
-                    dom.triggerEvent(this._node, 'shown.frost.toast');
-
-                    resolve();
-                }).catch(reject).finally(_ =>
-                    dom.removeDataset(this._node, 'animating')
-                );
+            dom.fadeIn(this._node, {
+                duration: this._settings.duration
+            }).then(_ => {
+                dom.triggerEvent(this._node, 'shown.frost.toast');
+            }).catch(_ => { }).finally(_ => {
+                this._animating = false;
             });
+        }
+
+        /**
+         * Initialize a Toast.
+         * @param {HTMLElement} node The input node.
+         * @param {object} [settings] The options to create the Toast with.
+         * @param {Boolean} [autohide=true] Whether to hide the toast after initialization.
+         * @param {number} [settings.delay=5000] The duration to wait before hiding the toast.
+         * @param {number} [settings.duration=100] The duration of the animation.
+         * @returns {Toast} A new Toast object.
+         */
+        static init(node, settings) {
+            return dom.hasData(node, 'toast') ?
+                dom.getData(node, 'toast') :
+                new this(node, settings);
         }
 
     }
 
 
-    // Default Toast options
+    // Toast default options
     Toast.defaults = {
         autohide: true,
         delay: 5000,
@@ -3151,75 +2909,42 @@
     };
 
     // Auto-initialize Toast from data-toggle
-    dom.addEventOnce(window, 'load', _ => {
-        const nodes = dom.find('[data-toggle="toast"]');
+    dom.addEventDelegate(document, 'click.frost.toast', '[data-dismiss="toast"]', e => {
+        e.preventDefault();
 
-        for (const node of nodes) {
-            new Toast(node);
-        }
+        const target = UI.getTarget(e.currentTarget, '.toast');
+        const toast = Toast.init(target, { autohide: false });
+        toast.hide();
     });
 
-    // Add Toast QuerySet method
+    // Toast QuerySet method
     if (QuerySet) {
         QuerySet.prototype.toast = function(a, ...args) {
-            let options, method;
+            let settings, method;
+
             if (Core.isObject(a)) {
-                options = a;
+                settings = a;
             } else if (Core.isString(a)) {
                 method = a;
             }
 
-            let result;
-            this.each((node, index) => {
+            for (const node of this) {
                 if (!Core.isElement(node)) {
-                    return;
+                    continue;
                 }
 
-                const toast = dom.hasData(node, 'toast') ?
-                    dom.getData(node, 'toast') :
-                    new Toast(node, options);
+                const toast = Toast.init(node, settings);
 
-                if (index) {
-                    return;
+                if (method) {
+                    toast[method](...args);
                 }
+            }
 
-                if (!method) {
-                    result = toast;
-                } else {
-                    result = toast[method](...args);
-                }
-            });
-
-            return result;
+            return this;
         };
     }
 
     UI.Toast = Toast;
-
-
-    /**
-     * Toast Helpers
-     */
-
-    Object.assign(Toast.prototype, {
-
-        /**
-         * Attach events for the Toast.
-         */
-        _events() {
-            this._dismissEvent = e => {
-                e.preventDefault();
-
-                this.hide().catch(_ => { });
-            };
-
-            if (this._dismiss.length) {
-                dom.addEvent(this._dismiss, 'click.frost.toast', this._dismissEvent);
-            }
-
-        }
-
-    });
 
 
     /**
@@ -3232,10 +2957,7 @@
          * New Tooltip constructor.
          * @param {HTMLElement} node The input node.
          * @param {object} [settings] The options to create the Tooltip with.
-         * @param {object} [settings.classes] The CSS classes to style the tooltip.
-         * @param {string} [settings.classes.tooltip=tooltip] The CSS classes for the tooltip.
-         * @param {string} [settings.classes.tooltipInner=tooltip-inner] The CSS classes for the tooltip inner-element.
-         * @param {string} [settings.classes.arrow=arrow] The CSS classes for the arrow.
+         * @param {string} [settings.template] The HTML template for the tooltip.
          * @param {number} [settings.duration=100] The duration of the animation.
          * @param {Boolean} [settings.enable=true] Whether the tooltip is enabled.
          * @param {Boolean} [settings.html=false] Whether to allow HTML in the tooltip.
@@ -3253,7 +2975,7 @@
 
             this._settings = Core.extend(
                 {},
-                Tooltip.defaults,
+                this.constructor.defaults,
                 dom.getDataset(this._node),
                 settings
             );
@@ -3274,22 +2996,24 @@
          * Destroy the Tooltip.
          */
         destroy() {
-            this._popper.destroy();
+            if (this._popper) {
+                this._popper.destroy();
+            }
 
             dom.remove(this._tooltip);
 
             if (this._triggers.includes('hover')) {
-                dom.removeEvent(this._node, 'mouseover.frost.tooltip', this._hoverEvent);
-                dom.removeEvent(this._node, 'mouseout.frost.tooltip', this._hideEvent);
+                dom.removeEvent(this._node, 'mouseover.frost.tooltip');
+                dom.removeEvent(this._node, 'mouseout.frost.tooltip');
             }
 
             if (this._triggers.includes('focus')) {
-                dom.removeEvent(this._node, 'focus.frost.tooltip', this._focusEvent);
-                dom.removeEvent(this._node, 'blur.frost.tooltip', this._hideEvent);
+                dom.removeEvent(this._node, 'focus.frost.tooltip');
+                dom.removeEvent(this._node, 'blur.frost.tooltip');
             }
 
             if (this._triggers.includes('click')) {
-                dom.removeEvent(this._node, 'click.frost.tooltip', this._clickEvent);
+                dom.removeEvent(this._node, 'click.frost.tooltip');
             }
 
             dom.removeData(this._node, 'tooltip', this);
@@ -3311,84 +3035,67 @@
 
         /**
          * Hide the Tooltip.
-         * @returns {Promise}
          */
         hide() {
-            return new Promise((resolve, reject) => {
-                if (dom.getDataset(this._tooltip, 'animating')) {
-                    dom.stop(this._tooltip);
-                }
+            if (this._animating) {
+                dom.stop(this._tooltip);
+            }
 
-                if (!dom.isConnected(this._tooltip)) {
-                    return reject();
-                }
+            if (
+                !dom.isConnected(this._tooltip) ||
+                !dom.triggerOne(this._node, 'hide.frost.tooltip')
+            ) {
+                return;
+            }
 
-                if (!DOM._triggerEvent(this._node, 'hide.frost.tooltip')) {
-                    return reject();
-                }
+            this._animating = true;
 
-                dom.setDataset(this._tooltip, 'animating', true);
-
-                dom.fadeOut(this._tooltip, {
-                    duration: this._settings.duration
-                }).then(_ => {
-                    dom.removeClass(this._tooltip, 'show');
-
-                    this._popper.destroy();
-
-                    dom.detach(this._tooltip);
-
-                    dom.triggerEvent(this._node, 'hidden.frost.tooltip');
-
-                    resolve();
-                }).catch(reject).finally(_ =>
-                    dom.removeDataset(this._tooltip, 'animating')
-                );
+            dom.fadeOut(this._tooltip, {
+                duration: this._settings.duration
+            }).then(_ => {
+                this._popper.destroy();
+                dom.removeClass(this._tooltip, 'show');
+                dom.detach(this._tooltip);
+                dom.triggerEvent(this._node, 'hidden.frost.tooltip');
+            }).catch(_ => { }).finally(_ => {
+                this._animating = false;
             });
         }
 
         /**
          * Show the Tooltip.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         show() {
-            return new Promise((resolve, reject) => {
-                if (dom.getDataset(this._tooltip, 'animating')) {
-                    dom.stop(this._tooltip);
-                }
+            if (this._animating) {
+                dom.stop(this._tooltip);
+            }
 
-                if (dom.isConnected(this._tooltip)) {
-                    return reject();
-                }
+            if (
+                dom.isConnected(this._tooltip) ||
+                !dom.triggerOne(this._node, 'show.frost.tooltip')
+            ) {
+                return;
+            }
 
-                if (!DOM._triggerEvent(this._node, 'show.frost.tooltip')) {
-                    return reject();
-                }
+            this._show();
 
-                this._show();
+            this._animating = true;
+            dom.addClass(this._tooltip, 'show');
 
-                dom.setDataset(this._tooltip, 'animating', true);
-
-                dom.addClass(this._tooltip, 'show');
-
-                dom.fadeIn(this._tooltip, {
-                    duration: this._settings.duration
-                }).then(_ => {
-                    dom.triggerEvent(this._node, 'shown.frost.tooltip');
-
-                    resolve();
-                }).catch(reject).finally(_ =>
-                    dom.removeDataset(this._tooltip, 'animating')
-                );
+            dom.fadeIn(this._tooltip, {
+                duration: this._settings.duration
+            }).then(_ => {
+                dom.triggerEvent(this._node, 'shown.frost.tooltip');
+            }).catch(_ => { }).finally(_ => {
+                this._animating = false;
             });
         }
 
         /**
          * Toggle the Tooltip.
-         * @returns {Promise} A new Promise that resolves when the animation has completed.
          */
         toggle() {
-            return dom.isConnected(this._tooltip) ?
+            dom.isConnected(this._tooltip) ?
                 this.hide() :
                 this.show();
         }
@@ -3397,76 +3104,35 @@
          * Update the Tooltip position.
          */
         update() {
-            this._popper.update();
-        }
-
-    }
-
-
-    // Default Tooltip options
-    Tooltip.defaults = {
-        classes: {
-            tooltip: 'tooltip',
-            tooltipInner: 'tooltip-inner',
-            arrow: 'arrow'
-        },
-        duration: 100,
-        enable: true,
-        html: false,
-        trigger: 'hover focus',
-        sanitize: input => dom.sanitize(input),
-        placement: 'auto',
-        position: 'center',
-        fixed: false,
-        spacing: 2,
-        minContact: false
-    };
-
-    // Auto-initialize Tooltip from data-toggle
-    dom.addEventOnce(window, 'load', _ => {
-        const nodes = dom.find('[data-toggle="tooltip"]');
-
-        for (const node of nodes) {
-            new Tooltip(node);
-        }
-    });
-
-    // Add Tooltip QuerySet method
-    if (QuerySet) {
-        QuerySet.prototype.tooltip = function(a, ...args) {
-            let options, method;
-            if (Core.isObject(a)) {
-                options = a;
-            } else if (Core.isString(a)) {
-                method = a;
+            if (this._popper) {
+                this._popper.update();
             }
+        }
 
-            let result;
-            this.each((node, index) => {
-                if (!Core.isElement(node)) {
-                    return;
-                }
+        /**
+         * Initialize a Tooltip.
+         * @param {HTMLElement} node The input node.
+         * @param {object} [settings] The options to create the Tooltip with.
+         * @param {string} [settings.template] The HTML template for the tooltip.
+         * @param {number} [settings.duration=100] The duration of the animation.
+         * @param {Boolean} [settings.enable=true] Whether the tooltip is enabled.
+         * @param {Boolean} [settings.html=false] Whether to allow HTML in the tooltip.
+         * @param {function} [settings.sanitize] The HTML sanitization function.
+         * @param {string} [settings.trigger=hover focus] The events to trigger the tooltip.
+         * @param {string} [settings.placement=auto] The placement of the tooltip relative to the toggle.
+         * @param {string} [settings.position=center] The position of the tooltip relative to the toggle.
+         * @param {Boolean} [settings.fixed=false] Whether the tooltip position is fixed.
+         * @param {number} [settings.spacing=2] The spacing between the tooltip and the toggle.
+         * @param {number} [settings.minContact=false] The minimum amount of contact the tooltip must make with the toggle.
+         * @returns {Tooltip} A new Tooltip object.
+         */
+        static init(node, settings) {
+            return dom.hasData(node, 'tooltip') ?
+                dom.getData(node, 'tooltip') :
+                new this(node, settings);
+        }
 
-                const tooltip = dom.hasData(node, 'tooltip') ?
-                    dom.getData(node, 'tooltip') :
-                    new Tooltip(node, options);
-
-                if (index) {
-                    return;
-                }
-
-                if (!method) {
-                    result = tooltip;
-                } else {
-                    result = tooltip[method](...args);
-                }
-            });
-
-            return result;
-        };
     }
-
-    UI.Tooltip = Tooltip;
 
 
     /**
@@ -3479,54 +3145,52 @@
          * Attach events for the Tooltip.
          */
         _events() {
-            this._hideEvent = _ => {
-                if (!this._enabled || !dom.isConnected(this._tooltip)) {
-                    return;
-                }
-
-                this.hide().catch(_ => { });
-            };
-
-            this._hoverEvent = _ => {
-                if (!this._enabled) {
-                    return;
-                }
-
-                dom.addEventOnce(this._node, 'mouseout.frost.tooltip', this._hideEvent);
-
-                this.show().catch(console.error);
-            };
-
-            this._focusEvent = _ => {
-                if (!this._enabled) {
-                    return;
-                }
-
-                dom.addEventOnce(this._node, 'blur.frost.tooltip', this._hideEvent)
-
-                this.show().catch(_ => { });
-            };
-
-            this._clickEvent = e => {
-                e.preventDefault();
-
-                if (!this._enabled) {
-                    return;
-                }
-
-                this.toggle().catch(console.error);
-            };
-
             if (this._triggers.includes('hover')) {
-                dom.addEvent(this._node, 'mouseover.frost.tooltip', this._hoverEvent);
+                dom.addEvent(this._node, 'mouseover.frost.popover', _ => {
+                    if (!this._enabled) {
+                        return;
+                    }
+
+                    this.show();
+                });
+
+                dom.addEvent(this._node, 'mouseout.frost.popover', _ => {
+                    if (!this._enabled) {
+                        return;
+                    }
+
+                    this.hide();
+                });
             }
 
             if (this._triggers.includes('focus')) {
-                dom.addEvent(this._node, 'focus.frost.tooltip', this._focusEvent);
+                dom.addEvent(this._node, 'focus.frost.popover', _ => {
+                    if (!this._enabled) {
+                        return;
+                    }
+
+                    this.show();
+                });
+
+                dom.addEvent(this._node, 'blur.frost.popover', _ => {
+                    if (!this._enabled) {
+                        return;
+                    }
+
+                    this.hide();
+                });
             }
 
             if (this._triggers.includes('click')) {
-                dom.addEvent(this._node, 'click.frost.tooltip', this._clickEvent);
+                dom.addEvent(this._node, 'click.frost.popover', e => {
+                    e.preventDefault();
+
+                    if (!this._enabled) {
+                        return;
+                    }
+
+                    this.toggle();
+                });
             }
         },
 
@@ -3534,24 +3198,9 @@
          * Render the Tooltip element.
          */
         _render() {
-            this._tooltip = dom.create('div', {
-                class: this._settings.classes.tooltip,
-                attributes: {
-                    role: 'tooltip'
-                }
-            });
-
-            this._arrow = dom.create('div', {
-                class: this._settings.classes.arrow
-            });
-
-
-            this._tooltipInner = dom.create('div', {
-                class: this._settings.classes.tooltipInner
-            });
-
-            dom.append(this._tooltip, this._arrow);
-            dom.append(this._tooltip, this._tooltipInner);
+            this._tooltip = dom.parseHTML(this._settings.template).shift();
+            this._arrow = dom.find('.tooltip-arrow', this._tooltip);
+            this._tooltipInner = dom.find('.tooltip-inner', this._tooltip);
         },
 
         /**
@@ -3589,6 +3238,54 @@
         }
 
     });
+
+
+    // Tooltip default options
+    Tooltip.defaults = {
+        template: '<div class="tooltip" role="tooltip">' +
+            '<div class="tooltip-arrow"></div>' +
+            '<div class="tooltip-inner"></div>' +
+            '</div>',
+        duration: 100,
+        enable: true,
+        html: false,
+        trigger: 'hover focus',
+        sanitize: input => dom.sanitize(input),
+        placement: 'auto',
+        position: 'center',
+        fixed: false,
+        spacing: 2,
+        minContact: false
+    };
+
+    // Tooltip QuerySet method
+    if (QuerySet) {
+        QuerySet.prototype.tooltip = function(a, ...args) {
+            let settings, method;
+
+            if (Core.isObject(a)) {
+                settings = a;
+            } else if (Core.isString(a)) {
+                method = a;
+            }
+
+            for (const node of this) {
+                if (!Core.isElement(node)) {
+                    continue;
+                }
+
+                const tooltip = Tooltip.init(node, settings);
+
+                if (method) {
+                    tooltip[method](...args);
+                }
+            }
+
+            return this;
+        };
+    }
+
+    UI.Tooltip = Tooltip;
 
     return {
         UI

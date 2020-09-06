@@ -8,54 +8,52 @@ Object.assign(Popover.prototype, {
      * Attach events for the Popover.
      */
     _events() {
-        this._hideEvent = _ => {
-            if (!this._enabled || !dom.isConnected(this._tooltip)) {
-                return;
-            }
-
-            this.hide().catch(_ => { });
-        };
-
-        this._hoverEvent = _ => {
-            if (!this._enabled) {
-                return;
-            }
-
-            dom.addEventOnce(this._node, 'mouseout.frost.popover', this._hideEvent);
-
-            this.show().catch(_ => { });
-        };
-
-        this._focusEvent = _ => {
-            if (!this._enabled) {
-                return;
-            }
-
-            dom.addEventOnce(this._node, 'blur.frost.popover', this._hideEvent);
-
-            this.show().catch(_ => { });
-        };
-
-        this._clickEvent = e => {
-            e.preventDefault();
-
-            if (!this._enabled) {
-                return;
-            }
-
-            this.toggle().catch(_ => { });
-        };
-
         if (this._triggers.includes('hover')) {
-            dom.addEvent(this._node, 'mouseover.frost.popover', this._hoverEvent);
+            dom.addEvent(this._node, 'mouseover.frost.popover', _ => {
+                if (!this._enabled) {
+                    return;
+                }
+
+                this.show();
+            });
+
+            dom.addEvent(this._node, 'mouseout.frost.popover', _ => {
+                if (!this._enabled) {
+                    return;
+                }
+
+                this.hide();
+            });
         }
 
         if (this._triggers.includes('focus')) {
-            dom.addEvent(this._node, 'focus.frost.popover', this._focusEvent);
+            dom.addEvent(this._node, 'focus.frost.popover', _ => {
+                if (!this._enabled) {
+                    return;
+                }
+
+                this.show();
+            });
+
+            dom.addEvent(this._node, 'blur.frost.popover', _ => {
+                if (!this._enabled) {
+                    return;
+                }
+
+                this.hide();
+            });
         }
 
         if (this._triggers.includes('click')) {
-            dom.addEvent(this._node, 'click.frost.popover', this._clickEvent);
+            dom.addEvent(this._node, 'click.frost.popover', e => {
+                e.preventDefault();
+
+                if (!this._enabled) {
+                    return;
+                }
+
+                this.toggle();
+            });
         }
     },
 
@@ -63,29 +61,10 @@ Object.assign(Popover.prototype, {
      * Render the Popover element.
      */
     _render() {
-        this._popover = dom.create('div', {
-            class: this._settings.classes.popover,
-            attributes: {
-                role: 'tooltip'
-            }
-        });
-
-        this._arrow = dom.create('div', {
-            class: this._settings.classes.arrow
-        });
-
-
-        this._popoverHeader = dom.create('h3', {
-            class: this._settings.classes.popoverHeader
-        });
-
-        this._popoverBody = dom.create('div', {
-            class: this._settings.classes.popoverBody
-        });
-
-        dom.append(this._popover, this._arrow);
-        dom.append(this._popover, this._popoverHeader);
-        dom.append(this._popover, this._popoverBody);
+        this._popover = dom.parseHTML(this._settings.template).shift();
+        this._arrow = dom.find('.popover-arrow', this._popover);
+        this._popoverHeader = dom.find('.popover-header', this._popover);
+        this._popoverBody = dom.find('.popover-body', this._popover);
     },
 
     /**

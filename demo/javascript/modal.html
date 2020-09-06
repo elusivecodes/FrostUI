@@ -7,9 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="../../dist/frost-ui.css" />
-    <script src="../../../FrostCore/dist/frost-core.js"></script>
-    <script src="../../../FrostDOM/dist/frost-dom.js"></script>
-    <script src="../../dist/frost-ui.js"></script>
+    <script src="../../dist/frost-ui-bundle.js"></script>
     <style>
         .btn {
             margin-bottom: .25rem;
@@ -20,7 +18,8 @@
 <body>
     <div class="container">
         <h1>Modal</h1>
-        <button class="btn btn-primary" role="button" data-toggle="modal" data-target="#modal">Open Modal</button>
+        <button class="btn ripple btn-primary" role="button" data-toggle="modal" data-target="#modal">Open
+            Modal</button>
         <div id="modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content shadow">
@@ -34,14 +33,15 @@
                         <p>This is the body of the modal.</p>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-success mb-0" role="button">Save</button>
-                        <button class="btn btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn ripple btn-success mb-0" role="button">Save</button>
+                        <button class="btn ripple btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
         <h4>Long Content</h4>
-        <button class="btn btn-primary" role="button" data-toggle="modal" data-target="#modalLong">Open Modal</button>
+        <button class="btn ripple btn-primary" role="button" data-toggle="modal" data-target="#modalLong">Open
+            Modal</button>
         <div id="modalLong" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalLongTitle"
             aria-hidden="true">
             <div class="modal-dialog">
@@ -104,14 +104,14 @@
                             amet mattis.</p>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-success mb-0" role="button">Save</button>
-                        <button class="btn btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn ripple btn-success mb-0" role="button">Save</button>
+                        <button class="btn ripple btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
         <h4>Scrollable</h4>
-        <button class="btn btn-primary" role="button" data-toggle="modal" data-target="#modalScrollable">Open
+        <button class="btn ripple btn-primary" role="button" data-toggle="modal" data-target="#modalScrollable">Open
             Modal</button>
         <div id="modalScrollable" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalScrollableTitle"
             aria-hidden="true">
@@ -176,14 +176,14 @@
                             amet mattis.</p>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-success mb-0" role="button">Save</button>
-                        <button class="btn btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn ripple btn-success mb-0" role="button">Save</button>
+                        <button class="btn ripple btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
         <h4>Vertically Centered</h4>
-        <button class="btn btn-primary" role="button" data-toggle="modal" data-target="#modalCentered">Open
+        <button class="btn ripple btn-primary" role="button" data-toggle="modal" data-target="#modalCentered">Open
             Modal</button>
         <div id="modalCentered" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalCenteredTitle"
             aria-hidden="true">
@@ -199,14 +199,14 @@
                         <p>This is the body of the modal.</p>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-success mb-0" role="button">Save</button>
-                        <button class="btn btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn ripple btn-success mb-0" role="button">Save</button>
+                        <button class="btn ripple btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
         <h4>Tooltips/Popovers</h4>
-        <button class="btn btn-primary" role="button" data-toggle="modal" data-target="#modalTooltips">Open
+        <button class="btn ripple btn-primary" role="button" data-toggle="modal" data-target="#modalTooltips">Open
             Modal</button>
         <div id="modalTooltips" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalTooltipsTitle"
             aria-hidden="true">
@@ -220,27 +220,27 @@
                     </div>
                     <div class="modal-body">
                         <h4>Tooltip</h4>
-                        <button class="btn btn-secondary" role="button" data-toggle="tooltip"
+                        <button class="btn ripple btn-secondary" role="button" data-toggle="tooltip"
                             data-title="This is a tooltip">Tooltip</button>
                         <h4>Popover</h4>
-                        <button class="btn btn-secondary" role="button" data-toggle="popover"
+                        <button class="btn ripple btn-secondary" role="button" data-toggle="popover"
                             data-content="Popover content would go here.. how cool!">
                             Popover
                         </button>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-success mb-0" role="button">Save</button>
-                        <button class="btn btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn ripple btn-success mb-0" role="button">Save</button>
+                        <button class="btn ripple btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
         <h4>Sizes</h4>
-        <button class="btn btn-primary" role="button" data-toggle="modal" data-target="#modalSmall">Open Small
+        <button class="btn ripple btn-primary" role="button" data-toggle="modal" data-target="#modalSmall">Open Small
             Modal</button>
-        <button class="btn btn-primary" role="button" data-toggle="modal" data-target="#modalLarge">Open Large
+        <button class="btn ripple btn-primary" role="button" data-toggle="modal" data-target="#modalLarge">Open Large
             Modal</button>
-        <button class="btn btn-primary" role="button" data-toggle="modal" data-target="#modalXL">Open Extra Large
+        <button class="btn ripple btn-primary" role="button" data-toggle="modal" data-target="#modalXL">Open Extra Large
             Modal</button>
         <div id="modalSmall" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalSmallTitle"
             aria-hidden="true">
@@ -256,8 +256,8 @@
                         <p>This is the body of the modal.</p>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-success mb-0" role="button">Save</button>
-                        <button class="btn btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn ripple btn-success mb-0" role="button">Save</button>
+                        <button class="btn ripple btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -276,8 +276,8 @@
                         <p>This is the body of the modal.</p>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-success mb-0" role="button">Save</button>
-                        <button class="btn btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn ripple btn-success mb-0" role="button">Save</button>
+                        <button class="btn ripple btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -295,8 +295,8 @@
                         <p>This is the body of the modal.</p>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-success mb-0" role="button">Save</button>
-                        <button class="btn btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn ripple btn-success mb-0" role="button">Save</button>
+                        <button class="btn ripple btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>

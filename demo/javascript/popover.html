@@ -8,9 +8,7 @@
     <title>Document</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../dist/frost-ui.css" />
-    <script src="../../../FrostCore/dist/frost-core.js"></script>
-    <script src="../../../FrostDOM/dist/frost-dom.js"></script>
-    <script src="../../dist/frost-ui.js"></script>
+    <script src="../../dist/frost-ui-bundle.js"></script>
     <style>
         .btn {
             margin-bottom: .25rem;
@@ -21,46 +19,52 @@
 <body>
     <div class="container">
         <h1>Popover</h1>
-        <button class="btn btn-secondary" role="button" data-toggle="popover" data-title="Popover"
+        <button class="btn ripple btn-secondary" role="button" data-toggle="popover" data-title="Popover"
             data-content="Popover content would go here.. how cool!">
             Popover
         </button>
         <h4>HTML</h4>
-        <button class="btn btn-secondary" role="button" data-toggle="popover" data-html="true"
+        <button class="btn ripple btn-secondary" role="button" data-toggle="popover" data-html="true"
             data-content="Popover content would go here.. <strong>how cool!</strong>">
             Popover
         </button>
         <h4>Placement</h4>
-        <button class="btn btn-secondary" role="button" data-toggle="popover"
+        <button class="btn ripple btn-secondary" role="button" data-toggle="popover"
             data-content="Popover content would go here.. how cool!" data-placement="top" data-fixed="true">
             Top
         </button>
-        <button class="btn btn-secondary" role="button" data-toggle="popover"
+        <button class="btn ripple btn-secondary" role="button" data-toggle="popover"
             data-content="Popover content would go here.. how cool!" data-placement="right" data-fixed="true">
             Right
         </button>
-        <button class="btn btn-secondary" role="button" data-toggle="popover"
+        <button class="btn ripple btn-secondary" role="button" data-toggle="popover"
             data-content="Popover content would go here.. how cool!" data-placement="bottom" data-fixed="true">
             Bottom
         </button>
-        <button class="btn btn-secondary" role="button" data-toggle="popover"
+        <button class="btn ripple btn-secondary" role="button" data-toggle="popover"
             data-content="Popover content would go here.. how cool!" data-placement="left" data-fixed="true">
             Left
         </button>
         <h4>Position</h4>
-        <button class="btn btn-secondary" role="button" data-toggle="popover"
+        <button class="btn ripple btn-secondary" role="button" data-toggle="popover"
             data-content="Popover content would go here.. how cool!" data-placement="bottom" data-position="start">
             Start
         </button>
-        <button class="btn btn-secondary" role="button" data-toggle="popover"
+        <button class="btn ripple btn-secondary" role="button" data-toggle="popover"
             data-content="Popover content would go here.. how cool!" data-placement="bottom" data-position="center">
             Center
         </button>
-        <button class="btn btn-secondary" role="button" data-toggle="popover"
+        <button class="btn ripple btn-secondary" role="button" data-toggle="popover"
             data-content="Popover content would go here.. how cool!" data-placement="bottom" data-position="end">
             End
         </button>
     </div>
+    <script>
+        const nodes = dom.find('[data-toggle="popover"]');
+        for (const node of nodes) {
+            UI.Popover.init(node);
+        }
+    </script>
 </body>
 
 </html>

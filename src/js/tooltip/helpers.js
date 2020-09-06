@@ -8,54 +8,52 @@ Object.assign(Tooltip.prototype, {
      * Attach events for the Tooltip.
      */
     _events() {
-        this._hideEvent = _ => {
-            if (!this._enabled || !dom.isConnected(this._tooltip)) {
-                return;
-            }
-
-            this.hide().catch(_ => { });
-        };
-
-        this._hoverEvent = _ => {
-            if (!this._enabled) {
-                return;
-            }
-
-            dom.addEventOnce(this._node, 'mouseout.frost.tooltip', this._hideEvent);
-
-            this.show().catch(console.error);
-        };
-
-        this._focusEvent = _ => {
-            if (!this._enabled) {
-                return;
-            }
-
-            dom.addEventOnce(this._node, 'blur.frost.tooltip', this._hideEvent)
-
-            this.show().catch(_ => { });
-        };
-
-        this._clickEvent = e => {
-            e.preventDefault();
-
-            if (!this._enabled) {
-                return;
-            }
-
-            this.toggle().catch(console.error);
-        };
-
         if (this._triggers.includes('hover')) {
-            dom.addEvent(this._node, 'mouseover.frost.tooltip', this._hoverEvent);
+            dom.addEvent(this._node, 'mouseover.frost.popover', _ => {
+                if (!this._enabled) {
+                    return;
+                }
+
+                this.show();
+            });
+
+            dom.addEvent(this._node, 'mouseout.frost.popover', _ => {
+                if (!this._enabled) {
+                    return;
+                }
+
+                this.hide();
+            });
         }
 
         if (this._triggers.includes('focus')) {
-            dom.addEvent(this._node, 'focus.frost.tooltip', this._focusEvent);
+            dom.addEvent(this._node, 'focus.frost.popover', _ => {
+                if (!this._enabled) {
+                    return;
+                }
+
+                this.show();
+            });
+
+            dom.addEvent(this._node, 'blur.frost.popover', _ => {
+                if (!this._enabled) {
+                    return;
+                }
+
+                this.hide();
+            });
         }
 
         if (this._triggers.includes('click')) {
-            dom.addEvent(this._node, 'click.frost.tooltip', this._clickEvent);
+            dom.addEvent(this._node, 'click.frost.popover', e => {
+                e.preventDefault();
+
+                if (!this._enabled) {
+                    return;
+                }
+
+                this.toggle();
+            });
         }
     },
 
@@ -63,24 +61,9 @@ Object.assign(Tooltip.prototype, {
      * Render the Tooltip element.
      */
     _render() {
-        this._tooltip = dom.create('div', {
-            class: this._settings.classes.tooltip,
-            attributes: {
-                role: 'tooltip'
-            }
-        });
-
-        this._arrow = dom.create('div', {
-            class: this._settings.classes.arrow
-        });
-
-
-        this._tooltipInner = dom.create('div', {
-            class: this._settings.classes.tooltipInner
-        });
-
-        dom.append(this._tooltip, this._arrow);
-        dom.append(this._tooltip, this._tooltipInner);
+        this._tooltip = dom.parseHTML(this._settings.template).shift();
+        this._arrow = dom.find('.tooltip-arrow', this._tooltip);
+        this._tooltipInner = dom.find('.tooltip-inner', this._tooltip);
     },
 
     /**

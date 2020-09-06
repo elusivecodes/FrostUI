@@ -15,242 +15,131 @@ class Collapse {
     constructor(node, settings) {
         this._node = node;
 
+        const id = this._node.getAttribute('id');
+        this._triggers = dom.find(
+            `[data-toggle="collapse"][data-target="#${id}"]`
+        );
+        console.log(this._triggers);
+
         this._settings = Core.extend(
             {},
-            Collapse.defaults,
+            this.constructor.defaults,
             dom.getDataset(this._node),
             settings
         );
 
-        this._targets = dom.find(this._settings.target);
-
-        this._events();
+        if (this._settings.parent) {
+            this._parent = dom.findOne(this._settings.parent);
+        }
 
         dom.setData(this._node, 'collapse', this);
-
-        for (const target of this._targets) {
-            if (!Collapse._toggles.has(target)) {
-                Collapse._toggles.set(target, []);
-            }
-
-            Collapse._toggles.get(target)
-                .push(this._node);
-        }
     }
 
     /**
      * Destroy the Collapse.
      */
     destroy() {
-        for (const target of this._targets) {
-            const toggles = Collapse._toggles.get(target)
-                .filter(toggle => !dom.isSame(toggle, this._node));
-
-            if (toggles.length) {
-                Collapse._toggles.set(target, toggles);
-            } else {
-                Collapse._toggles.delete(target);
-            }
-        }
-
-        dom.removeEvent(this._node, 'click.frost.collapse', this._clickEvent);
-
         dom.removeData(this._node, 'collapse');
     }
 
     /**
-     * Hide the target element.
-     * @returns {Promise} A new Promise that resolves when the animation has completed.
+     * Hide the element.
      */
     hide() {
-        return new Promise((resolve, reject) => {
-            const targets = this._targets
-                .filter(target => dom.hasClass(target, 'show') && !dom.getDataset(target, 'animating'));
+        if (
+            this._animating ||
+            !dom.hasClass(this._node, 'show') ||
+            !dom.triggerOne(this._node, 'hide.frost.collapse')
+        ) {
+            return;
+        }
 
-            if (!targets.length) {
-                return reject();
-            }
+        this._animating = true;
 
-            if (!DOM._triggerEvent(this._node, 'hide.frost.collapse')) {
-                return reject();
-            }
-
-            dom.setDataset(targets, 'animating', true);
-
-            dom.squeezeOut(targets, {
-                direction: this._settings.direction,
-                duration: this._settings.duration
-            }).then(_ => {
-                dom.removeClass(targets, 'show');
-
-                this._setExpanded(targets, false);
-                dom.triggerEvent(this._node, 'hidden.frost.collapse');
-
-                resolve();
-            }).catch(reject).finally(_ =>
-                dom.removeDataset(targets, 'animating')
-            );
+        dom.squeezeOut(this._node, {
+            direction: this._settings.direction,
+            duration: this._settings.duration
+        }).then(_ => {
+            dom.removeClass(this._node, 'show');
+            dom.setAttribute(this._triggers, 'aria-expanded', false);
+            dom.triggerEvent(this._node, 'hidden.frost.collapse');
+        }).catch(_ => { }).finally(_ => {
+            this._animating = false;
         });
     }
 
     /**
-     * Show the target element.
-     * @returns {Promise} A new Promise that resolves when the animation has completed.
+     * Show the element.
      */
     show() {
-        return new Promise((resolve, reject) => {
-            const targets = this._targets
-                .filter(target => dom.hasClass(target, 'show') && !dom.getDataset(target, 'animating'));
+        if (
+            this._animating ||
+            dom.hasClass(this._node, 'show')
+        ) {
+            return;
+        }
 
-            if (!targets.length) {
-                return reject();
-            }
+        const collapses = [];
+        if (this._parent) {
+            const siblings = dom.find('.collapse.show', this._parent);
+            for (const sibling of siblings) {
+                const collapse = this.constructor.init(sibling);
 
-            const accordion = this._getAccordion(hidden);
-
-            if (!accordion) {
-                return reject();
-            }
-
-            for (const node of accordion.nodes) {
-                if (!DOM._triggerEvent(node, 'hide.frost.collapse')) {
-                    return reject();
-                }
-            }
-
-            if (!DOM._triggerEvent(this._node, 'show.frost.collapse')) {
-                return reject();
-            }
-
-            const allTargets = [...targets];
-            allTargets.push(...accordion.targets);
-
-            dom.setDataset(allTargets, 'animating', true);
-
-            const animations = allTargets.map(target => {
-                const animation = accordion.targets.includes(target) ?
-                    'squeezeOut' : 'squeezeIn';
-
-                return dom[animation](target, {
-                    direction: this._settings.direction,
-                    duration: this._settings.duration,
-                    type: 'linear'
-                });
-            });
-
-            dom.addClass(targets, 'show');
-
-            Promise.all(animations).then(_ => {
-                if (accordion.targets.length) {
-                    dom.removeClass(accordion.targets, 'show');
-                    this._setExpanded(accordion.targets, false);
-                }
-
-                if (accordion.nodes.length) {
-                    dom.triggerEvent(accordion.nodes, 'hidden.frost.collapse');
-                }
-
-                this._setExpanded(targets);
-                dom.triggerEvent(this._node, 'shown.frost.collapse');
-
-                resolve();
-            }).catch(reject).finally(_ =>
-                dom.removeDataset(allTargets, 'animating')
-            );
-        });
-    }
-
-    /**
-     * Toggle the target element.
-     * @returns {Promise} A new Promise that resolves when the animation has completed.
-     */
-    toggle() {
-        return new Promise((resolve, reject) => {
-            const targets = [];
-            const hidden = [];
-            const visible = [];
-            for (const target of this._targets) {
-                if (dom.getDataset(target, 'animating')) {
+                if (this._parent !== collapse._parent) {
                     continue;
                 }
 
-                targets.push(target);
-
-                if (dom.hasClass(target, 'show')) {
-                    visible.push(target);
-                } else {
-                    hidden.push(target);
-                }
-            }
-
-            if (!targets.length) {
-                return reject();
-            }
-
-            if (visible.length && !DOM._triggerEvent(this._node, 'hide.frost.collapse')) {
-                return reject();
-            }
-
-            const accordion = this._getAccordion(hidden);
-
-            if (!accordion) {
-                return reject();
-            }
-
-            for (const node of accordion.nodes) {
-                if (!DOM._triggerEvent(node, 'hide.frost.collapse')) {
-                    return reject();
-                }
-            }
-
-            if (hidden.length && !DOM._triggerEvent(this._node, 'show.frost.collapse')) {
-                return reject();
-            }
-
-            const allTargets = [...targets];
-            allTargets.push(...accordion.targets);
-
-            dom.setDataset(allTargets, 'animating', true);
-
-            const animations = allTargets.map(target => {
-                const animation = visible.includes(target) || accordion.targets.includes(target) ?
-                    'squeezeOut' : 'squeezeIn';
-
-                return dom[animation](target, {
-                    direction: this._settings.direction,
-                    duration: this._settings.duration,
-                    type: 'linear'
-                });
-            });
-
-            dom.addClass(hidden, 'show')
-
-            Promise.all(animations).then(_ => {
-                if (accordion.targets.length) {
-                    dom.removeClass(accordion.targets, 'show');
-                    this._setExpanded(accordion.targets, false);
+                if (collapse._animating) {
+                    return;
                 }
 
-                if (accordion.nodes.length) {
-                    dom.triggerEvent(accordion.nodes, 'hidden.frost.collapse');
-                }
+                collapses.push(collapse);
+            }
+        }
 
-                if (visible.length) {
-                    dom.removeClass(visible, 'show');
-                    this._setExpanded(visible, false);
-                    dom.triggerEvent(this._node, 'hidden.frost.collapse');
-                }
+        if (!dom.triggerOne(this._node, 'show.frost.collapse')) {
+            return;
+        }
 
-                if (hidden.length) {
-                    this._setExpanded(hidden);
-                    dom.triggerEvent(this._node, 'shown.frost.collapse');
-                }
+        for (const collapse of collapses) {
+            collapse.hide();
+        }
 
-                resolve();
-            }).catch(reject).finally(_ =>
-                dom.removeDataset(allTargets, 'animating')
-            );
+        this._animating = true;
+        dom.addClass(this._node, 'show');
+
+        dom.squeezeIn(this._node, {
+            direction: this._settings.direction,
+            duration: this._settings.duration
+        }).then(_ => {
+            dom.setAttribute(this._triggers, 'aria-expanded', true);
+            dom.triggerEvent(this._node, 'shown.frost.collapse');
+        }).catch(_ => { }).finally(_ => {
+            this._animating = false;
         });
+    }
+
+    /**
+     * Toggle the element.
+     */
+    toggle() {
+        dom.hasClass(this._node, 'show') ?
+            this.hide() :
+            this.show();
+    }
+
+    /**
+     * Initialize a Collapse.
+     * @param {HTMLElement} node The input node.
+     * @param {object} [settings] The options to create the Collapse with.
+     * @param {string} [settings.direction=bottom] The direction to collapse the targets from/to.
+     * @param {number} [settings.duration=300] The duration of the animation.
+     * @returns {Collapse} A new Collapse object.
+     */
+    static init(node, settings) {
+        return dom.hasData(node, 'collapse') ?
+            dom.getData(node, 'collapse') :
+            new this(node, settings);
     }
 
 }

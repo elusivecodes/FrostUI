@@ -1,7 +1,7 @@
 .form-control {
     display: block;
     width: 100%;
-    padding: @half-spacing;
+    padding: @spacing / 2;
     font-size: 1rem;
     line-height: @line-height;
     border: @border-size @border-style @border-color;
@@ -48,7 +48,7 @@
 .form-minimal {
     display: block;
     width: 100%;
-    padding: @half-spacing;
+    padding: @spacing / 2;
     font-size: 1rem;
     line-height: @line-height;
     border: 0;
@@ -90,7 +90,7 @@
 .form-plain-text {
     display: block;
     width: 100%;
-    padding: @half-spacing 0;
+    padding: (@spacing / 2) 0;
     margin-bottom: 0;
     line-height: @line-height;
     color: @text;
@@ -101,13 +101,13 @@
 
 .form-control-lg,
 .form-minimal-lg {
-    padding: @half-spacing @spacing;
+    padding: (@spacing / 2) @spacing;
     font-size: 1.25rem;
 }
 
 .form-control-sm,
 .form-minimal-sm {
-    padding: @quarter-spacing @half-spacing;
+    padding: (@spacing / 4) (@spacing / 2);
     font-size: .875rem;
 }
 
@@ -119,7 +119,7 @@
 
 .form-check-input {
     position: absolute;
-    margin-top: @third-spacing;
+    margin-top: @spacing / 3;
     margin-left: -@spacing * 1.25;
 
     &:disabled,
@@ -133,7 +133,7 @@
 .form-check-inline .form-check-input {
     position: static;
     margin-top: 0;
-    margin-right: @third-spacing;
+    margin-right: @spacing / 3;
     margin-left: 0;
 }
 
@@ -141,16 +141,16 @@ select.form-control[multiple] {
     padding: 0;
 
     & option {
-        padding: @half-spacing;
+        padding: @spacing / 2;
     }
 }
 
 select.form-control-sm[multiple] option {
-    padding: @quarter-spacing @half-spacing;
+    padding: (@spacing / 4) (@spacing / 2);
 }
 
 select.form-control-lg[multiple] option {
-    padding: @half-spacing @spacing;
+    padding: (@spacing / 2) @spacing;
 }
 
 .form-control[type="file"] {

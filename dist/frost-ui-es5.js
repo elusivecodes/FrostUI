@@ -2,17 +2,15 @@
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -20,7 +18,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 /**
  * FrostUI v1.0
@@ -56,25 +54,19 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
    * @class
    */
 
-  var Alert =
-  /*#__PURE__*/
-  function () {
+  var Alert = /*#__PURE__*/function () {
     /**
      * New Alert constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Alert with.
-     * @param {number} [settings.duration=100] The duration of the animation.
+     * @param {number} [settings.duration=250] The duration of the animation.
      * @returns {Alert} A new Alert object.
      */
     function Alert(node, settings) {
       _classCallCheck(this, Alert);
 
       this._node = node;
-      this._settings = Core.extend({}, Alert.defaults, dom.getDataset(this._node), settings);
-      this._dismiss = dom.find('[data-dismiss="alert"]', this._node);
-
-      this._events();
-
+      this._settings = Core.extend({}, this.constructor.defaults, dom.getDataset(this._node), settings);
       dom.setData(this._node, 'alert', this);
     }
     /**
@@ -85,15 +77,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Alert, [{
       key: "destroy",
       value: function destroy() {
-        if (this._dismiss.length) {
-          dom.removeEvent(this._dismiss, 'click.frost.alert', this._dismissEvent);
-        }
-
         dom.removeData(this._node, 'alert');
       }
       /**
        * Close the Alert.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
        */
 
     }, {
@@ -101,132 +88,98 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       value: function close() {
         var _this = this;
 
-        return new Promise(function (resolve, reject) {
-          if (dom.getDataset(_this._node, 'animating')) {
-            return reject();
-          }
+        if (this._animating || !dom.triggerOne(this._node, 'close.frost.alert')) {
+          return;
+        }
 
-          if (!DOM._triggerEvent(_this._node, 'close.frost.alert')) {
-            return reject();
-          }
-
-          dom.setDataset(_this._node, 'animating', true);
-          dom.fadeOut(_this._node, {
-            duration: _this._settings.duration
-          }).then(function (_) {
-            dom.triggerEvent(_this._node, 'closed.frost.alert');
-            dom.remove(_this._node);
-            resolve();
-          })["catch"](function (e) {
-            dom.removeDataset(_this._node, 'animating');
-            reject(e);
-          });
+        this._animating = true;
+        dom.fadeOut(this._node, {
+          duration: this._settings.duration
+        }).then(function (_) {
+          dom.triggerEvent(_this._node, 'closed.frost.alert');
+          dom.remove(_this._node);
+        })["catch"](function (_) {})["finally"](function (_) {
+          _this._animating = false;
         });
+      }
+      /**
+       * Initialize an Alert.
+       * @param {HTMLElement} node The input node.
+       * @param {object} [settings] The options to create the Alert with.
+       * @param {number} [settings.duration=250] The duration of the animation.
+       * @returns {Alert} A new Alert object.
+       */
+
+    }], [{
+      key: "init",
+      value: function init(node, settings) {
+        return dom.hasData(node, 'alert') ? dom.getData(node, 'alert') : new this(node, settings);
       }
     }]);
 
     return Alert;
-  }(); // Default Alert options
+  }(); // Alert events
 
+
+  dom.addEventDelegate(document, 'click.frost.alert', '[data-dismiss="alert"]', function (e) {
+    e.preventDefault();
+    var target = UI.getTarget(e.currentTarget, '.alert');
+    var alert = Alert.init(target);
+    alert.close();
+  }); // Alert default options
 
   Alert.defaults = {
-    duration: 100
-  }; // Auto-initialize Alert from data-toggle
-
-  dom.addEventOnce(window, 'load', function (_) {
-    var nodes = dom.find('[data-toggle="alert"]');
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-      for (var _iterator = nodes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var node = _step.value;
-        new Alert(node);
-      }
-    } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-          _iterator["return"]();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
-        }
-      }
-    }
-  }); // Add Alert QuerySet method
+    duration: 250
+  }; // Alert QuerySet method
 
   if (QuerySet) {
     QuerySet.prototype.alert = function (a) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
-
-      var options, method;
+      var settings, method;
 
       if (Core.isObject(a)) {
-        options = a;
+        settings = a;
       } else if (Core.isString(a)) {
         method = a;
       }
 
-      var result;
-      this.each(function (node, index) {
-        if (!Core.isElement(node)) {
-          return;
-        }
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-        var alert = dom.hasData(node, 'alert') ? dom.getData(node, 'alert') : new Alert(node, options);
+      var _iterator = _createForOfIteratorHelper(this),
+          _step;
 
-        if (index) {
-          return;
-        }
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var node = _step.value;
 
-        if (!method) {
-          result = alert;
-        } else {
-          result = alert[method].apply(alert, args);
+          if (!Core.isElement(node)) {
+            continue;
+          }
+
+          var alert = Alert.init(node, settings);
+
+          if (method) {
+            alert[method].apply(alert, args);
+          }
         }
-      });
-      return result;
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+
+      return this;
     };
   }
 
   UI.Alert = Alert;
   /**
-   * Alert Helpers
-   */
-
-  Object.assign(Alert.prototype, {
-    /**
-     * Attach events for the Alert.
-     */
-    _events: function _events() {
-      var _this2 = this;
-
-      this._dismissEvent = function (e) {
-        e.preventDefault();
-
-        _this2.close()["catch"](function (_) {});
-      };
-
-      if (this._dismiss.length) {
-        dom.addEvent(this._dismiss, 'click.frost.alert', this._dismissEvent);
-      }
-    }
-  });
-  /**
    * Button Class
    * @class
    */
 
-  var Button =
-  /*#__PURE__*/
-  function () {
+  var Button = /*#__PURE__*/function () {
     /**
      * New Button constructor.
      * @param {HTMLElement} node The input node.
@@ -237,15 +190,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Button);
 
       this._node = node;
-      this._settings = Core.extend({}, Button.defaults, dom.getDataset(this._node), settings);
-      this._input = dom.findOne('input[type="checkbox"], input[type="radio"]', this._node);
+      this._settings = Core.extend({}, this.constructor.defaults, dom.getDataset(this._node), settings);
+      this._input = dom.findOne('input', this._node);
       this._isRadio = this._input && dom.is(this._input, '[type="radio"]');
 
       if (this._isRadio) {
         this._siblings = dom.siblings(this._node);
       }
-
-      this._events();
 
       dom.setData(this._node, 'button', this);
     }
@@ -257,7 +208,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Button, [{
       key: "destroy",
       value: function destroy() {
-        dom.removeEvent(this._node, 'frost.click.button', this._clickEvent);
         dom.removeData(this._node, 'button');
       }
       /**
@@ -269,132 +219,107 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       value: function toggle() {
         this._isRadio ? this._toggleRadio() : this._toggleCheckbox();
       }
+      /**
+       * Toggle a checkbox-type Button.
+       */
+
+    }, {
+      key: "_toggleCheckbox",
+      value: function _toggleCheckbox() {
+        dom.toggleClass(this._node, 'active');
+
+        if (this._input) {
+          var isChecked = dom.getProperty(this._input, 'checked');
+          dom.setProperty(this._input, 'checked', !isChecked);
+          dom.triggerEvent(this._input, 'change');
+        }
+      }
+      /**
+       * Toggle a radio-type Button.
+       */
+
+    }, {
+      key: "_toggleRadio",
+      value: function _toggleRadio() {
+        dom.addClass(this._node, 'active');
+        dom.removeClass(this._siblings, 'active');
+        dom.setProperty(this._input, 'checked', true);
+        dom.triggerEvent(this._input, 'change');
+      }
+      /**
+       * Initialize a Button.
+       * @param {HTMLElement} node The input node.
+       * @param {object} [settings] The options to create the Button with.
+       * @returns {Button} A new Button object.
+       */
+
+    }], [{
+      key: "init",
+      value: function init(node, settings) {
+        return dom.hasData(node, 'button') ? dom.getData(node, 'button') : new this(node, settings);
+      }
     }]);
 
     return Button;
-  }(); // Default Button options
+  }(); // Button events
 
 
-  Button.defaults = {}; // Auto-initialize Button from data-toggle
+  dom.addEventDelegate(document, 'click.frost.button', '[data-toggle="buttons"] > *, [data-toggle="button"]', function (e) {
+    e.preventDefault();
+    var button = Button.init(e.currentTarget);
+    button.toggle();
+  }); // Button default settings
 
-  dom.addEventOnce(window, 'load', function (_) {
-    var nodes = dom.find('[data-toggle="buttons"] > *, [data-toggle="button"]');
-    var _iteratorNormalCompletion2 = true;
-    var _didIteratorError2 = false;
-    var _iteratorError2 = undefined;
-
-    try {
-      for (var _iterator2 = nodes[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-        var node = _step2.value;
-        new Button(node);
-      }
-    } catch (err) {
-      _didIteratorError2 = true;
-      _iteratorError2 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-          _iterator2["return"]();
-        }
-      } finally {
-        if (_didIteratorError2) {
-          throw _iteratorError2;
-        }
-      }
-    }
-  }); // Add Button QuerySet method
+  Button.defaults = {}; // Button QuerySet method
 
   if (QuerySet) {
     QuerySet.prototype.button = function (a) {
-      for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-        args[_key2 - 1] = arguments[_key2];
-      }
-
-      var options, method;
+      var settings, method;
 
       if (Core.isObject(a)) {
-        options = a;
+        settings = a;
       } else if (Core.isString(a)) {
         method = a;
       }
 
-      var result;
-      this.each(function (node, index) {
-        if (!Core.isElement(node)) {
-          return;
-        }
+      for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        args[_key2 - 1] = arguments[_key2];
+      }
 
-        var button = dom.hasData(node, 'button') ? dom.getData(node, 'button') : new Button(node, options);
+      var _iterator2 = _createForOfIteratorHelper(this),
+          _step2;
 
-        if (index) {
-          return;
-        }
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var node = _step2.value;
 
-        if (!method) {
-          result = button;
-        } else {
-          result = button[method].apply(button, args);
+          if (!Core.isElement(node)) {
+            continue;
+          }
+
+          var button = Button.init(node, settings);
+
+          if (method) {
+            button[method].apply(button, args);
+          }
         }
-      });
-      return result;
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+
+      return this;
     };
   }
 
   UI.Button = Button;
   /**
-   * Button Helpers
-   */
-
-  Object.assign(Button.prototype, {
-    /**
-     * Attach events for the Button.
-     */
-    _events: function _events() {
-      var _this3 = this;
-
-      this._clickEvent = function (e) {
-        e.preventDefault();
-
-        _this3.toggle();
-      };
-
-      dom.addEvent(this._node, 'click.frost.button', this._clickEvent);
-    },
-
-    /**
-     * Toggle a checkbox-type Button.
-     */
-    _toggleCheckbox: function _toggleCheckbox() {
-      dom.toggleClass(this._node, 'active');
-
-      if (this._input) {
-        dom.setProperty(this._input, 'checked', !dom.getProperty(this._input, 'checked'));
-        dom.triggerEvent(this._input, 'change');
-      }
-    },
-
-    /**
-     * Toggle a radio-type Button.
-     */
-    _toggleRadio: function _toggleRadio() {
-      dom.addClass(this._node, 'active');
-
-      if (this._siblings) {
-        dom.removeClass(this._siblings, 'active');
-      }
-
-      dom.setProperty(this._input, 'checked', true);
-      dom.triggerEvent(this._input, 'change');
-    }
-  });
-  /**
    * Carousel Class
    * @class
    */
 
-  var Carousel =
-  /*#__PURE__*/
-  function () {
+  var Carousel = /*#__PURE__*/function () {
     /**
      * New Carousel constructor.
      * @param {HTMLElement} node The input node.
@@ -411,7 +336,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Carousel);
 
       this._node = node;
-      this._settings = Core.extend({}, Carousel.defaults, dom.getDataset(this._node), settings);
+      this._settings = Core.extend({}, this.constructor.defaults, dom.getDataset(this._node), settings);
       this._items = dom.find('.carousel-item', this._node);
       this._index = this._items.findIndex(function (item) {
         return dom.hasClass(item, 'active');
@@ -443,34 +368,32 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "destroy",
       value: function destroy() {
+        this._queue = [];
+
         if (this._timer) {
           clearTimeout(this._timer);
         }
 
-        dom.removeEvent(this._node, 'click.frost.carousel', this._clickNextEvent);
-        dom.removeEvent(this._node, 'click.frost.carousel', this._clickPrevEvent);
-        dom.removeEvent(this._node, 'click.frost.carousel', this._clickSlideEvent);
-
         if (this._settings.keyboard) {
-          dom.removeEvent(this._node, 'keydown.frost.carousel', this._keyDownEvent);
+          dom.removeEvent(this._node, 'keydown.frost.carousel');
         }
 
         if (this._settings.pause) {
-          dom.removeEvent(this._node, 'mouseenter.frost.carousel', this._mouseEnterEvent);
-          dom.removeEvent(this._node, 'mouseleave.frost.carousel', this._mouseLeaveEvent);
+          dom.removeEvent(this._node, 'mouseenter.frost.carousel');
+          dom.removeEvent(this._node, 'mouseleave.frost.carousel');
         }
 
+        dom.removeEvent(this._node, 'remove.frost.carousel');
         dom.removeData(this._node, 'carousel');
       }
       /**
        * Cycle to the next Carousel item.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
        */
 
     }, {
       key: "next",
       value: function next() {
-        return this.slide();
+        this.slide();
       }
       /**
        * Stop the carousel from cycling through items.
@@ -485,29 +408,26 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Cycle to the previous Carousel item.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
        */
 
     }, {
       key: "prev",
       value: function prev() {
-        return this.slide(-1);
+        this.slide(-1);
       }
       /**
        * Cycle to a specific Carousel item.
        * @param {number} index The item index to cycle to.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
        */
 
     }, {
       key: "show",
       value: function show(index) {
-        return this._show(index);
+        this._show(index);
       }
       /**
        * Slide the Carousel in a specific direction.
        * @param {number} [direction=1] The direction to slide to.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
        */
 
     }, {
@@ -515,87 +435,46 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       value: function slide() {
         var direction = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
         var index = this._queue.length ? this._queue[this._queue.length - 1] : this._index;
-        return this.show(index + direction);
+        this.show(index + direction);
+      }
+      /**
+       * Initialize a Carousel.
+       * @param {HTMLElement} node The input node.
+       * @param {object} [settings] The options to create the Carousel with.
+       * @param {number} [settings.interval=5000] The duration of the interval.
+       * @param {number} [settings.transition=500] The duration of the transition.
+       * @param {Boolean} [settings.keyboard=true] Whether to all keyboard navigation.
+       * @param {Boolean|string} [settings.ride=false] Set to "carousel" to automatically start the carousel.
+       * @param {Boolean} [settings.pause=true] Whether to pause the carousel on mouseover.
+       * @param {Boolean} [settings.wrap=true] Whether the carousel should cycle around.
+       * @returns {Carousel} A new Carousel object.
+       */
+
+    }], [{
+      key: "init",
+      value: function init(node, settings) {
+        return dom.hasData(node, 'carousel') ? dom.getData(node, 'carousel') : new this(node, settings);
       }
     }]);
 
     return Carousel;
-  }(); // Default Carousel options
+  }(); // Carousel events
 
 
-  Carousel.defaults = {
-    interval: 5000,
-    transition: 500,
-    keyboard: true,
-    ride: false,
-    pause: true,
-    wrap: true
-  }; // Auto-initialize Carousel from data-ride
+  dom.addEventDelegate(document, 'click.frost.carousel', '.carousel-next, .carousel-prev, [data-slide], [data-slide-to]', function (e) {
+    e.preventDefault();
+    var target = UI.getTarget(e.currentTarget, '.carousel');
+    var carousel = Carousel.init(target);
+    var slideTo = dom.getDataset(e.currentTarget, 'slideTo');
 
-  dom.addEventOnce(window, 'load', function (_) {
-    var nodes = dom.find('[data-toggle="carousel"], [data-ride="carousel"]');
-    var _iteratorNormalCompletion3 = true;
-    var _didIteratorError3 = false;
-    var _iteratorError3 = undefined;
-
-    try {
-      for (var _iterator3 = nodes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-        var node = _step3.value;
-        new Carousel(node);
-      }
-    } catch (err) {
-      _didIteratorError3 = true;
-      _iteratorError3 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
-          _iterator3["return"]();
-        }
-      } finally {
-        if (_didIteratorError3) {
-          throw _iteratorError3;
-        }
-      }
+    if (!Core.isUndefined(slideTo)) {
+      carousel.show(slideTo);
+    } else if (dom.hasClass(e.currentTarget, 'carousel-prev')) {
+      carousel.prev();
+    } else {
+      carousel.next();
     }
-  }); // Add Carousel QuerySet method
-
-  if (QuerySet) {
-    QuerySet.prototype.carousel = function (a) {
-      for (var _len3 = arguments.length, args = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-        args[_key3 - 1] = arguments[_key3];
-      }
-
-      var options, method;
-
-      if (Core.isObject(a)) {
-        options = a;
-      } else if (Core.isString(a)) {
-        method = a;
-      }
-
-      var result;
-      this.each(function (node, index) {
-        if (!Core.isElement(node)) {
-          return;
-        }
-
-        var carousel = dom.hasData(node, 'carousel') ? dom.getData(node, 'carousel') : new Carousel(node, options);
-
-        if (index) {
-          return;
-        }
-
-        if (!method) {
-          result = carousel;
-        } else {
-          result = carousel[method].apply(carousel, args);
-        }
-      });
-      return result;
-    };
-  }
-
-  UI.Carousel = Carousel;
+  });
   /**
    * Carousel Helpers
    */
@@ -605,156 +484,131 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Attach events for the Carousel.
      */
     _events: function _events() {
-      var _this4 = this;
-
-      this._clickNextEvent = function (e) {
-        e.preventDefault();
-
-        _this4.next()["catch"](function (_) {});
-      };
-
-      this._clickPrevEvent = function (e) {
-        e.preventDefault();
-
-        _this4.prev()["catch"](function (_) {});
-      };
-
-      this._clickSlideEvent = function (e) {
-        e.preventDefault();
-        var slideTo = dom.getDataset(e.currentTarget, 'slideTo');
-
-        _this4.show(slideTo)["catch"](function (_) {});
-      };
-
-      this._keyDownEvent = function (e) {
-        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
-          return;
-        }
-
-        e.preventDefault();
-
-        if (e.key === 'ArrowLeft') {
-          _this4.prev()["catch"](function (_) {});
-        } else if (e.key === 'ArrowRight') {
-          _this4.next()["catch"](function (_) {});
-        }
-      };
-
-      this._mouseEnterEvent = function (_) {
-        return _this4.pause();
-      };
-
-      this._mouseLeaveEvent = function (_) {
-        return _this4._setTimer();
-      };
-
-      dom.addEventDelegate(this._node, 'click.frost.carousel', '.carousel-next', this._clickNextEvent);
-      dom.addEventDelegate(this._node, 'click.frost.carousel', '.carousel-prev', this._clickPrevEvent);
-      dom.addEventDelegate(this._node, 'click.frost.carousel', '[data-slide-to]', this._clickSlideEvent);
+      var _this2 = this;
 
       if (this._settings.keyboard) {
-        dom.addEvent(this._node, 'keydown.frost.carousel', this._keyDownEvent);
+        dom.addEvent(this._node, 'keydown.frost.carousel', function (e) {
+          switch (e.key) {
+            case 'ArrowLeft':
+              e.preventDefault();
+
+              _this2.prev()["catch"](function (_) {});
+
+              break;
+
+            case 'ArrowRight':
+              e.preventDefault();
+
+              _this2.next()["catch"](function (_) {});
+
+              break;
+          }
+        });
       }
 
       if (this._settings.pause) {
-        dom.addEvent(this._node, 'mouseenter.frost.carousel', this._mouseEnterEvent);
-        dom.addEvent(this._node, 'mouseleave.frost.carousel', this._mouseLeaveEvent);
+        dom.addEvent(this._node, 'mouseenter.frost.carousel', function (_) {
+          _this2.pause();
+        });
+        dom.addEvent(this._node, 'mouseleave.frost.carousel', function (_) {
+          _this2._setTimer();
+        });
       }
+
+      dom.addEvent(this._node, 'remove.frost.carousel', function (_) {
+        _this2.destroy();
+      });
     },
 
     /**
      * Set a timer for the next Carousel cycle.
      */
     _setTimer: function _setTimer() {
-      var _this5 = this;
+      var _this3 = this;
 
       var interval = dom.getDataset(this._items[this._index], 'interval');
       this._timer = setTimeout(function (_) {
-        return _this5.cycle();
-      }, interval ? interval : this._settings.interval);
+        return _this3.cycle();
+      }, interval || this._settings.interval);
     },
 
     /**
      * Cycle to a specific Carousel item.
      * @param {number} index The item index to cycle to.
-     * @returns {Promise} A new Promise that resolves when the animation has completed.
      */
     _show: function _show(index) {
-      var _this6 = this;
+      var _this4 = this;
 
-      return new Promise(function (resolve, reject) {
-        if (dom.getDataset(_this6._node, 'sliding')) {
-          _this6._queue.push(index);
+      if (this._sliding) {
+        this._queue.push(index);
 
-          return;
+        return;
+      }
+
+      index = parseInt(index);
+
+      if (!this._settings.wrap && (index < 0 || index > this._items.length - 1)) {
+        return;
+      }
+
+      var dir = 0;
+
+      if (index < 0) {
+        dir = -1;
+      } else if (index > this._items.length - 1) {
+        dir = 1;
+      }
+
+      index %= this._items.length;
+
+      if (index < 0) {
+        index = this._items.length + index;
+      }
+
+      if (index === this._index) {
+        return;
+      }
+
+      var direction = dir == -1 || dir == 0 && index < this._index ? 'left' : 'right';
+      var eventData = {
+        direction: direction,
+        relatedTarget: this._items[index],
+        from: this._index,
+        to: index
+      };
+
+      if (!dom.triggerOne(this._node, 'slide.frost.carousel', eventData)) {
+        return;
+      }
+
+      var oldIndex = this._index;
+      this._index = index;
+      this._sliding = true;
+      this.pause();
+      dom.addClass(this._items[this._index], 'active');
+      dom.removeClass(this._items[oldIndex], 'active');
+      dom.animate(this._items[this._index], function (node, progress, options) {
+        return _this4._update(node, _this4._items[oldIndex], progress, options.direction);
+      }, {
+        direction: direction,
+        duration: this._settings.transition
+      }).then(function (_) {
+        var oldIndicator = dom.find('.active[data-slide-to]', _this4._node);
+        var newIndicator = dom.find('[data-slide-to="' + _this4._index + '"]', _this4._node);
+        dom.removeClass(oldIndicator, 'active');
+        dom.addClass(newIndicator, 'active');
+        dom.triggerEvent(_this4._node, 'slid.frost.carousel', eventData);
+        _this4._sliding = false;
+
+        if (!_this4._queue.length) {
+          _this4._setTimer();
+        } else {
+          var next = _this4._queue.shift();
+
+          _this4._show(next);
         }
-
-        index = parseInt(index);
-
-        if (!_this6._settings.wrap && (index < 0 || index > _this6._items.length - 1)) {
-          return reject();
-        }
-
-        var dir = 0;
-
-        if (index < 0) {
-          dir = -1;
-        } else if (index > _this6._items.length - 1) {
-          dir = 1;
-        }
-
-        index %= _this6._items.length;
-
-        if (index < 0) {
-          index = _this6._items.length + index;
-        }
-
-        if (index === _this6._index) {
-          return reject();
-        }
-
-        var direction = dir == -1 || dir == 0 && index < _this6._index ? 'left' : 'right';
-        var eventData = {
-          direction: direction,
-          relatedTarget: _this6._items[index],
-          from: _this6._index,
-          to: index
-        };
-
-        if (!DOM._triggerEvent(_this6._node, 'slide.frost.carousel', eventData)) {
-          return reject();
-        }
-
-        var oldIndex = _this6._index;
-        _this6._index = index;
-        dom.setDataset(_this6._node, 'sliding', true);
-
-        _this6.pause();
-
-        dom.addClass(_this6._items[_this6._index], 'active');
-        dom.removeClass(_this6._items[oldIndex], 'active');
-        dom.animate(_this6._items[_this6._index], function (node, progress, options) {
-          return _this6._update(node, _this6._items[oldIndex], progress, options.direction);
-        }, {
-          direction: direction,
-          duration: _this6._settings.transition
-        }).then(function (_) {
-          dom.removeClass(dom.find('.active[data-slide-to]', _this6._node), 'active');
-          dom.addClass(dom.find('[data-slide-to="' + _this6._index + '"]', _this6._node), 'active');
-          dom.removeDataset(_this6._node, 'sliding');
-          dom.triggerEvent(_this6._node, 'slid.frost.carousel', eventData);
-          resolve();
-
-          if (!_this6._queue.length) {
-            _this6._setTimer();
-
-            return;
-          }
-
-          var next = _this6._queue.shift();
-
-          return _this6._show(next);
-        })["catch"](reject);
+      })["catch"](function (_) {
+        _this4._sliding = false;
       });
     },
 
@@ -767,26 +621,94 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      */
     _update: function _update(nodeIn, nodeOut, progress, direction) {
       if (progress >= 1) {
-        DOMNode.setStyle(nodeOut, 'display', '');
-        DOMNode.setStyle(nodeOut, 'transform', '');
-        DOMNode.setStyle(nodeIn, 'transform', '');
+        nodeOut.style.setProperty('display', '');
+        nodeOut.style.setProperty('transform', '');
+        nodeIn.style.setProperty('transform', '');
         return;
       }
 
       var inverse = direction === 'right';
-      DOMNode.setStyle(nodeOut, 'display', 'block');
-      DOMNode.setStyle(nodeOut, 'transform', "translateX(".concat(Math.round(progress * 100) * (inverse ? -1 : 1), "%)"));
-      DOMNode.setStyle(nodeIn, 'transform', "translateX(".concat(Math.round((1 - progress) * 100) * (inverse ? 1 : -1), "%)"));
+      nodeOut.style.setProperty('display', 'block');
+      nodeOut.style.setProperty('transform', "translateX(".concat(Math.round(progress * 100) * (inverse ? -1 : 1), "%)"));
+      nodeIn.style.setProperty('transform', "translateX(".concat(Math.round((1 - progress) * 100) * (inverse ? 1 : -1), "%)"));
     }
-  });
+  }); // Carousel default options
+
+  Carousel.defaults = {
+    interval: 5000,
+    transition: 500,
+    keyboard: true,
+    ride: false,
+    pause: true,
+    wrap: true
+  }; // Carousel init
+
+  dom.addEventOnce(window, 'load', function (_) {
+    var nodes = dom.find('[data-ride="carousel"]');
+
+    var _iterator3 = _createForOfIteratorHelper(nodes),
+        _step3;
+
+    try {
+      for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+        var node = _step3.value;
+        Carousel.init(node);
+      }
+    } catch (err) {
+      _iterator3.e(err);
+    } finally {
+      _iterator3.f();
+    }
+  }); // Carousel QuerySet method
+
+  if (QuerySet) {
+    QuerySet.prototype.carousel = function (a) {
+      var settings, method;
+
+      if (Core.isObject(a)) {
+        settings = a;
+      } else if (Core.isString(a)) {
+        method = a;
+      }
+
+      for (var _len3 = arguments.length, args = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+        args[_key3 - 1] = arguments[_key3];
+      }
+
+      var _iterator4 = _createForOfIteratorHelper(this),
+          _step4;
+
+      try {
+        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+          var node = _step4.value;
+
+          if (!Core.isElement(node)) {
+            continue;
+          }
+
+          var carousel = Carousel.init(node, settings);
+
+          if (method) {
+            carousel[method].apply(carousel, args);
+          }
+        }
+      } catch (err) {
+        _iterator4.e(err);
+      } finally {
+        _iterator4.f();
+      }
+
+      return this;
+    };
+  }
+
+  UI.Carousel = Carousel;
   /**
    * Collapse Class
    * @class
    */
 
-  var Collapse =
-  /*#__PURE__*/
-  function () {
+  var Collapse = /*#__PURE__*/function () {
     /**
      * New Collapse constructor.
      * @param {HTMLElement} node The input node.
@@ -799,40 +721,18 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Collapse);
 
       this._node = node;
-      this._settings = Core.extend({}, Collapse.defaults, dom.getDataset(this._node), settings);
-      this._targets = dom.find(this._settings.target);
 
-      this._events();
+      var id = this._node.getAttribute('id');
+
+      this._triggers = dom.find("[data-toggle=\"collapse\"][data-target=\"#".concat(id, "\"]"));
+      console.log(this._triggers);
+      this._settings = Core.extend({}, this.constructor.defaults, dom.getDataset(this._node), settings);
+
+      if (this._settings.parent) {
+        this._parent = dom.findOne(this._settings.parent);
+      }
 
       dom.setData(this._node, 'collapse', this);
-      var _iteratorNormalCompletion4 = true;
-      var _didIteratorError4 = false;
-      var _iteratorError4 = undefined;
-
-      try {
-        for (var _iterator4 = this._targets[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-          var target = _step4.value;
-
-          if (!Collapse._toggles.has(target)) {
-            Collapse._toggles.set(target, []);
-          }
-
-          Collapse._toggles.get(target).push(this._node);
-        }
-      } catch (err) {
-        _didIteratorError4 = true;
-        _iteratorError4 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
-            _iterator4["return"]();
-          }
-        } finally {
-          if (_didIteratorError4) {
-            throw _iteratorError4;
-          }
-        }
-      }
     }
     /**
      * Destroy the Collapse.
@@ -842,354 +742,155 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Collapse, [{
       key: "destroy",
       value: function destroy() {
-        var _this7 = this;
-
-        var _iteratorNormalCompletion5 = true;
-        var _didIteratorError5 = false;
-        var _iteratorError5 = undefined;
-
-        try {
-          for (var _iterator5 = this._targets[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-            var target = _step5.value;
-
-            var toggles = Collapse._toggles.get(target).filter(function (toggle) {
-              return !dom.isSame(toggle, _this7._node);
-            });
-
-            if (toggles.length) {
-              Collapse._toggles.set(target, toggles);
-            } else {
-              Collapse._toggles["delete"](target);
-            }
-          }
-        } catch (err) {
-          _didIteratorError5 = true;
-          _iteratorError5 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion5 && _iterator5["return"] != null) {
-              _iterator5["return"]();
-            }
-          } finally {
-            if (_didIteratorError5) {
-              throw _iteratorError5;
-            }
-          }
-        }
-
-        dom.removeEvent(this._node, 'click.frost.collapse', this._clickEvent);
         dom.removeData(this._node, 'collapse');
       }
       /**
-       * Hide the target element.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
+       * Hide the element.
        */
 
     }, {
       key: "hide",
       value: function hide() {
-        var _this8 = this;
+        var _this5 = this;
 
-        return new Promise(function (resolve, reject) {
-          var targets = _this8._targets.filter(function (target) {
-            return dom.hasClass(target, 'show') && !dom.getDataset(target, 'animating');
-          });
+        if (this._animating || !dom.hasClass(this._node, 'show') || !dom.triggerOne(this._node, 'hide.frost.collapse')) {
+          return;
+        }
 
-          if (!targets.length) {
-            return reject();
-          }
-
-          if (!DOM._triggerEvent(_this8._node, 'hide.frost.collapse')) {
-            return reject();
-          }
-
-          dom.setDataset(targets, 'animating', true);
-          dom.squeezeOut(targets, {
-            direction: _this8._settings.direction,
-            duration: _this8._settings.duration
-          }).then(function (_) {
-            dom.removeClass(targets, 'show');
-
-            _this8._setExpanded(targets, false);
-
-            dom.triggerEvent(_this8._node, 'hidden.frost.collapse');
-            resolve();
-          })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset(targets, 'animating');
-          });
+        this._animating = true;
+        dom.squeezeOut(this._node, {
+          direction: this._settings.direction,
+          duration: this._settings.duration
+        }).then(function (_) {
+          dom.removeClass(_this5._node, 'show');
+          dom.setAttribute(_this5._triggers, 'aria-expanded', false);
+          dom.triggerEvent(_this5._node, 'hidden.frost.collapse');
+        })["catch"](function (_) {})["finally"](function (_) {
+          _this5._animating = false;
         });
       }
       /**
-       * Show the target element.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
+       * Show the element.
        */
 
     }, {
       key: "show",
       value: function show() {
-        var _this9 = this;
+        var _this6 = this;
 
-        return new Promise(function (resolve, reject) {
-          var targets = _this9._targets.filter(function (target) {
-            return dom.hasClass(target, 'show') && !dom.getDataset(target, 'animating');
-          });
+        if (this._animating || dom.hasClass(this._node, 'show')) {
+          return;
+        }
 
-          if (!targets.length) {
-            return reject();
-          }
+        var collapses = [];
 
-          var accordion = _this9._getAccordion(hidden);
+        if (this._parent) {
+          var siblings = dom.find('.collapse.show', this._parent);
 
-          if (!accordion) {
-            return reject();
-          }
-
-          var _iteratorNormalCompletion6 = true;
-          var _didIteratorError6 = false;
-          var _iteratorError6 = undefined;
+          var _iterator5 = _createForOfIteratorHelper(siblings),
+              _step5;
 
           try {
-            for (var _iterator6 = accordion.nodes[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-              var node = _step6.value;
+            for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+              var sibling = _step5.value;
+              var collapse = this.constructor.init(sibling);
 
-              if (!DOM._triggerEvent(node, 'hide.frost.collapse')) {
-                return reject();
+              if (this._parent !== collapse._parent) {
+                continue;
               }
+
+              if (collapse._animating) {
+                return;
+              }
+
+              collapses.push(collapse);
             }
           } catch (err) {
-            _didIteratorError6 = true;
-            _iteratorError6 = err;
+            _iterator5.e(err);
           } finally {
-            try {
-              if (!_iteratorNormalCompletion6 && _iterator6["return"] != null) {
-                _iterator6["return"]();
-              }
-            } finally {
-              if (_didIteratorError6) {
-                throw _iteratorError6;
-              }
-            }
+            _iterator5.f();
           }
+        }
 
-          if (!DOM._triggerEvent(_this9._node, 'show.frost.collapse')) {
-            return reject();
-          }
+        if (!dom.triggerOne(this._node, 'show.frost.collapse')) {
+          return;
+        }
 
-          var allTargets = _toConsumableArray(targets);
+        for (var _i = 0, _collapses = collapses; _i < _collapses.length; _i++) {
+          var _collapse = _collapses[_i];
 
-          allTargets.push.apply(allTargets, _toConsumableArray(accordion.targets));
-          dom.setDataset(allTargets, 'animating', true);
-          var animations = allTargets.map(function (target) {
-            var animation = accordion.targets.includes(target) ? 'squeezeOut' : 'squeezeIn';
-            return dom[animation](target, {
-              direction: _this9._settings.direction,
-              duration: _this9._settings.duration,
-              type: 'linear'
-            });
-          });
-          dom.addClass(targets, 'show');
-          Promise.all(animations).then(function (_) {
-            if (accordion.targets.length) {
-              dom.removeClass(accordion.targets, 'show');
+          _collapse.hide();
+        }
 
-              _this9._setExpanded(accordion.targets, false);
-            }
-
-            if (accordion.nodes.length) {
-              dom.triggerEvent(accordion.nodes, 'hidden.frost.collapse');
-            }
-
-            _this9._setExpanded(targets);
-
-            dom.triggerEvent(_this9._node, 'shown.frost.collapse');
-            resolve();
-          })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset(allTargets, 'animating');
-          });
+        this._animating = true;
+        dom.addClass(this._node, 'show');
+        dom.squeezeIn(this._node, {
+          direction: this._settings.direction,
+          duration: this._settings.duration
+        }).then(function (_) {
+          dom.setAttribute(_this6._triggers, 'aria-expanded', true);
+          dom.triggerEvent(_this6._node, 'shown.frost.collapse');
+        })["catch"](function (_) {})["finally"](function (_) {
+          _this6._animating = false;
         });
       }
       /**
-       * Toggle the target element.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
+       * Toggle the element.
        */
 
     }, {
       key: "toggle",
       value: function toggle() {
-        var _this10 = this;
+        dom.hasClass(this._node, 'show') ? this.hide() : this.show();
+      }
+      /**
+       * Initialize a Collapse.
+       * @param {HTMLElement} node The input node.
+       * @param {object} [settings] The options to create the Collapse with.
+       * @param {string} [settings.direction=bottom] The direction to collapse the targets from/to.
+       * @param {number} [settings.duration=300] The duration of the animation.
+       * @returns {Collapse} A new Collapse object.
+       */
 
-        return new Promise(function (resolve, reject) {
-          var targets = [];
-          var hidden = [];
-          var visible = [];
-          var _iteratorNormalCompletion7 = true;
-          var _didIteratorError7 = false;
-          var _iteratorError7 = undefined;
-
-          try {
-            for (var _iterator7 = _this10._targets[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
-              var target = _step7.value;
-
-              if (dom.getDataset(target, 'animating')) {
-                continue;
-              }
-
-              targets.push(target);
-
-              if (dom.hasClass(target, 'show')) {
-                visible.push(target);
-              } else {
-                hidden.push(target);
-              }
-            }
-          } catch (err) {
-            _didIteratorError7 = true;
-            _iteratorError7 = err;
-          } finally {
-            try {
-              if (!_iteratorNormalCompletion7 && _iterator7["return"] != null) {
-                _iterator7["return"]();
-              }
-            } finally {
-              if (_didIteratorError7) {
-                throw _iteratorError7;
-              }
-            }
-          }
-
-          if (!targets.length) {
-            return reject();
-          }
-
-          if (visible.length && !DOM._triggerEvent(_this10._node, 'hide.frost.collapse')) {
-            return reject();
-          }
-
-          var accordion = _this10._getAccordion(hidden);
-
-          if (!accordion) {
-            return reject();
-          }
-
-          var _iteratorNormalCompletion8 = true;
-          var _didIteratorError8 = false;
-          var _iteratorError8 = undefined;
-
-          try {
-            for (var _iterator8 = accordion.nodes[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
-              var node = _step8.value;
-
-              if (!DOM._triggerEvent(node, 'hide.frost.collapse')) {
-                return reject();
-              }
-            }
-          } catch (err) {
-            _didIteratorError8 = true;
-            _iteratorError8 = err;
-          } finally {
-            try {
-              if (!_iteratorNormalCompletion8 && _iterator8["return"] != null) {
-                _iterator8["return"]();
-              }
-            } finally {
-              if (_didIteratorError8) {
-                throw _iteratorError8;
-              }
-            }
-          }
-
-          if (hidden.length && !DOM._triggerEvent(_this10._node, 'show.frost.collapse')) {
-            return reject();
-          }
-
-          var allTargets = [].concat(targets);
-          allTargets.push.apply(allTargets, _toConsumableArray(accordion.targets));
-          dom.setDataset(allTargets, 'animating', true);
-          var animations = allTargets.map(function (target) {
-            var animation = visible.includes(target) || accordion.targets.includes(target) ? 'squeezeOut' : 'squeezeIn';
-            return dom[animation](target, {
-              direction: _this10._settings.direction,
-              duration: _this10._settings.duration,
-              type: 'linear'
-            });
-          });
-          dom.addClass(hidden, 'show');
-          Promise.all(animations).then(function (_) {
-            if (accordion.targets.length) {
-              dom.removeClass(accordion.targets, 'show');
-
-              _this10._setExpanded(accordion.targets, false);
-            }
-
-            if (accordion.nodes.length) {
-              dom.triggerEvent(accordion.nodes, 'hidden.frost.collapse');
-            }
-
-            if (visible.length) {
-              dom.removeClass(visible, 'show');
-
-              _this10._setExpanded(visible, false);
-
-              dom.triggerEvent(_this10._node, 'hidden.frost.collapse');
-            }
-
-            if (hidden.length) {
-              _this10._setExpanded(hidden);
-
-              dom.triggerEvent(_this10._node, 'shown.frost.collapse');
-            }
-
-            resolve();
-          })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset(allTargets, 'animating');
-          });
-        });
+    }], [{
+      key: "init",
+      value: function init(node, settings) {
+        return dom.hasData(node, 'collapse') ? dom.getData(node, 'collapse') : new this(node, settings);
       }
     }]);
 
     return Collapse;
-  }(); // Default Collapse options
+  }(); // Collapse events
 
+
+  dom.addEventDelegate(document, 'click.frost.collapse', '[data-toggle="collapse"]', function (e) {
+    e.preventDefault();
+    var selector = UI.getTargetSelector(e.currentTarget);
+    var targets = dom.find(selector);
+
+    var _iterator6 = _createForOfIteratorHelper(targets),
+        _step6;
+
+    try {
+      for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+        var target = _step6.value;
+        var collapse = Collapse.init(target);
+        collapse.toggle();
+      }
+    } catch (err) {
+      _iterator6.e(err);
+    } finally {
+      _iterator6.f();
+    }
+  }); // Collapse default options
 
   Collapse.defaults = {
     direction: 'bottom',
     duration: 250
-  };
-  Collapse._toggles = new WeakMap(); // Auto-initialize Collapse from data-ride
-
-  dom.addEventOnce(window, 'load', function (_) {
-    var nodes = dom.find('[data-toggle="collapse"]');
-    var _iteratorNormalCompletion9 = true;
-    var _didIteratorError9 = false;
-    var _iteratorError9 = undefined;
-
-    try {
-      for (var _iterator9 = nodes[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
-        var node = _step9.value;
-        new Collapse(node);
-      }
-    } catch (err) {
-      _didIteratorError9 = true;
-      _iteratorError9 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion9 && _iterator9["return"] != null) {
-          _iterator9["return"]();
-        }
-      } finally {
-        if (_didIteratorError9) {
-          throw _iteratorError9;
-        }
-      }
-    }
-  }); // Add Collapse QuerySet method
+  }; // Collapse QuerySet method
 
   if (QuerySet) {
     QuerySet.prototype.collapse = function (a) {
-      for (var _len4 = arguments.length, args = new Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
-        args[_key4 - 1] = arguments[_key4];
-      }
-
       var options, method;
 
       if (Core.isObject(a)) {
@@ -1198,207 +899,44 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         method = a;
       }
 
-      var result;
-      this.each(function (node, index) {
-        if (!Core.isElement(node)) {
-          return;
-        }
+      for (var _len4 = arguments.length, args = new Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
+        args[_key4 - 1] = arguments[_key4];
+      }
 
-        var collapse = dom.hasData(node, 'collapse') ? dom.getData(node, 'collapse') : new Collapse(node, options);
+      var _iterator7 = _createForOfIteratorHelper(this),
+          _step7;
 
-        if (index) {
-          return;
-        }
+      try {
+        for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
+          var node = _step7.value;
 
-        if (!method) {
-          result = collapse;
-        } else {
-          result = collapse[method].apply(collapse, args);
+          if (!Core.isElement(node)) {
+            continue;
+          }
+
+          var collapse = Collapse.init(node, options);
+
+          if (method) {
+            collapse[method].apply(collapse, args);
+          }
         }
-      });
-      return result;
+      } catch (err) {
+        _iterator7.e(err);
+      } finally {
+        _iterator7.f();
+      }
+
+      return this;
     };
   }
 
   UI.Collapse = Collapse;
   /**
-   * Collapse Helpers
-   */
-
-  Object.assign(Collapse.prototype, {
-    /**
-     * Attach events for the Collapse.
-     */
-    _events: function _events() {
-      var _this11 = this;
-
-      this._clickEvent = function (e) {
-        e.preventDefault();
-
-        _this11.toggle()["catch"](function (_) {});
-      };
-
-      dom.addEvent(this._node, 'click.frost.collapse', this._clickEvent);
-    },
-
-    /**
-     * Get accordion toggles and targets for the target nodes.
-     * @param {array} targets The target nodes.
-     * @return {object} The accordion toggles and targets.
-     */
-    _getAccordion: function _getAccordion(targets) {
-      var _this12 = this;
-
-      var accordionToggles = [];
-      var accordionTargets = [];
-      var _iteratorNormalCompletion10 = true;
-      var _didIteratorError10 = false;
-      var _iteratorError10 = undefined;
-
-      try {
-        for (var _iterator10 = targets[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
-          var target = _step10.value;
-          var parent = dom.getDataset(target, 'parent');
-
-          if (!parent) {
-            continue;
-          }
-
-          var parentNode = dom.closest(target, parent);
-          var collapseToggles = dom.find('[data-toggle="collapse"]', parentNode).filter(function (toggle) {
-            return !dom.isSame(toggle, _this12._node) && dom.hasData(toggle, 'collapse');
-          });
-          var _iteratorNormalCompletion11 = true;
-          var _didIteratorError11 = false;
-          var _iteratorError11 = undefined;
-
-          try {
-            for (var _iterator11 = collapseToggles[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
-              var toggle = _step11.value;
-
-              if (accordionToggles.includes(toggle)) {
-                continue;
-              }
-
-              var collapse = dom.getData(toggle, 'collapse');
-              var collapseTargets = dom.find(collapse._settings.target).filter(function (target) {
-                return !targets.includes(target) && !accordionTargets.includes(target) && dom.hasClass(target, 'show');
-              });
-
-              if (!collapseTargets.length) {
-                continue;
-              }
-
-              if (collapseTargets.find(function (target) {
-                return dom.getDataset(target, 'animating');
-              })) {
-                return false;
-              }
-
-              accordionToggles.push(toggle);
-              accordionTargets.push.apply(accordionTargets, _toConsumableArray(collapseTargets));
-            }
-          } catch (err) {
-            _didIteratorError11 = true;
-            _iteratorError11 = err;
-          } finally {
-            try {
-              if (!_iteratorNormalCompletion11 && _iterator11["return"] != null) {
-                _iterator11["return"]();
-              }
-            } finally {
-              if (_didIteratorError11) {
-                throw _iteratorError11;
-              }
-            }
-          }
-        }
-      } catch (err) {
-        _didIteratorError10 = true;
-        _iteratorError10 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion10 && _iterator10["return"] != null) {
-            _iterator10["return"]();
-          }
-        } finally {
-          if (_didIteratorError10) {
-            throw _iteratorError10;
-          }
-        }
-      }
-
-      return {
-        nodes: accordionToggles,
-        targets: accordionTargets
-      };
-    },
-
-    /**
-     * Set the ARIA expanded attribute for all targets.
-     * @param {array} targets The targets array.
-     * @param {Boolean} [expanded=true] Whether the target is expanded.
-     */
-    _setExpanded: function _setExpanded(targets) {
-      var expanded = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-      var _iteratorNormalCompletion12 = true;
-      var _didIteratorError12 = false;
-      var _iteratorError12 = undefined;
-
-      try {
-        for (var _iterator12 = targets[Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
-          var target = _step12.value;
-
-          var toggles = Collapse._toggles.get(target);
-
-          var _iteratorNormalCompletion13 = true;
-          var _didIteratorError13 = false;
-          var _iteratorError13 = undefined;
-
-          try {
-            for (var _iterator13 = toggles[Symbol.iterator](), _step13; !(_iteratorNormalCompletion13 = (_step13 = _iterator13.next()).done); _iteratorNormalCompletion13 = true) {
-              var toggle = _step13.value;
-              dom.setAttribute(toggle, 'aria-expanded', expanded);
-            }
-          } catch (err) {
-            _didIteratorError13 = true;
-            _iteratorError13 = err;
-          } finally {
-            try {
-              if (!_iteratorNormalCompletion13 && _iterator13["return"] != null) {
-                _iterator13["return"]();
-              }
-            } finally {
-              if (_didIteratorError13) {
-                throw _iteratorError13;
-              }
-            }
-          }
-        }
-      } catch (err) {
-        _didIteratorError12 = true;
-        _iteratorError12 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion12 && _iterator12["return"] != null) {
-            _iterator12["return"]();
-          }
-        } finally {
-          if (_didIteratorError12) {
-            throw _iteratorError12;
-          }
-        }
-      }
-    }
-  });
-  /**
    * Dropdown Class
    * @class
    */
 
-  var Dropdown =
-  /*#__PURE__*/
-  function () {
+  var Dropdown = /*#__PURE__*/function () {
     /**
      * New Dropdown constructor.
      * @param {HTMLElement} node The input node.
@@ -1412,14 +950,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Dropdown} A new Dropdown object.
      */
     function Dropdown(node, settings) {
+      var _this7 = this;
+
       _classCallCheck(this, Dropdown);
 
       this._node = node;
-      this._settings = Core.extend({}, Dropdown.defaults, dom.getDataset(this._node), settings);
-      this._containerNode = dom.parent(this._node);
-      this._menuNode = dom.siblings(this._node).find(function (child) {
-        return dom.hasClass(child, 'dropdown-menu');
-      });
+      this._settings = Core.extend({}, this.constructor.defaults, dom.getDataset(this._node), settings);
+      this._containerNode = dom.parent(this._node).shift();
+      this._menuNode = dom.next(this._node, '.dropdown-menu').shift();
 
       if (this._settings.reference) {
         if (this._settings.reference === 'parent') {
@@ -1443,8 +981,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         });
       }
 
-      this._events();
-
+      dom.addEvent(this._node, 'remove.frost.dropdown', function (_) {
+        _this7.destroy();
+      });
       dom.setData(this._node, 'dropdown', this);
     }
     /**
@@ -1455,101 +994,195 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Dropdown, [{
       key: "destroy",
       value: function destroy() {
-        dom.stop(this._menuNode, true);
-
         if (this._popper) {
           this._popper.destroy();
         }
 
-        dom.removeClass(this._containerNode, 'open');
-        dom.removeEvent(document, 'click.frost.dropdown', this._documentClickEvent);
-        dom.removeEvent(this._node, 'click.frost.dropdown', this._clickEvent);
-        dom.removeEvent(this._node, 'keyup.frost.dropdown', this._keyUpEvent);
-        dom.removeEvent(this._node, 'keydown.frost.dropdown', this._keyDownEvent);
-        dom.removeEventDelegate(this._menuNode, 'keydown.frost.dropdown', '.dropdown-item', this._menuKeyDownEvent);
+        dom.removeEvent(this._node, 'keyup.frost.dropdown');
+        dom.removeEvent(this._node, 'remove.frost.dropdown');
         dom.removeData(this._node, 'dropdown');
       }
       /**
        * Hide the Dropdown.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
        */
 
     }, {
       key: "hide",
       value: function hide() {
-        var _this13 = this;
+        var _this8 = this;
 
-        return new Promise(function (resolve, reject) {
-          if (!dom.hasClass(_this13._containerNode, 'open') || dom.getDataset(_this13._menuNode, 'animating')) {
-            return reject();
-          }
+        if (this._animating || !dom.hasClass(this._containerNode, 'open') || !dom.triggerOne(this._node, 'hide.frost.dropdown')) {
+          return;
+        }
 
-          if (!DOM._triggerEvent(_this13._node, 'hide.frost.dropdown')) {
-            return reject();
-          }
-
-          dom.setDataset(_this13._menuNode, 'animating', true);
-          dom.removeEvent(document, 'click.frost.dropdown', _this13._documentClickEvent);
-          dom.fadeOut(_this13._menuNode, {
-            duration: _this13._settings.duration
-          }).then(function (_) {
-            dom.removeClass(_this13._containerNode, 'open');
-            dom.setAttribute(_this13._node, 'aria-expanded', false);
-            dom.triggerEvent(_this13._node, 'hidden.frost.dropdown');
-            resolve();
-          })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset(_this13._menuNode, 'animating');
-          });
+        this._animating = true;
+        dom.fadeOut(this._menuNode, {
+          duration: this._settings.duration
+        }).then(function (_) {
+          dom.removeClass(_this8._containerNode, 'open');
+          dom.setAttribute(_this8._node, 'aria-expanded', false);
+          dom.triggerEvent(_this8._node, 'hidden.frost.dropdown');
+        })["catch"](function (_) {})["finally"](function (_) {
+          _this8._animating = false;
         });
       }
       /**
        * Show the Dropdown.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
        */
 
     }, {
       key: "show",
       value: function show() {
-        var _this14 = this;
+        var _this9 = this;
 
-        return new Promise(function (resolve, reject) {
-          if (dom.hasClass(_this14._containerNode, 'open') || dom.getDataset(_this14._menuNode, 'animating')) {
-            return reject();
-          }
+        if (this._animating || dom.hasClass(this._containerNode, 'open') || !dom.triggerOne(this._node, 'show.frost.dropdown')) {
+          return;
+        }
 
-          if (!DOM._triggerEvent(_this14._node, 'show.frost.dropdown')) {
-            return reject();
-          }
-
-          dom.setDataset(_this14._menuNode, 'animating', true);
-          dom.addClass(_this14._containerNode, 'open');
-          dom.fadeIn(_this14._menuNode, {
-            duration: _this14._settings.duration
-          }).then(function (_) {
-            dom.setAttribute(_this14._node, 'aria-expanded', true);
-            dom.addEvent(document, 'click.frost.dropdown', _this14._documentClickEvent);
-            dom.triggerEvent(_this14._node, 'shown.frost.dropdown');
-            resolve();
-          })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset(_this14._menuNode, 'animating');
-          });
+        this._animating = true;
+        dom.addClass(this._containerNode, 'open');
+        dom.fadeIn(this._menuNode, {
+          duration: this._settings.duration
+        }).then(function (_) {
+          dom.setAttribute(_this9._node, 'aria-expanded', true);
+          dom.triggerEvent(_this9._node, 'shown.frost.dropdown');
+        })["catch"](function (_) {})["finally"](function (_) {
+          _this9._animating = false;
         });
       }
       /**
        * Toggle the Dropdown.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
        */
 
     }, {
       key: "toggle",
       value: function toggle() {
-        return dom.hasClass(this._containerNode, 'open') ? this.hide() : this.show();
+        dom.hasClass(this._containerNode, 'open') ? this.hide() : this.show();
+      }
+      /**
+       * Auto-hide all visible dropdowns.
+       * @param {HTMLElement} [target] The target node.
+       * @param {Boolean} [noHideSelf=false] Whether to force prevent hiding self.
+       */
+
+    }], [{
+      key: "autoHide",
+      value: function autoHide(target) {
+        var noHideSelf = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+        if (!noHideSelf) {
+          noHideSelf = dom.is(target, 'form');
+        }
+
+        var menus = dom.find('.open > .dropdown-menu');
+
+        var _iterator8 = _createForOfIteratorHelper(menus),
+            _step8;
+
+        try {
+          for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
+            var menu = _step8.value;
+
+            if (target && dom.hasDescendent(menu, target) && (noHideSelf || dom.closest(target, 'form', menu).length)) {
+              continue;
+            }
+
+            var trigger = dom.prev(menu).shift();
+
+            if (trigger === target) {
+              continue;
+            }
+
+            var dropdown = this.init(trigger);
+            dropdown.hide();
+          }
+        } catch (err) {
+          _iterator8.e(err);
+        } finally {
+          _iterator8.f();
+        }
+      }
+      /**
+       * Initialize a Dropdown.
+       * @param {HTMLElement} node The input node.
+       * @param {object} [settings] The options to create the Dropdown with.
+       * @param {number} [settings.duration=100] The duration of the animation.
+       * @param {string} [settings.placement=bottom] The placement of the dropdown relative to the toggle.
+       * @param {string} [settings.position=start] The position of the dropdown relative to the toggle.
+       * @param {Boolean} [settings.fixed=false] Whether the dropdown position is fixed.
+       * @param {number} [settings.spacing=2] The spacing between the dropdown and the toggle.
+       * @param {number} [settings.minContact=false] The minimum amount of contact the dropdown must make with the toggle.
+       * @returns {Dropdown} A new Dropdown object.
+       */
+
+    }, {
+      key: "init",
+      value: function init(node, settings) {
+        return dom.hasData(node, 'dropdown') ? dom.getData(node, 'dropdown') : new this(node, settings);
       }
     }]);
 
     return Dropdown;
-  }(); // Default Dropdown options
+  }(); // Dropdown events
 
+
+  dom.addEventDelegate(document, 'click.frost.dropdown keyup.frost.dropdown', '[data-toggle="dropdown"]', function (e) {
+    if (e.key && e.key !== ' ') {
+      return;
+    }
+
+    e.preventDefault();
+    var dropdown = Dropdown.init(e.currentTarget);
+    dropdown.toggle();
+  });
+  dom.addEventDelegate(document, 'keydown.frost.dropdown', '[data-toggle="dropdown"]', function (e) {
+    switch (e.key) {
+      case 'ArrowDown':
+      case 'ArrowUp':
+        e.preventDefault();
+        var node = e.currentTarget;
+        var dropdown = Dropdown.init(node);
+
+        if (!dom.hasClass(dropdown._containerNode, 'open')) {
+          dropdown.show();
+        }
+
+        var focusNode = dom.findOne('.dropdown-item:not([tabindex="-1"])', dropdown._menuNode);
+        dom.focus(focusNode);
+        break;
+    }
+  });
+  dom.addEventDelegate(document, 'keydown.frost.dropdown', '.open > .dropdown-menu .dropdown-item', function (e) {
+    var focusNode;
+
+    switch (e.key) {
+      case 'ArrowDown':
+        focusNode = dom.nextAll(e.currentTarget, '.dropdown-item:not([tabindex="-1"])').shift();
+        break;
+
+      case 'ArrowUp':
+        focusNode = dom.prevAll(e.currentTarget, '.dropdown-item:not([tabindex="-1"])').pop();
+        break;
+
+      default:
+        return;
+    }
+
+    e.preventDefault();
+    dom.focus(focusNode);
+  });
+  dom.addEvent(document, 'click.frost.dropdown', function (e) {
+    Dropdown.autoHide(e.target);
+  });
+  dom.addEvent(document, 'keyup.frost.dropdown', function (e) {
+    switch (e.key) {
+      case 'Tab':
+        Dropdown.autoHide(e.target, true);
+
+      case 'Escape':
+        Dropdown.autoHide();
+    }
+  }); // Dropdown default options
 
   Dropdown.defaults = {
     duration: 100,
@@ -1558,152 +1191,90 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     fixed: false,
     spacing: 2,
     minContact: false
-  }; // Auto-initialize Dropdown from data-toggle
-
-  dom.addEventOnce(window, 'load', function (_) {
-    var nodes = dom.find('[data-toggle="dropdown"]');
-    var _iteratorNormalCompletion14 = true;
-    var _didIteratorError14 = false;
-    var _iteratorError14 = undefined;
-
-    try {
-      for (var _iterator14 = nodes[Symbol.iterator](), _step14; !(_iteratorNormalCompletion14 = (_step14 = _iterator14.next()).done); _iteratorNormalCompletion14 = true) {
-        var node = _step14.value;
-        new Dropdown(node);
-      }
-    } catch (err) {
-      _didIteratorError14 = true;
-      _iteratorError14 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion14 && _iterator14["return"] != null) {
-          _iterator14["return"]();
-        }
-      } finally {
-        if (_didIteratorError14) {
-          throw _iteratorError14;
-        }
-      }
-    }
-  }); // Add Dropdown QuerySet method
+  }; // Dropdown QuerySet method
 
   if (QuerySet) {
     QuerySet.prototype.dropdown = function (a) {
-      for (var _len5 = arguments.length, args = new Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
-        args[_key5 - 1] = arguments[_key5];
-      }
-
-      var options, method;
+      var settings, method;
 
       if (Core.isObject(a)) {
-        options = a;
+        settings = a;
       } else if (Core.isString(a)) {
         method = a;
       }
 
-      var result;
-      this.each(function (node, index) {
-        if (!Core.isElement(node)) {
-          return;
-        }
+      for (var _len5 = arguments.length, args = new Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
+        args[_key5 - 1] = arguments[_key5];
+      }
 
-        var dropdown = dom.hasData(node, 'dropdown') ? dom.getData(node, 'dropdown') : new Dropdown(node, options);
+      var _iterator9 = _createForOfIteratorHelper(this),
+          _step9;
 
-        if (index) {
-          return;
-        }
+      try {
+        for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
+          var node = _step9.value;
 
-        if (!method) {
-          result = dropdown;
-        } else {
-          result = dropdown[method].apply(dropdown, args);
+          if (!Core.isElement(node)) {
+            continue;
+          }
+
+          var dropdown = Dropdown.init(node, settings);
+
+          if (method) {
+            dropdown[method].apply(dropdown, args);
+          }
         }
-      });
-      return result;
+      } catch (err) {
+        _iterator9.e(err);
+      } finally {
+        _iterator9.f();
+      }
+
+      return this;
     };
   }
 
   UI.Dropdown = Dropdown;
   /**
-   * Dropdown Helpers
+   * Get a target from a node.
+   * @param {HTMLElement} node The input node.
+   * @param {string} [closestSelector] The default closest selector.
+   * @return {HTMLElement} The target node.
    */
 
-  Object.assign(Dropdown.prototype, {
-    /**
-     * Attach events for the Dropdown.
-     */
-    _events: function _events() {
-      var _this15 = this;
+  UI.getTarget = function (node, closestSelector) {
+    var selector = UI.getTargetSelector(node);
+    var target;
 
-      this._clickEvent = function (e) {
-        e.preventDefault();
-
-        _this15.toggle()["catch"](function (_) {});
-      };
-
-      this._keyUpEvent = function (e) {
-        if (e.key !== ' ') {
-          return;
-        }
-
-        e.preventDefault();
-
-        _this15.toggle()["catch"](function (_) {});
-      };
-
-      this._keyDownEvent = function (e) {
-        if (!['ArrowDown', 'ArrowUp'].includes(e.key)) {
-          return;
-        }
-
-        e.preventDefault();
-
-        _this15.show().then(function (_) {
-          var next = dom.findOne('.dropdown-item', _this15._menuNode);
-          dom.focus(next);
-        })["catch"](function (_) {});
-      };
-
-      this._menuKeyDownEvent = function (e) {
-        if (!['ArrowDown', 'ArrowUp'].includes(e.key)) {
-          return;
-        }
-
-        e.preventDefault();
-
-        if (e.key === 'ArrowDown') {
-          var next = dom.nextAll(e.currentTarget, '.dropdown-item').shift();
-          dom.focus(next);
-        } else if (e.key === 'ArrowUp') {
-          var prev = dom.prevAll(e.currentTarget, '.dropdown-item').shift();
-          dom.focus(prev);
-        }
-      };
-
-      this._documentClickEvent = function (e) {
-        if ((dom.isSame(e.target, _this15._menuNode) || dom.hasDescendent(_this15._menuNode, e.target)) && (dom.getDataset(e.target, 'dropdownClose') === false || dom.closest(e.target, function (parent) {
-          return dom.getDataset(parent, 'dropdownClose') === false;
-        }, _this15._menuNode).length)) {
-          return;
-        }
-
-        _this15.hide()["catch"](function (_) {});
-      };
-
-      dom.addEvent(this._node, 'click.frost.dropdown', this._clickEvent);
-      dom.addEvent(this._node, 'keyup.frost.dropdown', this._keyUpEvent);
-      dom.addEvent(this._node, 'keydown.frost.dropdown', this._keyDownEvent);
-      dom.addEventDelegate(this._menuNode, 'keydown.frost.dropdown', '.dropdown-item', this._menuKeyDownEvent);
+    if (selector && selector !== '#') {
+      target = dom.findOne(selector);
+    } else if (closestSelector) {
+      target = dom.closest(node, closestSelector).shift();
     }
-  });
+
+    if (!target) {
+      throw new Error('Target not found');
+    }
+
+    return target;
+  };
+  /**
+   * Get the target selector from a node.
+   * @param {HTMLElement} node The input node.
+   * @return {string} The target selector.
+   */
+
+
+  UI.getTargetSelector = function (node) {
+    return dom.getDataset(node, 'target') || dom.getAttribute(node, 'href');
+  };
   /**
    * Modal Class
    * @class
    */
 
-  var Modal =
-  /*#__PURE__*/
-  function () {
+
+  var Modal = /*#__PURE__*/function () {
     /**
      * New Modal constructor.
      * @param {HTMLElement} node The input node.
@@ -1719,11 +1290,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Modal);
 
       this._node = node;
-      this._settings = Core.extend({}, Modal.defaults, dom.getDataset(node), settings);
+      this._settings = Core.extend({}, this.constructor.defaults, dom.getDataset(node), settings);
       this._dialog = dom.child(this._node, '.modal-dialog').shift();
-      this._dismiss = dom.find('[data-dismiss="modal"]', this._node);
-
-      this._events();
 
       if (this._settings.show) {
         this.show();
@@ -1739,308 +1307,259 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Modal, [{
       key: "destroy",
       value: function destroy() {
-        if (Modal._toggles.has(this._node)) {
-          var toggles = Modal._toggles.get(this._node);
-
-          dom.removeEvent(toggles, 'click.frost.modal', this._clickEvent);
-
-          Modal._toggles["delete"](this._node);
-        }
-
-        if (this._dismiss.length) {
-          dom.removeEvent(this._dismiss, 'click.frost.modal', this._dismissEvent);
-        }
-
-        if (this._settings.backdrop) {
-          dom.removeEvent(document, 'click.frost.modal', this._documentClickEvent);
-        }
-
-        if (this._settings.keyboard) {
-          dom.removeEvent(window, 'keydown.frost.modal', this._windowKeyDownEvent);
-        }
-
         dom.removeData(this._node, 'modal');
       }
       /**
        * Hide the Modal.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
        */
 
     }, {
       key: "hide",
       value: function hide() {
-        var _this16 = this;
+        var _this10 = this;
 
-        return new Promise(function (resolve, reject) {
-          if (!dom.hasClass(_this16._node, 'show') || dom.getDataset(_this16._dialog, 'animating')) {
-            return reject();
+        if (this._animating || !dom.hasClass(this._node, 'show') || !dom.triggerOne(this._node, 'hide.frost.modal')) {
+          return;
+        }
+
+        this._animating = true;
+        Promise.all([dom.fadeOut(this._dialog, {
+          duration: this._settings.duration
+        }), dom.dropOut(this._dialog, {
+          duration: this._settings.duration
+        }), dom.fadeOut(this._backdrop, {
+          duration: this._settings.duration
+        })]).then(function (_) {
+          if (_this10._settings.backdrop) {
+            dom.remove(_this10._backdrop);
+            _this10._backdrop = null;
           }
 
-          if (!DOM._triggerEvent(_this16._node, 'hide.frost.modal')) {
-            return reject();
+          dom.removeAttribute(_this10._node, 'aria-modal');
+          dom.setAttribute(_this10._node, 'aria-hidden', true);
+          dom.removeClass(_this10._node, 'show');
+          dom.removeClass(document.body, 'modal-open');
+
+          if (_this10._activeTarget) {
+            dom.focus(_this10._activeTarget);
           }
 
-          dom.setDataset([_this16._dialog, _this16._backdrop], 'animating', true);
-
-          if (_this16._settings.backdrop) {
-            dom.removeEvent(document, 'click.frost.modal', _this16._documentClickEvent);
-          }
-
-          if (_this16._settings.keyboard) {
-            dom.removeEvent(window, 'keydown.frost.modal', _this16._windowKeyDownEvent);
-          }
-
-          Promise.all([dom.fadeOut(_this16._dialog, {
-            duration: _this16._settings.duration
-          }), dom.dropOut(_this16._dialog, {
-            duration: _this16._settings.duration
-          }), dom.fadeOut(_this16._backdrop, {
-            duration: _this16._settings.duration
-          })]).then(function (_) {
-            if (_this16._settings.backdrop) {
-              dom.remove(_this16._backdrop);
-              _this16._backdrop = null;
-            }
-
-            dom.removeAttribute(_this16._node, 'aria-modal');
-            dom.setAttribute(_this16._node, 'aria-hidden', true);
-            dom.removeClass(_this16._node, 'show');
-            dom.removeClass(document.body, 'modal-open');
-            dom.triggerEvent(_this16._node, 'hidden.frost.modal');
-            resolve();
-          })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset([_this16._dialog, _this16._backdrop], 'animating');
-          });
+          dom.triggerEvent(_this10._node, 'hidden.frost.modal');
+        })["catch"](function (_) {})["finally"](function (_) {
+          _this10._animating = false;
         });
       }
       /**
        * Show the Modal.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
+       * @param {HTMLElement} [activeTarget] The active target.
        */
 
     }, {
       key: "show",
-      value: function show() {
-        var _this17 = this;
+      value: function show(activeTarget) {
+        var _this11 = this;
 
-        return new Promise(function (resolve, reject) {
-          if (dom.hasClass(_this17._node, 'show') || dom.getDataset(_this17._dialog, 'animating')) {
-            return reject();
-          }
+        if (this._animating || dom.hasClass(this._node, 'show') || !dom.triggerOne(this._node, 'show.frost.modal')) {
+          return;
+        }
 
-          if (!DOM._triggerEvent(_this17._node, 'show.frost.modal')) {
-            return reject();
-          }
-
-          if (_this17._settings.backdrop) {
-            _this17._backdrop = dom.create('div', {
-              "class": 'modal-backdrop'
-            });
-            dom.append(document.body, _this17._backdrop);
-          }
-
-          dom.setDataset([_this17._dialog, _this17._backdrop], 'animating', true);
-          dom.addClass(_this17._node, 'show');
-          dom.addClass(document.body, 'modal-open');
-          Promise.all([dom.fadeIn(_this17._dialog, {
-            duration: _this17._settings.duration
-          }), dom.dropIn(_this17._dialog, {
-            duration: _this17._settings.duration
-          }), dom.fadeIn(_this17._backdrop, {
-            duration: _this17._settings.duration
-          })]).then(function (_) {
-            dom.removeAttribute(_this17._node, 'aria-hidden');
-            dom.setAttribute(_this17._node, 'aria-modal', true);
-
-            if (_this17._settings.backdrop) {
-              dom.addEvent(document, 'click.frost.modal', _this17._documentClickEvent);
-            }
-
-            if (_this17._settings.keyboard) {
-              dom.addEvent(window, 'keydown.frost.modal', _this17._windowKeyDownEvent);
-            }
-
-            if (_this17._settings.focus) {
-              dom.focus(_this17._node);
-            }
-
-            dom.triggerEvent(_this17._node, 'shown.frost.modal');
-            resolve();
-          })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset([_this17._dialog, _this17._backdrop], 'animating');
+        if (this._settings.backdrop) {
+          this._backdrop = dom.create('div', {
+            "class": 'modal-backdrop'
           });
+          dom.append(document.body, this._backdrop);
+        }
+
+        this._activeTarget = activeTarget;
+        this._animating = true;
+        dom.addClass(this._node, 'show');
+        dom.addClass(document.body, 'modal-open');
+        Promise.all([dom.fadeIn(this._dialog, {
+          duration: this._settings.duration
+        }), dom.dropIn(this._dialog, {
+          duration: this._settings.duration
+        }), dom.fadeIn(this._backdrop, {
+          duration: this._settings.duration
+        })]).then(function (_) {
+          dom.removeAttribute(_this11._node, 'aria-hidden');
+          dom.setAttribute(_this11._node, 'aria-modal', true);
+
+          if (_this11._settings.focus) {
+            dom.focus(_this11._node);
+          }
+
+          dom.triggerEvent(_this11._node, 'shown.frost.modal');
+        })["catch"](function (_) {})["finally"](function (_) {
+          _this11._animating = false;
         });
       }
       /**
        * Toggle the Modal.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
        */
 
     }, {
       key: "toggle",
       value: function toggle() {
-        return dom.hasClass(this._node, 'show') ? this.hide() : this.show();
+        dom.hasClass(this._node, 'show') ? this.hide() : this.show();
       }
+      /**
+       * Initialize a Modal.
+       * @param {HTMLElement} node The input node.
+       * @param {object} [settings] The options to create the Modal with.
+       * @param {number} [settings.duration=250] The duration of the animation.
+       * @param {Boolean} [settings.backdrop=true] Whether to display a backdrop for the modal.
+       * @param {Boolean} [settings.focus=true] Whether to set focus on the modal when shown.
+       * @param {Boolean} [settings.show=true] Whether to show the modal on initialization.
+       * @param {Boolean} [settings.keyboard=true] Whether to close the modal when the escape key is pressed.
+       * @returns {Modal} A new Modal object.
+       */
+
     }], [{
-      key: "fromToggle",
-      value: function fromToggle(toggle) {
-        var show = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-        var target = dom.getDataset(toggle, 'target');
-        var element = dom.findOne(target);
-        var modal = dom.hasData(element, 'modal') ? dom.getData(element, 'modal') : new this(element, {
-          show: show
-        });
-
-        if (!this._toggles.has(element)) {
-          this._toggles.set(element, []);
-        }
-
-        this._toggles.get(element).push(toggle);
-
-        dom.addEvent(toggle, 'click.frost.modal', modal._clickEvent);
+      key: "init",
+      value: function init(node, settings) {
+        return dom.hasData(node, 'modal') ? dom.getData(node, 'modal') : new this(node, settings);
       }
     }]);
 
     return Modal;
-  }(); // Default Modal options
+  }(); // Modal events
 
+
+  dom.addEventDelegate(document, 'click.frost.modal', '[data-toggle="modal"]', function (e) {
+    e.preventDefault();
+    var target = UI.getTarget(e.currentTarget, '.modal');
+    var modal = Modal.init(target);
+    modal.show(e.currentTarget);
+  });
+  dom.addEventDelegate(document, 'click.frost.modal', '[data-dismiss="modal"]', function (e) {
+    e.preventDefault();
+    var target = UI.getTarget(e.currentTarget, '.modal');
+    var modal = Modal.init(target);
+    modal.hide();
+  });
+  dom.addEvent(document, 'click.frost.modal', function (e) {
+    var backdrop = dom.findOne('.modal-backdrop');
+
+    if (!backdrop) {
+      return;
+    }
+
+    var targets = dom.find('.modal.show');
+
+    var _iterator10 = _createForOfIteratorHelper(targets),
+        _step10;
+
+    try {
+      for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
+        var target = _step10.value;
+
+        if (target !== e.target && dom.hasDescendent(target, e.target)) {
+          continue;
+        }
+
+        var modal = Modal.init(target);
+
+        if (modal._settings.backdrop === 'static') {
+          continue;
+        }
+
+        modal.hide();
+      }
+    } catch (err) {
+      _iterator10.e(err);
+    } finally {
+      _iterator10.f();
+    }
+  });
+  dom.addEvent(document, 'keyup.frost.modal', function (e) {
+    if (e.key !== 'Escape') {
+      return;
+    }
+
+    var targets = dom.find('.modal.show');
+
+    var _iterator11 = _createForOfIteratorHelper(targets),
+        _step11;
+
+    try {
+      for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
+        var target = _step11.value;
+        var modal = Modal.init(target);
+
+        if (!modal._settings.keyboard) {
+          continue;
+        }
+
+        modal.hide();
+      }
+    } catch (err) {
+      _iterator11.e(err);
+    } finally {
+      _iterator11.f();
+    }
+  }); // Modal default options
 
   Modal.defaults = {
     duration: 250,
     backdrop: true,
     focus: true,
-    show: true,
+    show: false,
     keyboard: true
-  };
-  Modal._toggles = new WeakMap(); // Auto-initialize Modal from data-toggle
-
-  dom.addEventOnce(window, 'load', function (_) {
-    var nodes = dom.find('[data-toggle="modal"]');
-    var _iteratorNormalCompletion15 = true;
-    var _didIteratorError15 = false;
-    var _iteratorError15 = undefined;
-
-    try {
-      for (var _iterator15 = nodes[Symbol.iterator](), _step15; !(_iteratorNormalCompletion15 = (_step15 = _iterator15.next()).done); _iteratorNormalCompletion15 = true) {
-        var node = _step15.value;
-        Modal.fromToggle(node);
-      }
-    } catch (err) {
-      _didIteratorError15 = true;
-      _iteratorError15 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion15 && _iterator15["return"] != null) {
-          _iterator15["return"]();
-        }
-      } finally {
-        if (_didIteratorError15) {
-          throw _iteratorError15;
-        }
-      }
-    }
-  }); // Add Modal QuerySet method
+  }; // Modal QuerySet method
 
   if (QuerySet) {
     QuerySet.prototype.modal = function (a) {
-      for (var _len6 = arguments.length, args = new Array(_len6 > 1 ? _len6 - 1 : 0), _key6 = 1; _key6 < _len6; _key6++) {
-        args[_key6 - 1] = arguments[_key6];
-      }
-
-      var options, method;
+      var settings, method;
 
       if (Core.isObject(a)) {
-        options = a;
+        settings = a;
       } else if (Core.isString(a)) {
         method = a;
       }
 
-      var result;
-      this.each(function (node, index) {
-        if (!Core.isElement(node)) {
-          return;
-        }
+      for (var _len6 = arguments.length, args = new Array(_len6 > 1 ? _len6 - 1 : 0), _key6 = 1; _key6 < _len6; _key6++) {
+        args[_key6 - 1] = arguments[_key6];
+      }
 
-        var modal = dom.hasData(node, 'modal') ? dom.getData(node, 'modal') : new Modal(node, options);
+      var _iterator12 = _createForOfIteratorHelper(this),
+          _step12;
 
-        if (index) {
-          return;
-        }
+      try {
+        for (_iterator12.s(); !(_step12 = _iterator12.n()).done;) {
+          var node = _step12.value;
 
-        if (!method) {
-          result = modal;
-        } else {
-          result = modal[method].apply(modal, args);
+          if (!Core.isElement(node)) {
+            continue;
+          }
+
+          var modal = Modal.init(node, settings);
+
+          if (method) {
+            modal[method].apply(modal, args);
+          }
         }
-      });
-      return result;
+      } catch (err) {
+        _iterator12.e(err);
+      } finally {
+        _iterator12.f();
+      }
+
+      return this;
     };
   }
 
   UI.Modal = Modal;
   /**
-   * Modal Helpers
-   */
-
-  Object.assign(Modal.prototype, {
-    /**
-     * Attach events for the Modal.
-     */
-    _events: function _events() {
-      var _this18 = this;
-
-      this._clickEvent = function (e) {
-        e.preventDefault();
-
-        _this18.show()["catch"](function (_) {});
-      };
-
-      this._dismissEvent = function (e) {
-        e.preventDefault();
-
-        _this18.hide()["catch"](function (_) {});
-      };
-
-      this._documentClickEvent = function (e) {
-        if (dom.isSame(e.target, _this18._dialog) || dom.hasDescendent(_this18._dialog, e.target)) {
-          return;
-        }
-
-        _this18.hide()["catch"](function (_) {});
-      };
-
-      this._windowKeyDownEvent = function (e) {
-        if (e.key !== 'Escape') {
-          return;
-        }
-
-        e.preventDefault();
-
-        _this18.hide()["catch"](function (_) {});
-      };
-
-      if (this._dismiss.length) {
-        dom.addEvent(this._dismiss, 'click.frost.modal', this._dismissEvent);
-      }
-    }
-  });
-  /**
    * Popover Class
    * @class
    */
 
-  var Popover =
-  /*#__PURE__*/
-  function () {
+  var Popover = /*#__PURE__*/function () {
     /**
      * New Popover constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Popover with.
-     * @param {object} [settings.classes] The CSS classes to style the popover.
-     * @param {string} [settings.classes.popover=popover] The CSS classes for the popover.
-     * @param {string} [settings.classes.popoverHeader=popover-header] The CSS classes for the popover header.
-     * @param {string} [settings.classes.popoverBody=popover-body] The CSS classes for the popover body.
-     * @param {string} [settings.classes.arrow=arrow] The CSS classes for the arrow.
+     * @param {string} [settings.template] The HTML template for the popover.
      * @param {number} [settings.duration=100] The duration of the animation.
      * @param {Boolean} [settings.enable=true] Whether the popover is enabled.
      * @param {Boolean} [settings.html=false] Whether to allow HTML in the popover.
@@ -2057,7 +1576,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Popover);
 
       this._node = node;
-      this._settings = Core.extend({}, Popover.defaults, dom.getDataset(this._node), settings);
+      this._settings = Core.extend({}, this.constructor.defaults, dom.getDataset(this._node), settings);
       this._triggers = this._settings.trigger.split(' ');
 
       this._render();
@@ -2078,22 +1597,24 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Popover, [{
       key: "destroy",
       value: function destroy() {
-        this._popper.destroy();
+        if (this._popper) {
+          this._popper.destroy();
+        }
 
         dom.remove(this._popover);
 
         if (this._triggers.includes('hover')) {
-          dom.removeEvent(this._node, 'mouseover.frost.popover', this._hoverEvent);
-          dom.removeEvent(this._node, 'mouseout.frost.popover', this._hideEvent);
+          dom.removeEvent(this._node, 'mouseover.frost.popover');
+          dom.removeEvent(this._node, 'mouseout.frost.popover');
         }
 
         if (this._triggers.includes('focus')) {
-          dom.removeEvent(this._node, 'focus.frost.popover', this._focusEvent);
-          dom.removeEvent(this._node, 'blur.frost.popover', this._hideEvent);
+          dom.removeEvent(this._node, 'focus.frost.popover');
+          dom.removeEvent(this._node, 'blur.frost.popover');
         }
 
         if (this._triggers.includes('click')) {
-          dom.removeEvent(this._node, 'click.frost.popover', this._clickEvent);
+          dom.removeEvent(this._node, 'click.frost.popover');
         }
 
         dom.removeData(this._node, 'popover', this);
@@ -2118,89 +1639,71 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Hide the Popover.
-       * @returns {Promise}
        */
 
     }, {
       key: "hide",
       value: function hide() {
-        var _this19 = this;
+        var _this12 = this;
 
-        return new Promise(function (resolve, reject) {
-          if (dom.getDataset(_this19._popover, 'animating')) {
-            dom.stop(_this19._tooltip);
-          }
+        if (this._animating) {
+          dom.stop(this._popover);
+        }
 
-          if (!dom.isConnected(_this19._popover)) {
-            return reject();
-          }
+        if (!dom.isConnected(this._popover) || !dom.triggerOne(this._node, 'hide.frost.popover')) {
+          return;
+        }
 
-          if (!DOM._triggerEvent(_this19._node, 'hide.frost.popover')) {
-            return reject();
-          }
+        this._animating = true;
+        dom.fadeOut(this._popover, {
+          duration: this._settings.duration
+        }).then(function (_) {
+          _this12._popper.destroy();
 
-          dom.setDataset(_this19._popover, 'animating', true);
-          dom.fadeOut(_this19._popover, {
-            duration: _this19._settings.duration
-          }).then(function (_) {
-            dom.removeClass(_this19._popover, 'show');
-
-            _this19._popper.destroy();
-
-            dom.detach(_this19._popover);
-            dom.triggerEvent(_this19._node, 'hidden.frost.popover');
-            resolve();
-          })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset(_this19._popover, 'animating');
-          });
+          dom.removeClass(_this12._popover, 'show');
+          dom.detach(_this12._popover);
+          dom.triggerEvent(_this12._node, 'hidden.frost.popover');
+        })["catch"](function (_) {})["finally"](function (_) {
+          _this12._animating = false;
         });
       }
       /**
        * Show the Popover.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
        */
 
     }, {
       key: "show",
       value: function show() {
-        var _this20 = this;
+        var _this13 = this;
 
-        return new Promise(function (resolve, reject) {
-          if (dom.getDataset(_this20._popover, 'animating')) {
-            dom.stop(_this20._tooltip);
-          }
+        if (this._animating) {
+          dom.stop(this._popover);
+        }
 
-          if (dom.isConnected(_this20._popover)) {
-            return reject();
-          }
+        if (dom.isConnected(this._popover) || !dom.triggerOne(this._node, 'show.frost.popover')) {
+          return;
+        }
 
-          if (!DOM._triggerEvent(_this20._node, 'show.frost.popover')) {
-            return reject();
-          }
+        this._show();
 
-          _this20._show();
-
-          dom.setDataset(_this20._popover, 'animating', true);
-          dom.addClass(_this20._popover, 'show');
-          dom.fadeIn(_this20._popover, {
-            duration: _this20._settings.duration
-          }).then(function (_) {
-            dom.triggerEvent(_this20._node, 'shown.frost.popover');
-            resolve();
-          })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset(_this20._popover, 'animating');
-          });
+        this._animating = true;
+        dom.addClass(this._popover, 'show');
+        dom.fadeIn(this._popover, {
+          duration: this._settings.duration
+        }).then(function (_) {
+          dom.triggerEvent(_this13._node, 'shown.frost.popover');
+        })["catch"](function (_) {})["finally"](function (_) {
+          _this13._animating = false;
         });
       }
       /**
        * Toggle the Popover.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
        */
 
     }, {
       key: "toggle",
       value: function toggle() {
-        return dom.isConnected(this._popover) ? this.hide() : this.show();
+        dom.isConnected(this._popover) ? this.hide() : this.show();
       }
       /**
        * Update the Popover position.
@@ -2209,158 +1712,93 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "update",
       value: function update() {
-        this._popper.update();
+        if (this._popper) {
+          this._popper.update();
+        }
+      }
+      /**
+       * Initialize a Popover.
+       * @param {HTMLElement} node The input node.
+       * @param {object} [settings] The options to create the Popover with.
+       * @param {string} [settings.template] The HTML template for the popover.
+       * @param {number} [settings.duration=100] The duration of the animation.
+       * @param {Boolean} [settings.enable=true] Whether the popover is enabled.
+       * @param {Boolean} [settings.html=false] Whether to allow HTML in the popover.
+       * @param {function} [settings.sanitize] The HTML sanitization function.
+       * @param {string} [settings.trigger=click] The events to trigger the popover.
+       * @param {string} [settings.placement=auto] The placement of the popover relative to the toggle.
+       * @param {string} [settings.position=center] The position of the popover relative to the toggle.
+       * @param {Boolean} [settings.fixed=false] Whether the popover position is fixed.
+       * @param {number} [settings.spacing=7] The spacing between the popover and the toggle.
+       * @param {number} [settings.minContact=false] The minimum amount of contact the popover must make with the toggle.
+       * @returns {Popover} A new Popover object.
+       */
+
+    }], [{
+      key: "init",
+      value: function init(node, settings) {
+        return dom.hasData(node, 'popover') ? dom.getData(node, 'popover') : new this(node, settings);
       }
     }]);
 
     return Popover;
-  }(); // Default Popover options
-
-
-  Popover.defaults = {
-    classes: {
-      popover: 'popover',
-      popoverHeader: 'popover-header',
-      popoverBody: 'popover-body',
-      arrow: 'arrow'
-    },
-    duration: 100,
-    enable: true,
-    html: false,
-    sanitize: function sanitize(input) {
-      return dom.sanitize(input);
-    },
-    trigger: 'click',
-    placement: 'auto',
-    position: 'center',
-    fixed: false,
-    spacing: 3,
-    minContact: false
-  }; // Auto-initialize Popover from data-toggle
-
-  dom.addEventOnce(window, 'load', function (_) {
-    var nodes = dom.find('[data-toggle="popover"]');
-    var _iteratorNormalCompletion16 = true;
-    var _didIteratorError16 = false;
-    var _iteratorError16 = undefined;
-
-    try {
-      for (var _iterator16 = nodes[Symbol.iterator](), _step16; !(_iteratorNormalCompletion16 = (_step16 = _iterator16.next()).done); _iteratorNormalCompletion16 = true) {
-        var node = _step16.value;
-        new Popover(node);
-      }
-    } catch (err) {
-      _didIteratorError16 = true;
-      _iteratorError16 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion16 && _iterator16["return"] != null) {
-          _iterator16["return"]();
-        }
-      } finally {
-        if (_didIteratorError16) {
-          throw _iteratorError16;
-        }
-      }
-    }
-  }); // Add Popover QuerySet method
-
-  if (QuerySet) {
-    QuerySet.prototype.popover = function (a) {
-      for (var _len7 = arguments.length, args = new Array(_len7 > 1 ? _len7 - 1 : 0), _key7 = 1; _key7 < _len7; _key7++) {
-        args[_key7 - 1] = arguments[_key7];
-      }
-
-      var options, method;
-
-      if (Core.isObject(a)) {
-        options = a;
-      } else if (Core.isString(a)) {
-        method = a;
-      }
-
-      var result;
-      this.each(function (node, index) {
-        if (!Core.isElement(node)) {
-          return;
-        }
-
-        var popover = dom.hasData(node, 'popover') ? dom.getData(node, 'popover') : new Popover(node, options);
-
-        if (index) {
-          return;
-        }
-
-        if (!method) {
-          result = popover;
-        } else {
-          result = popover[method].apply(popover, args);
-        }
-      });
-      return result;
-    };
-  }
-
-  UI.Popover = Popover;
+  }();
   /**
    * Popover Helpers
    */
+
 
   Object.assign(Popover.prototype, {
     /**
      * Attach events for the Popover.
      */
     _events: function _events() {
-      var _this21 = this;
-
-      this._hideEvent = function (_) {
-        if (!_this21._enabled || !dom.isConnected(_this21._tooltip)) {
-          return;
-        }
-
-        _this21.hide()["catch"](function (_) {});
-      };
-
-      this._hoverEvent = function (_) {
-        if (!_this21._enabled) {
-          return;
-        }
-
-        dom.addEventOnce(_this21._node, 'mouseout.frost.popover', _this21._hideEvent);
-
-        _this21.show()["catch"](function (_) {});
-      };
-
-      this._focusEvent = function (_) {
-        if (!_this21._enabled) {
-          return;
-        }
-
-        dom.addEventOnce(_this21._node, 'blur.frost.popover', _this21._hideEvent);
-
-        _this21.show()["catch"](function (_) {});
-      };
-
-      this._clickEvent = function (e) {
-        e.preventDefault();
-
-        if (!_this21._enabled) {
-          return;
-        }
-
-        _this21.toggle()["catch"](function (_) {});
-      };
+      var _this14 = this;
 
       if (this._triggers.includes('hover')) {
-        dom.addEvent(this._node, 'mouseover.frost.popover', this._hoverEvent);
+        dom.addEvent(this._node, 'mouseover.frost.popover', function (_) {
+          if (!_this14._enabled) {
+            return;
+          }
+
+          _this14.show();
+        });
+        dom.addEvent(this._node, 'mouseout.frost.popover', function (_) {
+          if (!_this14._enabled) {
+            return;
+          }
+
+          _this14.hide();
+        });
       }
 
       if (this._triggers.includes('focus')) {
-        dom.addEvent(this._node, 'focus.frost.popover', this._focusEvent);
+        dom.addEvent(this._node, 'focus.frost.popover', function (_) {
+          if (!_this14._enabled) {
+            return;
+          }
+
+          _this14.show();
+        });
+        dom.addEvent(this._node, 'blur.frost.popover', function (_) {
+          if (!_this14._enabled) {
+            return;
+          }
+
+          _this14.hide();
+        });
       }
 
       if (this._triggers.includes('click')) {
-        dom.addEvent(this._node, 'click.frost.popover', this._clickEvent);
+        dom.addEvent(this._node, 'click.frost.popover', function (e) {
+          e.preventDefault();
+
+          if (!_this14._enabled) {
+            return;
+          }
+
+          _this14.toggle();
+        });
       }
     },
 
@@ -2368,24 +1806,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Render the Popover element.
      */
     _render: function _render() {
-      this._popover = dom.create('div', {
-        "class": this._settings.classes.popover,
-        attributes: {
-          role: 'tooltip'
-        }
-      });
-      this._arrow = dom.create('div', {
-        "class": this._settings.classes.arrow
-      });
-      this._popoverHeader = dom.create('h3', {
-        "class": this._settings.classes.popoverHeader
-      });
-      this._popoverBody = dom.create('div', {
-        "class": this._settings.classes.popoverBody
-      });
-      dom.append(this._popover, this._arrow);
-      dom.append(this._popover, this._popoverHeader);
-      dom.append(this._popover, this._popoverBody);
+      this._popover = dom.parseHTML(this._settings.template).shift();
+      this._arrow = dom.find('.popover-arrow', this._popover);
+      this._popoverHeader = dom.find('.popover-header', this._popover);
+      this._popoverBody = dom.find('.popover-body', this._popover);
     },
 
     /**
@@ -2423,15 +1847,72 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         minContact: this._settings.minContact
       });
     }
-  });
+  }); // Popover default options
+
+  Popover.defaults = {
+    template: '<div class="popover" role="tooltip">' + '<div class="popover-arrow"></div>' + '<h3 class="popover-header"></h3>' + '<div class="popover-body"></div>' + '</div>',
+    duration: 100,
+    enable: true,
+    html: false,
+    sanitize: function sanitize(input) {
+      return dom.sanitize(input);
+    },
+    trigger: 'click',
+    placement: 'auto',
+    position: 'center',
+    fixed: false,
+    spacing: 3,
+    minContact: false
+  }; // Add Popover QuerySet method
+
+  if (QuerySet) {
+    QuerySet.prototype.popover = function (a) {
+      var settings, method;
+
+      if (Core.isObject(a)) {
+        settings = a;
+      } else if (Core.isString(a)) {
+        method = a;
+      }
+
+      for (var _len7 = arguments.length, args = new Array(_len7 > 1 ? _len7 - 1 : 0), _key7 = 1; _key7 < _len7; _key7++) {
+        args[_key7 - 1] = arguments[_key7];
+      }
+
+      var _iterator13 = _createForOfIteratorHelper(this),
+          _step13;
+
+      try {
+        for (_iterator13.s(); !(_step13 = _iterator13.n()).done;) {
+          var node = _step13.value;
+
+          if (!Core.isElement(node)) {
+            continue;
+          }
+
+          var popover = Popover.init(node, settings);
+
+          if (method) {
+            popover[method].apply(popover, args);
+          }
+        }
+      } catch (err) {
+        _iterator13.e(err);
+      } finally {
+        _iterator13.f();
+      }
+
+      return this;
+    };
+  }
+
+  UI.Popover = Popover;
   /**
    * Popper Class
    * @class
    */
 
-  var Popper =
-  /*#__PURE__*/
-  function () {
+  var Popper = /*#__PURE__*/function () {
     /**
      * New Popper constructor.
      * @param {HTMLElement} node The input node.
@@ -2448,21 +1929,29 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Popper} A new Popper object.
      */
     function Popper(node, settings) {
+      var _this15 = this;
+
       _classCallCheck(this, Popper);
 
       this._node = node;
-      this._settings = Core.extend({}, Popper.defaults, dom.getDataset(this._node), settings);
+      this._settings = Core.extend({}, this.constructor.defaults, dom.getDataset(this._node), settings);
       this._fixed = dom.isFixed(this._settings.reference);
-      this._scrollParent = Popper.getScrollParent(this._node);
-      this._relativeParent = Popper.getRelativeParent(this._node);
+      this._scrollParent = this.constructor.getScrollParent(this._node);
+      this._relativeParent = this.constructor.getRelativeParent(this._node);
       dom.setStyle(this._node, {
         position: this._fixed ? 'fixed' : 'absolute',
         top: 0,
         left: 0
       });
+      PopperSet.add(this);
 
-      this._events();
+      if (this._scrollParent) {
+        PopperSet.addOverflow(this._scrollParent, this);
+      }
 
+      dom.addEvent(this._node, 'remove.frost.popper', function (_) {
+        _this15.destroy();
+      });
       this.update();
       dom.setData(this._node, 'popper', this);
     }
@@ -2474,11 +1963,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Popper, [{
       key: "destroy",
       value: function destroy() {
-        dom.removeEvent(window, 'resize.frost.popper', this._updateEvent);
-        dom.removeEvent(window, 'scroll.frost.popper', this._updateEvent);
+        PopperSet.remove(this);
 
         if (this._scrollParent) {
-          dom.removeEvent(this._scrollParent, 'scroll.frost.popper', this._updateEvent);
+          PopperSet.removeOverflow(this._scrollParent, this);
         }
 
         dom.removeData(this._node, 'popper');
@@ -2497,13 +1985,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         var nodeBox = dom.rect(this._node, !this._fixed);
         var referenceBox = dom.rect(this._settings.reference, !this._fixed);
-        var windowBox = Popper.windowContainer(this._fixed); // check object could be seen
+        var windowBox = this.constructor.windowContainer(this._fixed); // check object could be seen
 
-        if (Popper.isNodeHidden(nodeBox, referenceBox, windowBox, this._settings.spacing)) {
+        if (this.constructor.isNodeHidden(nodeBox, referenceBox, windowBox, this._settings.spacing)) {
           return;
         }
 
-        dom.triggerEvent(this._node, 'update.frost.popper');
         var scrollBox = this._scrollParent ? dom.rect(this._scrollParent, !this._fixed) : null;
         var containerBox = this._settings.container ? dom.rect(this._settings.container, !this._fixed) : null;
 
@@ -2531,11 +2018,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         } // get optimal placement
 
 
-        var placement = this._settings.fixed ? this._settings.placement : Popper.getPopperPlacement(nodeBox, referenceBox, minimumBox, this._settings.placement, this._settings.spacing + 2);
+        var placement = this._settings.fixed ? this._settings.placement : this.constructor.getPopperPlacement(nodeBox, referenceBox, minimumBox, this._settings.placement, this._settings.spacing + 2);
         dom.setDataset(this._settings.reference, 'placement', placement);
         dom.setDataset(this._node, 'placement', placement); // get auto position
 
-        var position = this._settings.position !== 'auto' ? this._settings.position : Popper.getPopperPosition(nodeBox, referenceBox, minimumBox, placement, this._settings.position); // calculate actual offset
+        var position = this._settings.position !== 'auto' ? this._settings.position : this.constructor.getPopperPosition(nodeBox, referenceBox, minimumBox, placement, this._settings.position); // calculate actual offset
 
         var offset = {
           x: Math.round(referenceBox.x),
@@ -2550,14 +2037,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         } // offset for placement
 
 
-        Popper.adjustPlacement(offset, nodeBox, referenceBox, placement, this._settings.spacing); // offset for position
+        this.constructor.adjustPlacement(offset, nodeBox, referenceBox, placement, this._settings.spacing); // offset for position
 
-        Popper.adjustPosition(offset, nodeBox, referenceBox, placement, position); // compensate for margins
+        this.constructor.adjustPosition(offset, nodeBox, referenceBox, placement, position); // compensate for margins
 
         offset.x -= parseInt(dom.css(this._node, 'margin-left'));
         offset.y -= parseInt(dom.css(this._node, 'margin-top')); // corrective positioning
 
-        Popper.adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, this._settings.minContact); // compensate for scroll parent
+        this.constructor.adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, this._settings.minContact); // compensate for scroll parent
 
         if (this._scrollParent) {
           offset.x += dom.getScrollX(this._scrollParent);
@@ -2581,103 +2068,195 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
           this._updateArrow(newNodeBox, referenceBox, placement, position);
         }
+      }
+      /**
+       * Update the position of the arrow for the actual placement and position.
+       * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
+       * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
+       * @param {string} placement The actual placement of the Popper.
+       * @param {string} position The actual position of the Popper.
+       */
 
-        dom.triggerEvent(this._node, 'updated.frost.popper');
+    }, {
+      key: "_updateArrow",
+      value: function _updateArrow(nodeBox, referenceBox, placement, position) {
+        var arrowStyles = {
+          position: 'absolute',
+          top: '',
+          right: '',
+          bottom: '',
+          left: ''
+        };
+        dom.setStyle(this._settings.arrow, arrowStyles);
+        var arrowBox = dom.rect(this._settings.arrow, !this._fixed);
+
+        if (['top', 'bottom'].includes(placement)) {
+          arrowStyles[placement === 'top' ? 'bottom' : 'top'] = -arrowBox.height;
+          var diff = (referenceBox.width - nodeBox.width) / 2;
+          var offset = nodeBox.width / 2 - arrowBox.width / 2;
+
+          if (position === 'start') {
+            offset += diff;
+          } else if (position === 'end') {
+            offset -= diff;
+          }
+
+          arrowStyles.left = Core.clamp(offset, Math.max(referenceBox.left, nodeBox.left) - arrowBox.left, Math.min(referenceBox.right, nodeBox.right) - arrowBox.left - arrowBox.width);
+        } else {
+          arrowStyles[placement === 'right' ? 'left' : 'right'] = -arrowBox.width;
+
+          var _diff = (referenceBox.height - nodeBox.height) / 2;
+
+          var _offset = nodeBox.height / 2 - arrowBox.height;
+
+          if (position === 'start') {
+            _offset += _diff;
+          } else if (position === 'end') {
+            _offset -= _diff;
+          }
+
+          arrowStyles.top = Core.clamp(_offset, Math.max(referenceBox.top, nodeBox.top) - arrowBox.top, Math.min(referenceBox.bottom, nodeBox.bottom) - arrowBox.top - arrowBox.height);
+        }
+
+        dom.setStyle(this._settings.arrow, arrowStyles);
       }
     }]);
 
     return Popper;
-  }(); // Default Popper options
-
-
-  Popper.defaults = {
-    reference: null,
-    container: null,
-    arrow: null,
-    placement: 'bottom',
-    position: 'center',
-    fixed: false,
-    spacing: 0,
-    minContact: false,
-    useGpu: true
-  };
-  Popper._overflowTypes = ['overflow', 'overflowX', 'overflowY'];
-  Popper._overflowValues = ['auto', 'scroll'];
-  UI.Popper = Popper;
+  }();
   /**
-   * Popper Helpers
+   * PopperSet Class
+   * @class
    */
 
-  Object.assign(Popper.prototype, {
-    /**
-     * Attach events for the Popper.
-     */
-    _events: function _events() {
-      var _this22 = this;
 
-      this._updateEvent = Core.animation(function (_) {
-        return _this22.update();
-      });
-      dom.addEvent(window, 'resize.frost.popper', this._updateEvent);
-      dom.addEvent(window, 'scroll.frost.popper', this._updateEvent);
-
-      if (this._scrollParent) {
-        dom.addEvent(this._scrollParent, 'scroll.frost.popper', this._updateEvent);
-      }
-    },
-
-    /**
-     * Update the position of the arrow for the actual placement and position.
-     * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
-     * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
-     * @param {string} placement The actual placement of the Popper.
-     * @param {string} position The actual position of the Popper.
-     */
-    _updateArrow: function _updateArrow(nodeBox, referenceBox, placement, position) {
-      var arrowStyles = {
-        position: 'absolute',
-        top: '',
-        right: '',
-        bottom: '',
-        left: ''
-      };
-      dom.setStyle(this._settings.arrow, arrowStyles);
-      var arrowBox = dom.rect(this._settings.arrow, !this._fixed);
-
-      if (['top', 'bottom'].includes(placement)) {
-        arrowStyles[placement === 'top' ? 'bottom' : 'top'] = -arrowBox.height;
-        var diff = (referenceBox.width - nodeBox.width) / 2;
-        var offset = nodeBox.width / 2 - arrowBox.width / 2;
-
-        if (position === 'start') {
-          offset += diff;
-        } else if (position === 'end') {
-          offset -= diff;
-        }
-
-        arrowStyles.left = Core.clamp(offset, Math.max(referenceBox.left, nodeBox.left) - arrowBox.left, Math.min(referenceBox.right, nodeBox.right) - arrowBox.left - arrowBox.width);
-      } else {
-        arrowStyles[placement === 'right' ? 'left' : 'right'] = -arrowBox.width;
-
-        var _diff = (referenceBox.height - nodeBox.height) / 2;
-
-        var _offset = nodeBox.height / 2 - arrowBox.height;
-
-        if (position === 'start') {
-          _offset += _diff;
-        } else if (position === 'end') {
-          _offset -= _diff;
-        }
-
-        arrowStyles.top = Core.clamp(_offset, Math.max(referenceBox.top, nodeBox.top) - arrowBox.top, Math.min(referenceBox.bottom, nodeBox.bottom) - arrowBox.top - arrowBox.height);
-      }
-
-      dom.setStyle(this._settings.arrow, arrowStyles);
+  var PopperSet = /*#__PURE__*/function () {
+    function PopperSet() {
+      _classCallCheck(this, PopperSet);
     }
-  });
+
+    _createClass(PopperSet, null, [{
+      key: "add",
+
+      /**
+       * Add a Popper to the set.
+       * @param {Popper} popper The popper to add.
+       */
+      value: function add(popper) {
+        var _this16 = this;
+
+        this._poppers.push(popper);
+
+        if (this._running) {
+          return;
+        }
+
+        dom.addEvent(window, 'resize.frost.popper scroll.frost.popper', Core.animation(function (_) {
+          var _iterator14 = _createForOfIteratorHelper(_this16._poppers),
+              _step14;
+
+          try {
+            for (_iterator14.s(); !(_step14 = _iterator14.n()).done;) {
+              var _popper = _step14.value;
+
+              _popper.update();
+            }
+          } catch (err) {
+            _iterator14.e(err);
+          } finally {
+            _iterator14.f();
+          }
+        }));
+        this._running = true;
+      }
+      /**
+       * Add a Popper to a scrolling parent set.
+       * @param {HTMLElement} scrollParent The scrolling container element.
+       * @param {Popper} popper The popper to add.
+       */
+
+    }, {
+      key: "addOverflow",
+      value: function addOverflow(scrollParent, popper) {
+        var _this17 = this;
+
+        if (!this._popperOverflows.has(scrollParent)) {
+          this._popperOverflows.set(scrollParent, []);
+
+          dom.addEvent(scrollParent, 'scroll.frost.popper', Core.animation(function (_) {
+            var _iterator15 = _createForOfIteratorHelper(_this17._popperOverflows.get(scrollParent)),
+                _step15;
+
+            try {
+              for (_iterator15.s(); !(_step15 = _iterator15.n()).done;) {
+                var _popper2 = _step15.value;
+
+                _popper2.update();
+              }
+            } catch (err) {
+              _iterator15.e(err);
+            } finally {
+              _iterator15.f();
+            }
+          }));
+        }
+
+        this._popperOverflows.get(scrollParent).push(popper);
+      }
+      /**
+       * Remove a Popper from the set.
+       * @param {Popper} popper The popper to remove.
+       */
+
+    }, {
+      key: "remove",
+      value: function remove(popper) {
+        this._poppers = this._poppers.filter(function (oldPopper) {
+          return oldPopper !== popper;
+        });
+
+        if (this._poppers.length) {
+          return;
+        }
+
+        dom.removeEvent(window, 'resize.frost.popper scroll.frost.popper');
+        this._running = false;
+      }
+      /**
+       * Remove a Popper from a scrolling parent set.
+       * @param {HTMLElement} scrollParent The scrolling container element.
+       * @param {Popper} popper The popper to remove.
+       */
+
+    }, {
+      key: "removeOverflow",
+      value: function removeOverflow(scrollParent, popper) {
+        if (!this._popperOverflows.has(scrollParent)) {
+          return;
+        }
+
+        var poppers = this._popperOverflows.get(scrollParent).filter(function (oldPopper) {
+          return oldPopper !== popper;
+        });
+
+        if (poppers.length) {
+          this._popperOverflows.set(scrollParent, poppers);
+
+          return;
+        }
+
+        this._popperOverflows["delete"](scrollParent);
+
+        dom.removeEvent(scrollParent, 'scroll.frost.popper');
+      }
+    }]);
+
+    return PopperSet;
+  }();
   /**
    * Popper Static
    */
+
 
   Object.assign(Popper, {
     /**
@@ -2758,7 +2337,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     },
 
     /**
-     * Adjust the offset for the placement.
+     * Adjust the offset for the position.
      * @param {object} offset The offset object.
      * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
      * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
@@ -2968,11 +2547,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @return {HTMLElement} The scroll parent.
      */
     getScrollParent: function getScrollParent(node) {
-      var _this23 = this;
-
       return dom.closest(node, function (parent) {
-        return !!_this23._overflowTypes.find(function (overflow) {
-          return !!_this23._overflowValues.find(function (value) {
+        return !!['overflow', 'overflowX', 'overflowY'].find(function (overflow) {
+          return !!['auto', 'scroll'].find(function (value) {
             return new RegExp(value).test(dom.css(parent, overflow));
           });
         });
@@ -3013,15 +2590,67 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         left: scrollX
       };
     }
+  }); // Popper default options
+
+  Popper.defaults = {
+    reference: null,
+    container: null,
+    arrow: null,
+    placement: 'bottom',
+    position: 'center',
+    fixed: false,
+    spacing: 0,
+    minContact: false,
+    useGpu: true
+  };
+  PopperSet._poppers = [];
+  PopperSet._popperOverflows = new Map();
+  UI.Popper = Popper;
+  UI.PopperSet = PopperSet; // Ripple events
+
+  dom.addEventDelegate(document, 'mousedown.frost.ripple', '.ripple', function (e) {
+    var pos = dom.position(e.currentTarget, true);
+    UI.ripple(e.currentTarget, e.pageX - pos.x, e.pageY - pos.y);
   });
+  /**
+   * Create a ripple effect on a node.
+   * @param {HTMLElement} node The input node.
+   * @param {number} x The x position to start the ripple from.
+   * @param {number} y The y position to start the ripple from.
+   * @param {number} [duration=500] The duration of the ripple.
+   */
+
+  UI.ripple = function (node, x, y) {
+    var duration = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 500;
+    var width = dom.width(node);
+    var height = dom.height(node);
+    var scaleMultiple = Math.max(width, height);
+    var ripple = dom.create('span', {
+      "class": 'ripple-effect',
+      style: {
+        left: x,
+        top: y
+      }
+    });
+    dom.append(node, ripple);
+    dom.animate(ripple, function (node, progress) {
+      dom.setStyle(node, {
+        scale: Math.floor(progress * scaleMultiple),
+        opacity: 1 - progress
+      });
+    }, {
+      duration: duration
+    })["finally"](function (_) {
+      dom.remove(ripple);
+    });
+  };
   /**
    * Tab Class
    * @class
    */
 
-  var Tab =
-  /*#__PURE__*/
-  function () {
+
+  var Tab = /*#__PURE__*/function () {
     /**
      * New Tab constructor.
      * @param {HTMLElement} node The input node.
@@ -3033,17 +2662,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Tab);
 
       this._node = node;
-      this._settings = Core.extend({}, Tab.defaults, dom.getDataset(this._node), settings);
-
-      if (!this._settings.target) {
-        this._settings.target = dom.getAttribute(this._node, 'href');
-      }
-
-      this._target = dom.findOne(this._settings.target);
+      this._settings = Core.extend({}, this.constructor.defaults, dom.getDataset(this._node), settings);
+      var selector = UI.getTargetSelector(this._node);
+      this._target = dom.findOne(selector);
       this._siblings = dom.siblings(this._node);
-
-      this._events();
-
       dom.setData(this._node, 'tab', this);
     }
     /**
@@ -3054,187 +2676,168 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Tab, [{
       key: "destroy",
       value: function destroy() {
-        dom.removeEvent(this._node, 'click.frost.tab', this._clickEvent);
         dom.removeData(this._node, 'tab');
       }
       /**
        * Hide the current Tab.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
        */
 
     }, {
       key: "hide",
       value: function hide() {
-        var _this24 = this;
+        var _this18 = this;
 
-        return new Promise(function (resolve, reject) {
-          if (!dom.hasClass(_this24._target, 'active') || dom.getDataset(_this24._target, 'animating')) {
-            return reject();
-          }
+        if (this._animating || !dom.hasClass(this._target, 'active') || !dom.triggerOne(this._node, 'hide.frost.tab')) {
+          return;
+        }
 
-          if (!DOM._triggerEvent(_this24._node, 'hide.frost.tab')) {
-            return reject();
-          }
-
-          dom.setDataset(_this24._target, 'animating', true);
-          dom.fadeOut(_this24._target, {
-            duration: _this24._settings.duration
-          }).then(function (_) {
-            dom.removeClass(_this24._target, 'active');
-            dom.removeClass(_this24._node, 'active');
-            dom.setAttribute(_this24._node, 'aria-selected', false);
-            dom.triggerEvent(_this24._node, 'hidden.frost.tab');
-            resolve();
-          })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset(_this24._target, 'animating');
-          });
+        this._animating = true;
+        dom.fadeOut(this._target, {
+          duration: this._settings.duration
+        }).then(function (_) {
+          dom.removeClass(_this18._target, 'active');
+          dom.removeClass(_this18._node, 'active');
+          dom.setAttribute(_this18._node, 'aria-selected', false);
+          dom.triggerEvent(_this18._node, 'hidden.frost.tab');
+        })["catch"](function (_) {})["finally"](function (_) {
+          _this18._animating = false;
         });
       }
       /**
        * Hide any active Tabs, and show the current Tab.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
        */
 
     }, {
       key: "show",
       value: function show() {
-        var _this25 = this;
+        var _this19 = this;
 
-        return new Promise(function (resolve, reject) {
-          if (dom.hasClass(_this25._target, 'active') || dom.getDataset(_this25._target, 'animating')) {
-            return reject();
-          }
+        if (this._animating || dom.hasClass(this._target, 'active') || !dom.triggerOne(this._node, 'show.frost.tab')) {
+          return;
+        }
 
-          var activeTab = _this25._siblings.find(function (sibling) {
-            return dom.hasClass(sibling, 'active');
-          });
-
-          if (activeTab && !dom.hasData(activeTab, 'tab')) {
-            return reject();
-          }
-
-          (activeTab ? dom.getData(activeTab, 'tab').hide() : Promise.resolve()).then(function (_) {
-            if (!DOM._triggerEvent(_this25._node, 'show.frost.tab')) {
-              return reject();
-            }
-
-            dom.setDataset(_this25._target, 'animating', true);
-            dom.addClass(_this25._target, 'active');
-            dom.addClass(_this25._node, 'active');
-            return dom.fadeIn(_this25._target, {
-              duration: _this25._settings.duration
-            });
-          }).then(function (_) {
-            dom.setAttribute(_this25._node, 'aria-selected', true);
-            dom.triggerEvent(_this25._node, 'shown.frost.tab');
-            resolve();
-          })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset(_this25._target, 'animating');
-          });
+        var active = this._siblings.find(function (sibling) {
+          return dom.hasClass(sibling, 'active');
         });
+
+        var activeTab;
+
+        if (active) {
+          activeTab = this.constructor.init(active);
+
+          if (activeTab._animating) {
+            return;
+          }
+        }
+
+        if (!dom.triggerOne(this._node, 'show.frost.tab')) {
+          return;
+        }
+
+        var show = function show(_) {
+          _this19._animating = true;
+          dom.addClass(_this19._target, 'active');
+          dom.addClass(_this19._node, 'active');
+          dom.fadeIn(_this19._target, {
+            duration: _this19._settings.duration
+          }).then(function (_) {
+            dom.setAttribute(_this19._node, 'aria-selected', true);
+            dom.triggerEvent(_this19._node, 'shown.frost.tab');
+          })["catch"](function (_) {})["finally"](function (_) {
+            _this19._animating = false;
+          });
+        };
+
+        if (!activeTab) {
+          return show();
+        }
+
+        if (!dom.triggerOne(active, 'hide.frost.tab')) {
+          return;
+        }
+
+        dom.addEventOnce(active, 'hidden.frost.tab', function (_) {
+          show();
+        });
+        activeTab.hide();
+      }
+      /**
+       * Initialize a Tab.
+       * @param {HTMLElement} node The input node.
+       * @param {object} [settings] The options to create the Tab with.
+       * @param {number} [settings.duration=100] The duration of the animation.
+       * @returns {Tab} A new Tab object.
+       */
+
+    }], [{
+      key: "init",
+      value: function init(node, settings) {
+        return dom.hasData(node, 'tab') ? dom.getData(node, 'tab') : new this(node, settings);
       }
     }]);
 
     return Tab;
-  }(); // Default Tab options
+  }(); // Tab default options
 
 
   Tab.defaults = {
     duration: 100
-  }; // Auto-initialize Tab from data-toggle
+  }; // Tab events
 
-  dom.addEventOnce(window, 'load', function (_) {
-    var nodes = dom.find('[data-toggle="tab"]');
-    var _iteratorNormalCompletion17 = true;
-    var _didIteratorError17 = false;
-    var _iteratorError17 = undefined;
-
-    try {
-      for (var _iterator17 = nodes[Symbol.iterator](), _step17; !(_iteratorNormalCompletion17 = (_step17 = _iterator17.next()).done); _iteratorNormalCompletion17 = true) {
-        var node = _step17.value;
-        new Tab(node);
-      }
-    } catch (err) {
-      _didIteratorError17 = true;
-      _iteratorError17 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion17 && _iterator17["return"] != null) {
-          _iterator17["return"]();
-        }
-      } finally {
-        if (_didIteratorError17) {
-          throw _iteratorError17;
-        }
-      }
-    }
-  }); // Add Tab QuerySet method
+  dom.addEventDelegate(document, 'click.frost.tab', '[data-toggle="tab"]', function (e) {
+    e.preventDefault();
+    var tab = Tab.init(e.currentTarget);
+    tab.show();
+  }); // Tab QuerySet method
 
   if (QuerySet) {
     QuerySet.prototype.tab = function (a) {
-      for (var _len8 = arguments.length, args = new Array(_len8 > 1 ? _len8 - 1 : 0), _key8 = 1; _key8 < _len8; _key8++) {
-        args[_key8 - 1] = arguments[_key8];
-      }
-
-      var options, method;
+      var settings, method;
 
       if (Core.isObject(a)) {
-        options = a;
+        settings = a;
       } else if (Core.isString(a)) {
         method = a;
       }
 
-      var result;
-      this.each(function (node, index) {
-        if (!Core.isElement(node)) {
-          return;
-        }
+      for (var _len8 = arguments.length, args = new Array(_len8 > 1 ? _len8 - 1 : 0), _key8 = 1; _key8 < _len8; _key8++) {
+        args[_key8 - 1] = arguments[_key8];
+      }
 
-        var tab = dom.hasData(node, 'tab') ? dom.getData(node, 'tab') : new Tab(node, options);
+      var _iterator16 = _createForOfIteratorHelper(this),
+          _step16;
 
-        if (index) {
-          return;
-        }
+      try {
+        for (_iterator16.s(); !(_step16 = _iterator16.n()).done;) {
+          var node = _step16.value;
 
-        if (!method) {
-          result = tab;
-        } else {
-          result = tab[method].apply(tab, args);
+          if (!Core.isElement(node)) {
+            continue;
+          }
+
+          var tab = Tab.init(node, settings);
+
+          if (method) {
+            tab[method].apply(tab, args);
+          }
         }
-      });
-      return result;
+      } catch (err) {
+        _iterator16.e(err);
+      } finally {
+        _iterator16.f();
+      }
+
+      return this;
     };
   }
 
   UI.Tab = Tab;
   /**
-   * Tab Helpers
-   */
-
-  Object.assign(Tab.prototype, {
-    /**
-     * Attach events for the Tab.
-     */
-    _events: function _events() {
-      var _this26 = this;
-
-      this._clickEvent = function (e) {
-        e.preventDefault();
-
-        _this26.show()["catch"](function (_) {});
-      };
-
-      dom.addEvent(this._node, 'click.frost.tab', this._clickEvent);
-    }
-  });
-  /**
    * Toast Class
    * @class
    */
 
-  var Toast =
-  /*#__PURE__*/
-  function () {
+  var Toast = /*#__PURE__*/function () {
     /**
      * New Toast constructor.
      * @param {HTMLElement} node The input node.
@@ -3245,19 +2848,16 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Toast} A new Toast object.
      */
     function Toast(node, settings) {
-      var _this27 = this;
+      var _this20 = this;
 
       _classCallCheck(this, Toast);
 
       this._node = node;
-      this._settings = Core.extend({}, Toast.defaults, dom.getDataset(this._node), settings);
-      this._dismiss = dom.find('[data-dismiss="toast"]', this._node);
-
-      this._events();
+      this._settings = Core.extend({}, this.constructor.defaults, dom.getDataset(this._node), settings);
 
       if (this._settings.autohide) {
         setTimeout(function (_) {
-          _this27.hide()["catch"](function (_) {});
+          return _this20.hide();
         }, this._settings.delay);
       }
 
@@ -3271,78 +2871,73 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Toast, [{
       key: "destroy",
       value: function destroy() {
-        if (this._dismiss.length) {
-          dom.removeEvent(this._dismiss, 'click.frost.toast', this._dismissEvent);
-        }
-
         dom.removeData(this._node, 'toast');
       }
       /**
        * Hide the Toast.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
        */
 
     }, {
       key: "hide",
       value: function hide() {
-        var _this28 = this;
+        var _this21 = this;
 
-        return new Promise(function (resolve, reject) {
-          if (!dom.isVisible(_this28._node) || dom.getDataset(_this28._node, 'animating')) {
-            return reject();
-          }
+        if (this._animating || !dom.isVisible(this._node) || !dom.triggerOne(this._node, 'hide.frost.toast')) {
+          return;
+        }
 
-          if (!DOM._triggerEvent(_this28._node, 'hide.frost.toast')) {
-            return reject();
-          }
-
-          dom.setDataset(_this28._node, 'animating', true);
-          return dom.fadeOut(_this28._node, {
-            duration: _this28._settings.duration
-          }).then(function (_) {
-            dom.hide(_this28._node);
-            dom.triggerEvent(_this28._node, 'hidden.frost.toast');
-            resolve();
-          })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset(_this28._node, 'animating');
-          });
+        this._animating = true;
+        dom.fadeOut(this._node, {
+          duration: this._settings.duration
+        }).then(function (_) {
+          dom.hide(_this21._node);
+          dom.triggerEvent(_this21._node, 'hidden.frost.toast');
+        })["catch"](function (_) {})["finally"](function (_) {
+          _this21._animating = false;
         });
       }
       /**
        * Show the Toast.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
        */
 
     }, {
       key: "show",
       value: function show() {
-        var _this29 = this;
+        var _this22 = this;
 
-        return new Promise(function (resolve, reject) {
-          if (dom.isVisible(_this29._node) || dom.getDataset(_this29._node, 'animating')) {
-            return reject();
-          }
+        if (this._animating || dom.isVisible(this._node) || !dom.triggerOne(this._node, 'show.frost.toast')) {
+          return;
+        }
 
-          if (!DOM._triggerEvent(_this29._node, 'show.frost.toast')) {
-            return reject();
-          }
-
-          dom.setDataset(_this29._node, 'animating', true);
-          dom.show(_this29._node);
-          return dom.fadeIn(_this29._node, {
-            duration: _this29._settings.duration
-          }).then(function (_) {
-            dom.triggerEvent(_this29._node, 'shown.frost.toast');
-            resolve();
-          })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset(_this29._node, 'animating');
-          });
+        this._animating = true;
+        dom.show(this._node);
+        dom.fadeIn(this._node, {
+          duration: this._settings.duration
+        }).then(function (_) {
+          dom.triggerEvent(_this22._node, 'shown.frost.toast');
+        })["catch"](function (_) {})["finally"](function (_) {
+          _this22._animating = false;
         });
+      }
+      /**
+       * Initialize a Toast.
+       * @param {HTMLElement} node The input node.
+       * @param {object} [settings] The options to create the Toast with.
+       * @param {Boolean} [autohide=true] Whether to hide the toast after initialization.
+       * @param {number} [settings.delay=5000] The duration to wait before hiding the toast.
+       * @param {number} [settings.duration=100] The duration of the animation.
+       * @returns {Toast} A new Toast object.
+       */
+
+    }], [{
+      key: "init",
+      value: function init(node, settings) {
+        return dom.hasData(node, 'toast') ? dom.getData(node, 'toast') : new this(node, settings);
       }
     }]);
 
     return Toast;
-  }(); // Default Toast options
+  }(); // Toast default options
 
 
   Toast.defaults = {
@@ -3351,108 +2946,68 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     duration: 100
   }; // Auto-initialize Toast from data-toggle
 
-  dom.addEventOnce(window, 'load', function (_) {
-    var nodes = dom.find('[data-toggle="toast"]');
-    var _iteratorNormalCompletion18 = true;
-    var _didIteratorError18 = false;
-    var _iteratorError18 = undefined;
-
-    try {
-      for (var _iterator18 = nodes[Symbol.iterator](), _step18; !(_iteratorNormalCompletion18 = (_step18 = _iterator18.next()).done); _iteratorNormalCompletion18 = true) {
-        var node = _step18.value;
-        new Toast(node);
-      }
-    } catch (err) {
-      _didIteratorError18 = true;
-      _iteratorError18 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion18 && _iterator18["return"] != null) {
-          _iterator18["return"]();
-        }
-      } finally {
-        if (_didIteratorError18) {
-          throw _iteratorError18;
-        }
-      }
-    }
-  }); // Add Toast QuerySet method
+  dom.addEventDelegate(document, 'click.frost.toast', '[data-dismiss="toast"]', function (e) {
+    e.preventDefault();
+    var target = UI.getTarget(e.currentTarget, '.toast');
+    var toast = Toast.init(target, {
+      autohide: false
+    });
+    toast.hide();
+  }); // Toast QuerySet method
 
   if (QuerySet) {
     QuerySet.prototype.toast = function (a) {
-      for (var _len9 = arguments.length, args = new Array(_len9 > 1 ? _len9 - 1 : 0), _key9 = 1; _key9 < _len9; _key9++) {
-        args[_key9 - 1] = arguments[_key9];
-      }
-
-      var options, method;
+      var settings, method;
 
       if (Core.isObject(a)) {
-        options = a;
+        settings = a;
       } else if (Core.isString(a)) {
         method = a;
       }
 
-      var result;
-      this.each(function (node, index) {
-        if (!Core.isElement(node)) {
-          return;
-        }
+      for (var _len9 = arguments.length, args = new Array(_len9 > 1 ? _len9 - 1 : 0), _key9 = 1; _key9 < _len9; _key9++) {
+        args[_key9 - 1] = arguments[_key9];
+      }
 
-        var toast = dom.hasData(node, 'toast') ? dom.getData(node, 'toast') : new Toast(node, options);
+      var _iterator17 = _createForOfIteratorHelper(this),
+          _step17;
 
-        if (index) {
-          return;
-        }
+      try {
+        for (_iterator17.s(); !(_step17 = _iterator17.n()).done;) {
+          var node = _step17.value;
 
-        if (!method) {
-          result = toast;
-        } else {
-          result = toast[method].apply(toast, args);
+          if (!Core.isElement(node)) {
+            continue;
+          }
+
+          var toast = Toast.init(node, settings);
+
+          if (method) {
+            toast[method].apply(toast, args);
+          }
         }
-      });
-      return result;
+      } catch (err) {
+        _iterator17.e(err);
+      } finally {
+        _iterator17.f();
+      }
+
+      return this;
     };
   }
 
   UI.Toast = Toast;
   /**
-   * Toast Helpers
-   */
-
-  Object.assign(Toast.prototype, {
-    /**
-     * Attach events for the Toast.
-     */
-    _events: function _events() {
-      var _this30 = this;
-
-      this._dismissEvent = function (e) {
-        e.preventDefault();
-
-        _this30.hide()["catch"](function (_) {});
-      };
-
-      if (this._dismiss.length) {
-        dom.addEvent(this._dismiss, 'click.frost.toast', this._dismissEvent);
-      }
-    }
-  });
-  /**
    * Tooltip Class
    * @class
    */
 
-  var Tooltip =
-  /*#__PURE__*/
-  function () {
+  var Tooltip = /*#__PURE__*/function () {
     /**
      * New Tooltip constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Tooltip with.
-     * @param {object} [settings.classes] The CSS classes to style the tooltip.
-     * @param {string} [settings.classes.tooltip=tooltip] The CSS classes for the tooltip.
-     * @param {string} [settings.classes.tooltipInner=tooltip-inner] The CSS classes for the tooltip inner-element.
-     * @param {string} [settings.classes.arrow=arrow] The CSS classes for the arrow.
+     * @param {string} [settings.template] The HTML template for the tooltip.
      * @param {number} [settings.duration=100] The duration of the animation.
      * @param {Boolean} [settings.enable=true] Whether the tooltip is enabled.
      * @param {Boolean} [settings.html=false] Whether to allow HTML in the tooltip.
@@ -3469,7 +3024,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, Tooltip);
 
       this._node = node;
-      this._settings = Core.extend({}, Tooltip.defaults, dom.getDataset(this._node), settings);
+      this._settings = Core.extend({}, this.constructor.defaults, dom.getDataset(this._node), settings);
       this._triggers = this._settings.trigger.split(' ');
 
       this._render();
@@ -3490,22 +3045,24 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(Tooltip, [{
       key: "destroy",
       value: function destroy() {
-        this._popper.destroy();
+        if (this._popper) {
+          this._popper.destroy();
+        }
 
         dom.remove(this._tooltip);
 
         if (this._triggers.includes('hover')) {
-          dom.removeEvent(this._node, 'mouseover.frost.tooltip', this._hoverEvent);
-          dom.removeEvent(this._node, 'mouseout.frost.tooltip', this._hideEvent);
+          dom.removeEvent(this._node, 'mouseover.frost.tooltip');
+          dom.removeEvent(this._node, 'mouseout.frost.tooltip');
         }
 
         if (this._triggers.includes('focus')) {
-          dom.removeEvent(this._node, 'focus.frost.tooltip', this._focusEvent);
-          dom.removeEvent(this._node, 'blur.frost.tooltip', this._hideEvent);
+          dom.removeEvent(this._node, 'focus.frost.tooltip');
+          dom.removeEvent(this._node, 'blur.frost.tooltip');
         }
 
         if (this._triggers.includes('click')) {
-          dom.removeEvent(this._node, 'click.frost.tooltip', this._clickEvent);
+          dom.removeEvent(this._node, 'click.frost.tooltip');
         }
 
         dom.removeData(this._node, 'tooltip', this);
@@ -3530,89 +3087,71 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Hide the Tooltip.
-       * @returns {Promise}
        */
 
     }, {
       key: "hide",
       value: function hide() {
-        var _this31 = this;
+        var _this23 = this;
 
-        return new Promise(function (resolve, reject) {
-          if (dom.getDataset(_this31._tooltip, 'animating')) {
-            dom.stop(_this31._tooltip);
-          }
+        if (this._animating) {
+          dom.stop(this._tooltip);
+        }
 
-          if (!dom.isConnected(_this31._tooltip)) {
-            return reject();
-          }
+        if (!dom.isConnected(this._tooltip) || !dom.triggerOne(this._node, 'hide.frost.tooltip')) {
+          return;
+        }
 
-          if (!DOM._triggerEvent(_this31._node, 'hide.frost.tooltip')) {
-            return reject();
-          }
+        this._animating = true;
+        dom.fadeOut(this._tooltip, {
+          duration: this._settings.duration
+        }).then(function (_) {
+          _this23._popper.destroy();
 
-          dom.setDataset(_this31._tooltip, 'animating', true);
-          dom.fadeOut(_this31._tooltip, {
-            duration: _this31._settings.duration
-          }).then(function (_) {
-            dom.removeClass(_this31._tooltip, 'show');
-
-            _this31._popper.destroy();
-
-            dom.detach(_this31._tooltip);
-            dom.triggerEvent(_this31._node, 'hidden.frost.tooltip');
-            resolve();
-          })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset(_this31._tooltip, 'animating');
-          });
+          dom.removeClass(_this23._tooltip, 'show');
+          dom.detach(_this23._tooltip);
+          dom.triggerEvent(_this23._node, 'hidden.frost.tooltip');
+        })["catch"](function (_) {})["finally"](function (_) {
+          _this23._animating = false;
         });
       }
       /**
        * Show the Tooltip.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
        */
 
     }, {
       key: "show",
       value: function show() {
-        var _this32 = this;
+        var _this24 = this;
 
-        return new Promise(function (resolve, reject) {
-          if (dom.getDataset(_this32._tooltip, 'animating')) {
-            dom.stop(_this32._tooltip);
-          }
+        if (this._animating) {
+          dom.stop(this._tooltip);
+        }
 
-          if (dom.isConnected(_this32._tooltip)) {
-            return reject();
-          }
+        if (dom.isConnected(this._tooltip) || !dom.triggerOne(this._node, 'show.frost.tooltip')) {
+          return;
+        }
 
-          if (!DOM._triggerEvent(_this32._node, 'show.frost.tooltip')) {
-            return reject();
-          }
+        this._show();
 
-          _this32._show();
-
-          dom.setDataset(_this32._tooltip, 'animating', true);
-          dom.addClass(_this32._tooltip, 'show');
-          dom.fadeIn(_this32._tooltip, {
-            duration: _this32._settings.duration
-          }).then(function (_) {
-            dom.triggerEvent(_this32._node, 'shown.frost.tooltip');
-            resolve();
-          })["catch"](reject)["finally"](function (_) {
-            return dom.removeDataset(_this32._tooltip, 'animating');
-          });
+        this._animating = true;
+        dom.addClass(this._tooltip, 'show');
+        dom.fadeIn(this._tooltip, {
+          duration: this._settings.duration
+        }).then(function (_) {
+          dom.triggerEvent(_this24._node, 'shown.frost.tooltip');
+        })["catch"](function (_) {})["finally"](function (_) {
+          _this24._animating = false;
         });
       }
       /**
        * Toggle the Tooltip.
-       * @returns {Promise} A new Promise that resolves when the animation has completed.
        */
 
     }, {
       key: "toggle",
       value: function toggle() {
-        return dom.isConnected(this._tooltip) ? this.hide() : this.show();
+        dom.isConnected(this._tooltip) ? this.hide() : this.show();
       }
       /**
        * Update the Tooltip position.
@@ -3621,157 +3160,93 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "update",
       value: function update() {
-        this._popper.update();
+        if (this._popper) {
+          this._popper.update();
+        }
+      }
+      /**
+       * Initialize a Tooltip.
+       * @param {HTMLElement} node The input node.
+       * @param {object} [settings] The options to create the Tooltip with.
+       * @param {string} [settings.template] The HTML template for the tooltip.
+       * @param {number} [settings.duration=100] The duration of the animation.
+       * @param {Boolean} [settings.enable=true] Whether the tooltip is enabled.
+       * @param {Boolean} [settings.html=false] Whether to allow HTML in the tooltip.
+       * @param {function} [settings.sanitize] The HTML sanitization function.
+       * @param {string} [settings.trigger=hover focus] The events to trigger the tooltip.
+       * @param {string} [settings.placement=auto] The placement of the tooltip relative to the toggle.
+       * @param {string} [settings.position=center] The position of the tooltip relative to the toggle.
+       * @param {Boolean} [settings.fixed=false] Whether the tooltip position is fixed.
+       * @param {number} [settings.spacing=2] The spacing between the tooltip and the toggle.
+       * @param {number} [settings.minContact=false] The minimum amount of contact the tooltip must make with the toggle.
+       * @returns {Tooltip} A new Tooltip object.
+       */
+
+    }], [{
+      key: "init",
+      value: function init(node, settings) {
+        return dom.hasData(node, 'tooltip') ? dom.getData(node, 'tooltip') : new this(node, settings);
       }
     }]);
 
     return Tooltip;
-  }(); // Default Tooltip options
-
-
-  Tooltip.defaults = {
-    classes: {
-      tooltip: 'tooltip',
-      tooltipInner: 'tooltip-inner',
-      arrow: 'arrow'
-    },
-    duration: 100,
-    enable: true,
-    html: false,
-    trigger: 'hover focus',
-    sanitize: function sanitize(input) {
-      return dom.sanitize(input);
-    },
-    placement: 'auto',
-    position: 'center',
-    fixed: false,
-    spacing: 2,
-    minContact: false
-  }; // Auto-initialize Tooltip from data-toggle
-
-  dom.addEventOnce(window, 'load', function (_) {
-    var nodes = dom.find('[data-toggle="tooltip"]');
-    var _iteratorNormalCompletion19 = true;
-    var _didIteratorError19 = false;
-    var _iteratorError19 = undefined;
-
-    try {
-      for (var _iterator19 = nodes[Symbol.iterator](), _step19; !(_iteratorNormalCompletion19 = (_step19 = _iterator19.next()).done); _iteratorNormalCompletion19 = true) {
-        var node = _step19.value;
-        new Tooltip(node);
-      }
-    } catch (err) {
-      _didIteratorError19 = true;
-      _iteratorError19 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion19 && _iterator19["return"] != null) {
-          _iterator19["return"]();
-        }
-      } finally {
-        if (_didIteratorError19) {
-          throw _iteratorError19;
-        }
-      }
-    }
-  }); // Add Tooltip QuerySet method
-
-  if (QuerySet) {
-    QuerySet.prototype.tooltip = function (a) {
-      for (var _len10 = arguments.length, args = new Array(_len10 > 1 ? _len10 - 1 : 0), _key10 = 1; _key10 < _len10; _key10++) {
-        args[_key10 - 1] = arguments[_key10];
-      }
-
-      var options, method;
-
-      if (Core.isObject(a)) {
-        options = a;
-      } else if (Core.isString(a)) {
-        method = a;
-      }
-
-      var result;
-      this.each(function (node, index) {
-        if (!Core.isElement(node)) {
-          return;
-        }
-
-        var tooltip = dom.hasData(node, 'tooltip') ? dom.getData(node, 'tooltip') : new Tooltip(node, options);
-
-        if (index) {
-          return;
-        }
-
-        if (!method) {
-          result = tooltip;
-        } else {
-          result = tooltip[method].apply(tooltip, args);
-        }
-      });
-      return result;
-    };
-  }
-
-  UI.Tooltip = Tooltip;
+  }();
   /**
    * Tooltip Helpers
    */
+
 
   Object.assign(Tooltip.prototype, {
     /**
      * Attach events for the Tooltip.
      */
     _events: function _events() {
-      var _this33 = this;
-
-      this._hideEvent = function (_) {
-        if (!_this33._enabled || !dom.isConnected(_this33._tooltip)) {
-          return;
-        }
-
-        _this33.hide()["catch"](function (_) {});
-      };
-
-      this._hoverEvent = function (_) {
-        if (!_this33._enabled) {
-          return;
-        }
-
-        dom.addEventOnce(_this33._node, 'mouseout.frost.tooltip', _this33._hideEvent);
-
-        _this33.show()["catch"](console.error);
-      };
-
-      this._focusEvent = function (_) {
-        if (!_this33._enabled) {
-          return;
-        }
-
-        dom.addEventOnce(_this33._node, 'blur.frost.tooltip', _this33._hideEvent);
-
-        _this33.show()["catch"](function (_) {});
-      };
-
-      this._clickEvent = function (e) {
-        e.preventDefault();
-
-        if (!_this33._enabled) {
-          return;
-        }
-
-        _this33.toggle()["catch"](console.error);
-      };
+      var _this25 = this;
 
       if (this._triggers.includes('hover')) {
-        dom.addEvent(this._node, 'mouseover.frost.tooltip', this._hoverEvent);
+        dom.addEvent(this._node, 'mouseover.frost.popover', function (_) {
+          if (!_this25._enabled) {
+            return;
+          }
+
+          _this25.show();
+        });
+        dom.addEvent(this._node, 'mouseout.frost.popover', function (_) {
+          if (!_this25._enabled) {
+            return;
+          }
+
+          _this25.hide();
+        });
       }
 
       if (this._triggers.includes('focus')) {
-        dom.addEvent(this._node, 'focus.frost.tooltip', this._focusEvent);
+        dom.addEvent(this._node, 'focus.frost.popover', function (_) {
+          if (!_this25._enabled) {
+            return;
+          }
+
+          _this25.show();
+        });
+        dom.addEvent(this._node, 'blur.frost.popover', function (_) {
+          if (!_this25._enabled) {
+            return;
+          }
+
+          _this25.hide();
+        });
       }
 
       if (this._triggers.includes('click')) {
-        dom.addEvent(this._node, 'click.frost.tooltip', this._clickEvent);
+        dom.addEvent(this._node, 'click.frost.popover', function (e) {
+          e.preventDefault();
+
+          if (!_this25._enabled) {
+            return;
+          }
+
+          _this25.toggle();
+        });
       }
     },
 
@@ -3779,20 +3254,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Render the Tooltip element.
      */
     _render: function _render() {
-      this._tooltip = dom.create('div', {
-        "class": this._settings.classes.tooltip,
-        attributes: {
-          role: 'tooltip'
-        }
-      });
-      this._arrow = dom.create('div', {
-        "class": this._settings.classes.arrow
-      });
-      this._tooltipInner = dom.create('div', {
-        "class": this._settings.classes.tooltipInner
-      });
-      dom.append(this._tooltip, this._arrow);
-      dom.append(this._tooltip, this._tooltipInner);
+      this._tooltip = dom.parseHTML(this._settings.template).shift();
+      this._arrow = dom.find('.tooltip-arrow', this._tooltip);
+      this._tooltipInner = dom.find('.tooltip-inner', this._tooltip);
     },
 
     /**
@@ -3820,7 +3284,66 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         minContact: this._settings.minContact
       });
     }
-  });
+  }); // Tooltip default options
+
+  Tooltip.defaults = {
+    template: '<div class="tooltip" role="tooltip">' + '<div class="tooltip-arrow"></div>' + '<div class="tooltip-inner"></div>' + '</div>',
+    duration: 100,
+    enable: true,
+    html: false,
+    trigger: 'hover focus',
+    sanitize: function sanitize(input) {
+      return dom.sanitize(input);
+    },
+    placement: 'auto',
+    position: 'center',
+    fixed: false,
+    spacing: 2,
+    minContact: false
+  }; // Tooltip QuerySet method
+
+  if (QuerySet) {
+    QuerySet.prototype.tooltip = function (a) {
+      var settings, method;
+
+      if (Core.isObject(a)) {
+        settings = a;
+      } else if (Core.isString(a)) {
+        method = a;
+      }
+
+      for (var _len10 = arguments.length, args = new Array(_len10 > 1 ? _len10 - 1 : 0), _key10 = 1; _key10 < _len10; _key10++) {
+        args[_key10 - 1] = arguments[_key10];
+      }
+
+      var _iterator18 = _createForOfIteratorHelper(this),
+          _step18;
+
+      try {
+        for (_iterator18.s(); !(_step18 = _iterator18.n()).done;) {
+          var node = _step18.value;
+
+          if (!Core.isElement(node)) {
+            continue;
+          }
+
+          var tooltip = Tooltip.init(node, settings);
+
+          if (method) {
+            tooltip[method].apply(tooltip, args);
+          }
+        }
+      } catch (err) {
+        _iterator18.e(err);
+      } finally {
+        _iterator18.f();
+      }
+
+      return this;
+    };
+  }
+
+  UI.Tooltip = Tooltip;
   return {
     UI: UI
   };

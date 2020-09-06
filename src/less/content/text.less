@@ -47,10 +47,9 @@ samp {
     font-size: 1em;
 }
 
-dl,
 ol,
 ul {
-    margin: 0 0 @spacing;
+    margin: 0 0 @spacing @spacing;
 }
 
 ol ul,
@@ -60,12 +59,16 @@ ul ol {
     margin-bottom: 0;
 }
 
+dl {
+    margin: 0 0 @spacing;
+}
+
 dt {
     font-weight: @font-weight-bolder;
 }
 
 dd {
-    margin-bottom: @half-spacing;
+    margin-bottom: @spacing / 2;
 }
 
 dfn {

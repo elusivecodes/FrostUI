@@ -8,11 +8,7 @@ class Popover {
      * New Popover constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Popover with.
-     * @param {object} [settings.classes] The CSS classes to style the popover.
-     * @param {string} [settings.classes.popover=popover] The CSS classes for the popover.
-     * @param {string} [settings.classes.popoverHeader=popover-header] The CSS classes for the popover header.
-     * @param {string} [settings.classes.popoverBody=popover-body] The CSS classes for the popover body.
-     * @param {string} [settings.classes.arrow=arrow] The CSS classes for the arrow.
+     * @param {string} [settings.template] The HTML template for the popover.
      * @param {number} [settings.duration=100] The duration of the animation.
      * @param {Boolean} [settings.enable=true] Whether the popover is enabled.
      * @param {Boolean} [settings.html=false] Whether to allow HTML in the popover.
@@ -30,7 +26,7 @@ class Popover {
 
         this._settings = Core.extend(
             {},
-            Popover.defaults,
+            this.constructor.defaults,
             dom.getDataset(this._node),
             settings
         );
@@ -51,22 +47,24 @@ class Popover {
      * Destroy the Popover.
      */
     destroy() {
-        this._popper.destroy();
+        if (this._popper) {
+            this._popper.destroy();
+        }
 
         dom.remove(this._popover);
 
         if (this._triggers.includes('hover')) {
-            dom.removeEvent(this._node, 'mouseover.frost.popover', this._hoverEvent);
-            dom.removeEvent(this._node, 'mouseout.frost.popover', this._hideEvent);
+            dom.removeEvent(this._node, 'mouseover.frost.popover');
+            dom.removeEvent(this._node, 'mouseout.frost.popover');
         }
 
         if (this._triggers.includes('focus')) {
-            dom.removeEvent(this._node, 'focus.frost.popover', this._focusEvent);
-            dom.removeEvent(this._node, 'blur.frost.popover', this._hideEvent);
+            dom.removeEvent(this._node, 'focus.frost.popover');
+            dom.removeEvent(this._node, 'blur.frost.popover');
         }
 
         if (this._triggers.includes('click')) {
-            dom.removeEvent(this._node, 'click.frost.popover', this._clickEvent);
+            dom.removeEvent(this._node, 'click.frost.popover');
         }
 
         dom.removeData(this._node, 'popover', this);
@@ -88,84 +86,67 @@ class Popover {
 
     /**
      * Hide the Popover.
-     * @returns {Promise}
      */
     hide() {
-        return new Promise((resolve, reject) => {
-            if (dom.getDataset(this._popover, 'animating')) {
-                dom.stop(this._tooltip);
-            }
+        if (this._animating) {
+            dom.stop(this._popover);
+        }
 
-            if (!dom.isConnected(this._popover)) {
-                return reject();
-            }
+        if (
+            !dom.isConnected(this._popover) ||
+            !dom.triggerOne(this._node, 'hide.frost.popover')
+        ) {
+            return;
+        }
 
-            if (!DOM._triggerEvent(this._node, 'hide.frost.popover')) {
-                return reject();
-            }
+        this._animating = true;
 
-            dom.setDataset(this._popover, 'animating', true);
-
-            dom.fadeOut(this._popover, {
-                duration: this._settings.duration
-            }).then(_ => {
-                dom.removeClass(this._popover, 'show');
-
-                this._popper.destroy();
-
-                dom.detach(this._popover);
-
-                dom.triggerEvent(this._node, 'hidden.frost.popover');
-
-                resolve();
-            }).catch(reject).finally(_ =>
-                dom.removeDataset(this._popover, 'animating')
-            );
+        dom.fadeOut(this._popover, {
+            duration: this._settings.duration
+        }).then(_ => {
+            this._popper.destroy();
+            dom.removeClass(this._popover, 'show');
+            dom.detach(this._popover);
+            dom.triggerEvent(this._node, 'hidden.frost.popover');
+        }).catch(_ => { }).finally(_ => {
+            this._animating = false;
         });
     }
 
     /**
      * Show the Popover.
-     * @returns {Promise} A new Promise that resolves when the animation has completed.
      */
     show() {
-        return new Promise((resolve, reject) => {
-            if (dom.getDataset(this._popover, 'animating')) {
-                dom.stop(this._tooltip);
-            }
+        if (this._animating) {
+            dom.stop(this._popover);
+        }
 
-            if (dom.isConnected(this._popover)) {
-                return reject();
-            }
+        if (
+            dom.isConnected(this._popover) ||
+            !dom.triggerOne(this._node, 'show.frost.popover')
+        ) {
+            return;
+        }
 
-            if (!DOM._triggerEvent(this._node, 'show.frost.popover')) {
-                return reject();
-            }
+        this._show();
 
-            this._show();
+        this._animating = true;
+        dom.addClass(this._popover, 'show');
 
-            dom.setDataset(this._popover, 'animating', true);
-
-            dom.addClass(this._popover, 'show');
-
-            dom.fadeIn(this._popover, {
-                duration: this._settings.duration
-            }).then(_ => {
-                dom.triggerEvent(this._node, 'shown.frost.popover')
-
-                resolve();
-            }).catch(reject).finally(_ =>
-                dom.removeDataset(this._popover, 'animating')
-            );
+        dom.fadeIn(this._popover, {
+            duration: this._settings.duration
+        }).then(_ => {
+            dom.triggerEvent(this._node, 'shown.frost.popover');
+        }).catch(_ => { }).finally(_ => {
+            this._animating = false;
         });
     }
 
     /**
      * Toggle the Popover.
-     * @returns {Promise} A new Promise that resolves when the animation has completed.
      */
     toggle() {
-        return dom.isConnected(this._popover) ?
+        dom.isConnected(this._popover) ?
             this.hide() :
             this.show();
     }
@@ -174,7 +155,32 @@ class Popover {
      * Update the Popover position.
      */
     update() {
-        this._popper.update();
+        if (this._popper) {
+            this._popper.update();
+        }
+    }
+
+    /**
+     * Initialize a Popover.
+     * @param {HTMLElement} node The input node.
+     * @param {object} [settings] The options to create the Popover with.
+     * @param {string} [settings.template] The HTML template for the popover.
+     * @param {number} [settings.duration=100] The duration of the animation.
+     * @param {Boolean} [settings.enable=true] Whether the popover is enabled.
+     * @param {Boolean} [settings.html=false] Whether to allow HTML in the popover.
+     * @param {function} [settings.sanitize] The HTML sanitization function.
+     * @param {string} [settings.trigger=click] The events to trigger the popover.
+     * @param {string} [settings.placement=auto] The placement of the popover relative to the toggle.
+     * @param {string} [settings.position=center] The position of the popover relative to the toggle.
+     * @param {Boolean} [settings.fixed=false] Whether the popover position is fixed.
+     * @param {number} [settings.spacing=7] The spacing between the popover and the toggle.
+     * @param {number} [settings.minContact=false] The minimum amount of contact the popover must make with the toggle.
+     * @returns {Popover} A new Popover object.
+     */
+    static init(node, settings) {
+        return dom.hasData(node, 'popover') ?
+            dom.getData(node, 'popover') :
+            new this(node, settings);
     }
 
 }

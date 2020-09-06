@@ -95,7 +95,7 @@ Object.assign(Popper, {
     },
 
     /**
-     * Adjust the offset for the placement.
+     * Adjust the offset for the position.
      * @param {object} offset The offset object.
      * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
      * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
@@ -333,8 +333,8 @@ Object.assign(Popper, {
         return dom.closest(
             node,
             parent =>
-                !!this._overflowTypes.find(overflow =>
-                    !!this._overflowValues.find(value =>
+                !!['overflow', 'overflowX', 'overflowY'].find(overflow =>
+                    !!['auto', 'scroll'].find(value =>
                         new RegExp(value)
                             .test(
                                 dom.css(parent, overflow)

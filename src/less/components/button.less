@@ -37,13 +37,13 @@
 }
 
 .btn {
+    position: relative;
+    overflow: hidden;
     display: inline-block;
-    padding: @quarter-spacing @half-spacing;
+    padding: (@spacing / 4) (@spacing / 2);
     text-align: center;
     white-space: nowrap;
     vertical-align: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
     user-select: none;
     font-size: 1rem;
     line-height: @line-height;
@@ -92,11 +92,11 @@
 .btn-pill {
     padding-left: @spacing;
     padding-right: @spacing;
-    border-radius: @double-spacing;
+    border-radius: @spacing * 2;
 
     &.btn-sm {
-        padding-left: @half-spacing;
-        padding-right: @half-spacing;
+        padding-left: @spacing / 2;
+        padding-right: @spacing / 2;
     }
 }
 
