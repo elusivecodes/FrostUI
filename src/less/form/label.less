@@ -1,4 +1,4 @@
-.col-form-label {
+.col-label {
     padding-top: calc((@spacing / 2) + @border-size);
     padding-bottom: calc((@spacing / 2) + @border-size);
     margin-bottom: 0;
@@ -6,16 +6,96 @@
     line-height: @line-height;
 }
 
-.col-form-label-sm {
+.col-label-sm {
     padding-top: calc((@spacing / 4) + @border-size);
     padding-bottom: calc((@spacing / 4) + @border-size);
     font-size: .875rem;
-    line-height: @line-height;
 }
 
-.col-form-label-lg {
+.col-label-lg {
     padding-top: calc((@spacing / 2) + @border-size);
     padding-bottom: calc((@spacing / 2) + @border-size);
     font-size: 1.25rem;
+}
+
+.label-floating {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    margin-bottom: 0;
+    padding: (@spacing * .75) (@spacing / 2);
+    font-size: 1rem;
     line-height: @line-height;
+    color: @form-placeholder;
+    pointer-events: none;
+    cursor: text;
+    border-radius: @border-radius;
+    transition: padding .1s ease-in-out, font-size .1s ease-in-out, color .1s ease-in-out;
+}
+
+.input-floating {
+
+    &,
+    .input-group-filled &,
+    .input-group-outline & {
+        padding-top: @spacing * .75;
+        padding-bottom: @spacing * .75;
+    }
+
+    &::placeholder {
+        color: transparent;
+    }
+
+    &.input-sm,
+    .input-group-sm & {
+        padding-top: @spacing / 2;
+        padding-bottom: @spacing / 2;
+
+        &:focus,
+        &:not(:placeholder-shown) {
+            padding-top: @spacing * .8;
+            padding-bottom: @spacing / 5;
+
+            ~ .label-floating {
+                padding-top: 0;
+            }
+        }
+
+        ~ .label-floating {
+            padding-top: @spacing / 2;
+            padding-bottom: @spacing / 2;
+            font-size: .875rem;
+        }
+    }
+
+    &.input-lg,
+    .input-group-lg & {
+
+        ~ .label-floating {
+            font-size: 1.25rem;
+        }
+    }
+
+    &.input-filled ~ .label-floating {
+        border-bottom: @border-size @border-style transparent;
+    }
+
+    &.input-outline ~ .label-floating {
+        border: @border-size @border-style transparent;
+    }
+
+    &:focus,
+    &:not(:placeholder-shown) {
+        padding-top: (@spacing * 1.25);
+        padding-bottom: @spacing / 4;
+
+        ~ .label-floating {
+            padding-top: @spacing / 4;
+            padding-bottom: @spacing / 4;
+            font-size: 13px;
+            color: @secondary;
+        }
+    }
 }

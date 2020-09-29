@@ -6,22 +6,16 @@
         width: @amount !important;
     }
 
-    .mw@{b}@{size} {
-        max-width: @amount !important;
-    }
-
     .h@{b}@{size} {
         height: @amount !important;
-    }
-
-    .mh@{b}@{size} {
-        max-height: @amount !important;
     }
 
     .mix-sizing(@n, @b, (@i + 1));
 }
 
 .create-sizing(@n, @b: -) {
+    @size: 100;
+
     .w@{b}auto {
         width: auto !important;
     }
@@ -30,20 +24,28 @@
         height: auto !important;
     }
 
-    .vw@{b}100 {
+    .vw@{b}@{size} {
         width: 100vw !important;
     }
 
-    .vh@{b}100 {
+    .vh@{b}@{size} {
         height: 100vh !important;
     }
 
-    .min-vw@{b}100 {
+    .min-vw@{b}@{size} {
         min-width: 100vw !important;
     }
 
-    .min-vh@{b}100 {
+    .min-vh@{b}@{size} {
         min-height: 100vh !important;
+    }
+
+    .mw@{b}@{size} {
+        max-width: 100% !important;
+    }
+
+    .mh@{b}@{size} {
+        max-height: 100% !important;
     }
 
     .mix-sizing(@n, @b);

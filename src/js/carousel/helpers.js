@@ -9,15 +9,21 @@ Object.assign(Carousel.prototype, {
      */
     _events() {
         if (this._settings.keyboard) {
+            console.log(this._node);
             dom.addEvent(this._node, 'keydown.frost.carousel', e => {
+                const target = e.target;
+                if (dom.is(target, 'input, select')) {
+                    return;
+                }
+
                 switch (e.key) {
                     case 'ArrowLeft':
                         e.preventDefault();
-                        this.prev().catch(_ => { });
+                        this.prev();
                         break;
                     case 'ArrowRight':
                         e.preventDefault();
-                        this.next().catch(_ => { });
+                        this.next();
                         break;
                 }
             });
@@ -42,6 +48,10 @@ Object.assign(Carousel.prototype, {
      * Set a timer for the next Carousel cycle.
      */
     _setTimer() {
+        if (this._timer) {
+            return;
+        }
+
         const interval = dom.getDataset(this._items[this._index], 'interval');
 
         this._timer = setTimeout(
@@ -56,7 +66,6 @@ Object.assign(Carousel.prototype, {
      */
     _show(index) {
         if (this._sliding) {
-            this._queue.push(index);
             return;
         }
 
@@ -114,10 +123,9 @@ Object.assign(Carousel.prototype, {
 
         dom.animate(
             this._items[this._index],
-            (node, progress, options) =>
-                this._update(node, this._items[oldIndex], progress, options.direction),
+            (node, progress) =>
+                this._update(node, this._items[oldIndex], progress, direction),
             {
-                direction,
                 duration: this._settings.transition
             }
         ).then(_ => {
@@ -127,15 +135,8 @@ Object.assign(Carousel.prototype, {
             dom.addClass(newIndicator, 'active');
             dom.triggerEvent(this._node, 'slid.frost.carousel', eventData);
 
-            this._sliding = false;
-
-            if (!this._queue.length) {
-                this._setTimer();
-            } else {
-                const next = this._queue.shift();
-                this._show(next);
-            }
-        }).catch(_ => {
+            this._setTimer();
+        }).finally(_ => {
             this._sliding = false;
         });
     },

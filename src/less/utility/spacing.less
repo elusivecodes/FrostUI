@@ -1,51 +1,63 @@
 .mix-spacing(@n, @b: -, @i: 0) when (@i =< @n) {
-    @amount: @spacing * @i;
+    @amount: (@spacing / 4) * @i;
 
     .p@{b}@{i} {
         padding: @amount !important;
     }
-    .pt@{b}@{i}, .py@{b}@{i} {
+    .pt@{b}@{i},
+    .py@{b}@{i} {
         padding-top: @amount !important;
     }
-    .pr@{b}@{i}, .px@{b}@{i} {
+    .pr@{b}@{i},
+    .px@{b}@{i} {
         padding-right: @amount !important;
     }
-    .pb@{b}@{i}, .py@{b}@{i} {
+    .pb@{b}@{i}, 
+    .py@{b}@{i} {
         padding-bottom: @amount !important;
     }
-    .pl@{b}@{i}, .px@{b}@{i} {
+    .pl@{b}@{i},
+    .px@{b}@{i} {
         padding-left: @amount !important;
     }
 
     .m@{b}@{i} {
         margin: @amount;
     }
-    .mt@{b}@{i}, .my@{b}@{i} {
+    .mt@{b}@{i},
+    .my@{b}@{i} {
         margin-top: @amount !important;
     }
-    .mr@{b}@{i}, .mx@{b}@{i} {
+    .mr@{b}@{i},
+    .mx@{b}@{i} {
         margin-right: @amount !important;
     }
-    .mb@{b}@{i}, .my@{b}@{i} {
+    .mb@{b}@{i},
+    .my@{b}@{i} {
         margin-bottom: @amount !important;
     }
-    .ml@{b}@{i}, .mx@{b}@{i} {
+    .ml@{b}@{i},
+    .mx@{b}@{i} {
         margin-left: @amount !important;
     }
 
     .m@{b}n@{i} {
         margin: -@amount;
     }
-    .mt@{b}n@{i}, .my@{b}n@{i} {
+    .mt@{b}n@{i},
+    .my@{b}n@{i} {
         margin-top: -@amount !important;
     }
-    .mr@{b}n@{i}, .mx@{b}n@{i} {
+    .mr@{b}n@{i},
+    .mx@{b}n@{i} {
         margin-right: -@amount !important;
     }
-    .mb@{b}n@{i}, .my@{b}n@{i} {
+    .mb@{b}n@{i},
+    .my@{b}n@{i} {
         margin-bottom: -@amount !important;
     }
-    .ml@{b}n@{i}, .mx@{b}n@{i} {
+    .ml@{b}n@{i},
+    .mx@{b}n@{i} {
         margin-left: -@amount !important;
     }
 
@@ -56,16 +68,20 @@
     .m@{b}auto {
         margin: auto !important;
     }
-    .mt@{b}auto, .my@{b}auto {
+    .mt@{b}auto,
+    .my@{b}auto {
         margin-top: auto !important;
     }
-    .mr@{b}auto, .mx@{b}auto {
+    .mr@{b}auto,
+    .mx@{b}auto {
         margin-right: auto !important;
     }
-    .mb@{b}auto, .my@{b}auto {
+    .mb@{b}auto,
+    .my@{b}auto {
         margin-bottom: auto !important;
     }
-    .ml@{b}auto, .mx@{b}auto {
+    .ml@{b}auto,
+    .mx@{b}auto {
         margin-left: auto !important;
     }
 
@@ -88,6 +104,10 @@
 
 @media (min-width: @break-lg) {
     .create-spacing(5, -xl-);
+}
+
+@media (min-width: @break-xl) {
+    .create-spacing(5, -xxl-);
 }
 
 @media only print {

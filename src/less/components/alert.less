@@ -2,7 +2,7 @@
     background-color: tint(lighten(@color, 20%), 50%);
     color: darken(@color, 20%);
 
-    & .alert-link {
+    .alert-link {
         color: darken(@color, 30%);
     }
 }
@@ -13,6 +13,14 @@
     margin-bottom: @spacing;
     border: @border-size @border-style @border-color;
     border-radius: @border-radius;
+
+    .close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: @spacing;
+        color: inherit;
+    }
 }
 
 .alert-heading {

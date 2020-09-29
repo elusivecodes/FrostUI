@@ -5,6 +5,65 @@
     border-radius: @border-radius;
 }
 
+.page-link {
+    position: relative;
+    display: block;
+    .text-color(@secondary);
+    background-color: @secondary;
+    border: @border-size @border-style @border-color;
+    transition: color @transition-time @transition-type, background-color @transition-time @transition-type, box-shadow @transition-time @transition-type;
+    padding: (@spacing / 2);
+
+
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+        z-index: 1;
+    }
+
+    &:hover {
+        .text-color(@secondary);
+        text-decoration: none;
+        background-color: darken(@secondary, 10%);
+    }
+
+    &:focus {
+        text-decoration: none;
+        outline: 0;
+        box-shadow: @shadow-xs;
+    }
+
+    &:active {
+        box-shadow: @shadow;
+    }
+}
+
+.page-item {
+    &.active .page-link {
+        background-color: darken(@secondary, 20%);
+    }
+
+    &.disabled .page-link {
+        opacity: @disabled-opacity;
+        pointer-events: none;
+    }
+
+    &:first-child .page-link {
+        border-top-left-radius: @border-radius;
+        border-bottom-left-radius: @border-radius;
+    }
+
+    &:last-child .page-link {
+        border-top-right-radius: @border-radius;
+        border-bottom-right-radius: @border-radius;
+    }
+
+    &:not(:first-child) .page-link {
+        margin-left: -@border-size;
+    }
+}
+
 .pagination-sm .page-link {
     padding: (@spacing / 4) (@spacing / 2);
     font-size: .875rem;
@@ -15,78 +74,4 @@
     padding: (@spacing * .75) (@spacing * 1.5);
     font-size: 1.25rem;
     line-height: 1.5;
-}
-
-.page-item {
-    &.active .page-link {
-        z-index: 1;
-        background-color: darken(@secondary, 20%);
-    }
-
-    &.disabled {
-        & button.page-link,
-        & .page-link {
-            opacity: @disabled-opacity;
-            pointer-events: none;
-        }
-    }
-
-    &:first-child .page-link {
-        margin-left: 0;
-        border-top-left-radius: @border-radius;
-        border-bottom-left-radius: @border-radius;
-    }
-
-    &:last-child .page-link {
-        border-top-right-radius: @border-radius;
-        border-bottom-right-radius: @border-radius;
-    }
-}
-
-.page-link {
-    position: relative;
-    display: block;
-    padding: (@spacing / 2);
-    margin-left: -@border-size;
-    line-height: 1.25;
-    background-color: @secondary;
-    .text-color(@secondary);
-    border: @border-size @border-style @border-color;
-    transition: color @transition-time @transition-type, background-color @transition-time @transition-type, box-shadow @transition-time @transition-type;
-
-    &:hover,
-    &.hover {
-        text-decoration: none;
-        background-color: darken(@secondary, 10%);
-        .text-color(@secondary);
-        z-index: @z-hover;
-    }
-
-    &:focus,
-    &.focus {
-        text-decoration: none;
-        outline: 0;
-        z-index: @z-focus;
-        box-shadow: @shadow-xs;
-    }
-
-    &:active,
-    &.active {
-        z-index: @z-active;
-    }
-
-    &:active {
-        box-shadow: @shadow;
-    }
-
-    button& {
-        outline: 0;
-        cursor: pointer;
-    }
-
-    &:disabled,
-    &.disabled {
-        opacity: @disabled-opacity;
-        pointer-events: none;
-    }
 }

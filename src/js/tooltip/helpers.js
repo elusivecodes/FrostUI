@@ -55,6 +55,14 @@ Object.assign(Tooltip.prototype, {
                 this.toggle();
             });
         }
+
+        if (this._modal) {
+            this._hideModalEvent = _ => {
+                this.hide();
+            };
+
+            dom.addEvent(this._modal, 'hide.frost.modal', this._hideModalEvent);
+        }
     },
 
     /**

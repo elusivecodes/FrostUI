@@ -1,0 +1,22 @@
+.mix-color-links(@name) {
+    .link-@{name} {
+        color: darken(@@name, 20%);
+    }
+
+    .link-@{name}:hover,
+    .link-@{name}:active {
+        color: darken(@@name, 30%);
+    }
+}
+
+.mix-color-links(white);
+.mix-color-links(black);
+
+.mix-color-links(primary);
+.mix-color-links(secondary);
+.mix-color-links(success);
+.mix-color-links(info);
+.mix-color-links(warning);
+.mix-color-links(danger);
+.mix-color-links(light);
+.mix-color-links(dark);

@@ -1,130 +1,106 @@
 .nav {
     display: flex;
+    flex-wrap: wrap;
+    margin-left: 0;
     margin-bottom: 0;
+    list-style: none;
 }
 
 .nav-link {
     display: block;
     padding: (@spacing / 2) @spacing;
+    text-decoration: none;
+    transition: color @transition-time @transition-type,
+        background-color @transition-time @transition-type,
+        border-color @transition-time @transition-type;
 
-    &:hover:not(:focus),
-    &:hover:not(.focus),
-    &.hover:not(:focus),
-    &.hover:not(.focus) {
+    &:hover,
+    &:focus {
         text-decoration: none;
+    }
+
+    &:hover {
+        color: tint(@link, 25%);
     }
 
     &.disabled {
         opacity: @disabled-opacity;
         pointer-events: none;
-    }
-}
-
-.nav-fill .nav-link {
-    flex: 1 1 auto;
-    text-align: center;
-}
-
-.nav-justified .nav-link {
-    flex-basis: 0;
-    flex-grow: 1;
-    text-align: center;
-}
-
-.nav-pills {
-    & .nav-link {
-        margin: 0;
-        border: @border-size @border-style transparent;
-        border-radius: @border-radius;
-
-        &:not(:last-child) {
-            margin-right: @spacing / 4;
-        }
-
-        &.active {
-            background-color: @link;
-            .text-color(@link);
-
-            &:hover,
-            &.hover {
-                background-color: darken(@link, 5%);
-            }
-    
-            &:focus,
-            &.focus {
-                z-index: @z-focus;
-                box-shadow: @shadow-xs;
-                text-decoration: none;
-            }
-    
-            &:active {
-                z-index: @z-active;
-                box-shadow: @shadow;
-            }
-        }
-
-        &:hover,
-        &.hover {
-            z-index: @z-hover;
-        }
+        cursor: default;
     }
 }
 
 .nav-tabs {
     border-bottom: @border-size @border-style @border-color;
 
-    & .nav-link.active {
-        background-color: @white;
-        border-color: @border-color;
-        border-bottom-color: transparent;
-    }
-
-    & .open .nav-link,
-    & .nav-link:hover,
-    & .nav-link.hover,
-    & .nav-link:focus,
-    & .nav-link.focus {
-        &:not(.active) {
-            border-color: @shadow-color;
-        }
-        border-bottom-color: transparent;
-    }
-
-    & .nav-link {
-        margin: 0 0 -@border-size;
-        background-color: transparent;
+    .nav-link {
+        margin-bottom: -@border-size;
         border: @border-size @border-style transparent;
         border-top-left-radius: @border-radius;
         border-top-right-radius: @border-radius;
 
-        &:not(:last-child) {
-            margin-right: @spacing / 10;
-        }
-
         &:hover,
-        &.hover {
-            z-index: @z-hover;
+        &:focus {
+            border-color: @shadow-color;
         }
 
-        &:focus,
-        &.focus {
-            z-index: @z-focus;
-            text-decoration: none
+        &.disabled {
+            background-color: transparent;
+            border-color: transparent;
         }
-    
-        &:active,
-        &.active {
-            z-index: @z-active;
-        }
+    }
+
+    .nav-link.active,
+    .nav-item.show .nav-link {
+        color: @text;
+        background-color: @white;
+        border-color: @border-color @border-color @white;
+    }
+
+    .dropdown-menu {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
     }
 }
 
-.tab-pane {
-    display: none;
+.nav-pills {
+
+    .nav-link {
+        border-radius: @border-radius;
+    }
+
+    .nav-link.active,
+    .nav-item.show .nav-link {
+        background-color: @link;
+        .text-color(@link);
+    }
 }
 
-.tab-pane.active {
-    display: block;
+.nav-fill {
+    > .nav-link,
+    .nav-item {
+        flex: 1 1 auto;
+        text-align: center;
+    }
+}
+
+.nav-justified {
+    > .nav-link,
+    .nav-item {
+        flex-basis: 0;
+        flex-grow: 1;
+        text-align: center;
+    }
+}
+
+.tab-content {
+    > .tab-pane {
+        display: none;
+
+        &.active {
+            display: block;
+        }
+    }
 }
 
 .card-header-tabs {

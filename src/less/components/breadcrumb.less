@@ -1,26 +1,29 @@
 .breadcrumb {
     display: flex;
     flex-wrap: wrap;
-    list-style: none;
-    margin-bottom: @spacing;
     padding: (@spacing / 2) @spacing;
+    margin-bottom: @spacing;
+    list-style: none;
     background-color: @light;
     border: @border-size @border-style @border-color;
     border-radius: @border-radius;
 }
 
-.crumb {
-    display: inline-flex;
-    margin: 0;
+.breadcrumb-item {
+    display: flex;
 
     &.active {
         color: @dark;
     }
 
-    &:not(:last-child)::after {
-        display: inline-block;
-        padding: 0 (@spacing / 2);
-        color: @divider-color;
-        content: @breadcrumb-divider;
+    + .breadcrumb-item {
+        padding-left: (@spacing / 2);
+
+        &::before {
+            display: inline-block;
+            padding-right: (@spacing / 2);
+            color: @divider-color;
+            content: @breadcrumb-divider;
+        }
     }
 }

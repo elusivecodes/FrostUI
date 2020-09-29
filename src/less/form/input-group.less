@@ -1,0 +1,108 @@
+.input-group-filled,
+.input-group-outline {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+
+    > .form-input {
+        position: relative;
+        flex: 1 1 auto;
+        width: 1%;
+        min-width: 0;
+    }
+
+    .btn {
+        position: relative;
+        z-index: 2;
+    }
+
+    > .form-input > .input-outline:focus,
+    .btn:focus {
+        z-index: 3;
+    }
+
+    > :not(:first-child):not(.dropdown-menu):not(.ripple-line) {
+        margin-left: -@border-size;
+    }
+}
+
+.input-group-filled > :not(.dropdown-menu) {
+    border-radius: 0;
+}
+
+.input-group-outline {
+
+    > :not(:first-child):not(.dropdown-menu),
+    > .form-input:not(:first-child) > .input-outline {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    
+    > .dropdown-toggle:nth-last-child(n+3),
+    > :not(:last-child):not(.dropdown-menu):not(.dropdown-toggle),
+    > .form-input:not(:last-child) > .input-outline {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }    
+}
+
+.input-group-text {
+    display: flex;
+    align-items: center;
+    padding: @spacing / 2;
+    font-size: 1rem;
+    font-weight: @font-weight;
+    line-height: @line-height;
+    text-align: center;
+    white-space: nowrap;
+    color: @dark;
+    background-color: @light;
+}
+
+.input-group-filled .input-group-text {
+    border-bottom: @border-size @border-style @dark;
+}
+
+.input-group-outline .input-group-text {
+    border: @border-size @border-style @border-color;
+    border-radius: @border-radius;
+}
+
+.input-group-sm {
+    .btn,
+    .input-filled,
+    .input-outline,
+    .input-group-text {
+        padding: (@spacing / 4) (@spacing / 2);
+        font-size: .875rem;
+    }
+}
+
+.input-group-lg {
+    .btn,
+    .input-filled,
+    .input-outline,
+    .input-group-text {
+        font-size: 1.25rem;
+    }
+}
+
+.input-group-outline.input-group-sm {
+    &,
+    > .form-input > .input-outline,
+    > .btn,
+    > .input-group-text {
+        border-radius: @border-radius * .75;
+    }
+}
+
+.input-group-outline.input-group-lg {
+    &,
+    > .form-input > .input-outline,
+    > .btn,
+    > .input-group-text {
+        border-radius: @border-radius * 1.25;
+    }
+}

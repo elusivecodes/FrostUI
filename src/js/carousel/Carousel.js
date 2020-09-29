@@ -32,8 +32,6 @@ class Carousel {
             dom.hasClass(item, 'active')
         );
 
-        this._queue = [];
-
         this._events();
 
         dom.setData(this._node, 'carousel', this);
@@ -56,8 +54,6 @@ class Carousel {
      * Destroy the Carousel.
      */
     destroy() {
-        this._queue = [];
-
         if (this._timer) {
             clearTimeout(this._timer);
         }
@@ -87,9 +83,8 @@ class Carousel {
      * Stop the carousel from cycling through items.
      */
     pause() {
-        if (this._timer) {
-            clearTimeout(this._timer);
-        }
+        clearTimeout(this._timer);
+        this._timer = null;
     }
 
     /**
@@ -112,11 +107,7 @@ class Carousel {
      * @param {number} [direction=1] The direction to slide to.
      */
     slide(direction = 1) {
-        const index = this._queue.length ?
-            this._queue[this._queue.length - 1] :
-            this._index;
-
-        this.show(index + direction);
+        this.show(this._index + direction);
     }
 
     /**

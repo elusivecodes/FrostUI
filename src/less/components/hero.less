@@ -1,53 +1,6 @@
-.mix-hero(@color) {
-    background-color: lighten(@color, 2%);
-    .text-color(@color);
-
-    & .hero-link {
-        .text-color(@color);
-    }
-}
-
 .hero {
     padding: (@spacing * 2.5) (@spacing * 1.5);
     margin-bottom: @spacing;
     border: @border-size @border-style @border-color;
     border-radius: @spacing * 2;
-}
-
-.hero-fluid {
-    padding-right: 0;
-    padding-left: 0;
-    border-radius: 0;
-}
-
-.hero-primary {
-    .mix-hero(@primary);
-}
-
-.hero-secondary {
-    .mix-hero(@secondary);
-}
-
-.hero-success {
-    .mix-hero(@success);
-}
-
-.hero-info {
-    .mix-hero(@info);
-}
-
-.hero-warning {
-    .mix-hero(@warning);
-}
-
-.hero-danger {
-    .mix-hero(@danger);
-}
-
-.hero-light {
-    .mix-hero(@light);
-}
-
-.hero-dark {
-    .mix-hero(@dark);
 }

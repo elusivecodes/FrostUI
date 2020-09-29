@@ -19,7 +19,7 @@ dom.addEventDelegate(document, 'keydown.frost.dropdown', '[data-toggle="dropdown
             const node = e.currentTarget;
             const dropdown = Dropdown.init(node);
 
-            if (!dom.hasClass(dropdown._containerNode, 'open')) {
+            if (!dom.hasClass(dropdown._menuNode, 'show')) {
                 dropdown.show();
             }
 
@@ -29,7 +29,7 @@ dom.addEventDelegate(document, 'keydown.frost.dropdown', '[data-toggle="dropdown
     }
 });
 
-dom.addEventDelegate(document, 'keydown.frost.dropdown', '.open > .dropdown-menu .dropdown-item', e => {
+dom.addEventDelegate(document, 'keydown.frost.dropdown', '.dropdown-menu.show .dropdown-item', e => {
     let focusNode;
 
     switch (e.key) {

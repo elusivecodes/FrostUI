@@ -1,3 +1,5 @@
+
+
 .blockquote {
     margin-bottom: @spacing;
     font-size: 1.25rem;
@@ -5,6 +7,7 @@
 
 .blockquote-footer {
     display: block;
+    margin-top: -@spacing;
     font-size: 80%;
     color: #6c757d;
 
@@ -13,70 +16,60 @@
     }
 }
 
-.h1,
-.h2,
-.h3,
-.h4,
-.h5,
-.h6 {
-    font-weight: @font-weight;
-}
-
 .h1 {
-    font-size: 3em;
+    &:extend(h1);
 }
 
 .h2 {
-    font-size: 2.5em;
+    &:extend(h2);
 }
 
 .h3 {
-    font-size: 2em;
+    &:extend(h3);
 }
 
 .h4 {
-    font-size: 1.5em;
+    &:extend(h4);
 }
 
 .h5 {
-    font-size: 1.25em;
+    &:extend(h5);
 }
 
 .h6 {
-    font-size: 1em;
+    &:extend(h6);
+}
+
+.heading-1,
+.heading-2,
+.heading-3,
+.heading-4 {
+    font-weight: @font-weight-light;
+    line-height: 1.2;
 }
 
 .heading-1 {
     font-size: 5rem;
-    font-weight: 300;
-    line-height: 1.2;
 }
 
 .heading-2 {
     font-size: 4.5rem;
-    font-weight: 300;
-    line-height: 1.2;
 }
 
 .heading-3 {
     font-size: 3.5rem;
-    font-weight: 300;
-    line-height: 1.2;
 }
 
 .heading-4 {
     font-size: 2.5rem;
-    font-weight: 300;
-    line-height: 1.2;
 }
 
 .lead {
     font-size: 1.25rem;
-    font-weight: 300;
 }
 
 .list-inline {
-    padding-left: 0;
+    margin-left: 0;
     list-style: none;
 }
 
@@ -89,6 +82,6 @@
 }
 
 .list-unstyled {
-    padding-left: 0;
+    margin-left: 0;
     list-style: none;
 }

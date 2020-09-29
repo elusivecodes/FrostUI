@@ -1,15 +1,26 @@
+.reset-text() {
+    font-family: @font-family;
+    font-style: normal;
+    font-weight: @font-weight;
+    line-height: @line-height;
+    text-align: left;
+    text-decoration: none;
+    text-shadow: none;
+    text-transform: none;
+    letter-spacing: normal;
+    word-break: normal;
+    word-spacing: normal;
+    white-space: normal;
+    line-break: auto;
+    font-size: .875rem;
+}
+
 .text-wrap {
     white-space: normal !important;
 }
 
 .text-nowrap {
     white-space: nowrap !important;
-}
-
-.text-truncate {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 .text-break {
@@ -51,6 +62,26 @@
 
 .font-italic {
     font-style: italic !important;
+}
+
+.font-normal {
+    font-style: normal !important;
+}
+
+.lh-1 {
+    line-height: 1 !important;
+}
+
+.lh-sm {
+    line-height: 1.25 !important;
+}
+
+.lh-base {
+    line-height: @line-height !important;
+}
+
+.lh-lg {
+    line-height: 2 !important;
 }
 
 .text-monospace {

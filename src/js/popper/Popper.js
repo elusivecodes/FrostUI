@@ -29,15 +29,14 @@ class Popper {
             settings
         );
 
-        this._fixed = dom.isFixed(this._settings.reference);
         this._scrollParent = this.constructor.getScrollParent(this._node);
         this._relativeParent = this.constructor.getRelativeParent(this._node);
 
         dom.setStyle(this._node, {
-            position: this._fixed ?
-                'fixed' :
-                'absolute',
+            position: 'absolute',
             top: 0,
+            right: 'initial',
+            bottom: 'initial',
             left: 0
         });
 
@@ -51,7 +50,9 @@ class Popper {
             this.destroy();
         });
 
-        this.update();
+        window.requestAnimationFrame(_ => {
+            this.update();
+        });
 
         dom.setData(this._node, 'popper', this);
     }
@@ -78,9 +79,9 @@ class Popper {
         }
 
         // calculate boxes
-        const nodeBox = dom.rect(this._node, !this._fixed);
-        const referenceBox = dom.rect(this._settings.reference, !this._fixed);
-        const windowBox = this.constructor.windowContainer(this._fixed);
+        const nodeBox = dom.rect(this._node, true);
+        const referenceBox = dom.rect(this._settings.reference, true);
+        const windowBox = this.constructor.windowContainer();
 
         // check object could be seen
         if (this.constructor.isNodeHidden(nodeBox, referenceBox, windowBox, this._settings.spacing)) {
@@ -88,11 +89,11 @@ class Popper {
         }
 
         const scrollBox = this._scrollParent ?
-            dom.rect(this._scrollParent, !this._fixed) :
+            dom.rect(this._scrollParent, true) :
             null;
 
         const containerBox = this._settings.container ?
-            dom.rect(this._settings.container, !this._fixed) :
+            dom.rect(this._settings.container, true) :
             null;
 
         const minimumBox = {
@@ -152,8 +153,8 @@ class Popper {
         };
 
         // offset for relative parent
-        const relativeBox = this._relativeParent && !this._fixed ?
-            dom.rect(this._relativeParent, !this._fixed) :
+        const relativeBox = this._relativeParent ?
+            dom.rect(this._relativeParent, true) :
             null;
 
         if (relativeBox) {
@@ -193,7 +194,7 @@ class Popper {
 
         // update arrow
         if (this._settings.arrow) {
-            const newNodeBox = dom.rect(this._node, !this._fixed);
+            const newNodeBox = dom.rect(this._node, true);
             this._updateArrow(newNodeBox, referenceBox, placement, position);
         }
     }
@@ -215,7 +216,7 @@ class Popper {
         };
         dom.setStyle(this._settings.arrow, arrowStyles);
 
-        const arrowBox = dom.rect(this._settings.arrow, !this._fixed);
+        const arrowBox = dom.rect(this._settings.arrow, true);
 
         if (['top', 'bottom'].includes(placement)) {
             arrowStyles[placement === 'top' ? 'bottom' : 'top'] = -arrowBox.height;

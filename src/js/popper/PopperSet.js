@@ -18,7 +18,7 @@ class PopperSet {
         dom.addEvent(
             window,
             'resize.frost.popper scroll.frost.popper',
-            Core.animation(_ => {
+            DOM.debounce(_ => {
                 for (const popper of this._poppers) {
                     popper.update();
                 }
@@ -38,7 +38,7 @@ class PopperSet {
             dom.addEvent(
                 scrollParent,
                 'scroll.frost.popper',
-                Core.animation(_ => {
+                DOM.debounce(_ => {
                     for (const popper of this._popperOverflows.get(scrollParent)) {
                         popper.update();
                     }

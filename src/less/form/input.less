@@ -1,165 +1,129 @@
-.form-control {
+.form-input {
+    position: relative;
+}
+
+.input-filled,
+.input-outline {
     display: block;
     width: 100%;
+    min-height: calc(1rem + @spacing + (@border-size * 2));
     padding: @spacing / 2;
     font-size: 1rem;
     line-height: @line-height;
+
+    &::placeholder {
+        color: @form-placeholder;
+    }
+
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+        z-index: 1;
+    }
+
+    &:focus {
+        outline: 0;
+    }
+
+    &:disabled,
+    &.disabled {
+        pointer-events: none;
+        background-color: @form-disabled;
+
+        &::placeholder {
+            color: #999;
+        }
+    }
+
+    &[readonly] {
+
+        &,
+        &::placeholder {
+            color: #999;
+        }
+    }
+
+    select& {
+
+        &:not([multiple]) {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right (@spacing / 2) center;
+            background-size: 16px 12px;
+            appearance: none;
+        }
+
+        &[multiple] {
+            padding: 0;
+    
+            option {
+                padding: @spacing / 2;
+            }
+        }
+    }
+}
+
+.input-filled {
+    border: 0;
+    border-bottom: @border-size @border-style @dark;
+    background-color: @light;
+
+    &:hover {
+        background-color: shade(@light, 5%);
+    }
+
+    &:focus {
+        background-color: shade(@light, 10%);
+    }
+}
+
+.input-outline {
     border: @border-size @border-style @border-color;
     border-radius: @border-radius;
     background-color: @white;
 
-    &::placeholder {
-        color: @form-placeholder;
-    }
-
-    &:hover,
-    &.hover {
+    &:hover {
         border-color: tint(lighten(@primary, 5%), 50%);
-        z-index: @z-hover;
     }
 
-    &:active,
-    &.active {
-        z-index: @z-active;
-    }
-
-    &:active {
-        box-shadow: @shadow-xs;
-    }
-
-    &:focus,
-    &.focus {
-        outline: 0;
+    &:focus {
         border-color: @primary;
-        z-index: @z-focus;
-        box-shadow: @shadow-xs;
-    }
-
-    &:not([type=file]) {
-        &:disabled,
-        &.disabled,
-        &[readonly] {
-            pointer-events: none;
-            background-color: @form-disabled;
-        }
+        box-shadow: @shadow-sm;
     }
 }
 
-.form-minimal {
-    display: block;
-    width: 100%;
-    padding: @spacing / 2;
-    font-size: 1rem;
-    line-height: @line-height;
-    border: 0;
-    border-bottom: @border-size @border-style @border-color;
-    background-color: @form-minimal;
-
-    &::placeholder {
-        color: @form-placeholder;
-    }
-
-    &:hover,
-    &.hover {
-        border-color: tint(lighten(@primary, 5%), 50%);
-        z-index: @z-hover;
-    }
-
-    &:active,
-    &.active {
-        z-index: @z-active;
-    }
-
-    &:focus,
-    &.focus {
-        outline: 0;
-        border-color: @primary;
-        z-index: @z-focus;
-    }
-
-    &:not([type=file]) {
-        &:disabled,
-        &.disabled,
-        &[readonly] {
-            pointer-events: none;
-            background-color: @form-disabled;
-        }
-    }
-}
-
-.form-plain-text {
-    display: block;
-    width: 100%;
-    padding: (@spacing / 2) 0;
-    margin-bottom: 0;
-    line-height: @line-height;
-    color: @text;
-    background-color: transparent;
-    border: solid transparent;
-    border-width: @border-size 0;
-}
-
-.form-control-lg,
-.form-minimal-lg {
-    padding: (@spacing / 2) @spacing;
+.input-lg {
     font-size: 1.25rem;
+
+    select&[multiple] option {
+        padding: (@spacing / 4) (@spacing / 2);
+    }
 }
 
-.form-control-sm,
-.form-minimal-sm {
+.input-sm {
     padding: (@spacing / 4) (@spacing / 2);
     font-size: .875rem;
+
+    select&[multiple] option {
+        padding: (@spacing / 2) @spacing;
+    }
 }
 
-.form-check {
-    position: relative;
-    display: block;
-    padding-left: @spacing * 1.25;
-}
-
-.form-check-input {
+.ripple-line {
     position: absolute;
-    margin-top: @spacing / 3;
-    margin-left: -@spacing * 1.25;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: @border-size * 2;
+    transform: scaleX(0);
+    opacity: 0;
+    z-index: 2;
+    background-color: @primary;
+    transition: transform .25s ease-in-out, opacity .25s ease-in-out;
 
-    &:disabled,
-    &.disabled {
-        & ~ .form-check-label {
-            opacity: @disabled-opacity;
-        }
-    }
-}
-
-.form-check-inline .form-check-input {
-    position: static;
-    margin-top: 0;
-    margin-right: @spacing / 3;
-    margin-left: 0;
-}
-
-select.form-control[multiple] {
-    padding: 0;
-
-    & option {
-        padding: @spacing / 2;
-    }
-}
-
-select.form-control-sm[multiple] option {
-    padding: (@spacing / 4) (@spacing / 2);
-}
-
-select.form-control-lg[multiple] option {
-    padding: (@spacing / 2) @spacing;
-}
-
-.form-control[type="file"] {
-    border: 0;
-    padding-left: 0;
-
-    &:focus,
-    &.focus,
-    &:active {
-        box-shadow: none;
+    .input-filled:focus ~ & {
+        transform: scaleX(1);
+        opacity: 1;
     }
 }

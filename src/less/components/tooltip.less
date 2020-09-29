@@ -3,29 +3,16 @@
     z-index: @z-tooltip;
     display: block;
     margin: 0;
-    font-family: @font-family;
-    font-style: normal;
-    font-weight: @font-weight;
-    line-height: @line-height;
-    text-align: left;
-    text-align: start;
-    text-decoration: none;
-    text-shadow: none;
-    text-transform: none;
-    letter-spacing: normal;
-    word-break: normal;
-    word-spacing: normal;
-    white-space: normal;
-    line-break: auto;
-    font-size: .875rem;
+    .reset-text();
     word-wrap: break-word;
+    font-size: .875rem;
     opacity: 0;
 
     &.show {
         opacity: .9;
     }
 
-    & .tooltip-arrow {
+    .tooltip-arrow {
         position: absolute;
         display: block;
         width: .8rem;

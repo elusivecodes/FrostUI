@@ -1,0 +1,93 @@
+.form-check {
+    display: block;
+    min-height: @spacing * 1.5;
+    padding-left: @spacing * 2;
+
+    .input-check {
+        float: left;
+        margin-left: -(@spacing * 2);
+    }
+}
+
+.input-check {
+    width: 1.25em;
+    height: 1.25em;
+    margin-top: @spacing / 8;
+    vertical-align: top;
+    background-color: @light;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: @border-size @border-style @border-color;
+    appearance: none;
+    transition: background-color .15s ease-in-out,background-position .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+    &[type="checkbox"] {
+        border-radius: @border-radius;
+    }
+
+    &[type="radio"] {
+        border-radius: 50%;
+    }
+
+    &:focus {
+        border-color: tint(@primary, 25%);
+        outline: 0;
+        box-shadow: @shadow-sm;
+    }
+
+    &:checked {
+        background-color: @primary;
+        border-color: @primary;
+
+        &[type="checkbox"] {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+        }
+
+        &[type="radio"] {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e");
+        }
+    }
+
+    &:disabled {
+        pointer-events: none;
+        filter: none;
+        opacity: @disabled-opacity;
+
+        ~ .form-check-label {
+            opacity: @disabled-opacity;
+        }
+    }
+}
+
+.form-switch {
+    padding-left: @spacing * 2.5;
+
+    .input-check {
+        width: @spacing * 2;
+        margin-left: -(@spacing * 2.5);
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e");
+        background-position: left center;
+        border-radius: @spacing * 2;
+
+        &:focus {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%238bbafe'/%3e%3c/svg%3e")
+        }
+
+        &:checked {
+            background-position: right center;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+        }
+    }
+}
+
+.form-check-inline {
+    display: inline-block;
+    margin-right: @spacing;
+}
+
+.btn-check {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+}

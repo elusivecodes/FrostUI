@@ -5,20 +5,7 @@
     z-index: @z-popover;
     display: block;
     max-width: 276px;
-    font-family: @font-family;
-    font-style: normal;
-    font-weight: @font-weight;
-    line-height: @line-height;
-    text-align: left;
-    text-align: start;
-    text-decoration: none;
-    text-shadow: none;
-    text-transform: none;
-    letter-spacing: normal;
-    word-break: normal;
-    word-spacing: normal;
-    white-space: normal;
-    line-break: auto;
+    .reset-text();
     font-size: .875rem;
     word-wrap: break-word;
     background-color: @white;
@@ -26,7 +13,7 @@
     border: @border-size @border-style @border-color;
     border-radius: @border-radius;
 
-    & .popover-arrow {
+    .popover-arrow {
         position: absolute;
         display: block;
         width: @spacing;
@@ -111,12 +98,16 @@
 .popover-header {
     padding: (@spacing / 2) @spacing;
     margin-bottom: 0;
-    font-size: 1rem;
+    font-size: @font-size;
     color: inherit;
     background-color: @light;
     border-bottom: @border-size @border-style @border-color;
     border-top-left-radius: @border-radius;
     border-top-right-radius: @border-radius;
+
+    &:empty {
+        display: none;
+    }
 }
 
 .popover-body {

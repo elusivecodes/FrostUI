@@ -3,8 +3,8 @@
     color: darken(@color, 10%);
 }
 
-.mix-table-responsive(@b: -) {
-    .table@{b}responsive {
+.mix-table-responsive(@b: ~'') {
+    .table-responsive@{b} {
         display: block;
         width: 100%;
         overflow-x: auto;
@@ -15,39 +15,39 @@
     width: 100%;
     margin-bottom: @spacing;
 
-    & th,
-    & td {
+    th,
+    td {
         border-bottom: @border-size @border-style @border-color;
         padding: (@spacing / 2) @spacing;
     }
 
-    & th {
+    th {
         border-bottom-width: (@border-size * 2);
     }
 }
 
 .table-bordered {
-    & th,
-    & td {
-       border: @border-size @border-style @border-color;
+    th,
+    td {
+        border: @border-size @border-style @border-color;
     }
 
-    & th {
+    th {
        border-bottom-width: (@border-size * 2);
     }
 }
 
 .table-borderless {
-    & tbody+tbody,
-    & td,
-    & th,
-    & thead th {
+    tbody + tbody,
+    td,
+    th,
+    thead th {
         border: 0;
     }
 }
 
 .table-striped {
-    & tr:nth-child(even) {
+    tr:nth-child(even) {
         background-color: darken(@light, 10%);
     }
 
@@ -57,16 +57,15 @@
 }
 
 .table-hover tbody tr {
-    &:hover,
-    &.hover {
+    &:hover {
         color: @dark;
         background-color: rgba(0,0,0,.075);
     }
 }
 
 .table-sm {
-    & td,
-    & th {
+    td,
+    th {
         padding: @spacing / 3;
     }
 }
@@ -76,16 +75,15 @@
     background-color: @dark;
 
     &.table-hover tbody tr {
-        &:hover,
-        &.hover {
+        &:hover {
             color: @white;
             background-color: rgba(255,255,255,.075);
         }
     }
 
-    & th,
-    & td {
-       border-color: rgba(255, 255, 255, .2);
+    th,
+    td {
+        border-color: rgba(255, 255, 255, .2);
     }
 }
 
@@ -129,18 +127,22 @@
 
 .mix-table-responsive();
 
-@media (min-width: @break-xs) {
-    .mix-table-responsive(-sm-);
+@media (max-width: @break-xs) {
+    .mix-table-responsive(-sm);
 }
 
-@media (min-width: @break-sm) {
-    .mix-table-responsive(-md-);
+@media (max-width: @break-sm) {
+    .mix-table-responsive(-md);
 }
 
-@media (min-width: @break-md) {
-    .mix-table-responsive(-lg-);
+@media (max-width: @break-md) {
+    .mix-table-responsive(-lg);
 }
 
-@media (min-width: @break-lg) {
-    .mix-table-responsive(-xl-);
+@media (max-width: @break-lg) {
+    .mix-table-responsive(-xl);
+}
+
+@media (max-width: @break-xl) {
+    .mix-table-responsive(-xxl);
 }

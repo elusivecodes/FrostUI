@@ -1,42 +1,40 @@
 .toast {
     max-width: 350px;
-    overflow: hidden;
     font-size: .875rem;
+    color: @text;
     background-color: @toast-color;
     background-clip: padding-box;
     border: @border-size @border-style @border-color;
     border-radius: @border-radius;
-    backdrop-filter: blur(10px);
     opacity: 0;
+    backdrop-filter: blur(10px);
 
+    &:not(:last-child) {
+        margin-bottom: @spacing;
+    }
+    
     &.show {
         display: block;
         opacity: 1;
     }
 
-    &.toast-sm {
-        max-width: 250px;
-    }
-
-    &.toast-lg {
-        max-width: 450px;
-    }
-
-    &.toast-xl {
-        max-width: 550px;
+    &.hide {
+        display: none;
     }
 }
 
 .toast-header {
     display: flex;
     align-items: center;
-    padding: (@spacing / 2) (@spacing / 1.5);
+    padding: (@spacing / 2) (@spacing * 0.75);
     color: @dark;
     background-color: @toast-color;
     background-clip: padding-box;
     border-bottom: @border-size @border-style @shadow-color;
+    border-top-left-radius: calc(@border-radius - @border-size);
+    border-top-right-radius: calc(@border-radius - @border-size);
 }
 
 .toast-body {
-    padding: .75rem;
+    padding: (@spacing * 0.75);
 }

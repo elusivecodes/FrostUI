@@ -26,13 +26,11 @@ class Dropdown {
             settings
         );
 
-        this._containerNode = dom.parent(this._node).shift();
-
         this._menuNode = dom.next(this._node, '.dropdown-menu').shift();
 
         if (this._settings.reference) {
             if (this._settings.reference === 'parent') {
-                this._referenceNode = this._containerNode;
+                this._referenceNode = dom.parent(this._node).shift();
             } else {
                 this._referenceNode = dom.findOne(this._settings.reference);
             }
@@ -41,7 +39,11 @@ class Dropdown {
         }
 
         // Attach popper
-        if (!dom.closest(this._node, '.navbar-nav').length) {
+        if (this._settings.display !== 'static' && dom.closest(this._node, '.navbar-nav').length) {
+            this._settings.display = 'static';
+        }
+
+        if (this._settings.display === 'dynamic') {
             this._popper = new Popper(
                 this._menuNode,
                 {
@@ -81,7 +83,7 @@ class Dropdown {
     hide() {
         if (
             this._animating ||
-            !dom.hasClass(this._containerNode, 'open') ||
+            !dom.hasClass(this._menuNode, 'show') ||
             !dom.triggerOne(this._node, 'hide.frost.dropdown')
         ) {
             return;
@@ -92,7 +94,7 @@ class Dropdown {
         dom.fadeOut(this._menuNode, {
             duration: this._settings.duration
         }).then(_ => {
-            dom.removeClass(this._containerNode, 'open');
+            dom.removeClass(this._menuNode, 'show');
             dom.setAttribute(this._node, 'aria-expanded', false);
             dom.triggerEvent(this._node, 'hidden.frost.dropdown');
         }).catch(_ => { }).finally(_ => {
@@ -106,14 +108,14 @@ class Dropdown {
     show() {
         if (
             this._animating ||
-            dom.hasClass(this._containerNode, 'open') ||
+            dom.hasClass(this._menuNode, 'show') ||
             !dom.triggerOne(this._node, 'show.frost.dropdown')
         ) {
             return;
         }
 
         this._animating = true;
-        dom.addClass(this._containerNode, 'open');
+        dom.addClass(this._menuNode, 'show');
 
         dom.fadeIn(this._menuNode, {
             duration: this._settings.duration
@@ -129,7 +131,7 @@ class Dropdown {
      * Toggle the Dropdown.
      */
     toggle() {
-        dom.hasClass(this._containerNode, 'open') ?
+        dom.hasClass(this._menuNode, 'show') ?
             this.hide() :
             this.show();
     }
@@ -144,7 +146,7 @@ class Dropdown {
             noHideSelf = dom.is(target, 'form');
         }
 
-        const menus = dom.find('.open > .dropdown-menu');
+        const menus = dom.find('.dropdown-menu.show');
 
         for (const menu of menus) {
             if (

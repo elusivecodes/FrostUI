@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../dist/frost-ui.min.css" />
+    <script src="../../dist/frost-ui-bundle.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Inputs</h1>
+        <form>
+            <div class="mb-4">
+                <label id="textLabel" for="textarea">Text Input</label>
+                <div class="form-input">
+                    <input type="text" id="text" class="input-filled" placeholder="Placeholder"
+                        aria-labelledby="textLabel" />
+                    <div class="ripple-line"></div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label id="textareaLabel" for="textarea">Textarea Input</label>
+                <div class="form-input">
+                    <textarea id="textarea" class="input-filled" placeholder="Placeholder"
+                        aria-labelledby="textareaLabel"></textarea>
+                    <div class="ripple-line"></div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label id="selectLabel" for="select">Select Input</label>
+                <div class="form-input">
+                    <select id="select" class="input-filled" aria-labelledby="selectLabel">
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                        <option>Option 3</option>
+                        <option>Option 4</option>
+                        <option>Option 5</option>
+                        <option>Option 6</option>
+                    </select>
+                    <div class="ripple-line"></div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label id="multiSelectLabel" for="multiSelect">Multi-Select Input</label>
+                <div class="form-input">
+                    <select id="multiSelect" class="input-filled" multiple="true" aria-labelledby="multiSelectLabel">
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                        <option>Option 3</option>
+                        <option>Option 4</option>
+                        <option>Option 5</option>
+                        <option>Option 6</option>
+                    </select>
+                    <div class="ripple-line"></div>
+                </div>
+            </div>
+
+            <h4>Readonly</h4>
+            <div class="mb-4">
+                <label id="textReadonlyLabel" for="textReadonly">Text Input</label>
+                <div class="form-input">
+                    <input type="text" id="textReadonly" class="input-filled" placeholder="Placeholder"
+                        aria-labelledby="textReadonlyLabel" readonly />
+                    <div class="ripple-line"></div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label id="textareaReadonlyLabel" for="textareaReadonly">Textarea Input</label>
+                <div class="form-input">
+                    <textarea id="textareaReadonly" class="input-filled" placeholder="Placeholder"
+                        aria-labelledby="textareReadonlyLabel" readonly></textarea>
+                    <div class="ripple-line"></div>
+                </div>
+            </div>
+
+            <h4>Disabled</h4>
+            <div class="mb-4">
+                <label id="textDisabledLabel" for="textDisabled">Text Input</label>
+                <div class="form-input">
+                    <input type="text" id="textDisabled" class="input-filled" placeholder="Placeholder"
+                        aria-labelledby="textDisabledLabel" disabled />
+                    <div class="ripple-line"></div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label id="textareaDisabledLabel" for="textareaDisabled">Textarea Input</label>
+                <div class="form-input">
+                    <textarea id="textareaDisabled" class="input-filled" placeholder="Placeholder"
+                        aria-labelledby="textareaDisabledLabel" disabled></textarea>
+                    <div class="ripple-line"></div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label id="selectDisabledLabel" for="selectDisabled">Select Input</label>
+                <div class="form-input">
+                    <select id="selectDisabled" class="input-filled" aria-labelledby="selectDisabledLabel" disabled>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                        <option>Option 3</option>
+                        <option>Option 4</option>
+                        <option>Option 5</option>
+                        <option>Option 6</option>
+                    </select>
+                    <div class="ripple-line"></div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label id="multiSelectDisabledLabel" for="multiSelectDisabled">Multi-Select Input</label>
+                <div class="form-input">
+                    <select id="multiSelectDisabled" class="input-filled" multiple="true"
+                        aria-labelledby="multiSelectDisabledLabel" disabled>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                        <option>Option 3</option>
+                        <option>Option 4</option>
+                        <option>Option 5</option>
+                        <option>Option 6</option>
+                    </select>
+                    <div class="ripple-line"></div>
+                </div>
+            </div>
+
+            <h4>Sizes</h4>
+            <div class="mb-4">
+                <label id="textSmLabel" for="textSm">Label</label>
+                <div class="form-input">
+                    <input type="text" id="textSm" class="input-filled input-sm" placeholder="Placeholder"
+                        aria-labelledby="textSmLabel" />
+                    <div class="ripple-line"></div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label id="textareaSmLabel" for="textareaSm">Label</label>
+                <div class="form-input">
+                    <textarea id="textareaSm" class="input-filled input-sm" placeholder="Placeholder"
+                        aria-labelledby="textareaSmLabel"></textarea>
+                    <div class="ripple-line"></div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label id="selectSmLabel" for="selectSm">Label</label>
+                <div class="form-input">
+                    <select id="selectSm" class="input-filled input-sm" aria-labelledby="selectSmLabel">
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                        <option>Option 3</option>
+                        <option>Option 4</option>
+                        <option>Option 5</option>
+                        <option>Option 6</option>
+                    </select>
+                    <div class="ripple-line"></div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label id="multiSelectSmLabel" for="multiSelectSm">Label</label>
+                <div class="form-input">
+                    <select id="multiSelectSm" class="input-filled input-sm" multiple="true"
+                        aria-labelledby="multiSelectSmLabel">
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                        <option>Option 3</option>
+                        <option>Option 4</option>
+                        <option>Option 5</option>
+                        <option>Option 6</option>
+                    </select>
+                    <div class="ripple-line"></div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <div class="form-input">
+                    <label id="textLgLabel" for="textLg">Label</label>
+                    <input type="text" id="textLg" class="input-filled input-lg" placeholder="Placeholder"
+                        aria-labelledby="textLgLabel" />
+                    <div class="ripple-line"></div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label id="textareaLgLabel" for="textareaLg">Label</label>
+                <textarea id="textareaLg" class="input-filled input-lg" placeholder="Placeholder"
+                    aria-labelledby="textareaLgLabel"></textarea>
+            </div>
+            <div class="mb-4">
+                <label id="selectLgLabel" for="selectLg">Label</label>
+                <select id="selectLg" class="input-filled input-lg" aria-labelledby="selectLgLabel">
+                    <option>Option 1</option>
+                    <option>Option 2</option>
+                    <option>Option 3</option>
+                    <option>Option 4</option>
+                    <option>Option 5</option>
+                    <option>Option 6</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label id="multiSelectLgLabel" for="multiSelectLg">Label</label>
+                <select id="multiSelectLg" class="input-filled input-lg" multiple="true"
+                    aria-labelledby="multiSelectLgLabel">
+                    <option>Option 1</option>
+                    <option>Option 2</option>
+                    <option>Option 3</option>
+                    <option>Option 4</option>
+                    <option>Option 5</option>
+                    <option>Option 6</option>
+                </select>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

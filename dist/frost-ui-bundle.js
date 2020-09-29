@@ -21,7 +21,7 @@
     }
 
     /**
-     * FrostCore v1.0.5
+     * FrostCore v1.0.8
      * https://github.com/elusivecodes/FrostCore
      */
     (function(global, factory) {
@@ -257,16 +257,15 @@
          * Create a wrapped version of a function that executes once per wait period
          * (using the most recent arguments passed to it).
          * @param {function} callback Callback function to execute.
-         * @param {number} wait The number of milliseconds to wait until next execution.
-         * @param {Boolean} [leading] Whether to execute on the leading edge of the wait period.
+         * @param {number} [wait=0] The number of milliseconds to wait until next execution.
+         * @param {Boolean} [leading=false] Whether to execute on the leading edge of the wait period.
          * @param {Boolean} [trailing=true] Whether to execute on the trailing edge of the wait period.
          * @returns {function} The wrapped function.
          */
-        Core.debounce = (callback, wait, leading, trailing = true) => {
+        Core.debounce = (callback, wait = 0, leading = false, trailing = true) => {
             let debounceReference,
                 lastRan,
-                newArgs,
-                running;
+                newArgs;
 
             const debounced = (...args) => {
                 const now = Date.now();
@@ -281,20 +280,22 @@
                 }
 
                 newArgs = args;
-                if (running || !trailing) {
+                if (!trailing) {
                     return;
                 }
 
-                running = true;
+                if (debounceReference) {
+                    clearTimeout(debounceReference);
+                }
+
                 debounceReference = setTimeout(
                     _ => {
                         lastRan = Date.now();
                         callback(...newArgs);
 
-                        running = false;
                         debounceReference = null;
                     },
-                    delta
+                    wait
                 );
             };
 
@@ -305,7 +306,6 @@
 
                 clearTimeout(debounceReference);
 
-                running = false;
                 debounceReference = null;
             };
 
@@ -381,13 +381,62 @@
          * Create a wrapped version of a function that executes at most once per wait period.
          * (using the most recent arguments passed to it).
          * @param {function} callback Callback function to execute.
-         * @param {number} wait The number of milliseconds to wait until next execution.
+         * @param {number} [wait=0] The number of milliseconds to wait until next execution.
          * @param {Boolean} [leading=true] Whether to execute on the leading edge of the wait period.
          * @param {Boolean} [trailing=true] Whether to execute on the trailing edge of the wait period.
          * @returns {function} The wrapped function.
          */
-        Core.throttle = (callback, wait, leading = true, trailing = true) =>
-            Core.debounce(callback, wait, leading, trailing);
+        Core.throttle = (callback, wait = 0, leading = true, trailing = true) => {
+            let throttleReference,
+                lastRan,
+                newArgs,
+                running;
+
+            const throttled = (...args) => {
+                const now = Date.now();
+                const delta = lastRan ?
+                    lastRan - now :
+                    null;
+
+                if (leading && (delta === null || delta >= wait)) {
+                    lastRan = now;
+                    callback(...args);
+                    return;
+                }
+
+                newArgs = args;
+                if (running || !trailing) {
+                    return;
+                }
+
+                running = true;
+                throttleReference = setTimeout(
+                    _ => {
+                        lastRan = Date.now();
+                        callback(...newArgs);
+
+                        running = false;
+                        throttleReference = null;
+                    },
+                    delta === null ?
+                        wait :
+                        delta
+                );
+            };
+
+            throttled.cancel = _ => {
+                if (!throttleReference) {
+                    return;
+                }
+
+                clearTimeout(throttleReference);
+
+                running = false;
+                throttleReference = null;
+            };
+
+            return throttled;
+        };
 
         /**
          * Execute a function a specified number of times.
@@ -1048,7 +1097,7 @@
     });
 
     /**
-     * FrostDOM v1.1.2
+     * FrostDOM v1.1.6
      * https://github.com/elusivecodes/FrostDOM
      */
     (function(global, factory) {
@@ -3564,20 +3613,20 @@
         Object.assign(DOM.prototype, {
 
             /** 
-             * Return a wrapped mouse drag event (optionally limited by animation frame).
+             * Return a wrapped mouse drag event (optionally debounced).
              * @param {DOM~eventCallback} down The callback to execute on mousedown.
              * @param {DOM~eventCallback} move The callback to execute on mousemove.
              * @param {DOM~eventCallback} up The callback to execute on mouseup.
-             * @param {Boolean} [animated=true] Whether to limit the move event by animation frame.
+             * @param {Boolean} [debounce=true] Whether to debounce the move event.
              * @returns {DOM~eventCallback} The mouse drag event callback.
              */
-            mouseDragFactory(down, move, up, animated = true) {
-                if (move && animated) {
-                    move = Core.animation(move);
+            mouseDragFactory(down, move, up, debounce = true) {
+                if (move && debounce) {
+                    move = this.constructor.debounce(move);
 
                     // needed to make sure up callback executes after final move callback
                     if (up) {
-                        up = Core.animation(up);
+                        up = this.constructor.debounce(up);
                     }
                 }
 
@@ -7667,6 +7716,28 @@
         Object.assign(DOM, {
 
             /**
+             * Create a wrapped version of a function that executes once per tick.
+             * @param {function} callback Callback function to debounce.
+             * @returns {function} The wrapped function.
+             */
+            debounce(callback) {
+                let running;
+
+                return (...args) => {
+                    if (running) {
+                        return;
+                    }
+
+                    running = true;
+
+                    Promise.resolve().then(_ => {
+                        callback(...args);
+                        running = false;
+                    });
+                };
+            },
+
+            /**
              * Return a RegExp for testing a namespaced event.
              * @param {string} event The namespaced event.
              * @returns {RegExp} The namespaced event RegExp.
@@ -10869,13 +10940,6 @@
                     settings
                 );
 
-                this._input = dom.findOne('input', this._node);
-                this._isRadio = this._input && dom.is(this._input, '[type="radio"]');
-
-                if (this._isRadio) {
-                    this._siblings = dom.siblings(this._node);
-                }
-
                 dom.setData(this._node, 'button', this);
             }
 
@@ -10890,32 +10954,10 @@
              * Toggle the Button.
              */
             toggle() {
-                this._isRadio ?
-                    this._toggleRadio() :
-                    this._toggleCheckbox();
-            }
-
-            /**
-             * Toggle a checkbox-type Button.
-             */
-            _toggleCheckbox() {
                 dom.toggleClass(this._node, 'active');
 
-                if (this._input) {
-                    const isChecked = dom.getProperty(this._input, 'checked');
-                    dom.setProperty(this._input, 'checked', !isChecked);
-                    dom.triggerEvent(this._input, 'change');
-                }
-            }
-
-            /**
-             * Toggle a radio-type Button.
-             */
-            _toggleRadio() {
-                dom.addClass(this._node, 'active');
-                dom.removeClass(this._siblings, 'active');
-                dom.setProperty(this._input, 'checked', true);
-                dom.triggerEvent(this._input, 'change');
+                const pressed = dom.hasClass(this._node, 'active');
+                dom.setAttribute('aria-pressed', pressed);
             }
 
             /**
@@ -10934,7 +10976,7 @@
 
 
         // Button events
-        dom.addEventDelegate(document, 'click.frost.button', '[data-toggle="buttons"] > *, [data-toggle="button"]', e => {
+        dom.addEventDelegate(document, 'click.frost.button', '[data-toggle="button"]', e => {
             e.preventDefault();
 
             const button = Button.init(e.currentTarget);
@@ -11009,8 +11051,6 @@
                     dom.hasClass(item, 'active')
                 );
 
-                this._queue = [];
-
                 this._events();
 
                 dom.setData(this._node, 'carousel', this);
@@ -11033,8 +11073,6 @@
              * Destroy the Carousel.
              */
             destroy() {
-                this._queue = [];
-
                 if (this._timer) {
                     clearTimeout(this._timer);
                 }
@@ -11064,9 +11102,8 @@
              * Stop the carousel from cycling through items.
              */
             pause() {
-                if (this._timer) {
-                    clearTimeout(this._timer);
-                }
+                clearTimeout(this._timer);
+                this._timer = null;
             }
 
             /**
@@ -11089,11 +11126,7 @@
              * @param {number} [direction=1] The direction to slide to.
              */
             slide(direction = 1) {
-                const index = this._queue.length ?
-                    this._queue[this._queue.length - 1] :
-                    this._index;
-
-                this.show(index + direction);
+                this.show(this._index + direction);
             }
 
             /**
@@ -11127,7 +11160,7 @@
 
             if (!Core.isUndefined(slideTo)) {
                 carousel.show(slideTo);
-            } else if (dom.hasClass(e.currentTarget, 'carousel-prev')) {
+            } else if (dom.hasClass(e.currentTarget, 'carousel-control-prev')) {
                 carousel.prev();
             } else {
                 carousel.next();
@@ -11146,15 +11179,21 @@
              */
             _events() {
                 if (this._settings.keyboard) {
+                    console.log(this._node);
                     dom.addEvent(this._node, 'keydown.frost.carousel', e => {
+                        const target = e.target;
+                        if (dom.is(target, 'input, select')) {
+                            return;
+                        }
+
                         switch (e.key) {
                             case 'ArrowLeft':
                                 e.preventDefault();
-                                this.prev().catch(_ => { });
+                                this.prev();
                                 break;
                             case 'ArrowRight':
                                 e.preventDefault();
-                                this.next().catch(_ => { });
+                                this.next();
                                 break;
                         }
                     });
@@ -11179,6 +11218,10 @@
              * Set a timer for the next Carousel cycle.
              */
             _setTimer() {
+                if (this._timer) {
+                    return;
+                }
+
                 const interval = dom.getDataset(this._items[this._index], 'interval');
 
                 this._timer = setTimeout(
@@ -11193,7 +11236,6 @@
              */
             _show(index) {
                 if (this._sliding) {
-                    this._queue.push(index);
                     return;
                 }
 
@@ -11251,10 +11293,9 @@
 
                 dom.animate(
                     this._items[this._index],
-                    (node, progress, options) =>
-                        this._update(node, this._items[oldIndex], progress, options.direction),
+                    (node, progress) =>
+                        this._update(node, this._items[oldIndex], progress, direction),
                     {
-                        direction,
                         duration: this._settings.transition
                     }
                 ).then(_ => {
@@ -11264,15 +11305,8 @@
                     dom.addClass(newIndicator, 'active');
                     dom.triggerEvent(this._node, 'slid.frost.carousel', eventData);
 
-                    this._sliding = false;
-
-                    if (!this._queue.length) {
-                        this._setTimer();
-                    } else {
-                        const next = this._queue.shift();
-                        this._show(next);
-                    }
-                }).catch(_ => {
+                    this._setTimer();
+                }).finally(_ => {
                     this._sliding = false;
                 });
             },
@@ -11581,13 +11615,11 @@
                     settings
                 );
 
-                this._containerNode = dom.parent(this._node).shift();
-
                 this._menuNode = dom.next(this._node, '.dropdown-menu').shift();
 
                 if (this._settings.reference) {
                     if (this._settings.reference === 'parent') {
-                        this._referenceNode = this._containerNode;
+                        this._referenceNode = dom.parent(this._node).shift();
                     } else {
                         this._referenceNode = dom.findOne(this._settings.reference);
                     }
@@ -11596,7 +11628,11 @@
                 }
 
                 // Attach popper
-                if (!dom.closest(this._node, '.navbar-nav').length) {
+                if (this._settings.display !== 'static' && dom.closest(this._node, '.navbar-nav').length) {
+                    this._settings.display = 'static';
+                }
+
+                if (this._settings.display === 'dynamic') {
                     this._popper = new Popper(
                         this._menuNode,
                         {
@@ -11636,7 +11672,7 @@
             hide() {
                 if (
                     this._animating ||
-                    !dom.hasClass(this._containerNode, 'open') ||
+                    !dom.hasClass(this._menuNode, 'show') ||
                     !dom.triggerOne(this._node, 'hide.frost.dropdown')
                 ) {
                     return;
@@ -11647,7 +11683,7 @@
                 dom.fadeOut(this._menuNode, {
                     duration: this._settings.duration
                 }).then(_ => {
-                    dom.removeClass(this._containerNode, 'open');
+                    dom.removeClass(this._menuNode, 'show');
                     dom.setAttribute(this._node, 'aria-expanded', false);
                     dom.triggerEvent(this._node, 'hidden.frost.dropdown');
                 }).catch(_ => { }).finally(_ => {
@@ -11661,14 +11697,14 @@
             show() {
                 if (
                     this._animating ||
-                    dom.hasClass(this._containerNode, 'open') ||
+                    dom.hasClass(this._menuNode, 'show') ||
                     !dom.triggerOne(this._node, 'show.frost.dropdown')
                 ) {
                     return;
                 }
 
                 this._animating = true;
-                dom.addClass(this._containerNode, 'open');
+                dom.addClass(this._menuNode, 'show');
 
                 dom.fadeIn(this._menuNode, {
                     duration: this._settings.duration
@@ -11684,7 +11720,7 @@
              * Toggle the Dropdown.
              */
             toggle() {
-                dom.hasClass(this._containerNode, 'open') ?
+                dom.hasClass(this._menuNode, 'show') ?
                     this.hide() :
                     this.show();
             }
@@ -11699,7 +11735,7 @@
                     noHideSelf = dom.is(target, 'form');
                 }
 
-                const menus = dom.find('.open > .dropdown-menu');
+                const menus = dom.find('.dropdown-menu.show');
 
                 for (const menu of menus) {
                     if (
@@ -11766,7 +11802,7 @@
                     const node = e.currentTarget;
                     const dropdown = Dropdown.init(node);
 
-                    if (!dom.hasClass(dropdown._containerNode, 'open')) {
+                    if (!dom.hasClass(dropdown._menuNode, 'show')) {
                         dropdown.show();
                     }
 
@@ -11776,7 +11812,7 @@
             }
         });
 
-        dom.addEventDelegate(document, 'keydown.frost.dropdown', '.open > .dropdown-menu .dropdown-item', e => {
+        dom.addEventDelegate(document, 'keydown.frost.dropdown', '.dropdown-menu.show .dropdown-item', e => {
             let focusNode;
 
             switch (e.key) {
@@ -11811,6 +11847,7 @@
 
         // Dropdown default options
         Dropdown.defaults = {
+            display: 'dynamic',
             duration: 100,
             placement: 'bottom',
             position: 'start',
@@ -12182,6 +12219,8 @@
                     settings
                 );
 
+                this._modal = dom.closest(this._node, '.modal').shift();
+
                 this._triggers = this._settings.trigger.split(' ');
 
                 this._render();
@@ -12216,6 +12255,10 @@
 
                 if (this._triggers.includes('click')) {
                     dom.removeEvent(this._node, 'click.frost.popover');
+                }
+
+                if (this._modal) {
+                    dom.removeEvent(this._modal, 'hide.frost.modal', this._hideModalEvent);
                 }
 
                 dom.removeData(this._node, 'popover', this);
@@ -12394,6 +12437,14 @@
                         this.toggle();
                     });
                 }
+
+                if (this._modal) {
+                    this._hideModalEvent = _ => {
+                        this.hide();
+                    };
+
+                    dom.addEvent(this._modal, 'hide.frost.modal', this._hideModalEvent);
+                }
             },
 
             /**
@@ -12537,15 +12588,14 @@
                     settings
                 );
 
-                this._fixed = dom.isFixed(this._settings.reference);
                 this._scrollParent = this.constructor.getScrollParent(this._node);
                 this._relativeParent = this.constructor.getRelativeParent(this._node);
 
                 dom.setStyle(this._node, {
-                    position: this._fixed ?
-                        'fixed' :
-                        'absolute',
+                    position: 'absolute',
                     top: 0,
+                    right: 'initial',
+                    bottom: 'initial',
                     left: 0
                 });
 
@@ -12559,7 +12609,9 @@
                     this.destroy();
                 });
 
-                this.update();
+                window.requestAnimationFrame(_ => {
+                    this.update();
+                });
 
                 dom.setData(this._node, 'popper', this);
             }
@@ -12586,9 +12638,9 @@
                 }
 
                 // calculate boxes
-                const nodeBox = dom.rect(this._node, !this._fixed);
-                const referenceBox = dom.rect(this._settings.reference, !this._fixed);
-                const windowBox = this.constructor.windowContainer(this._fixed);
+                const nodeBox = dom.rect(this._node, true);
+                const referenceBox = dom.rect(this._settings.reference, true);
+                const windowBox = this.constructor.windowContainer();
 
                 // check object could be seen
                 if (this.constructor.isNodeHidden(nodeBox, referenceBox, windowBox, this._settings.spacing)) {
@@ -12596,11 +12648,11 @@
                 }
 
                 const scrollBox = this._scrollParent ?
-                    dom.rect(this._scrollParent, !this._fixed) :
+                    dom.rect(this._scrollParent, true) :
                     null;
 
                 const containerBox = this._settings.container ?
-                    dom.rect(this._settings.container, !this._fixed) :
+                    dom.rect(this._settings.container, true) :
                     null;
 
                 const minimumBox = {
@@ -12660,8 +12712,8 @@
                 };
 
                 // offset for relative parent
-                const relativeBox = this._relativeParent && !this._fixed ?
-                    dom.rect(this._relativeParent, !this._fixed) :
+                const relativeBox = this._relativeParent ?
+                    dom.rect(this._relativeParent, true) :
                     null;
 
                 if (relativeBox) {
@@ -12701,7 +12753,7 @@
 
                 // update arrow
                 if (this._settings.arrow) {
-                    const newNodeBox = dom.rect(this._node, !this._fixed);
+                    const newNodeBox = dom.rect(this._node, true);
                     this._updateArrow(newNodeBox, referenceBox, placement, position);
                 }
             }
@@ -12723,7 +12775,7 @@
                 };
                 dom.setStyle(this._settings.arrow, arrowStyles);
 
-                const arrowBox = dom.rect(this._settings.arrow, !this._fixed);
+                const arrowBox = dom.rect(this._settings.arrow, true);
 
                 if (['top', 'bottom'].includes(placement)) {
                     arrowStyles[placement === 'top' ? 'bottom' : 'top'] = -arrowBox.height;
@@ -12785,7 +12837,7 @@
                 dom.addEvent(
                     window,
                     'resize.frost.popper scroll.frost.popper',
-                    Core.animation(_ => {
+                    DOM.debounce(_ => {
                         for (const popper of this._poppers) {
                             popper.update();
                         }
@@ -12805,7 +12857,7 @@
                     dom.addEvent(
                         scrollParent,
                         'scroll.frost.popper',
-                        Core.animation(_ => {
+                        DOM.debounce(_ => {
                             for (const popper of this._popperOverflows.get(scrollParent)) {
                                 popper.update();
                             }
@@ -13220,16 +13272,11 @@
 
             /**
              * Calculate the computed bounding rectangle of the window.
-             * @param {Boolean} fixed Whether the Popper is fixed.
              * @returns {object} The computed bounding rectangle of the window.
              */
-            windowContainer(fixed) {
-                const scrollX = fixed ?
-                    0 :
-                    dom.getScrollX(window);
-                const scrollY = fixed ?
-                    0 :
-                    dom.getScrollY(window);
+            windowContainer() {
+                const scrollX = dom.getScrollX(window);
+                const scrollY = dom.getScrollY(window);
                 const windowWidth = dom.width(document);
                 const windowHeight = dom.height(document);
 
@@ -13680,6 +13727,8 @@
                     settings
                 );
 
+                this._modal = dom.closest(this._node, '.modal').shift();
+
                 this._triggers = this._settings.trigger.split(' ');
 
                 this._render();
@@ -13714,6 +13763,10 @@
 
                 if (this._triggers.includes('click')) {
                     dom.removeEvent(this._node, 'click.frost.tooltip');
+                }
+
+                if (this._modal) {
+                    dom.removeEvent(this._modal, 'hide.frost.modal', this._hideModalEvent);
                 }
 
                 dom.removeData(this._node, 'tooltip', this);
@@ -13891,6 +13944,14 @@
 
                         this.toggle();
                     });
+                }
+
+                if (this._modal) {
+                    this._hideModalEvent = _ => {
+                        this.hide();
+                    };
+
+                    dom.addEvent(this._modal, 'hide.frost.modal', this._hideModalEvent);
                 }
             },
 

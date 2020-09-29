@@ -31,6 +31,8 @@ class Tooltip {
             settings
         );
 
+        this._modal = dom.closest(this._node, '.modal').shift();
+
         this._triggers = this._settings.trigger.split(' ');
 
         this._render();
@@ -65,6 +67,10 @@ class Tooltip {
 
         if (this._triggers.includes('click')) {
             dom.removeEvent(this._node, 'click.frost.tooltip');
+        }
+
+        if (this._modal) {
+            dom.removeEvent(this._modal, 'hide.frost.modal', this._hideModalEvent);
         }
 
         dom.removeData(this._node, 'tooltip', this);

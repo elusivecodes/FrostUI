@@ -1,5 +1,6 @@
 // Dropdown default options
 Dropdown.defaults = {
+    display: 'dynamic',
     duration: 100,
     placement: 'bottom',
     position: 'start',

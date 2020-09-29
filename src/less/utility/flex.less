@@ -107,6 +107,23 @@
     .flex@{b}shrink-1 {
         flex-shrink: 1 !important;
     }
+
+    .mix-flex-order(5, @b);
+
+    .order@{b}first {
+        order: -1 !important;
+    }
+    .order@{b}last {
+        order: 6 !important;
+    }
+}
+
+.mix-flex-order(@n, @b: -, @i: 0) when (@i =< @n) {
+    .order@{b}@{i} {
+        order: 0 !important;
+    }
+
+    .mix-flex-order(@n, @b, (@i + 1));
 }
 
 .mix-flex();
@@ -125,4 +142,8 @@
 
 @media (min-width: @break-lg) {
     .mix-flex(-xl-);
+}
+
+@media (min-width: @break-xl) {
+    .mix-flex(-xxl-);
 }

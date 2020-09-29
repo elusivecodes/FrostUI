@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../dist/frost-ui.css" />
+    <script src="../../dist/frost-ui-bundle.js"></script>
+    <style>
+        .btn {
+            margin-bottom: .25rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Tooltips</h1>
+        <div class="mb-4">
+            <button class="btn ripple btn-secondary" role="button" data-toggle="tooltip"
+                data-title="This is a tooltip">Tooltip</button>
+        </div>
+        <h4>HTML</h4>
+        <div class="mb-4">
+            <button class="btn ripple btn-secondary" role="button" data-toggle="tooltip" data-html="true"
+                data-title="This is a <strong>tooltip</strong>">
+                Tooltip</button>
+        </div>
+        <h4>Placement</h4>
+        <div class="mb-4">
+            <button class="btn ripple btn-secondary" role="button" data-toggle="tooltip" data-title="This is a tooltip"
+                data-placement="top" data-position="center" data-fixed="true">Top
+            </button>
+            <button class="btn ripple btn-secondary" role="button" data-toggle="tooltip" data-title="This is a tooltip"
+                data-placement="right" data-position="center" data-fixed="true">Right
+            </button>
+            <button class="btn ripple btn-secondary" role="button" data-toggle="tooltip" data-title="This is a tooltip"
+                data-placement="bottom" data-position="center" data-fixed="true">
+                Bottom</button>
+            <button class="btn ripple btn-secondary" role="button" data-toggle="tooltip" data-title="This is a tooltip"
+                data-placement="left" data-position="center" data-fixed="true">Left
+            </button>
+        </div>
+        <h4>Position</h4>
+        <div class="mb-4">
+            <button class="btn ripple btn-secondary" role="button" data-toggle="tooltip" data-title="This is a tooltip"
+                data-placement="bottom" data-position="start" data-fixed="true">Start
+            </button>
+            <button class="btn ripple btn-secondary" role="button" data-toggle="tooltip" data-title="This is a tooltip"
+                data-placement="bottom" data-position="center" data-fixed="true">
+                Center</button>
+            <button class="btn ripple btn-secondary" role="button" data-toggle="tooltip" data-title="This is a tooltip"
+                data-placement="bottom" data-position="end" data-fixed="true">End
+            </button>
+        </div>
+    </div>
+    <script>
+        const nodes = dom.find('[data-toggle="tooltip"]');
+        for (const node of nodes) {
+            UI.Tooltip.init(node);
+        }
+    </script>
+</body>
+
+</html>

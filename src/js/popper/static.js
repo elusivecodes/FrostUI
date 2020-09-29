@@ -363,16 +363,11 @@ Object.assign(Popper, {
 
     /**
      * Calculate the computed bounding rectangle of the window.
-     * @param {Boolean} fixed Whether the Popper is fixed.
      * @returns {object} The computed bounding rectangle of the window.
      */
-    windowContainer(fixed) {
-        const scrollX = fixed ?
-            0 :
-            dom.getScrollX(window);
-        const scrollY = fixed ?
-            0 :
-            dom.getScrollY(window);
+    windowContainer() {
+        const scrollX = dom.getScrollX(window);
+        const scrollY = dom.getScrollY(window);
         const windowWidth = dom.width(document);
         const windowHeight = dom.height(document);
 

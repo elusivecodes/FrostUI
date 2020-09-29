@@ -1,0 +1,31 @@
+.close {
+    font-weight: @font-weight-bolder;
+    line-height: 1;
+    color: @black;
+    text-shadow: 0 1px 0 @white;
+    opacity: .5;
+
+    &:focus {
+        opacity: .75;
+    }
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &.disabled,
+    &:disabled {
+        opacity: 0.25;
+        pointer-events: none;
+    }
+
+    button& {
+        padding: 0;
+        background-color: transparent;
+        border: 0;
+
+        &:focus {
+            outline: 0;
+        }
+    }
+}

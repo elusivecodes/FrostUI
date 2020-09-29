@@ -2,14 +2,13 @@
     background-color: @color;
     .text-color(@color);
 
+    .btn-check:checked + &,
     &.active,
-    &.active:hover,
-    &.active.hover {
+    &.active:hover {
         background-color: darken(@color, 20%);
     }
 
-    &:hover,
-    &.hover {
+    &:hover {
         background-color: darken(@color, 10%);
         .text-color(@color);
     }
@@ -20,16 +19,15 @@
     color: @color;
     border-color: @color;
 
+    .btn-check:checked + &,
     &.active,
-    &.active:hover,
-    &.active.hover {
+    &.active:hover {
         background-color: transparent;
         color: darken(@color, 20%);
         border-color: darken(@color, 20%);
     }
 
-    &:hover,
-    &.hover {
+    &:hover {
         background-color: @color;
         .text-color(@color);
         border-color: @border-color;
@@ -37,84 +35,88 @@
 }
 
 .btn {
-    position: relative;
-    overflow: hidden;
     display: inline-block;
-    padding: (@spacing / 4) (@spacing / 2);
+    font-family: @font-family;
+    font-weight: @font-weight;
+    line-height: @line-height;
+    color: @text;
     text-align: center;
+    text-decoration: none;
     white-space: nowrap;
     vertical-align: middle;
+    cursor: pointer;
     user-select: none;
-    font-size: 1rem;
-    line-height: @line-height;
     background-color: transparent;
     border: @border-size @border-style @border-color;
+    padding: (@spacing / 4) (@spacing / 2);
+    font-size: 1rem;
     border-radius: @border-radius;
     transition: color @transition-time @transition-type,
         background-color @transition-time @transition-type,
         box-shadow @transition-time @transition-type;
-
-    &:hover,
-    &.hover {
+    
+    &:hover {
+        color: @text;
         text-decoration: none;
-        z-index: @z-hover;
     }
 
-    &:focus,
-    &.focus {
-        text-decoration: none;
-        z-index: @z-focus;
-        box-shadow: @shadow-xs;
+    .btn-check:focus + &,
+    &:focus {
+        outline: 0;
+        box-shadow: @shadow-sm;
     }
 
+    .btn-check:checked + &,
+    .btn-check:active + &,
     &:active,
     &.active {
-        z-index: @z-active;
-    }
-
-    &:active {
         box-shadow: @shadow;
     }
 
-    button& {
-        outline: 0;
-        cursor: pointer;
-    }
-
     &:disabled,
-    &.disabled {
+    &.disabled,
+    fieldset:disabled & {
         opacity: @disabled-opacity;
         pointer-events: none;
     }
 }
 
-.btn-group-pill .btn,
-.btn-pill {
-    padding-left: @spacing;
-    padding-right: @spacing;
-    border-radius: @spacing * 2;
+.btn-link {
+    color: @link;
+    border-color: transparent;
+    text-decoration: none;
 
-    &.btn-sm {
-        padding-left: @spacing / 2;
-        padding-right: @spacing / 2;
+    &:hover {
+        color: tint(@link, 25%);
+        text-decoration: underline;
     }
+
+    &:focus {
+        border-color: @border-color;
+        text-decoration: underline;
+    }
+
+    &:disabled,
+    &.disabled {
+        color: @secondary;
+    }
+}
+
+.btn-lg {
+    padding: (@spacing / 3) @spacing;
+    font-size: 1.25rem;
+}
+
+.btn-sm {
+    font-size: .8rem;
 }
 
 .btn-block {
     display: block;
     width: 100%;
-}
 
-.btn-link {
-    border: 0;
-    border-radius: 0;
-    color: @link;
-    box-shadow: none !important;
-
-    &:hover,
-    &.hover {
-        box-shadow: none;
-        text-decoration: underline;
+    + .btn-block {
+        margin-top: @spacing / 2;
     }
 }
 

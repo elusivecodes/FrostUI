@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="../../dist/frost-ui.min.css" />
     <script src="../../dist/frost-ui-bundle.js"></script>
     <style>
-        .btn {
+        .container .btn {
+            margin-top: .25rem;
             margin-bottom: .25rem;
         }
     </style>
@@ -18,7 +19,7 @@
 <body>
     <div class="container">
         <h1>Buttons</h1>
-        <div>
+        <div class="mb-4">
             <button class="btn ripple btn-primary" role="button">Primary</button>
             <button class="btn ripple btn-secondary" role="button">Secondary</button>
             <button class="btn ripple btn-success" role="button">Success</button>
@@ -29,35 +30,8 @@
             <button class="btn ripple btn-dark" role="button">Dark</button>
             <button class="btn ripple btn-link" role="button">Link</button>
         </div>
-        <div>
-            <button class="btn ripple btn-primary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Primary</button>
-            <button class="btn ripple btn-secondary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Secondary</button>
-            <button class="btn ripple btn-success disabled" role="button" aria-disabled="true"
-                tabindex="-1">Success</button>
-            <button class="btn ripple btn-info disabled" role="button" aria-disabled="true" tabindex="-1">Info</button>
-            <button class="btn ripple btn-warning disabled" role="button" aria-disabled="true"
-                tabindex="-1">Warning</button>
-            <button class="btn ripple btn-danger disabled" role="button" aria-disabled="true"
-                tabindex="-1">Danger</button>
-            <button class="btn ripple btn-light disabled" role="button" aria-disabled="true"
-                tabindex="-1">Light</button>
-            <button class="btn ripple btn-dark disabled" role="button" aria-disabled="true" tabindex="-1">Dark</button>
-            <button class="btn ripple btn-link disabled" role="button" aria-disabled="true" tabindex="-1">Link</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-primary active" role="button">Primary</button>
-            <button class="btn ripple btn-secondary active" role="button">Secondary</button>
-            <button class="btn ripple btn-success active" role="button">Success</button>
-            <button class="btn ripple btn-info active" role="button">Info</button>
-            <button class="btn ripple btn-warning active" role="button">Warning</button>
-            <button class="btn ripple btn-danger active" role="button">Danger</button>
-            <button class="btn ripple btn-light active" role="button">Light</button>
-            <button class="btn ripple btn-dark active" role="button">Dark</button>
-            <button class="btn ripple btn-link active" role="button">Link</button>
-        </div>
-        <div>
+        <h4>Outline Buttons</h4>
+        <div class="mb-4">
             <button class="btn ripple btn-outline-primary" role="button">Primary</button>
             <button class="btn ripple btn-outline-secondary" role="button">Secondary</button>
             <button class="btn ripple btn-outline-success" role="button">Success</button>
@@ -67,431 +41,32 @@
             <button class="btn ripple btn-outline-light" role="button">Light</button>
             <button class="btn ripple btn-outline-dark" role="button">Dark</button>
         </div>
-        <div>
-            <button class="btn ripple btn-outline-primary disabled" role="button" aria-disabled="true"
+        <h4>Sizes</h4>
+        <div class="mb-4">
+            <button class="btn ripple btn-primary btn-lg" role="button">Primary</button>
+            <button class="btn ripple btn-secondary btn-lg" role="button">Secondary</button>
+        </div>
+        <div class="mb-4">
+            <button class="btn ripple btn-primary btn-sm" role="button">Primary</button>
+            <button class="btn ripple btn-secondary btn-sm" role="button">Secondary</button>
+        </div>
+        <h4>Block Buttons</h4>
+        <div class="mb-4" style="max-width: 16rem;">
+            <button class="btn ripple btn-primary btn-lg btn-block" role="button">Primary</button>
+            <button class="btn ripple btn-secondary btn-lg btn-block" role="button">Secondary</button>
+        </div>
+        <h4>Disabled Buttons</h4>
+        <div class="mb-4">
+            <button class="btn ripple btn-primary btn-lg disabled" role="button" aria-disabled="true"
                 tabindex="-1">Primary</button>
-            <button class="btn ripple btn-outline-secondary disabled" role="button" aria-disabled="true"
+            <button class="btn ripple btn-secondary btn-lg disabled" role="button" aria-disabled="true"
                 tabindex="-1">Secondary</button>
-            <button class="btn ripple btn-outline-success disabled" role="button" aria-disabled="true"
-                tabindex="-1">Success</button>
-            <button class="btn ripple btn-outline-info disabled" role="button" aria-disabled="true"
-                tabindex="-1">Info</button>
-            <button class="btn ripple btn-outline-warning disabled" role="button" aria-disabled="true"
-                tabindex="-1">Warning</button>
-            <button class="btn ripple btn-outline-danger disabled" role="button" aria-disabled="true"
-                tabindex="-1">Danger</button>
-            <button class="btn ripple btn-outline-light disabled" role="button" aria-disabled="true"
-                tabindex="-1">Light</button>
-            <button class="btn ripple btn-outline-dark disabled" role="button" aria-disabled="true"
-                tabindex="-1">Dark</button>
         </div>
-        <div>
-            <button class="btn ripple btn-outline-primary active" role="button">Primary</button>
-            <button class="btn ripple btn-outline-secondary active" role="button">Secondary</button>
-            <button class="btn ripple btn-outline-success active" role="button">Success</button>
-            <button class="btn ripple btn-outline-info active" role="button">Info</button>
-            <button class="btn ripple btn-outline-warning active" role="button">Warning</button>
-            <button class="btn ripple btn-outline-danger active" role="button">Danger</button>
-            <button class="btn ripple btn-outline-light active" role="button">Light</button>
-            <button class="btn ripple btn-outline-dark active" role="button">Dark</button>
-        </div>
-        <br />
-        <h4>Large</h4>
-        <div>
-            <button class="btn ripple btn-lg btn-primary" role="button">Primary</button>
-            <button class="btn ripple btn-lg btn-secondary" role="button">Secondary</button>
-            <button class="btn ripple btn-lg btn-success" role="button">Success</button>
-            <button class="btn ripple btn-lg btn-info" role="button">Info</button>
-            <button class="btn ripple btn-lg btn-warning" role="button">Warning</button>
-            <button class="btn ripple btn-lg btn-danger" role="button">Danger</button>
-            <button class="btn ripple btn-lg btn-light" role="button">Light</button>
-            <button class="btn ripple btn-lg btn-dark" role="button">Dark</button>
-            <button class="btn ripple btn-lg btn-link" role="button">Link</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-lg btn-primary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Primary</button>
-            <button class="btn ripple btn-lg btn-secondary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Secondary</button>
-            <button class="btn ripple btn-lg btn-success disabled" role="button" aria-disabled="true"
-                tabindex="-1">Success</button>
-            <button class="btn ripple btn-lg btn-info disabled" role="button" aria-disabled="true"
-                tabindex="-1">Info</button>
-            <button class="btn ripple btn-lg btn-warning disabled" role="button" aria-disabled="true"
-                tabindex="-1">Warning</button>
-            <button class="btn ripple btn-lg btn-danger disabled" role="button" aria-disabled="true"
-                tabindex="-1">Danger</button>
-            <button class="btn ripple btn-lg btn-light disabled" role="button" aria-disabled="true"
-                tabindex="-1">Light</button>
-            <button class="btn ripple btn-lg btn-dark disabled" role="button" aria-disabled="true"
-                tabindex="-1">Dark</button>
-            <button class="btn ripple btn-lg btn-link disabled" role="button" aria-disabled="true"
-                tabindex="-1">Link</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-lg btn-primary active" role="button">Primary</button>
-            <button class="btn ripple btn-lg btn-secondary active" role="button">Secondary</button>
-            <button class="btn ripple btn-lg btn-success active" role="button">Success</button>
-            <button class="btn ripple btn-lg btn-info active" role="button">Info</button>
-            <button class="btn ripple btn-lg btn-warning active" role="button">Warning</button>
-            <button class="btn ripple btn-lg btn-danger active" role="button">Danger</button>
-            <button class="btn ripple btn-lg btn-light active" role="button">Light</button>
-            <button class="btn ripple btn-lg btn-dark active" role="button">Dark</button>
-            <button class="btn ripple btn-lg btn-link active" role="button">Link</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-lg btn-outline-primary" role="button">Primary</button>
-            <button class="btn ripple btn-lg btn-outline-secondary" role="button">Secondary</button>
-            <button class="btn ripple btn-lg btn-outline-success" role="button">Success</button>
-            <button class="btn ripple btn-lg btn-outline-info" role="button">Info</button>
-            <button class="btn ripple btn-lg btn-outline-warning" role="button">Warning</button>
-            <button class="btn ripple btn-lg btn-outline-danger" role="button">Danger</button>
-            <button class="btn ripple btn-lg btn-outline-light" role="button">Light</button>
-            <button class="btn ripple btn-lg btn-outline-dark" role="button">Dark</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-lg btn-outline-primary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Primary</button>
-            <button class="btn ripple btn-lg btn-outline-secondary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Secondary</button>
-            <button class="btn ripple btn-lg btn-outline-success disabled" role="button" aria-disabled="true"
-                tabindex="-1">Success</button>
-            <button class="btn ripple btn-lg btn-outline-info disabled" role="button" aria-disabled="true"
-                tabindex="-1">Info</button>
-            <button class="btn ripple btn-lg btn-outline-warning disabled" role="button" aria-disabled="true"
-                tabindex="-1">Warning</button>
-            <button class="btn ripple btn-lg btn-outline-danger disabled" role="button" aria-disabled="true"
-                tabindex="-1">Danger</button>
-            <button class="btn ripple btn-lg btn-outline-light disabled" role="button" aria-disabled="true"
-                tabindex="-1">Light</button>
-            <button class="btn ripple btn-lg btn-outline-dark disabled" role="button" aria-disabled="true"
-                tabindex="-1">Dark</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-lg btn-outline-primary active" role="button">Primary</button>
-            <button class="btn ripple btn-lg btn-outline-secondary active" role="button">Secondary</button>
-            <button class="btn ripple btn-lg btn-outline-success active" role="button">Success</button>
-            <button class="btn ripple btn-lg btn-outline-info active" role="button">Info</button>
-            <button class="btn ripple btn-lg btn-outline-warning active" role="button">Warning</button>
-            <button class="btn ripple btn-lg btn-outline-danger active" role="button">Danger</button>
-            <button class="btn ripple btn-lg btn-outline-light active" role="button">Light</button>
-            <button class="btn ripple btn-lg btn-outline-dark active" role="button">Dark</button>
-        </div>
-        <br />
-        <h4>Small</h4>
-        <div>
-            <button class="btn ripple btn-sm btn-primary" role="button">Primary</button>
-            <button class="btn ripple btn-sm btn-secondary" role="button">Secondary</button>
-            <button class="btn ripple btn-sm btn-success" role="button">Success</button>
-            <button class="btn ripple btn-sm btn-info" role="button">Info</button>
-            <button class="btn ripple btn-sm btn-warning" role="button">Warning</button>
-            <button class="btn ripple btn-sm btn-danger" role="button">Danger</button>
-            <button class="btn ripple btn-sm btn-light" role="button">Light</button>
-            <button class="btn ripple btn-sm btn-dark" role="button">Dark</button>
-            <button class="btn ripple btn-sm btn-link" role="button">Link</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-sm btn-primary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Primary</button>
-            <button class="btn ripple btn-sm btn-secondary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Secondary</button>
-            <button class="btn ripple btn-sm btn-success disabled" role="button" aria-disabled="true"
-                tabindex="-1">Success</button>
-            <button class="btn ripple btn-sm btn-info disabled" role="button" aria-disabled="true"
-                tabindex="-1">Info</button>
-            <button class="btn ripple btn-sm btn-warning disabled" role="button" aria-disabled="true"
-                tabindex="-1">Warning</button>
-            <button class="btn ripple btn-sm btn-danger disabled" role="button" aria-disabled="true"
-                tabindex="-1">Danger</button>
-            <button class="btn ripple btn-sm btn-light disabled" role="button" aria-disabled="true"
-                tabindex="-1">Light</button>
-            <button class="btn ripple btn-sm btn-dark disabled" role="button" aria-disabled="true"
-                tabindex="-1">Dark</button>
-            <button class="btn ripple btn-sm btn-link disabled" role="button" aria-disabled="true"
-                tabindex="-1">Link</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-sm btn-primary active" role="button">Primary</button>
-            <button class="btn ripple btn-sm btn-secondary active" role="button">Secondary</button>
-            <button class="btn ripple btn-sm btn-success active" role="button">Success</button>
-            <button class="btn ripple btn-sm btn-info active" role="button">Info</button>
-            <button class="btn ripple btn-sm btn-warning active" role="button">Warning</button>
-            <button class="btn ripple btn-sm btn-danger active" role="button">Danger</button>
-            <button class="btn ripple btn-sm btn-light active" role="button">Light</button>
-            <button class="btn ripple btn-sm btn-dark active" role="button">Dark</button>
-            <button class="btn ripple btn-sm btn-link active" role="button">Link</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-sm btn-outline-primary" role="button">Primary</button>
-            <button class="btn ripple btn-sm btn-outline-secondary" role="button">Secondary</button>
-            <button class="btn ripple btn-sm btn-outline-success" role="button">Success</button>
-            <button class="btn ripple btn-sm btn-outline-info" role="button">Info</button>
-            <button class="btn ripple btn-sm btn-outline-warning" role="button">Warning</button>
-            <button class="btn ripple btn-sm btn-outline-danger" role="button">Danger</button>
-            <button class="btn ripple btn-sm btn-outline-light" role="button">Light</button>
-            <button class="btn ripple btn-sm btn-outline-dark" role="button">Dark</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-sm btn-outline-primary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Primary</button>
-            <button class="btn ripple btn-sm btn-outline-secondary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Secondary</button>
-            <button class="btn ripple btn-sm btn-outline-success disabled" role="button" aria-disabled="true"
-                tabindex="-1">Success</button>
-            <button class="btn ripple btn-sm btn-outline-info disabled" role="button" aria-disabled="true"
-                tabindex="-1">Info</button>
-            <button class="btn ripple btn-sm btn-outline-warning disabled" role="button" aria-disabled="true"
-                tabindex="-1">Warning</button>
-            <button class="btn ripple btn-sm btn-outline-danger disabled" role="button" aria-disabled="true"
-                tabindex="-1">Danger</button>
-            <button class="btn ripple btn-sm btn-outline-light disabled" role="button" aria-disabled="true"
-                tabindex="-1">Light</button>
-            <button class="btn ripple btn-sm btn-outline-dark disabled" role="button" aria-disabled="true"
-                tabindex="-1">Dark</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-sm btn-outline-primary active" role="button">Primary</button>
-            <button class="btn ripple btn-sm btn-outline-secondary active" role="button">Secondary</button>
-            <button class="btn ripple btn-sm btn-outline-success active" role="button">Success</button>
-            <button class="btn ripple btn-sm btn-outline-info active" role="button">Info</button>
-            <button class="btn ripple btn-sm btn-outline-warning active" role="button">Warning</button>
-            <button class="btn ripple btn-sm btn-outline-danger active" role="button">Danger</button>
-            <button class="btn ripple btn-sm btn-outline-light active" role="button">Light</button>
-            <button class="btn ripple btn-sm btn-outline-dark active" role="button">Dark</button>
-        </div>
-        <br />
-        <h4>Pills</h4>
-        <div>
-            <button class="btn ripple btn-pill btn-primary" role="button">Primary</button>
-            <button class="btn ripple btn-pill btn-secondary" role="button">Secondary</button>
-            <button class="btn ripple btn-pill btn-success" role="button">Success</button>
-            <button class="btn ripple btn-pill btn-info" role="button">Info</button>
-            <button class="btn ripple btn-pill btn-warning" role="button">Warning</button>
-            <button class="btn ripple btn-pill btn-danger" role="button">Danger</button>
-            <button class="btn ripple btn-pill btn-light" role="button">Light</button>
-            <button class="btn ripple btn-pill btn-dark" role="button">Dark</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-pill btn-primary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Primary</button>
-            <button class="btn ripple btn-pill btn-secondary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Secondary</button>
-            <button class="btn ripple btn-pill btn-success disabled" role="button" aria-disabled="true"
-                tabindex="-1">Success</button>
-            <button class="btn ripple btn-pill btn-info disabled" role="button" aria-disabled="true"
-                tabindex="-1">Info</button>
-            <button class="btn ripple btn-pill btn-warning disabled" role="button" aria-disabled="true"
-                tabindex="-1">Warning</button>
-            <button class="btn ripple btn-pill btn-danger disabled" role="button" aria-disabled="true"
-                tabindex="-1">Danger</button>
-            <button class="btn ripple btn-pill btn-light disabled" role="button" aria-disabled="true"
-                tabindex="-1">Light</button>
-            <button class="btn ripple btn-pill btn-dark disabled" role="button" aria-disabled="true"
-                tabindex="-1">Dark</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-pill btn-primary active" role="button">Primary</button>
-            <button class="btn ripple btn-pill btn-secondary active" role="button">Secondary</button>
-            <button class="btn ripple btn-pill btn-success active" role="button">Success</button>
-            <button class="btn ripple btn-pill btn-info active" role="button">Info</button>
-            <button class="btn ripple btn-pill btn-warning active" role="button">Warning</button>
-            <button class="btn ripple btn-pill btn-danger active" role="button">Danger</button>
-            <button class="btn ripple btn-pill btn-light active" role="button">Light</button>
-            <button class="btn ripple btn-pill btn-dark active" role="button">Dark</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-pill btn-outline-primary" role="button">Primary</button>
-            <button class="btn ripple btn-pill btn-outline-secondary" role="button">Secondary</button>
-            <button class="btn ripple btn-pill btn-outline-success" role="button">Success</button>
-            <button class="btn ripple btn-pill btn-outline-info" role="button">Info</button>
-            <button class="btn ripple btn-pill btn-outline-warning" role="button">Warning</button>
-            <button class="btn ripple btn-pill btn-outline-danger" role="button">Danger</button>
-            <button class="btn ripple btn-pill btn-outline-light" role="button">Light</button>
-            <button class="btn ripple btn-pill btn-outline-dark" role="button">Dark</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-pill btn-outline-primary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Primary</button>
-            <button class="btn ripple btn-pill btn-outline-secondary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Secondary</button>
-            <button class="btn ripple btn-pill btn-outline-success disabled" role="button" aria-disabled="true"
-                tabindex="-1">Success</button>
-            <button class="btn ripple btn-pill btn-outline-info disabled" role="button" aria-disabled="true"
-                tabindex="-1">Info</button>
-            <button class="btn ripple btn-pill btn-outline-warning disabled" role="button" aria-disabled="true"
-                tabindex="-1">Warning</button>
-            <button class="btn ripple btn-pill btn-outline-danger disabled" role="button" aria-disabled="true"
-                tabindex="-1">Danger</button>
-            <button class="btn ripple btn-pill btn-outline-light disabled" role="button" aria-disabled="true"
-                tabindex="-1">Light</button>
-            <button class="btn ripple btn-pill btn-outline-dark disabled" role="button" aria-disabled="true"
-                tabindex="-1">Dark</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-pill btn-outline-primary active" role="button">Primary</button>
-            <button class="btn ripple btn-pill btn-outline-secondary active" role="button">Secondary</button>
-            <button class="btn ripple btn-pill btn-outline-success active" role="button">Success</button>
-            <button class="btn ripple btn-pill btn-outline-info active" role="button">Info</button>
-            <button class="btn ripple btn-pill btn-outline-warning active" role="button">Warning</button>
-            <button class="btn ripple btn-pill btn-outline-danger active" role="button">Danger</button>
-            <button class="btn ripple btn-pill btn-outline-light active" role="button">Light</button>
-            <button class="btn ripple btn-pill btn-outline-dark active" role="button">Dark</button>
-        </div>
-        <br />
-        <h4>Large Pills</h4>
-        <div>
-            <button class="btn ripple btn-pill btn-lg btn-primary" role="button">Primary</button>
-            <button class="btn ripple btn-pill btn-lg btn-secondary" role="button">Secondary</button>
-            <button class="btn ripple btn-pill btn-lg btn-success" role="button">Success</button>
-            <button class="btn ripple btn-pill btn-lg btn-info" role="button">Info</button>
-            <button class="btn ripple btn-pill btn-lg btn-warning" role="button">Warning</button>
-            <button class="btn ripple btn-pill btn-lg btn-danger" role="button">Danger</button>
-            <button class="btn ripple btn-pill btn-lg btn-light" role="button">Light</button>
-            <button class="btn ripple btn-pill btn-lg btn-dark" role="button">Dark</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-pill btn-lg btn-primary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Primary</button>
-            <button class="btn ripple btn-pill btn-lg btn-secondary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Secondary</button>
-            <button class="btn ripple btn-pill btn-lg btn-success disabled" role="button" aria-disabled="true"
-                tabindex="-1">Success</button>
-            <button class="btn ripple btn-pill btn-lg btn-info disabled" role="button" aria-disabled="true"
-                tabindex="-1">Info</button>
-            <button class="btn ripple btn-pill btn-lg btn-warning disabled" role="button" aria-disabled="true"
-                tabindex="-1">Warning</button>
-            <button class="btn ripple btn-pill btn-lg btn-danger disabled" role="button" aria-disabled="true"
-                tabindex="-1">Danger</button>
-            <button class="btn ripple btn-pill btn-lg btn-light disabled" role="button" aria-disabled="true"
-                tabindex="-1">Light</button>
-            <button class="btn ripple btn-pill btn-lg btn-dark disabled" role="button" aria-disabled="true"
-                tabindex="-1">Dark</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-pill btn-lg btn-primary active" role="button">Primary</button>
-            <button class="btn ripple btn-pill btn-lg btn-secondary active" role="button">Secondary</button>
-            <button class="btn ripple btn-pill btn-lg btn-success active" role="button">Success</button>
-            <button class="btn ripple btn-pill btn-lg btn-info active" role="button">Info</button>
-            <button class="btn ripple btn-pill btn-lg btn-warning active" role="button">Warning</button>
-            <button class="btn ripple btn-pill btn-lg btn-danger active" role="button">Danger</button>
-            <button class="btn ripple btn-pill btn-lg btn-light active" role="button">Light</button>
-            <button class="btn ripple btn-pill btn-lg btn-dark active" role="button">Dark</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-pill btn-lg btn-outline-primary" role="button">Primary</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-secondary" role="button">Secondary</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-success" role="button">Success</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-info" role="button">Info</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-warning" role="button">Warning</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-danger" role="button">Danger</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-light" role="button">Light</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-dark" role="button">Dark</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-pill btn-lg btn-outline-primary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Primary</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-secondary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Secondary</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-success disabled" role="button" aria-disabled="true"
-                tabindex="-1">Success</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-info disabled" role="button" aria-disabled="true"
-                tabindex="-1">Info</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-warning disabled" role="button" aria-disabled="true"
-                tabindex="-1">Warning</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-danger disabled" role="button" aria-disabled="true"
-                tabindex="-1">Danger</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-light disabled" role="button" aria-disabled="true"
-                tabindex="-1">Light</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-dark disabled" role="button" aria-disabled="true"
-                tabindex="-1">Dark</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-pill btn-lg btn-outline-primary active" role="button">Primary</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-secondary active" role="button">Secondary</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-success active" role="button">Success</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-info active" role="button">Info</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-warning active" role="button">Warning</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-danger active" role="button">Danger</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-light active" role="button">Light</button>
-            <button class="btn ripple btn-pill btn-lg btn-outline-dark active" role="button">Dark</button>
-        </div>
-        <br />
-        <h4>Small Pills</h4>
-        <div>
-            <button class="btn ripple btn-pill btn-sm btn-primary" role="button">Primary</button>
-            <button class="btn ripple btn-pill btn-sm btn-secondary" role="button">Secondary</button>
-            <button class="btn ripple btn-pill btn-sm btn-success" role="button">Success</button>
-            <button class="btn ripple btn-pill btn-sm btn-info" role="button">Info</button>
-            <button class="btn ripple btn-pill btn-sm btn-warning" role="button">Warning</button>
-            <button class="btn ripple btn-pill btn-sm btn-danger" role="button">Danger</button>
-            <button class="btn ripple btn-pill btn-sm btn-light" role="button">Light</button>
-            <button class="btn ripple btn-pill btn-sm btn-dark" role="button">Dark</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-pill btn-sm btn-primary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Primary</button>
-            <button class="btn ripple btn-pill btn-sm btn-secondary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Secondary</button>
-            <button class="btn ripple btn-pill btn-sm btn-success disabled" role="button" aria-disabled="true"
-                tabindex="-1">Success</button>
-            <button class="btn ripple btn-pill btn-sm btn-info disabled" role="button" aria-disabled="true"
-                tabindex="-1">Info</button>
-            <button class="btn ripple btn-pill btn-sm btn-warning disabled" role="button" aria-disabled="true"
-                tabindex="-1">Warning</button>
-            <button class="btn ripple btn-pill btn-sm btn-danger disabled" role="button" aria-disabled="true"
-                tabindex="-1">Danger</button>
-            <button class="btn ripple btn-pill btn-sm btn-light disabled" role="button" aria-disabled="true"
-                tabindex="-1">Light</button>
-            <button class="btn ripple btn-pill btn-sm btn-dark disabled" role="button" aria-disabled="true"
-                tabindex="-1">Dark</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-pill btn-sm btn-primary active" role="button">Primary</button>
-            <button class="btn ripple btn-pill btn-sm btn-secondary active" role="button">Secondary</button>
-            <button class="btn ripple btn-pill btn-sm btn-success active" role="button">Success</button>
-            <button class="btn ripple btn-pill btn-sm btn-info active" role="button">Info</button>
-            <button class="btn ripple btn-pill btn-sm btn-warning active" role="button">Warning</button>
-            <button class="btn ripple btn-pill btn-sm btn-danger active" role="button">Danger</button>
-            <button class="btn ripple btn-pill btn-sm btn-light active" role="button">Light</button>
-            <button class="btn ripple btn-pill btn-sm btn-dark active" role="button">Dark</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-pill btn-sm btn-outline-primary" role="button">Primary</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-secondary" role="button">Secondary</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-success" role="button">Success</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-info" role="button">Info</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-warning" role="button">Warning</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-danger" role="button">Danger</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-light" role="button">Light</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-dark" role="button">Dark</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-pill btn-sm btn-outline-primary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Primary</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-secondary disabled" role="button" aria-disabled="true"
-                tabindex="-1">Secondary</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-success disabled" role="button" aria-disabled="true"
-                tabindex="-1">Success</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-info disabled" role="button" aria-disabled="true"
-                tabindex="-1">Info</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-warning disabled" role="button" aria-disabled="true"
-                tabindex="-1">Warning</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-danger disabled" role="button" aria-disabled="true"
-                tabindex="-1">Danger</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-light disabled" role="button" aria-disabled="true"
-                tabindex="-1">Light</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-dark disabled" role="button" aria-disabled="true"
-                tabindex="-1">Dark</button>
-        </div>
-        <div>
-            <button class="btn ripple btn-pill btn-sm btn-outline-primary active" role="button">Primary</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-secondary active" role="button">Secondary</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-success active" role="button">Success</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-info active" role="button">Info</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-warning active" role="button">Warning</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-danger active" role="button">Danger</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-light active" role="button">Light</button>
-            <button class="btn ripple btn-pill btn-sm btn-outline-dark active" role="button">Dark</button>
+        <h4>Toggle Buttons</h4>
+        <div class="mb-4">
+            <button class="btn ripple btn-primary active" role="button" data-toggle="button">Toggle</button>
+            <button class="btn ripple btn-primary" role="button" data-toggle="button">Toggle</button>
+            <button class="btn ripple btn-primary disabled" role="button" data-toggle="button">Toggle</button>
         </div>
     </div>
 </body>

@@ -1,3 +1,89 @@
+.form-success {
+
+    .input-filled {
+
+        &:hover {
+            background-color: tint(@form-success, 80%);
+        }
+
+        &:focus {
+            background-color: tint(@form-success, 70%);
+        }
+    }
+
+    .input-filled,
+    .input-group-filled .input-group-text {
+        background-color: tint(@form-success, 90%);
+    }
+
+    .input-outline,
+    .input-check {
+        border-color: @form-success;
+    
+        &:focus {
+            border-color: tint(@form-success, 25%);
+        }
+    }
+
+    .input-check {
+
+        &:checked {
+            background-color: @form-success;
+        }
+    
+        ~ .form-check-label {
+            color: @form-success;
+        }
+    }
+
+    .ripple-line {
+        background-color: @form-success;
+    }
+}
+
+.form-error {
+
+    .input-filled {
+
+        &:hover {
+            background-color: tint(@form-error, 80%);
+        }
+
+        &:focus {
+            background-color: tint(@form-error, 70%);
+        }
+    }
+
+    .input-filled,
+    .input-group-filled .input-group-text {
+        background-color: tint(@form-error, 90%);
+    }
+
+    .input-outline,
+    .input-check {
+        border-color: @form-error;
+    
+        &:focus {
+            border-color: tint(@form-error, 25%);
+        }
+    }
+
+    .input-check {
+
+        &:checked {
+            background-color: @form-error;
+        }
+    
+        ~ .form-check-label {
+            color: @form-error;
+        }
+    }
+
+    .ripple-line {
+        background-color: @form-error;
+    }
+}
+
 .valid-feedback,
 .invalid-feedback {
     display: none;
@@ -6,76 +92,15 @@
     font-size: 80%;
 }
 
-.form-success {
-    & .input-group-text {
-        background-color: tint(lighten(@form-success, 25%), 75%);
-        border-color: @form-success;
-        color: @form-success;
-    }
-
-    & .form-control,
-    & .form-minimal {
-        border-color: @form-success;
-    }
-
-    & .valid-feedback {
-        display: block;
-    }
-
-    & .custom-control-input,
-    &.custom-switch .custom-control-input,
-    & .custom-switch .custom-control-input {
-        &:checked,
-        &.checked {
-            & ~ .custom-control-label::before {
-                background-color: @form-success;
-                border-color: @form-success;
-            }
-        }
-    }
-
-    & .custom-control-input ~ .custom-control-label {
-        color: @form-success;
-    }
-}
-
 .valid-feedback {
     color: @form-success;
 }
 
-.form-error {
-    & .input-group-text {
-        background-color: tint(lighten(@form-error, 25%), 75%);
-        border-color: @form-error;
-        color: @form-error;
-    }
-
-    & .form-control,
-    & .form-minimal {
-        border-color: @form-error;
-    }
-
-    & .invalid-feedback {
-        display: block;
-    }
-
-    & .custom-control-input,
-    &.custom-switch .custom-control-input,
-    & .custom-switch .custom-control-input {
-        &:checked,
-        &.checked {
-            & ~ .custom-control-label::before {
-                background-color: @form-error;
-                border-color: @form-error;
-            }
-        }
-    }
-
-    & .custom-control-input ~ .custom-control-label {
-        color: @form-error;
-    }
-}
-
 .invalid-feedback {
     color: @form-error;
+}
+
+.form-success .valid-feedback,
+.form-error .invalid-feedback {
+    display: block;
 }

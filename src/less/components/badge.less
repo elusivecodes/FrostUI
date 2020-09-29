@@ -1,104 +1,21 @@
-.mix-badge(@color) {
-    background-color: @color;
-    .text-color(@color);
-
-    a&,
-    button& {
-        &:hover,
-        &.hover {
-            background-color: darken(@color, 10%);
-            .text-color(@color);
-        }
-    }
-}
-
 .badge {
     display: inline-block;
     padding: (@spacing / 4) (@spacing / 3);
-    border-radius: @border-radius;
     font-size: 75%;
     font-weight: @font-weight-bold;
     line-height: 1;
     text-align: center;
     white-space: nowrap;
-    vertical-align: baseline;
-    transition: color @transition-time @transition-type,
-        background-color @transition-time @transition-type,
-        box-shadow @transition-time @transition-type;
-
-    a&,
-    button& {
-
-        &:hover,
-        &.hover {
-            z-index: @z-hover;
-            text-decoration: none;
-        }
-
-        &:focus,
-        &.focus {
-            text-decoration: none;
-            box-shadow: @shadow-xs;
-            z-index: @z-focus;
-        }
-
-        &:active,
-        &.active {
-            z-index: @z-active;
-        }
-
-        &:active {
-            box-shadow: @shadow;
-        }
-    }
-
-    button& {
-        border: 0;
-        outline: 0;
-        cursor: pointer;
-    }
-
-    &:disabled,
-    &.disabled {
-        opacity: @disabled-opacity;
-        pointer-events: none;
-    }
+    vertical-align: middle;
+    color: @white;
+    border-radius: @border-radius;
 }
 
-.badge-pill {
-    padding-right: @spacing / 2;
-    padding-left: @spacing / 2;
-    border-radius: @spacing;
+.badge:empty {
+    display: none;
 }
 
-.badge-primary {
-    .mix-badge(@primary);
-}
-
-.badge-secondary {
-    .mix-badge(@secondary);
-}
-
-.badge-success {
-    .mix-badge(@success);
-}
-
-.badge-info {
-    .mix-badge(@info);
-}
-
-.badge-warning {
-    .mix-badge(@warning);
-}
-
-.badge-danger {
-    .mix-badge(@danger);
-}
-
-.badge-light {
-    .mix-badge(@light);
-}
-
-.badge-dark {
-    .mix-badge(@dark);
+.btn .badge {
+    position: relative;
+    top: -1px;
 }

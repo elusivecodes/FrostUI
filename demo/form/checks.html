@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../dist/frost-ui.min.css" />
+    <script src="../../dist/frost-ui-bundle.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Custom Inputs</h1>
+        <form>
+            <h4>Checkbox</h4>
+            <div class="mb-4">
+                <div class="form-check">
+                    <input type="checkbox" id="checkboxChecked" class="input-check"
+                        aria-labelledby="checkboxCheckedLabel" checked />
+                    <label id="checkboxCheckedLabel" class="form-check-label" for="checkboxChecked">Checked</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="checkbox" class="input-check" aria-labelledBy="checkboxLabel" />
+                    <label id="checkboxLabel" class="form-check-label" for="checkbox">Option</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="checkboxDisabled" class="input-check"
+                        aria-labelledby="checkboxDisabledLabel" disabled />
+                    <label id="checkboxDisabledLabel" class="form-check-label" for="checkboxDisabled">Disabled</label>
+                </div>
+            </div>
+            <h4>Radio</h4>
+            <div class="mb-4">
+                <div class="form-check">
+                    <input type="radio" id="radioChecked" class="input-check" aria-labelledby="radioCheckedLabel"
+                        checked />
+                    <label id="radioCheckedLabel" class="form-check-label" for="radioChecked">Checked</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" id="radio" class="input-check" aria-labelledBy="radioLabel" />
+                    <label id="radioLabel" class="form-check-label" for="radio">Option</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" id="radioDisabled" class="input-check" aria-labelledby="radioDisabledLabel"
+                        disabled />
+                    <label id="radioDisabledLabel" class="form-check-label" for="radioDisabled">Disabled</label>
+                </div>
+            </div>
+            <h4>Switch</h4>
+            <div class="mb-4">
+                <div class="form-check form-switch">
+                    <input type="checkbox" id="switchChecked" class="input-check" aria-labelledby="switchCheckedLabel"
+                        checked />
+                    <label id="switchCheckedLabel" class="form-check-label" for="switchChecked">Checked</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input type="checkbox" id="switch" class="input-check" aria-labelledBy="switchLabel" />
+                    <label id="switchLabel" class="form-check-label" for="switch">Option</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input type="checkbox" id="switchDisabled" class="input-check" aria-labelledby="switchDisabledLabel"
+                        disabled />
+                    <label id="switchDisabledLabel" class="form-check-label" for="switchDisabled">Disabled</label>
+                </div>
+            </div>
+            <h4>Buttons</h4>
+            <div class="mb-4">
+                <div class="btn-group-toggle">
+                    <input type="checkbox" class="btn-check" id="checkButton" checked />
+                    <label class="btn ripple btn-secondary" for="checkButton" role="button">Checked</label>
+                </div>
+            </div>
+            <div class="mb-4">
+                <div class="btn-group btn-group-toggle">
+                    <input type="radio" class="btn-check" name="options" id="option1" checked />
+                    <label class="btn ripple btn-secondary" for="option1" role="button">Checked</label>
+                    <input type="radio" class="btn-check" name="options" id="option2" />
+                    <label class="btn ripple btn-secondary" for="option2" role="button">Option</label>
+                    <input type="radio" class="btn-check" name="options" id="option3" disabled />
+                    <label class="btn ripple btn-secondary disabled" for="option3" role="button">Disabled</label>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

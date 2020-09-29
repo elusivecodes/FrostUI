@@ -12,12 +12,6 @@
     }
 }
 
-.clearfix ::after {
-    display: block;
-    content: '';
-    clear: both;
-}
-
 .mix-float();
 
 @media (min-width: @break-xs) {
@@ -34,4 +28,8 @@
 
 @media (min-width: @break-lg) {
     .mix-float(-xl-);
+}
+
+@media (min-width: @break-xl) {
+    .mix-float(-xxl-);
 }

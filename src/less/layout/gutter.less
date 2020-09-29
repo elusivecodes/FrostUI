@@ -1,0 +1,71 @@
+.mix-gutter(@n, @b: -, @i: 0) when (@i =< @n) {
+    @amount: @spacing / 4 * @i;
+
+    .g@{b}@{i} {
+        margin: -@amount;
+
+        > * {
+            padding: @amount;
+        }
+    }
+
+    .gt@{b}@{i},
+    .gy@{b}@{i} {
+        margin-top: -@amount;
+
+        > * {
+            padding-top: @amount;
+        }
+    }
+
+    .gr@{b}@{i},
+    .gx@{b}@{i} {
+        margin-right: -@amount;
+
+        > * {
+            padding-right: @amount;
+        }
+    }
+
+    .gb@{b}@{i}, 
+    .py@{b}@{i} {
+        margin-bottom: -@amount;
+
+        > * {
+            padding-bottom: @amount;
+        }
+    }
+
+    .gl@{b}@{i},
+    .gx@{b}@{i} {
+        margin-left: -@amount;
+
+        > * {
+            padding-bottom: @amount;
+        }
+    }
+
+    .mix-gutter(@n, @b, (@i + 1));
+}
+
+.mix-gutter(5);
+
+@media (min-width: @break-xs) {
+    .mix-gutter(5, -sm-);
+}
+
+@media (min-width: @break-sm) {
+    .mix-gutter(5, -md-);
+}
+
+@media (min-width: @break-md) {
+    .mix-gutter(5, -lg-);
+}
+
+@media (min-width: @break-lg) {
+    .mix-gutter(5, -xl-);
+}
+
+@media (min-width: @break-xl) {
+    .mix-gutter(5, -xxl-);
+}

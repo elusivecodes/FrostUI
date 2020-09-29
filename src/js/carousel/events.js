@@ -8,7 +8,7 @@ dom.addEventDelegate(document, 'click.frost.carousel', '.carousel-next, .carouse
 
     if (!Core.isUndefined(slideTo)) {
         carousel.show(slideTo);
-    } else if (dom.hasClass(e.currentTarget, 'carousel-prev')) {
+    } else if (dom.hasClass(e.currentTarget, 'carousel-control-prev')) {
         carousel.prev();
     } else {
         carousel.next();
