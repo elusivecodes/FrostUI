@@ -118,9 +118,13 @@
         .nav-link {
             color: fade(@black, 75%);
 
-            &:hover,
-            &:focus {
+            &:hover {
                 color: fade(@black, 90%);
+            }
+
+            &:focus {
+                color: fade(@black, 80%);
+                background-color: fade(@black, 10%);
             }
         }
 
@@ -135,9 +139,12 @@
     }
 
     .navbar-toggler {
-        &:hover,
         &:focus {
             background-color: fade(@black, 10%);
+        }
+
+        &:hover {
+            background-color: fade(@black, 20%);
         }
     }
 }
@@ -155,9 +162,13 @@
         .nav-link {
             color: fade(@white, 75%);
 
-            &:hover,
-            &:focus {
+            &:hover {
                 color: fade(@white, 90%);
+            }
+
+            &:focus {
+                color: fade(@white, 80%);
+                background-color: fade(@white, 10%);
             }
         }
 
@@ -172,9 +183,12 @@
     }
 
     .navbar-toggler {
-        &:hover,
-        &:focus {
+        &:hover {
             background-color: fade(@white, 10%);
+        }
+
+        &:focus {
+            background-color: fade(@white, 20%);
         }
     }
 }

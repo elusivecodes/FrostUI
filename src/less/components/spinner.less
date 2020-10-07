@@ -5,7 +5,7 @@
 }
 
 .spinner-border {
-    display: inline-block;
+    display: inline-flex;
     width: @spacing * 2;
     height: @spacing * 2;
     vertical-align: text-bottom;
@@ -13,12 +13,13 @@
     border-right-color: transparent;
     border-radius: 50%;
     animation: spinner-border .75s @transition-type infinite;
+    line-height: 1.5;
 }
 
 .spinner-border-sm {
-    width: @spacing * 1.2;
-    height: @spacing * 1.2;
-    border-width: .1em;
+    width: @spacing;
+    height: @spacing;
+    border-width: .2em;
 }
 
 @keyframes spinner-grow {
@@ -42,6 +43,6 @@
 }
 
 .spinner-grow-sm {
-    width: @spacing * 1.2;
-    height: @spacing * 1.2;
+    width: @spacing;
+    height: @spacing;
 }

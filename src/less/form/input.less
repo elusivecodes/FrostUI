@@ -1,5 +1,6 @@
 .form-input {
     position: relative;
+    width: 100%;
 }
 
 .input-filled,
@@ -84,7 +85,7 @@
     background-color: @white;
 
     &:hover {
-        border-color: tint(lighten(@primary, 5%), 50%);
+        border-color: @dark;
     }
 
     &:focus {
@@ -120,7 +121,8 @@
     opacity: 0;
     z-index: 2;
     background-color: @primary;
-    transition: transform .25s ease-in-out, opacity .25s ease-in-out;
+    transition: transform .25s @transition-type,
+        opacity .25s @transition-type;
 
     .input-filled:focus ~ & {
         transform: scaleX(1);

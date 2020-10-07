@@ -14,13 +14,14 @@
         background-color @transition-time @transition-type,
         border-color @transition-time @transition-type;
 
-    &:hover,
-    &:focus {
+    &:hover {
         text-decoration: none;
+        color: tint(@link, 25%);
     }
 
-    &:hover {
-        color: tint(@link, 25%);
+    &:focus {
+        text-decoration: none;
+        background-color: @light;
     }
 
     &.disabled {
@@ -43,7 +44,7 @@
         &:focus {
             border-color: @shadow-color;
         }
-
+    
         &.disabled {
             background-color: transparent;
             border-color: transparent;
@@ -55,6 +56,10 @@
         color: @text;
         background-color: @white;
         border-color: @border-color @border-color @white;
+
+        &:focus {
+            border-color: @link @link @white;
+        }
     }
 
     .dropdown-menu {
@@ -73,6 +78,10 @@
     .nav-item.show .nav-link {
         background-color: @link;
         .text-color(@link);
+
+        &:focus {
+            background-color: lighten(@link, 10%);
+        }
     }
 }
 

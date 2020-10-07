@@ -27,6 +27,14 @@ class Modal {
 
         this._dialog = dom.child(this._node, '.modal-dialog').shift();
 
+        if (dom.hasClass(this._node, 'modal-left')) {
+            this._direction = 'left';
+        } else if (dom.hasClass(this._node, 'modal-right')) {
+            this._direction = 'right';
+        } else {
+            this._direction = 'top';
+        }
+
         if (this._settings.show) {
             this.show();
         }
@@ -60,7 +68,8 @@ class Modal {
                 duration: this._settings.duration
             }),
             dom.dropOut(this._dialog, {
-                duration: this._settings.duration
+                duration: this._settings.duration,
+                direction: this._direction
             }),
             dom.fadeOut(this._backdrop, {
                 duration: this._settings.duration
@@ -118,7 +127,8 @@ class Modal {
                 duration: this._settings.duration
             }),
             dom.dropIn(this._dialog, {
-                duration: this._settings.duration
+                duration: this._settings.duration,
+                direction: this._direction
             }),
             dom.fadeIn(this._backdrop, {
                 duration: this._settings.duration

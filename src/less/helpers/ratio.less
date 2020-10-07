@@ -1,15 +1,11 @@
-.embed-responsive {
+.radio {
     position: relative;
     display: block;
     width: 100%;
     padding: 0;
     overflow: hidden;
 
-    .embed-responsive-item,
-    embed,
-    iframe,
-    object,
-    video {
+    > * {
         position: absolute;
         top: 0;
         bottom: 0;
@@ -20,18 +16,18 @@
     }
 }
 
-.embed-responsive-1by1::before {
+.ratio-1x1::before {
     padding-top: 100%;
 }
 
-.embed-responsive-4by3::before {
+.ratio-4x3::before {
     padding-top: 75%;
 }
 
-.embed-responsive-16by9::before {
+.ratio-16x9::before {
     padding-top: 56.25%;
 }
 
-.embed-responsive-21by9::before {
+.ratio-21x9::before {
     padding-top: 42.857143%;
 }

@@ -1,51 +1,89 @@
-.input-group-filled,
-.input-group-outline {
+.input-group {
     position: relative;
     display: flex;
     flex-wrap: wrap;
     align-items: stretch;
     width: 100%;
+    border-radius: @border-radius;
 
-    > .form-input {
+    > .form-input,
+    > .input-filled,
+    > .input-outline {
         position: relative;
         flex: 1 1 auto;
         width: 1%;
         min-width: 0;
     }
 
-    .btn {
+    > .btn {
         position: relative;
         z-index: 2;
     }
 
     > .form-input > .input-outline:focus,
-    .btn:focus {
+    > .input-outline:focus,
+    > .btn:focus {
         z-index: 3;
     }
 
-    > :not(:first-child):not(.dropdown-menu):not(.ripple-line) {
-        margin-left: -@border-size;
+    > .btn,
+    > .form-input,
+    > .input-filled,
+    > .input-outline,
+    > .input-group-text,
+    > .form-input > .input-filled,
+    > .form-input > .input-outline {
+        border-radius: inherit;
+
+        &:not(:last-child) {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        &:not(:first-child) {
+            margin-left: -@border-size;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
     }
 }
 
-.input-group-filled > :not(.dropdown-menu) {
+.input-group-filled {
     border-radius: 0;
+
+    > .input-group-text {
+        border: 0;
+        border-bottom: @border-size @border-style @dark;
+    }
 }
 
-.input-group-outline {
+.input-group-sm {
 
-    > :not(:first-child):not(.dropdown-menu),
-    > .form-input:not(:first-child) > .input-outline {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
+    &:not(.input-group-filled) {
+        border-radius: @border-radius * .75;
     }
-    
-    > .dropdown-toggle:nth-last-child(n+3),
-    > :not(:last-child):not(.dropdown-menu):not(.dropdown-toggle),
-    > .form-input:not(:last-child) > .input-outline {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-    }    
+
+    .btn,
+    .input-filled,
+    .input-outline,
+    .input-group-text  {
+        padding: (@spacing / 4) (@spacing / 2);
+        font-size: .875rem;
+    }
+}
+
+.input-group-lg {
+
+    &:not(.input-group-filled) {
+        border-radius: @border-radius * 1.25;
+    }
+
+    .btn,
+    .input-filled,
+    .input-outline,
+    .input-group-text {
+        font-size: 1.25rem;
+    }
 }
 
 .input-group-text {
@@ -59,50 +97,5 @@
     white-space: nowrap;
     color: @dark;
     background-color: @light;
-}
-
-.input-group-filled .input-group-text {
-    border-bottom: @border-size @border-style @dark;
-}
-
-.input-group-outline .input-group-text {
     border: @border-size @border-style @border-color;
-    border-radius: @border-radius;
-}
-
-.input-group-sm {
-    .btn,
-    .input-filled,
-    .input-outline,
-    .input-group-text {
-        padding: (@spacing / 4) (@spacing / 2);
-        font-size: .875rem;
-    }
-}
-
-.input-group-lg {
-    .btn,
-    .input-filled,
-    .input-outline,
-    .input-group-text {
-        font-size: 1.25rem;
-    }
-}
-
-.input-group-outline.input-group-sm {
-    &,
-    > .form-input > .input-outline,
-    > .btn,
-    > .input-group-text {
-        border-radius: @border-radius * .75;
-    }
-}
-
-.input-group-outline.input-group-lg {
-    &,
-    > .form-input > .input-outline,
-    > .btn,
-    > .input-group-text {
-        border-radius: @border-radius * 1.25;
-    }
 }

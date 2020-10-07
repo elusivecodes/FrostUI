@@ -12,6 +12,10 @@
         background-color: darken(@color, 10%);
         .text-color(@color);
     }
+
+    &:focus {
+        background-color: lighten(@color, 10%);
+    }
 }
 
 .mix-btn-outline(@color) {
@@ -31,6 +35,10 @@
         background-color: @color;
         .text-color(@color);
         border-color: @border-color;
+    }
+
+    &:focus {
+        background-color: @shadow-color;
     }
 }
 

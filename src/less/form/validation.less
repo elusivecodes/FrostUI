@@ -19,16 +19,17 @@
     .input-outline,
     .input-check {
         border-color: @form-success;
-    
-        &:focus {
-            border-color: tint(@form-success, 25%);
-        }
     }
 
     .input-check {
 
         &:checked {
             background-color: @form-success;
+            border-color: @form-success;
+
+            &:focus {
+                background-color: lighten(@form-success, 10%);
+            }
         }
     
         ~ .form-check-label {
@@ -62,16 +63,17 @@
     .input-outline,
     .input-check {
         border-color: @form-error;
-    
-        &:focus {
-            border-color: tint(@form-error, 25%);
-        }
     }
 
     .input-check {
 
         &:checked {
             background-color: @form-error;
+            border-color: @form-error;
+
+            &:focus {
+                background-color: lighten(@form-error, 10%);
+            }
         }
     
         ~ .form-check-label {

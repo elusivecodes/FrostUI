@@ -99,7 +99,6 @@
     width: 100vw;
     height: 100vh;
     background-color: @backdrop-color;
-    backdrop-filter: blur(.25rem);
 }
 
 .modal-header {
@@ -111,6 +110,11 @@
     border-bottom: @border-size @border-style @border-color;
     border-top-left-radius: @border-radius;
     border-top-right-radius: @border-radius;
+
+    .close {
+        padding: (@spacing / 2);
+        margin: -(@spacing / 2) -(@spacing / 2) -(@spacing / 2) auto;
+    }
 }
 
 .modal-title {
@@ -138,6 +142,35 @@
     > * {
         margin: @spacing / 4;
     }
+}
+
+.modal-left,
+.modal-right {
+
+    .modal-dialog {
+        width: 350px;
+        max-width: 80%;
+        height: 100%;
+        margin: 0;
+    }
+
+    .modal-content {
+        height: inherit;
+        border: 0;
+        border-radius: 0;
+    }
+
+    .modal-body {
+        overflow-y: auto;
+    }
+}
+
+.modal-left .modal-dialog {
+    margin-right: auto;
+}
+
+.modal-right .modal-dialog {
+    margin-left: auto;
 }
 
 @media (min-width: @break-xs) {

@@ -10,8 +10,8 @@
 }
 
 .input-check {
-    width: 1.25em;
-    height: 1.25em;
+    width: 1em;
+    height: 1em;
     margin-top: @spacing / 8;
     vertical-align: top;
     background-color: @light;
@@ -20,7 +20,11 @@
     background-size: contain;
     border: @border-size @border-style @border-color;
     appearance: none;
-    transition: background-color .15s ease-in-out,background-position .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition:
+        background-color @transition-time @transition-type,
+        background-position @transition-time @transition-type,
+        border-color @transition-time @transition-type,
+        box-shadow @transition-time @transition-type;
 
     &[type="checkbox"] {
         border-radius: @border-radius;
@@ -39,6 +43,10 @@
     &:checked {
         background-color: @primary;
         border-color: @primary;
+
+        &:focus {
+            background-color: lighten(@primary, 10%);
+        }
 
         &[type="checkbox"] {
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");

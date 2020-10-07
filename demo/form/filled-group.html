@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../dist/frost-ui.min.css" />
+    <script src="../../dist/frost-ui-bundle.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Input Groups</h1>
+        <form>
+            <div class="mb-4">
+                <label for="filledText">Label</label>
+                <div class="input-group input-group-filled">
+                    <div class="form-input">
+                        <input class="input-filled" type="text" id="filledText" placeholder="Placeholder" />
+                        <div class="ripple-line"></div>
+                    </div>
+                    <div class="input-group-text">Text</div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="filledTextarea">Label</label>
+                <div class="input-group input-group-filled">
+                    <div class="form-input">
+                        <textarea class="input-filled" id="filledTextarea" placeholder="Placeholder"></textarea>
+                        <div class="ripple-line"></div>
+                    </div>
+                    <div class="input-group-text">Text</div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="filledSelect">Label</label>
+                <div class="input-group input-group-filled">
+                    <div class="form-input">
+                        <select class="input-filled" id="filledSelect">
+                            <option>Option 1</option>
+                            <option>Option 1</option>
+                            <option>Option 1</option>
+                            <option>Option 1</option>
+                            <option>Option 1</option>
+                            <option>Option 1</option>
+                        </select>
+                        <div class="ripple-line"></div>
+                    </div>
+                    <div class="input-group-text">Text</div>
+                </div>
+            </div>
+
+            <h4>Append/Prepend</h4>
+            <div class="mb-4">
+                <label for="filledAppend">Label</label>
+                <div class="input-group input-group-filled">
+                    <div class="form-input">
+                        <input class="input-filled" type="text" id="filledAppend" placeholder="Placeholder" />
+                        <div class="ripple-line"></div>
+                    </div>
+                    <div class="input-group-text">Text</div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="filledPrepend">Label</label>
+                <div class="input-group input-group-filled">
+                    <div class="input-group-text">Text</div>
+                    <div class="form-input">
+                        <input class="input-filled" type="text" id="filledPrepend" placeholder="Placeholder" />
+                        <div class="ripple-line"></div>
+                    </div>
+                </div>
+            </div>
+
+            <h4>Buttons</h4>
+            <div class="mb-4">
+                <label for="filledButton">Label</label>
+                <div class="input-group input-group-filled">
+                    <div class="form-input">
+                        <input class="input-filled" type="text" id="filledButton" placeholder="Placeholder" />
+                        <div class="ripple-line"></div>
+                    </div>
+                    <button class="btn ripple btn-dark" role="button">Button</button>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="filledButtons">Label</label>
+                <div class="input-group input-group-filled">
+                    <div class="form-input">
+                        <input class="input-filled" type="text" id="filledButtons" placeholder="Placeholder" />
+                        <div class="ripple-line"></div>
+                    </div>
+                    <button class="btn ripple btn-outline-dark" role="button">Button</button>
+                    <button class="btn ripple btn-dark" role="button">Button</button>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="filledDropdown">Label</label>
+                <div class="input-group input-group-filled">
+                    <div class="form-input">
+                        <input class="input-filled" type="text" id="filledDropdown" placeholder="Placeholder" />
+                        <div class="ripple-line"></div>
+                    </div>
+                    <button id="dropdownLink" class="btn ripple btn-success dropdown-toggle" role="button"
+                        data-toggle="dropdown" data-position="end" aria-haspopup="true"
+                        aria-expanded="false">Button</button>
+                    <div class="dropdown-menu shadow-sm" aria-labelledby="dropdownLink">
+                        <button class="dropdown-item">Link</button>
+                        <button class="dropdown-item">Link</button>
+                        <button class="dropdown-item">Link</button>
+                        <button class="dropdown-item">Link</button>
+                        <button class="dropdown-item">Link</button>
+                    </div>
+                </div>
+            </div>
+
+            <h4>Sizes</h4>
+            <div class="mb-4">
+                <label for="filledTextSmall">Label</label>
+                <div class="input-group input-group-filled input-group-sm">
+                    <div class="form-input">
+                        <input class="input-filled" type="text" id="filledTextSmall" placeholder="Placeholder" />
+                        <div class="ripple-line"></div>
+                    </div>
+                    <div class="input-group-text">Text</div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="filledButtonSmall">Label</label>
+                <div class="input-group input-group-filled input-group-sm">
+                    <div class="form-input">
+                        <input class="input-filled" type="text" id="filledButtonSmall" placeholder="Placeholder" />
+                        <div class="ripple-line"></div>
+                    </div>
+                    <button class="btn ripple btn-dark" role="button">Button</button>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="filledTextLarge">Label</label>
+                <div class="input-group input-group-filled input-group-lg">
+                    <div class="form-input">
+                        <input class="input-filled" type="text" id="filledTextLarge" placeholder="Placeholder" />
+                        <div class="ripple-line"></div>
+                    </div>
+                    <div class="input-group-text">Text</div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="filledButtonLarge">Label</label>
+                <div class="input-group input-group-filled input-group-lg">
+                    <div class="form-input">
+                        <input class="input-filled" type="text" id="filledButtonLarge" placeholder="Placeholder" />
+                        <div class="ripple-line"></div>
+                    </div>
+                    <button class="btn ripple btn-dark" role="button">Button</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

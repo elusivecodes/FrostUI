@@ -33,6 +33,11 @@
     border-bottom: @border-size @border-style @shadow-color;
     border-top-left-radius: calc(@border-radius - @border-size);
     border-top-right-radius: calc(@border-radius - @border-size);
+
+    .close {
+        padding: (@spacing / 2);
+        margin: -(@spacing / 2) -(@spacing / 2) -(@spacing / 2) auto;
+    }
 }
 
 .toast-body {

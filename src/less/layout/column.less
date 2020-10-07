@@ -23,28 +23,82 @@
     .mix-cols-grid(@n, @b, (@i + 1));
 }
 
+.mix-row-cols(@n, @b: -, @i: 1) when (@i =< @n) {
+    @size: 100 / @i;
+    @amount: 1% * @size;
+
+    .row-cols@{b}@{i} > * {
+        flex: 0 0 auto;
+        width: @amount;
+    }
+
+    .mix-row-cols(@n, @b, (@i + 1));
+}
+
 .col {
     flex: 1 0 0%;
 }
 
 .mix-cols(@grid-size);
 
+.row-cols-auto > * {
+    flex: 0 0 auto;
+    width: auto;
+}
+
+.mix-row-cols(4);
+
 @media (min-width: @break-xs) {
     .mix-cols(@grid-size, -sm-);
+
+    .row-cols-sm-auto > * {
+        flex: 0 0 auto;
+        width: auto;
+    }
+    
+    .mix-row-cols(4, -sm-);
 }
 
 @media (min-width: @break-sm) {
     .mix-cols(@grid-size, -md-);
+
+    .row-cols-md-auto > * {
+        flex: 0 0 auto;
+        width: auto;
+    }
+
+    .mix-row-cols(4, -md-);
 }
 
 @media (min-width: @break-md) {
     .mix-cols(@grid-size, -lg-);
+
+    .row-cols-lg-auto > * {
+        flex: 0 0 auto;
+        width: auto;
+    }
+
+    .mix-row-cols(4, -lg-);
 }
 
 @media (min-width: @break-lg) {
     .mix-cols(@grid-size, -xl-);
+
+    .row-cols-xl-auto > * {
+        flex: 0 0 auto;
+        width: auto;
+    }
+
+    .mix-row-cols(4, -xl-);
 }
 
 @media (min-width: @break-xl) {
     .mix-cols(@grid-size, -xxl-);
+
+    .row-cols-xxl-auto > * {
+        flex: 0 0 auto;
+        width: auto;
+    }
+
+    .mix-row-cols(4, -xxl-);
 }

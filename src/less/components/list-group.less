@@ -4,10 +4,13 @@
     color: darken(@color, 25%);
 
     &.list-group-item-action {
-        &:hover,
-        &:focus {
+        &:hover {
             background-color: darken(@background, 5%);
             color: darken(@color, 40%);
+        }
+
+        &:focus {
+            background-color: lighten(@background, 2%);
         }
     }
 }
@@ -63,17 +66,19 @@
     color: @text;
     text-align: inherit;
 
-    &:focus {
-        outline: 0;
-        box-shadow: @shadow-sm;
-    }
-
-    &:hover,
-    &:focus {
+    &:hover {
         z-index: 1;
         color: @text;
         text-decoration: none;
         background-color: @light;
+    }
+
+    &:focus {
+        z-index: 1;
+        text-decoration: none;
+        background-color: lighten(@light, 2%);
+        outline: 0;
+        box-shadow: @shadow-sm;
     }
 
     &:active {

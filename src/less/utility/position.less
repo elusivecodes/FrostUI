@@ -1,3 +1,25 @@
+.mix-position(@n, @i: 0) when (@i < @n) {
+    @amount: (100 / (@n - 1)) * @i;
+
+    .top-@{i} {
+        top: @amount !important;
+    }
+
+    .right-@{i} {
+        right: @amount !important;
+    }
+
+    .bottom-@{i} {
+        bottom: @amount !important;
+    }
+
+    .left-@{i} {
+        left: @amount !important;
+    }
+
+    .mix-position(@n, (@i + 1));
+}
+
 .position-static {
     position: static !important;
 }
@@ -16,4 +38,10 @@
 
 .position-sticky {
     position: sticky !important;
+}
+
+.mix-position(3);
+
+.translate-middle {
+    transform: translateX(-50%) translateY(-50%) !important;
 }
