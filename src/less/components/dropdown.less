@@ -4,7 +4,7 @@
     }
 
     &::after {
-        margin-left: .5rem;
+        margin-left: @spacing / 2;
         content: @arrow-down;
     }
 }
@@ -95,13 +95,20 @@
     &:focus {
         color: @text;
         text-decoration: none;
-        background-color: rgba(0, 0, 0, .1);
+        background-color: @hover-color;
     }
 
-    &:active,
+    button&:focus {
+        outline: 0;
+    }
+
     &.active {
         .text-color(@link);
         background-color: @link;
+
+        &:focus {
+            .bg-light(@link);
+        }
     }
 
     &:disabled,
@@ -124,7 +131,7 @@
     display: block;
     padding: (@spacing / 2) @spacing;
     margin-bottom: 0;
-    font-size: .875rem;
+    font-size: @font-size-sm;
     color: @dark;
     white-space: nowrap;
 }

@@ -3,21 +3,23 @@
     .input-filled {
 
         &:hover {
-            background-color: tint(@form-success, 80%);
+            background-color: @form-success-lighter;
         }
 
         &:focus {
-            background-color: tint(@form-success, 70%);
+            background-color: @form-success-light;
         }
     }
 
     .input-filled,
     .input-group-filled .input-group-text {
-        background-color: tint(@form-success, 90%);
+        background-color: @form-success-lightest;
     }
 
+    .input-filled,
     .input-outline,
-    .input-check {
+    .input-check,
+    .input-group-filled .input-group-text  {
         border-color: @form-success;
     }
 
@@ -28,7 +30,7 @@
             border-color: @form-success;
 
             &:focus {
-                background-color: lighten(@form-success, 10%);
+                .bg-light(@form-success);
             }
         }
     
@@ -47,21 +49,23 @@
     .input-filled {
 
         &:hover {
-            background-color: tint(@form-error, 80%);
+            background-color: @form-error-lighter;
         }
 
         &:focus {
-            background-color: tint(@form-error, 70%);
+            background-color: @form-error-light;
         }
     }
 
     .input-filled,
     .input-group-filled .input-group-text {
-        background-color: tint(@form-error, 90%);
+        background-color: @form-error-lightest;
     }
 
+    .input-filled,
     .input-outline,
-    .input-check {
+    .input-check,
+    .input-group-filled .input-group-text  {
         border-color: @form-error;
     }
 
@@ -72,7 +76,7 @@
             border-color: @form-error;
 
             &:focus {
-                background-color: lighten(@form-error, 10%);
+                .bg-light(@form-error);
             }
         }
     

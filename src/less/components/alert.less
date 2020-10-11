@@ -1,9 +1,9 @@
 .mix-alert(@color) {
-    background-color: tint(lighten(@color, 20%), 50%);
-    color: darken(@color, 20%);
+    .bg-lightest(@color);
+    .text-dark(@color);
 
     .alert-link {
-        color: darken(@color, 30%);
+        .text-darker(@color);
     }
 }
 

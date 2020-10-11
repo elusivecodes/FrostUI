@@ -51,7 +51,7 @@
     padding-top: @spacing / 4;
     padding-bottom: @spacing / 4;
     margin-right: @spacing;
-    font-size: 1.25rem;
+    font-size: @font-size-lg;
     white-space: nowrap;
 }
 
@@ -89,7 +89,7 @@
 
 .navbar-toggler {
     padding: (@spacing / 4) (@spacing / 2);
-    font-size: 1.25rem;
+    font-size: @font-size-lg;
     line-height: 1;
     background-color: transparent;
     border: @border-size @border-style transparent;
@@ -116,15 +116,15 @@
 
     .navbar-nav {
         .nav-link {
-            color: fade(@black, 75%);
+            color: fade(@black, 70%);
 
             &:hover {
                 color: fade(@black, 90%);
             }
 
             &:focus {
-                color: fade(@black, 80%);
-                background-color: fade(@black, 10%);
+                color: @black;
+                .bg-fade(@black);
             }
         }
 
@@ -135,40 +135,31 @@
     }
 
     .navbar-text {
-        color: fade(@black, 75%);
+        .text-lighter(@black);
     }
 
-    .navbar-toggler {
-        &:focus {
-            background-color: fade(@black, 10%);
-        }
-
-        &:hover {
-            background-color: fade(@black, 20%);
-        }
+    .navbar-toggler:focus {
+        .bg-fade(@black);
     }
 }
 
 .navbar-dark {
-    .navbar-brand {
-        color: @white;
-    }
-
+    .navbar-brand ,
     .navbar-toggler {
         color: @white;
     }
 
     .navbar-nav {
         .nav-link {
-            color: fade(@white, 75%);
+            color: fade(@white, 70%);
 
             &:hover {
                 color: fade(@white, 90%);
             }
 
             &:focus {
-                color: fade(@white, 80%);
-                background-color: fade(@white, 10%);
+                color: @white;
+                .bg-fade(@white);
             }
         }
 
@@ -179,17 +170,11 @@
     }
 
     .navbar-text {
-        color: fade(@white, 75%);
+        .text-darker(@white);
     }
 
-    .navbar-toggler {
-        &:hover {
-            background-color: fade(@white, 10%);
-        }
-
-        &:focus {
-            background-color: fade(@white, 20%);
-        }
+    .navbar-toggler:focus {
+        .bg-fade(@white);
     }
 }
 

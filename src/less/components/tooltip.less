@@ -5,7 +5,7 @@
     margin: 0;
     .reset-text();
     word-wrap: break-word;
-    font-size: .875rem;
+    font-size: @font-size-sm;
     opacity: 0;
 
     &.show {
@@ -15,8 +15,8 @@
     .tooltip-arrow {
         position: absolute;
         display: block;
-        width: .8rem;
-        height: .4rem;
+        width: @tooltip-arrow-size;
+        height: @tooltip-arrow-size / 2;
         pointer-events: none;
 
         &::before {
@@ -32,7 +32,7 @@
 
         &::before {
             top: 0;
-            border-width: .4rem .4rem 0;
+            border-width: (@tooltip-arrow-size / 2) (@tooltip-arrow-size / 2) 0;
             border-top-color: @black;
         }
     }
@@ -42,7 +42,7 @@
 
         &::before {
             right: 0;
-            border-width: .4rem .4rem .4rem 0;
+            border-width: (@tooltip-arrow-size / 2) (@tooltip-arrow-size / 2) (@tooltip-arrow-size / 2) 0;
             border-right-color: @black;
         }
     }
@@ -52,7 +52,7 @@
 
         &::before {
             bottom: 0;
-            border-width: 0 .4rem .4rem;
+            border-width: 0 (@tooltip-arrow-size / 2) (@tooltip-arrow-size / 2);
             border-bottom-color: @black;
         }
     }
@@ -62,14 +62,14 @@
 
         &::before {
             left: 0;
-            border-width: .4rem 0 .4rem .4rem;
+            border-width: (@tooltip-arrow-size / 2) 0 (@tooltip-arrow-size / 2) (@tooltip-arrow-size / 2);
             border-left-color: @black;
         }
     }
 }
 
 .tooltip-inner {
-    max-width: 200px;
+    max-width: @tooltip-width;
     padding: (@spacing / 4) (@spacing / 2);
     color: @white;
     text-align: center;

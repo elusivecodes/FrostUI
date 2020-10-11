@@ -148,7 +148,7 @@
 .modal-right {
 
     .modal-dialog {
-        width: 350px;
+        width: @modal-side-width;
         max-width: 80%;
         height: 100%;
         margin: 0;
@@ -175,7 +175,7 @@
 
 @media (min-width: @break-xs) {
     .modal-dialog {
-        max-width: 500px;
+        max-width: @modal-width;
         margin: (@spacing * 2) auto;
     }
 
@@ -192,20 +192,20 @@
     }
 
     .modal-sm {
-        max-width: 300px;
+        max-width: @modal-sm-width;
     }
 }
 
 @media (min-width: @break-md) {
     .modal-lg,
     .modal-xl {
-        max-width: 800px;
+        max-width: @modal-lg-width;
     }
 }
 
 @media (min-width: @break-lg) {
     .modal-xl {
-        max-width: 1140px;
+        max-width: @modal-xl-width;
     }
 }
 

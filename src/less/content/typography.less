@@ -2,17 +2,17 @@
 
 .blockquote {
     margin-bottom: @spacing;
-    font-size: 1.25rem;
+    font-size: @font-size-lg;
 }
 
 .blockquote-footer {
     display: block;
     margin-top: -@spacing;
     font-size: 80%;
-    color: #6c757d;
+    color: @blockquote-footer-color;
 
     &::before {
-        content: "\2014 \00A0";
+        content: @blockquote-footer-prefix;
     }
 }
 

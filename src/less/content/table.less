@@ -1,6 +1,6 @@
 .mix-table(@color) {
-    background-color: tint(lighten(@color, 20%), 50%);
-    color: darken(@color, 10%);
+    .bg-lighter(@color);
+    .text-dark(@color);
 }
 
 .mix-table-responsive(@b: ~'') {
@@ -48,18 +48,18 @@
 
 .table-striped {
     tr:nth-child(even) {
-        background-color: darken(@light, 10%);
+        background-color: shade(@white, 5%);
     }
 
     &.table-dark tr:nth-child(even) {
-        background-color: lighten(@dark, 10%);
+        background-color: tint(@dark, 5%);
     }
 }
 
 .table-hover tbody tr {
     &:hover {
         color: @dark;
-        background-color: rgba(0,0,0,.075);
+        background-color: @hover-color;
     }
 }
 
@@ -77,13 +77,13 @@
     &.table-hover tbody tr {
         &:hover {
             color: @white;
-            background-color: rgba(255,255,255,.075);
+            background-color: @hover-light-color;
         }
     }
 
     th,
     td {
-        border-color: rgba(255, 255, 255, .2);
+        border-color: @border-light-color;
     }
 }
 

@@ -12648,7 +12648,11 @@
                 }
 
                 // calculate boxes
-                const nodeBox = dom.rect(this._node, true);
+                const nodeBox = {
+                    width: dom.width(this._node),
+                    height: dom.height(this._node)
+                };
+
                 const referenceBox = dom.rect(this._settings.reference, true);
                 const windowBox = this.constructor.windowContainer();
 
@@ -13337,9 +13341,9 @@
          * @param {HTMLElement} node The input node.
          * @param {number} x The x position to start the ripple from.
          * @param {number} y The y position to start the ripple from.
-         * @param {number} [duration=500] The duration of the ripple.
+         * @param {number} [duration=250] The duration of the ripple.
          */
-        UI.ripple = (node, x, y, duration = 500) => {
+        UI.ripple = (node, x, y, duration = 250) => {
             const width = dom.width(node);
             const height = dom.height(node);
             const scaleMultiple = Math.max(width, height);
@@ -13357,7 +13361,7 @@
                 ripple,
                 (node, progress) => {
                     dom.setStyle(node, {
-                        scale: Math.floor(progress * scaleMultiple),
+                        transform: 'scale(' + Math.floor(progress * scaleMultiple) + ')',
                         opacity: 1 - progress
                     });
                 },
@@ -13548,6 +13552,21 @@
         }
 
         UI.Tab = Tab;
+
+
+        // Text expand events
+        dom.addEventDelegate(document, 'input', '.text-expand', e => {
+            const textArea = e.currentTarget;
+
+            dom.setStyle(textArea, 'height', 'inherit');
+
+            const borderTop = dom.css(textArea, 'borderTop');
+            const borderBottom = dom.css(textArea, 'borderBottom');
+
+            const height = dom.scrollHeight(textArea) + parseInt(borderTop) + parseInt(borderBottom);
+
+            dom.setStyle(textArea, 'height', height);
+        });
 
 
         /**

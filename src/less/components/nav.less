@@ -10,13 +10,13 @@
     display: block;
     padding: (@spacing / 2) @spacing;
     text-decoration: none;
-    transition: color @transition-time @transition-type,
-        background-color @transition-time @transition-type,
-        border-color @transition-time @transition-type;
+    border-radius: @border-radius;
+    transition: all @transition-time @transition-type;
+    transition-property: color background-color border-color;
 
     &:hover {
         text-decoration: none;
-        color: tint(@link, 25%);
+        .text-light(@link);
     }
 
     &:focus {
@@ -37,12 +37,12 @@
     .nav-link {
         margin-bottom: -@border-size;
         border: @border-size @border-style transparent;
-        border-top-left-radius: @border-radius;
-        border-top-right-radius: @border-radius;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
 
         &:hover,
         &:focus {
-            border-color: @shadow-color;
+            border-color: @border-color;
         }
     
         &.disabled {
@@ -70,17 +70,13 @@
 
 .nav-pills {
 
-    .nav-link {
-        border-radius: @border-radius;
-    }
-
     .nav-link.active,
     .nav-item.show .nav-link {
         background-color: @link;
         .text-color(@link);
 
         &:focus {
-            background-color: lighten(@link, 10%);
+            .bg-light(@link);
         }
     }
 }

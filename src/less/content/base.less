@@ -15,7 +15,7 @@
 
 html {
     font-family: sans-serif;
-    line-height: 1.15;
+    line-height: @line-height;
     font-size: @font-size;
 }
 
@@ -44,7 +44,7 @@ caption {
     padding: (@spacing / 2) 0;
     text-align: left;
     caption-side: bottom;
-    color: lighten(@text, 50%);
+    .text-lighter(@text);
 }
 
 hr {
@@ -140,7 +140,7 @@ legend {
     display: block;
     width: 100%;
     max-width: 100%;
-    margin-bottom: .5rem;
+    margin-bottom: @spacing / 2;
     font-size: 1.5rem;
     line-height: inherit;
     color: inherit;
@@ -175,7 +175,7 @@ a {
     background-color: transparent;
 
     &:hover {
-        color: tint(@link, 25%);
+        .text-light(@link);
         text-decoration: underline;
     }
 
@@ -245,7 +245,9 @@ h3,
 h4,
 h5,
 h6 {
-    margin: 0;
+    margin-top: 0;
+    margin-bottom: @spacing / 2;
+    line-height: 1.2;
     font-weight: @font-weight-bold;
 }
 

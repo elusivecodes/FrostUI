@@ -9,13 +9,13 @@
 .col-label-sm {
     padding-top: calc((@spacing / 4) + @border-size);
     padding-bottom: calc((@spacing / 4) + @border-size);
-    font-size: .875rem;
+    font-size: @font-size-sm;
 }
 
 .col-label-lg {
     padding-top: calc((@spacing / 2) + @border-size);
     padding-bottom: calc((@spacing / 2) + @border-size);
-    font-size: 1.25rem;
+    font-size: @font-size-lg;
 }
 
 .label-floating {
@@ -32,9 +32,8 @@
     pointer-events: none;
     cursor: text;
     border-radius: @border-radius;
-    transition: padding @transition-time @transition-type,
-        font-size @transition-time @transition-type,
-        color @transition-time @transition-type;
+    transition: all @transition-time @transition-type;
+    transition-property: padding, font-size, color;
 }
 
 .input-floating {
@@ -53,7 +52,7 @@
     .input-group-sm & {
 
         ~ .label-floating {
-            font-size: .875rem;
+            font-size: @font-size-sm;
         }
 
     }
@@ -62,7 +61,7 @@
     .input-group-lg & {
 
         ~ .label-floating {
-            font-size: 1.25rem;
+            font-size: @font-size-lg;
         }
     }
 
@@ -81,7 +80,7 @@
 
         ~ .label-floating {
             padding-top: @spacing / 4;
-            font-size: 13px;
+            font-size: @font-size-floating;
             color: @secondary;
         }
     }

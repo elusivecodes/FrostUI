@@ -4,9 +4,9 @@
     left: 0;
     z-index: @z-popover;
     display: block;
-    max-width: 276px;
+    max-width: @popover-width;
     .reset-text();
-    font-size: .875rem;
+    font-size: @font-size-sm;
     word-wrap: break-word;
     background-color: @white;
     background-clip: padding-box;
@@ -16,8 +16,8 @@
     .popover-arrow {
         position: absolute;
         display: block;
-        width: @spacing;
-        height: @spacing / 2;
+        width: @popover-arrow-size;
+        height: @popover-arrow-size / 2;
         pointer-events: none;
 
         &::before,
@@ -35,13 +35,13 @@
 
         &::before {
             top: @border-size;
-            border-width: (@spacing / 2) (@spacing / 2) 0;
+            border-width: (@popover-arrow-size / 2) (@popover-arrow-size / 2) 0;
             border-top-color: @border-color;
         }
 
         &::after {
             top: 0;
-            border-width: (@spacing / 2) (@spacing / 2) 0;
+            border-width: (@popover-arrow-size / 2) (@popover-arrow-size / 2) 0;
             border-top-color: @white;
         }
     }
@@ -51,13 +51,13 @@
 
         &::before {
             right: @border-size;
-            border-width: (@spacing / 2) (@spacing / 2) (@spacing / 2) 0;
+            border-width: (@popover-arrow-size / 2) (@popover-arrow-size / 2) (@popover-arrow-size / 2) 0;
             border-right-color: @border-color;
         }
 
         &::after {
             right: 0;
-            border-width: (@spacing / 2) (@spacing / 2) (@spacing / 2) 0;
+            border-width: (@popover-arrow-size / 2) (@popover-arrow-size / 2) (@popover-arrow-size / 2) 0;
             border-right-color: @white;
         }
     }
@@ -67,13 +67,13 @@
 
         &::before {
             bottom: @border-size;
-            border-width: 0 (@spacing / 2) (@spacing / 2);
+            border-width: 0 (@popover-arrow-size / 2) (@popover-arrow-size / 2);
             border-bottom-color: @border-color;
         }
 
         &::after {
             bottom: 0;
-            border-width: 0 (@spacing / 2) (@spacing / 2);
+            border-width: 0 (@popover-arrow-size / 2) (@popover-arrow-size / 2);
             border-bottom-color: @white;
         }
     }
@@ -83,13 +83,13 @@
 
         &::before {
             left: @border-size;
-            border-width: (@spacing / 2) 0 (@spacing / 2) (@spacing / 2);
+            border-width: (@popover-arrow-size / 2) 0 (@popover-arrow-size / 2) (@popover-arrow-size / 2);
             border-left-color: @border-color;
         }
 
         &::after {
             left: 0;
-            border-width: (@spacing / 2) 0 (@spacing / 2) (@spacing / 2);
+            border-width: (@popover-arrow-size / 2) 0 (@popover-arrow-size / 2) (@popover-arrow-size / 2);
             border-left-color: @white;
         }
     }

@@ -33,7 +33,7 @@
         background-color: @form-disabled;
 
         &::placeholder {
-            color: #999;
+            color: @form-disabled-placeholder;
         }
     }
 
@@ -41,7 +41,7 @@
 
         &,
         &::placeholder {
-            color: #999;
+            color: @form-disabled-placeholder;
         }
     }
 
@@ -90,24 +90,24 @@
 
     &:focus {
         border-color: @primary;
-        box-shadow: @shadow-sm;
-    }
-}
-
-.input-lg {
-    font-size: 1.25rem;
-
-    select&[multiple] option {
-        padding: (@spacing / 4) (@spacing / 2);
+        box-shadow: 0 0 0 @border-size @primary;
     }
 }
 
 .input-sm {
     padding: (@spacing / 4) (@spacing / 2);
-    font-size: .875rem;
+    font-size: @font-size-sm;
 
     select&[multiple] option {
         padding: (@spacing / 2) @spacing;
+    }
+}
+
+.input-lg {
+    font-size: @font-size-lg;
+
+    select&[multiple] option {
+        padding: (@spacing / 4) (@spacing / 2);
     }
 }
 
@@ -121,8 +121,8 @@
     opacity: 0;
     z-index: 2;
     background-color: @primary;
-    transition: transform .25s @transition-type,
-        opacity .25s @transition-type;
+    transition: all @transition-time @transition-type;
+    transition-property: transform, opacity;
 
     .input-filled:focus ~ & {
         transform: scaleX(1);

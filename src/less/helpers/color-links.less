@@ -1,11 +1,11 @@
 .mix-color-links(@name) {
     .link-@{name} {
-        color: darken(@@name, 20%);
+        .text-dark(@@name);
     }
 
     .link-@{name}:hover,
     .link-@{name}:active {
-        color: darken(@@name, 30%);
+        .text-darker(@@name);
     }
 }
 

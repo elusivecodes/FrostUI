@@ -12,12 +12,6 @@
     }
 }
 
-.text-color(@background) {
-    @luma: unit(luma(@background));
-    @result: if((@luma < 55), @white, @black);
-    color: @result;
-}
-
 .mix-color(white);
 .mix-color(black);
 
@@ -31,5 +25,5 @@
 .mix-color(dark);
 
 .text-muted {
-    color: lighten(@text, 50%);
+    .text-lighter(@text);
 }

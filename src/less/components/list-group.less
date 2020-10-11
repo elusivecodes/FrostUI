@@ -1,16 +1,15 @@
 .mix-list-group-item(@color) {
-    @background: tint(lighten(@color, 20%), 50%);
-    background-color: @background;
-    color: darken(@color, 25%);
+    .bg-lighter(@color);
+    .text-dark(@color);
 
     &.list-group-item-action {
         &:hover {
-            background-color: darken(@background, 5%);
-            color: darken(@color, 40%);
+            .bg-light(@color);
+            .text-darker(@color);
         }
 
         &:focus {
-            background-color: lighten(@background, 2%);
+            .bg-lightest(@color);
         }
     }
 }
@@ -76,9 +75,13 @@
     &:focus {
         z-index: 1;
         text-decoration: none;
-        background-color: lighten(@light, 2%);
+        .bg-light(@light);
         outline: 0;
         box-shadow: @shadow-sm;
+    }
+
+    &.active:focus {
+        .bg-light(@link);
     }
 
     &:active {

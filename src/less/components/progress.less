@@ -11,7 +11,7 @@
     display: flex;
     height: @spacing;
     overflow: hidden;
-    font-size: .75rem;
+    font-size: @font-size-sm;
     background-color: @light;
     border-radius: @border-radius;
 }
@@ -25,7 +25,7 @@
     text-align: center;
     white-space: nowrap;
     background-color: @primary;
-    transition: width .6s ease;
+    transition: width @transition-time-long @transition-type;
 }
 
 .progress-bar-striped {

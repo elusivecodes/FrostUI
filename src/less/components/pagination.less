@@ -25,12 +25,12 @@
     &:hover {
         .text-color(@secondary);
         text-decoration: none;
-        background-color: darken(@secondary, 10%);
+        .bg-dark(@secondary);
     }
 
     &:focus {
         text-decoration: none;
-        background-color: lighten(@secondary, 10%);
+        .bg-light(@secondary);
         outline: 0;
         box-shadow: @shadow-xs;
     }
@@ -42,7 +42,11 @@
 
 .page-item {
     &.active .page-link {
-        background-color: darken(@secondary, 20%);
+        .bg-darker(@secondary);
+
+        &:focus {
+            .bg-dark(@secondary);
+        }
     }
 
     &.disabled .page-link {
@@ -67,12 +71,12 @@
 
 .pagination-sm .page-link {
     padding: (@spacing / 4) (@spacing / 2);
-    font-size: .875rem;
+    font-size: @font-size-sm;
     line-height: 1.5;
 }
 
 .pagination-lg .page-link {
     padding: (@spacing * .75) (@spacing * 1.5);
-    font-size: 1.25rem;
+    font-size: @font-size-lg;
     line-height: 1.5;
 }

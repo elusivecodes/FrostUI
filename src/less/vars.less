@@ -15,14 +15,29 @@
 
 @form-placeholder: rgba(0, 0, 0, .5);
 @form-disabled: gainsboro;
+@form-disabled-placeholder: #999;
 @form-success: forestgreen;
 @form-error: crimson;
 
+@blockquote-footer-color: #6c757d;
+
 @toast-color: rgba(255, 255, 255, .85);
-@shadow-color: rgba(0, 0, 0, .05);
-@border-color: rgba(0, 0, 0, .15);
 @backdrop-color: rgba(0, 0, 0, .5);
+@ripple-color: rgba(255, 255, 255, .25);
+@ripple-dark-color: rgba(0, 0, 0, 0.25);
+@hover-color: rgba(0, 0, 0, .1);
+@hover-light-color: rgba(255, 255, 255, .1);
+@border-color: rgba(0, 0, 0, .15);
+@border-light-color: rgba(255, 255, 255, .15);
+@shadow-color: rgba(0, 0, 0, .05);
 @divider-color: rgba(0, 0, 0, .5);
+
+@form-success-light: tint(@form-success, 70%);
+@form-success-lighter: tint(@form-success, 80%);
+@form-success-lightest: tint(@form-success, 90%);
+@form-error-light: tint(@form-error, 70%);
+@form-error-lighter: tint(@form-error, 80%);
+@form-error-lightest: tint(@form-error, 90%);
 
 // Shadows
 @shadow-xs: 0 2px 3px 0 rgba(0, 0, 0, .05), 0 2px 2px 0 rgba(0, 0, 0, .1);
@@ -31,21 +46,45 @@
 @shadow-lg: 0 8px 10px 1px rgba(0, 0, 0, .05), 0 3px 14px 2px rgba(0, 0, 0, .05), 0 5px 5px -3px rgba(0, 0, 0, .1);
 
 // Transitions
-@transition-time: .1s;
+@transition-time: .25s;
+@transition-time-long: .5s;
+@transition-time-longer: .75s;
 @transition-type: ease-in-out;
 
 // Borders
 @border-size: 1px;
 @border-style: solid;
 @border-radius: .2rem;
+@border-radius-sm: .15rem;
+@border-radius-lg: .25rem;
 
 // Opacity
-@disabled-opacity: 0.5;
+@disabled-opacity: .5;
 
 // Spacing
 @spacing: 1rem;
 @gutter: 1.5rem;
 @form-gutter: .5rem;
+
+// Sizing
+@container-sm-width: 540px;
+@container-md-width: 720px;
+@container-lg-width: 960px;
+@container-xl-width: 1140px;
+@container-xxl-width: 1320px;
+
+@modal-side-width: 350px;
+@modal-sm-width: 300px;
+@modal-width: 500px;
+@modal-lg-width: 800px;
+@modal-xl-width: 1140px;
+
+@popover-width: 276px;
+@popover-arrow-size: 1.2rem;
+@progress-height: 200px;
+@toast-width: 350px;
+@tooltip-width: 200px;
+@tooltip-arrow-size: .8rem;
 
 // Breakpoints
 @break-xs: 576px;
@@ -64,11 +103,19 @@
 
 // Font
 @font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+@font-family-mono: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 @font-mono: monospace, monospace;
-@font-size: 1.1rem;
-@font-weight: 400;
-@line-height: 1.5;
 
+@font-size: 1.1rem;
+@font-size-sm: .875rem;
+@font-size-lg: 1.25rem;
+@font-size-floating: 13px;
+
+@line-height: 1.5;
+@line-height-sm: 1.25;
+@line-height-lg: 2;
+
+@font-weight: 400;
 @font-weight-bold: 500;
 @font-weight-bolder: 700;
 @font-weight-light: 300;
@@ -79,7 +126,8 @@
 
 // Icons
 @navbar-toggle: '\2630';
-@breadcrumb-divider: '\00bb';
+@breadcrumb-divider: '\002f';
+@blockquote-footer-prefix: '\2014 \00A0';
 @cancel: '\2716';
 
 @check-tick: '\2713';
