@@ -114,7 +114,7 @@
 
     // Alert default options
     Alert.defaults = {
-        duration: 250
+        duration: 500
     };
 
     // Alert QuerySet method
@@ -783,7 +783,7 @@
     // Collapse default options
     Collapse.defaults = {
         direction: 'bottom',
-        duration: 250
+        duration: 500
     };
 
     // Collapse QuerySet method
@@ -1077,7 +1077,7 @@
     // Dropdown default options
     Dropdown.defaults = {
         display: 'dynamic',
-        duration: 100,
+        duration: 500,
         placement: 'bottom',
         position: 'start',
         fixed: false,
@@ -1388,7 +1388,7 @@
 
     // Modal default options
     Modal.defaults = {
-        duration: 250,
+        duration: 500,
         backdrop: true,
         focus: true,
         show: false,
@@ -2570,9 +2570,9 @@
      * @param {HTMLElement} node The input node.
      * @param {number} x The x position to start the ripple from.
      * @param {number} y The y position to start the ripple from.
-     * @param {number} [duration=250] The duration of the ripple.
+     * @param {number} [duration=500] The duration of the ripple.
      */
-    UI.ripple = (node, x, y, duration = 250) => {
+    UI.ripple = (node, x, y, duration = 500) => {
         const width = dom.width(node);
         const height = dom.height(node);
         const scaleMultiple = Math.max(width, height);
@@ -2742,7 +2742,7 @@
 
     // Tab default options
     Tab.defaults = {
-        duration: 100
+        duration: 500
     };
 
     // Tab events
@@ -2910,7 +2910,7 @@
     Toast.defaults = {
         autohide: true,
         delay: 5000,
-        duration: 100
+        duration: 250
     };
 
     // Auto-initialize Toast from data-toggle

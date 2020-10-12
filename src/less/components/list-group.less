@@ -64,6 +64,8 @@
     width: 100%;
     color: @text;
     text-align: inherit;
+    transition: all @transition-time @transition-type;
+    transition-property: color, background-color, box-shadow;
 
     &:hover {
         z-index: 1;

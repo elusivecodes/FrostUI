@@ -1,6 +1,6 @@
 // Alert default options
 Alert.defaults = {
-    duration: 250
+    duration: 500
 };
 
 // Alert QuerySet method

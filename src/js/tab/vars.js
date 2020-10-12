@@ -1,6 +1,6 @@
 // Tab default options
 Tab.defaults = {
-    duration: 100
+    duration: 500
 };
 
 // Tab events

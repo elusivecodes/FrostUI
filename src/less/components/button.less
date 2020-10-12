@@ -9,6 +9,7 @@
     }
 
     .btn-check:checked + &:focus,
+    .btn-check:checked:focus + &,
     &.active:focus,
     &:hover {
         .bg-dark(@color);
@@ -35,18 +36,15 @@
     }
 
     .btn-check:checked + &:focus,
-    &.active:focus,
+    .btn-check:checked:focus + &,
     &:hover {
-        background-color: @color;
-        .text-color(@color);
-        border-color: @border-color;
+        background-color: fade(@color, 15%);
+        color: @color;
     }
 
     .btn-check:focus + &,
     &:focus {
-        .bg-light(@color);
-        .text-color(@color);
-        border-color: @border-color;
+        background-color: fade(@color, 30%);
     }
 }
 
@@ -68,7 +66,7 @@
     font-size: 1rem;
     border-radius: @border-radius;
     transition: all @transition-time @transition-type;
-    transition-property: color background-color box-shadow;
+    transition-property: color, background-color, box-shadow;
     
     &:hover {
         color: @text;

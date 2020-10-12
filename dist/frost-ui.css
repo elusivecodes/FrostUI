@@ -508,56 +508,56 @@ u {
   font-weight: 500;
 }
 .alert-primary {
-  background-color: #d0daf8;
+  background-color: #a0b4f0;
   color: #314fa9;
 }
 .alert-primary .alert-link {
   color: #213571;
 }
 .alert-secondary {
-  background-color: #dde1e6;
+  background-color: #bbc4cc;
   color: #596673;
 }
 .alert-secondary .alert-link {
   color: #3c444d;
 }
 .alert-success {
-  background-color: #ceecdc;
+  background-color: #9ed9b8;
   color: #2d8655;
 }
 .alert-success .alert-link {
   color: #1e5a39;
 }
 .alert-info {
-  background-color: #c7ecea;
+  background-color: #90d9d5;
   color: #188680;
 }
 .alert-info .alert-link {
   color: #105955;
 }
 .alert-warning {
-  background-color: #ffdfd3;
+  background-color: #ffbfa8;
   color: #bf5f3c;
 }
 .alert-warning .alert-link {
   color: #804028;
 }
 .alert-danger {
-  background-color: #f3d6d6;
+  background-color: #e6aeae;
   color: #9a4545;
 }
 .alert-danger .alert-link {
   color: #672e2e;
 }
 .alert-light {
-  background-color: #fdfdfd;
+  background-color: #fafafa;
   color: #b8b8b8;
 }
 .alert-light .alert-link {
   color: #7b7b7b;
 }
 .alert-dark {
-  background-color: #cbd3d3;
+  background-color: #97a7a7;
   color: #233b3b;
 }
 .alert-dark .alert-link {
@@ -624,8 +624,8 @@ u {
   padding: 0.25rem 0.5rem;
   font-size: 1rem;
   border-radius: 0.2rem;
-  transition: all 0.25s ease-in-out;
-  transition-property: color background-color box-shadow;
+  transition: all 0.5s ease-in-out;
+  transition-property: color, background-color, box-shadow;
 }
 .btn:hover {
   color: #121212;
@@ -691,6 +691,7 @@ fieldset:disabled .btn {
   background-color: #213571;
 }
 .btn-check:checked + .btn-primary:focus,
+.btn-check:checked:focus + .btn-primary,
 .btn-primary.active:focus,
 .btn-primary:hover {
   background-color: #314fa9;
@@ -710,6 +711,7 @@ fieldset:disabled .btn {
   background-color: #3c444d;
 }
 .btn-check:checked + .btn-secondary:focus,
+.btn-check:checked:focus + .btn-secondary,
 .btn-secondary.active:focus,
 .btn-secondary:hover {
   background-color: #596673;
@@ -729,6 +731,7 @@ fieldset:disabled .btn {
   background-color: #1e5a39;
 }
 .btn-check:checked + .btn-success:focus,
+.btn-check:checked:focus + .btn-success,
 .btn-success.active:focus,
 .btn-success:hover {
   background-color: #2d8655;
@@ -748,6 +751,7 @@ fieldset:disabled .btn {
   background-color: #105955;
 }
 .btn-check:checked + .btn-info:focus,
+.btn-check:checked:focus + .btn-info,
 .btn-info.active:focus,
 .btn-info:hover {
   background-color: #188680;
@@ -767,6 +771,7 @@ fieldset:disabled .btn {
   background-color: #804028;
 }
 .btn-check:checked + .btn-warning:focus,
+.btn-check:checked:focus + .btn-warning,
 .btn-warning.active:focus,
 .btn-warning:hover {
   background-color: #bf5f3c;
@@ -786,6 +791,7 @@ fieldset:disabled .btn {
   background-color: #672e2e;
 }
 .btn-check:checked + .btn-danger:focus,
+.btn-check:checked:focus + .btn-danger,
 .btn-danger.active:focus,
 .btn-danger:hover {
   background-color: #9a4545;
@@ -805,6 +811,7 @@ fieldset:disabled .btn {
   background-color: #7b7b7b;
 }
 .btn-check:checked + .btn-light:focus,
+.btn-check:checked:focus + .btn-light,
 .btn-light.active:focus,
 .btn-light:hover {
   background-color: #b8b8b8;
@@ -824,6 +831,7 @@ fieldset:disabled .btn {
   background-color: #182828;
 }
 .btn-check:checked + .btn-dark:focus,
+.btn-check:checked:focus + .btn-dark,
 .btn-dark.active:focus,
 .btn-dark:hover {
   background-color: #233b3b;
@@ -846,17 +854,14 @@ fieldset:disabled .btn {
   border-color: #314fa9;
 }
 .btn-check:checked + .btn-outline-primary:focus,
-.btn-outline-primary.active:focus,
+.btn-check:checked:focus + .btn-outline-primary,
 .btn-outline-primary:hover {
-  background-color: royalblue;
-  color: white;
-  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(65, 105, 225, 0.15);
+  color: royalblue;
 }
 .btn-check:focus + .btn-outline-primary,
 .btn-outline-primary:focus {
-  background-color: #718fe9;
-  color: white;
-  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(65, 105, 225, 0.3);
 }
 .btn-outline-secondary {
   background-color: transparent;
@@ -871,17 +876,14 @@ fieldset:disabled .btn {
   border-color: #596673;
 }
 .btn-check:checked + .btn-outline-secondary:focus,
-.btn-outline-secondary.active:focus,
+.btn-check:checked:focus + .btn-outline-secondary,
 .btn-outline-secondary:hover {
-  background-color: lightslategray;
-  color: white;
-  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(119, 136, 153, 0.15);
+  color: lightslategray;
 }
 .btn-check:focus + .btn-outline-secondary,
 .btn-outline-secondary:focus {
-  background-color: #99a6b3;
-  color: white;
-  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(119, 136, 153, 0.3);
 }
 .btn-outline-success {
   background-color: transparent;
@@ -896,17 +898,14 @@ fieldset:disabled .btn {
   border-color: #2d8655;
 }
 .btn-check:checked + .btn-outline-success:focus,
-.btn-outline-success.active:focus,
+.btn-check:checked:focus + .btn-outline-success,
 .btn-outline-success:hover {
-  background-color: mediumseagreen;
-  color: white;
-  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(60, 179, 113, 0.15);
+  color: mediumseagreen;
 }
 .btn-check:focus + .btn-outline-success,
 .btn-outline-success:focus {
-  background-color: #6dc695;
-  color: white;
-  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(60, 179, 113, 0.3);
 }
 .btn-outline-info {
   background-color: transparent;
@@ -921,17 +920,14 @@ fieldset:disabled .btn {
   border-color: #188680;
 }
 .btn-check:checked + .btn-outline-info:focus,
-.btn-outline-info.active:focus,
+.btn-check:checked:focus + .btn-outline-info,
 .btn-outline-info:hover {
-  background-color: lightseagreen;
-  color: white;
-  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(32, 178, 170, 0.15);
+  color: lightseagreen;
 }
 .btn-check:focus + .btn-outline-info,
 .btn-outline-info:focus {
-  background-color: #58c5bf;
-  color: white;
-  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(32, 178, 170, 0.3);
 }
 .btn-outline-warning {
   background-color: transparent;
@@ -946,17 +942,14 @@ fieldset:disabled .btn {
   border-color: #bf5f3c;
 }
 .btn-check:checked + .btn-outline-warning:focus,
-.btn-outline-warning.active:focus,
+.btn-check:checked:focus + .btn-outline-warning,
 .btn-outline-warning:hover {
-  background-color: coral;
-  color: white;
-  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(255, 127, 80, 0.15);
+  color: coral;
 }
 .btn-check:focus + .btn-outline-warning,
 .btn-outline-warning:focus {
-  background-color: #ff9f7c;
-  color: white;
-  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(255, 127, 80, 0.3);
 }
 .btn-outline-danger {
   background-color: transparent;
@@ -971,17 +964,14 @@ fieldset:disabled .btn {
   border-color: #9a4545;
 }
 .btn-check:checked + .btn-outline-danger:focus,
-.btn-outline-danger.active:focus,
+.btn-check:checked:focus + .btn-outline-danger,
 .btn-outline-danger:hover {
-  background-color: indianred;
-  color: white;
-  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(205, 92, 92, 0.15);
+  color: indianred;
 }
 .btn-check:focus + .btn-outline-danger,
 .btn-outline-danger:focus {
-  background-color: #da8585;
-  color: white;
-  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(205, 92, 92, 0.3);
 }
 .btn-outline-light {
   background-color: transparent;
@@ -996,17 +986,14 @@ fieldset:disabled .btn {
   border-color: #b8b8b8;
 }
 .btn-check:checked + .btn-outline-light:focus,
-.btn-outline-light.active:focus,
+.btn-check:checked:focus + .btn-outline-light,
 .btn-outline-light:hover {
-  background-color: whitesmoke;
-  color: black;
-  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(245, 245, 245, 0.15);
+  color: whitesmoke;
 }
 .btn-check:focus + .btn-outline-light,
 .btn-outline-light:focus {
-  background-color: #f8f8f8;
-  color: black;
-  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(245, 245, 245, 0.3);
 }
 .btn-outline-dark {
   background-color: transparent;
@@ -1021,17 +1008,14 @@ fieldset:disabled .btn {
   border-color: #233b3b;
 }
 .btn-check:checked + .btn-outline-dark:focus,
-.btn-outline-dark.active:focus,
+.btn-check:checked:focus + .btn-outline-dark,
 .btn-outline-dark:hover {
-  background-color: darkslategray;
-  color: white;
-  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(47, 79, 79, 0.15);
+  color: darkslategray;
 }
 .btn-check:focus + .btn-outline-dark,
 .btn-outline-dark:focus {
-  background-color: #637b7b;
-  color: white;
-  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(47, 79, 79, 0.3);
 }
 .btn-group,
 .btn-group-vertical {
@@ -1508,6 +1492,8 @@ button.dropdown-item:focus {
   width: 100%;
   color: #121212;
   text-align: inherit;
+  transition: all 0.5s ease-in-out;
+  transition-property: color, background-color, box-shadow;
 }
 .list-group-item-action:hover {
   z-index: 1;
@@ -2127,8 +2113,8 @@ button.dropdown-item:focus {
   padding: 0.5rem 1rem;
   text-decoration: none;
   border-radius: 0.2rem;
-  transition: all 0.25s ease-in-out;
-  transition-property: color background-color border-color;
+  transition: all 0.5s ease-in-out;
+  transition-property: color, background-color, border-color;
 }
 .nav-link:hover {
   text-decoration: none;
@@ -2449,7 +2435,7 @@ button.dropdown-item:focus {
   color: white;
   background-color: lightslategray;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  transition: color 0.25s ease-in-out, background-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+  transition: color 0.5s ease-in-out, background-color 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
   padding: 0.5rem;
 }
 .page-link:hover,
@@ -3140,8 +3126,8 @@ button.close:focus {
   background-size: contain;
   border: 1px solid rgba(0, 0, 0, 0.15);
   appearance: none;
-  transition: all 0.25s ease-in-out;
-  transition-property: background-color background-position border-color box-shadow;
+  transition: all 0.5s ease-in-out;
+  transition-property: background-color, background-position, border-color, box-shadow;
 }
 .input-check[type="checkbox"] {
   border-radius: 0.2rem;
@@ -3329,7 +3315,7 @@ select.input-lg[multiple] option {
   opacity: 0;
   z-index: 2;
   background-color: royalblue;
-  transition: all 0.25s ease-in-out;
+  transition: all 0.5s ease-in-out;
   transition-property: transform, opacity;
 }
 .input-filled:focus ~ .ripple-line {
@@ -3461,7 +3447,7 @@ select.input-lg[multiple] option {
   pointer-events: none;
   cursor: text;
   border-radius: 0.2rem;
-  transition: all 0.25s ease-in-out;
+  transition: all 0.5s ease-in-out;
   transition-property: padding, font-size, color;
 }
 .input-floating,

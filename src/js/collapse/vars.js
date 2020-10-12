@@ -1,7 +1,7 @@
 // Collapse default options
 Collapse.defaults = {
     direction: 'bottom',
-    duration: 250
+    duration: 500
 };
 
 // Collapse QuerySet method
