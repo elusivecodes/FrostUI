@@ -79,11 +79,7 @@ class Popper {
         }
 
         // calculate boxes
-        const nodeBox = {
-            width: dom.width(this._node),
-            height: dom.height(this._node)
-        };
-
+        const nodeBox = dom.rect(this._node, true);
         const referenceBox = dom.rect(this._settings.reference, true);
         const windowBox = this.constructor.windowContainer();
 

@@ -1,6 +1,6 @@
 // Modal default options
 Modal.defaults = {
-    duration: 500,
+    duration: 250,
     backdrop: true,
     focus: true,
     show: false,

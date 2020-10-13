@@ -10885,7 +10885,7 @@
 
         // Alert default options
         Alert.defaults = {
-            duration: 500
+            duration: 250
         };
 
         // Alert QuerySet method
@@ -11554,7 +11554,7 @@
         // Collapse default options
         Collapse.defaults = {
             direction: 'bottom',
-            duration: 500
+            duration: 250
         };
 
         // Collapse QuerySet method
@@ -11848,7 +11848,7 @@
         // Dropdown default options
         Dropdown.defaults = {
             display: 'dynamic',
-            duration: 500,
+            duration: 250,
             placement: 'bottom',
             position: 'start',
             fixed: false,
@@ -12159,7 +12159,7 @@
 
         // Modal default options
         Modal.defaults = {
-            duration: 500,
+            duration: 250,
             backdrop: true,
             focus: true,
             show: false,
@@ -12648,11 +12648,7 @@
                 }
 
                 // calculate boxes
-                const nodeBox = {
-                    width: dom.width(this._node),
-                    height: dom.height(this._node)
-                };
-
+                const nodeBox = dom.rect(this._node, true);
                 const referenceBox = dom.rect(this._settings.reference, true);
                 const windowBox = this.constructor.windowContainer();
 

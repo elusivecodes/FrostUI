@@ -1,6 +1,17 @@
 .mix-table(@color) {
-    .bg-lighter(@color);
-    .text-dark(@color);
+    &,
+    & > th,
+    & > td {
+        .bg-lighter(@color);
+        .text-darker(@color);
+    }
+
+    .table-hover &:hover {
+        > th,
+        > td {
+            .bg-lightest(@color);
+        }
+    }
 }
 
 .mix-table-responsive(@b: ~'') {
@@ -74,11 +85,14 @@
     color: @white;
     background-color: @dark;
 
-    &.table-hover tbody tr {
-        &:hover {
-            color: @white;
-            background-color: @hover-light-color;
-        }
+    &.table-hover tbody tr:hover {
+        color: @white;
+        background-color: @hover-light-color;
+    }
+
+    .table-hover tbody tr&:hover {
+        color: @white;
+        .bg-light(@dark);
     }
 
     th,
@@ -97,31 +111,31 @@
     background-color: @light;
 }
 
-.table-active, .table-active > td, .table-active > th {
+.table-active {
     .mix-table(@link);
 }
 
-.table-primary, .table-primary>td, .table-primary>th {
+.table-primary {
     .mix-table(@primary);
 }
 
-.table-secondary, .table-secondary>td, .table-secondary>th {
+.table-secondary {
     .mix-table(@secondary);
 }
 
-.table-success, .table-success>td, .table-success>th {
+.table-success {
     .mix-table(@success);
 }
 
-.table-info, .table-info>td, .table-info>th {
+.table-info {
     .mix-table(@info);
 }
 
-.table-warning, .table-warning>td, .table-warning>th {
+.table-warning {
     .mix-table(@warning);
 }
 
-.table-danger, .table-danger>td, .table-danger>th {
+.table-danger {
     .mix-table(@danger);
 }
 

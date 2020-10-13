@@ -11,7 +11,8 @@
     .text-color(@secondary);
     background-color: @secondary;
     border: @border-size @border-style @border-color;
-    transition: color @transition-time @transition-type, background-color @transition-time @transition-type, box-shadow @transition-time @transition-type;
+    transition: all @transition-time-long @transition-type;
+    transition-property: color, background-color, box-shadow;
     padding: (@spacing / 2);
 
 

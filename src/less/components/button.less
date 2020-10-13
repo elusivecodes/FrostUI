@@ -46,6 +46,10 @@
     &:focus {
         background-color: fade(@color, 30%);
     }
+
+    &.ripple > .ripple-effect {
+        background-color: fade(@color, 50%);
+    }
 }
 
 .btn {
@@ -65,7 +69,7 @@
     padding: (@spacing / 4) (@spacing / 2);
     font-size: 1rem;
     border-radius: @border-radius;
-    transition: all @transition-time @transition-type;
+    transition: all @transition-time-long @transition-type;
     transition-property: color, background-color, box-shadow;
     
     &:hover {

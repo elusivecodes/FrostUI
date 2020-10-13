@@ -64,14 +64,14 @@
     width: 100%;
     color: @text;
     text-align: inherit;
-    transition: all @transition-time @transition-type;
+    transition: all @transition-time-long @transition-type;
     transition-property: color, background-color, box-shadow;
 
     &:hover {
         z-index: 1;
         color: @text;
         text-decoration: none;
-        background-color: @light;
+        .bg-fade(@dark);
     }
 
     &:focus {
@@ -84,10 +84,6 @@
 
     &.active:focus {
         .bg-light(@link);
-    }
-
-    &:active {
-        background-color: @light;
     }
 }
 
