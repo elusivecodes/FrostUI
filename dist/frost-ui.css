@@ -666,13 +666,13 @@ u {
 .btn-check:focus + .btn,
 .btn:focus {
   outline: 0;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 3px 1px -2px rgba(0, 0, 0, 0.1), 0 1px 5px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 3px 1px -2px rgba(0, 0, 0, 0.15), 0 1px 5px 0 rgba(0, 0, 0, 0.05);
 }
 .btn-check:checked + .btn,
 .btn-check:active + .btn,
 .btn:active,
 .btn.active {
-  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.05), 0 1px 10px 0 rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.05), 0 1px 10px 0 rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
 }
 .btn:disabled,
 .btn.disabled,
@@ -896,7 +896,7 @@ fieldset:disabled .btn {
   background-color: rgba(65, 105, 225, 0.3);
 }
 .btn-outline-primary.ripple > .ripple-effect {
-  background-color: rgba(65, 105, 225, 0.5);
+  background-color: rgba(65, 105, 225, 0.2);
 }
 .btn-outline-secondary {
   background-color: transparent;
@@ -921,7 +921,7 @@ fieldset:disabled .btn {
   background-color: rgba(119, 136, 153, 0.3);
 }
 .btn-outline-secondary.ripple > .ripple-effect {
-  background-color: rgba(119, 136, 153, 0.5);
+  background-color: rgba(119, 136, 153, 0.2);
 }
 .btn-outline-success {
   background-color: transparent;
@@ -946,7 +946,7 @@ fieldset:disabled .btn {
   background-color: rgba(60, 179, 113, 0.3);
 }
 .btn-outline-success.ripple > .ripple-effect {
-  background-color: rgba(60, 179, 113, 0.5);
+  background-color: rgba(60, 179, 113, 0.2);
 }
 .btn-outline-info {
   background-color: transparent;
@@ -971,7 +971,7 @@ fieldset:disabled .btn {
   background-color: rgba(32, 178, 170, 0.3);
 }
 .btn-outline-info.ripple > .ripple-effect {
-  background-color: rgba(32, 178, 170, 0.5);
+  background-color: rgba(32, 178, 170, 0.2);
 }
 .btn-outline-warning {
   background-color: transparent;
@@ -996,7 +996,7 @@ fieldset:disabled .btn {
   background-color: rgba(255, 127, 80, 0.3);
 }
 .btn-outline-warning.ripple > .ripple-effect {
-  background-color: rgba(255, 127, 80, 0.5);
+  background-color: rgba(255, 127, 80, 0.2);
 }
 .btn-outline-danger {
   background-color: transparent;
@@ -1021,7 +1021,7 @@ fieldset:disabled .btn {
   background-color: rgba(205, 92, 92, 0.3);
 }
 .btn-outline-danger.ripple > .ripple-effect {
-  background-color: rgba(205, 92, 92, 0.5);
+  background-color: rgba(205, 92, 92, 0.2);
 }
 .btn-outline-light {
   background-color: transparent;
@@ -1046,7 +1046,7 @@ fieldset:disabled .btn {
   background-color: rgba(245, 245, 245, 0.3);
 }
 .btn-outline-light.ripple > .ripple-effect {
-  background-color: rgba(245, 245, 245, 0.5);
+  background-color: rgba(245, 245, 245, 0.2);
 }
 .btn-outline-dark {
   background-color: transparent;
@@ -1071,7 +1071,7 @@ fieldset:disabled .btn {
   background-color: rgba(47, 79, 79, 0.3);
 }
 .btn-outline-dark.ripple > .ripple-effect {
-  background-color: rgba(47, 79, 79, 0.5);
+  background-color: rgba(47, 79, 79, 0.2);
 }
 .btn-group,
 .btn-group-vertical {
@@ -1562,7 +1562,7 @@ button.dropdown-item:focus {
   text-decoration: none;
   background-color: #f8f8f8;
   outline: 0;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 3px 1px -2px rgba(0, 0, 0, 0.1), 0 1px 5px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 3px 1px -2px rgba(0, 0, 0, 0.15), 0 1px 5px 0 rgba(0, 0, 0, 0.05);
 }
 .list-group-item-action.active:focus {
   background-color: #74a1c7;
@@ -1923,7 +1923,7 @@ button.dropdown-item:focus {
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0.2rem;
-  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.05), 0 3px 14px 2px rgba(0, 0, 0, 0.05), 0 5px 5px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.05), 0 3px 14px 2px rgba(0, 0, 0, 0.05), 0 5px 5px -3px rgba(0, 0, 0, 0.15);
   outline: 0;
 }
 .modal-backdrop {
@@ -2507,10 +2507,10 @@ button.dropdown-item:focus {
   text-decoration: none;
   background-color: #99a6b3;
   outline: 0;
-  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.15);
 }
 .page-link:active {
-  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.05), 0 1px 10px 0 rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.05), 0 1px 10px 0 rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
 }
 .page-item.active .page-link {
   background-color: #3c444d;
@@ -3053,11 +3053,11 @@ button.close:focus {
   width: 2px;
   height: 2px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: rgba(255, 255, 255, 0.2);
   pointer-events: none;
 }
 .ripple-dark:not(.active) > .ripple-effect {
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .visually-hidden,
 .visually-hidden-focusable:not(:focus) {
@@ -7066,13 +7066,13 @@ select.input-lg[multiple] option {
   box-shadow: none !important;
 }
 .shadow-sm {
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 3px 1px -2px rgba(0, 0, 0, 0.1), 0 1px 5px 0 rgba(0, 0, 0, 0.05) !important;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 3px 1px -2px rgba(0, 0, 0, 0.15), 0 1px 5px 0 rgba(0, 0, 0, 0.05) !important;
 }
 .shadow {
-  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.05), 0 1px 10px 0 rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.05), 0 1px 10px 0 rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.15) !important;
 }
 .shadow-lg {
-  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.05), 0 3px 14px 2px rgba(0, 0, 0, 0.05), 0 5px 5px -3px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.05), 0 3px 14px 2px rgba(0, 0, 0, 0.05), 0 5px 5px -3px rgba(0, 0, 0, 0.15) !important;
 }
 .w-auto {
   width: auto !important;
