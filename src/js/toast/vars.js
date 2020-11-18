@@ -2,7 +2,7 @@
 Toast.defaults = {
     autohide: true,
     delay: 5000,
-    duration: 250
+    duration: 100
 };
 
 // Auto-initialize Toast from data-toggle

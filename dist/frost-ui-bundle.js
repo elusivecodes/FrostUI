@@ -21,7 +21,7 @@
     }
 
     /**
-     * FrostCore v1.0.8
+     * FrostCore v1.0.10
      * https://github.com/elusivecodes/FrostCore
      */
     (function(global, factory) {
@@ -1097,7 +1097,7 @@
     });
 
     /**
-     * FrostDOM v1.1.6
+     * FrostDOM v1.1.8
      * https://github.com/elusivecodes/FrostDOM
      */
     (function(global, factory) {
@@ -10885,7 +10885,7 @@
 
         // Alert default options
         Alert.defaults = {
-            duration: 250
+            duration: 100
         };
 
         // Alert QuerySet method
@@ -11848,7 +11848,7 @@
         // Dropdown default options
         Dropdown.defaults = {
             display: 'dynamic',
-            duration: 250,
+            duration: 100,
             placement: 'bottom',
             position: 'start',
             fixed: false,
@@ -13337,12 +13337,12 @@
          * @param {HTMLElement} node The input node.
          * @param {number} x The x position to start the ripple from.
          * @param {number} y The y position to start the ripple from.
-         * @param {number} [duration=500] The duration of the ripple.
+         * @param {number} [duration=750] The duration of the ripple.
          */
-        UI.ripple = (node, x, y, duration = 500) => {
+        UI.ripple = (node, x, y, duration = 750) => {
             const width = dom.width(node);
             const height = dom.height(node);
-            const scaleMultiple = Math.max(width, height);
+            const scaleMultiple = Math.max(width, height) * 6;
 
             const ripple = dom.create('span', {
                 class: 'ripple-effect',
@@ -13358,7 +13358,7 @@
                 (node, progress) => {
                     dom.setStyle(node, {
                         transform: 'scale(' + Math.floor(progress * scaleMultiple) + ')',
-                        opacity: 1 - progress
+                        opacity: 1 - Math.pow(progress, 2)
                     });
                 },
                 {
@@ -13509,7 +13509,7 @@
 
         // Tab default options
         Tab.defaults = {
-            duration: 500
+            duration: 100
         };
 
         // Tab events
@@ -13677,7 +13677,7 @@
         Toast.defaults = {
             autohide: true,
             delay: 5000,
-            duration: 250
+            duration: 100
         };
 
         // Auto-initialize Toast from data-toggle

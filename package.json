@@ -33,7 +33,7 @@
         "terser": "^4.8.0"
     },
     "dependencies": {
-        "frostcore": "^1.0.8",
-        "frostdom": "^1.1.6"
+        "frostcore": "^1.0.10",
+        "frostdom": "^1.1.8"
     }
 }

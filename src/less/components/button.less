@@ -44,11 +44,11 @@
 
     .btn-check:focus + &,
     &:focus {
-        background-color: fade(@color, 30%);
+        background-color: fade(@color, 25%);
     }
 
     &.ripple > .ripple-effect {
-        background-color: fade(@color, 20%);
+        background-color: fade(@color, 40%);
     }
 }
 
@@ -69,7 +69,7 @@
     padding: (@spacing / 4) (@spacing / 2);
     font-size: 1rem;
     border-radius: @border-radius;
-    transition: all @transition-time-long @transition-type;
+    transition: all @transition-time @transition-type;
     transition-property: color, background-color, box-shadow;
     
     &:hover {
