@@ -25,7 +25,7 @@
     text-align: center;
     white-space: nowrap;
     background-color: @primary;
-    transition: width @transition-time-long @transition-type;
+    transition: width @transition-time @transition-type;
 }
 
 .progress-bar-striped {
@@ -39,7 +39,7 @@
 }
 
 .progress-bar-animated {
-    animation: progress-bar-stripes 1s linear infinite;
+    animation: progress-bar-stripes @animation-time linear infinite;
 }
 
 .progress-vertical {
@@ -55,5 +55,11 @@
         &:first-child {
             margin-top: auto;
         }
+    }
+}
+
+@media (prefers-reduced-motion) {
+    .progress-bar-animated {
+        animation-duration: @animation-time-longer;
     }
 }

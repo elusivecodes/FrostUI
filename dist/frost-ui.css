@@ -516,6 +516,84 @@ u {
   margin-left: 0;
   list-style: none;
 }
+.accordion-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  font-size: 1.1rem;
+  color: #121212;
+  background-color: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0;
+  overflow-anchor: none;
+  transition: all 0.25s ease-in-out;
+  transition-property: color, background-color, border-color, border-radius, box-shadow;
+}
+.accordion-button.collapsed {
+  border-bottom-width: 0;
+}
+.accordion-button:not(.collapsed) {
+  color: #23415a;
+  background-color: #b5cde1;
+}
+.accordion-button:not(.collapsed)::after {
+  transform: rotate(180deg);
+}
+.accordion-button::after {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: auto;
+  content: '\2b9f';
+  transition: transform 0.25s ease-in-out;
+}
+.accordion-button:hover {
+  z-index: 2;
+}
+.accordion-button:focus {
+  z-index: 3;
+  outline: 0;
+}
+.accordion-header {
+  margin-bottom: 0;
+}
+.accordion-item:first-of-type .accordion-button {
+  border-top-left-radius: 0.2rem;
+  border-top-right-radius: 0.2rem;
+}
+.accordion-item:last-of-type .accordion-button.collapsed,
+.accordion-item:last-of-type .accordion-collapse {
+  border-bottom-width: 1px;
+  border-bottom-left-radius: 0.2rem;
+  border-bottom-right-radius: 0.2rem;
+}
+.accordion-collapse {
+  border: solid rgba(0, 0, 0, 0.125);
+  border-width: 0 1px;
+}
+.accordion-body {
+  padding: 1rem 1.25rem;
+}
+.accordion-flush .accordion-button {
+  border-right-width: 0;
+  border-left-width: 0;
+  border-radius: 0;
+}
+.accordion-flush .accordion-collapse {
+  border-width: 0;
+}
+.accordion-flush .accordion-item:first-of-type .accordion-button {
+  border-top-width: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.accordion-flush .accordion-item:last-of-type .accordion-button.collapsed {
+  border-bottom-width: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
 .alert {
   position: relative;
   padding: 1rem;
@@ -705,13 +783,6 @@ fieldset:disabled .btn {
 .btn-sm,
 .btn-group-sm > .btn {
   font-size: 0.875rem;
-}
-.btn-block {
-  display: block;
-  width: 100%;
-}
-.btn-block + .btn-block {
-  margin-top: 0.5rem;
 }
 .btn-primary {
   background-color: royalblue;
@@ -1230,25 +1301,6 @@ fieldset:disabled .btn {
 .card-img-bottom {
   border-bottom-right-radius: calc((1rem / 4) - 1px);
   border-bottom-left-radius: calc((1rem / 4) - 1px);
-}
-.accordion {
-  overflow-anchor: none;
-}
-.accordion > .card {
-  overflow: hidden;
-}
-.accordion > .card:not(:last-of-type) {
-  border-bottom: 0;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.accordion > .card:not(:first-of-type) {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-.accordion > .card > .card-header {
-  margin-bottom: -1px;
-  border-radius: 0;
 }
 .card-group > .card {
   margin-bottom: 1rem;
@@ -2496,7 +2548,7 @@ button.dropdown-item:focus {
   color: white;
   background-color: lightslategray;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  transition: all 0.5s ease-in-out;
+  transition: all 0.25s ease-in-out;
   transition-property: color, background-color, box-shadow;
   padding: 0.5rem;
 }
@@ -2687,7 +2739,7 @@ button.dropdown-item:focus {
   text-align: center;
   white-space: nowrap;
   background-color: royalblue;
-  transition: width 0.5s ease-in-out;
+  transition: width 0.25s ease-in-out;
 }
 .progress-bar-striped {
   background-image: linear-gradient(-45deg, transparent 50%, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0.25) 70%, transparent 70%);
@@ -2709,6 +2761,11 @@ button.dropdown-item:focus {
 .progress-vertical .progress-bar:first-child {
   margin-top: auto;
 }
+@media (prefers-reduced-motion) {
+  .progress-bar-animated {
+    animation-duration: 5s;
+  }
+}
 @keyframes spinner-border {
   to {
     transform: rotate(360deg);
@@ -2722,7 +2779,7 @@ button.dropdown-item:focus {
   border: 0.25em solid currentColor;
   border-right-color: transparent;
   border-radius: 50%;
-  animation: spinner-border 0.75s ease-in-out infinite;
+  animation: spinner-border 1s ease-in-out infinite;
   line-height: 1.5;
 }
 .spinner-border-sm {
@@ -2746,11 +2803,17 @@ button.dropdown-item:focus {
   background-color: currentColor;
   border-radius: 50%;
   opacity: 0;
-  animation: spinner-grow 0.75s ease-in-out infinite;
+  animation: spinner-grow 1s ease-in-out infinite;
 }
 .spinner-grow-sm {
   width: 1rem;
   height: 1rem;
+}
+@media (prefers-reduced-motion) {
+  .spinner-grow,
+  .spinner-border {
+    animation-duration: 5s;
+  }
 }
 .toast {
   max-width: 350px;
@@ -3061,11 +3124,8 @@ button.close:focus {
   width: 2px;
   height: 2px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.4);
   pointer-events: none;
-}
-.ripple-dark:not(.active) > .ripple-effect {
-  background-color: rgba(47, 79, 79, 0.25);
 }
 .visually-hidden,
 .visually-hidden-focusable:not(:focus) {
@@ -5798,12 +5858,6 @@ select.input-lg[multiple] option {
 .rounded {
   border-radius: 0.2rem !important;
 }
-.rounded-sm {
-  border-radius: 0.15rem !important;
-}
-.rounded-lg {
-  border-radius: 0.25rem !important;
-}
 .rounded-top {
   border-top-left-radius: 0.2rem !important;
   border-top-right-radius: 0.2rem !important;
@@ -5827,7 +5881,16 @@ select.input-lg[multiple] option {
   border-radius: 5rem !important;
 }
 .rounded-0 {
-  border-radius: 0 !important;
+  border-radius: 0rem !important;
+}
+.rounded-1 {
+  border-radius: 0.1rem !important;
+}
+.rounded-2 {
+  border-radius: 0.2rem !important;
+}
+.rounded-3 {
+  border-radius: 0.3rem !important;
 }
 .bg-white {
   background-color: white !important;
@@ -5946,6 +6009,9 @@ select.input-lg[multiple] option {
 .d-inline-flex {
   display: inline-flex !important;
 }
+.d-grid {
+  display: grid !important;
+}
 .d-none {
   display: none !important;
 }
@@ -5973,6 +6039,9 @@ select.input-lg[multiple] option {
   }
   .d-sm-inline-flex {
     display: inline-flex !important;
+  }
+  .d-sm-grid {
+    display: grid !important;
   }
   .d-sm-none {
     display: none !important;
@@ -6003,6 +6072,9 @@ select.input-lg[multiple] option {
   .d-md-inline-flex {
     display: inline-flex !important;
   }
+  .d-md-grid {
+    display: grid !important;
+  }
   .d-md-none {
     display: none !important;
   }
@@ -6031,6 +6103,9 @@ select.input-lg[multiple] option {
   }
   .d-lg-inline-flex {
     display: inline-flex !important;
+  }
+  .d-lg-grid {
+    display: grid !important;
   }
   .d-lg-none {
     display: none !important;
@@ -6061,6 +6136,9 @@ select.input-lg[multiple] option {
   .d-xl-inline-flex {
     display: inline-flex !important;
   }
+  .d-xl-grid {
+    display: grid !important;
+  }
   .d-xl-none {
     display: none !important;
   }
@@ -6090,6 +6168,9 @@ select.input-lg[multiple] option {
   .d-xxl-inline-flex {
     display: inline-flex !important;
   }
+  .d-xxl-grid {
+    display: grid !important;
+  }
   .d-xxl-none {
     display: none !important;
   }
@@ -6118,6 +6199,9 @@ select.input-lg[multiple] option {
   }
   .d-print-inline-flex {
     display: inline-flex !important;
+  }
+  .d-print-grid {
+    display: grid !important;
   }
   .d-print-none {
     display: none !important;
@@ -7016,6 +7100,12 @@ select.input-lg[multiple] option {
 .overflow-hidden {
   overflow: hidden !important;
 }
+.overflow-visible {
+  overflow: visible !important;
+}
+.overflow-scroll {
+  overflow: scroll !important;
+}
 .position-static {
   position: static !important;
 }
@@ -7206,6 +7296,9 @@ select.input-lg[multiple] option {
 .mx-n0 {
   margin-left: 0rem !important;
 }
+.gap-0 {
+  gap: 0rem !important;
+}
 .p-1 {
   padding: 0.25rem !important;
 }
@@ -7262,6 +7355,9 @@ select.input-lg[multiple] option {
 .ml-n1,
 .mx-n1 {
   margin-left: -0.25rem !important;
+}
+.gap-1 {
+  gap: 0.25rem !important;
 }
 .p-2 {
   padding: 0.5rem !important;
@@ -7320,6 +7416,9 @@ select.input-lg[multiple] option {
 .mx-n2 {
   margin-left: -0.5rem !important;
 }
+.gap-2 {
+  gap: 0.5rem !important;
+}
 .p-3 {
   padding: 0.75rem !important;
 }
@@ -7376,6 +7475,9 @@ select.input-lg[multiple] option {
 .ml-n3,
 .mx-n3 {
   margin-left: -0.75rem !important;
+}
+.gap-3 {
+  gap: 0.75rem !important;
 }
 .p-4 {
   padding: 1rem !important;
@@ -7434,6 +7536,9 @@ select.input-lg[multiple] option {
 .mx-n4 {
   margin-left: -1rem !important;
 }
+.gap-4 {
+  gap: 1rem !important;
+}
 .p-5 {
   padding: 1.25rem !important;
 }
@@ -7490,6 +7595,9 @@ select.input-lg[multiple] option {
 .ml-n5,
 .mx-n5 {
   margin-left: -1.25rem !important;
+}
+.gap-5 {
+  gap: 1.25rem !important;
 }
 @media (min-width: 576px) {
   .m-sm-auto {
@@ -7568,6 +7676,9 @@ select.input-lg[multiple] option {
   .mx-sm-n0 {
     margin-left: 0rem !important;
   }
+  .gap-sm-0 {
+    gap: 0rem !important;
+  }
   .p-sm-1 {
     padding: 0.25rem !important;
   }
@@ -7624,6 +7735,9 @@ select.input-lg[multiple] option {
   .ml-sm-n1,
   .mx-sm-n1 {
     margin-left: -0.25rem !important;
+  }
+  .gap-sm-1 {
+    gap: 0.25rem !important;
   }
   .p-sm-2 {
     padding: 0.5rem !important;
@@ -7682,6 +7796,9 @@ select.input-lg[multiple] option {
   .mx-sm-n2 {
     margin-left: -0.5rem !important;
   }
+  .gap-sm-2 {
+    gap: 0.5rem !important;
+  }
   .p-sm-3 {
     padding: 0.75rem !important;
   }
@@ -7738,6 +7855,9 @@ select.input-lg[multiple] option {
   .ml-sm-n3,
   .mx-sm-n3 {
     margin-left: -0.75rem !important;
+  }
+  .gap-sm-3 {
+    gap: 0.75rem !important;
   }
   .p-sm-4 {
     padding: 1rem !important;
@@ -7796,6 +7916,9 @@ select.input-lg[multiple] option {
   .mx-sm-n4 {
     margin-left: -1rem !important;
   }
+  .gap-sm-4 {
+    gap: 1rem !important;
+  }
   .p-sm-5 {
     padding: 1.25rem !important;
   }
@@ -7852,6 +7975,9 @@ select.input-lg[multiple] option {
   .ml-sm-n5,
   .mx-sm-n5 {
     margin-left: -1.25rem !important;
+  }
+  .gap-sm-5 {
+    gap: 1.25rem !important;
   }
 }
 @media (min-width: 768px) {
@@ -7931,6 +8057,9 @@ select.input-lg[multiple] option {
   .mx-md-n0 {
     margin-left: 0rem !important;
   }
+  .gap-md-0 {
+    gap: 0rem !important;
+  }
   .p-md-1 {
     padding: 0.25rem !important;
   }
@@ -7987,6 +8116,9 @@ select.input-lg[multiple] option {
   .ml-md-n1,
   .mx-md-n1 {
     margin-left: -0.25rem !important;
+  }
+  .gap-md-1 {
+    gap: 0.25rem !important;
   }
   .p-md-2 {
     padding: 0.5rem !important;
@@ -8045,6 +8177,9 @@ select.input-lg[multiple] option {
   .mx-md-n2 {
     margin-left: -0.5rem !important;
   }
+  .gap-md-2 {
+    gap: 0.5rem !important;
+  }
   .p-md-3 {
     padding: 0.75rem !important;
   }
@@ -8101,6 +8236,9 @@ select.input-lg[multiple] option {
   .ml-md-n3,
   .mx-md-n3 {
     margin-left: -0.75rem !important;
+  }
+  .gap-md-3 {
+    gap: 0.75rem !important;
   }
   .p-md-4 {
     padding: 1rem !important;
@@ -8159,6 +8297,9 @@ select.input-lg[multiple] option {
   .mx-md-n4 {
     margin-left: -1rem !important;
   }
+  .gap-md-4 {
+    gap: 1rem !important;
+  }
   .p-md-5 {
     padding: 1.25rem !important;
   }
@@ -8215,6 +8356,9 @@ select.input-lg[multiple] option {
   .ml-md-n5,
   .mx-md-n5 {
     margin-left: -1.25rem !important;
+  }
+  .gap-md-5 {
+    gap: 1.25rem !important;
   }
 }
 @media (min-width: 992px) {
@@ -8294,6 +8438,9 @@ select.input-lg[multiple] option {
   .mx-lg-n0 {
     margin-left: 0rem !important;
   }
+  .gap-lg-0 {
+    gap: 0rem !important;
+  }
   .p-lg-1 {
     padding: 0.25rem !important;
   }
@@ -8350,6 +8497,9 @@ select.input-lg[multiple] option {
   .ml-lg-n1,
   .mx-lg-n1 {
     margin-left: -0.25rem !important;
+  }
+  .gap-lg-1 {
+    gap: 0.25rem !important;
   }
   .p-lg-2 {
     padding: 0.5rem !important;
@@ -8408,6 +8558,9 @@ select.input-lg[multiple] option {
   .mx-lg-n2 {
     margin-left: -0.5rem !important;
   }
+  .gap-lg-2 {
+    gap: 0.5rem !important;
+  }
   .p-lg-3 {
     padding: 0.75rem !important;
   }
@@ -8464,6 +8617,9 @@ select.input-lg[multiple] option {
   .ml-lg-n3,
   .mx-lg-n3 {
     margin-left: -0.75rem !important;
+  }
+  .gap-lg-3 {
+    gap: 0.75rem !important;
   }
   .p-lg-4 {
     padding: 1rem !important;
@@ -8522,6 +8678,9 @@ select.input-lg[multiple] option {
   .mx-lg-n4 {
     margin-left: -1rem !important;
   }
+  .gap-lg-4 {
+    gap: 1rem !important;
+  }
   .p-lg-5 {
     padding: 1.25rem !important;
   }
@@ -8578,6 +8737,9 @@ select.input-lg[multiple] option {
   .ml-lg-n5,
   .mx-lg-n5 {
     margin-left: -1.25rem !important;
+  }
+  .gap-lg-5 {
+    gap: 1.25rem !important;
   }
 }
 @media (min-width: 1200px) {
@@ -8657,6 +8819,9 @@ select.input-lg[multiple] option {
   .mx-xl-n0 {
     margin-left: 0rem !important;
   }
+  .gap-xl-0 {
+    gap: 0rem !important;
+  }
   .p-xl-1 {
     padding: 0.25rem !important;
   }
@@ -8713,6 +8878,9 @@ select.input-lg[multiple] option {
   .ml-xl-n1,
   .mx-xl-n1 {
     margin-left: -0.25rem !important;
+  }
+  .gap-xl-1 {
+    gap: 0.25rem !important;
   }
   .p-xl-2 {
     padding: 0.5rem !important;
@@ -8771,6 +8939,9 @@ select.input-lg[multiple] option {
   .mx-xl-n2 {
     margin-left: -0.5rem !important;
   }
+  .gap-xl-2 {
+    gap: 0.5rem !important;
+  }
   .p-xl-3 {
     padding: 0.75rem !important;
   }
@@ -8827,6 +8998,9 @@ select.input-lg[multiple] option {
   .ml-xl-n3,
   .mx-xl-n3 {
     margin-left: -0.75rem !important;
+  }
+  .gap-xl-3 {
+    gap: 0.75rem !important;
   }
   .p-xl-4 {
     padding: 1rem !important;
@@ -8885,6 +9059,9 @@ select.input-lg[multiple] option {
   .mx-xl-n4 {
     margin-left: -1rem !important;
   }
+  .gap-xl-4 {
+    gap: 1rem !important;
+  }
   .p-xl-5 {
     padding: 1.25rem !important;
   }
@@ -8941,6 +9118,9 @@ select.input-lg[multiple] option {
   .ml-xl-n5,
   .mx-xl-n5 {
     margin-left: -1.25rem !important;
+  }
+  .gap-xl-5 {
+    gap: 1.25rem !important;
   }
 }
 @media (min-width: 1400px) {
@@ -9020,6 +9200,9 @@ select.input-lg[multiple] option {
   .mx-xxl-n0 {
     margin-left: 0rem !important;
   }
+  .gap-xxl-0 {
+    gap: 0rem !important;
+  }
   .p-xxl-1 {
     padding: 0.25rem !important;
   }
@@ -9076,6 +9259,9 @@ select.input-lg[multiple] option {
   .ml-xxl-n1,
   .mx-xxl-n1 {
     margin-left: -0.25rem !important;
+  }
+  .gap-xxl-1 {
+    gap: 0.25rem !important;
   }
   .p-xxl-2 {
     padding: 0.5rem !important;
@@ -9134,6 +9320,9 @@ select.input-lg[multiple] option {
   .mx-xxl-n2 {
     margin-left: -0.5rem !important;
   }
+  .gap-xxl-2 {
+    gap: 0.5rem !important;
+  }
   .p-xxl-3 {
     padding: 0.75rem !important;
   }
@@ -9190,6 +9379,9 @@ select.input-lg[multiple] option {
   .ml-xxl-n3,
   .mx-xxl-n3 {
     margin-left: -0.75rem !important;
+  }
+  .gap-xxl-3 {
+    gap: 0.75rem !important;
   }
   .p-xxl-4 {
     padding: 1rem !important;
@@ -9248,6 +9440,9 @@ select.input-lg[multiple] option {
   .mx-xxl-n4 {
     margin-left: -1rem !important;
   }
+  .gap-xxl-4 {
+    gap: 1rem !important;
+  }
   .p-xxl-5 {
     padding: 1.25rem !important;
   }
@@ -9304,6 +9499,9 @@ select.input-lg[multiple] option {
   .ml-xxl-n5,
   .mx-xxl-n5 {
     margin-left: -1.25rem !important;
+  }
+  .gap-xxl-5 {
+    gap: 1.25rem !important;
   }
 }
 @media only print {
@@ -9383,6 +9581,9 @@ select.input-lg[multiple] option {
   .mx-print-n0 {
     margin-left: 0rem !important;
   }
+  .gap-print-0 {
+    gap: 0rem !important;
+  }
   .p-print-1 {
     padding: 0.25rem !important;
   }
@@ -9439,6 +9640,9 @@ select.input-lg[multiple] option {
   .ml-print-n1,
   .mx-print-n1 {
     margin-left: -0.25rem !important;
+  }
+  .gap-print-1 {
+    gap: 0.25rem !important;
   }
   .p-print-2 {
     padding: 0.5rem !important;
@@ -9497,6 +9701,9 @@ select.input-lg[multiple] option {
   .mx-print-n2 {
     margin-left: -0.5rem !important;
   }
+  .gap-print-2 {
+    gap: 0.5rem !important;
+  }
   .p-print-3 {
     padding: 0.75rem !important;
   }
@@ -9553,6 +9760,9 @@ select.input-lg[multiple] option {
   .ml-print-n3,
   .mx-print-n3 {
     margin-left: -0.75rem !important;
+  }
+  .gap-print-3 {
+    gap: 0.75rem !important;
   }
   .p-print-4 {
     padding: 1rem !important;
@@ -9611,6 +9821,9 @@ select.input-lg[multiple] option {
   .mx-print-n4 {
     margin-left: -1rem !important;
   }
+  .gap-print-4 {
+    gap: 1rem !important;
+  }
   .p-print-5 {
     padding: 1.25rem !important;
   }
@@ -9668,6 +9881,9 @@ select.input-lg[multiple] option {
   .mx-print-n5 {
     margin-left: -1.25rem !important;
   }
+  .gap-print-5 {
+    gap: 1.25rem !important;
+  }
 }
 .text-wrap {
   white-space: normal !important;
@@ -9708,6 +9924,24 @@ select.input-lg[multiple] option {
 }
 .fst-normal {
   font-style: normal !important;
+}
+.fs-1 {
+  font-size: 3rem;
+}
+.fs-2 {
+  font-size: 2.5rem;
+}
+.fs-3 {
+  font-size: 2rem;
+}
+.fs-4 {
+  font-size: 1.5rem;
+}
+.fs-5 {
+  font-size: 1.25rem;
+}
+.fs-6 {
+  font-size: 1rem;
 }
 .lh-1 {
   line-height: 1 !important;

@@ -55,6 +55,7 @@ class Collapse {
         }
 
         this._animating = true;
+        dom.addClass(this._triggers, 'collapsed');
 
         dom.squeezeOut(this._node, {
             direction: this._settings.direction,
@@ -107,6 +108,7 @@ class Collapse {
 
         this._animating = true;
         dom.addClass(this._node, 'show');
+        dom.removeClass(this._triggers, 'collapsed');
 
         dom.squeezeIn(this._node, {
             direction: this._settings.direction,

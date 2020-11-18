@@ -6,6 +6,14 @@
     .mix-border(@n, (@i + 1));
 }
 
+.mix-border-radius(@n, @i: 0) when (@i =< @n) {
+    .rounded-@{i} {
+        border-radius: (@border-radius / 2 * @i) !important;
+    }
+
+    .mix-border-radius(@n, (@i + 1));
+}
+
 .border {
     border: @border-size @border-style @border-color !important;
 }
@@ -48,14 +56,6 @@
     border-radius: @border-radius !important;
 }
 
-.rounded-sm {
-    border-radius: @border-radius-sm !important;
-}
-
-.rounded-lg {
-    border-radius: @border-radius-lg !important;
-}
-
 .rounded-top {
     border-top-left-radius: @border-radius !important;
     border-top-right-radius: @border-radius !important;
@@ -84,6 +84,4 @@
     border-radius: 5rem !important;
 }
 
-.rounded-0 {
-    border-radius: 0 !important;
-}
+.mix-border-radius(3);
