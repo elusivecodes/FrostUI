@@ -5,7 +5,7 @@ Dropdown.defaults = {
     placement: 'bottom',
     position: 'start',
     fixed: false,
-    spacing: 2,
+    spacing: 3,
     minContact: false
 };
 

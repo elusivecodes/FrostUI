@@ -4,6 +4,16 @@
     color: @result;
 }
 
+.text-size(@size, @important: 0) {
+    @ratio: (@size / .5) - 2;
+    @minSize: (@ratio * .1rem) + 1.25rem;
+    @maxSize: @size * 1rem;
+    @offset: @ratio * .33vw;
+    @suffix: if(@important = 1, ~' !important', ~'');
+    @fontSize: if((@size < 1.5), @maxSize, clamp(@minSize, calc(@minSize + @offset), @maxSize));
+    font-size: @fontSize@suffix;
+}
+
 .text-light(@color) {
     color: tint(@color, 25%);
 }

@@ -11,16 +11,24 @@
     border-radius: 0;
     overflow-anchor: none;
     transition: all @transition-time @transition-type;
-    transition-property: color, background-color, border-color, border-radius, box-shadow;
+    transition-property: color, background-color, border-color, border-radius;
 
     &.collapsed {
         border-bottom-width: 0;
+
+        &:focus {
+            background-color: @shadow-color;
+        }    
     }
 
     &:not(.collapsed) {
-        .text-darker(@link);
-        .bg-lightest(@link);
+        .text-darker(@primary);
+        .bg-fade(@primary);
 
+        &:focus {
+            background-color: fade(@primary, 20%);
+        }
+    
         &::after {
             transform: rotate(180deg);
         }

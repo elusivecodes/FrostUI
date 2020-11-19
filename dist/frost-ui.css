@@ -213,27 +213,27 @@ h6,
 }
 h1,
 .h1 {
-  font-size: 3em;
+  font-size: clamp(1.65rem, calc(1.65rem + 1.32vw), 3rem) ;
 }
 h2,
 .h2 {
-  font-size: 2.5em;
+  font-size: clamp(1.55rem, calc(1.55rem + 0.99vw), 2.5rem) ;
 }
 h3,
 .h3 {
-  font-size: 2em;
+  font-size: clamp(1.45rem, calc(1.45rem + 0.66vw), 2rem) ;
 }
 h4,
 .h4 {
-  font-size: 1.5em;
+  font-size: clamp(1.35rem, calc(1.35rem + 0.33vw), 1.5rem) ;
 }
 h5,
 .h5 {
-  font-size: 1.25em;
+  font-size: 1.25rem ;
 }
 h6,
 .h6 {
-  font-size: 1em;
+  font-size: 1rem ;
 }
 ol,
 ul {
@@ -488,19 +488,19 @@ u {
   line-height: 1.2;
 }
 .heading-1 {
-  font-size: 5rem;
+  font-size: clamp(2.05rem, calc(2.05rem + 2.64vw), 5rem) ;
 }
 .heading-2 {
-  font-size: 4.5rem;
+  font-size: clamp(1.95rem, calc(1.95rem + 2.31vw), 4.5rem) ;
 }
 .heading-3 {
-  font-size: 3.5rem;
+  font-size: clamp(1.75rem, calc(1.75rem + 1.65vw), 3.5rem) ;
 }
 .heading-4 {
-  font-size: 2.5rem;
+  font-size: clamp(1.55rem, calc(1.55rem + 0.99vw), 2.5rem) ;
 }
 .lead {
-  font-size: 1.25rem;
+  font-size: 1.25rem ;
 }
 .list-inline {
   margin-left: 0;
@@ -529,14 +529,20 @@ u {
   border-radius: 0;
   overflow-anchor: none;
   transition: all 0.25s ease-in-out;
-  transition-property: color, background-color, border-color, border-radius, box-shadow;
+  transition-property: color, background-color, border-color, border-radius;
 }
 .accordion-button.collapsed {
   border-bottom-width: 0;
 }
+.accordion-button.collapsed:focus {
+  background-color: rgba(0, 0, 0, 0.05);
+}
 .accordion-button:not(.collapsed) {
-  color: #23415a;
-  background-color: #b5cde1;
+  color: #213571;
+  background-color: rgba(65, 105, 225, 0.1);
+}
+.accordion-button:not(.collapsed):focus {
+  background-color: rgba(65, 105, 225, 0.2);
 }
 .accordion-button:not(.collapsed)::after {
   transform: rotate(180deg);
@@ -2726,7 +2732,7 @@ button.dropdown-item:focus {
   display: flex;
   height: 1rem;
   overflow: hidden;
-  font-size: 0.875rem;
+  font-size: 0.65rem;
   background-color: whitesmoke;
   border-radius: 0.2rem;
 }
@@ -9926,22 +9932,22 @@ select.input-lg[multiple] option {
   font-style: normal !important;
 }
 .fs-1 {
-  font-size: 3rem;
+  font-size: clamp(1.65rem, calc(1.65rem + 1.32vw), 3rem)  !important;
 }
 .fs-2 {
-  font-size: 2.5rem;
+  font-size: clamp(1.55rem, calc(1.55rem + 0.99vw), 2.5rem)  !important;
 }
 .fs-3 {
-  font-size: 2rem;
+  font-size: clamp(1.45rem, calc(1.45rem + 0.66vw), 2rem)  !important;
 }
 .fs-4 {
-  font-size: 1.5rem;
+  font-size: clamp(1.35rem, calc(1.35rem + 0.33vw), 1.5rem)  !important;
 }
 .fs-5 {
-  font-size: 1.25rem;
+  font-size: 1.25rem  !important;
 }
 .fs-6 {
-  font-size: 1rem;
+  font-size: 1rem  !important;
 }
 .lh-1 {
   line-height: 1 !important;

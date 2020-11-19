@@ -33,6 +33,7 @@ class Popper {
         this._relativeParent = this.constructor.getRelativeParent(this._node);
 
         dom.setStyle(this._node, {
+            margin: 0,
             position: 'absolute',
             top: 0,
             right: 'initial',
@@ -171,6 +172,8 @@ class Popper {
         // compensate for margins
         offset.x -= parseInt(dom.css(this._node, 'margin-left'));
         offset.y -= parseInt(dom.css(this._node, 'margin-top'));
+
+        // compensate for borders
 
         // corrective positioning
         this.constructor.adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, this._settings.minContact);
