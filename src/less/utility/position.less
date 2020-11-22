@@ -1,20 +1,20 @@
 .mix-position(@n, @i: 0) when (@i < @n) {
     @amount: (100 / (@n - 1)) * @i;
 
-    .top-@{i} {
-        top: @amount !important;
+    .top-@{amount} {
+        top: unit(@amount, ~'%') !important;
     }
 
-    .right-@{i} {
-        right: @amount !important;
+    .right-@{amount} {
+        right: unit(@amount, ~'%') !important;
     }
 
-    .bottom-@{i} {
-        bottom: @amount !important;
+    .bottom-@{amount} {
+        bottom: unit(@amount, ~'%') !important;
     }
 
-    .left-@{i} {
-        left: @amount !important;
+    .left-@{amount} {
+        left: unit(@amount, ~'%') !important;
     }
 
     .mix-position(@n, (@i + 1));

@@ -37,6 +37,9 @@
     .justify-content@{b}around {
         justify-content: space-around !important;
     }
+    .justify-content@{b}evenly {
+        justify-content: space-evenly !important
+    }
 
     .align-items@{b}start {
         align-items: flex-start !important;
@@ -120,7 +123,7 @@
 
 .mix-flex-order(@n, @b: -, @i: 0) when (@i =< @n) {
     .order@{b}@{i} {
-        order: 0 !important;
+        order: @i !important;
     }
 
     .mix-flex-order(@n, @b, (@i + 1));

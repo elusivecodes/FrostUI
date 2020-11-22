@@ -12,197 +12,211 @@
 
 <body>
     <div class="container">
-        <h1>Form</h1>
-        <form>
-            <div class="mb-4">
-                <label for="input1">Label</label>
-                <div class="form-input">
-                    <input class="input-filled" type="text" id="input1" placeholder="Placeholder" />
-                    <div class="ripple-line"></div>
+        <h1>Form Layouts</h1>
+        <div class="mb-4">
+            <form>
+                <div class="mb-4">
+                    <label for="input1">Label</label>
+                    <div class="form-input">
+                        <input class="input-filled" type="text" id="input1" placeholder="Placeholder" />
+                        <div class="ripple-line"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="mb-4">
-                <label for="input2">Label</label>
-                <div class="form-input">
-                    <input class="input-filled" type="text" id="input2" placeholder="Placeholder" />
-                    <div class="ripple-line"></div>
+                <div class="mb-4">
+                    <label for="input2">Label</label>
+                    <div class="form-input">
+                        <input class="input-filled" type="text" id="input2" placeholder="Placeholder" />
+                        <div class="ripple-line"></div>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
+
         <h4>Grid</h4>
-        <form>
-            <div class="row mb-4">
-                <div class="col">
-                    <div class="form-input">
-                        <input class="input-filled" type="text" placeholder="Placeholder" aria-label="Label" />
-                        <div class="ripple-line"></div>
+        <div class="mb-4">
+            <form>
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="form-input">
+                            <input class="input-filled" type="text" placeholder="Placeholder" aria-label="Label" />
+                            <div class="ripple-line"></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-input">
+                            <input class="input-filled" type="text" placeholder="Placeholder" aria-label="Label" />
+                            <div class="ripple-line"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="form-input">
-                        <input class="input-filled" type="text" placeholder="Placeholder" aria-label="Label" />
-                        <div class="ripple-line"></div>
-                    </div>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
+
         <h4>Columns</h4>
-        <form>
-            <div class="row mb-4">
-                <div class="col-md-6">
-                    <label for="columnInput1">Label</label>
+        <div class="mb-4">
+            <form>
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="columnInput1">Label</label>
+                        <div class="form-input">
+                            <input class="input-filled" type="text" id="columnInput1" placeholder="Placeholder" />
+                            <div class="ripple-line"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="columnInput2">Label</label>
+                        <div class="form-input">
+                            <input class="input-filled" type="text" id="columnInput2" placeholder="Placeholder" />
+                            <div class="ripple-line"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="columnInput3">Label</label>
                     <div class="form-input">
-                        <input class="input-filled" type="text" id="columnInput1" placeholder="Placeholder" />
+                        <textarea class="input-filled" id="columnInput3" placeholder="Placeholder"></textarea>
                         <div class="ripple-line"></div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <label for="columnInput2">Label</label>
-                    <div class="form-input">
-                        <input class="input-filled" type="text" id="columnInput2" placeholder="Placeholder" />
-                        <div class="ripple-line"></div>
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="columnInput4">Label</label>
+                        <div class="form-input">
+                            <input class="input-filled" type="text" id="columnInput4" placeholder="Placeholder" />
+                            <div class="ripple-line"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="columnInput5">Label</label>
+                        <div class="form-input">
+                            <select class="input-filled" id="columnInput5">
+                                <option>Option 1</option>
+                                <option>Option 2</option>
+                                <option>Option 3</option>
+                                <option>Option 4</option>
+                                <option>Option 5</option>
+                                <option>Option 6</option>
+                            </select>
+                            <div class="ripple-line"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="columnInput6">Label</label>
+                        <div class="form-input">
+                            <input class="input-filled" type="text" id="columnInput6" placeholder="Placeholder" />
+                            <div class="ripple-line"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="mb-4">
-                <label for="columnInput3">Label</label>
-                <div class="form-input">
-                    <textarea class="input-filled" id="columnInput3" placeholder="Placeholder"></textarea>
-                    <div class="ripple-line"></div>
-                </div>
-            </div>
-            <div class="row mb-4">
-                <div class="col-md-6">
-                    <label for="columnInput4">Label</label>
-                    <div class="form-input">
-                        <input class="input-filled" type="text" id="columnInput4" placeholder="Placeholder" />
-                        <div class="ripple-line"></div>
+                <div class="mb-4">
+                    <div class="form-check">
+                        <input class="input-check" type="checkbox" id="columnInput7" />
+                        <label class="form-check-label" for="columnInput7">Option</label>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <label for="columnInput5">Label</label>
-                    <div class="form-input">
-                        <select class="input-filled" id="columnInput5">
-                            <option>Option 1</option>
-                            <option>Option 2</option>
-                            <option>Option 3</option>
-                            <option>Option 4</option>
-                            <option>Option 5</option>
-                            <option>Option 6</option>
-                        </select>
-                        <div class="ripple-line"></div>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <label for="columnInput6">Label</label>
-                    <div class="form-input">
-                        <input class="input-filled" type="text" id="columnInput6" placeholder="Placeholder" />
-                        <div class="ripple-line"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-4">
-                <div class="form-check">
-                    <input class="input-check" type="checkbox" id="columnInput7" />
-                    <label class="form-check-label" for="columnInput7">Option</label>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
+
         <h4>Horizontal</h4>
-        <form>
-            <div class="row mb-4">
-                <label class="col-sm-2 col-label" for="horizontalInput1">Label</label>
-                <div class="col-sm-10">
-                    <div class="form-input">
-                        <input class="input-filled" type="text" id="horizontalInput1" placeholder="Placeholder" />
-                        <div class="ripple-line"></div>
+        <div class="mb-4">
+            <form>
+                <div class="row mb-4">
+                    <label class="col-sm-2 col-label" for="horizontalInput1">Label</label>
+                    <div class="col-sm-10">
+                        <div class="form-input">
+                            <input class="input-filled" type="text" id="horizontalInput1" placeholder="Placeholder" />
+                            <div class="ripple-line"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row mb-4">
-                <label class="col-sm-2 col-label" for="horizontalInput2">Label</label>
-                <div class="col-sm-10">
-                    <div class="form-input">
-                        <textarea id="horizontalInput2" class="input-filled" placeholder="Placeholder"></textarea>
-                        <div class="ripple-line"></div>
+                <div class="row mb-4">
+                    <label class="col-sm-2 col-label" for="horizontalInput2">Label</label>
+                    <div class="col-sm-10">
+                        <div class="form-input">
+                            <textarea id="horizontalInput2" class="input-filled" placeholder="Placeholder"></textarea>
+                            <div class="ripple-line"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <fieldset class="mb-4">
-                <div class="row">
-                    <legend class="col-sm-2 col-label pt-0">Label</legend>
+                <fieldset class="mb-4">
+                    <div class="row">
+                        <legend class="col-sm-2 col-label pt-0">Label</legend>
+                        <div class="col-sm-10">
+                            <div class="form-check">
+                                <input class="input-check" type="radio" name="horizontalRadio"
+                                    id="horizontalRadioChecked" checked />
+                                <label class="form-check-label" for="horizontalRadioChecked">Selected</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="input-check" type="radio" name="horizontalRadio"
+                                    id="horizontalRadioDefault" />
+                                <label class="form-check-label" for="horizontalRadioDefault">Option</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="input-check" type="radio" name="horizontalRadio"
+                                    id="horizontalRadioDisabled" disabled />
+                                <label class="form-check-label" for="horizontalRadioDisabled">Disabled</label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="row mb-4">
+                    <div class="col-sm-2 col-label">Label</div>
                     <div class="col-sm-10">
                         <div class="form-check">
-                            <input class="input-check" type="radio" name="horizontalRadio" id="horizontalRadioChecked"
-                                checked />
-                            <label class="form-check-label" for="horizontalRadioChecked">Selected</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="input-check" type="radio" name="horizontalRadio"
-                                id="horizontalRadioDefault" />
-                            <label class="form-check-label" for="horizontalRadioDefault">Option</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="input-check" type="radio" name="horizontalRadio" id="horizontalRadioDisabled"
-                                disabled />
-                            <label class="form-check-label" for="horizontalRadioDisabled">Disabled</label>
+                            <input class="input-check" type="checkbox" id="horizontalCheck" />
+                            <label class="form-check-label" for="horizontalCheck">Option</label>
                         </div>
                     </div>
                 </div>
-            </fieldset>
-            <div class="row mb-4">
-                <div class="col-sm-2 col-label">Label</div>
-                <div class="col-sm-10">
-                    <div class="form-check">
-                        <input class="input-check" type="checkbox" id="horizontalCheck" />
-                        <label class="form-check-label" for="horizontalCheck">Option</label>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <h4>Inline</h4>
-        <form class="row row-cols-lg-auto g-3 align-items-center mb-4">
-            <div class="col-12">
-                <label class="visually-hidden" for="inlineInput1">Label</label>
-                <div class="form-input">
-                    <input class="input-filled mr-sm-2" type="text" id="inlineInput1" placeholder="Placeholder" />
-                    <div class="ripple-line"></div>
-                </div>
-            </div>
+            </form>
+        </div>
 
-            <div class="col-12">
-                <label class="visually-hidden" for="inlineInput2">Label</label>
-                <div class="input-group input-group-filled mr-sm-2">
-                    <div class="input-group-text">@</div>
+        <h4>Inline</h4>
+        <div class="mb-4">
+            <form class="row row-cols-lg-auto g-3 align-items-center">
+                <div class="col-12">
+                    <label class="visually-hidden" for="inlineInput1">Label</label>
                     <div class="form-input">
-                        <input class="input-filled" type="text" id="inlineInput2" placeholder="Placeholder" />
+                        <input class="input-filled mr-sm-2" type="text" id="inlineInput1" placeholder="Placeholder" />
                         <div class="ripple-line"></div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-12">
-                <div class="form-check">
-                    <input class="input-check" type="checkbox" id="inlineCheck" />
-                    <label class="form-check-label" for="inlineCheck">Option</label>
+                <div class="col-12">
+                    <label class="visually-hidden" for="inlineInput2">Label</label>
+                    <div class="input-group input-group-filled mr-sm-2">
+                        <div class="input-group-text">@</div>
+                        <div class="form-input">
+                            <input class="input-filled" type="text" id="inlineInput2" placeholder="Placeholder" />
+                            <div class="ripple-line"></div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="col-12">
+                    <div class="form-check">
+                        <input class="input-check" type="checkbox" id="inlineCheck" />
+                        <label class="form-check-label" for="inlineCheck">Option</label>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn ripple btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
 
-            <div class="col-12">
-                <button type="submit" class="btn ripple btn-primary">Submit</button>
-            </div>
-        </form>
         <h4>Help Text</h4>
-        <form>
-            <div class="mb-4">
-                <label for="helpInput">Label</label>
-                <div class="form-input">
-                    <input class="input-filled" type="text" id="helpInput" placeholder="Placeholder" />
-                    <div class="ripple-line"></div>
+        <div class="mb-4">
+            <form>
+                <div class="mb-4">
+                    <label for="helpInput">Label</label>
+                    <div class="form-input">
+                        <input class="input-filled" type="text" id="helpInput" placeholder="Placeholder" />
+                        <div class="ripple-line"></div>
+                    </div>
+                    <small class="form-text text-muted">This is help text for the form.</small>
                 </div>
-                <small class="form-text text-muted">This is help text for the form.</small>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </body>
 

@@ -27,3 +27,23 @@
 .text-muted {
     .text-lighter(@text);
 }
+
+.text-body {
+    color: @text !important;
+}
+
+.text-black-50 {
+    color: fade(@black, 50%) !important;
+}
+
+.text-white-50 {
+    color: fade(@white, 50%) !important;
+}
+
+.bg-transparent {
+    background-color: transparent !important;
+}
+
+.bg-gradient {
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0)) !important;
+}

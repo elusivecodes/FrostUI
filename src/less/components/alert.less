@@ -1,9 +1,17 @@
 .mix-alert(@color) {
     .bg-lightest(@color);
-    .text-darker(@color);
+    .text-dark(@color);
 
     .alert-link {
-        .text-darkest(@color);
+        .text-darker(@color);
+
+        &:hover {
+            .text-darkest(@color);
+        }
+
+        &:focus {
+            .text-dark(@color);
+        }
     }
 }
 

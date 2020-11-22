@@ -19,6 +19,7 @@
     .btn-check:focus + &,
     &:focus {
         .bg-light(@color);
+        .text-color(@color);
     }
 }
 
@@ -45,6 +46,7 @@
     .btn-check:focus + &,
     &:focus {
         background-color: fade(@color, 25%);
+        color: @color;
     }
 
     &.ripple > .ripple-effect {
@@ -81,6 +83,7 @@
     &:focus {
         outline: 0;
         box-shadow: @shadow-sm;
+        text-decoration: none;
     }
 
     .btn-check:checked + &,

@@ -171,15 +171,16 @@ textarea {
 
 a {
     color: @link;
-    text-decoration: none;
     background-color: transparent;
+    text-decoration: none;
 
     &:hover {
-        .text-light(@link);
+        .text-dark(@link);
         text-decoration: underline;
     }
 
     &:focus {
+        .text-light(@link);
         text-decoration: underline;
         outline: 0;
     }

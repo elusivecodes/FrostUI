@@ -139,14 +139,15 @@ textarea {
 }
 a {
   color: steelblue;
-  text-decoration: none;
   background-color: transparent;
+  text-decoration: none;
 }
 a:hover {
-  color: #74a1c7;
+  color: #356287;
   text-decoration: underline;
 }
 a:focus {
+  color: #74a1c7;
   text-decoration: underline;
   outline: 0;
 }
@@ -556,9 +557,13 @@ u {
   transition: transform 0.25s ease-in-out;
 }
 .accordion-button:hover {
+  color: #121212;
+  text-decoration: none;
   z-index: 2;
 }
 .accordion-button:focus {
+  color: #121212;
+  text-decoration: none;
   z-index: 3;
   outline: 0;
 }
@@ -625,59 +630,107 @@ u {
 }
 .alert-primary {
   background-color: #b3c3f3;
-  color: #213571;
+  color: #314fa9;
 }
 .alert-primary .alert-link {
+  color: #213571;
+}
+.alert-primary .alert-link:hover {
   color: #101a38;
+}
+.alert-primary .alert-link:focus {
+  color: #314fa9;
 }
 .alert-secondary {
   background-color: #c9cfd6;
-  color: #3c444d;
+  color: #596673;
 }
 .alert-secondary .alert-link {
+  color: #3c444d;
+}
+.alert-secondary .alert-link:hover {
   color: #1e2226;
+}
+.alert-secondary .alert-link:focus {
+  color: #596673;
 }
 .alert-success {
   background-color: #b1e1c6;
-  color: #1e5a39;
+  color: #2d8655;
 }
 .alert-success .alert-link {
+  color: #1e5a39;
+}
+.alert-success .alert-link:hover {
   color: #0f2d1c;
+}
+.alert-success .alert-link:focus {
+  color: #2d8655;
 }
 .alert-info {
   background-color: #a6e0dd;
-  color: #105955;
+  color: #188680;
 }
 .alert-info .alert-link {
+  color: #105955;
+}
+.alert-info .alert-link:hover {
   color: #082d2b;
+}
+.alert-info .alert-link:focus {
+  color: #188680;
 }
 .alert-warning {
   background-color: #ffccb9;
-  color: #804028;
+  color: #bf5f3c;
 }
 .alert-warning .alert-link {
+  color: #804028;
+}
+.alert-warning .alert-link:hover {
   color: #402014;
+}
+.alert-warning .alert-link:focus {
+  color: #bf5f3c;
 }
 .alert-danger {
   background-color: #ebbebe;
-  color: #672e2e;
+  color: #9a4545;
 }
 .alert-danger .alert-link {
+  color: #672e2e;
+}
+.alert-danger .alert-link:hover {
   color: #331717;
+}
+.alert-danger .alert-link:focus {
+  color: #9a4545;
 }
 .alert-light {
   background-color: #fbfbfb;
-  color: #7b7b7b;
+  color: #b8b8b8;
 }
 .alert-light .alert-link {
+  color: #7b7b7b;
+}
+.alert-light .alert-link:hover {
   color: #3d3d3d;
+}
+.alert-light .alert-link:focus {
+  color: #b8b8b8;
 }
 .alert-dark {
   background-color: #acb9b9;
-  color: #182828;
+  color: #233b3b;
 }
 .alert-dark .alert-link {
+  color: #182828;
+}
+.alert-dark .alert-link:hover {
   color: #0c1414;
+}
+.alert-dark .alert-link:focus {
+  color: #233b3b;
 }
 .badge {
   display: inline-block;
@@ -751,6 +804,7 @@ u {
 .btn:focus {
   outline: 0;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 3px 1px -2px rgba(0, 0, 0, 0.15), 0 1px 5px 0 rgba(0, 0, 0, 0.05);
+  text-decoration: none;
 }
 .btn-check:checked + .btn,
 .btn-check:active + .btn,
@@ -809,6 +863,7 @@ fieldset:disabled .btn {
 .btn-check:focus + .btn-primary,
 .btn-primary:focus {
   background-color: #6787e7;
+  color: white;
 }
 .btn-secondary {
   background-color: lightslategray;
@@ -829,6 +884,7 @@ fieldset:disabled .btn {
 .btn-check:focus + .btn-secondary,
 .btn-secondary:focus {
   background-color: #92a0ad;
+  color: white;
 }
 .btn-success {
   background-color: mediumseagreen;
@@ -849,6 +905,7 @@ fieldset:disabled .btn {
 .btn-check:focus + .btn-success,
 .btn-success:focus {
   background-color: #63c28d;
+  color: white;
 }
 .btn-info {
   background-color: lightseagreen;
@@ -869,6 +926,7 @@ fieldset:disabled .btn {
 .btn-check:focus + .btn-info,
 .btn-info:focus {
   background-color: #4dc1bb;
+  color: white;
 }
 .btn-warning {
   background-color: coral;
@@ -889,6 +947,7 @@ fieldset:disabled .btn {
 .btn-check:focus + .btn-warning,
 .btn-warning:focus {
   background-color: #ff9973;
+  color: white;
 }
 .btn-danger {
   background-color: indianred;
@@ -909,6 +968,7 @@ fieldset:disabled .btn {
 .btn-check:focus + .btn-danger,
 .btn-danger:focus {
   background-color: #d77d7d;
+  color: white;
 }
 .btn-light {
   background-color: whitesmoke;
@@ -929,6 +989,7 @@ fieldset:disabled .btn {
 .btn-check:focus + .btn-light,
 .btn-light:focus {
   background-color: #f7f7f7;
+  color: black;
 }
 .btn-dark {
   background-color: darkslategray;
@@ -949,6 +1010,7 @@ fieldset:disabled .btn {
 .btn-check:focus + .btn-dark,
 .btn-dark:focus {
   background-color: #597272;
+  color: white;
 }
 .btn-outline-primary {
   background-color: transparent;
@@ -971,6 +1033,7 @@ fieldset:disabled .btn {
 .btn-check:focus + .btn-outline-primary,
 .btn-outline-primary:focus {
   background-color: rgba(65, 105, 225, 0.25);
+  color: royalblue;
 }
 .btn-outline-primary.ripple > .ripple-effect {
   background-color: rgba(65, 105, 225, 0.4);
@@ -996,6 +1059,7 @@ fieldset:disabled .btn {
 .btn-check:focus + .btn-outline-secondary,
 .btn-outline-secondary:focus {
   background-color: rgba(119, 136, 153, 0.25);
+  color: lightslategray;
 }
 .btn-outline-secondary.ripple > .ripple-effect {
   background-color: rgba(119, 136, 153, 0.4);
@@ -1021,6 +1085,7 @@ fieldset:disabled .btn {
 .btn-check:focus + .btn-outline-success,
 .btn-outline-success:focus {
   background-color: rgba(60, 179, 113, 0.25);
+  color: mediumseagreen;
 }
 .btn-outline-success.ripple > .ripple-effect {
   background-color: rgba(60, 179, 113, 0.4);
@@ -1046,6 +1111,7 @@ fieldset:disabled .btn {
 .btn-check:focus + .btn-outline-info,
 .btn-outline-info:focus {
   background-color: rgba(32, 178, 170, 0.25);
+  color: lightseagreen;
 }
 .btn-outline-info.ripple > .ripple-effect {
   background-color: rgba(32, 178, 170, 0.4);
@@ -1071,6 +1137,7 @@ fieldset:disabled .btn {
 .btn-check:focus + .btn-outline-warning,
 .btn-outline-warning:focus {
   background-color: rgba(255, 127, 80, 0.25);
+  color: coral;
 }
 .btn-outline-warning.ripple > .ripple-effect {
   background-color: rgba(255, 127, 80, 0.4);
@@ -1096,6 +1163,7 @@ fieldset:disabled .btn {
 .btn-check:focus + .btn-outline-danger,
 .btn-outline-danger:focus {
   background-color: rgba(205, 92, 92, 0.25);
+  color: indianred;
 }
 .btn-outline-danger.ripple > .ripple-effect {
   background-color: rgba(205, 92, 92, 0.4);
@@ -1121,6 +1189,7 @@ fieldset:disabled .btn {
 .btn-check:focus + .btn-outline-light,
 .btn-outline-light:focus {
   background-color: rgba(245, 245, 245, 0.25);
+  color: whitesmoke;
 }
 .btn-outline-light.ripple > .ripple-effect {
   background-color: rgba(245, 245, 245, 0.4);
@@ -1146,6 +1215,7 @@ fieldset:disabled .btn {
 .btn-check:focus + .btn-outline-dark,
 .btn-outline-dark:focus {
   background-color: rgba(47, 79, 79, 0.25);
+  color: darkslategray;
 }
 .btn-outline-dark.ripple > .ripple-effect {
   background-color: rgba(47, 79, 79, 0.4);
@@ -1617,6 +1687,7 @@ button.dropdown-item:focus {
 }
 .list-group-item-action:focus {
   z-index: 1;
+  color: #121212;
   text-decoration: none;
   background-color: #f7f7f7;
   outline: 0;
@@ -2237,7 +2308,6 @@ button.dropdown-item:focus {
 }
 .nav-link:hover {
   text-decoration: none;
-  color: #74a1c7;
 }
 .nav-link:focus {
   text-decoration: none;
@@ -2570,6 +2640,7 @@ button.dropdown-item:focus {
   background-color: #5f6d7a;
 }
 .page-link:focus {
+  color: white;
   text-decoration: none;
   background-color: #92a0ad;
   outline: 0;
@@ -2938,7 +3009,7 @@ button.dropdown-item:focus {
   background-color: black;
   border-radius: 0.2rem;
 }
-.clearfix ::after {
+.clearfix::after {
   display: block;
   content: '';
   clear: both;
@@ -2951,9 +3022,11 @@ button.dropdown-item:focus {
   opacity: 0.5;
 }
 .close:focus {
+  text-decoration: none;
   opacity: 0.75;
 }
 .close:hover {
+  text-decoration: none;
   opacity: 1;
 }
 .close.disabled,
@@ -2976,12 +3049,18 @@ button.close:focus {
 .link-white:active {
   color: #808080;
 }
+.link-white:focus {
+  color: white;
+}
 .link-black {
   color: #000000;
 }
 .link-black:hover,
 .link-black:active {
   color: #000000;
+}
+.link-black:focus {
+  color: black;
 }
 .link-primary {
   color: #314fa9;
@@ -2990,12 +3069,18 @@ button.close:focus {
 .link-primary:active {
   color: #213571;
 }
+.link-primary:focus {
+  color: royalblue;
+}
 .link-secondary {
   color: #596673;
 }
 .link-secondary:hover,
 .link-secondary:active {
   color: #3c444d;
+}
+.link-secondary:focus {
+  color: lightslategray;
 }
 .link-success {
   color: #2d8655;
@@ -3004,12 +3089,18 @@ button.close:focus {
 .link-success:active {
   color: #1e5a39;
 }
+.link-success:focus {
+  color: mediumseagreen;
+}
 .link-info {
   color: #188680;
 }
 .link-info:hover,
 .link-info:active {
   color: #105955;
+}
+.link-info:focus {
+  color: lightseagreen;
 }
 .link-warning {
   color: #bf5f3c;
@@ -3018,12 +3109,18 @@ button.close:focus {
 .link-warning:active {
   color: #804028;
 }
+.link-warning:focus {
+  color: coral;
+}
 .link-danger {
   color: #9a4545;
 }
 .link-danger:hover,
 .link-danger:active {
   color: #672e2e;
+}
+.link-danger:focus {
+  color: indianred;
 }
 .link-light {
   color: #b8b8b8;
@@ -3032,12 +3129,18 @@ button.close:focus {
 .link-light:active {
   color: #7b7b7b;
 }
+.link-light:focus {
+  color: whitesmoke;
+}
 .link-dark {
   color: #233b3b;
 }
 .link-dark:hover,
 .link-dark:active {
   color: #182828;
+}
+.link-dark:focus {
+  color: darkslategray;
 }
 .fixed-top {
   position: fixed;
@@ -3093,14 +3196,14 @@ button.close:focus {
     z-index: 1020;
   }
 }
-.radio {
+.ratio {
   position: relative;
   display: block;
   width: 100%;
   padding: 0;
   overflow: hidden;
 }
-.radio > * {
+.ratio > * {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -3108,6 +3211,10 @@ button.close:focus {
   width: 100%;
   height: 100%;
   border: 0;
+}
+.ratio::before {
+  display: block;
+  content: "";
 }
 .ratio-1x1::before {
   padding-top: 100%;
@@ -3610,6 +3717,7 @@ select.input-lg[multiple] option {
 .container-md,
 .container-lg,
 .container-xl,
+.container-xxl,
 .container-fluid {
   width: 100%;
   padding-right: 1.5rem;
@@ -3783,7 +3891,14 @@ select.input-lg[multiple] option {
   flex: 0 0 auto;
   width: 25%;
 }
+.row-cols-5 > * {
+  flex: 0 0 auto;
+  width: 20%;
+}
 @media (min-width: 576px) {
+  .col-sm {
+    flex: 1 0 0%;
+  }
   .col-sm-1 {
     flex: 0 0 auto;
     width: 8.33333333%;
@@ -3893,8 +4008,15 @@ select.input-lg[multiple] option {
     flex: 0 0 auto;
     width: 25%;
   }
+  .row-cols-sm-5 > * {
+    flex: 0 0 auto;
+    width: 20%;
+  }
 }
 @media (min-width: 768px) {
+  .col-md {
+    flex: 1 0 0%;
+  }
   .col-md-1 {
     flex: 0 0 auto;
     width: 8.33333333%;
@@ -4004,8 +4126,15 @@ select.input-lg[multiple] option {
     flex: 0 0 auto;
     width: 25%;
   }
+  .row-cols-md-5 > * {
+    flex: 0 0 auto;
+    width: 20%;
+  }
 }
 @media (min-width: 992px) {
+  .col-lg {
+    flex: 1 0 0%;
+  }
   .col-lg-1 {
     flex: 0 0 auto;
     width: 8.33333333%;
@@ -4115,8 +4244,15 @@ select.input-lg[multiple] option {
     flex: 0 0 auto;
     width: 25%;
   }
+  .row-cols-lg-5 > * {
+    flex: 0 0 auto;
+    width: 20%;
+  }
 }
 @media (min-width: 1200px) {
+  .col-xl {
+    flex: 1 0 0%;
+  }
   .col-xl-1 {
     flex: 0 0 auto;
     width: 8.33333333%;
@@ -4226,8 +4362,15 @@ select.input-lg[multiple] option {
     flex: 0 0 auto;
     width: 25%;
   }
+  .row-cols-xl-5 > * {
+    flex: 0 0 auto;
+    width: 20%;
+  }
 }
 @media (min-width: 1400px) {
+  .col-xxl {
+    flex: 1 0 0%;
+  }
   .col-xxl-1 {
     flex: 0 0 auto;
     width: 8.33333333%;
@@ -4337,6 +4480,10 @@ select.input-lg[multiple] option {
     flex: 0 0 auto;
     width: 25%;
   }
+  .row-cols-xxl-5 > * {
+    flex: 0 0 auto;
+    width: 20%;
+  }
 }
 .g-0 {
   margin: 0rem;
@@ -4361,11 +4508,11 @@ select.input-lg[multiple] option {
   padding-right: 0rem;
 }
 .gb-0,
-.py-0 {
+.gy-0 {
   margin-bottom: 0rem;
 }
 .gb-0 > *,
-.py-0 > * {
+.gy-0 > * {
   padding-bottom: 0rem;
 }
 .gl-0,
@@ -4374,7 +4521,7 @@ select.input-lg[multiple] option {
 }
 .gl-0 > *,
 .gx-0 > * {
-  padding-bottom: 0rem;
+  padding-left: 0rem;
 }
 .g-1 {
   margin: -0.25rem;
@@ -4399,11 +4546,11 @@ select.input-lg[multiple] option {
   padding-right: 0.25rem;
 }
 .gb-1,
-.py-1 {
+.gy-1 {
   margin-bottom: -0.25rem;
 }
 .gb-1 > *,
-.py-1 > * {
+.gy-1 > * {
   padding-bottom: 0.25rem;
 }
 .gl-1,
@@ -4412,7 +4559,7 @@ select.input-lg[multiple] option {
 }
 .gl-1 > *,
 .gx-1 > * {
-  padding-bottom: 0.25rem;
+  padding-left: 0.25rem;
 }
 .g-2 {
   margin: -0.5rem;
@@ -4437,11 +4584,11 @@ select.input-lg[multiple] option {
   padding-right: 0.5rem;
 }
 .gb-2,
-.py-2 {
+.gy-2 {
   margin-bottom: -0.5rem;
 }
 .gb-2 > *,
-.py-2 > * {
+.gy-2 > * {
   padding-bottom: 0.5rem;
 }
 .gl-2,
@@ -4450,7 +4597,7 @@ select.input-lg[multiple] option {
 }
 .gl-2 > *,
 .gx-2 > * {
-  padding-bottom: 0.5rem;
+  padding-left: 0.5rem;
 }
 .g-3 {
   margin: -0.75rem;
@@ -4475,11 +4622,11 @@ select.input-lg[multiple] option {
   padding-right: 0.75rem;
 }
 .gb-3,
-.py-3 {
+.gy-3 {
   margin-bottom: -0.75rem;
 }
 .gb-3 > *,
-.py-3 > * {
+.gy-3 > * {
   padding-bottom: 0.75rem;
 }
 .gl-3,
@@ -4488,7 +4635,7 @@ select.input-lg[multiple] option {
 }
 .gl-3 > *,
 .gx-3 > * {
-  padding-bottom: 0.75rem;
+  padding-left: 0.75rem;
 }
 .g-4 {
   margin: -1rem;
@@ -4513,11 +4660,11 @@ select.input-lg[multiple] option {
   padding-right: 1rem;
 }
 .gb-4,
-.py-4 {
+.gy-4 {
   margin-bottom: -1rem;
 }
 .gb-4 > *,
-.py-4 > * {
+.gy-4 > * {
   padding-bottom: 1rem;
 }
 .gl-4,
@@ -4526,7 +4673,7 @@ select.input-lg[multiple] option {
 }
 .gl-4 > *,
 .gx-4 > * {
-  padding-bottom: 1rem;
+  padding-left: 1rem;
 }
 .g-5 {
   margin: -1.25rem;
@@ -4551,11 +4698,11 @@ select.input-lg[multiple] option {
   padding-right: 1.25rem;
 }
 .gb-5,
-.py-5 {
+.gy-5 {
   margin-bottom: -1.25rem;
 }
 .gb-5 > *,
-.py-5 > * {
+.gy-5 > * {
   padding-bottom: 1.25rem;
 }
 .gl-5,
@@ -4564,7 +4711,7 @@ select.input-lg[multiple] option {
 }
 .gl-5 > *,
 .gx-5 > * {
-  padding-bottom: 1.25rem;
+  padding-left: 1.25rem;
 }
 @media (min-width: 576px) {
   .g-sm-0 {
@@ -4590,11 +4737,11 @@ select.input-lg[multiple] option {
     padding-right: 0rem;
   }
   .gb-sm-0,
-  .py-sm-0 {
+  .gy-sm-0 {
     margin-bottom: 0rem;
   }
   .gb-sm-0 > *,
-  .py-sm-0 > * {
+  .gy-sm-0 > * {
     padding-bottom: 0rem;
   }
   .gl-sm-0,
@@ -4603,7 +4750,7 @@ select.input-lg[multiple] option {
   }
   .gl-sm-0 > *,
   .gx-sm-0 > * {
-    padding-bottom: 0rem;
+    padding-left: 0rem;
   }
   .g-sm-1 {
     margin: -0.25rem;
@@ -4628,11 +4775,11 @@ select.input-lg[multiple] option {
     padding-right: 0.25rem;
   }
   .gb-sm-1,
-  .py-sm-1 {
+  .gy-sm-1 {
     margin-bottom: -0.25rem;
   }
   .gb-sm-1 > *,
-  .py-sm-1 > * {
+  .gy-sm-1 > * {
     padding-bottom: 0.25rem;
   }
   .gl-sm-1,
@@ -4641,7 +4788,7 @@ select.input-lg[multiple] option {
   }
   .gl-sm-1 > *,
   .gx-sm-1 > * {
-    padding-bottom: 0.25rem;
+    padding-left: 0.25rem;
   }
   .g-sm-2 {
     margin: -0.5rem;
@@ -4666,11 +4813,11 @@ select.input-lg[multiple] option {
     padding-right: 0.5rem;
   }
   .gb-sm-2,
-  .py-sm-2 {
+  .gy-sm-2 {
     margin-bottom: -0.5rem;
   }
   .gb-sm-2 > *,
-  .py-sm-2 > * {
+  .gy-sm-2 > * {
     padding-bottom: 0.5rem;
   }
   .gl-sm-2,
@@ -4679,7 +4826,7 @@ select.input-lg[multiple] option {
   }
   .gl-sm-2 > *,
   .gx-sm-2 > * {
-    padding-bottom: 0.5rem;
+    padding-left: 0.5rem;
   }
   .g-sm-3 {
     margin: -0.75rem;
@@ -4704,11 +4851,11 @@ select.input-lg[multiple] option {
     padding-right: 0.75rem;
   }
   .gb-sm-3,
-  .py-sm-3 {
+  .gy-sm-3 {
     margin-bottom: -0.75rem;
   }
   .gb-sm-3 > *,
-  .py-sm-3 > * {
+  .gy-sm-3 > * {
     padding-bottom: 0.75rem;
   }
   .gl-sm-3,
@@ -4717,7 +4864,7 @@ select.input-lg[multiple] option {
   }
   .gl-sm-3 > *,
   .gx-sm-3 > * {
-    padding-bottom: 0.75rem;
+    padding-left: 0.75rem;
   }
   .g-sm-4 {
     margin: -1rem;
@@ -4742,11 +4889,11 @@ select.input-lg[multiple] option {
     padding-right: 1rem;
   }
   .gb-sm-4,
-  .py-sm-4 {
+  .gy-sm-4 {
     margin-bottom: -1rem;
   }
   .gb-sm-4 > *,
-  .py-sm-4 > * {
+  .gy-sm-4 > * {
     padding-bottom: 1rem;
   }
   .gl-sm-4,
@@ -4755,7 +4902,7 @@ select.input-lg[multiple] option {
   }
   .gl-sm-4 > *,
   .gx-sm-4 > * {
-    padding-bottom: 1rem;
+    padding-left: 1rem;
   }
   .g-sm-5 {
     margin: -1.25rem;
@@ -4780,11 +4927,11 @@ select.input-lg[multiple] option {
     padding-right: 1.25rem;
   }
   .gb-sm-5,
-  .py-sm-5 {
+  .gy-sm-5 {
     margin-bottom: -1.25rem;
   }
   .gb-sm-5 > *,
-  .py-sm-5 > * {
+  .gy-sm-5 > * {
     padding-bottom: 1.25rem;
   }
   .gl-sm-5,
@@ -4793,7 +4940,7 @@ select.input-lg[multiple] option {
   }
   .gl-sm-5 > *,
   .gx-sm-5 > * {
-    padding-bottom: 1.25rem;
+    padding-left: 1.25rem;
   }
 }
 @media (min-width: 768px) {
@@ -4820,11 +4967,11 @@ select.input-lg[multiple] option {
     padding-right: 0rem;
   }
   .gb-md-0,
-  .py-md-0 {
+  .gy-md-0 {
     margin-bottom: 0rem;
   }
   .gb-md-0 > *,
-  .py-md-0 > * {
+  .gy-md-0 > * {
     padding-bottom: 0rem;
   }
   .gl-md-0,
@@ -4833,7 +4980,7 @@ select.input-lg[multiple] option {
   }
   .gl-md-0 > *,
   .gx-md-0 > * {
-    padding-bottom: 0rem;
+    padding-left: 0rem;
   }
   .g-md-1 {
     margin: -0.25rem;
@@ -4858,11 +5005,11 @@ select.input-lg[multiple] option {
     padding-right: 0.25rem;
   }
   .gb-md-1,
-  .py-md-1 {
+  .gy-md-1 {
     margin-bottom: -0.25rem;
   }
   .gb-md-1 > *,
-  .py-md-1 > * {
+  .gy-md-1 > * {
     padding-bottom: 0.25rem;
   }
   .gl-md-1,
@@ -4871,7 +5018,7 @@ select.input-lg[multiple] option {
   }
   .gl-md-1 > *,
   .gx-md-1 > * {
-    padding-bottom: 0.25rem;
+    padding-left: 0.25rem;
   }
   .g-md-2 {
     margin: -0.5rem;
@@ -4896,11 +5043,11 @@ select.input-lg[multiple] option {
     padding-right: 0.5rem;
   }
   .gb-md-2,
-  .py-md-2 {
+  .gy-md-2 {
     margin-bottom: -0.5rem;
   }
   .gb-md-2 > *,
-  .py-md-2 > * {
+  .gy-md-2 > * {
     padding-bottom: 0.5rem;
   }
   .gl-md-2,
@@ -4909,7 +5056,7 @@ select.input-lg[multiple] option {
   }
   .gl-md-2 > *,
   .gx-md-2 > * {
-    padding-bottom: 0.5rem;
+    padding-left: 0.5rem;
   }
   .g-md-3 {
     margin: -0.75rem;
@@ -4934,11 +5081,11 @@ select.input-lg[multiple] option {
     padding-right: 0.75rem;
   }
   .gb-md-3,
-  .py-md-3 {
+  .gy-md-3 {
     margin-bottom: -0.75rem;
   }
   .gb-md-3 > *,
-  .py-md-3 > * {
+  .gy-md-3 > * {
     padding-bottom: 0.75rem;
   }
   .gl-md-3,
@@ -4947,7 +5094,7 @@ select.input-lg[multiple] option {
   }
   .gl-md-3 > *,
   .gx-md-3 > * {
-    padding-bottom: 0.75rem;
+    padding-left: 0.75rem;
   }
   .g-md-4 {
     margin: -1rem;
@@ -4972,11 +5119,11 @@ select.input-lg[multiple] option {
     padding-right: 1rem;
   }
   .gb-md-4,
-  .py-md-4 {
+  .gy-md-4 {
     margin-bottom: -1rem;
   }
   .gb-md-4 > *,
-  .py-md-4 > * {
+  .gy-md-4 > * {
     padding-bottom: 1rem;
   }
   .gl-md-4,
@@ -4985,7 +5132,7 @@ select.input-lg[multiple] option {
   }
   .gl-md-4 > *,
   .gx-md-4 > * {
-    padding-bottom: 1rem;
+    padding-left: 1rem;
   }
   .g-md-5 {
     margin: -1.25rem;
@@ -5010,11 +5157,11 @@ select.input-lg[multiple] option {
     padding-right: 1.25rem;
   }
   .gb-md-5,
-  .py-md-5 {
+  .gy-md-5 {
     margin-bottom: -1.25rem;
   }
   .gb-md-5 > *,
-  .py-md-5 > * {
+  .gy-md-5 > * {
     padding-bottom: 1.25rem;
   }
   .gl-md-5,
@@ -5023,7 +5170,7 @@ select.input-lg[multiple] option {
   }
   .gl-md-5 > *,
   .gx-md-5 > * {
-    padding-bottom: 1.25rem;
+    padding-left: 1.25rem;
   }
 }
 @media (min-width: 992px) {
@@ -5050,11 +5197,11 @@ select.input-lg[multiple] option {
     padding-right: 0rem;
   }
   .gb-lg-0,
-  .py-lg-0 {
+  .gy-lg-0 {
     margin-bottom: 0rem;
   }
   .gb-lg-0 > *,
-  .py-lg-0 > * {
+  .gy-lg-0 > * {
     padding-bottom: 0rem;
   }
   .gl-lg-0,
@@ -5063,7 +5210,7 @@ select.input-lg[multiple] option {
   }
   .gl-lg-0 > *,
   .gx-lg-0 > * {
-    padding-bottom: 0rem;
+    padding-left: 0rem;
   }
   .g-lg-1 {
     margin: -0.25rem;
@@ -5088,11 +5235,11 @@ select.input-lg[multiple] option {
     padding-right: 0.25rem;
   }
   .gb-lg-1,
-  .py-lg-1 {
+  .gy-lg-1 {
     margin-bottom: -0.25rem;
   }
   .gb-lg-1 > *,
-  .py-lg-1 > * {
+  .gy-lg-1 > * {
     padding-bottom: 0.25rem;
   }
   .gl-lg-1,
@@ -5101,7 +5248,7 @@ select.input-lg[multiple] option {
   }
   .gl-lg-1 > *,
   .gx-lg-1 > * {
-    padding-bottom: 0.25rem;
+    padding-left: 0.25rem;
   }
   .g-lg-2 {
     margin: -0.5rem;
@@ -5126,11 +5273,11 @@ select.input-lg[multiple] option {
     padding-right: 0.5rem;
   }
   .gb-lg-2,
-  .py-lg-2 {
+  .gy-lg-2 {
     margin-bottom: -0.5rem;
   }
   .gb-lg-2 > *,
-  .py-lg-2 > * {
+  .gy-lg-2 > * {
     padding-bottom: 0.5rem;
   }
   .gl-lg-2,
@@ -5139,7 +5286,7 @@ select.input-lg[multiple] option {
   }
   .gl-lg-2 > *,
   .gx-lg-2 > * {
-    padding-bottom: 0.5rem;
+    padding-left: 0.5rem;
   }
   .g-lg-3 {
     margin: -0.75rem;
@@ -5164,11 +5311,11 @@ select.input-lg[multiple] option {
     padding-right: 0.75rem;
   }
   .gb-lg-3,
-  .py-lg-3 {
+  .gy-lg-3 {
     margin-bottom: -0.75rem;
   }
   .gb-lg-3 > *,
-  .py-lg-3 > * {
+  .gy-lg-3 > * {
     padding-bottom: 0.75rem;
   }
   .gl-lg-3,
@@ -5177,7 +5324,7 @@ select.input-lg[multiple] option {
   }
   .gl-lg-3 > *,
   .gx-lg-3 > * {
-    padding-bottom: 0.75rem;
+    padding-left: 0.75rem;
   }
   .g-lg-4 {
     margin: -1rem;
@@ -5202,11 +5349,11 @@ select.input-lg[multiple] option {
     padding-right: 1rem;
   }
   .gb-lg-4,
-  .py-lg-4 {
+  .gy-lg-4 {
     margin-bottom: -1rem;
   }
   .gb-lg-4 > *,
-  .py-lg-4 > * {
+  .gy-lg-4 > * {
     padding-bottom: 1rem;
   }
   .gl-lg-4,
@@ -5215,7 +5362,7 @@ select.input-lg[multiple] option {
   }
   .gl-lg-4 > *,
   .gx-lg-4 > * {
-    padding-bottom: 1rem;
+    padding-left: 1rem;
   }
   .g-lg-5 {
     margin: -1.25rem;
@@ -5240,11 +5387,11 @@ select.input-lg[multiple] option {
     padding-right: 1.25rem;
   }
   .gb-lg-5,
-  .py-lg-5 {
+  .gy-lg-5 {
     margin-bottom: -1.25rem;
   }
   .gb-lg-5 > *,
-  .py-lg-5 > * {
+  .gy-lg-5 > * {
     padding-bottom: 1.25rem;
   }
   .gl-lg-5,
@@ -5253,7 +5400,7 @@ select.input-lg[multiple] option {
   }
   .gl-lg-5 > *,
   .gx-lg-5 > * {
-    padding-bottom: 1.25rem;
+    padding-left: 1.25rem;
   }
 }
 @media (min-width: 1200px) {
@@ -5280,11 +5427,11 @@ select.input-lg[multiple] option {
     padding-right: 0rem;
   }
   .gb-xl-0,
-  .py-xl-0 {
+  .gy-xl-0 {
     margin-bottom: 0rem;
   }
   .gb-xl-0 > *,
-  .py-xl-0 > * {
+  .gy-xl-0 > * {
     padding-bottom: 0rem;
   }
   .gl-xl-0,
@@ -5293,7 +5440,7 @@ select.input-lg[multiple] option {
   }
   .gl-xl-0 > *,
   .gx-xl-0 > * {
-    padding-bottom: 0rem;
+    padding-left: 0rem;
   }
   .g-xl-1 {
     margin: -0.25rem;
@@ -5318,11 +5465,11 @@ select.input-lg[multiple] option {
     padding-right: 0.25rem;
   }
   .gb-xl-1,
-  .py-xl-1 {
+  .gy-xl-1 {
     margin-bottom: -0.25rem;
   }
   .gb-xl-1 > *,
-  .py-xl-1 > * {
+  .gy-xl-1 > * {
     padding-bottom: 0.25rem;
   }
   .gl-xl-1,
@@ -5331,7 +5478,7 @@ select.input-lg[multiple] option {
   }
   .gl-xl-1 > *,
   .gx-xl-1 > * {
-    padding-bottom: 0.25rem;
+    padding-left: 0.25rem;
   }
   .g-xl-2 {
     margin: -0.5rem;
@@ -5356,11 +5503,11 @@ select.input-lg[multiple] option {
     padding-right: 0.5rem;
   }
   .gb-xl-2,
-  .py-xl-2 {
+  .gy-xl-2 {
     margin-bottom: -0.5rem;
   }
   .gb-xl-2 > *,
-  .py-xl-2 > * {
+  .gy-xl-2 > * {
     padding-bottom: 0.5rem;
   }
   .gl-xl-2,
@@ -5369,7 +5516,7 @@ select.input-lg[multiple] option {
   }
   .gl-xl-2 > *,
   .gx-xl-2 > * {
-    padding-bottom: 0.5rem;
+    padding-left: 0.5rem;
   }
   .g-xl-3 {
     margin: -0.75rem;
@@ -5394,11 +5541,11 @@ select.input-lg[multiple] option {
     padding-right: 0.75rem;
   }
   .gb-xl-3,
-  .py-xl-3 {
+  .gy-xl-3 {
     margin-bottom: -0.75rem;
   }
   .gb-xl-3 > *,
-  .py-xl-3 > * {
+  .gy-xl-3 > * {
     padding-bottom: 0.75rem;
   }
   .gl-xl-3,
@@ -5407,7 +5554,7 @@ select.input-lg[multiple] option {
   }
   .gl-xl-3 > *,
   .gx-xl-3 > * {
-    padding-bottom: 0.75rem;
+    padding-left: 0.75rem;
   }
   .g-xl-4 {
     margin: -1rem;
@@ -5432,11 +5579,11 @@ select.input-lg[multiple] option {
     padding-right: 1rem;
   }
   .gb-xl-4,
-  .py-xl-4 {
+  .gy-xl-4 {
     margin-bottom: -1rem;
   }
   .gb-xl-4 > *,
-  .py-xl-4 > * {
+  .gy-xl-4 > * {
     padding-bottom: 1rem;
   }
   .gl-xl-4,
@@ -5445,7 +5592,7 @@ select.input-lg[multiple] option {
   }
   .gl-xl-4 > *,
   .gx-xl-4 > * {
-    padding-bottom: 1rem;
+    padding-left: 1rem;
   }
   .g-xl-5 {
     margin: -1.25rem;
@@ -5470,11 +5617,11 @@ select.input-lg[multiple] option {
     padding-right: 1.25rem;
   }
   .gb-xl-5,
-  .py-xl-5 {
+  .gy-xl-5 {
     margin-bottom: -1.25rem;
   }
   .gb-xl-5 > *,
-  .py-xl-5 > * {
+  .gy-xl-5 > * {
     padding-bottom: 1.25rem;
   }
   .gl-xl-5,
@@ -5483,7 +5630,7 @@ select.input-lg[multiple] option {
   }
   .gl-xl-5 > *,
   .gx-xl-5 > * {
-    padding-bottom: 1.25rem;
+    padding-left: 1.25rem;
   }
 }
 @media (min-width: 1400px) {
@@ -5510,11 +5657,11 @@ select.input-lg[multiple] option {
     padding-right: 0rem;
   }
   .gb-xxl-0,
-  .py-xxl-0 {
+  .gy-xxl-0 {
     margin-bottom: 0rem;
   }
   .gb-xxl-0 > *,
-  .py-xxl-0 > * {
+  .gy-xxl-0 > * {
     padding-bottom: 0rem;
   }
   .gl-xxl-0,
@@ -5523,7 +5670,7 @@ select.input-lg[multiple] option {
   }
   .gl-xxl-0 > *,
   .gx-xxl-0 > * {
-    padding-bottom: 0rem;
+    padding-left: 0rem;
   }
   .g-xxl-1 {
     margin: -0.25rem;
@@ -5548,11 +5695,11 @@ select.input-lg[multiple] option {
     padding-right: 0.25rem;
   }
   .gb-xxl-1,
-  .py-xxl-1 {
+  .gy-xxl-1 {
     margin-bottom: -0.25rem;
   }
   .gb-xxl-1 > *,
-  .py-xxl-1 > * {
+  .gy-xxl-1 > * {
     padding-bottom: 0.25rem;
   }
   .gl-xxl-1,
@@ -5561,7 +5708,7 @@ select.input-lg[multiple] option {
   }
   .gl-xxl-1 > *,
   .gx-xxl-1 > * {
-    padding-bottom: 0.25rem;
+    padding-left: 0.25rem;
   }
   .g-xxl-2 {
     margin: -0.5rem;
@@ -5586,11 +5733,11 @@ select.input-lg[multiple] option {
     padding-right: 0.5rem;
   }
   .gb-xxl-2,
-  .py-xxl-2 {
+  .gy-xxl-2 {
     margin-bottom: -0.5rem;
   }
   .gb-xxl-2 > *,
-  .py-xxl-2 > * {
+  .gy-xxl-2 > * {
     padding-bottom: 0.5rem;
   }
   .gl-xxl-2,
@@ -5599,7 +5746,7 @@ select.input-lg[multiple] option {
   }
   .gl-xxl-2 > *,
   .gx-xxl-2 > * {
-    padding-bottom: 0.5rem;
+    padding-left: 0.5rem;
   }
   .g-xxl-3 {
     margin: -0.75rem;
@@ -5624,11 +5771,11 @@ select.input-lg[multiple] option {
     padding-right: 0.75rem;
   }
   .gb-xxl-3,
-  .py-xxl-3 {
+  .gy-xxl-3 {
     margin-bottom: -0.75rem;
   }
   .gb-xxl-3 > *,
-  .py-xxl-3 > * {
+  .gy-xxl-3 > * {
     padding-bottom: 0.75rem;
   }
   .gl-xxl-3,
@@ -5637,7 +5784,7 @@ select.input-lg[multiple] option {
   }
   .gl-xxl-3 > *,
   .gx-xxl-3 > * {
-    padding-bottom: 0.75rem;
+    padding-left: 0.75rem;
   }
   .g-xxl-4 {
     margin: -1rem;
@@ -5662,11 +5809,11 @@ select.input-lg[multiple] option {
     padding-right: 1rem;
   }
   .gb-xxl-4,
-  .py-xxl-4 {
+  .gy-xxl-4 {
     margin-bottom: -1rem;
   }
   .gb-xxl-4 > *,
-  .py-xxl-4 > * {
+  .gy-xxl-4 > * {
     padding-bottom: 1rem;
   }
   .gl-xxl-4,
@@ -5675,7 +5822,7 @@ select.input-lg[multiple] option {
   }
   .gl-xxl-4 > *,
   .gx-xxl-4 > * {
-    padding-bottom: 1rem;
+    padding-left: 1rem;
   }
   .g-xxl-5 {
     margin: -1.25rem;
@@ -5700,11 +5847,11 @@ select.input-lg[multiple] option {
     padding-right: 1.25rem;
   }
   .gb-xxl-5,
-  .py-xxl-5 {
+  .gy-xxl-5 {
     margin-bottom: -1.25rem;
   }
   .gb-xxl-5 > *,
-  .py-xxl-5 > * {
+  .gy-xxl-5 > * {
     padding-bottom: 1.25rem;
   }
   .gl-xxl-5,
@@ -5713,7 +5860,7 @@ select.input-lg[multiple] option {
   }
   .gl-xxl-5 > *,
   .gx-xxl-5 > * {
-    padding-bottom: 1.25rem;
+    padding-left: 1.25rem;
   }
 }
 .text-left {
@@ -5991,6 +6138,21 @@ select.input-lg[multiple] option {
 .text-muted {
   color: #898989;
 }
+.text-body {
+  color: #121212 !important;
+}
+.text-black-50 {
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+.text-white-50 {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+.bg-transparent {
+  background-color: transparent !important;
+}
+.bg-gradient {
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0)) !important;
+}
 .d-inline {
   display: inline !important;
 }
@@ -6249,6 +6411,9 @@ select.input-lg[multiple] option {
 .justify-content-around {
   justify-content: space-around !important;
 }
+.justify-content-evenly {
+  justify-content: space-evenly !important;
+}
 .align-items-start {
   align-items: flex-start !important;
 }
@@ -6319,19 +6484,19 @@ select.input-lg[multiple] option {
   order: 0 !important;
 }
 .order-1 {
-  order: 0 !important;
+  order: 1 !important;
 }
 .order-2 {
-  order: 0 !important;
+  order: 2 !important;
 }
 .order-3 {
-  order: 0 !important;
+  order: 3 !important;
 }
 .order-4 {
-  order: 0 !important;
+  order: 4 !important;
 }
 .order-5 {
-  order: 0 !important;
+  order: 5 !important;
 }
 .order-first {
   order: -1 !important;
@@ -6375,6 +6540,9 @@ select.input-lg[multiple] option {
   }
   .justify-content-sm-around {
     justify-content: space-around !important;
+  }
+  .justify-content-sm-evenly {
+    justify-content: space-evenly !important;
   }
   .align-items-sm-start {
     align-items: flex-start !important;
@@ -6446,19 +6614,19 @@ select.input-lg[multiple] option {
     order: 0 !important;
   }
   .order-sm-1 {
-    order: 0 !important;
+    order: 1 !important;
   }
   .order-sm-2 {
-    order: 0 !important;
+    order: 2 !important;
   }
   .order-sm-3 {
-    order: 0 !important;
+    order: 3 !important;
   }
   .order-sm-4 {
-    order: 0 !important;
+    order: 4 !important;
   }
   .order-sm-5 {
-    order: 0 !important;
+    order: 5 !important;
   }
   .order-sm-first {
     order: -1 !important;
@@ -6503,6 +6671,9 @@ select.input-lg[multiple] option {
   }
   .justify-content-md-around {
     justify-content: space-around !important;
+  }
+  .justify-content-md-evenly {
+    justify-content: space-evenly !important;
   }
   .align-items-md-start {
     align-items: flex-start !important;
@@ -6574,19 +6745,19 @@ select.input-lg[multiple] option {
     order: 0 !important;
   }
   .order-md-1 {
-    order: 0 !important;
+    order: 1 !important;
   }
   .order-md-2 {
-    order: 0 !important;
+    order: 2 !important;
   }
   .order-md-3 {
-    order: 0 !important;
+    order: 3 !important;
   }
   .order-md-4 {
-    order: 0 !important;
+    order: 4 !important;
   }
   .order-md-5 {
-    order: 0 !important;
+    order: 5 !important;
   }
   .order-md-first {
     order: -1 !important;
@@ -6631,6 +6802,9 @@ select.input-lg[multiple] option {
   }
   .justify-content-lg-around {
     justify-content: space-around !important;
+  }
+  .justify-content-lg-evenly {
+    justify-content: space-evenly !important;
   }
   .align-items-lg-start {
     align-items: flex-start !important;
@@ -6702,19 +6876,19 @@ select.input-lg[multiple] option {
     order: 0 !important;
   }
   .order-lg-1 {
-    order: 0 !important;
+    order: 1 !important;
   }
   .order-lg-2 {
-    order: 0 !important;
+    order: 2 !important;
   }
   .order-lg-3 {
-    order: 0 !important;
+    order: 3 !important;
   }
   .order-lg-4 {
-    order: 0 !important;
+    order: 4 !important;
   }
   .order-lg-5 {
-    order: 0 !important;
+    order: 5 !important;
   }
   .order-lg-first {
     order: -1 !important;
@@ -6759,6 +6933,9 @@ select.input-lg[multiple] option {
   }
   .justify-content-xl-around {
     justify-content: space-around !important;
+  }
+  .justify-content-xl-evenly {
+    justify-content: space-evenly !important;
   }
   .align-items-xl-start {
     align-items: flex-start !important;
@@ -6830,19 +7007,19 @@ select.input-lg[multiple] option {
     order: 0 !important;
   }
   .order-xl-1 {
-    order: 0 !important;
+    order: 1 !important;
   }
   .order-xl-2 {
-    order: 0 !important;
+    order: 2 !important;
   }
   .order-xl-3 {
-    order: 0 !important;
+    order: 3 !important;
   }
   .order-xl-4 {
-    order: 0 !important;
+    order: 4 !important;
   }
   .order-xl-5 {
-    order: 0 !important;
+    order: 5 !important;
   }
   .order-xl-first {
     order: -1 !important;
@@ -6887,6 +7064,9 @@ select.input-lg[multiple] option {
   }
   .justify-content-xxl-around {
     justify-content: space-around !important;
+  }
+  .justify-content-xxl-evenly {
+    justify-content: space-evenly !important;
   }
   .align-items-xxl-start {
     align-items: flex-start !important;
@@ -6958,19 +7138,19 @@ select.input-lg[multiple] option {
     order: 0 !important;
   }
   .order-xxl-1 {
-    order: 0 !important;
+    order: 1 !important;
   }
   .order-xxl-2 {
-    order: 0 !important;
+    order: 2 !important;
   }
   .order-xxl-3 {
-    order: 0 !important;
+    order: 3 !important;
   }
   .order-xxl-4 {
-    order: 0 !important;
+    order: 4 !important;
   }
   .order-xxl-5 {
-    order: 0 !important;
+    order: 5 !important;
   }
   .order-xxl-first {
     order: -1 !important;
@@ -7128,40 +7308,40 @@ select.input-lg[multiple] option {
   position: sticky !important;
 }
 .top-0 {
-  top: 0 !important;
+  top: 0% !important;
 }
 .right-0 {
-  right: 0 !important;
+  right: 0% !important;
 }
 .bottom-0 {
-  bottom: 0 !important;
+  bottom: 0% !important;
 }
 .left-0 {
-  left: 0 !important;
+  left: 0% !important;
 }
-.top-1 {
-  top: 50 !important;
+.top-50 {
+  top: 50% !important;
 }
-.right-1 {
-  right: 50 !important;
+.right-50 {
+  right: 50% !important;
 }
-.bottom-1 {
-  bottom: 50 !important;
+.bottom-50 {
+  bottom: 50% !important;
 }
-.left-1 {
-  left: 50 !important;
+.left-50 {
+  left: 50% !important;
 }
-.top-2 {
-  top: 100 !important;
+.top-100 {
+  top: 100% !important;
 }
-.right-2 {
-  right: 100 !important;
+.right-100 {
+  right: 100% !important;
 }
-.bottom-2 {
-  bottom: 100 !important;
+.bottom-100 {
+  bottom: 100% !important;
 }
-.left-2 {
-  left: 100 !important;
+.left-100 {
+  left: 100% !important;
 }
 .translate-middle {
   transform: translateX(-50%) translateY(-50%) !important;
@@ -9966,6 +10146,12 @@ select.input-lg[multiple] option {
 }
 .text-reset {
   color: inherit !important;
+}
+.text-decoration-underline {
+  text-decoration: underline !important;
+}
+.text-decoration-line-through {
+  text-decoration: line-through !important;
 }
 .text-decoration-none {
   text-decoration: none !important;
