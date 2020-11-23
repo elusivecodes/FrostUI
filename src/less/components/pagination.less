@@ -8,13 +8,18 @@
 .page-link {
     position: relative;
     display: block;
-    .text-color(@secondary);
     background-color: @secondary;
     border: @border-size @border-style @border-color;
     transition: all @transition-time @transition-type;
     transition-property: color, background-color, box-shadow;
     padding: (@spacing / 2);
 
+    &,
+    &:hover,
+    &:focus {
+        .text-color(@secondary);
+        text-decoration: none;
+    }
 
     &:hover,
     &:focus,
@@ -24,14 +29,10 @@
     }
 
     &:hover {
-        .text-color(@secondary);
-        text-decoration: none;
         .bg-dark(@secondary);
     }
 
     &:focus {
-        .text-color(@secondary);
-        text-decoration: none;
         .bg-light(@secondary);
         outline: 0;
         box-shadow: @shadow-xs;

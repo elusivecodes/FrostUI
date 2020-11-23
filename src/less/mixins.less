@@ -34,13 +34,6 @@
     color: shade(@color, 75%);
 }
 
-.bg-dark(@color) {
-    background-color: shade(@color, 20%);
-}
-
-.bg-darker(@color) {
-    background-color: shade(@color, 40%);
-}
 .bg-light(@color) {
     background-color: tint(@color, 20%);
 }
@@ -51,6 +44,18 @@
 
 .bg-lightest(@color) {
     background-color: tint(@color, 60%);
+}
+
+.bg-dark(@color) {
+    @luma: unit(luma(@color));
+    @result: if((@luma < 55), 20%, 10%);
+    background-color: shade(@color, @result);
+}
+
+.bg-darker(@color) {
+    @luma: unit(luma(@color));
+    @result: if((@luma < 55), 40%, 20%);
+    background-color: shade(@color, @result);
 }
 
 .bg-fade(@color) {

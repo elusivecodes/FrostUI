@@ -1,6 +1,11 @@
 .mix-btn(@color) {
     background-color: @color;
-    .text-color(@color);
+
+    &,
+    &:hover,
+    &:focus {
+        .text-color(@color);
+    }
 
     .btn-check:checked + &,
     &.active,
@@ -13,20 +18,23 @@
     &.active:focus,
     &:hover {
         .bg-dark(@color);
-        .text-color(@color);
     }
 
     .btn-check:focus + &,
     &:focus {
         .bg-light(@color);
-        .text-color(@color);
     }
 }
 
 .mix-btn-outline(@color) {
     background-color: transparent;
-    color: @color;
     border-color: @color;
+
+    &,
+    &:hover,
+    &:focus {
+        color: @color;
+    }
 
     .btn-check:checked + &,
     &.active,
@@ -40,13 +48,11 @@
     .btn-check:checked:focus + &,
     &:hover {
         background-color: fade(@color, 15%);
-        color: @color;
     }
 
     .btn-check:focus + &,
     &:focus {
         background-color: fade(@color, 25%);
-        color: @color;
     }
 
     &.ripple > .ripple-effect {
@@ -59,9 +65,7 @@
     font-family: @font-family;
     font-weight: @font-weight;
     line-height: @line-height;
-    color: @text;
     text-align: center;
-    text-decoration: none;
     white-space: nowrap;
     vertical-align: middle;
     cursor: pointer;
@@ -73,8 +77,10 @@
     border-radius: @border-radius;
     transition: all @transition-time @transition-type;
     transition-property: color, background-color, box-shadow;
-    
-    &:hover {
+
+    &,
+    &:hover,
+    &:focus {
         color: @text;
         text-decoration: none;
     }
@@ -83,7 +89,6 @@
     &:focus {
         outline: 0;
         box-shadow: @shadow-sm;
-        text-decoration: none;
     }
 
     .btn-check:checked + &,
@@ -106,14 +111,18 @@
     border-color: transparent;
     text-decoration: none;
 
-    &:hover {
-        .text-light(@link);
+    &:hover,
+    &:focus {
         text-decoration: underline;
     }
 
+    &:hover {
+        .text-dark(@link);
+    }
+
     &:focus {
-        border-color: @border-color;
-        text-decoration: underline;
+        .text-light(@link);
+        box-shadow: none;
     }
 
     &:disabled,

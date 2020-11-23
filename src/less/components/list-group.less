@@ -63,22 +63,29 @@
 
 .list-group-item-action {
     width: 100%;
-    color: @text;
     text-align: inherit;
     transition: all @transition-time @transition-type;
     transition-property: color, background-color, box-shadow;
 
-    &:hover {
-        z-index: 1;
+    &,
+    &:hover,
+    &:focus {
         color: @text;
         text-decoration: none;
+    }
+
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+        z-index: 1;
+    }
+
+    &:hover {
         .bg-fade(@dark);
     }
 
     &:focus {
-        z-index: 1;
-        color: @text;
-        text-decoration: none;
         .bg-light(@light);
         outline: 0;
         box-shadow: @shadow-sm;

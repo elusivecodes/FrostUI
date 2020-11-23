@@ -174,14 +174,17 @@ a {
     background-color: transparent;
     text-decoration: none;
 
+    &:hover,
+    &:focus {
+        text-decoration: underline;
+    }
+
     &:hover {
         .text-dark(@link);
-        text-decoration: underline;
     }
 
     &:focus {
         .text-light(@link);
-        text-decoration: underline;
         outline: 0;
     }
 }

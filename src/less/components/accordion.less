@@ -5,13 +5,19 @@
     width: 100%;
     padding: @spacing (@spacing * 1.25);
     font-size: @font-size;
-    color: @text;
     background-color: transparent;
     border: @border-size @border-style @border-color;
     border-radius: 0;
     overflow-anchor: none;
     transition: all @transition-time @transition-type;
     transition-property: color, background-color, border-color, border-radius;
+
+    &,
+    &:hover,
+    &:focus {
+        color: @text;
+        text-decoration: none;
+    }
 
     &.collapsed {
         border-bottom-width: 0;
@@ -44,14 +50,10 @@
     }
 
     &:hover {
-        color: @text;
-        text-decoration: none;
         z-index: 2;
     }
 
     &:focus {
-        color: @text;
-        text-decoration: none;
         z-index: 3;
         outline: 0;
     }
