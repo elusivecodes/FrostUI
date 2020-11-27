@@ -1,16 +1,12 @@
 .mix-table(@color) {
     &,
-    & > th,
-    & > td {
-        .bg-lighter(@color);
+    & > * {
+        .bg-lightest(@color);
         .text-darker(@color);
     }
 
-    .table-hover &:hover {
-        > th,
-        > td {
-            .bg-lightest(@color);
-        }
+    .table-hover > :not(caption) > &:hover > * {
+        background-color: tint(@color, 70%);
     }
 }
 
@@ -26,77 +22,56 @@
     width: 100%;
     margin-bottom: @spacing;
 
-    th,
-    td {
+    > :not(caption) > * > * {
         border-bottom: @border-size @border-style @table-border-color;
         padding: (@spacing / 2) @spacing;
     }
 
-    th {
+    > :not(:last-child) > :last-child > * {
         border-bottom-width: (@border-size * 2);
     }
 }
 
-.table-bordered {
-    th,
-    td {
-        border: @border-size @border-style @table-border-color;
-    }
-
-    th {
-       border-bottom-width: (@border-size * 2);
-    }
+.table-bordered > :not(caption) > * > * {
+    border: @border-size @border-style @table-border-color;
 }
 
-.table-borderless {
-    tbody + tbody,
-    td,
-    th,
-    thead th {
-        border: 0;
-    }
+.table-borderless > :not(caption) > * > * {
+    border: 0;
 }
 
-.table-striped {
-    tr:nth-child(even) {
-        background-color: shade(@white, 5%);
-    }
-
-    &.table-dark tr:nth-child(even) {
-        background-color: tint(@dark, 5%);
-    }
+.table-striped > tbody > tr:nth-child(odd) {
+    .bg-fade(@dark);
 }
 
-.table-hover tbody tr {
-    &:hover {
-        color: @dark;
-        background-color: @hover-color;
-    }
+.table-hover > tbody > tr:hover {
+    color: @dark;
+    background-color: @hover-color;
 }
 
-.table-sm {
-    td,
-    th {
-        padding: @spacing / 3;
-    }
+.table-sm > :not(caption) > * > * {
+    padding: @spacing / 3;
 }
 
 .table-dark {
     color: @white;
     background-color: @dark;
 
-    &.table-hover tbody tr:hover {
+    &.table-striped > tbody > tr:nth-child(odd) {
+        .bg-fade(@white);
+    }
+
+    &.table-hover > tbody > tr:hover {
         color: @white;
         background-color: @hover-light-color;
     }
 
-    .table-hover tbody tr&:hover {
+    .table-hover > tbody > tr&:hover {
         color: @white;
         .bg-light(@dark);
     }
 
-    th,
-    td {
+    > :not(caption) > * > * {
         border-color: @table-border-light-color;
     }
 }

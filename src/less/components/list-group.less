@@ -1,16 +1,16 @@
 .mix-list-group-item(@color) {
-    .bg-lighter(@color);
+    .bg-lightest(@color);
     .text-dark(@color);
 
     &.list-group-item-action {
         &:hover {
-            .bg-light(@color);
+            .bg-lighter(@color);
             .text-darker(@color);
         }
 
         &:focus {
-            .bg-lightest(@color);
-            .text-darkest(@color);
+            background-color: tint(@color, 70%);
+            .text-darker(@color);
         }
     }
 }
@@ -86,7 +86,7 @@
     }
 
     &:focus {
-        .bg-light(@light);
+        .bg-fade(@white);
         outline: 0;
         box-shadow: @shadow-sm;
     }
