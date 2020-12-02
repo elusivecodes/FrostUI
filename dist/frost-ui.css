@@ -7284,6 +7284,9 @@ select.input-lg[multiple] option {
 .icon-calendar::before {
   content: '\1F4C5';
 }
+.icon-clock::before {
+  content: '\1f552';
+}
 .user-select-all {
   user-select: all !important;
 }
