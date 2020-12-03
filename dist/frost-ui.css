@@ -7281,6 +7281,12 @@ select.input-lg[multiple] option {
 .icon-download::before {
   content: '\2913';
 }
+.icon-copy::before {
+  content: '\1f4cb';
+}
+.icon-cut::before {
+  content: '\2702';
+}
 .icon-calendar::before {
   content: '\1F4C5';
 }
