@@ -1097,7 +1097,7 @@
     });
 
     /**
-     * FrostDOM v2.0.0
+     * FrostDOM v2.0.1
      * https://github.com/elusivecodes/FrostDOM
      */
     (function(global, factory) {
