@@ -1830,7 +1830,6 @@
             );
 
             this._scrollParent = this.constructor.getScrollParent(this._node);
-            this._relativeParent = this.constructor.getRelativeParent(this._node);
 
             dom.setStyle(this._node, {
                 margin: 0,
@@ -1954,8 +1953,9 @@
             };
 
             // offset for relative parent
-            const relativeBox = this._relativeParent ?
-                dom.rect(this._relativeParent, true) :
+            const _relativeParent = this.constructor.getRelativeParent(this._node);
+            const relativeBox = _relativeParent ?
+                dom.rect(_relativeParent, true) :
                 null;
 
             if (relativeBox) {
