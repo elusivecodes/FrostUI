@@ -1879,8 +1879,13 @@
             }
 
             // calculate boxes
-            const nodeBox = dom.rect(this._node, true);
             const referenceBox = dom.rect(this._settings.reference, true);
+
+            if (this._settings.fullWidth) {
+                dom.setStyle(this._node, 'width', referenceBox.width + 'px');
+            }
+
+            const nodeBox = dom.rect(this._node, true);
             const windowBox = this.constructor.windowContainer();
 
             // check object could be seen
@@ -2546,6 +2551,7 @@
         placement: 'bottom',
         position: 'center',
         fixed: false,
+        fullWidth: false,
         spacing: 0,
         minContact: false,
         useGpu: true

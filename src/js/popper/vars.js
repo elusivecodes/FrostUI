@@ -6,6 +6,7 @@ Popper.defaults = {
     placement: 'bottom',
     position: 'center',
     fixed: false,
+    fullWidth: false,
     spacing: 0,
     minContact: false,
     useGpu: true
