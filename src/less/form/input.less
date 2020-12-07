@@ -74,7 +74,8 @@
         background-color: shade(@light, 5%);
     }
 
-    &:focus {
+    &:focus,
+    .focus {
         background-color: shade(@light, 10%);
     }
 }
@@ -88,7 +89,8 @@
         border-color: @dark;
     }
 
-    &:focus {
+    &:focus,
+    .focus {
         border-color: @primary;
         box-shadow: 0 0 0 @border-size @primary;
     }
@@ -124,7 +126,8 @@
     transition: all @transition-time @transition-type;
     transition-property: transform, opacity;
 
-    .input-filled:focus ~ & {
+    .input-filled:focus ~ &,
+    .input-filled.focus ~ & {
         transform: scaleX(1);
         opacity: 1;
     }

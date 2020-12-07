@@ -31,7 +31,8 @@
         border-radius: 50%;
     }
 
-    &:focus {
+    &:focus,
+    &.focus {
         .border-light(@primary);
         outline: 0;
         box-shadow: 0 0 0 @border-size @primary;
@@ -41,7 +42,8 @@
         background-color: @primary;
         border-color: @primary;
 
-        &:focus {
+        &:focus,
+        &.focus {
             .bg-light(@primary);
         }
 
@@ -75,7 +77,8 @@
         background-position: left center;
         border-radius: 2rem;
 
-        &:focus {
+        &:focus,
+        &.focus {
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%238bbafe'/%3e%3c/svg%3e")
         }
 

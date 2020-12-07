@@ -1070,8 +1070,10 @@
         switch (e.key) {
             case 'Tab':
                 Dropdown.autoHide(e.target, true);
+                break;
             case 'Escape':
                 Dropdown.autoHide();
+                break;
         }
     });
 
