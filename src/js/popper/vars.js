@@ -3,12 +3,13 @@ Popper.defaults = {
     reference: null,
     container: null,
     arrow: null,
+    afterUpdate: null,
+    beforeUpdate: null,
     placement: 'bottom',
     position: 'center',
     fixed: false,
-    fullWidth: false,
     spacing: 0,
-    minContact: false,
+    minContact: null,
     useGpu: true
 };
 

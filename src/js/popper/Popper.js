@@ -11,6 +11,8 @@ class Popper {
      * @param {HTMLElement} settings.referencee The node to use as the reference.
      * @param {HTMLElement} [settings.container] The node to use as the container.
      * @param {HTMLElement} [settings.arrow] The node to use as the arrow.
+     * @param {function} [settings.beforeUpdate] The callback to run before updating the Popper.
+     * @param {function} [settings.afterUpdate] The callback to run after updating the Popper.
      * @param {string} [settings.placement=bottom] The placement of the node relative to the reference.
      * @param {string} [settings.position=center] The position of the node relative to the reference.
      * @param {Boolean} [settings.fixed=false] Whether the node position is fixed.
@@ -78,13 +80,13 @@ class Popper {
             return;
         }
 
-        // calculate boxes
-        const referenceBox = dom.rect(this._settings.reference, true);
-
-        if (this._settings.fullWidth) {
-            dom.setStyle(this._node, 'width', referenceBox.width + 'px');
+        if (this._settings.beforeUpdate) {
+            this._settings.beforeUpdate(this._node, this._settings.reference);
         }
 
+        // calculate boxes
+        const nodeBox = dom.rect(this._node, true);
+        const referenceBox = dom.rect(this._settings.reference, true);
         const windowBox = this.constructor.windowContainer();
 
         // check object could be seen
@@ -157,9 +159,9 @@ class Popper {
         };
 
         // offset for relative parent
-        const _relativeParent = this.constructor.getRelativeParent(this._node);
-        const relativeBox = _relativeParent ?
-            dom.rect(_relativeParent, true) :
+        const relativeParent = this.constructor.getRelativeParent(this._node);
+        const relativeBox = relativeParent ?
+            dom.rect(relativeParent, true) :
             null;
 
         if (relativeBox) {
@@ -203,6 +205,10 @@ class Popper {
         if (this._settings.arrow) {
             const newNodeBox = dom.rect(this._node, true);
             this._updateArrow(newNodeBox, referenceBox, placement, position);
+        }
+
+        if (this._settings.afterUpdate) {
+            this._settings.afterUpdate(this._node, this._settings.reference, placement, position);
         }
     }
 
