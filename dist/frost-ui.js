@@ -1848,6 +1848,14 @@
                 left: 0
             });
 
+            this._resetStyle = {};
+            if (this._settings.useGpu) {
+                this._resetStyle.transform = ''
+            } else {
+                this._resetStyle.marginLeft = ''
+                this._resetStyle.marginTop = '';
+            }
+
             PopperSet.add(this);
 
             if (this._scrollParent) {
@@ -1885,6 +1893,9 @@
             if (!dom.isConnected(this._node)) {
                 return;
             }
+
+            // reset position
+            dom.setStyle(this._node, this._resetStyle);
 
             if (this._settings.beforeUpdate) {
                 this._settings.beforeUpdate(this._node, this._settings.reference);
