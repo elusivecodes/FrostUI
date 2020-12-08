@@ -70,6 +70,9 @@ Object.assign(Tooltip.prototype, {
      */
     _render() {
         this._tooltip = dom.parseHTML(this._settings.template).shift();
+        if (this._settings.customClass) {
+            dom.addClass(this._tooltip, this._settings.customClass);
+        }
         this._arrow = dom.find('.tooltip-arrow', this._tooltip);
         this._tooltipInner = dom.find('.tooltip-inner', this._tooltip);
     },

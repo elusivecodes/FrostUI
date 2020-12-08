@@ -733,18 +733,14 @@ u {
 .breadcrumb {
   display: flex;
   flex-wrap: wrap;
-  padding: 0.5rem 1rem;
-  margin: 0 0 1rem;
+  margin: 0 0 1rem 0;
   list-style: none;
-  background-color: ghostwhite;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 0.2rem;
 }
 .breadcrumb-item {
   display: flex;
 }
 .breadcrumb-item.active {
-  color: darkslategray;
+  color: lightslategray;
 }
 .breadcrumb-item + .breadcrumb-item {
   padding-left: 0.5rem;
@@ -2912,8 +2908,10 @@ button.dropdown-item:focus {
   }
 }
 .toast {
-  max-width: 350px;
+  width: 350px;
+  max-width: 100%;
   font-size: 0.875rem;
+  pointer-events: auto;
   color: #121212;
   background-color: rgba(255, 255, 255, 0.85);
   background-clip: padding-box;
@@ -2931,6 +2929,14 @@ button.dropdown-item:focus {
 }
 .toast.hide {
   display: none;
+}
+.toast-container {
+  width: max-content;
+  max-width: 100%;
+  pointer-events: none;
+}
+.toast-container > :not(:last-child) {
+  margin-bottom: 0.75rem;
 }
 .toast-header {
   display: flex;
@@ -5894,13 +5900,13 @@ select.input-lg[multiple] option {
     padding-left: 1.25rem;
   }
 }
-.text-left {
+.text-start {
   text-align: left !important;
 }
 .text-center {
   text-align: center !important;
 }
-.text-right {
+.text-end {
   text-align: right !important;
 }
 .text-justify {
@@ -5925,13 +5931,13 @@ select.input-lg[multiple] option {
   vertical-align: text-bottom !important;
 }
 @media (min-width: 576px) {
-  .text-sm-left {
+  .text-sm-start {
     text-align: left !important;
   }
   .text-sm-center {
     text-align: center !important;
   }
-  .text-sm-right {
+  .text-sm-end {
     text-align: right !important;
   }
   .text-sm-justify {
@@ -5939,13 +5945,13 @@ select.input-lg[multiple] option {
   }
 }
 @media (min-width: 768px) {
-  .text-md-left {
+  .text-md-start {
     text-align: left !important;
   }
   .text-md-center {
     text-align: center !important;
   }
-  .text-md-right {
+  .text-md-end {
     text-align: right !important;
   }
   .text-md-justify {
@@ -5953,13 +5959,13 @@ select.input-lg[multiple] option {
   }
 }
 @media (min-width: 992px) {
-  .text-lg-left {
+  .text-lg-start {
     text-align: left !important;
   }
   .text-lg-center {
     text-align: center !important;
   }
-  .text-lg-right {
+  .text-lg-end {
     text-align: right !important;
   }
   .text-lg-justify {
@@ -5967,13 +5973,13 @@ select.input-lg[multiple] option {
   }
 }
 @media (min-width: 1200px) {
-  .text-xl-left {
+  .text-xl-start {
     text-align: left !important;
   }
   .text-xl-center {
     text-align: center !important;
   }
-  .text-xl-right {
+  .text-xl-end {
     text-align: right !important;
   }
   .text-xl-justify {
@@ -5981,13 +5987,13 @@ select.input-lg[multiple] option {
   }
 }
 @media (min-width: 1400px) {
-  .text-xxl-left {
+  .text-xxl-start {
     text-align: left !important;
   }
   .text-xxl-center {
     text-align: center !important;
   }
-  .text-xxl-right {
+  .text-xxl-end {
     text-align: right !important;
   }
   .text-xxl-justify {
@@ -6000,13 +6006,13 @@ select.input-lg[multiple] option {
 .border-top {
   border-top: 1px solid rgba(0, 0, 0, 0.15) !important;
 }
-.border-right {
+.border-end {
   border-right: 1px solid rgba(0, 0, 0, 0.15) !important;
 }
 .border-bottom {
   border-bottom: 1px solid rgba(0, 0, 0, 0.15) !important;
 }
-.border-left {
+.border-start {
   border-left: 1px solid rgba(0, 0, 0, 0.15) !important;
 }
 .border-0 {
@@ -6030,13 +6036,13 @@ select.input-lg[multiple] option {
 .border-top-0 {
   border-top: 0 !important;
 }
-.border-right-0 {
+.border-start-0 {
   border-right: 0 !important;
 }
 .border-bottom-0 {
   border-bottom: 0 !important;
 }
-.border-left-0 {
+.border-end-0 {
   border-left: 0 !important;
 }
 .rounded {
@@ -6046,7 +6052,7 @@ select.input-lg[multiple] option {
   border-top-left-radius: 0.2rem !important;
   border-top-right-radius: 0.2rem !important;
 }
-.rounded-right {
+.rounded-end {
   border-top-right-radius: 0.2rem !important;
   border-bottom-right-radius: 0.2rem !important;
 }
@@ -6054,7 +6060,7 @@ select.input-lg[multiple] option {
   border-bottom-left-radius: 0.2rem !important;
   border-bottom-right-radius: 0.2rem !important;
 }
-.rounded-left {
+.rounded-start {
   border-top-left-radius: 0.2rem !important;
   border-bottom-left-radius: 0.2rem !important;
 }
@@ -7190,20 +7196,20 @@ select.input-lg[multiple] option {
     order: 6 !important;
   }
 }
-.float-left {
+.float-start {
   float: left !important;
 }
-.float-right {
+.float-end {
   float: right !important;
 }
 .float-none {
   float: none !important;
 }
 @media (min-width: 576px) {
-  .float-sm-left {
+  .float-sm-start {
     float: left !important;
   }
-  .float-sm-right {
+  .float-sm-end {
     float: right !important;
   }
   .float-sm-none {
@@ -7211,10 +7217,10 @@ select.input-lg[multiple] option {
   }
 }
 @media (min-width: 768px) {
-  .float-md-left {
+  .float-md-start {
     float: left !important;
   }
-  .float-md-right {
+  .float-md-end {
     float: right !important;
   }
   .float-md-none {
@@ -7222,10 +7228,10 @@ select.input-lg[multiple] option {
   }
 }
 @media (min-width: 992px) {
-  .float-lg-left {
+  .float-lg-start {
     float: left !important;
   }
-  .float-lg-right {
+  .float-lg-end {
     float: right !important;
   }
   .float-lg-none {
@@ -7233,10 +7239,10 @@ select.input-lg[multiple] option {
   }
 }
 @media (min-width: 1200px) {
-  .float-xl-left {
+  .float-xl-start {
     float: left !important;
   }
-  .float-xl-right {
+  .float-xl-end {
     float: right !important;
   }
   .float-xl-none {
@@ -7244,10 +7250,10 @@ select.input-lg[multiple] option {
   }
 }
 @media (min-width: 1400px) {
-  .float-xxl-left {
+  .float-xxl-start {
     float: left !important;
   }
-  .float-xxl-right {
+  .float-xxl-end {
     float: right !important;
   }
   .float-xxl-none {
@@ -7350,37 +7356,37 @@ select.input-lg[multiple] option {
 .top-0 {
   top: 0% !important;
 }
-.right-0 {
+.end-0 {
   right: 0% !important;
 }
 .bottom-0 {
   bottom: 0% !important;
 }
-.left-0 {
+.start-0 {
   left: 0% !important;
 }
 .top-50 {
   top: 50% !important;
 }
-.right-50 {
+.end-50 {
   right: 50% !important;
 }
 .bottom-50 {
   bottom: 50% !important;
 }
-.left-50 {
+.start-50 {
   left: 50% !important;
 }
 .top-100 {
   top: 100% !important;
 }
-.right-100 {
+.end-100 {
   right: 100% !important;
 }
 .bottom-100 {
   bottom: 100% !important;
 }
-.left-100 {
+.start-100 {
   left: 100% !important;
 }
 .translate-middle {
@@ -7453,7 +7459,7 @@ select.input-lg[multiple] option {
 .my-auto {
   margin-top: auto !important;
 }
-.mr-auto,
+.me-auto,
 .mx-auto {
   margin-right: auto !important;
 }
@@ -7461,7 +7467,7 @@ select.input-lg[multiple] option {
 .my-auto {
   margin-bottom: auto !important;
 }
-.ml-auto,
+.ms-auto,
 .mx-auto {
   margin-left: auto !important;
 }
@@ -7472,7 +7478,7 @@ select.input-lg[multiple] option {
 .py-0 {
   padding-top: 0rem !important;
 }
-.pr-0,
+.pe-0,
 .px-0 {
   padding-right: 0rem !important;
 }
@@ -7480,7 +7486,7 @@ select.input-lg[multiple] option {
 .py-0 {
   padding-bottom: 0rem !important;
 }
-.pl-0,
+.ps-0,
 .px-0 {
   padding-left: 0rem !important;
 }
@@ -7491,7 +7497,7 @@ select.input-lg[multiple] option {
 .my-0 {
   margin-top: 0rem !important;
 }
-.mr-0,
+.me-0,
 .mx-0 {
   margin-right: 0rem !important;
 }
@@ -7499,7 +7505,7 @@ select.input-lg[multiple] option {
 .my-0 {
   margin-bottom: 0rem !important;
 }
-.ml-0,
+.ms-0,
 .mx-0 {
   margin-left: 0rem !important;
 }
@@ -7510,7 +7516,7 @@ select.input-lg[multiple] option {
 .my-n0 {
   margin-top: 0rem !important;
 }
-.mr-n0,
+.me-n0,
 .mx-n0 {
   margin-right: 0rem !important;
 }
@@ -7518,7 +7524,7 @@ select.input-lg[multiple] option {
 .my-n0 {
   margin-bottom: 0rem !important;
 }
-.ml-n0,
+.ms-n0,
 .mx-n0 {
   margin-left: 0rem !important;
 }
@@ -7532,7 +7538,7 @@ select.input-lg[multiple] option {
 .py-1 {
   padding-top: 0.25rem !important;
 }
-.pr-1,
+.pe-1,
 .px-1 {
   padding-right: 0.25rem !important;
 }
@@ -7540,7 +7546,7 @@ select.input-lg[multiple] option {
 .py-1 {
   padding-bottom: 0.25rem !important;
 }
-.pl-1,
+.ps-1,
 .px-1 {
   padding-left: 0.25rem !important;
 }
@@ -7551,7 +7557,7 @@ select.input-lg[multiple] option {
 .my-1 {
   margin-top: 0.25rem !important;
 }
-.mr-1,
+.me-1,
 .mx-1 {
   margin-right: 0.25rem !important;
 }
@@ -7559,7 +7565,7 @@ select.input-lg[multiple] option {
 .my-1 {
   margin-bottom: 0.25rem !important;
 }
-.ml-1,
+.ms-1,
 .mx-1 {
   margin-left: 0.25rem !important;
 }
@@ -7570,7 +7576,7 @@ select.input-lg[multiple] option {
 .my-n1 {
   margin-top: -0.25rem !important;
 }
-.mr-n1,
+.me-n1,
 .mx-n1 {
   margin-right: -0.25rem !important;
 }
@@ -7578,7 +7584,7 @@ select.input-lg[multiple] option {
 .my-n1 {
   margin-bottom: -0.25rem !important;
 }
-.ml-n1,
+.ms-n1,
 .mx-n1 {
   margin-left: -0.25rem !important;
 }
@@ -7592,7 +7598,7 @@ select.input-lg[multiple] option {
 .py-2 {
   padding-top: 0.5rem !important;
 }
-.pr-2,
+.pe-2,
 .px-2 {
   padding-right: 0.5rem !important;
 }
@@ -7600,7 +7606,7 @@ select.input-lg[multiple] option {
 .py-2 {
   padding-bottom: 0.5rem !important;
 }
-.pl-2,
+.ps-2,
 .px-2 {
   padding-left: 0.5rem !important;
 }
@@ -7611,7 +7617,7 @@ select.input-lg[multiple] option {
 .my-2 {
   margin-top: 0.5rem !important;
 }
-.mr-2,
+.me-2,
 .mx-2 {
   margin-right: 0.5rem !important;
 }
@@ -7619,7 +7625,7 @@ select.input-lg[multiple] option {
 .my-2 {
   margin-bottom: 0.5rem !important;
 }
-.ml-2,
+.ms-2,
 .mx-2 {
   margin-left: 0.5rem !important;
 }
@@ -7630,7 +7636,7 @@ select.input-lg[multiple] option {
 .my-n2 {
   margin-top: -0.5rem !important;
 }
-.mr-n2,
+.me-n2,
 .mx-n2 {
   margin-right: -0.5rem !important;
 }
@@ -7638,7 +7644,7 @@ select.input-lg[multiple] option {
 .my-n2 {
   margin-bottom: -0.5rem !important;
 }
-.ml-n2,
+.ms-n2,
 .mx-n2 {
   margin-left: -0.5rem !important;
 }
@@ -7652,7 +7658,7 @@ select.input-lg[multiple] option {
 .py-3 {
   padding-top: 0.75rem !important;
 }
-.pr-3,
+.pe-3,
 .px-3 {
   padding-right: 0.75rem !important;
 }
@@ -7660,7 +7666,7 @@ select.input-lg[multiple] option {
 .py-3 {
   padding-bottom: 0.75rem !important;
 }
-.pl-3,
+.ps-3,
 .px-3 {
   padding-left: 0.75rem !important;
 }
@@ -7671,7 +7677,7 @@ select.input-lg[multiple] option {
 .my-3 {
   margin-top: 0.75rem !important;
 }
-.mr-3,
+.me-3,
 .mx-3 {
   margin-right: 0.75rem !important;
 }
@@ -7679,7 +7685,7 @@ select.input-lg[multiple] option {
 .my-3 {
   margin-bottom: 0.75rem !important;
 }
-.ml-3,
+.ms-3,
 .mx-3 {
   margin-left: 0.75rem !important;
 }
@@ -7690,7 +7696,7 @@ select.input-lg[multiple] option {
 .my-n3 {
   margin-top: -0.75rem !important;
 }
-.mr-n3,
+.me-n3,
 .mx-n3 {
   margin-right: -0.75rem !important;
 }
@@ -7698,7 +7704,7 @@ select.input-lg[multiple] option {
 .my-n3 {
   margin-bottom: -0.75rem !important;
 }
-.ml-n3,
+.ms-n3,
 .mx-n3 {
   margin-left: -0.75rem !important;
 }
@@ -7712,7 +7718,7 @@ select.input-lg[multiple] option {
 .py-4 {
   padding-top: 1rem !important;
 }
-.pr-4,
+.pe-4,
 .px-4 {
   padding-right: 1rem !important;
 }
@@ -7720,7 +7726,7 @@ select.input-lg[multiple] option {
 .py-4 {
   padding-bottom: 1rem !important;
 }
-.pl-4,
+.ps-4,
 .px-4 {
   padding-left: 1rem !important;
 }
@@ -7731,7 +7737,7 @@ select.input-lg[multiple] option {
 .my-4 {
   margin-top: 1rem !important;
 }
-.mr-4,
+.me-4,
 .mx-4 {
   margin-right: 1rem !important;
 }
@@ -7739,7 +7745,7 @@ select.input-lg[multiple] option {
 .my-4 {
   margin-bottom: 1rem !important;
 }
-.ml-4,
+.ms-4,
 .mx-4 {
   margin-left: 1rem !important;
 }
@@ -7750,7 +7756,7 @@ select.input-lg[multiple] option {
 .my-n4 {
   margin-top: -1rem !important;
 }
-.mr-n4,
+.me-n4,
 .mx-n4 {
   margin-right: -1rem !important;
 }
@@ -7758,7 +7764,7 @@ select.input-lg[multiple] option {
 .my-n4 {
   margin-bottom: -1rem !important;
 }
-.ml-n4,
+.ms-n4,
 .mx-n4 {
   margin-left: -1rem !important;
 }
@@ -7772,7 +7778,7 @@ select.input-lg[multiple] option {
 .py-5 {
   padding-top: 1.25rem !important;
 }
-.pr-5,
+.pe-5,
 .px-5 {
   padding-right: 1.25rem !important;
 }
@@ -7780,7 +7786,7 @@ select.input-lg[multiple] option {
 .py-5 {
   padding-bottom: 1.25rem !important;
 }
-.pl-5,
+.ps-5,
 .px-5 {
   padding-left: 1.25rem !important;
 }
@@ -7791,7 +7797,7 @@ select.input-lg[multiple] option {
 .my-5 {
   margin-top: 1.25rem !important;
 }
-.mr-5,
+.me-5,
 .mx-5 {
   margin-right: 1.25rem !important;
 }
@@ -7799,7 +7805,7 @@ select.input-lg[multiple] option {
 .my-5 {
   margin-bottom: 1.25rem !important;
 }
-.ml-5,
+.ms-5,
 .mx-5 {
   margin-left: 1.25rem !important;
 }
@@ -7810,7 +7816,7 @@ select.input-lg[multiple] option {
 .my-n5 {
   margin-top: -1.25rem !important;
 }
-.mr-n5,
+.me-n5,
 .mx-n5 {
   margin-right: -1.25rem !important;
 }
@@ -7818,7 +7824,7 @@ select.input-lg[multiple] option {
 .my-n5 {
   margin-bottom: -1.25rem !important;
 }
-.ml-n5,
+.ms-n5,
 .mx-n5 {
   margin-left: -1.25rem !important;
 }
@@ -7833,7 +7839,7 @@ select.input-lg[multiple] option {
   .my-sm-auto {
     margin-top: auto !important;
   }
-  .mr-sm-auto,
+  .me-sm-auto,
   .mx-sm-auto {
     margin-right: auto !important;
   }
@@ -7841,7 +7847,7 @@ select.input-lg[multiple] option {
   .my-sm-auto {
     margin-bottom: auto !important;
   }
-  .ml-sm-auto,
+  .ms-sm-auto,
   .mx-sm-auto {
     margin-left: auto !important;
   }
@@ -7852,7 +7858,7 @@ select.input-lg[multiple] option {
   .py-sm-0 {
     padding-top: 0rem !important;
   }
-  .pr-sm-0,
+  .pe-sm-0,
   .px-sm-0 {
     padding-right: 0rem !important;
   }
@@ -7860,7 +7866,7 @@ select.input-lg[multiple] option {
   .py-sm-0 {
     padding-bottom: 0rem !important;
   }
-  .pl-sm-0,
+  .ps-sm-0,
   .px-sm-0 {
     padding-left: 0rem !important;
   }
@@ -7871,7 +7877,7 @@ select.input-lg[multiple] option {
   .my-sm-0 {
     margin-top: 0rem !important;
   }
-  .mr-sm-0,
+  .me-sm-0,
   .mx-sm-0 {
     margin-right: 0rem !important;
   }
@@ -7879,7 +7885,7 @@ select.input-lg[multiple] option {
   .my-sm-0 {
     margin-bottom: 0rem !important;
   }
-  .ml-sm-0,
+  .ms-sm-0,
   .mx-sm-0 {
     margin-left: 0rem !important;
   }
@@ -7890,7 +7896,7 @@ select.input-lg[multiple] option {
   .my-sm-n0 {
     margin-top: 0rem !important;
   }
-  .mr-sm-n0,
+  .me-sm-n0,
   .mx-sm-n0 {
     margin-right: 0rem !important;
   }
@@ -7898,7 +7904,7 @@ select.input-lg[multiple] option {
   .my-sm-n0 {
     margin-bottom: 0rem !important;
   }
-  .ml-sm-n0,
+  .ms-sm-n0,
   .mx-sm-n0 {
     margin-left: 0rem !important;
   }
@@ -7912,7 +7918,7 @@ select.input-lg[multiple] option {
   .py-sm-1 {
     padding-top: 0.25rem !important;
   }
-  .pr-sm-1,
+  .pe-sm-1,
   .px-sm-1 {
     padding-right: 0.25rem !important;
   }
@@ -7920,7 +7926,7 @@ select.input-lg[multiple] option {
   .py-sm-1 {
     padding-bottom: 0.25rem !important;
   }
-  .pl-sm-1,
+  .ps-sm-1,
   .px-sm-1 {
     padding-left: 0.25rem !important;
   }
@@ -7931,7 +7937,7 @@ select.input-lg[multiple] option {
   .my-sm-1 {
     margin-top: 0.25rem !important;
   }
-  .mr-sm-1,
+  .me-sm-1,
   .mx-sm-1 {
     margin-right: 0.25rem !important;
   }
@@ -7939,7 +7945,7 @@ select.input-lg[multiple] option {
   .my-sm-1 {
     margin-bottom: 0.25rem !important;
   }
-  .ml-sm-1,
+  .ms-sm-1,
   .mx-sm-1 {
     margin-left: 0.25rem !important;
   }
@@ -7950,7 +7956,7 @@ select.input-lg[multiple] option {
   .my-sm-n1 {
     margin-top: -0.25rem !important;
   }
-  .mr-sm-n1,
+  .me-sm-n1,
   .mx-sm-n1 {
     margin-right: -0.25rem !important;
   }
@@ -7958,7 +7964,7 @@ select.input-lg[multiple] option {
   .my-sm-n1 {
     margin-bottom: -0.25rem !important;
   }
-  .ml-sm-n1,
+  .ms-sm-n1,
   .mx-sm-n1 {
     margin-left: -0.25rem !important;
   }
@@ -7972,7 +7978,7 @@ select.input-lg[multiple] option {
   .py-sm-2 {
     padding-top: 0.5rem !important;
   }
-  .pr-sm-2,
+  .pe-sm-2,
   .px-sm-2 {
     padding-right: 0.5rem !important;
   }
@@ -7980,7 +7986,7 @@ select.input-lg[multiple] option {
   .py-sm-2 {
     padding-bottom: 0.5rem !important;
   }
-  .pl-sm-2,
+  .ps-sm-2,
   .px-sm-2 {
     padding-left: 0.5rem !important;
   }
@@ -7991,7 +7997,7 @@ select.input-lg[multiple] option {
   .my-sm-2 {
     margin-top: 0.5rem !important;
   }
-  .mr-sm-2,
+  .me-sm-2,
   .mx-sm-2 {
     margin-right: 0.5rem !important;
   }
@@ -7999,7 +8005,7 @@ select.input-lg[multiple] option {
   .my-sm-2 {
     margin-bottom: 0.5rem !important;
   }
-  .ml-sm-2,
+  .ms-sm-2,
   .mx-sm-2 {
     margin-left: 0.5rem !important;
   }
@@ -8010,7 +8016,7 @@ select.input-lg[multiple] option {
   .my-sm-n2 {
     margin-top: -0.5rem !important;
   }
-  .mr-sm-n2,
+  .me-sm-n2,
   .mx-sm-n2 {
     margin-right: -0.5rem !important;
   }
@@ -8018,7 +8024,7 @@ select.input-lg[multiple] option {
   .my-sm-n2 {
     margin-bottom: -0.5rem !important;
   }
-  .ml-sm-n2,
+  .ms-sm-n2,
   .mx-sm-n2 {
     margin-left: -0.5rem !important;
   }
@@ -8032,7 +8038,7 @@ select.input-lg[multiple] option {
   .py-sm-3 {
     padding-top: 0.75rem !important;
   }
-  .pr-sm-3,
+  .pe-sm-3,
   .px-sm-3 {
     padding-right: 0.75rem !important;
   }
@@ -8040,7 +8046,7 @@ select.input-lg[multiple] option {
   .py-sm-3 {
     padding-bottom: 0.75rem !important;
   }
-  .pl-sm-3,
+  .ps-sm-3,
   .px-sm-3 {
     padding-left: 0.75rem !important;
   }
@@ -8051,7 +8057,7 @@ select.input-lg[multiple] option {
   .my-sm-3 {
     margin-top: 0.75rem !important;
   }
-  .mr-sm-3,
+  .me-sm-3,
   .mx-sm-3 {
     margin-right: 0.75rem !important;
   }
@@ -8059,7 +8065,7 @@ select.input-lg[multiple] option {
   .my-sm-3 {
     margin-bottom: 0.75rem !important;
   }
-  .ml-sm-3,
+  .ms-sm-3,
   .mx-sm-3 {
     margin-left: 0.75rem !important;
   }
@@ -8070,7 +8076,7 @@ select.input-lg[multiple] option {
   .my-sm-n3 {
     margin-top: -0.75rem !important;
   }
-  .mr-sm-n3,
+  .me-sm-n3,
   .mx-sm-n3 {
     margin-right: -0.75rem !important;
   }
@@ -8078,7 +8084,7 @@ select.input-lg[multiple] option {
   .my-sm-n3 {
     margin-bottom: -0.75rem !important;
   }
-  .ml-sm-n3,
+  .ms-sm-n3,
   .mx-sm-n3 {
     margin-left: -0.75rem !important;
   }
@@ -8092,7 +8098,7 @@ select.input-lg[multiple] option {
   .py-sm-4 {
     padding-top: 1rem !important;
   }
-  .pr-sm-4,
+  .pe-sm-4,
   .px-sm-4 {
     padding-right: 1rem !important;
   }
@@ -8100,7 +8106,7 @@ select.input-lg[multiple] option {
   .py-sm-4 {
     padding-bottom: 1rem !important;
   }
-  .pl-sm-4,
+  .ps-sm-4,
   .px-sm-4 {
     padding-left: 1rem !important;
   }
@@ -8111,7 +8117,7 @@ select.input-lg[multiple] option {
   .my-sm-4 {
     margin-top: 1rem !important;
   }
-  .mr-sm-4,
+  .me-sm-4,
   .mx-sm-4 {
     margin-right: 1rem !important;
   }
@@ -8119,7 +8125,7 @@ select.input-lg[multiple] option {
   .my-sm-4 {
     margin-bottom: 1rem !important;
   }
-  .ml-sm-4,
+  .ms-sm-4,
   .mx-sm-4 {
     margin-left: 1rem !important;
   }
@@ -8130,7 +8136,7 @@ select.input-lg[multiple] option {
   .my-sm-n4 {
     margin-top: -1rem !important;
   }
-  .mr-sm-n4,
+  .me-sm-n4,
   .mx-sm-n4 {
     margin-right: -1rem !important;
   }
@@ -8138,7 +8144,7 @@ select.input-lg[multiple] option {
   .my-sm-n4 {
     margin-bottom: -1rem !important;
   }
-  .ml-sm-n4,
+  .ms-sm-n4,
   .mx-sm-n4 {
     margin-left: -1rem !important;
   }
@@ -8152,7 +8158,7 @@ select.input-lg[multiple] option {
   .py-sm-5 {
     padding-top: 1.25rem !important;
   }
-  .pr-sm-5,
+  .pe-sm-5,
   .px-sm-5 {
     padding-right: 1.25rem !important;
   }
@@ -8160,7 +8166,7 @@ select.input-lg[multiple] option {
   .py-sm-5 {
     padding-bottom: 1.25rem !important;
   }
-  .pl-sm-5,
+  .ps-sm-5,
   .px-sm-5 {
     padding-left: 1.25rem !important;
   }
@@ -8171,7 +8177,7 @@ select.input-lg[multiple] option {
   .my-sm-5 {
     margin-top: 1.25rem !important;
   }
-  .mr-sm-5,
+  .me-sm-5,
   .mx-sm-5 {
     margin-right: 1.25rem !important;
   }
@@ -8179,7 +8185,7 @@ select.input-lg[multiple] option {
   .my-sm-5 {
     margin-bottom: 1.25rem !important;
   }
-  .ml-sm-5,
+  .ms-sm-5,
   .mx-sm-5 {
     margin-left: 1.25rem !important;
   }
@@ -8190,7 +8196,7 @@ select.input-lg[multiple] option {
   .my-sm-n5 {
     margin-top: -1.25rem !important;
   }
-  .mr-sm-n5,
+  .me-sm-n5,
   .mx-sm-n5 {
     margin-right: -1.25rem !important;
   }
@@ -8198,7 +8204,7 @@ select.input-lg[multiple] option {
   .my-sm-n5 {
     margin-bottom: -1.25rem !important;
   }
-  .ml-sm-n5,
+  .ms-sm-n5,
   .mx-sm-n5 {
     margin-left: -1.25rem !important;
   }
@@ -8214,7 +8220,7 @@ select.input-lg[multiple] option {
   .my-md-auto {
     margin-top: auto !important;
   }
-  .mr-md-auto,
+  .me-md-auto,
   .mx-md-auto {
     margin-right: auto !important;
   }
@@ -8222,7 +8228,7 @@ select.input-lg[multiple] option {
   .my-md-auto {
     margin-bottom: auto !important;
   }
-  .ml-md-auto,
+  .ms-md-auto,
   .mx-md-auto {
     margin-left: auto !important;
   }
@@ -8233,7 +8239,7 @@ select.input-lg[multiple] option {
   .py-md-0 {
     padding-top: 0rem !important;
   }
-  .pr-md-0,
+  .pe-md-0,
   .px-md-0 {
     padding-right: 0rem !important;
   }
@@ -8241,7 +8247,7 @@ select.input-lg[multiple] option {
   .py-md-0 {
     padding-bottom: 0rem !important;
   }
-  .pl-md-0,
+  .ps-md-0,
   .px-md-0 {
     padding-left: 0rem !important;
   }
@@ -8252,7 +8258,7 @@ select.input-lg[multiple] option {
   .my-md-0 {
     margin-top: 0rem !important;
   }
-  .mr-md-0,
+  .me-md-0,
   .mx-md-0 {
     margin-right: 0rem !important;
   }
@@ -8260,7 +8266,7 @@ select.input-lg[multiple] option {
   .my-md-0 {
     margin-bottom: 0rem !important;
   }
-  .ml-md-0,
+  .ms-md-0,
   .mx-md-0 {
     margin-left: 0rem !important;
   }
@@ -8271,7 +8277,7 @@ select.input-lg[multiple] option {
   .my-md-n0 {
     margin-top: 0rem !important;
   }
-  .mr-md-n0,
+  .me-md-n0,
   .mx-md-n0 {
     margin-right: 0rem !important;
   }
@@ -8279,7 +8285,7 @@ select.input-lg[multiple] option {
   .my-md-n0 {
     margin-bottom: 0rem !important;
   }
-  .ml-md-n0,
+  .ms-md-n0,
   .mx-md-n0 {
     margin-left: 0rem !important;
   }
@@ -8293,7 +8299,7 @@ select.input-lg[multiple] option {
   .py-md-1 {
     padding-top: 0.25rem !important;
   }
-  .pr-md-1,
+  .pe-md-1,
   .px-md-1 {
     padding-right: 0.25rem !important;
   }
@@ -8301,7 +8307,7 @@ select.input-lg[multiple] option {
   .py-md-1 {
     padding-bottom: 0.25rem !important;
   }
-  .pl-md-1,
+  .ps-md-1,
   .px-md-1 {
     padding-left: 0.25rem !important;
   }
@@ -8312,7 +8318,7 @@ select.input-lg[multiple] option {
   .my-md-1 {
     margin-top: 0.25rem !important;
   }
-  .mr-md-1,
+  .me-md-1,
   .mx-md-1 {
     margin-right: 0.25rem !important;
   }
@@ -8320,7 +8326,7 @@ select.input-lg[multiple] option {
   .my-md-1 {
     margin-bottom: 0.25rem !important;
   }
-  .ml-md-1,
+  .ms-md-1,
   .mx-md-1 {
     margin-left: 0.25rem !important;
   }
@@ -8331,7 +8337,7 @@ select.input-lg[multiple] option {
   .my-md-n1 {
     margin-top: -0.25rem !important;
   }
-  .mr-md-n1,
+  .me-md-n1,
   .mx-md-n1 {
     margin-right: -0.25rem !important;
   }
@@ -8339,7 +8345,7 @@ select.input-lg[multiple] option {
   .my-md-n1 {
     margin-bottom: -0.25rem !important;
   }
-  .ml-md-n1,
+  .ms-md-n1,
   .mx-md-n1 {
     margin-left: -0.25rem !important;
   }
@@ -8353,7 +8359,7 @@ select.input-lg[multiple] option {
   .py-md-2 {
     padding-top: 0.5rem !important;
   }
-  .pr-md-2,
+  .pe-md-2,
   .px-md-2 {
     padding-right: 0.5rem !important;
   }
@@ -8361,7 +8367,7 @@ select.input-lg[multiple] option {
   .py-md-2 {
     padding-bottom: 0.5rem !important;
   }
-  .pl-md-2,
+  .ps-md-2,
   .px-md-2 {
     padding-left: 0.5rem !important;
   }
@@ -8372,7 +8378,7 @@ select.input-lg[multiple] option {
   .my-md-2 {
     margin-top: 0.5rem !important;
   }
-  .mr-md-2,
+  .me-md-2,
   .mx-md-2 {
     margin-right: 0.5rem !important;
   }
@@ -8380,7 +8386,7 @@ select.input-lg[multiple] option {
   .my-md-2 {
     margin-bottom: 0.5rem !important;
   }
-  .ml-md-2,
+  .ms-md-2,
   .mx-md-2 {
     margin-left: 0.5rem !important;
   }
@@ -8391,7 +8397,7 @@ select.input-lg[multiple] option {
   .my-md-n2 {
     margin-top: -0.5rem !important;
   }
-  .mr-md-n2,
+  .me-md-n2,
   .mx-md-n2 {
     margin-right: -0.5rem !important;
   }
@@ -8399,7 +8405,7 @@ select.input-lg[multiple] option {
   .my-md-n2 {
     margin-bottom: -0.5rem !important;
   }
-  .ml-md-n2,
+  .ms-md-n2,
   .mx-md-n2 {
     margin-left: -0.5rem !important;
   }
@@ -8413,7 +8419,7 @@ select.input-lg[multiple] option {
   .py-md-3 {
     padding-top: 0.75rem !important;
   }
-  .pr-md-3,
+  .pe-md-3,
   .px-md-3 {
     padding-right: 0.75rem !important;
   }
@@ -8421,7 +8427,7 @@ select.input-lg[multiple] option {
   .py-md-3 {
     padding-bottom: 0.75rem !important;
   }
-  .pl-md-3,
+  .ps-md-3,
   .px-md-3 {
     padding-left: 0.75rem !important;
   }
@@ -8432,7 +8438,7 @@ select.input-lg[multiple] option {
   .my-md-3 {
     margin-top: 0.75rem !important;
   }
-  .mr-md-3,
+  .me-md-3,
   .mx-md-3 {
     margin-right: 0.75rem !important;
   }
@@ -8440,7 +8446,7 @@ select.input-lg[multiple] option {
   .my-md-3 {
     margin-bottom: 0.75rem !important;
   }
-  .ml-md-3,
+  .ms-md-3,
   .mx-md-3 {
     margin-left: 0.75rem !important;
   }
@@ -8451,7 +8457,7 @@ select.input-lg[multiple] option {
   .my-md-n3 {
     margin-top: -0.75rem !important;
   }
-  .mr-md-n3,
+  .me-md-n3,
   .mx-md-n3 {
     margin-right: -0.75rem !important;
   }
@@ -8459,7 +8465,7 @@ select.input-lg[multiple] option {
   .my-md-n3 {
     margin-bottom: -0.75rem !important;
   }
-  .ml-md-n3,
+  .ms-md-n3,
   .mx-md-n3 {
     margin-left: -0.75rem !important;
   }
@@ -8473,7 +8479,7 @@ select.input-lg[multiple] option {
   .py-md-4 {
     padding-top: 1rem !important;
   }
-  .pr-md-4,
+  .pe-md-4,
   .px-md-4 {
     padding-right: 1rem !important;
   }
@@ -8481,7 +8487,7 @@ select.input-lg[multiple] option {
   .py-md-4 {
     padding-bottom: 1rem !important;
   }
-  .pl-md-4,
+  .ps-md-4,
   .px-md-4 {
     padding-left: 1rem !important;
   }
@@ -8492,7 +8498,7 @@ select.input-lg[multiple] option {
   .my-md-4 {
     margin-top: 1rem !important;
   }
-  .mr-md-4,
+  .me-md-4,
   .mx-md-4 {
     margin-right: 1rem !important;
   }
@@ -8500,7 +8506,7 @@ select.input-lg[multiple] option {
   .my-md-4 {
     margin-bottom: 1rem !important;
   }
-  .ml-md-4,
+  .ms-md-4,
   .mx-md-4 {
     margin-left: 1rem !important;
   }
@@ -8511,7 +8517,7 @@ select.input-lg[multiple] option {
   .my-md-n4 {
     margin-top: -1rem !important;
   }
-  .mr-md-n4,
+  .me-md-n4,
   .mx-md-n4 {
     margin-right: -1rem !important;
   }
@@ -8519,7 +8525,7 @@ select.input-lg[multiple] option {
   .my-md-n4 {
     margin-bottom: -1rem !important;
   }
-  .ml-md-n4,
+  .ms-md-n4,
   .mx-md-n4 {
     margin-left: -1rem !important;
   }
@@ -8533,7 +8539,7 @@ select.input-lg[multiple] option {
   .py-md-5 {
     padding-top: 1.25rem !important;
   }
-  .pr-md-5,
+  .pe-md-5,
   .px-md-5 {
     padding-right: 1.25rem !important;
   }
@@ -8541,7 +8547,7 @@ select.input-lg[multiple] option {
   .py-md-5 {
     padding-bottom: 1.25rem !important;
   }
-  .pl-md-5,
+  .ps-md-5,
   .px-md-5 {
     padding-left: 1.25rem !important;
   }
@@ -8552,7 +8558,7 @@ select.input-lg[multiple] option {
   .my-md-5 {
     margin-top: 1.25rem !important;
   }
-  .mr-md-5,
+  .me-md-5,
   .mx-md-5 {
     margin-right: 1.25rem !important;
   }
@@ -8560,7 +8566,7 @@ select.input-lg[multiple] option {
   .my-md-5 {
     margin-bottom: 1.25rem !important;
   }
-  .ml-md-5,
+  .ms-md-5,
   .mx-md-5 {
     margin-left: 1.25rem !important;
   }
@@ -8571,7 +8577,7 @@ select.input-lg[multiple] option {
   .my-md-n5 {
     margin-top: -1.25rem !important;
   }
-  .mr-md-n5,
+  .me-md-n5,
   .mx-md-n5 {
     margin-right: -1.25rem !important;
   }
@@ -8579,7 +8585,7 @@ select.input-lg[multiple] option {
   .my-md-n5 {
     margin-bottom: -1.25rem !important;
   }
-  .ml-md-n5,
+  .ms-md-n5,
   .mx-md-n5 {
     margin-left: -1.25rem !important;
   }
@@ -8595,7 +8601,7 @@ select.input-lg[multiple] option {
   .my-lg-auto {
     margin-top: auto !important;
   }
-  .mr-lg-auto,
+  .me-lg-auto,
   .mx-lg-auto {
     margin-right: auto !important;
   }
@@ -8603,7 +8609,7 @@ select.input-lg[multiple] option {
   .my-lg-auto {
     margin-bottom: auto !important;
   }
-  .ml-lg-auto,
+  .ms-lg-auto,
   .mx-lg-auto {
     margin-left: auto !important;
   }
@@ -8614,7 +8620,7 @@ select.input-lg[multiple] option {
   .py-lg-0 {
     padding-top: 0rem !important;
   }
-  .pr-lg-0,
+  .pe-lg-0,
   .px-lg-0 {
     padding-right: 0rem !important;
   }
@@ -8622,7 +8628,7 @@ select.input-lg[multiple] option {
   .py-lg-0 {
     padding-bottom: 0rem !important;
   }
-  .pl-lg-0,
+  .ps-lg-0,
   .px-lg-0 {
     padding-left: 0rem !important;
   }
@@ -8633,7 +8639,7 @@ select.input-lg[multiple] option {
   .my-lg-0 {
     margin-top: 0rem !important;
   }
-  .mr-lg-0,
+  .me-lg-0,
   .mx-lg-0 {
     margin-right: 0rem !important;
   }
@@ -8641,7 +8647,7 @@ select.input-lg[multiple] option {
   .my-lg-0 {
     margin-bottom: 0rem !important;
   }
-  .ml-lg-0,
+  .ms-lg-0,
   .mx-lg-0 {
     margin-left: 0rem !important;
   }
@@ -8652,7 +8658,7 @@ select.input-lg[multiple] option {
   .my-lg-n0 {
     margin-top: 0rem !important;
   }
-  .mr-lg-n0,
+  .me-lg-n0,
   .mx-lg-n0 {
     margin-right: 0rem !important;
   }
@@ -8660,7 +8666,7 @@ select.input-lg[multiple] option {
   .my-lg-n0 {
     margin-bottom: 0rem !important;
   }
-  .ml-lg-n0,
+  .ms-lg-n0,
   .mx-lg-n0 {
     margin-left: 0rem !important;
   }
@@ -8674,7 +8680,7 @@ select.input-lg[multiple] option {
   .py-lg-1 {
     padding-top: 0.25rem !important;
   }
-  .pr-lg-1,
+  .pe-lg-1,
   .px-lg-1 {
     padding-right: 0.25rem !important;
   }
@@ -8682,7 +8688,7 @@ select.input-lg[multiple] option {
   .py-lg-1 {
     padding-bottom: 0.25rem !important;
   }
-  .pl-lg-1,
+  .ps-lg-1,
   .px-lg-1 {
     padding-left: 0.25rem !important;
   }
@@ -8693,7 +8699,7 @@ select.input-lg[multiple] option {
   .my-lg-1 {
     margin-top: 0.25rem !important;
   }
-  .mr-lg-1,
+  .me-lg-1,
   .mx-lg-1 {
     margin-right: 0.25rem !important;
   }
@@ -8701,7 +8707,7 @@ select.input-lg[multiple] option {
   .my-lg-1 {
     margin-bottom: 0.25rem !important;
   }
-  .ml-lg-1,
+  .ms-lg-1,
   .mx-lg-1 {
     margin-left: 0.25rem !important;
   }
@@ -8712,7 +8718,7 @@ select.input-lg[multiple] option {
   .my-lg-n1 {
     margin-top: -0.25rem !important;
   }
-  .mr-lg-n1,
+  .me-lg-n1,
   .mx-lg-n1 {
     margin-right: -0.25rem !important;
   }
@@ -8720,7 +8726,7 @@ select.input-lg[multiple] option {
   .my-lg-n1 {
     margin-bottom: -0.25rem !important;
   }
-  .ml-lg-n1,
+  .ms-lg-n1,
   .mx-lg-n1 {
     margin-left: -0.25rem !important;
   }
@@ -8734,7 +8740,7 @@ select.input-lg[multiple] option {
   .py-lg-2 {
     padding-top: 0.5rem !important;
   }
-  .pr-lg-2,
+  .pe-lg-2,
   .px-lg-2 {
     padding-right: 0.5rem !important;
   }
@@ -8742,7 +8748,7 @@ select.input-lg[multiple] option {
   .py-lg-2 {
     padding-bottom: 0.5rem !important;
   }
-  .pl-lg-2,
+  .ps-lg-2,
   .px-lg-2 {
     padding-left: 0.5rem !important;
   }
@@ -8753,7 +8759,7 @@ select.input-lg[multiple] option {
   .my-lg-2 {
     margin-top: 0.5rem !important;
   }
-  .mr-lg-2,
+  .me-lg-2,
   .mx-lg-2 {
     margin-right: 0.5rem !important;
   }
@@ -8761,7 +8767,7 @@ select.input-lg[multiple] option {
   .my-lg-2 {
     margin-bottom: 0.5rem !important;
   }
-  .ml-lg-2,
+  .ms-lg-2,
   .mx-lg-2 {
     margin-left: 0.5rem !important;
   }
@@ -8772,7 +8778,7 @@ select.input-lg[multiple] option {
   .my-lg-n2 {
     margin-top: -0.5rem !important;
   }
-  .mr-lg-n2,
+  .me-lg-n2,
   .mx-lg-n2 {
     margin-right: -0.5rem !important;
   }
@@ -8780,7 +8786,7 @@ select.input-lg[multiple] option {
   .my-lg-n2 {
     margin-bottom: -0.5rem !important;
   }
-  .ml-lg-n2,
+  .ms-lg-n2,
   .mx-lg-n2 {
     margin-left: -0.5rem !important;
   }
@@ -8794,7 +8800,7 @@ select.input-lg[multiple] option {
   .py-lg-3 {
     padding-top: 0.75rem !important;
   }
-  .pr-lg-3,
+  .pe-lg-3,
   .px-lg-3 {
     padding-right: 0.75rem !important;
   }
@@ -8802,7 +8808,7 @@ select.input-lg[multiple] option {
   .py-lg-3 {
     padding-bottom: 0.75rem !important;
   }
-  .pl-lg-3,
+  .ps-lg-3,
   .px-lg-3 {
     padding-left: 0.75rem !important;
   }
@@ -8813,7 +8819,7 @@ select.input-lg[multiple] option {
   .my-lg-3 {
     margin-top: 0.75rem !important;
   }
-  .mr-lg-3,
+  .me-lg-3,
   .mx-lg-3 {
     margin-right: 0.75rem !important;
   }
@@ -8821,7 +8827,7 @@ select.input-lg[multiple] option {
   .my-lg-3 {
     margin-bottom: 0.75rem !important;
   }
-  .ml-lg-3,
+  .ms-lg-3,
   .mx-lg-3 {
     margin-left: 0.75rem !important;
   }
@@ -8832,7 +8838,7 @@ select.input-lg[multiple] option {
   .my-lg-n3 {
     margin-top: -0.75rem !important;
   }
-  .mr-lg-n3,
+  .me-lg-n3,
   .mx-lg-n3 {
     margin-right: -0.75rem !important;
   }
@@ -8840,7 +8846,7 @@ select.input-lg[multiple] option {
   .my-lg-n3 {
     margin-bottom: -0.75rem !important;
   }
-  .ml-lg-n3,
+  .ms-lg-n3,
   .mx-lg-n3 {
     margin-left: -0.75rem !important;
   }
@@ -8854,7 +8860,7 @@ select.input-lg[multiple] option {
   .py-lg-4 {
     padding-top: 1rem !important;
   }
-  .pr-lg-4,
+  .pe-lg-4,
   .px-lg-4 {
     padding-right: 1rem !important;
   }
@@ -8862,7 +8868,7 @@ select.input-lg[multiple] option {
   .py-lg-4 {
     padding-bottom: 1rem !important;
   }
-  .pl-lg-4,
+  .ps-lg-4,
   .px-lg-4 {
     padding-left: 1rem !important;
   }
@@ -8873,7 +8879,7 @@ select.input-lg[multiple] option {
   .my-lg-4 {
     margin-top: 1rem !important;
   }
-  .mr-lg-4,
+  .me-lg-4,
   .mx-lg-4 {
     margin-right: 1rem !important;
   }
@@ -8881,7 +8887,7 @@ select.input-lg[multiple] option {
   .my-lg-4 {
     margin-bottom: 1rem !important;
   }
-  .ml-lg-4,
+  .ms-lg-4,
   .mx-lg-4 {
     margin-left: 1rem !important;
   }
@@ -8892,7 +8898,7 @@ select.input-lg[multiple] option {
   .my-lg-n4 {
     margin-top: -1rem !important;
   }
-  .mr-lg-n4,
+  .me-lg-n4,
   .mx-lg-n4 {
     margin-right: -1rem !important;
   }
@@ -8900,7 +8906,7 @@ select.input-lg[multiple] option {
   .my-lg-n4 {
     margin-bottom: -1rem !important;
   }
-  .ml-lg-n4,
+  .ms-lg-n4,
   .mx-lg-n4 {
     margin-left: -1rem !important;
   }
@@ -8914,7 +8920,7 @@ select.input-lg[multiple] option {
   .py-lg-5 {
     padding-top: 1.25rem !important;
   }
-  .pr-lg-5,
+  .pe-lg-5,
   .px-lg-5 {
     padding-right: 1.25rem !important;
   }
@@ -8922,7 +8928,7 @@ select.input-lg[multiple] option {
   .py-lg-5 {
     padding-bottom: 1.25rem !important;
   }
-  .pl-lg-5,
+  .ps-lg-5,
   .px-lg-5 {
     padding-left: 1.25rem !important;
   }
@@ -8933,7 +8939,7 @@ select.input-lg[multiple] option {
   .my-lg-5 {
     margin-top: 1.25rem !important;
   }
-  .mr-lg-5,
+  .me-lg-5,
   .mx-lg-5 {
     margin-right: 1.25rem !important;
   }
@@ -8941,7 +8947,7 @@ select.input-lg[multiple] option {
   .my-lg-5 {
     margin-bottom: 1.25rem !important;
   }
-  .ml-lg-5,
+  .ms-lg-5,
   .mx-lg-5 {
     margin-left: 1.25rem !important;
   }
@@ -8952,7 +8958,7 @@ select.input-lg[multiple] option {
   .my-lg-n5 {
     margin-top: -1.25rem !important;
   }
-  .mr-lg-n5,
+  .me-lg-n5,
   .mx-lg-n5 {
     margin-right: -1.25rem !important;
   }
@@ -8960,7 +8966,7 @@ select.input-lg[multiple] option {
   .my-lg-n5 {
     margin-bottom: -1.25rem !important;
   }
-  .ml-lg-n5,
+  .ms-lg-n5,
   .mx-lg-n5 {
     margin-left: -1.25rem !important;
   }
@@ -8976,7 +8982,7 @@ select.input-lg[multiple] option {
   .my-xl-auto {
     margin-top: auto !important;
   }
-  .mr-xl-auto,
+  .me-xl-auto,
   .mx-xl-auto {
     margin-right: auto !important;
   }
@@ -8984,7 +8990,7 @@ select.input-lg[multiple] option {
   .my-xl-auto {
     margin-bottom: auto !important;
   }
-  .ml-xl-auto,
+  .ms-xl-auto,
   .mx-xl-auto {
     margin-left: auto !important;
   }
@@ -8995,7 +9001,7 @@ select.input-lg[multiple] option {
   .py-xl-0 {
     padding-top: 0rem !important;
   }
-  .pr-xl-0,
+  .pe-xl-0,
   .px-xl-0 {
     padding-right: 0rem !important;
   }
@@ -9003,7 +9009,7 @@ select.input-lg[multiple] option {
   .py-xl-0 {
     padding-bottom: 0rem !important;
   }
-  .pl-xl-0,
+  .ps-xl-0,
   .px-xl-0 {
     padding-left: 0rem !important;
   }
@@ -9014,7 +9020,7 @@ select.input-lg[multiple] option {
   .my-xl-0 {
     margin-top: 0rem !important;
   }
-  .mr-xl-0,
+  .me-xl-0,
   .mx-xl-0 {
     margin-right: 0rem !important;
   }
@@ -9022,7 +9028,7 @@ select.input-lg[multiple] option {
   .my-xl-0 {
     margin-bottom: 0rem !important;
   }
-  .ml-xl-0,
+  .ms-xl-0,
   .mx-xl-0 {
     margin-left: 0rem !important;
   }
@@ -9033,7 +9039,7 @@ select.input-lg[multiple] option {
   .my-xl-n0 {
     margin-top: 0rem !important;
   }
-  .mr-xl-n0,
+  .me-xl-n0,
   .mx-xl-n0 {
     margin-right: 0rem !important;
   }
@@ -9041,7 +9047,7 @@ select.input-lg[multiple] option {
   .my-xl-n0 {
     margin-bottom: 0rem !important;
   }
-  .ml-xl-n0,
+  .ms-xl-n0,
   .mx-xl-n0 {
     margin-left: 0rem !important;
   }
@@ -9055,7 +9061,7 @@ select.input-lg[multiple] option {
   .py-xl-1 {
     padding-top: 0.25rem !important;
   }
-  .pr-xl-1,
+  .pe-xl-1,
   .px-xl-1 {
     padding-right: 0.25rem !important;
   }
@@ -9063,7 +9069,7 @@ select.input-lg[multiple] option {
   .py-xl-1 {
     padding-bottom: 0.25rem !important;
   }
-  .pl-xl-1,
+  .ps-xl-1,
   .px-xl-1 {
     padding-left: 0.25rem !important;
   }
@@ -9074,7 +9080,7 @@ select.input-lg[multiple] option {
   .my-xl-1 {
     margin-top: 0.25rem !important;
   }
-  .mr-xl-1,
+  .me-xl-1,
   .mx-xl-1 {
     margin-right: 0.25rem !important;
   }
@@ -9082,7 +9088,7 @@ select.input-lg[multiple] option {
   .my-xl-1 {
     margin-bottom: 0.25rem !important;
   }
-  .ml-xl-1,
+  .ms-xl-1,
   .mx-xl-1 {
     margin-left: 0.25rem !important;
   }
@@ -9093,7 +9099,7 @@ select.input-lg[multiple] option {
   .my-xl-n1 {
     margin-top: -0.25rem !important;
   }
-  .mr-xl-n1,
+  .me-xl-n1,
   .mx-xl-n1 {
     margin-right: -0.25rem !important;
   }
@@ -9101,7 +9107,7 @@ select.input-lg[multiple] option {
   .my-xl-n1 {
     margin-bottom: -0.25rem !important;
   }
-  .ml-xl-n1,
+  .ms-xl-n1,
   .mx-xl-n1 {
     margin-left: -0.25rem !important;
   }
@@ -9115,7 +9121,7 @@ select.input-lg[multiple] option {
   .py-xl-2 {
     padding-top: 0.5rem !important;
   }
-  .pr-xl-2,
+  .pe-xl-2,
   .px-xl-2 {
     padding-right: 0.5rem !important;
   }
@@ -9123,7 +9129,7 @@ select.input-lg[multiple] option {
   .py-xl-2 {
     padding-bottom: 0.5rem !important;
   }
-  .pl-xl-2,
+  .ps-xl-2,
   .px-xl-2 {
     padding-left: 0.5rem !important;
   }
@@ -9134,7 +9140,7 @@ select.input-lg[multiple] option {
   .my-xl-2 {
     margin-top: 0.5rem !important;
   }
-  .mr-xl-2,
+  .me-xl-2,
   .mx-xl-2 {
     margin-right: 0.5rem !important;
   }
@@ -9142,7 +9148,7 @@ select.input-lg[multiple] option {
   .my-xl-2 {
     margin-bottom: 0.5rem !important;
   }
-  .ml-xl-2,
+  .ms-xl-2,
   .mx-xl-2 {
     margin-left: 0.5rem !important;
   }
@@ -9153,7 +9159,7 @@ select.input-lg[multiple] option {
   .my-xl-n2 {
     margin-top: -0.5rem !important;
   }
-  .mr-xl-n2,
+  .me-xl-n2,
   .mx-xl-n2 {
     margin-right: -0.5rem !important;
   }
@@ -9161,7 +9167,7 @@ select.input-lg[multiple] option {
   .my-xl-n2 {
     margin-bottom: -0.5rem !important;
   }
-  .ml-xl-n2,
+  .ms-xl-n2,
   .mx-xl-n2 {
     margin-left: -0.5rem !important;
   }
@@ -9175,7 +9181,7 @@ select.input-lg[multiple] option {
   .py-xl-3 {
     padding-top: 0.75rem !important;
   }
-  .pr-xl-3,
+  .pe-xl-3,
   .px-xl-3 {
     padding-right: 0.75rem !important;
   }
@@ -9183,7 +9189,7 @@ select.input-lg[multiple] option {
   .py-xl-3 {
     padding-bottom: 0.75rem !important;
   }
-  .pl-xl-3,
+  .ps-xl-3,
   .px-xl-3 {
     padding-left: 0.75rem !important;
   }
@@ -9194,7 +9200,7 @@ select.input-lg[multiple] option {
   .my-xl-3 {
     margin-top: 0.75rem !important;
   }
-  .mr-xl-3,
+  .me-xl-3,
   .mx-xl-3 {
     margin-right: 0.75rem !important;
   }
@@ -9202,7 +9208,7 @@ select.input-lg[multiple] option {
   .my-xl-3 {
     margin-bottom: 0.75rem !important;
   }
-  .ml-xl-3,
+  .ms-xl-3,
   .mx-xl-3 {
     margin-left: 0.75rem !important;
   }
@@ -9213,7 +9219,7 @@ select.input-lg[multiple] option {
   .my-xl-n3 {
     margin-top: -0.75rem !important;
   }
-  .mr-xl-n3,
+  .me-xl-n3,
   .mx-xl-n3 {
     margin-right: -0.75rem !important;
   }
@@ -9221,7 +9227,7 @@ select.input-lg[multiple] option {
   .my-xl-n3 {
     margin-bottom: -0.75rem !important;
   }
-  .ml-xl-n3,
+  .ms-xl-n3,
   .mx-xl-n3 {
     margin-left: -0.75rem !important;
   }
@@ -9235,7 +9241,7 @@ select.input-lg[multiple] option {
   .py-xl-4 {
     padding-top: 1rem !important;
   }
-  .pr-xl-4,
+  .pe-xl-4,
   .px-xl-4 {
     padding-right: 1rem !important;
   }
@@ -9243,7 +9249,7 @@ select.input-lg[multiple] option {
   .py-xl-4 {
     padding-bottom: 1rem !important;
   }
-  .pl-xl-4,
+  .ps-xl-4,
   .px-xl-4 {
     padding-left: 1rem !important;
   }
@@ -9254,7 +9260,7 @@ select.input-lg[multiple] option {
   .my-xl-4 {
     margin-top: 1rem !important;
   }
-  .mr-xl-4,
+  .me-xl-4,
   .mx-xl-4 {
     margin-right: 1rem !important;
   }
@@ -9262,7 +9268,7 @@ select.input-lg[multiple] option {
   .my-xl-4 {
     margin-bottom: 1rem !important;
   }
-  .ml-xl-4,
+  .ms-xl-4,
   .mx-xl-4 {
     margin-left: 1rem !important;
   }
@@ -9273,7 +9279,7 @@ select.input-lg[multiple] option {
   .my-xl-n4 {
     margin-top: -1rem !important;
   }
-  .mr-xl-n4,
+  .me-xl-n4,
   .mx-xl-n4 {
     margin-right: -1rem !important;
   }
@@ -9281,7 +9287,7 @@ select.input-lg[multiple] option {
   .my-xl-n4 {
     margin-bottom: -1rem !important;
   }
-  .ml-xl-n4,
+  .ms-xl-n4,
   .mx-xl-n4 {
     margin-left: -1rem !important;
   }
@@ -9295,7 +9301,7 @@ select.input-lg[multiple] option {
   .py-xl-5 {
     padding-top: 1.25rem !important;
   }
-  .pr-xl-5,
+  .pe-xl-5,
   .px-xl-5 {
     padding-right: 1.25rem !important;
   }
@@ -9303,7 +9309,7 @@ select.input-lg[multiple] option {
   .py-xl-5 {
     padding-bottom: 1.25rem !important;
   }
-  .pl-xl-5,
+  .ps-xl-5,
   .px-xl-5 {
     padding-left: 1.25rem !important;
   }
@@ -9314,7 +9320,7 @@ select.input-lg[multiple] option {
   .my-xl-5 {
     margin-top: 1.25rem !important;
   }
-  .mr-xl-5,
+  .me-xl-5,
   .mx-xl-5 {
     margin-right: 1.25rem !important;
   }
@@ -9322,7 +9328,7 @@ select.input-lg[multiple] option {
   .my-xl-5 {
     margin-bottom: 1.25rem !important;
   }
-  .ml-xl-5,
+  .ms-xl-5,
   .mx-xl-5 {
     margin-left: 1.25rem !important;
   }
@@ -9333,7 +9339,7 @@ select.input-lg[multiple] option {
   .my-xl-n5 {
     margin-top: -1.25rem !important;
   }
-  .mr-xl-n5,
+  .me-xl-n5,
   .mx-xl-n5 {
     margin-right: -1.25rem !important;
   }
@@ -9341,7 +9347,7 @@ select.input-lg[multiple] option {
   .my-xl-n5 {
     margin-bottom: -1.25rem !important;
   }
-  .ml-xl-n5,
+  .ms-xl-n5,
   .mx-xl-n5 {
     margin-left: -1.25rem !important;
   }
@@ -9357,7 +9363,7 @@ select.input-lg[multiple] option {
   .my-xxl-auto {
     margin-top: auto !important;
   }
-  .mr-xxl-auto,
+  .me-xxl-auto,
   .mx-xxl-auto {
     margin-right: auto !important;
   }
@@ -9365,7 +9371,7 @@ select.input-lg[multiple] option {
   .my-xxl-auto {
     margin-bottom: auto !important;
   }
-  .ml-xxl-auto,
+  .ms-xxl-auto,
   .mx-xxl-auto {
     margin-left: auto !important;
   }
@@ -9376,7 +9382,7 @@ select.input-lg[multiple] option {
   .py-xxl-0 {
     padding-top: 0rem !important;
   }
-  .pr-xxl-0,
+  .pe-xxl-0,
   .px-xxl-0 {
     padding-right: 0rem !important;
   }
@@ -9384,7 +9390,7 @@ select.input-lg[multiple] option {
   .py-xxl-0 {
     padding-bottom: 0rem !important;
   }
-  .pl-xxl-0,
+  .ps-xxl-0,
   .px-xxl-0 {
     padding-left: 0rem !important;
   }
@@ -9395,7 +9401,7 @@ select.input-lg[multiple] option {
   .my-xxl-0 {
     margin-top: 0rem !important;
   }
-  .mr-xxl-0,
+  .me-xxl-0,
   .mx-xxl-0 {
     margin-right: 0rem !important;
   }
@@ -9403,7 +9409,7 @@ select.input-lg[multiple] option {
   .my-xxl-0 {
     margin-bottom: 0rem !important;
   }
-  .ml-xxl-0,
+  .ms-xxl-0,
   .mx-xxl-0 {
     margin-left: 0rem !important;
   }
@@ -9414,7 +9420,7 @@ select.input-lg[multiple] option {
   .my-xxl-n0 {
     margin-top: 0rem !important;
   }
-  .mr-xxl-n0,
+  .me-xxl-n0,
   .mx-xxl-n0 {
     margin-right: 0rem !important;
   }
@@ -9422,7 +9428,7 @@ select.input-lg[multiple] option {
   .my-xxl-n0 {
     margin-bottom: 0rem !important;
   }
-  .ml-xxl-n0,
+  .ms-xxl-n0,
   .mx-xxl-n0 {
     margin-left: 0rem !important;
   }
@@ -9436,7 +9442,7 @@ select.input-lg[multiple] option {
   .py-xxl-1 {
     padding-top: 0.25rem !important;
   }
-  .pr-xxl-1,
+  .pe-xxl-1,
   .px-xxl-1 {
     padding-right: 0.25rem !important;
   }
@@ -9444,7 +9450,7 @@ select.input-lg[multiple] option {
   .py-xxl-1 {
     padding-bottom: 0.25rem !important;
   }
-  .pl-xxl-1,
+  .ps-xxl-1,
   .px-xxl-1 {
     padding-left: 0.25rem !important;
   }
@@ -9455,7 +9461,7 @@ select.input-lg[multiple] option {
   .my-xxl-1 {
     margin-top: 0.25rem !important;
   }
-  .mr-xxl-1,
+  .me-xxl-1,
   .mx-xxl-1 {
     margin-right: 0.25rem !important;
   }
@@ -9463,7 +9469,7 @@ select.input-lg[multiple] option {
   .my-xxl-1 {
     margin-bottom: 0.25rem !important;
   }
-  .ml-xxl-1,
+  .ms-xxl-1,
   .mx-xxl-1 {
     margin-left: 0.25rem !important;
   }
@@ -9474,7 +9480,7 @@ select.input-lg[multiple] option {
   .my-xxl-n1 {
     margin-top: -0.25rem !important;
   }
-  .mr-xxl-n1,
+  .me-xxl-n1,
   .mx-xxl-n1 {
     margin-right: -0.25rem !important;
   }
@@ -9482,7 +9488,7 @@ select.input-lg[multiple] option {
   .my-xxl-n1 {
     margin-bottom: -0.25rem !important;
   }
-  .ml-xxl-n1,
+  .ms-xxl-n1,
   .mx-xxl-n1 {
     margin-left: -0.25rem !important;
   }
@@ -9496,7 +9502,7 @@ select.input-lg[multiple] option {
   .py-xxl-2 {
     padding-top: 0.5rem !important;
   }
-  .pr-xxl-2,
+  .pe-xxl-2,
   .px-xxl-2 {
     padding-right: 0.5rem !important;
   }
@@ -9504,7 +9510,7 @@ select.input-lg[multiple] option {
   .py-xxl-2 {
     padding-bottom: 0.5rem !important;
   }
-  .pl-xxl-2,
+  .ps-xxl-2,
   .px-xxl-2 {
     padding-left: 0.5rem !important;
   }
@@ -9515,7 +9521,7 @@ select.input-lg[multiple] option {
   .my-xxl-2 {
     margin-top: 0.5rem !important;
   }
-  .mr-xxl-2,
+  .me-xxl-2,
   .mx-xxl-2 {
     margin-right: 0.5rem !important;
   }
@@ -9523,7 +9529,7 @@ select.input-lg[multiple] option {
   .my-xxl-2 {
     margin-bottom: 0.5rem !important;
   }
-  .ml-xxl-2,
+  .ms-xxl-2,
   .mx-xxl-2 {
     margin-left: 0.5rem !important;
   }
@@ -9534,7 +9540,7 @@ select.input-lg[multiple] option {
   .my-xxl-n2 {
     margin-top: -0.5rem !important;
   }
-  .mr-xxl-n2,
+  .me-xxl-n2,
   .mx-xxl-n2 {
     margin-right: -0.5rem !important;
   }
@@ -9542,7 +9548,7 @@ select.input-lg[multiple] option {
   .my-xxl-n2 {
     margin-bottom: -0.5rem !important;
   }
-  .ml-xxl-n2,
+  .ms-xxl-n2,
   .mx-xxl-n2 {
     margin-left: -0.5rem !important;
   }
@@ -9556,7 +9562,7 @@ select.input-lg[multiple] option {
   .py-xxl-3 {
     padding-top: 0.75rem !important;
   }
-  .pr-xxl-3,
+  .pe-xxl-3,
   .px-xxl-3 {
     padding-right: 0.75rem !important;
   }
@@ -9564,7 +9570,7 @@ select.input-lg[multiple] option {
   .py-xxl-3 {
     padding-bottom: 0.75rem !important;
   }
-  .pl-xxl-3,
+  .ps-xxl-3,
   .px-xxl-3 {
     padding-left: 0.75rem !important;
   }
@@ -9575,7 +9581,7 @@ select.input-lg[multiple] option {
   .my-xxl-3 {
     margin-top: 0.75rem !important;
   }
-  .mr-xxl-3,
+  .me-xxl-3,
   .mx-xxl-3 {
     margin-right: 0.75rem !important;
   }
@@ -9583,7 +9589,7 @@ select.input-lg[multiple] option {
   .my-xxl-3 {
     margin-bottom: 0.75rem !important;
   }
-  .ml-xxl-3,
+  .ms-xxl-3,
   .mx-xxl-3 {
     margin-left: 0.75rem !important;
   }
@@ -9594,7 +9600,7 @@ select.input-lg[multiple] option {
   .my-xxl-n3 {
     margin-top: -0.75rem !important;
   }
-  .mr-xxl-n3,
+  .me-xxl-n3,
   .mx-xxl-n3 {
     margin-right: -0.75rem !important;
   }
@@ -9602,7 +9608,7 @@ select.input-lg[multiple] option {
   .my-xxl-n3 {
     margin-bottom: -0.75rem !important;
   }
-  .ml-xxl-n3,
+  .ms-xxl-n3,
   .mx-xxl-n3 {
     margin-left: -0.75rem !important;
   }
@@ -9616,7 +9622,7 @@ select.input-lg[multiple] option {
   .py-xxl-4 {
     padding-top: 1rem !important;
   }
-  .pr-xxl-4,
+  .pe-xxl-4,
   .px-xxl-4 {
     padding-right: 1rem !important;
   }
@@ -9624,7 +9630,7 @@ select.input-lg[multiple] option {
   .py-xxl-4 {
     padding-bottom: 1rem !important;
   }
-  .pl-xxl-4,
+  .ps-xxl-4,
   .px-xxl-4 {
     padding-left: 1rem !important;
   }
@@ -9635,7 +9641,7 @@ select.input-lg[multiple] option {
   .my-xxl-4 {
     margin-top: 1rem !important;
   }
-  .mr-xxl-4,
+  .me-xxl-4,
   .mx-xxl-4 {
     margin-right: 1rem !important;
   }
@@ -9643,7 +9649,7 @@ select.input-lg[multiple] option {
   .my-xxl-4 {
     margin-bottom: 1rem !important;
   }
-  .ml-xxl-4,
+  .ms-xxl-4,
   .mx-xxl-4 {
     margin-left: 1rem !important;
   }
@@ -9654,7 +9660,7 @@ select.input-lg[multiple] option {
   .my-xxl-n4 {
     margin-top: -1rem !important;
   }
-  .mr-xxl-n4,
+  .me-xxl-n4,
   .mx-xxl-n4 {
     margin-right: -1rem !important;
   }
@@ -9662,7 +9668,7 @@ select.input-lg[multiple] option {
   .my-xxl-n4 {
     margin-bottom: -1rem !important;
   }
-  .ml-xxl-n4,
+  .ms-xxl-n4,
   .mx-xxl-n4 {
     margin-left: -1rem !important;
   }
@@ -9676,7 +9682,7 @@ select.input-lg[multiple] option {
   .py-xxl-5 {
     padding-top: 1.25rem !important;
   }
-  .pr-xxl-5,
+  .pe-xxl-5,
   .px-xxl-5 {
     padding-right: 1.25rem !important;
   }
@@ -9684,7 +9690,7 @@ select.input-lg[multiple] option {
   .py-xxl-5 {
     padding-bottom: 1.25rem !important;
   }
-  .pl-xxl-5,
+  .ps-xxl-5,
   .px-xxl-5 {
     padding-left: 1.25rem !important;
   }
@@ -9695,7 +9701,7 @@ select.input-lg[multiple] option {
   .my-xxl-5 {
     margin-top: 1.25rem !important;
   }
-  .mr-xxl-5,
+  .me-xxl-5,
   .mx-xxl-5 {
     margin-right: 1.25rem !important;
   }
@@ -9703,7 +9709,7 @@ select.input-lg[multiple] option {
   .my-xxl-5 {
     margin-bottom: 1.25rem !important;
   }
-  .ml-xxl-5,
+  .ms-xxl-5,
   .mx-xxl-5 {
     margin-left: 1.25rem !important;
   }
@@ -9714,7 +9720,7 @@ select.input-lg[multiple] option {
   .my-xxl-n5 {
     margin-top: -1.25rem !important;
   }
-  .mr-xxl-n5,
+  .me-xxl-n5,
   .mx-xxl-n5 {
     margin-right: -1.25rem !important;
   }
@@ -9722,7 +9728,7 @@ select.input-lg[multiple] option {
   .my-xxl-n5 {
     margin-bottom: -1.25rem !important;
   }
-  .ml-xxl-n5,
+  .ms-xxl-n5,
   .mx-xxl-n5 {
     margin-left: -1.25rem !important;
   }
@@ -9738,7 +9744,7 @@ select.input-lg[multiple] option {
   .my-print-auto {
     margin-top: auto !important;
   }
-  .mr-print-auto,
+  .me-print-auto,
   .mx-print-auto {
     margin-right: auto !important;
   }
@@ -9746,7 +9752,7 @@ select.input-lg[multiple] option {
   .my-print-auto {
     margin-bottom: auto !important;
   }
-  .ml-print-auto,
+  .ms-print-auto,
   .mx-print-auto {
     margin-left: auto !important;
   }
@@ -9757,7 +9763,7 @@ select.input-lg[multiple] option {
   .py-print-0 {
     padding-top: 0rem !important;
   }
-  .pr-print-0,
+  .pe-print-0,
   .px-print-0 {
     padding-right: 0rem !important;
   }
@@ -9765,7 +9771,7 @@ select.input-lg[multiple] option {
   .py-print-0 {
     padding-bottom: 0rem !important;
   }
-  .pl-print-0,
+  .ps-print-0,
   .px-print-0 {
     padding-left: 0rem !important;
   }
@@ -9776,7 +9782,7 @@ select.input-lg[multiple] option {
   .my-print-0 {
     margin-top: 0rem !important;
   }
-  .mr-print-0,
+  .me-print-0,
   .mx-print-0 {
     margin-right: 0rem !important;
   }
@@ -9784,7 +9790,7 @@ select.input-lg[multiple] option {
   .my-print-0 {
     margin-bottom: 0rem !important;
   }
-  .ml-print-0,
+  .ms-print-0,
   .mx-print-0 {
     margin-left: 0rem !important;
   }
@@ -9795,7 +9801,7 @@ select.input-lg[multiple] option {
   .my-print-n0 {
     margin-top: 0rem !important;
   }
-  .mr-print-n0,
+  .me-print-n0,
   .mx-print-n0 {
     margin-right: 0rem !important;
   }
@@ -9803,7 +9809,7 @@ select.input-lg[multiple] option {
   .my-print-n0 {
     margin-bottom: 0rem !important;
   }
-  .ml-print-n0,
+  .ms-print-n0,
   .mx-print-n0 {
     margin-left: 0rem !important;
   }
@@ -9817,7 +9823,7 @@ select.input-lg[multiple] option {
   .py-print-1 {
     padding-top: 0.25rem !important;
   }
-  .pr-print-1,
+  .pe-print-1,
   .px-print-1 {
     padding-right: 0.25rem !important;
   }
@@ -9825,7 +9831,7 @@ select.input-lg[multiple] option {
   .py-print-1 {
     padding-bottom: 0.25rem !important;
   }
-  .pl-print-1,
+  .ps-print-1,
   .px-print-1 {
     padding-left: 0.25rem !important;
   }
@@ -9836,7 +9842,7 @@ select.input-lg[multiple] option {
   .my-print-1 {
     margin-top: 0.25rem !important;
   }
-  .mr-print-1,
+  .me-print-1,
   .mx-print-1 {
     margin-right: 0.25rem !important;
   }
@@ -9844,7 +9850,7 @@ select.input-lg[multiple] option {
   .my-print-1 {
     margin-bottom: 0.25rem !important;
   }
-  .ml-print-1,
+  .ms-print-1,
   .mx-print-1 {
     margin-left: 0.25rem !important;
   }
@@ -9855,7 +9861,7 @@ select.input-lg[multiple] option {
   .my-print-n1 {
     margin-top: -0.25rem !important;
   }
-  .mr-print-n1,
+  .me-print-n1,
   .mx-print-n1 {
     margin-right: -0.25rem !important;
   }
@@ -9863,7 +9869,7 @@ select.input-lg[multiple] option {
   .my-print-n1 {
     margin-bottom: -0.25rem !important;
   }
-  .ml-print-n1,
+  .ms-print-n1,
   .mx-print-n1 {
     margin-left: -0.25rem !important;
   }
@@ -9877,7 +9883,7 @@ select.input-lg[multiple] option {
   .py-print-2 {
     padding-top: 0.5rem !important;
   }
-  .pr-print-2,
+  .pe-print-2,
   .px-print-2 {
     padding-right: 0.5rem !important;
   }
@@ -9885,7 +9891,7 @@ select.input-lg[multiple] option {
   .py-print-2 {
     padding-bottom: 0.5rem !important;
   }
-  .pl-print-2,
+  .ps-print-2,
   .px-print-2 {
     padding-left: 0.5rem !important;
   }
@@ -9896,7 +9902,7 @@ select.input-lg[multiple] option {
   .my-print-2 {
     margin-top: 0.5rem !important;
   }
-  .mr-print-2,
+  .me-print-2,
   .mx-print-2 {
     margin-right: 0.5rem !important;
   }
@@ -9904,7 +9910,7 @@ select.input-lg[multiple] option {
   .my-print-2 {
     margin-bottom: 0.5rem !important;
   }
-  .ml-print-2,
+  .ms-print-2,
   .mx-print-2 {
     margin-left: 0.5rem !important;
   }
@@ -9915,7 +9921,7 @@ select.input-lg[multiple] option {
   .my-print-n2 {
     margin-top: -0.5rem !important;
   }
-  .mr-print-n2,
+  .me-print-n2,
   .mx-print-n2 {
     margin-right: -0.5rem !important;
   }
@@ -9923,7 +9929,7 @@ select.input-lg[multiple] option {
   .my-print-n2 {
     margin-bottom: -0.5rem !important;
   }
-  .ml-print-n2,
+  .ms-print-n2,
   .mx-print-n2 {
     margin-left: -0.5rem !important;
   }
@@ -9937,7 +9943,7 @@ select.input-lg[multiple] option {
   .py-print-3 {
     padding-top: 0.75rem !important;
   }
-  .pr-print-3,
+  .pe-print-3,
   .px-print-3 {
     padding-right: 0.75rem !important;
   }
@@ -9945,7 +9951,7 @@ select.input-lg[multiple] option {
   .py-print-3 {
     padding-bottom: 0.75rem !important;
   }
-  .pl-print-3,
+  .ps-print-3,
   .px-print-3 {
     padding-left: 0.75rem !important;
   }
@@ -9956,7 +9962,7 @@ select.input-lg[multiple] option {
   .my-print-3 {
     margin-top: 0.75rem !important;
   }
-  .mr-print-3,
+  .me-print-3,
   .mx-print-3 {
     margin-right: 0.75rem !important;
   }
@@ -9964,7 +9970,7 @@ select.input-lg[multiple] option {
   .my-print-3 {
     margin-bottom: 0.75rem !important;
   }
-  .ml-print-3,
+  .ms-print-3,
   .mx-print-3 {
     margin-left: 0.75rem !important;
   }
@@ -9975,7 +9981,7 @@ select.input-lg[multiple] option {
   .my-print-n3 {
     margin-top: -0.75rem !important;
   }
-  .mr-print-n3,
+  .me-print-n3,
   .mx-print-n3 {
     margin-right: -0.75rem !important;
   }
@@ -9983,7 +9989,7 @@ select.input-lg[multiple] option {
   .my-print-n3 {
     margin-bottom: -0.75rem !important;
   }
-  .ml-print-n3,
+  .ms-print-n3,
   .mx-print-n3 {
     margin-left: -0.75rem !important;
   }
@@ -9997,7 +10003,7 @@ select.input-lg[multiple] option {
   .py-print-4 {
     padding-top: 1rem !important;
   }
-  .pr-print-4,
+  .pe-print-4,
   .px-print-4 {
     padding-right: 1rem !important;
   }
@@ -10005,7 +10011,7 @@ select.input-lg[multiple] option {
   .py-print-4 {
     padding-bottom: 1rem !important;
   }
-  .pl-print-4,
+  .ps-print-4,
   .px-print-4 {
     padding-left: 1rem !important;
   }
@@ -10016,7 +10022,7 @@ select.input-lg[multiple] option {
   .my-print-4 {
     margin-top: 1rem !important;
   }
-  .mr-print-4,
+  .me-print-4,
   .mx-print-4 {
     margin-right: 1rem !important;
   }
@@ -10024,7 +10030,7 @@ select.input-lg[multiple] option {
   .my-print-4 {
     margin-bottom: 1rem !important;
   }
-  .ml-print-4,
+  .ms-print-4,
   .mx-print-4 {
     margin-left: 1rem !important;
   }
@@ -10035,7 +10041,7 @@ select.input-lg[multiple] option {
   .my-print-n4 {
     margin-top: -1rem !important;
   }
-  .mr-print-n4,
+  .me-print-n4,
   .mx-print-n4 {
     margin-right: -1rem !important;
   }
@@ -10043,7 +10049,7 @@ select.input-lg[multiple] option {
   .my-print-n4 {
     margin-bottom: -1rem !important;
   }
-  .ml-print-n4,
+  .ms-print-n4,
   .mx-print-n4 {
     margin-left: -1rem !important;
   }
@@ -10057,7 +10063,7 @@ select.input-lg[multiple] option {
   .py-print-5 {
     padding-top: 1.25rem !important;
   }
-  .pr-print-5,
+  .pe-print-5,
   .px-print-5 {
     padding-right: 1.25rem !important;
   }
@@ -10065,7 +10071,7 @@ select.input-lg[multiple] option {
   .py-print-5 {
     padding-bottom: 1.25rem !important;
   }
-  .pl-print-5,
+  .ps-print-5,
   .px-print-5 {
     padding-left: 1.25rem !important;
   }
@@ -10076,7 +10082,7 @@ select.input-lg[multiple] option {
   .my-print-5 {
     margin-top: 1.25rem !important;
   }
-  .mr-print-5,
+  .me-print-5,
   .mx-print-5 {
     margin-right: 1.25rem !important;
   }
@@ -10084,7 +10090,7 @@ select.input-lg[multiple] option {
   .my-print-5 {
     margin-bottom: 1.25rem !important;
   }
-  .ml-print-5,
+  .ms-print-5,
   .mx-print-5 {
     margin-left: 1.25rem !important;
   }
@@ -10095,7 +10101,7 @@ select.input-lg[multiple] option {
   .my-print-n5 {
     margin-top: -1.25rem !important;
   }
-  .mr-print-n5,
+  .me-print-n5,
   .mx-print-n5 {
     margin-right: -1.25rem !important;
   }
@@ -10103,7 +10109,7 @@ select.input-lg[multiple] option {
   .my-print-n5 {
     margin-bottom: -1.25rem !important;
   }
-  .ml-print-n5,
+  .ms-print-n5,
   .mx-print-n5 {
     margin-left: -1.25rem !important;
   }

@@ -1,19 +1,15 @@
 .breadcrumb {
     display: flex;
     flex-wrap: wrap;
-    padding: (@spacing / 2) @spacing;
-    margin: 0 0 @spacing;
+    margin: 0 0 @spacing 0;
     list-style: none;
-    background-color: @light;
-    border: @border-size @border-style @border-color;
-    border-radius: @border-radius;
 }
 
 .breadcrumb-item {
     display: flex;
 
     &.active {
-        color: @dark;
+        color: @secondary;
     }
 
     + .breadcrumb-item {

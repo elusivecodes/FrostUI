@@ -70,6 +70,9 @@ Object.assign(Popover.prototype, {
      */
     _render() {
         this._popover = dom.parseHTML(this._settings.template).shift();
+        if (this._settings.customClass) {
+            dom.addClass(this._popover, this._settings.customClass);
+        }
         this._arrow = dom.find('.popover-arrow', this._popover);
         this._popoverHeader = dom.find('.popover-header', this._popover);
         this._popoverBody = dom.find('.popover-body', this._popover);

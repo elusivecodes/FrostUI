@@ -1,6 +1,8 @@
 .toast {
-    max-width: @toast-width;
+    width: @toast-width;
+    max-width: 100%;
     font-size: @font-size-sm;
+    pointer-events: auto;
     color: @text;
     background-color: @toast-color;
     background-clip: padding-box;
@@ -20,6 +22,16 @@
 
     &.hide {
         display: none;
+    }
+}
+
+.toast-container {
+    width: max-content;
+    max-width: 100%;
+    pointer-events: none;
+
+    > :not(:last-child) {
+        margin-bottom: @spacing * 0.75;
     }
 }
 

@@ -58,6 +58,7 @@ class Toast {
             duration: this._settings.duration
         }).then(_ => {
             dom.hide(this._node);
+            dom.removeClass(this._node, 'show');
             dom.triggerEvent(this._node, 'hidden.frost.toast');
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
@@ -78,6 +79,7 @@ class Toast {
 
         this._animating = true;
         dom.show(this._node);
+        dom.addClass(this._node, 'show');
 
         dom.fadeIn(this._node, {
             duration: this._settings.duration

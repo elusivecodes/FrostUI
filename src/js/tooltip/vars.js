@@ -4,6 +4,7 @@ Tooltip.defaults = {
         '<div class="tooltip-arrow"></div>' +
         '<div class="tooltip-inner"></div>' +
         '</div>',
+    customClass: null,
     duration: 100,
     enable: true,
     html: false,

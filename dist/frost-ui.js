@@ -1695,6 +1695,9 @@
          */
         _render() {
             this._popover = dom.parseHTML(this._settings.template).shift();
+            if (this._settings.customClass) {
+                dom.addClass(this._popover, this._settings.customClass);
+            }
             this._arrow = dom.find('.popover-arrow', this._popover);
             this._popoverHeader = dom.find('.popover-header', this._popover);
             this._popoverBody = dom.find('.popover-body', this._popover);
@@ -1758,6 +1761,7 @@
             '<h3 class="popover-header"></h3>' +
             '<div class="popover-body"></div>' +
             '</div>',
+        customClass: null,
         duration: 100,
         enable: true,
         html: false,
@@ -2873,6 +2877,7 @@
                 duration: this._settings.duration
             }).then(_ => {
                 dom.hide(this._node);
+                dom.removeClass(this._node, 'show');
                 dom.triggerEvent(this._node, 'hidden.frost.toast');
             }).catch(_ => { }).finally(_ => {
                 this._animating = false;
@@ -2893,6 +2898,7 @@
 
             this._animating = true;
             dom.show(this._node);
+            dom.addClass(this._node, 'show');
 
             dom.fadeIn(this._node, {
                 duration: this._settings.duration
@@ -3233,6 +3239,9 @@
          */
         _render() {
             this._tooltip = dom.parseHTML(this._settings.template).shift();
+            if (this._settings.customClass) {
+                dom.addClass(this._tooltip, this._settings.customClass);
+            }
             this._arrow = dom.find('.tooltip-arrow', this._tooltip);
             this._tooltipInner = dom.find('.tooltip-inner', this._tooltip);
         },
@@ -3280,6 +3289,7 @@
             '<div class="tooltip-arrow"></div>' +
             '<div class="tooltip-inner"></div>' +
             '</div>',
+        customClass: null,
         duration: 100,
         enable: true,
         html: false,
