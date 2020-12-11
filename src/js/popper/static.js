@@ -14,7 +14,7 @@ Object.assign(Popper, {
      * @param {string} placement The actual placement of the Popper.
      * @param {number} [minContact] The minimum amount of contact to make with the reference node.
      */
-    adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, minContact) {
+    _adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, minContact) {
         if (['left', 'right'].includes(placement)) {
             let offsetY = offset.y;
             let refTop = referenceBox.top;
@@ -82,7 +82,7 @@ Object.assign(Popper, {
      * @param {string} placement The actual placement of the Popper.
      * @param {number} spacing The amount of spacing to use.
      */
-    adjustPlacement(offset, nodeBox, referenceBox, placement, spacing) {
+    _adjustPlacement(offset, nodeBox, referenceBox, placement, spacing) {
         if (placement === 'top') {
             offset.y -= Math.round(nodeBox.height) + spacing
         } else if (placement === 'right') {
@@ -102,7 +102,7 @@ Object.assign(Popper, {
      * @param {string} placement The actual placement of the Popper.
      * @param {string} position The actual position of the Popper.
      */
-    adjustPosition(offset, nodeBox, referenceBox, placement, position) {
+    _adjustPosition(offset, nodeBox, referenceBox, placement, position) {
         if (position === 'start') {
             return;
         }
@@ -135,7 +135,7 @@ Object.assign(Popper, {
      * @param {number} spacing The amount of spacing to use.
      * @returns {string} The new placement of the Popper.
      */
-    getPopperPlacement(nodeBox, referenceBox, minimumBox, placement, spacing) {
+    _getPopperPlacement(nodeBox, referenceBox, minimumBox, placement, spacing) {
         const spaceTop = referenceBox.top - minimumBox.top;
         const spaceRight = minimumBox.right - referenceBox.right;
         const spaceBottom = minimumBox.bottom - referenceBox.bottom;
@@ -224,7 +224,7 @@ Object.assign(Popper, {
      * @param {string} position The initial position of the Popper.
      * @returns {string} The new position of the Popper.
      */
-    getPopperPosition(nodeBox, referenceBox, minimumBox, placement, position) {
+    _getPopperPosition(nodeBox, referenceBox, minimumBox, placement, position) {
 
         const deltaX = nodeBox.width - referenceBox.width;
         const deltaY = nodeBox.height - referenceBox.height;
@@ -315,7 +315,7 @@ Object.assign(Popper, {
      * @param {HTMLElement} node The input node.
      * @return {HTMLElement} The relative parent.
      */
-    getRelativeParent(node) {
+    _getRelativeParent(node) {
         return dom.closest(
             node,
             parent =>
@@ -329,7 +329,7 @@ Object.assign(Popper, {
      * @param {HTMLElement} node The input node.
      * @return {HTMLElement} The scroll parent.
      */
-    getScrollParent(node) {
+    _getScrollParent(node) {
         return dom.closest(
             node,
             parent =>
@@ -354,7 +354,7 @@ Object.assign(Popper, {
      * @param {number} spacing The amount of spacing to use.
      * @returns {Boolean} TRUE if the node can not be visible inside the window, otherwise FALSE.
      */
-    isNodeHidden(nodeBox, referenceBox, windowContainer, spacing) {
+    _isNodeHidden(nodeBox, referenceBox, windowContainer, spacing) {
         return windowContainer.top > referenceBox.bottom + nodeBox.height + spacing ||
             windowContainer.left > referenceBox.right + nodeBox.width + spacing ||
             windowContainer.bottom < referenceBox.top - nodeBox.height - spacing ||
@@ -365,7 +365,7 @@ Object.assign(Popper, {
      * Calculate the computed bounding rectangle of the window.
      * @returns {object} The computed bounding rectangle of the window.
      */
-    windowContainer() {
+    _windowContainer() {
         const scrollX = dom.getScrollX(window);
         const scrollY = dom.getScrollY(window);
         const windowWidth = dom.width(document);

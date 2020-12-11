@@ -9,59 +9,37 @@ Object.assign(Popover.prototype, {
      */
     _events() {
         if (this._triggers.includes('hover')) {
-            dom.addEvent(this._node, 'mouseover.frost.popover', _ => {
-                if (!this._enabled) {
-                    return;
-                }
-
+            dom.addEvent(this._node, 'mouseover.ui.popover', _ => {
                 this.show();
             });
 
-            dom.addEvent(this._node, 'mouseout.frost.popover', _ => {
-                if (!this._enabled) {
-                    return;
-                }
-
+            dom.addEvent(this._node, 'mouseout.ui.popover', _ => {
                 this.hide();
             });
         }
 
         if (this._triggers.includes('focus')) {
-            dom.addEvent(this._node, 'focus.frost.popover', _ => {
-                if (!this._enabled) {
-                    return;
-                }
-
+            dom.addEvent(this._node, 'focus.ui.popover', _ => {
                 this.show();
             });
 
-            dom.addEvent(this._node, 'blur.frost.popover', _ => {
-                if (!this._enabled) {
-                    return;
-                }
-
+            dom.addEvent(this._node, 'blur.ui.popover', _ => {
                 this.hide();
             });
         }
 
         if (this._triggers.includes('click')) {
-            dom.addEvent(this._node, 'click.frost.popover', e => {
+            dom.addEvent(this._node, 'click.ui.popover', e => {
                 e.preventDefault();
-
-                if (!this._enabled) {
-                    return;
-                }
 
                 this.toggle();
             });
         }
 
         if (this._modal) {
-            this._hideModalEvent = _ => {
+            dom.addEvent(this._modal, 'hide.ui.modal', _ => {
                 this.hide();
-            };
-
-            dom.addEvent(this._modal, 'hide.frost.modal', this._hideModalEvent);
+            });
         }
     },
 

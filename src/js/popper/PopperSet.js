@@ -17,7 +17,7 @@ class PopperSet {
 
         dom.addEvent(
             window,
-            'resize.frost.popper scroll.frost.popper',
+            'resize.ui.popper scroll.ui.popper',
             DOM.debounce(_ => {
                 for (const popper of this._poppers) {
                     popper.update();
@@ -37,7 +37,7 @@ class PopperSet {
             this._popperOverflows.set(scrollParent, []);
             dom.addEvent(
                 scrollParent,
-                'scroll.frost.popper',
+                'scroll.ui.popper',
                 DOM.debounce(_ => {
                     for (const popper of this._popperOverflows.get(scrollParent)) {
                         popper.update();
@@ -60,7 +60,7 @@ class PopperSet {
             return;
         }
 
-        dom.removeEvent(window, 'resize.frost.popper scroll.frost.popper');
+        dom.removeEvent(window, 'resize.ui.popper scroll.ui.popper');
         this._running = false;
     }
 
@@ -82,7 +82,7 @@ class PopperSet {
         }
 
         this._popperOverflows.delete(scrollParent);
-        dom.removeEvent(scrollParent, 'scroll.frost.popper');
+        dom.removeEvent(scrollParent, 'scroll.ui.popper');
     }
 
 }

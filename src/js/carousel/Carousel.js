@@ -2,29 +2,16 @@
  * Carousel Class
  * @class
  */
-class Carousel {
+class Carousel extends BaseComponent {
 
     /**
      * New Carousel constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Carousel with.
-     * @param {number} [settings.interval=5000] The duration of the interval.
-     * @param {number} [settings.transition=500] The duration of the transition.
-     * @param {Boolean} [settings.keyboard=true] Whether to all keyboard navigation.
-     * @param {Boolean|string} [settings.ride=false] Set to "carousel" to automatically start the carousel.
-     * @param {Boolean} [settings.pause=true] Whether to pause the carousel on mouseover.
-     * @param {Boolean} [settings.wrap=true] Whether the carousel should cycle around.
      * @returns {Carousel} A new Carousel object.
      */
     constructor(node, settings) {
-        this._node = node;
-
-        this._settings = Core.extend(
-            {},
-            this.constructor.defaults,
-            dom.getDataset(this._node),
-            settings
-        );
+        super(node, settings);
 
         this._items = dom.find('.carousel-item', this._node);
 
@@ -33,8 +20,6 @@ class Carousel {
         );
 
         this._events();
-
-        dom.setData(this._node, 'carousel', this);
 
         if (this._settings.ride === 'carousel') {
             this._setTimer();
@@ -59,17 +44,15 @@ class Carousel {
         }
 
         if (this._settings.keyboard) {
-            dom.removeEvent(this._node, 'keydown.frost.carousel');
+            dom.removeEvent(this._node, 'keydown.ui.carousel');
         }
 
         if (this._settings.pause) {
-            dom.removeEvent(this._node, 'mouseenter.frost.carousel');
-            dom.removeEvent(this._node, 'mouseleave.frost.carousel');
+            dom.removeEvent(this._node, 'mouseenter.ui.carousel');
+            dom.removeEvent(this._node, 'mouseleave.ui.carousel');
         }
 
-        dom.removeEvent(this._node, 'remove.frost.carousel');
-
-        dom.removeData(this._node, 'carousel');
+        super.destroy();
     }
 
     /**
@@ -108,24 +91,6 @@ class Carousel {
      */
     slide(direction = 1) {
         this.show(this._index + direction);
-    }
-
-    /**
-     * Initialize a Carousel.
-     * @param {HTMLElement} node The input node.
-     * @param {object} [settings] The options to create the Carousel with.
-     * @param {number} [settings.interval=5000] The duration of the interval.
-     * @param {number} [settings.transition=500] The duration of the transition.
-     * @param {Boolean} [settings.keyboard=true] Whether to all keyboard navigation.
-     * @param {Boolean|string} [settings.ride=false] Set to "carousel" to automatically start the carousel.
-     * @param {Boolean} [settings.pause=true] Whether to pause the carousel on mouseover.
-     * @param {Boolean} [settings.wrap=true] Whether the carousel should cycle around.
-     * @returns {Carousel} A new Carousel object.
-     */
-    static init(node, settings) {
-        return dom.hasData(node, 'carousel') ?
-            dom.getData(node, 'carousel') :
-            new this(node, settings);
     }
 
 }

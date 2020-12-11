@@ -9,31 +9,6 @@ Dropdown.defaults = {
     minContact: false
 };
 
-// Dropdown QuerySet method
-if (QuerySet) {
-    QuerySet.prototype.dropdown = function(a, ...args) {
-        let settings, method;
-
-        if (Core.isObject(a)) {
-            settings = a;
-        } else if (Core.isString(a)) {
-            method = a;
-        }
-
-        for (const node of this) {
-            if (!Core.isElement(node)) {
-                continue;
-            }
-
-            const dropdown = Dropdown.init(node, settings);
-
-            if (method) {
-                dropdown[method](...args);
-            }
-        }
-
-        return this;
-    };
-}
+UI.initComponent('dropdown', Dropdown);
 
 UI.Dropdown = Dropdown;

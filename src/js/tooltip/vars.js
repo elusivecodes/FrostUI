@@ -17,31 +17,6 @@ Tooltip.defaults = {
     minContact: false
 };
 
-// Tooltip QuerySet method
-if (QuerySet) {
-    QuerySet.prototype.tooltip = function(a, ...args) {
-        let settings, method;
-
-        if (Core.isObject(a)) {
-            settings = a;
-        } else if (Core.isString(a)) {
-            method = a;
-        }
-
-        for (const node of this) {
-            if (!Core.isElement(node)) {
-                continue;
-            }
-
-            const tooltip = Tooltip.init(node, settings);
-
-            if (method) {
-                tooltip[method](...args);
-            }
-        }
-
-        return this;
-    };
-}
+UI.initComponent('tooltip', Tooltip);
 
 UI.Tooltip = Tooltip;

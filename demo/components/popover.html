@@ -20,58 +20,49 @@
     <div class="container">
         <h1>Popovers</h1>
         <div class="mb-4">
-            <button class="btn ripple btn-secondary" role="button" data-toggle="popover" data-title="Popover"
-                data-content="Popover content would go here.. how cool!">
+            <button class="btn ripple btn-secondary" role="button" data-ui-toggle="popover" data-ui-title="Popover" data-ui-content="Popover content would go here.. how cool!">
                 Popover
             </button>
         </div>
 
         <h4>HTML</h4>
         <div class="mb-4">
-            <button class="btn ripple btn-secondary" role="button" data-toggle="popover" data-html="true"
-                data-content="Popover content would go here.. <strong>how cool!</strong>">
+            <button class="btn ripple btn-secondary" role="button" data-ui-toggle="popover" data-ui-html="true" data-ui-content="Popover content would go here.. <strong>how cool!</strong>">
                 Popover
             </button>
         </div>
 
         <h4>Placement</h4>
         <div class="mb-4">
-            <button class="btn ripple btn-secondary" role="button" data-toggle="popover"
-                data-content="Popover content would go here.. how cool!" data-placement="top" data-fixed="true">
+            <button class="btn ripple btn-secondary" role="button" data-ui-toggle="popover" data-ui-content="Popover content would go here.. how cool!" data-ui-placement="top" data-ui-fixed="true">
                 Top
             </button>
-            <button class="btn ripple btn-secondary" role="button" data-toggle="popover"
-                data-content="Popover content would go here.. how cool!" data-placement="right" data-fixed="true">
+            <button class="btn ripple btn-secondary" role="button" data-ui-toggle="popover" data-ui-content="Popover content would go here.. how cool!" data-ui-placement="right" data-ui-fixed="true">
                 Right
             </button>
-            <button class="btn ripple btn-secondary" role="button" data-toggle="popover"
-                data-content="Popover content would go here.. how cool!" data-placement="bottom" data-fixed="true">
+            <button class="btn ripple btn-secondary" role="button" data-ui-toggle="popover" data-ui-content="Popover content would go here.. how cool!" data-ui-placement="bottom" data-ui-fixed="true">
                 Bottom
             </button>
-            <button class="btn ripple btn-secondary" role="button" data-toggle="popover"
-                data-content="Popover content would go here.. how cool!" data-placement="left" data-fixed="true">
+            <button class="btn ripple btn-secondary" role="button" data-ui-toggle="popover" data-ui-content="Popover content would go here.. how cool!" data-ui-placement="left" data-ui-fixed="true">
                 Left
             </button>
         </div>
 
         <h4>Position</h4>
         <div class="mb-4">
-            <button class="btn ripple btn-secondary" role="button" data-toggle="popover"
-                data-content="Popover content would go here.. how cool!" data-placement="bottom" data-position="start">
+            <button class="btn ripple btn-secondary" role="button" data-ui-toggle="popover" data-ui-content="Popover content would go here.. how cool!" data-ui-placement="bottom" data-ui-position="start">
                 Start
             </button>
-            <button class="btn ripple btn-secondary" role="button" data-toggle="popover"
-                data-content="Popover content would go here.. how cool!" data-placement="bottom" data-position="center">
+            <button class="btn ripple btn-secondary" role="button" data-ui-toggle="popover" data-ui-content="Popover content would go here.. how cool!" data-ui-placement="bottom" data-ui-position="center">
                 Center
             </button>
-            <button class="btn ripple btn-secondary" role="button" data-toggle="popover"
-                data-content="Popover content would go here.. how cool!" data-placement="bottom" data-position="end">
+            <button class="btn ripple btn-secondary" role="button" data-ui-toggle="popover" data-ui-content="Popover content would go here.. how cool!" data-ui-placement="bottom" data-ui-position="end">
                 End
             </button>
         </div>
     </div>
     <script>
-        const nodes = dom.find('[data-toggle="popover"]');
+        const nodes = dom.find('[data-ui-toggle="popover"]');
         for (const node of nodes) {
             UI.Popover.init(node);
         }

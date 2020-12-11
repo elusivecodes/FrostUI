@@ -1,5 +1,5 @@
 // Collapse events
-dom.addEventDelegate(document, 'click.frost.collapse', '[data-toggle="collapse"]', e => {
+dom.addEventDelegate(document, 'click.ui.collapse', '[data-ui-toggle="collapse"]', e => {
     e.preventDefault();
 
     const selector = UI.getTargetSelector(e.currentTarget);

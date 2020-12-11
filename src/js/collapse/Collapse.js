@@ -2,44 +2,25 @@
  * Collapse Class
  * @class
  */
-class Collapse {
+class Collapse extends BaseComponent {
 
     /**
      * New Collapse constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Collapse with.
-     * @param {string} [settings.direction=bottom] The direction to collapse the targets from/to.
-     * @param {number} [settings.duration=300] The duration of the animation.
      * @returns {Collapse} A new Collapse object.
      */
     constructor(node, settings) {
-        this._node = node;
+        super(node, settings);
 
         const id = this._node.getAttribute('id');
         this._triggers = dom.find(
-            `[data-toggle="collapse"][data-target="#${id}"]`
-        );
-        console.log(this._triggers);
-
-        this._settings = Core.extend(
-            {},
-            this.constructor.defaults,
-            dom.getDataset(this._node),
-            settings
+            `[data-ui-toggle="collapse"][data-ui-target="#${id}"]`
         );
 
         if (this._settings.parent) {
             this._parent = dom.findOne(this._settings.parent);
         }
-
-        dom.setData(this._node, 'collapse', this);
-    }
-
-    /**
-     * Destroy the Collapse.
-     */
-    destroy() {
-        dom.removeData(this._node, 'collapse');
     }
 
     /**
@@ -49,7 +30,7 @@ class Collapse {
         if (
             this._animating ||
             !dom.hasClass(this._node, 'show') ||
-            !dom.triggerOne(this._node, 'hide.frost.collapse')
+            !dom.triggerOne(this._node, 'hide.ui.collapse')
         ) {
             return;
         }
@@ -63,7 +44,7 @@ class Collapse {
         }).then(_ => {
             dom.removeClass(this._node, 'show');
             dom.setAttribute(this._triggers, 'aria-expanded', false);
-            dom.triggerEvent(this._node, 'hidden.frost.collapse');
+            dom.triggerEvent(this._node, 'hidden.ui.collapse');
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
         });
@@ -98,7 +79,7 @@ class Collapse {
             }
         }
 
-        if (!dom.triggerOne(this._node, 'show.frost.collapse')) {
+        if (!dom.triggerOne(this._node, 'show.ui.collapse')) {
             return;
         }
 
@@ -115,7 +96,7 @@ class Collapse {
             duration: this._settings.duration
         }).then(_ => {
             dom.setAttribute(this._triggers, 'aria-expanded', true);
-            dom.triggerEvent(this._node, 'shown.frost.collapse');
+            dom.triggerEvent(this._node, 'shown.ui.collapse');
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
         });
@@ -128,20 +109,6 @@ class Collapse {
         dom.hasClass(this._node, 'show') ?
             this.hide() :
             this.show();
-    }
-
-    /**
-     * Initialize a Collapse.
-     * @param {HTMLElement} node The input node.
-     * @param {object} [settings] The options to create the Collapse with.
-     * @param {string} [settings.direction=bottom] The direction to collapse the targets from/to.
-     * @param {number} [settings.duration=300] The duration of the animation.
-     * @returns {Collapse} A new Collapse object.
-     */
-    static init(node, settings) {
-        return dom.hasData(node, 'collapse') ?
-            dom.getData(node, 'collapse') :
-            new this(node, settings);
     }
 
 }

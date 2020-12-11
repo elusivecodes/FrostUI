@@ -19,7 +19,7 @@
     <div class="container">
         <h1>Modals</h1>
         <div class="mb-4">
-            <button class="btn ripple btn-primary" role="button" data-toggle="modal" data-target="#modal">Open
+            <button class="btn ripple btn-primary" role="button" data-ui-toggle="modal" data-ui-target="#modal">Open
                 Modal</button>
         </div>
         <div id="modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
@@ -27,7 +27,7 @@
                 <div class="modal-content shadow">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalTitle">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-ui-dismiss="modal" aria-label="Close">
                             <small class="icon-cancel" aria-hidden="true"></small>
                         </button>
                     </div>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-success mb-0" role="button">Save</button>
-                        <button class="btn ripple btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn ripple btn-secondary mb-0" role="button" data-ui-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -44,16 +44,15 @@
 
         <h4>Long Content</h4>
         <div class="mb-4">
-            <button class="btn ripple btn-primary" role="button" data-toggle="modal" data-target="#modalLong">Open
+            <button class="btn ripple btn-primary" role="button" data-ui-toggle="modal" data-ui-target="#modalLong">Open
                 Modal</button>
         </div>
-        <div id="modalLong" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalLongTitle"
-            aria-hidden="true">
+        <div id="modalLong" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalLongTitle" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content shadow">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalLongTitle">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-ui-dismiss="modal" aria-label="Close">
                             <small class="icon-cancel" aria-hidden="true"></small>
                         </button>
                     </div>
@@ -85,7 +84,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-success mb-0" role="button">Save</button>
-                        <button class="btn ripple btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn ripple btn-secondary mb-0" role="button" data-ui-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -93,16 +92,15 @@
 
         <h4>Scrollable</h4>
         <div class="mb-4">
-            <button class="btn ripple btn-primary" role="button" data-toggle="modal" data-target="#modalScrollable">Open
+            <button class="btn ripple btn-primary" role="button" data-ui-toggle="modal" data-ui-target="#modalScrollable">Open
                 Modal</button>
         </div>
-        <div id="modalScrollable" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalScrollableTitle"
-            aria-hidden="true">
+        <div id="modalScrollable" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalScrollableTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable">
                 <div class="modal-content shadow">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalScrollableTitle">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-ui-dismiss="modal" aria-label="Close">
                             <small class="icon-cancel" aria-hidden="true"></small>
                         </button>
                     </div>
@@ -134,7 +132,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-success mb-0" role="button">Save</button>
-                        <button class="btn ripple btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn ripple btn-secondary mb-0" role="button" data-ui-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -142,16 +140,15 @@
 
         <h4>Vertically Centered</h4>
         <div class="mb-4">
-            <button class="btn ripple btn-primary" role="button" data-toggle="modal" data-target="#modalCentered">Open
+            <button class="btn ripple btn-primary" role="button" data-ui-toggle="modal" data-ui-target="#modalCentered">Open
                 Modal</button>
         </div>
-        <div id="modalCentered" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalCenteredTitle"
-            aria-hidden="true">
+        <div id="modalCentered" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalCenteredTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content shadow">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalCenteredTitle">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-ui-dismiss="modal" aria-label="Close">
                             <small class="icon-cancel" aria-hidden="true"></small>
                         </button>
                     </div>
@@ -160,7 +157,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-success mb-0" role="button">Save</button>
-                        <button class="btn ripple btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn ripple btn-secondary mb-0" role="button" data-ui-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -168,32 +165,29 @@
 
         <h4>Tooltips/Popovers</h4>
         <div class="mb-4">
-            <button class="btn ripple btn-primary" role="button" data-toggle="modal" data-target="#modalTooltips">Open
+            <button class="btn ripple btn-primary" role="button" data-ui-toggle="modal" data-ui-target="#modalTooltips">Open
                 Modal</button>
         </div>
-        <div id="modalTooltips" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalTooltipsTitle"
-            aria-hidden="true">
+        <div id="modalTooltips" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalTooltipsTitle" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content shadow">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalTooltipsTitle">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-ui-dismiss="modal" aria-label="Close">
                             <small class="icon-cancel" aria-hidden="true"></small>
                         </button>
                     </div>
                     <div class="modal-body">
                         <h4>Tooltip</h4>
-                        <button class="btn ripple btn-secondary" role="button" data-toggle="tooltip"
-                            data-title="This is a tooltip">Tooltip</button>
+                        <button class="btn ripple btn-secondary" role="button" data-ui-toggle="tooltip" data-ui-title="This is a tooltip">Tooltip</button>
                         <h4>Popover</h4>
-                        <button class="btn ripple btn-secondary" role="button" data-toggle="popover"
-                            data-content="Popover content would go here.. how cool!">
+                        <button class="btn ripple btn-secondary" role="button" data-ui-toggle="popover" data-ui-content="Popover content would go here.. how cool!">
                             Popover
                         </button>
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-success mb-0" role="button">Save</button>
-                        <button class="btn ripple btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn ripple btn-secondary mb-0" role="button" data-ui-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -201,23 +195,22 @@
 
         <h4>Sizes</h4>
         <div class="mb-4">
-            <button class="btn ripple btn-primary" role="button" data-toggle="modal" data-target="#modalSmall">Open
+            <button class="btn ripple btn-primary" role="button" data-ui-toggle="modal" data-ui-target="#modalSmall">Open
                 Small
                 Modal</button>
-            <button class="btn ripple btn-primary" role="button" data-toggle="modal" data-target="#modalLarge">Open
+            <button class="btn ripple btn-primary" role="button" data-ui-toggle="modal" data-ui-target="#modalLarge">Open
                 Large
                 Modal</button>
-            <button class="btn ripple btn-primary" role="button" data-toggle="modal" data-target="#modalXL">Open Extra
+            <button class="btn ripple btn-primary" role="button" data-ui-toggle="modal" data-ui-target="#modalXL">Open Extra
                 Large
                 Modal</button>
         </div>
-        <div id="modalSmall" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalSmallTitle"
-            aria-hidden="true">
+        <div id="modalSmall" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalSmallTitle" aria-hidden="true">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content shadow">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalSmallTitle">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-ui-dismiss="modal" aria-label="Close">
                             <small class="icon-cancel" aria-hidden="true"></small>
                         </button>
                     </div>
@@ -226,18 +219,17 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-success mb-0" role="button">Save</button>
-                        <button class="btn ripple btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn ripple btn-secondary mb-0" role="button" data-ui-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="modalLarge" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalLargeTitle"
-            aria-hidden="true">
+        <div id="modalLarge" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalLargeTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content shadow">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalLargeTitle">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-ui-dismiss="modal" aria-label="Close">
                             <small class="icon-cancel" aria-hidden="true"></small>
                         </button>
                     </div>
@@ -246,7 +238,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-success mb-0" role="button">Save</button>
-                        <button class="btn ripple btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn ripple btn-secondary mb-0" role="button" data-ui-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -256,7 +248,7 @@
                 <div class="modal-content shadow">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalXLTitle">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-ui-dismiss="modal" aria-label="Close">
                             <small class="icon-cancel" aria-hidden="true"></small>
                         </button>
                     </div>
@@ -265,7 +257,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-success mb-0" role="button">Save</button>
-                        <button class="btn ripple btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn ripple btn-secondary mb-0" role="button" data-ui-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -273,17 +265,16 @@
 
         <h4>Sides</h4>
         <div class="mb-4">
-            <button class="btn ripple btn-primary" role="button" data-toggle="modal" data-target="#modalLeft">Open Left
+            <button class="btn ripple btn-primary" role="button" data-ui-toggle="modal" data-ui-target="#modalLeft">Open Left
                 Modal</button>
-            <button class="btn ripple btn-primary" role="button" data-toggle="modal" data-target="#modalRight">Open
+            <button class="btn ripple btn-primary" role="button" data-ui-toggle="modal" data-ui-target="#modalRight">Open
                 Right Modal</button>
-            <div id="modalLeft" class="modal modal-left" tabindex="-1" role="dialog" aria-labelledby="modalLeftTitle"
-                aria-hidden="true">
+            <div id="modalLeft" class="modal modal-left" tabindex="-1" role="dialog" aria-labelledby="modalLeftTitle" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content shadow">
                         <div class="modal-header">
                             <h5 class="modal-title" id="modalLeftTitle">Modal title</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" class="close" data-ui-dismiss="modal" aria-label="Close">
                                 <small class="icon-cancel" aria-hidden="true"></small>
                             </button>
                         </div>
@@ -292,20 +283,18 @@
                         </div>
                         <div class="modal-footer">
                             <button class="btn ripple btn-success mb-0" role="button">Save</button>
-                            <button class="btn ripple btn-secondary mb-0" role="button"
-                                data-dismiss="modal">Cancel</button>
+                            <button class="btn ripple btn-secondary mb-0" role="button" data-ui-dismiss="modal">Cancel</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="modalRight" class="modal modal-right" tabindex="-1" role="dialog" aria-labelledby="modalRightTitle"
-            aria-hidden="true">
+        <div id="modalRight" class="modal modal-right" tabindex="-1" role="dialog" aria-labelledby="modalRightTitle" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content shadow">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalRightTitle">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-ui-dismiss="modal" aria-label="Close">
                             <small class="icon-cancel" aria-hidden="true"></small>
                         </button>
                     </div>
@@ -314,7 +303,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-success mb-0" role="button">Save</button>
-                        <button class="btn ripple btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn ripple btn-secondary mb-0" role="button" data-ui-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -322,16 +311,15 @@
 
         <h4>Fullscreen</h4>
         <div class="mb-4">
-            <button class="btn ripple btn-primary" role="button" data-toggle="modal" data-target="#modalFullscreen">Open
+            <button class="btn ripple btn-primary" role="button" data-ui-toggle="modal" data-ui-target="#modalFullscreen">Open
                 Modal</button>
         </div>
-        <div id="modalFullscreen" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalFullscreenTitle"
-            aria-hidden="true">
+        <div id="modalFullscreen" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalFullscreenTitle" aria-hidden="true">
             <div class="modal-dialog modal-fullscreen">
                 <div class="modal-content shadow">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalFullscreenTitle">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-ui-dismiss="modal" aria-label="Close">
                             <small class="icon-cancel" aria-hidden="true"></small>
                         </button>
                     </div>
@@ -340,18 +328,18 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-success mb-0" role="button">Save</button>
-                        <button class="btn ripple btn-secondary mb-0" role="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn ripple btn-secondary mb-0" role="button" data-ui-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <script>
-        const tooltips = dom.find('[data-toggle="tooltip"]');
+        const tooltips = dom.find('[data-ui-toggle="tooltip"]');
         for (const tooltip of tooltips) {
             UI.Tooltip.init(tooltip);
         }
-        const popovers = dom.find('[data-toggle="popover"]');
+        const popovers = dom.find('[data-ui-toggle="popover"]');
         for (const popover of popovers) {
             UI.Popover.init(popovers);
         }

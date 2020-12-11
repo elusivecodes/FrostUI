@@ -1,5 +1,5 @@
 // Button events
-dom.addEventDelegate(document, 'click.frost.button', '[data-toggle="button"]', e => {
+dom.addEventDelegate(document, 'click.ui.button', '[data-ui-toggle="button"]', e => {
     e.preventDefault();
 
     const button = Button.init(e.currentTarget);

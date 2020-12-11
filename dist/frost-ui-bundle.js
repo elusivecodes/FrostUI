@@ -10736,17 +10736,16 @@
         const UI = {};
 
         /**
-         * Alert Class
+         * BaseComponent Class
          * @class
          */
-        class Alert {
+        class BaseComponent {
 
             /**
-             * New Alert constructor.
+             * New BaseComponent constructor.
              * @param {HTMLElement} node The input node.
-             * @param {object} [settings] The options to create the Alert with.
-             * @param {number} [settings.duration=250] The duration of the animation.
-             * @returns {Alert} A new Alert object.
+             * @param {object} [settings] The options to create the BaseComponent with.
+             * @returns {BaseComponent} A new BaseComponent object.
              */
             constructor(node, settings) {
                 this._node = node;
@@ -10754,19 +10753,135 @@
                 this._settings = Core.extend(
                     {},
                     this.constructor.defaults,
-                    dom.getDataset(this._node),
+                    UI.getDataset(this._node),
                     settings
                 );
 
-                dom.setData(this._node, 'alert', this);
+                dom.addEvent(this._node, this.constructor.REMOVE_EVENT, _ => {
+                    this.destroy();
+                });
+
+                dom.setData(this._node, this.constructor.DATA_KEY, this);
             }
 
             /**
-             * Destroy the Alert.
+             * Destroy the BaseComponent.
              */
             destroy() {
-                dom.removeData(this._node, 'alert');
+                dom.removeEvent(this._node, this.constructor.REMOVE_EVENT);
+                dom.removeData(this._node, this.constructor.DATA_KEY);
+                this._node = null;
+                this._settings = null;
             }
+
+            /**
+             * Initialize a BaseComponent.
+             * @param {HTMLElement} node The input node.
+             * @returns {BaseComponent} A new BaseComponent object.
+             */
+            static init(node, ...args) {
+                return dom.hasData(node, this.DATA_KEY) ?
+                    dom.getData(node, this.DATA_KEY) :
+                    new this(node, ...args);
+            }
+
+        }
+
+        UI.BaseComponent = BaseComponent;
+
+
+        /**
+         * Get normalized UI data from a node.
+         * @param {HTMLElement} node The input node.
+         * @returns {object} The normalized data.
+         */
+        UI.getDataset = node => {
+            const dataset = dom.getDataset(node);
+
+            const uiDataset = {};
+
+            for (const key in dataset) {
+                if (/ui[A-Z]/.test(key)) {
+                    const realKey = key.slice(2, 3).toLowerCase() + key.slice(3);
+                    uiDataset[realKey] = dataset[key];
+                }
+            }
+
+            return uiDataset;
+        };
+
+        /**
+         * Get a target from a node.
+         * @param {HTMLElement} node The input node.
+         * @param {string} [closestSelector] The default closest selector.
+         * @return {HTMLElement} The target node.
+         */
+        UI.getTarget = (node, closestSelector) => {
+            const selector = UI.getTargetSelector(node);
+
+            let target;
+
+            if (selector && selector !== '#') {
+                target = dom.findOne(selector);
+            } else if (closestSelector) {
+                target = dom.closest(node, closestSelector).shift();
+            }
+
+            if (!target) {
+                throw new Error('Target not found');
+            }
+
+            return target;
+        };
+
+        /**
+         * Get the target selector from a node.
+         * @param {HTMLElement} node The input node.
+         * @return {string} The target selector.
+         */
+        UI.getTargetSelector = node =>
+            dom.getDataset(node, 'uiTarget') || dom.getAttribute(node, 'href');
+
+        /**
+         * Initialize a UI component.
+         * @param {string} key The component key.
+         * @param {class} component The component class.
+         */
+        UI.initComponent = (key, component) => {
+            component.DATA_KEY = key;
+            component.REMOVE_EVENT = `remove.ui.${key}`;
+
+            QuerySet.prototype[key] = function(a, ...args) {
+                let settings, method;
+
+                if (Core.isObject(a)) {
+                    settings = a;
+                } else if (Core.isString(a)) {
+                    method = a;
+                }
+
+                for (const node of this) {
+                    if (!Core.isElement(node)) {
+                        continue;
+                    }
+
+                    const instance = component.init(node, settings);
+
+                    if (method) {
+                        instance[method](...args);
+                    }
+                }
+
+                return this;
+            };
+        };
+
+
+        /**
+         * Alert Class
+         * @class
+         */
+        class Alert extends BaseComponent {
 
             /**
              * Close the Alert.
@@ -10774,7 +10889,7 @@
             close() {
                 if (
                     this._animating ||
-                    !dom.triggerOne(this._node, 'close.frost.alert')
+                    !dom.triggerOne(this._node, 'close.ui.alert')
                 ) {
                     return;
                 }
@@ -10784,31 +10899,18 @@
                 dom.fadeOut(this._node, {
                     duration: this._settings.duration
                 }).then(_ => {
-                    dom.triggerEvent(this._node, 'closed.frost.alert');
+                    dom.triggerEvent(this._node, 'closed.ui.alert');
                     dom.remove(this._node);
                 }).catch(_ => { }).finally(_ => {
                     this._animating = false;
                 });
             }
 
-            /**
-             * Initialize an Alert.
-             * @param {HTMLElement} node The input node.
-             * @param {object} [settings] The options to create the Alert with.
-             * @param {number} [settings.duration=250] The duration of the animation.
-             * @returns {Alert} A new Alert object.
-             */
-            static init(node, settings) {
-                return dom.hasData(node, 'alert') ?
-                    dom.getData(node, 'alert') :
-                    new this(node, settings);
-            }
-
         }
 
 
         // Alert events
-        dom.addEventDelegate(document, 'click.frost.alert', '[data-dismiss="alert"]', e => {
+        dom.addEventDelegate(document, 'click.ui.alert', '[data-ui-dismiss="alert"]', e => {
             e.preventDefault();
 
             const target = UI.getTarget(e.currentTarget, '.alert');
@@ -10822,32 +10924,7 @@
             duration: 100
         };
 
-        // Alert QuerySet method
-        if (QuerySet) {
-            QuerySet.prototype.alert = function(a, ...args) {
-                let settings, method;
-
-                if (Core.isObject(a)) {
-                    settings = a;
-                } else if (Core.isString(a)) {
-                    method = a;
-                }
-
-                for (const node of this) {
-                    if (!Core.isElement(node)) {
-                        continue;
-                    }
-
-                    const alert = Alert.init(node, settings);
-
-                    if (method) {
-                        alert[method](...args);
-                    }
-                }
-
-                return this;
-            };
-        }
+        UI.initComponent('alert', Alert);
 
         UI.Alert = Alert;
 
@@ -10856,33 +10933,7 @@
          * Button Class
          * @class
          */
-        class Button {
-
-            /**
-             * New Button constructor.
-             * @param {HTMLElement} node The input node.
-             * @param {object} [settings] The options to create the Button with.
-             * @returns {Button} A new Button object.
-             */
-            constructor(node, settings) {
-                this._node = node;
-
-                this._settings = Core.extend(
-                    {},
-                    this.constructor.defaults,
-                    dom.getDataset(this._node),
-                    settings
-                );
-
-                dom.setData(this._node, 'button', this);
-            }
-
-            /**
-             * Destroy the Button.
-             */
-            destroy() {
-                dom.removeData(this._node, 'button');
-            }
+        class Button extends BaseComponent {
 
             /**
              * Toggle the Button.
@@ -10894,23 +10945,11 @@
                 dom.setAttribute('aria-pressed', pressed);
             }
 
-            /**
-             * Initialize a Button.
-             * @param {HTMLElement} node The input node.
-             * @param {object} [settings] The options to create the Button with.
-             * @returns {Button} A new Button object.
-             */
-            static init(node, settings) {
-                return dom.hasData(node, 'button') ?
-                    dom.getData(node, 'button') :
-                    new this(node, settings);
-            }
-
         }
 
 
         // Button events
-        dom.addEventDelegate(document, 'click.frost.button', '[data-toggle="button"]', e => {
+        dom.addEventDelegate(document, 'click.ui.button', '[data-ui-toggle="button"]', e => {
             e.preventDefault();
 
             const button = Button.init(e.currentTarget);
@@ -10921,32 +10960,7 @@
         // Button default settings
         Button.defaults = {};
 
-        // Button QuerySet method
-        if (QuerySet) {
-            QuerySet.prototype.button = function(a, ...args) {
-                let settings, method;
-
-                if (Core.isObject(a)) {
-                    settings = a;
-                } else if (Core.isString(a)) {
-                    method = a;
-                }
-
-                for (const node of this) {
-                    if (!Core.isElement(node)) {
-                        continue;
-                    }
-
-                    const button = Button.init(node, settings);
-
-                    if (method) {
-                        button[method](...args);
-                    }
-                }
-
-                return this;
-            };
-        }
+        UI.initComponent('button', Button);
 
         UI.Button = Button;
 
@@ -10955,29 +10969,16 @@
          * Carousel Class
          * @class
          */
-        class Carousel {
+        class Carousel extends BaseComponent {
 
             /**
              * New Carousel constructor.
              * @param {HTMLElement} node The input node.
              * @param {object} [settings] The options to create the Carousel with.
-             * @param {number} [settings.interval=5000] The duration of the interval.
-             * @param {number} [settings.transition=500] The duration of the transition.
-             * @param {Boolean} [settings.keyboard=true] Whether to all keyboard navigation.
-             * @param {Boolean|string} [settings.ride=false] Set to "carousel" to automatically start the carousel.
-             * @param {Boolean} [settings.pause=true] Whether to pause the carousel on mouseover.
-             * @param {Boolean} [settings.wrap=true] Whether the carousel should cycle around.
              * @returns {Carousel} A new Carousel object.
              */
             constructor(node, settings) {
-                this._node = node;
-
-                this._settings = Core.extend(
-                    {},
-                    this.constructor.defaults,
-                    dom.getDataset(this._node),
-                    settings
-                );
+                super(node, settings);
 
                 this._items = dom.find('.carousel-item', this._node);
 
@@ -10986,8 +10987,6 @@
                 );
 
                 this._events();
-
-                dom.setData(this._node, 'carousel', this);
 
                 if (this._settings.ride === 'carousel') {
                     this._setTimer();
@@ -11012,17 +11011,15 @@
                 }
 
                 if (this._settings.keyboard) {
-                    dom.removeEvent(this._node, 'keydown.frost.carousel');
+                    dom.removeEvent(this._node, 'keydown.ui.carousel');
                 }
 
                 if (this._settings.pause) {
-                    dom.removeEvent(this._node, 'mouseenter.frost.carousel');
-                    dom.removeEvent(this._node, 'mouseleave.frost.carousel');
+                    dom.removeEvent(this._node, 'mouseenter.ui.carousel');
+                    dom.removeEvent(this._node, 'mouseleave.ui.carousel');
                 }
 
-                dom.removeEvent(this._node, 'remove.frost.carousel');
-
-                dom.removeData(this._node, 'carousel');
+                super.destroy();
             }
 
             /**
@@ -11063,42 +11060,40 @@
                 this.show(this._index + direction);
             }
 
-            /**
-             * Initialize a Carousel.
-             * @param {HTMLElement} node The input node.
-             * @param {object} [settings] The options to create the Carousel with.
-             * @param {number} [settings.interval=5000] The duration of the interval.
-             * @param {number} [settings.transition=500] The duration of the transition.
-             * @param {Boolean} [settings.keyboard=true] Whether to all keyboard navigation.
-             * @param {Boolean|string} [settings.ride=false] Set to "carousel" to automatically start the carousel.
-             * @param {Boolean} [settings.pause=true] Whether to pause the carousel on mouseover.
-             * @param {Boolean} [settings.wrap=true] Whether the carousel should cycle around.
-             * @returns {Carousel} A new Carousel object.
-             */
-            static init(node, settings) {
-                return dom.hasData(node, 'carousel') ?
-                    dom.getData(node, 'carousel') :
-                    new this(node, settings);
-            }
-
         }
 
 
         // Carousel events
-        dom.addEventDelegate(document, 'click.frost.carousel', '.carousel-next, .carousel-prev, [data-slide], [data-slide-to]', e => {
+        dom.addEventOnce(window, 'load', _ => {
+            const nodes = dom.find('[data-ui-ride="carousel"]');
+
+            for (const node of nodes) {
+                Carousel.init(node);
+            }
+        });
+
+        dom.addEventDelegate(document, 'click.ui.carousel', '[data-ui-slide]', e => {
             e.preventDefault();
 
             const target = UI.getTarget(e.currentTarget, '.carousel');
             const carousel = Carousel.init(target);
-            const slideTo = dom.getDataset(e.currentTarget, 'slideTo');
+            const slide = dom.getDataset(e.currentTarget, 'uiSlide');
 
-            if (!Core.isUndefined(slideTo)) {
-                carousel.show(slideTo);
-            } else if (dom.hasClass(e.currentTarget, 'carousel-control-prev')) {
+            if (slide === 'prev') {
                 carousel.prev();
             } else {
                 carousel.next();
             }
+        });
+
+        dom.addEventDelegate(document, 'click.ui.carousel', '[data-ui-slide-to]', e => {
+            e.preventDefault();
+
+            const target = UI.getTarget(e.currentTarget, '.carousel');
+            const carousel = Carousel.init(target);
+            const slideTo = dom.getDataset(e.currentTarget, 'uiSlideTo');
+
+            carousel.show(slideTo);
         });
 
 
@@ -11113,8 +11108,7 @@
              */
             _events() {
                 if (this._settings.keyboard) {
-                    console.log(this._node);
-                    dom.addEvent(this._node, 'keydown.frost.carousel', e => {
+                    dom.addEvent(this._node, 'keydown.ui.carousel', e => {
                         const target = e.target;
                         if (dom.is(target, 'input, select')) {
                             return;
@@ -11134,18 +11128,14 @@
                 }
 
                 if (this._settings.pause) {
-                    dom.addEvent(this._node, 'mouseenter.frost.carousel', _ => {
+                    dom.addEvent(this._node, 'mouseenter.ui.carousel', _ => {
                         this.pause();
                     });
 
-                    dom.addEvent(this._node, 'mouseleave.frost.carousel', _ => {
+                    dom.addEvent(this._node, 'mouseleave.ui.carousel', _ => {
                         this._setTimer();
                     });
                 }
-
-                dom.addEvent(this._node, 'remove.frost.carousel', _ => {
-                    this.destroy();
-                });
             },
 
             /**
@@ -11156,7 +11146,7 @@
                     return;
                 }
 
-                const interval = dom.getDataset(this._items[this._index], 'interval');
+                const interval = dom.getDataset(this._items[this._index], 'uiInterval');
 
                 this._timer = setTimeout(
                     _ => this.cycle(),
@@ -11211,7 +11201,7 @@
                     to: index
                 };
 
-                if (!dom.triggerOne(this._node, 'slide.frost.carousel', eventData)) {
+                if (!dom.triggerOne(this._node, 'slide.ui.carousel', eventData)) {
                     return;
                 }
 
@@ -11233,11 +11223,11 @@
                         duration: this._settings.transition
                     }
                 ).then(_ => {
-                    const oldIndicator = dom.find('.active[data-slide-to]', this._node);
-                    const newIndicator = dom.find('[data-slide-to="' + this._index + '"]', this._node);
+                    const oldIndicator = dom.find('.active[data-ui-slide-to]', this._node);
+                    const newIndicator = dom.find('[data-ui-slide-to="' + this._index + '"]', this._node);
                     dom.removeClass(oldIndicator, 'active');
                     dom.addClass(newIndicator, 'active');
-                    dom.triggerEvent(this._node, 'slid.frost.carousel', eventData);
+                    dom.triggerEvent(this._node, 'slid.ui.carousel', eventData);
 
                     this._setTimer();
                 }).finally(_ => {
@@ -11285,41 +11275,7 @@
             wrap: true
         };
 
-        // Carousel init
-        dom.addEventOnce(window, 'load', _ => {
-            const nodes = dom.find('[data-ride="carousel"]');
-
-            for (const node of nodes) {
-                Carousel.init(node);
-            }
-        });
-
-        // Carousel QuerySet method
-        if (QuerySet) {
-            QuerySet.prototype.carousel = function(a, ...args) {
-                let settings, method;
-
-                if (Core.isObject(a)) {
-                    settings = a;
-                } else if (Core.isString(a)) {
-                    method = a;
-                }
-
-                for (const node of this) {
-                    if (!Core.isElement(node)) {
-                        continue;
-                    }
-
-                    const carousel = Carousel.init(node, settings);
-
-                    if (method) {
-                        carousel[method](...args);
-                    }
-                }
-
-                return this;
-            };
-        }
+        UI.initComponent('carousel', Carousel);
 
         UI.Carousel = Carousel;
 
@@ -11328,44 +11284,25 @@
          * Collapse Class
          * @class
          */
-        class Collapse {
+        class Collapse extends BaseComponent {
 
             /**
              * New Collapse constructor.
              * @param {HTMLElement} node The input node.
              * @param {object} [settings] The options to create the Collapse with.
-             * @param {string} [settings.direction=bottom] The direction to collapse the targets from/to.
-             * @param {number} [settings.duration=300] The duration of the animation.
              * @returns {Collapse} A new Collapse object.
              */
             constructor(node, settings) {
-                this._node = node;
+                super(node, settings);
 
                 const id = this._node.getAttribute('id');
                 this._triggers = dom.find(
-                    `[data-toggle="collapse"][data-target="#${id}"]`
-                );
-                console.log(this._triggers);
-
-                this._settings = Core.extend(
-                    {},
-                    this.constructor.defaults,
-                    dom.getDataset(this._node),
-                    settings
+                    `[data-ui-toggle="collapse"][data-ui-target="#${id}"]`
                 );
 
                 if (this._settings.parent) {
                     this._parent = dom.findOne(this._settings.parent);
                 }
-
-                dom.setData(this._node, 'collapse', this);
-            }
-
-            /**
-             * Destroy the Collapse.
-             */
-            destroy() {
-                dom.removeData(this._node, 'collapse');
             }
 
             /**
@@ -11375,7 +11312,7 @@
                 if (
                     this._animating ||
                     !dom.hasClass(this._node, 'show') ||
-                    !dom.triggerOne(this._node, 'hide.frost.collapse')
+                    !dom.triggerOne(this._node, 'hide.ui.collapse')
                 ) {
                     return;
                 }
@@ -11389,7 +11326,7 @@
                 }).then(_ => {
                     dom.removeClass(this._node, 'show');
                     dom.setAttribute(this._triggers, 'aria-expanded', false);
-                    dom.triggerEvent(this._node, 'hidden.frost.collapse');
+                    dom.triggerEvent(this._node, 'hidden.ui.collapse');
                 }).catch(_ => { }).finally(_ => {
                     this._animating = false;
                 });
@@ -11424,7 +11361,7 @@
                     }
                 }
 
-                if (!dom.triggerOne(this._node, 'show.frost.collapse')) {
+                if (!dom.triggerOne(this._node, 'show.ui.collapse')) {
                     return;
                 }
 
@@ -11441,7 +11378,7 @@
                     duration: this._settings.duration
                 }).then(_ => {
                     dom.setAttribute(this._triggers, 'aria-expanded', true);
-                    dom.triggerEvent(this._node, 'shown.frost.collapse');
+                    dom.triggerEvent(this._node, 'shown.ui.collapse');
                 }).catch(_ => { }).finally(_ => {
                     this._animating = false;
                 });
@@ -11456,25 +11393,11 @@
                     this.show();
             }
 
-            /**
-             * Initialize a Collapse.
-             * @param {HTMLElement} node The input node.
-             * @param {object} [settings] The options to create the Collapse with.
-             * @param {string} [settings.direction=bottom] The direction to collapse the targets from/to.
-             * @param {number} [settings.duration=300] The duration of the animation.
-             * @returns {Collapse} A new Collapse object.
-             */
-            static init(node, settings) {
-                return dom.hasData(node, 'collapse') ?
-                    dom.getData(node, 'collapse') :
-                    new this(node, settings);
-            }
-
         }
 
 
         // Collapse events
-        dom.addEventDelegate(document, 'click.frost.collapse', '[data-toggle="collapse"]', e => {
+        dom.addEventDelegate(document, 'click.ui.collapse', '[data-ui-toggle="collapse"]', e => {
             e.preventDefault();
 
             const selector = UI.getTargetSelector(e.currentTarget);
@@ -11493,32 +11416,7 @@
             duration: 250
         };
 
-        // Collapse QuerySet method
-        if (QuerySet) {
-            QuerySet.prototype.collapse = function(a, ...args) {
-                let options, method;
-
-                if (Core.isObject(a)) {
-                    options = a;
-                } else if (Core.isString(a)) {
-                    method = a;
-                }
-
-                for (const node of this) {
-                    if (!Core.isElement(node)) {
-                        continue;
-                    }
-
-                    const collapse = Collapse.init(node, options);
-
-                    if (method) {
-                        collapse[method](...args);
-                    }
-                }
-
-                return this;
-            };
-        }
+        UI.initComponent('collapse', Collapse);
 
         UI.Collapse = Collapse;
 
@@ -11527,29 +11425,16 @@
          * Dropdown Class
          * @class
          */
-        class Dropdown {
+        class Dropdown extends BaseComponent {
 
             /**
              * New Dropdown constructor.
              * @param {HTMLElement} node The input node.
              * @param {object} [settings] The options to create the Dropdown with.
-             * @param {number} [settings.duration=100] The duration of the animation.
-             * @param {string} [settings.placement=bottom] The placement of the dropdown relative to the toggle.
-             * @param {string} [settings.position=start] The position of the dropdown relative to the toggle.
-             * @param {Boolean} [settings.fixed=false] Whether the dropdown position is fixed.
-             * @param {number} [settings.spacing=2] The spacing between the dropdown and the toggle.
-             * @param {number} [settings.minContact=false] The minimum amount of contact the dropdown must make with the toggle.
              * @returns {Dropdown} A new Dropdown object.
              */
             constructor(node, settings) {
-                this._node = node;
-
-                this._settings = Core.extend(
-                    {},
-                    this.constructor.defaults,
-                    dom.getDataset(this._node),
-                    settings
-                );
+                super(node, settings);
 
                 this._menuNode = dom.next(this._node, '.dropdown-menu').shift();
 
@@ -11581,12 +11466,6 @@
                         }
                     );
                 }
-
-                dom.addEvent(this._node, 'remove.frost.dropdown', _ => {
-                    this.destroy();
-                });
-
-                dom.setData(this._node, 'dropdown', this);
             }
 
             /**
@@ -11597,9 +11476,9 @@
                     this._popper.destroy();
                 }
 
-                dom.removeEvent(this._node, 'keyup.frost.dropdown');
-                dom.removeEvent(this._node, 'remove.frost.dropdown');
-                dom.removeData(this._node, 'dropdown');
+                dom.removeEvent(this._node, 'keyup.ui.dropdown');
+
+                super.destroy();
             }
 
             /**
@@ -11609,7 +11488,7 @@
                 if (
                     this._animating ||
                     !dom.hasClass(this._menuNode, 'show') ||
-                    !dom.triggerOne(this._node, 'hide.frost.dropdown')
+                    !dom.triggerOne(this._node, 'hide.ui.dropdown')
                 ) {
                     return;
                 }
@@ -11621,7 +11500,7 @@
                 }).then(_ => {
                     dom.removeClass(this._menuNode, 'show');
                     dom.setAttribute(this._node, 'aria-expanded', false);
-                    dom.triggerEvent(this._node, 'hidden.frost.dropdown');
+                    dom.triggerEvent(this._node, 'hidden.ui.dropdown');
                 }).catch(_ => { }).finally(_ => {
                     this._animating = false;
                 });
@@ -11634,7 +11513,7 @@
                 if (
                     this._animating ||
                     dom.hasClass(this._menuNode, 'show') ||
-                    !dom.triggerOne(this._node, 'show.frost.dropdown')
+                    !dom.triggerOne(this._node, 'show.ui.dropdown')
                 ) {
                     return;
                 }
@@ -11646,7 +11525,7 @@
                     duration: this._settings.duration
                 }).then(_ => {
                     dom.setAttribute(this._node, 'aria-expanded', true);
-                    dom.triggerEvent(this._node, 'shown.frost.dropdown');
+                    dom.triggerEvent(this._node, 'shown.ui.dropdown');
                 }).catch(_ => { }).finally(_ => {
                     this._animating = false;
                 });
@@ -11659,6 +11538,17 @@
                 dom.hasClass(this._menuNode, 'show') ?
                     this.hide() :
                     this.show();
+            }
+
+            /**
+             * Update the Dropdown position.
+             */
+            update() {
+                if (this._settings.display === 'dynamic') {
+                    return;
+                }
+
+                this._popper.update();
             }
 
             /**
@@ -11696,29 +11586,11 @@
                 }
             }
 
-            /**
-             * Initialize a Dropdown.
-             * @param {HTMLElement} node The input node.
-             * @param {object} [settings] The options to create the Dropdown with.
-             * @param {number} [settings.duration=100] The duration of the animation.
-             * @param {string} [settings.placement=bottom] The placement of the dropdown relative to the toggle.
-             * @param {string} [settings.position=start] The position of the dropdown relative to the toggle.
-             * @param {Boolean} [settings.fixed=false] Whether the dropdown position is fixed.
-             * @param {number} [settings.spacing=2] The spacing between the dropdown and the toggle.
-             * @param {number} [settings.minContact=false] The minimum amount of contact the dropdown must make with the toggle.
-             * @returns {Dropdown} A new Dropdown object.
-             */
-            static init(node, settings) {
-                return dom.hasData(node, 'dropdown') ?
-                    dom.getData(node, 'dropdown') :
-                    new this(node, settings);
-            }
-
         }
 
 
         // Dropdown events
-        dom.addEventDelegate(document, 'click.frost.dropdown keyup.frost.dropdown', '[data-toggle="dropdown"]', e => {
+        dom.addEventDelegate(document, 'click.ui.dropdown keyup.ui.dropdown', '[data-ui-toggle="dropdown"]', e => {
             if (e.key && e.key !== ' ') {
                 return;
             }
@@ -11729,7 +11601,7 @@
             dropdown.toggle();
         });
 
-        dom.addEventDelegate(document, 'keydown.frost.dropdown', '[data-toggle="dropdown"]', e => {
+        dom.addEventDelegate(document, 'keydown.ui.dropdown', '[data-ui-toggle="dropdown"]', e => {
             switch (e.key) {
                 case 'ArrowDown':
                 case 'ArrowUp':
@@ -11748,7 +11620,7 @@
             }
         });
 
-        dom.addEventDelegate(document, 'keydown.frost.dropdown', '.dropdown-menu.show .dropdown-item', e => {
+        dom.addEventDelegate(document, 'keydown.ui.dropdown', '.dropdown-menu.show .dropdown-item', e => {
             let focusNode;
 
             switch (e.key) {
@@ -11767,11 +11639,11 @@
             dom.focus(focusNode);
         });
 
-        dom.addEvent(document, 'click.frost.dropdown', e => {
+        dom.addEvent(document, 'click.ui.dropdown', e => {
             Dropdown.autoHide(e.target);
         });
 
-        dom.addEvent(document, 'keyup.frost.dropdown', e => {
+        dom.addEvent(document, 'keyup.ui.dropdown', e => {
             switch (e.key) {
                 case 'Tab':
                     Dropdown.autoHide(e.target, true);
@@ -11794,95 +11666,25 @@
             minContact: false
         };
 
-        // Dropdown QuerySet method
-        if (QuerySet) {
-            QuerySet.prototype.dropdown = function(a, ...args) {
-                let settings, method;
-
-                if (Core.isObject(a)) {
-                    settings = a;
-                } else if (Core.isString(a)) {
-                    method = a;
-                }
-
-                for (const node of this) {
-                    if (!Core.isElement(node)) {
-                        continue;
-                    }
-
-                    const dropdown = Dropdown.init(node, settings);
-
-                    if (method) {
-                        dropdown[method](...args);
-                    }
-                }
-
-                return this;
-            };
-        }
+        UI.initComponent('dropdown', Dropdown);
 
         UI.Dropdown = Dropdown;
-
-
-        /**
-         * Get a target from a node.
-         * @param {HTMLElement} node The input node.
-         * @param {string} [closestSelector] The default closest selector.
-         * @return {HTMLElement} The target node.
-         */
-        UI.getTarget = (node, closestSelector) => {
-            const selector = UI.getTargetSelector(node);
-
-            let target;
-
-            if (selector && selector !== '#') {
-                target = dom.findOne(selector);
-            } else if (closestSelector) {
-                target = dom.closest(node, closestSelector).shift();
-            }
-
-            if (!target) {
-                throw new Error('Target not found');
-            }
-
-            return target;
-        };
-
-        /**
-         * Get the target selector from a node.
-         * @param {HTMLElement} node The input node.
-         * @return {string} The target selector.
-         */
-        UI.getTargetSelector = node =>
-            dom.getDataset(node, 'target') || dom.getAttribute(node, 'href');
 
 
         /**
          * Modal Class
          * @class
          */
-        class Modal {
+        class Modal extends BaseComponent {
 
             /**
              * New Modal constructor.
              * @param {HTMLElement} node The input node.
              * @param {object} [settings] The options to create the Modal with.
-             * @param {number} [settings.duration=250] The duration of the animation.
-             * @param {Boolean} [settings.backdrop=true] Whether to display a backdrop for the modal.
-             * @param {Boolean} [settings.focus=true] Whether to set focus on the modal when shown.
-             * @param {Boolean} [settings.show=true] Whether to show the modal on initialization.
-             * @param {Boolean} [settings.keyboard=true] Whether to close the modal when the escape key is pressed.
              * @returns {Modal} A new Modal object.
              */
             constructor(node, settings) {
-                this._node = node;
-
-                this._settings = Core.extend(
-                    {},
-                    this.constructor.defaults,
-                    dom.getDataset(node),
-                    settings
-                );
+                super(node, settings);
 
                 this._dialog = dom.child(this._node, '.modal-dialog').shift();
 
@@ -11897,15 +11699,6 @@
                 if (this._settings.show) {
                     this.show();
                 }
-
-                dom.setData(this._node, 'modal', this);
-            }
-
-            /**
-             * Destroy the Modal.
-             */
-            destroy() {
-                dom.removeData(this._node, 'modal');
             }
 
             /**
@@ -11915,7 +11708,7 @@
                 if (
                     this._animating ||
                     !dom.hasClass(this._node, 'show') ||
-                    !dom.triggerOne(this._node, 'hide.frost.modal')
+                    !dom.triggerOne(this._node, 'hide.ui.modal')
                 ) {
                     return;
                 }
@@ -11934,22 +11727,22 @@
                         duration: this._settings.duration
                     })
                 ]).then(_ => {
-                    if (this._settings.backdrop) {
-                        dom.remove(this._backdrop);
-                        this._backdrop = null;
-                    }
-
                     dom.removeAttribute(this._node, 'aria-modal');
                     dom.setAttribute(this._node, 'aria-hidden', true);
 
                     dom.removeClass(this._node, 'show');
                     dom.removeClass(document.body, 'modal-open');
 
+                    if (this._settings.backdrop) {
+                        dom.remove(this._backdrop);
+                        this._backdrop = null;
+                    }
+
                     if (this._activeTarget) {
                         dom.focus(this._activeTarget);
                     }
 
-                    dom.triggerEvent(this._node, 'hidden.frost.modal');
+                    dom.triggerEvent(this._node, 'hidden.ui.modal');
                 }).catch(_ => { }).finally(_ => {
                     this._animating = false;
                 });
@@ -11963,16 +11756,9 @@
                 if (
                     this._animating ||
                     dom.hasClass(this._node, 'show') ||
-                    !dom.triggerOne(this._node, 'show.frost.modal')
+                    !dom.triggerOne(this._node, 'show.ui.modal')
                 ) {
                     return;
-                }
-
-                if (this._settings.backdrop) {
-                    this._backdrop = dom.create('div', {
-                        class: 'modal-backdrop'
-                    });
-                    dom.append(document.body, this._backdrop);
                 }
 
                 this._activeTarget = activeTarget;
@@ -11980,6 +11766,13 @@
 
                 dom.addClass(this._node, 'show');
                 dom.addClass(document.body, 'modal-open');
+
+                if (this._settings.backdrop) {
+                    this._backdrop = dom.create('div', {
+                        class: 'modal-backdrop'
+                    });
+                    dom.append(document.body, this._backdrop);
+                }
 
                 Promise.all([
                     dom.fadeIn(this._dialog, {
@@ -12000,7 +11793,7 @@
                         dom.focus(this._node);
                     }
 
-                    dom.triggerEvent(this._node, 'shown.frost.modal');
+                    dom.triggerEvent(this._node, 'shown.ui.modal');
                 }).catch(_ => { }).finally(_ => {
                     this._animating = false;
                 });
@@ -12015,28 +11808,11 @@
                     this.show();
             }
 
-            /**
-             * Initialize a Modal.
-             * @param {HTMLElement} node The input node.
-             * @param {object} [settings] The options to create the Modal with.
-             * @param {number} [settings.duration=250] The duration of the animation.
-             * @param {Boolean} [settings.backdrop=true] Whether to display a backdrop for the modal.
-             * @param {Boolean} [settings.focus=true] Whether to set focus on the modal when shown.
-             * @param {Boolean} [settings.show=true] Whether to show the modal on initialization.
-             * @param {Boolean} [settings.keyboard=true] Whether to close the modal when the escape key is pressed.
-             * @returns {Modal} A new Modal object.
-             */
-            static init(node, settings) {
-                return dom.hasData(node, 'modal') ?
-                    dom.getData(node, 'modal') :
-                    new this(node, settings);
-            }
-
         }
 
 
         // Modal events
-        dom.addEventDelegate(document, 'click.frost.modal', '[data-toggle="modal"]', e => {
+        dom.addEventDelegate(document, 'click.ui.modal', '[data-ui-toggle="modal"]', e => {
             e.preventDefault();
 
             const target = UI.getTarget(e.currentTarget, '.modal');
@@ -12044,7 +11820,7 @@
             modal.show(e.currentTarget);
         });
 
-        dom.addEventDelegate(document, 'click.frost.modal', '[data-dismiss="modal"]', e => {
+        dom.addEventDelegate(document, 'click.ui.modal', '[data-ui-dismiss="modal"]', e => {
             e.preventDefault();
 
             const target = UI.getTarget(e.currentTarget, '.modal');
@@ -12052,7 +11828,7 @@
             modal.hide();
         });
 
-        dom.addEvent(document, 'click.frost.modal', e => {
+        dom.addEvent(document, 'click.ui.modal', e => {
             const backdrop = dom.findOne('.modal-backdrop');
 
             if (!backdrop) {
@@ -12076,7 +11852,7 @@
             }
         });
 
-        dom.addEvent(document, 'keyup.frost.modal', e => {
+        dom.addEvent(document, 'keyup.ui.modal', e => {
             if (e.key !== 'Escape') {
                 return;
             }
@@ -12104,32 +11880,7 @@
             keyboard: true
         };
 
-        // Modal QuerySet method
-        if (QuerySet) {
-            QuerySet.prototype.modal = function(a, ...args) {
-                let settings, method;
-
-                if (Core.isObject(a)) {
-                    settings = a;
-                } else if (Core.isString(a)) {
-                    method = a;
-                }
-
-                for (const node of this) {
-                    if (!Core.isElement(node)) {
-                        continue;
-                    }
-
-                    const modal = Modal.init(node, settings);
-
-                    if (method) {
-                        modal[method](...args);
-                    }
-                }
-
-                return this;
-            };
-        }
+        UI.initComponent('modal', Modal);
 
         UI.Modal = Modal;
 
@@ -12138,34 +11889,16 @@
          * Popover Class
          * @class
          */
-        class Popover {
+        class Popover extends BaseComponent {
 
             /**
              * New Popover constructor.
              * @param {HTMLElement} node The input node.
              * @param {object} [settings] The options to create the Popover with.
-             * @param {string} [settings.template] The HTML template for the popover.
-             * @param {number} [settings.duration=100] The duration of the animation.
-             * @param {Boolean} [settings.enable=true] Whether the popover is enabled.
-             * @param {Boolean} [settings.html=false] Whether to allow HTML in the popover.
-             * @param {function} [settings.sanitize] The HTML sanitization function.
-             * @param {string} [settings.trigger=click] The events to trigger the popover.
-             * @param {string} [settings.placement=auto] The placement of the popover relative to the toggle.
-             * @param {string} [settings.position=center] The position of the popover relative to the toggle.
-             * @param {Boolean} [settings.fixed=false] Whether the popover position is fixed.
-             * @param {number} [settings.spacing=7] The spacing between the popover and the toggle.
-             * @param {number} [settings.minContact=false] The minimum amount of contact the popover must make with the toggle.
              * @returns {Popover} A new Popover object.
              */
             constructor(node, settings) {
-                this._node = node;
-
-                this._settings = Core.extend(
-                    {},
-                    this.constructor.defaults,
-                    dom.getDataset(this._node),
-                    settings
-                );
+                super(node, settings);
 
                 this._modal = dom.closest(this._node, '.modal').shift();
 
@@ -12177,8 +11910,6 @@
                 if (this._settings.enable) {
                     this.enable();
                 }
-
-                dom.setData(this._node, 'popover', this);
             }
 
             /**
@@ -12192,24 +11923,24 @@
                 dom.remove(this._popover);
 
                 if (this._triggers.includes('hover')) {
-                    dom.removeEvent(this._node, 'mouseover.frost.popover');
-                    dom.removeEvent(this._node, 'mouseout.frost.popover');
+                    dom.removeEvent(this._node, 'mouseover.ui.popover');
+                    dom.removeEvent(this._node, 'mouseout.ui.popover');
                 }
 
                 if (this._triggers.includes('focus')) {
-                    dom.removeEvent(this._node, 'focus.frost.popover');
-                    dom.removeEvent(this._node, 'blur.frost.popover');
+                    dom.removeEvent(this._node, 'focus.ui.popover');
+                    dom.removeEvent(this._node, 'blur.ui.popover');
                 }
 
                 if (this._triggers.includes('click')) {
-                    dom.removeEvent(this._node, 'click.frost.popover');
+                    dom.removeEvent(this._node, 'click.ui.popover');
                 }
 
                 if (this._modal) {
-                    dom.removeEvent(this._modal, 'hide.frost.modal', this._hideModalEvent);
+                    dom.removeEvent(this._modal, 'hide.ui.modal', this._hideModalEvent);
                 }
 
-                dom.removeData(this._node, 'popover', this);
+                super.destroy();
             }
 
             /**
@@ -12230,13 +11961,17 @@
              * Hide the Popover.
              */
             hide() {
+                if (!this._enabled) {
+                    return;
+                }
+
                 if (this._animating) {
                     dom.stop(this._popover);
                 }
 
                 if (
                     !dom.isConnected(this._popover) ||
-                    !dom.triggerOne(this._node, 'hide.frost.popover')
+                    !dom.triggerOne(this._node, 'hide.ui.popover')
                 ) {
                     return;
                 }
@@ -12249,7 +11984,7 @@
                     this._popper.destroy();
                     dom.removeClass(this._popover, 'show');
                     dom.detach(this._popover);
-                    dom.triggerEvent(this._node, 'hidden.frost.popover');
+                    dom.triggerEvent(this._node, 'hidden.ui.popover');
                 }).catch(_ => { }).finally(_ => {
                     this._animating = false;
                 });
@@ -12259,26 +11994,29 @@
              * Show the Popover.
              */
             show() {
+                if (!this._enabled) {
+                    return;
+                }
+
                 if (this._animating) {
                     dom.stop(this._popover);
                 }
 
                 if (
                     dom.isConnected(this._popover) ||
-                    !dom.triggerOne(this._node, 'show.frost.popover')
+                    !dom.triggerOne(this._node, 'show.ui.popover')
                 ) {
                     return;
                 }
 
-                this._show();
-
                 this._animating = true;
                 dom.addClass(this._popover, 'show');
+                this._show();
 
                 dom.fadeIn(this._popover, {
                     duration: this._settings.duration
                 }).then(_ => {
-                    dom.triggerEvent(this._node, 'shown.frost.popover');
+                    dom.triggerEvent(this._node, 'shown.ui.popover');
                 }).catch(_ => { }).finally(_ => {
                     this._animating = false;
                 });
@@ -12297,32 +12035,11 @@
              * Update the Popover position.
              */
             update() {
-                if (this._popper) {
-                    this._popper.update();
+                if (!this._popper) {
+                    return;
                 }
-            }
 
-            /**
-             * Initialize a Popover.
-             * @param {HTMLElement} node The input node.
-             * @param {object} [settings] The options to create the Popover with.
-             * @param {string} [settings.template] The HTML template for the popover.
-             * @param {number} [settings.duration=100] The duration of the animation.
-             * @param {Boolean} [settings.enable=true] Whether the popover is enabled.
-             * @param {Boolean} [settings.html=false] Whether to allow HTML in the popover.
-             * @param {function} [settings.sanitize] The HTML sanitization function.
-             * @param {string} [settings.trigger=click] The events to trigger the popover.
-             * @param {string} [settings.placement=auto] The placement of the popover relative to the toggle.
-             * @param {string} [settings.position=center] The position of the popover relative to the toggle.
-             * @param {Boolean} [settings.fixed=false] Whether the popover position is fixed.
-             * @param {number} [settings.spacing=7] The spacing between the popover and the toggle.
-             * @param {number} [settings.minContact=false] The minimum amount of contact the popover must make with the toggle.
-             * @returns {Popover} A new Popover object.
-             */
-            static init(node, settings) {
-                return dom.hasData(node, 'popover') ?
-                    dom.getData(node, 'popover') :
-                    new this(node, settings);
+                this._popper.update();
             }
 
         }
@@ -12339,59 +12056,37 @@
              */
             _events() {
                 if (this._triggers.includes('hover')) {
-                    dom.addEvent(this._node, 'mouseover.frost.popover', _ => {
-                        if (!this._enabled) {
-                            return;
-                        }
-
+                    dom.addEvent(this._node, 'mouseover.ui.popover', _ => {
                         this.show();
                     });
 
-                    dom.addEvent(this._node, 'mouseout.frost.popover', _ => {
-                        if (!this._enabled) {
-                            return;
-                        }
-
+                    dom.addEvent(this._node, 'mouseout.ui.popover', _ => {
                         this.hide();
                     });
                 }
 
                 if (this._triggers.includes('focus')) {
-                    dom.addEvent(this._node, 'focus.frost.popover', _ => {
-                        if (!this._enabled) {
-                            return;
-                        }
-
+                    dom.addEvent(this._node, 'focus.ui.popover', _ => {
                         this.show();
                     });
 
-                    dom.addEvent(this._node, 'blur.frost.popover', _ => {
-                        if (!this._enabled) {
-                            return;
-                        }
-
+                    dom.addEvent(this._node, 'blur.ui.popover', _ => {
                         this.hide();
                     });
                 }
 
                 if (this._triggers.includes('click')) {
-                    dom.addEvent(this._node, 'click.frost.popover', e => {
+                    dom.addEvent(this._node, 'click.ui.popover', e => {
                         e.preventDefault();
-
-                        if (!this._enabled) {
-                            return;
-                        }
 
                         this.toggle();
                     });
                 }
 
                 if (this._modal) {
-                    this._hideModalEvent = _ => {
+                    dom.addEvent(this._modal, 'hide.ui.modal', _ => {
                         this.hide();
-                    };
-
-                    dom.addEvent(this._modal, 'hide.frost.modal', this._hideModalEvent);
+                    });
                 }
             },
 
@@ -12479,32 +12174,7 @@
             minContact: false
         };
 
-        // Add Popover QuerySet method
-        if (QuerySet) {
-            QuerySet.prototype.popover = function(a, ...args) {
-                let settings, method;
-
-                if (Core.isObject(a)) {
-                    settings = a;
-                } else if (Core.isString(a)) {
-                    method = a;
-                }
-
-                for (const node of this) {
-                    if (!Core.isElement(node)) {
-                        continue;
-                    }
-
-                    const popover = Popover.init(node, settings);
-
-                    if (method) {
-                        popover[method](...args);
-                    }
-                }
-
-                return this;
-            };
-        }
+        UI.initComponent('popover', Popover);
 
         UI.Popover = Popover;
 
@@ -12513,36 +12183,16 @@
          * Popper Class
          * @class
          */
-        class Popper {
+        class Popper extends BaseComponent {
 
             /**
              * New Popper constructor.
              * @param {HTMLElement} node The input node.
              * @param {object} settings The options to create the Popper with.
-             * @param {HTMLElement} settings.referencee The node to use as the reference.
-             * @param {HTMLElement} [settings.container] The node to use as the container.
-             * @param {HTMLElement} [settings.arrow] The node to use as the arrow.
-             * @param {function} [settings.beforeUpdate] The callback to run before updating the Popper.
-             * @param {function} [settings.afterUpdate] The callback to run after updating the Popper.
-             * @param {string} [settings.placement=bottom] The placement of the node relative to the reference.
-             * @param {string} [settings.position=center] The position of the node relative to the reference.
-             * @param {Boolean} [settings.fixed=false] Whether the node position is fixed.
-             * @param {number} [settings.spacing=0] The spacing between the node and the reference.
-             * @param {number} [settings.minContact=false] The minimum amount of contact the node must make with the reference.
-             * @param {Boolean} [settings.useGpu=true] Whether to use GPU acceleration.
              * @returns {Popper} A new Popper object.
              */
             constructor(node, settings) {
-                this._node = node;
-
-                this._settings = Core.extend(
-                    {},
-                    this.constructor.defaults,
-                    dom.getDataset(this._node),
-                    settings
-                );
-
-                this._scrollParent = this.constructor.getScrollParent(this._node);
+                super(node, settings);
 
                 dom.setStyle(this._node, {
                     margin: 0,
@@ -12563,19 +12213,15 @@
 
                 PopperSet.add(this);
 
+                this._scrollParent = this.constructor._getScrollParent(this._node);
+
                 if (this._scrollParent) {
                     PopperSet.addOverflow(this._scrollParent, this);
                 }
 
-                dom.addEvent(this._node, 'remove.frost.popper', _ => {
-                    this.destroy();
-                });
-
                 window.requestAnimationFrame(_ => {
                     this.update();
                 });
-
-                dom.setData(this._node, 'popper', this);
             }
 
             /**
@@ -12588,7 +12234,7 @@
                     PopperSet.removeOverflow(this._scrollParent, this);
                 }
 
-                dom.removeData(this._node, 'popper');
+                super.destroy();
             }
 
             /**
@@ -12609,10 +12255,10 @@
                 // calculate boxes
                 const nodeBox = dom.rect(this._node, true);
                 const referenceBox = dom.rect(this._settings.reference, true);
-                const windowBox = this.constructor.windowContainer();
+                const windowBox = this.constructor._windowContainer();
 
                 // check object could be seen
-                if (this.constructor.isNodeHidden(nodeBox, referenceBox, windowBox, this._settings.spacing)) {
+                if (this.constructor._isNodeHidden(nodeBox, referenceBox, windowBox, this._settings.spacing)) {
                     return;
                 }
 
@@ -12652,7 +12298,7 @@
                 // get optimal placement
                 const placement = this._settings.fixed ?
                     this._settings.placement :
-                    this.constructor.getPopperPlacement(
+                    this.constructor._getPopperPlacement(
                         nodeBox,
                         referenceBox,
                         minimumBox,
@@ -12660,13 +12306,13 @@
                         this._settings.spacing + 2
                     );
 
-                dom.setDataset(this._settings.reference, 'placement', placement);
-                dom.setDataset(this._node, 'placement', placement);
+                dom.setDataset(this._settings.reference, 'uiPlacement', placement);
+                dom.setDataset(this._node, 'uiPlacement', placement);
 
                 // get auto position
                 const position = this._settings.position !== 'auto' ?
                     this._settings.position :
-                    this.constructor.getPopperPosition(
+                    this.constructor._getPopperPosition(
                         nodeBox,
                         referenceBox,
                         minimumBox,
@@ -12681,7 +12327,7 @@
                 };
 
                 // offset for relative parent
-                const relativeParent = this.constructor.getRelativeParent(this._node);
+                const relativeParent = this.constructor._getRelativeParent(this._node);
                 const relativeBox = relativeParent ?
                     dom.rect(relativeParent, true) :
                     null;
@@ -12692,10 +12338,10 @@
                 }
 
                 // offset for placement
-                this.constructor.adjustPlacement(offset, nodeBox, referenceBox, placement, this._settings.spacing);
+                this.constructor._adjustPlacement(offset, nodeBox, referenceBox, placement, this._settings.spacing);
 
                 // offset for position
-                this.constructor.adjustPosition(offset, nodeBox, referenceBox, placement, position);
+                this.constructor._adjustPosition(offset, nodeBox, referenceBox, placement, position);
 
                 // compensate for margins
                 offset.x -= parseInt(dom.css(this._node, 'margin-left'));
@@ -12704,7 +12350,7 @@
                 // compensate for borders
 
                 // corrective positioning
-                this.constructor.adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, this._settings.minContact);
+                this.constructor._adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, this._settings.minContact);
 
                 // compensate for scroll parent
                 if (this._scrollParent) {
@@ -12733,6 +12379,105 @@
                     this._settings.afterUpdate(this._node, this._settings.reference, placement, position);
                 }
             }
+
+        }
+
+
+        /**
+         * PopperSet Class
+         * @class
+         */
+        class PopperSet {
+
+            /**
+             * Add a Popper to the set.
+             * @param {Popper} popper The popper to add.
+             */
+            static add(popper) {
+                this._poppers.push(popper);
+
+                if (this._running) {
+                    return;
+                }
+
+                dom.addEvent(
+                    window,
+                    'resize.ui.popper scroll.ui.popper',
+                    DOM.debounce(_ => {
+                        for (const popper of this._poppers) {
+                            popper.update();
+                        }
+                    })
+                );
+                this._running = true;
+            }
+
+            /**
+             * Add a Popper to a scrolling parent set.
+             * @param {HTMLElement} scrollParent The scrolling container element.
+             * @param {Popper} popper The popper to add.
+             */
+            static addOverflow(scrollParent, popper) {
+                if (!this._popperOverflows.has(scrollParent)) {
+                    this._popperOverflows.set(scrollParent, []);
+                    dom.addEvent(
+                        scrollParent,
+                        'scroll.ui.popper',
+                        DOM.debounce(_ => {
+                            for (const popper of this._popperOverflows.get(scrollParent)) {
+                                popper.update();
+                            }
+                        })
+                    );
+                }
+
+                this._popperOverflows.get(scrollParent).push(popper);
+            }
+
+            /**
+             * Remove a Popper from the set.
+             * @param {Popper} popper The popper to remove.
+             */
+            static remove(popper) {
+                this._poppers = this._poppers.filter(oldPopper => oldPopper !== popper);
+
+                if (this._poppers.length) {
+                    return;
+                }
+
+                dom.removeEvent(window, 'resize.ui.popper scroll.ui.popper');
+                this._running = false;
+            }
+
+            /**
+             * Remove a Popper from a scrolling parent set.
+             * @param {HTMLElement} scrollParent The scrolling container element.
+             * @param {Popper} popper The popper to remove.
+             */
+            static removeOverflow(scrollParent, popper) {
+                if (!this._popperOverflows.has(scrollParent)) {
+                    return;
+                }
+
+                const poppers = this._popperOverflows.get(scrollParent).filter(oldPopper => oldPopper !== popper);
+
+                if (poppers.length) {
+                    this._popperOverflows.set(scrollParent, poppers);
+                    return;
+                }
+
+                this._popperOverflows.delete(scrollParent);
+                dom.removeEvent(scrollParent, 'scroll.ui.popper');
+            }
+
+        }
+
+
+        /**
+         * Popper Helpers
+         */
+
+        Object.assign(Popper.prototype, {
 
             /**
              * Update the position of the arrow for the actual placement and position.
@@ -12790,97 +12535,7 @@
                 dom.setStyle(this._settings.arrow, arrowStyles);
             }
 
-        }
-
-
-        /**
-         * PopperSet Class
-         * @class
-         */
-        class PopperSet {
-
-            /**
-             * Add a Popper to the set.
-             * @param {Popper} popper The popper to add.
-             */
-            static add(popper) {
-                this._poppers.push(popper);
-
-                if (this._running) {
-                    return;
-                }
-
-                dom.addEvent(
-                    window,
-                    'resize.frost.popper scroll.frost.popper',
-                    DOM.debounce(_ => {
-                        for (const popper of this._poppers) {
-                            popper.update();
-                        }
-                    })
-                );
-                this._running = true;
-            }
-
-            /**
-             * Add a Popper to a scrolling parent set.
-             * @param {HTMLElement} scrollParent The scrolling container element.
-             * @param {Popper} popper The popper to add.
-             */
-            static addOverflow(scrollParent, popper) {
-                if (!this._popperOverflows.has(scrollParent)) {
-                    this._popperOverflows.set(scrollParent, []);
-                    dom.addEvent(
-                        scrollParent,
-                        'scroll.frost.popper',
-                        DOM.debounce(_ => {
-                            for (const popper of this._popperOverflows.get(scrollParent)) {
-                                popper.update();
-                            }
-                        })
-                    );
-                }
-
-                this._popperOverflows.get(scrollParent).push(popper);
-            }
-
-            /**
-             * Remove a Popper from the set.
-             * @param {Popper} popper The popper to remove.
-             */
-            static remove(popper) {
-                this._poppers = this._poppers.filter(oldPopper => oldPopper !== popper);
-
-                if (this._poppers.length) {
-                    return;
-                }
-
-                dom.removeEvent(window, 'resize.frost.popper scroll.frost.popper');
-                this._running = false;
-            }
-
-            /**
-             * Remove a Popper from a scrolling parent set.
-             * @param {HTMLElement} scrollParent The scrolling container element.
-             * @param {Popper} popper The popper to remove.
-             */
-            static removeOverflow(scrollParent, popper) {
-                if (!this._popperOverflows.has(scrollParent)) {
-                    return;
-                }
-
-                const poppers = this._popperOverflows.get(scrollParent).filter(oldPopper => oldPopper !== popper);
-
-                if (poppers.length) {
-                    this._popperOverflows.set(scrollParent, poppers);
-                    return;
-                }
-
-                this._popperOverflows.delete(scrollParent);
-                dom.removeEvent(scrollParent, 'scroll.frost.popper');
-            }
-
-        }
+        });
 
 
         /**
@@ -12899,7 +12554,7 @@
              * @param {string} placement The actual placement of the Popper.
              * @param {number} [minContact] The minimum amount of contact to make with the reference node.
              */
-            adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, minContact) {
+            _adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, minContact) {
                 if (['left', 'right'].includes(placement)) {
                     let offsetY = offset.y;
                     let refTop = referenceBox.top;
@@ -12967,7 +12622,7 @@
              * @param {string} placement The actual placement of the Popper.
              * @param {number} spacing The amount of spacing to use.
              */
-            adjustPlacement(offset, nodeBox, referenceBox, placement, spacing) {
+            _adjustPlacement(offset, nodeBox, referenceBox, placement, spacing) {
                 if (placement === 'top') {
                     offset.y -= Math.round(nodeBox.height) + spacing
                 } else if (placement === 'right') {
@@ -12987,7 +12642,7 @@
              * @param {string} placement The actual placement of the Popper.
              * @param {string} position The actual position of the Popper.
              */
-            adjustPosition(offset, nodeBox, referenceBox, placement, position) {
+            _adjustPosition(offset, nodeBox, referenceBox, placement, position) {
                 if (position === 'start') {
                     return;
                 }
@@ -13020,7 +12675,7 @@
              * @param {number} spacing The amount of spacing to use.
              * @returns {string} The new placement of the Popper.
              */
-            getPopperPlacement(nodeBox, referenceBox, minimumBox, placement, spacing) {
+            _getPopperPlacement(nodeBox, referenceBox, minimumBox, placement, spacing) {
                 const spaceTop = referenceBox.top - minimumBox.top;
                 const spaceRight = minimumBox.right - referenceBox.right;
                 const spaceBottom = minimumBox.bottom - referenceBox.bottom;
@@ -13109,7 +12764,7 @@
              * @param {string} position The initial position of the Popper.
              * @returns {string} The new position of the Popper.
              */
-            getPopperPosition(nodeBox, referenceBox, minimumBox, placement, position) {
+            _getPopperPosition(nodeBox, referenceBox, minimumBox, placement, position) {
 
                 const deltaX = nodeBox.width - referenceBox.width;
                 const deltaY = nodeBox.height - referenceBox.height;
@@ -13200,7 +12855,7 @@
              * @param {HTMLElement} node The input node.
              * @return {HTMLElement} The relative parent.
              */
-            getRelativeParent(node) {
+            _getRelativeParent(node) {
                 return dom.closest(
                     node,
                     parent =>
@@ -13214,7 +12869,7 @@
              * @param {HTMLElement} node The input node.
              * @return {HTMLElement} The scroll parent.
              */
-            getScrollParent(node) {
+            _getScrollParent(node) {
                 return dom.closest(
                     node,
                     parent =>
@@ -13239,7 +12894,7 @@
              * @param {number} spacing The amount of spacing to use.
              * @returns {Boolean} TRUE if the node can not be visible inside the window, otherwise FALSE.
              */
-            isNodeHidden(nodeBox, referenceBox, windowContainer, spacing) {
+            _isNodeHidden(nodeBox, referenceBox, windowContainer, spacing) {
                 return windowContainer.top > referenceBox.bottom + nodeBox.height + spacing ||
                     windowContainer.left > referenceBox.right + nodeBox.width + spacing ||
                     windowContainer.bottom < referenceBox.top - nodeBox.height - spacing ||
@@ -13250,7 +12905,7 @@
              * Calculate the computed bounding rectangle of the window.
              * @returns {object} The computed bounding rectangle of the window.
              */
-            windowContainer() {
+            _windowContainer() {
                 const scrollX = dom.getScrollX(window);
                 const scrollY = dom.getScrollY(window);
                 const windowWidth = dom.width(document);
@@ -13288,12 +12943,14 @@
         PopperSet._poppers = [];
         PopperSet._popperOverflows = new Map;
 
+        UI.initComponent('popper', Popper);
+
         UI.Popper = Popper;
         UI.PopperSet = PopperSet;
 
 
         // Ripple events
-        dom.addEventDelegate(document, 'mousedown.frost.ripple', '.ripple', e => {
+        dom.addEventDelegate(document, 'mousedown.ui.ripple', '.ripple', e => {
             const pos = dom.position(e.currentTarget, true);
 
             UI.ripple(e.currentTarget, e.pageX - pos.x, e.pageY - pos.y);
@@ -13342,37 +12999,20 @@
          * Tab Class
          * @class
          */
-        class Tab {
+        class Tab extends BaseComponent {
 
             /**
              * New Tab constructor.
              * @param {HTMLElement} node The input node.
              * @param {object} [settings] The options to create the Tab with.
-             * @param {number} [settings.duration=100] The duration of the animation.
              * @returns {Tab} A new Tab object.
              */
             constructor(node, settings) {
-                this._node = node;
-
-                this._settings = Core.extend(
-                    {},
-                    this.constructor.defaults,
-                    dom.getDataset(this._node),
-                    settings
-                );
+                super(node, settings);
 
                 const selector = UI.getTargetSelector(this._node);
                 this._target = dom.findOne(selector);
                 this._siblings = dom.siblings(this._node);
-
-                dom.setData(this._node, 'tab', this);
-            }
-
-            /**
-             * Destroy the Tab.
-             */
-            destroy() {
-                dom.removeData(this._node, 'tab');
             }
 
             /**
@@ -13382,7 +13022,7 @@
                 if (
                     this._animating ||
                     !dom.hasClass(this._target, 'active') ||
-                    !dom.triggerOne(this._node, 'hide.frost.tab')
+                    !dom.triggerOne(this._node, 'hide.ui.tab')
                 ) {
                     return;
                 }
@@ -13395,7 +13035,7 @@
                     dom.removeClass(this._target, 'active');
                     dom.removeClass(this._node, 'active');
                     dom.setAttribute(this._node, 'aria-selected', false);
-                    dom.triggerEvent(this._node, 'hidden.frost.tab');
+                    dom.triggerEvent(this._node, 'hidden.ui.tab');
                 }).catch(_ => { }).finally(_ => {
                     this._animating = false;
                 });
@@ -13408,7 +13048,7 @@
                 if (
                     this._animating ||
                     dom.hasClass(this._target, 'active') ||
-                    !dom.triggerOne(this._node, 'show.frost.tab')
+                    !dom.triggerOne(this._node, 'show.ui.tab')
                 ) {
                     return;
                 }
@@ -13425,7 +13065,7 @@
                     }
                 }
 
-                if (!dom.triggerOne(this._node, 'show.frost.tab')) {
+                if (!dom.triggerOne(this._node, 'show.ui.tab')) {
                     return;
                 }
 
@@ -13438,7 +13078,7 @@
                         duration: this._settings.duration
                     }).then(_ => {
                         dom.setAttribute(this._node, 'aria-selected', true);
-                        dom.triggerEvent(this._node, 'shown.frost.tab');
+                        dom.triggerEvent(this._node, 'shown.ui.tab');
                     }).catch(_ => { }).finally(_ => {
                         this._animating = false;
                     });
@@ -13448,31 +13088,27 @@
                     return show();
                 }
 
-                if (!dom.triggerOne(active, 'hide.frost.tab')) {
+                if (!dom.triggerOne(active, 'hide.ui.tab')) {
                     return;
                 }
 
-                dom.addEventOnce(active, 'hidden.frost.tab', _ => {
+                dom.addEventOnce(active, 'hidden.ui.tab', _ => {
                     show();
                 });
 
                 activeTab.hide();
             }
 
-            /**
-             * Initialize a Tab.
-             * @param {HTMLElement} node The input node.
-             * @param {object} [settings] The options to create the Tab with.
-             * @param {number} [settings.duration=100] The duration of the animation.
-             * @returns {Tab} A new Tab object.
-             */
-            static init(node, settings) {
-                return dom.hasData(node, 'tab') ?
-                    dom.getData(node, 'tab') :
-                    new this(node, settings);
-            }
-
         }
+
+
+        // Tab events
+        dom.addEventDelegate(document, 'click.ui.tab', '[data-ui-toggle="tab"]', e => {
+            e.preventDefault();
+
+            const tab = Tab.init(e.currentTarget);
+            tab.show();
+        });
 
 
         // Tab default options
@@ -13480,53 +13116,19 @@
             duration: 100
         };
 
-        // Tab events
-        dom.addEventDelegate(document, 'click.frost.tab', '[data-toggle="tab"]', e => {
-            e.preventDefault();
-
-            const tab = Tab.init(e.currentTarget);
-            tab.show();
-        });
-
-        // Tab QuerySet method
-        if (QuerySet) {
-            QuerySet.prototype.tab = function(a, ...args) {
-                let settings, method;
-
-                if (Core.isObject(a)) {
-                    settings = a;
-                } else if (Core.isString(a)) {
-                    method = a;
-                }
-
-                for (const node of this) {
-                    if (!Core.isElement(node)) {
-                        continue;
-                    }
-
-                    const tab = Tab.init(node, settings);
-
-                    if (method) {
-                        tab[method](...args);
-                    }
-                }
-
-                return this;
-            };
-        }
+        UI.initComponent('tab', Tab);
 
         UI.Tab = Tab;
 
 
         // Text expand events
-        dom.addEventDelegate(document, 'input', '.text-expand', e => {
+        dom.addEventDelegate(document, 'input.ui.text-expand', '.text-expand', e => {
             const textArea = e.currentTarget;
 
             dom.setStyle(textArea, 'height', 'inherit');
 
             const borderTop = dom.css(textArea, 'borderTop');
             const borderBottom = dom.css(textArea, 'borderBottom');
-
             const height = dom.scrollHeight(textArea) + parseInt(borderTop) + parseInt(borderBottom);
 
             dom.setStyle(textArea, 'height', height);
@@ -13537,26 +13139,16 @@
          * Toast Class
          * @class
          */
-        class Toast {
+        class Toast extends BaseComponent {
 
             /**
              * New Toast constructor.
              * @param {HTMLElement} node The input node.
              * @param {object} [settings] The options to create the Toast with.
-             * @param {Boolean} [autohide=true] Whether to hide the toast after initialization.
-             * @param {number} [settings.delay=5000] The duration to wait before hiding the toast.
-             * @param {number} [settings.duration=100] The duration of the animation.
              * @returns {Toast} A new Toast object.
              */
             constructor(node, settings) {
-                this._node = node;
-
-                this._settings = Core.extend(
-                    {},
-                    this.constructor.defaults,
-                    dom.getDataset(this._node),
-                    settings
-                );
+                super(node, settings);
 
                 if (this._settings.autohide) {
                     setTimeout(
@@ -13564,15 +13156,6 @@
                         this._settings.delay
                     );
                 }
-
-                dom.setData(this._node, 'toast', this);
-            }
-
-            /**
-             * Destroy the Toast.
-             */
-            destroy() {
-                dom.removeData(this._node, 'toast');
             }
 
             /**
@@ -13582,7 +13165,7 @@
                 if (
                     this._animating ||
                     !dom.isVisible(this._node) ||
-                    !dom.triggerOne(this._node, 'hide.frost.toast')
+                    !dom.triggerOne(this._node, 'hide.ui.toast')
                 ) {
                     return;
                 }
@@ -13594,7 +13177,7 @@
                 }).then(_ => {
                     dom.hide(this._node);
                     dom.removeClass(this._node, 'show');
-                    dom.triggerEvent(this._node, 'hidden.frost.toast');
+                    dom.triggerEvent(this._node, 'hidden.ui.toast');
                 }).catch(_ => { }).finally(_ => {
                     this._animating = false;
                 });
@@ -13607,7 +13190,7 @@
                 if (
                     this._animating ||
                     dom.isVisible(this._node) ||
-                    !dom.triggerOne(this._node, 'show.frost.toast')
+                    !dom.triggerOne(this._node, 'show.ui.toast')
                 ) {
                     return;
                 }
@@ -13619,28 +13202,23 @@
                 dom.fadeIn(this._node, {
                     duration: this._settings.duration
                 }).then(_ => {
-                    dom.triggerEvent(this._node, 'shown.frost.toast');
+                    dom.triggerEvent(this._node, 'shown.ui.toast');
                 }).catch(_ => { }).finally(_ => {
                     this._animating = false;
                 });
             }
 
-            /**
-             * Initialize a Toast.
-             * @param {HTMLElement} node The input node.
-             * @param {object} [settings] The options to create the Toast with.
-             * @param {Boolean} [autohide=true] Whether to hide the toast after initialization.
-             * @param {number} [settings.delay=5000] The duration to wait before hiding the toast.
-             * @param {number} [settings.duration=100] The duration of the animation.
-             * @returns {Toast} A new Toast object.
-             */
-            static init(node, settings) {
-                return dom.hasData(node, 'toast') ?
-                    dom.getData(node, 'toast') :
-                    new this(node, settings);
-            }
-
         }
+
+
+        // Toast events
+        dom.addEventDelegate(document, 'click.ui.toast', '[data-ui-dismiss="toast"]', e => {
+            e.preventDefault();
+
+            const target = UI.getTarget(e.currentTarget, '.toast');
+            const toast = Toast.init(target, { autohide: false });
+            toast.hide();
+        });
 
 
         // Toast default options
@@ -13650,41 +13228,7 @@
             duration: 100
         };
 
-        // Auto-initialize Toast from data-toggle
-        dom.addEventDelegate(document, 'click.frost.toast', '[data-dismiss="toast"]', e => {
-            e.preventDefault();
-
-            const target = UI.getTarget(e.currentTarget, '.toast');
-            const toast = Toast.init(target, { autohide: false });
-            toast.hide();
-        });
-
-        // Toast QuerySet method
-        if (QuerySet) {
-            QuerySet.prototype.toast = function(a, ...args) {
-                let settings, method;
-
-                if (Core.isObject(a)) {
-                    settings = a;
-                } else if (Core.isString(a)) {
-                    method = a;
-                }
-
-                for (const node of this) {
-                    if (!Core.isElement(node)) {
-                        continue;
-                    }
-
-                    const toast = Toast.init(node, settings);
-
-                    if (method) {
-                        toast[method](...args);
-                    }
-                }
-
-                return this;
-            };
-        }
+        UI.initComponent('toast', Toast);
 
         UI.Toast = Toast;
 
@@ -13693,34 +13237,16 @@
          * Tooltip Class
          * @class
          */
-        class Tooltip {
+        class Tooltip extends BaseComponent {
 
             /**
              * New Tooltip constructor.
              * @param {HTMLElement} node The input node.
              * @param {object} [settings] The options to create the Tooltip with.
-             * @param {string} [settings.template] The HTML template for the tooltip.
-             * @param {number} [settings.duration=100] The duration of the animation.
-             * @param {Boolean} [settings.enable=true] Whether the tooltip is enabled.
-             * @param {Boolean} [settings.html=false] Whether to allow HTML in the tooltip.
-             * @param {function} [settings.sanitize] The HTML sanitization function.
-             * @param {string} [settings.trigger=hover focus] The events to trigger the tooltip.
-             * @param {string} [settings.placement=auto] The placement of the tooltip relative to the toggle.
-             * @param {string} [settings.position=center] The position of the tooltip relative to the toggle.
-             * @param {Boolean} [settings.fixed=false] Whether the tooltip position is fixed.
-             * @param {number} [settings.spacing=2] The spacing between the tooltip and the toggle.
-             * @param {number} [settings.minContact=false] The minimum amount of contact the tooltip must make with the toggle.
              * @returns {Tooltip} A new Tooltip object.
              */
             constructor(node, settings) {
-                this._node = node;
-
-                this._settings = Core.extend(
-                    {},
-                    this.constructor.defaults,
-                    dom.getDataset(this._node),
-                    settings
-                );
+                super(node, settings);
 
                 this._modal = dom.closest(this._node, '.modal').shift();
 
@@ -13732,8 +13258,6 @@
                 if (this._settings.enable) {
                     this.enable();
                 }
-
-                dom.setData(this._node, 'tooltip', this);
             }
 
             /**
@@ -13747,24 +13271,24 @@
                 dom.remove(this._tooltip);
 
                 if (this._triggers.includes('hover')) {
-                    dom.removeEvent(this._node, 'mouseover.frost.tooltip');
-                    dom.removeEvent(this._node, 'mouseout.frost.tooltip');
+                    dom.removeEvent(this._node, 'mouseover.ui.tooltip');
+                    dom.removeEvent(this._node, 'mouseout.ui.tooltip');
                 }
 
                 if (this._triggers.includes('focus')) {
-                    dom.removeEvent(this._node, 'focus.frost.tooltip');
-                    dom.removeEvent(this._node, 'blur.frost.tooltip');
+                    dom.removeEvent(this._node, 'focus.ui.tooltip');
+                    dom.removeEvent(this._node, 'blur.ui.tooltip');
                 }
 
                 if (this._triggers.includes('click')) {
-                    dom.removeEvent(this._node, 'click.frost.tooltip');
+                    dom.removeEvent(this._node, 'click.ui.tooltip');
                 }
 
                 if (this._modal) {
-                    dom.removeEvent(this._modal, 'hide.frost.modal', this._hideModalEvent);
+                    dom.removeEvent(this._modal, 'hide.ui.modal');
                 }
 
-                dom.removeData(this._node, 'tooltip', this);
+                super.destroy();
             }
 
             /**
@@ -13785,13 +13309,17 @@
              * Hide the Tooltip.
              */
             hide() {
+                if (!this._enabled) {
+                    return;
+                }
+
                 if (this._animating) {
                     dom.stop(this._tooltip);
                 }
 
                 if (
                     !dom.isConnected(this._tooltip) ||
-                    !dom.triggerOne(this._node, 'hide.frost.tooltip')
+                    !dom.triggerOne(this._node, 'hide.ui.tooltip')
                 ) {
                     return;
                 }
@@ -13804,7 +13332,7 @@
                     this._popper.destroy();
                     dom.removeClass(this._tooltip, 'show');
                     dom.detach(this._tooltip);
-                    dom.triggerEvent(this._node, 'hidden.frost.tooltip');
+                    dom.triggerEvent(this._node, 'hidden.ui.tooltip');
                 }).catch(_ => { }).finally(_ => {
                     this._animating = false;
                 });
@@ -13814,26 +13342,29 @@
              * Show the Tooltip.
              */
             show() {
+                if (!this._enabled) {
+                    return;
+                }
+
                 if (this._animating) {
                     dom.stop(this._tooltip);
                 }
 
                 if (
                     dom.isConnected(this._tooltip) ||
-                    !dom.triggerOne(this._node, 'show.frost.tooltip')
+                    !dom.triggerOne(this._node, 'show.ui.tooltip')
                 ) {
                     return;
                 }
 
-                this._show();
-
                 this._animating = true;
                 dom.addClass(this._tooltip, 'show');
+                this._show();
 
                 dom.fadeIn(this._tooltip, {
                     duration: this._settings.duration
                 }).then(_ => {
-                    dom.triggerEvent(this._node, 'shown.frost.tooltip');
+                    dom.triggerEvent(this._node, 'shown.ui.tooltip');
                 }).catch(_ => { }).finally(_ => {
                     this._animating = false;
                 });
@@ -13852,32 +13383,11 @@
              * Update the Tooltip position.
              */
             update() {
-                if (this._popper) {
-                    this._popper.update();
+                if (!this._popper) {
+                    return;
                 }
-            }
 
-            /**
-             * Initialize a Tooltip.
-             * @param {HTMLElement} node The input node.
-             * @param {object} [settings] The options to create the Tooltip with.
-             * @param {string} [settings.template] The HTML template for the tooltip.
-             * @param {number} [settings.duration=100] The duration of the animation.
-             * @param {Boolean} [settings.enable=true] Whether the tooltip is enabled.
-             * @param {Boolean} [settings.html=false] Whether to allow HTML in the tooltip.
-             * @param {function} [settings.sanitize] The HTML sanitization function.
-             * @param {string} [settings.trigger=hover focus] The events to trigger the tooltip.
-             * @param {string} [settings.placement=auto] The placement of the tooltip relative to the toggle.
-             * @param {string} [settings.position=center] The position of the tooltip relative to the toggle.
-             * @param {Boolean} [settings.fixed=false] Whether the tooltip position is fixed.
-             * @param {number} [settings.spacing=2] The spacing between the tooltip and the toggle.
-             * @param {number} [settings.minContact=false] The minimum amount of contact the tooltip must make with the toggle.
-             * @returns {Tooltip} A new Tooltip object.
-             */
-            static init(node, settings) {
-                return dom.hasData(node, 'tooltip') ?
-                    dom.getData(node, 'tooltip') :
-                    new this(node, settings);
+                this._popper.update();
             }
 
         }
@@ -13894,59 +13404,37 @@
              */
             _events() {
                 if (this._triggers.includes('hover')) {
-                    dom.addEvent(this._node, 'mouseover.frost.popover', _ => {
-                        if (!this._enabled) {
-                            return;
-                        }
-
+                    dom.addEvent(this._node, 'mouseover.ui.tooltip', _ => {
                         this.show();
                     });
 
-                    dom.addEvent(this._node, 'mouseout.frost.popover', _ => {
-                        if (!this._enabled) {
-                            return;
-                        }
-
+                    dom.addEvent(this._node, 'mouseout.ui.tooltip', _ => {
                         this.hide();
                     });
                 }
 
                 if (this._triggers.includes('focus')) {
-                    dom.addEvent(this._node, 'focus.frost.popover', _ => {
-                        if (!this._enabled) {
-                            return;
-                        }
-
+                    dom.addEvent(this._node, 'focus.ui.tooltip', _ => {
                         this.show();
                     });
 
-                    dom.addEvent(this._node, 'blur.frost.popover', _ => {
-                        if (!this._enabled) {
-                            return;
-                        }
-
+                    dom.addEvent(this._node, 'blur.ui.tooltip', _ => {
                         this.hide();
                     });
                 }
 
                 if (this._triggers.includes('click')) {
-                    dom.addEvent(this._node, 'click.frost.popover', e => {
+                    dom.addEvent(this._node, 'click.ui.tooltip', e => {
                         e.preventDefault();
-
-                        if (!this._enabled) {
-                            return;
-                        }
 
                         this.toggle();
                     });
                 }
 
                 if (this._modal) {
-                    this._hideModalEvent = _ => {
+                    dom.addEvent(this._modal, 'hide.ui.modal', _ => {
                         this.hide();
-                    };
-
-                    dom.addEvent(this._modal, 'hide.frost.modal', this._hideModalEvent);
+                    });
                 }
             },
 
@@ -14018,32 +13506,7 @@
             minContact: false
         };
 
-        // Tooltip QuerySet method
-        if (QuerySet) {
-            QuerySet.prototype.tooltip = function(a, ...args) {
-                let settings, method;
-
-                if (Core.isObject(a)) {
-                    settings = a;
-                } else if (Core.isString(a)) {
-                    method = a;
-                }
-
-                for (const node of this) {
-                    if (!Core.isElement(node)) {
-                        continue;
-                    }
-
-                    const tooltip = Tooltip.init(node, settings);
-
-                    if (method) {
-                        tooltip[method](...args);
-                    }
-                }
-
-                return this;
-            };
-        }
+        UI.initComponent('tooltip', Tooltip);
 
         UI.Tooltip = Tooltip;
 

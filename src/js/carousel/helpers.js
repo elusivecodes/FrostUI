@@ -9,8 +9,7 @@ Object.assign(Carousel.prototype, {
      */
     _events() {
         if (this._settings.keyboard) {
-            console.log(this._node);
-            dom.addEvent(this._node, 'keydown.frost.carousel', e => {
+            dom.addEvent(this._node, 'keydown.ui.carousel', e => {
                 const target = e.target;
                 if (dom.is(target, 'input, select')) {
                     return;
@@ -30,18 +29,14 @@ Object.assign(Carousel.prototype, {
         }
 
         if (this._settings.pause) {
-            dom.addEvent(this._node, 'mouseenter.frost.carousel', _ => {
+            dom.addEvent(this._node, 'mouseenter.ui.carousel', _ => {
                 this.pause();
             });
 
-            dom.addEvent(this._node, 'mouseleave.frost.carousel', _ => {
+            dom.addEvent(this._node, 'mouseleave.ui.carousel', _ => {
                 this._setTimer();
             });
         }
-
-        dom.addEvent(this._node, 'remove.frost.carousel', _ => {
-            this.destroy();
-        });
     },
 
     /**
@@ -52,7 +47,7 @@ Object.assign(Carousel.prototype, {
             return;
         }
 
-        const interval = dom.getDataset(this._items[this._index], 'interval');
+        const interval = dom.getDataset(this._items[this._index], 'uiInterval');
 
         this._timer = setTimeout(
             _ => this.cycle(),
@@ -107,7 +102,7 @@ Object.assign(Carousel.prototype, {
             to: index
         };
 
-        if (!dom.triggerOne(this._node, 'slide.frost.carousel', eventData)) {
+        if (!dom.triggerOne(this._node, 'slide.ui.carousel', eventData)) {
             return;
         }
 
@@ -129,11 +124,11 @@ Object.assign(Carousel.prototype, {
                 duration: this._settings.transition
             }
         ).then(_ => {
-            const oldIndicator = dom.find('.active[data-slide-to]', this._node);
-            const newIndicator = dom.find('[data-slide-to="' + this._index + '"]', this._node);
+            const oldIndicator = dom.find('.active[data-ui-slide-to]', this._node);
+            const newIndicator = dom.find('[data-ui-slide-to="' + this._index + '"]', this._node);
             dom.removeClass(oldIndicator, 'active');
             dom.addClass(newIndicator, 'active');
-            dom.triggerEvent(this._node, 'slid.frost.carousel', eventData);
+            dom.triggerEvent(this._node, 'slid.ui.carousel', eventData);
 
             this._setTimer();
         }).finally(_ => {

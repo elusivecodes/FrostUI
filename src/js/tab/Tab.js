@@ -2,37 +2,20 @@
  * Tab Class
  * @class
  */
-class Tab {
+class Tab extends BaseComponent {
 
     /**
      * New Tab constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Tab with.
-     * @param {number} [settings.duration=100] The duration of the animation.
      * @returns {Tab} A new Tab object.
      */
     constructor(node, settings) {
-        this._node = node;
-
-        this._settings = Core.extend(
-            {},
-            this.constructor.defaults,
-            dom.getDataset(this._node),
-            settings
-        );
+        super(node, settings);
 
         const selector = UI.getTargetSelector(this._node);
         this._target = dom.findOne(selector);
         this._siblings = dom.siblings(this._node);
-
-        dom.setData(this._node, 'tab', this);
-    }
-
-    /**
-     * Destroy the Tab.
-     */
-    destroy() {
-        dom.removeData(this._node, 'tab');
     }
 
     /**
@@ -42,7 +25,7 @@ class Tab {
         if (
             this._animating ||
             !dom.hasClass(this._target, 'active') ||
-            !dom.triggerOne(this._node, 'hide.frost.tab')
+            !dom.triggerOne(this._node, 'hide.ui.tab')
         ) {
             return;
         }
@@ -55,7 +38,7 @@ class Tab {
             dom.removeClass(this._target, 'active');
             dom.removeClass(this._node, 'active');
             dom.setAttribute(this._node, 'aria-selected', false);
-            dom.triggerEvent(this._node, 'hidden.frost.tab');
+            dom.triggerEvent(this._node, 'hidden.ui.tab');
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
         });
@@ -68,7 +51,7 @@ class Tab {
         if (
             this._animating ||
             dom.hasClass(this._target, 'active') ||
-            !dom.triggerOne(this._node, 'show.frost.tab')
+            !dom.triggerOne(this._node, 'show.ui.tab')
         ) {
             return;
         }
@@ -85,7 +68,7 @@ class Tab {
             }
         }
 
-        if (!dom.triggerOne(this._node, 'show.frost.tab')) {
+        if (!dom.triggerOne(this._node, 'show.ui.tab')) {
             return;
         }
 
@@ -98,7 +81,7 @@ class Tab {
                 duration: this._settings.duration
             }).then(_ => {
                 dom.setAttribute(this._node, 'aria-selected', true);
-                dom.triggerEvent(this._node, 'shown.frost.tab');
+                dom.triggerEvent(this._node, 'shown.ui.tab');
             }).catch(_ => { }).finally(_ => {
                 this._animating = false;
             });
@@ -108,28 +91,15 @@ class Tab {
             return show();
         }
 
-        if (!dom.triggerOne(active, 'hide.frost.tab')) {
+        if (!dom.triggerOne(active, 'hide.ui.tab')) {
             return;
         }
 
-        dom.addEventOnce(active, 'hidden.frost.tab', _ => {
+        dom.addEventOnce(active, 'hidden.ui.tab', _ => {
             show();
         });
 
         activeTab.hide();
-    }
-
-    /**
-     * Initialize a Tab.
-     * @param {HTMLElement} node The input node.
-     * @param {object} [settings] The options to create the Tab with.
-     * @param {number} [settings.duration=100] The duration of the animation.
-     * @returns {Tab} A new Tab object.
-     */
-    static init(node, settings) {
-        return dom.hasData(node, 'tab') ?
-            dom.getData(node, 'tab') :
-            new this(node, settings);
     }
 
 }

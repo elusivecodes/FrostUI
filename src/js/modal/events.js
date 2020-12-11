@@ -1,5 +1,5 @@
 // Modal events
-dom.addEventDelegate(document, 'click.frost.modal', '[data-toggle="modal"]', e => {
+dom.addEventDelegate(document, 'click.ui.modal', '[data-ui-toggle="modal"]', e => {
     e.preventDefault();
 
     const target = UI.getTarget(e.currentTarget, '.modal');
@@ -7,7 +7,7 @@ dom.addEventDelegate(document, 'click.frost.modal', '[data-toggle="modal"]', e =
     modal.show(e.currentTarget);
 });
 
-dom.addEventDelegate(document, 'click.frost.modal', '[data-dismiss="modal"]', e => {
+dom.addEventDelegate(document, 'click.ui.modal', '[data-ui-dismiss="modal"]', e => {
     e.preventDefault();
 
     const target = UI.getTarget(e.currentTarget, '.modal');
@@ -15,7 +15,7 @@ dom.addEventDelegate(document, 'click.frost.modal', '[data-dismiss="modal"]', e 
     modal.hide();
 });
 
-dom.addEvent(document, 'click.frost.modal', e => {
+dom.addEvent(document, 'click.ui.modal', e => {
     const backdrop = dom.findOne('.modal-backdrop');
 
     if (!backdrop) {
@@ -39,7 +39,7 @@ dom.addEvent(document, 'click.frost.modal', e => {
     }
 });
 
-dom.addEvent(document, 'keyup.frost.modal', e => {
+dom.addEvent(document, 'keyup.ui.modal', e => {
     if (e.key !== 'Escape') {
         return;
     }

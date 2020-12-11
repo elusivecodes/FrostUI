@@ -1,5 +1,5 @@
 // Dropdown events
-dom.addEventDelegate(document, 'click.frost.dropdown keyup.frost.dropdown', '[data-toggle="dropdown"]', e => {
+dom.addEventDelegate(document, 'click.ui.dropdown keyup.ui.dropdown', '[data-ui-toggle="dropdown"]', e => {
     if (e.key && e.key !== ' ') {
         return;
     }
@@ -10,7 +10,7 @@ dom.addEventDelegate(document, 'click.frost.dropdown keyup.frost.dropdown', '[da
     dropdown.toggle();
 });
 
-dom.addEventDelegate(document, 'keydown.frost.dropdown', '[data-toggle="dropdown"]', e => {
+dom.addEventDelegate(document, 'keydown.ui.dropdown', '[data-ui-toggle="dropdown"]', e => {
     switch (e.key) {
         case 'ArrowDown':
         case 'ArrowUp':
@@ -29,7 +29,7 @@ dom.addEventDelegate(document, 'keydown.frost.dropdown', '[data-toggle="dropdown
     }
 });
 
-dom.addEventDelegate(document, 'keydown.frost.dropdown', '.dropdown-menu.show .dropdown-item', e => {
+dom.addEventDelegate(document, 'keydown.ui.dropdown', '.dropdown-menu.show .dropdown-item', e => {
     let focusNode;
 
     switch (e.key) {
@@ -48,11 +48,11 @@ dom.addEventDelegate(document, 'keydown.frost.dropdown', '.dropdown-menu.show .d
     dom.focus(focusNode);
 });
 
-dom.addEvent(document, 'click.frost.dropdown', e => {
+dom.addEvent(document, 'click.ui.dropdown', e => {
     Dropdown.autoHide(e.target);
 });
 
-dom.addEvent(document, 'keyup.frost.dropdown', e => {
+dom.addEvent(document, 'keyup.ui.dropdown', e => {
     switch (e.key) {
         case 'Tab':
             Dropdown.autoHide(e.target, true);

@@ -1559,27 +1559,27 @@ fieldset:disabled .btn {
 .dropdown-toggle-split::after {
   margin-left: 0;
 }
-[data-placement="top"] + .dropdown-menu {
+[data-ui-placement="top"] + .dropdown-menu {
   top: auto;
   bottom: 100%;
 }
-[data-placement="top"].dropdown-toggle::after {
+[data-ui-placement="top"].dropdown-toggle::after {
   content: '\2b9d';
 }
-[data-placement="right"] + .dropdown-menu {
+[data-ui-placement="right"] + .dropdown-menu {
   top: 0;
   right: auto;
   left: 100%;
 }
-[data-placement="right"].dropdown-toggle::after {
+[data-ui-placement="right"].dropdown-toggle::after {
   content: '\2b9e';
 }
-[data-placement="left"] + .dropdown-menu {
+[data-ui-placement="left"] + .dropdown-menu {
   top: 0;
   right: 100%;
   left: auto;
 }
-[data-placement="left"].dropdown-toggle::after {
+[data-ui-placement="left"].dropdown-toggle::after {
   content: '\2b9c';
 }
 .dropdown-menu {
@@ -2737,54 +2737,54 @@ button.dropdown-item:focus {
   border-color: transparent;
   border-style: solid;
 }
-.popover[data-placement="top"] .popover-arrow {
+.popover[data-ui-placement="top"] .popover-arrow {
   bottom: 0;
 }
-.popover[data-placement="top"] .popover-arrow::before {
+.popover[data-ui-placement="top"] .popover-arrow::before {
   top: 1px;
   border-width: 0.6rem 0.6rem 0;
   border-top-color: rgba(0, 0, 0, 0.15);
 }
-.popover[data-placement="top"] .popover-arrow::after {
+.popover[data-ui-placement="top"] .popover-arrow::after {
   top: 0;
   border-width: 0.6rem 0.6rem 0;
   border-top-color: white;
 }
-.popover[data-placement="right"] .popover-arrow {
+.popover[data-ui-placement="right"] .popover-arrow {
   left: 0;
 }
-.popover[data-placement="right"] .popover-arrow::before {
+.popover[data-ui-placement="right"] .popover-arrow::before {
   right: 1px;
   border-width: 0.6rem 0.6rem 0.6rem 0;
   border-right-color: rgba(0, 0, 0, 0.15);
 }
-.popover[data-placement="right"] .popover-arrow::after {
+.popover[data-ui-placement="right"] .popover-arrow::after {
   right: 0;
   border-width: 0.6rem 0.6rem 0.6rem 0;
   border-right-color: white;
 }
-.popover[data-placement="bottom"] .popover-arrow {
+.popover[data-ui-placement="bottom"] .popover-arrow {
   top: 0;
 }
-.popover[data-placement="bottom"] .popover-arrow::before {
+.popover[data-ui-placement="bottom"] .popover-arrow::before {
   bottom: 1px;
   border-width: 0 0.6rem 0.6rem;
   border-bottom-color: rgba(0, 0, 0, 0.15);
 }
-.popover[data-placement="bottom"] .popover-arrow::after {
+.popover[data-ui-placement="bottom"] .popover-arrow::after {
   bottom: 0;
   border-width: 0 0.6rem 0.6rem;
   border-bottom-color: white;
 }
-.popover[data-placement="left"] .popover-arrow {
+.popover[data-ui-placement="left"] .popover-arrow {
   right: 0;
 }
-.popover[data-placement="left"] .popover-arrow::before {
+.popover[data-ui-placement="left"] .popover-arrow::before {
   left: 1px;
   border-width: 0.6rem 0 0.6rem 0.6rem;
   border-left-color: rgba(0, 0, 0, 0.15);
 }
-.popover[data-placement="left"] .popover-arrow::after {
+.popover[data-ui-placement="left"] .popover-arrow::after {
   left: 0;
   border-width: 0.6rem 0 0.6rem 0.6rem;
   border-left-color: white;
@@ -2994,34 +2994,34 @@ button.dropdown-item:focus {
   border-color: transparent;
   border-style: solid;
 }
-.tooltip[data-placement="top"] .tooltip-arrow {
+.tooltip[data-ui-placement="top"] .tooltip-arrow {
   bottom: 0;
 }
-.tooltip[data-placement="top"] .tooltip-arrow::before {
+.tooltip[data-ui-placement="top"] .tooltip-arrow::before {
   top: 0;
   border-width: 0.4rem 0.4rem 0;
   border-top-color: black;
 }
-.tooltip[data-placement="right"] .tooltip-arrow {
+.tooltip[data-ui-placement="right"] .tooltip-arrow {
   left: 0;
 }
-.tooltip[data-placement="right"] .tooltip-arrow::before {
+.tooltip[data-ui-placement="right"] .tooltip-arrow::before {
   right: 0;
   border-width: 0.4rem 0.4rem 0.4rem 0;
   border-right-color: black;
 }
-.tooltip[data-placement="bottom"] .tooltip-arrow {
+.tooltip[data-ui-placement="bottom"] .tooltip-arrow {
   top: 0;
 }
-.tooltip[data-placement="bottom"] .tooltip-arrow::before {
+.tooltip[data-ui-placement="bottom"] .tooltip-arrow::before {
   bottom: 0;
   border-width: 0 0.4rem 0.4rem;
   border-bottom-color: black;
 }
-.tooltip[data-placement="left"] .tooltip-arrow {
+.tooltip[data-ui-placement="left"] .tooltip-arrow {
   right: 0;
 }
-.tooltip[data-placement="left"] .tooltip-arrow::before {
+.tooltip[data-ui-placement="left"] .tooltip-arrow::before {
   left: 0;
   border-width: 0.4rem 0 0.4rem 0.4rem;
   border-left-color: black;

@@ -16,5 +16,7 @@ Popper.defaults = {
 PopperSet._poppers = [];
 PopperSet._popperOverflows = new Map;
 
+UI.initComponent('popper', Popper);
+
 UI.Popper = Popper;
 UI.PopperSet = PopperSet;

@@ -19,48 +19,39 @@
     <div class="container">
         <h1>Tooltips</h1>
         <div class="mb-4">
-            <button class="btn ripple btn-secondary" role="button" data-toggle="tooltip"
-                data-title="This is a tooltip">Tooltip</button>
+            <button class="btn ripple btn-secondary" role="button" data-ui-toggle="tooltip" data-ui-title="This is a tooltip">Tooltip</button>
         </div>
 
         <h4>HTML</h4>
         <div class="mb-4">
-            <button class="btn ripple btn-secondary" role="button" data-toggle="tooltip" data-html="true"
-                data-title="This is a <strong>tooltip</strong>">
+            <button class="btn ripple btn-secondary" role="button" data-ui-toggle="tooltip" data-ui-html="true" data-ui-title="This is a <strong>tooltip</strong>">
                 Tooltip</button>
         </div>
 
         <h4>Placement</h4>
         <div class="mb-4">
-            <button class="btn ripple btn-secondary" role="button" data-toggle="tooltip" data-title="This is a tooltip"
-                data-placement="top" data-position="center" data-fixed="true">Top
+            <button class="btn ripple btn-secondary" role="button" data-ui-toggle="tooltip" data-ui-title="This is a tooltip" data-ui-placement="top" data-ui-position="center" data-ui-fixed="true">Top
             </button>
-            <button class="btn ripple btn-secondary" role="button" data-toggle="tooltip" data-title="This is a tooltip"
-                data-placement="right" data-position="center" data-fixed="true">Right
+            <button class="btn ripple btn-secondary" role="button" data-ui-toggle="tooltip" data-ui-title="This is a tooltip" data-ui-placement="right" data-ui-position="center" data-ui-fixed="true">Right
             </button>
-            <button class="btn ripple btn-secondary" role="button" data-toggle="tooltip" data-title="This is a tooltip"
-                data-placement="bottom" data-position="center" data-fixed="true">
+            <button class="btn ripple btn-secondary" role="button" data-ui-toggle="tooltip" data-ui-title="This is a tooltip" data-ui-placement="bottom" data-ui-position="center" data-ui-fixed="true">
                 Bottom</button>
-            <button class="btn ripple btn-secondary" role="button" data-toggle="tooltip" data-title="This is a tooltip"
-                data-placement="left" data-position="center" data-fixed="true">Left
+            <button class="btn ripple btn-secondary" role="button" data-ui-toggle="tooltip" data-ui-title="This is a tooltip" data-ui-placement="left" data-ui-position="center" data-ui-fixed="true">Left
             </button>
         </div>
 
         <h4>Position</h4>
         <div class="mb-4">
-            <button class="btn ripple btn-secondary" role="button" data-toggle="tooltip" data-title="This is a tooltip"
-                data-placement="bottom" data-position="start" data-fixed="true">Start
+            <button class="btn ripple btn-secondary" role="button" data-ui-toggle="tooltip" data-ui-title="This is a tooltip" data-ui-placement="bottom" data-ui-position="start" data-ui-fixed="true">Start
             </button>
-            <button class="btn ripple btn-secondary" role="button" data-toggle="tooltip" data-title="This is a tooltip"
-                data-placement="bottom" data-position="center" data-fixed="true">
+            <button class="btn ripple btn-secondary" role="button" data-ui-toggle="tooltip" data-ui-title="This is a tooltip" data-ui-placement="bottom" data-ui-position="center" data-ui-fixed="true">
                 Center</button>
-            <button class="btn ripple btn-secondary" role="button" data-toggle="tooltip" data-title="This is a tooltip"
-                data-placement="bottom" data-position="end" data-fixed="true">End
+            <button class="btn ripple btn-secondary" role="button" data-ui-toggle="tooltip" data-ui-title="This is a tooltip" data-ui-placement="bottom" data-ui-position="end" data-ui-fixed="true">End
             </button>
         </div>
     </div>
     <script>
-        const nodes = dom.find('[data-toggle="tooltip"]');
+        const nodes = dom.find('[data-ui-toggle="tooltip"]');
         for (const node of nodes) {
             UI.Tooltip.init(node);
         }

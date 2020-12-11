@@ -2,36 +2,16 @@
  * Popper Class
  * @class
  */
-class Popper {
+class Popper extends BaseComponent {
 
     /**
      * New Popper constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} settings The options to create the Popper with.
-     * @param {HTMLElement} settings.referencee The node to use as the reference.
-     * @param {HTMLElement} [settings.container] The node to use as the container.
-     * @param {HTMLElement} [settings.arrow] The node to use as the arrow.
-     * @param {function} [settings.beforeUpdate] The callback to run before updating the Popper.
-     * @param {function} [settings.afterUpdate] The callback to run after updating the Popper.
-     * @param {string} [settings.placement=bottom] The placement of the node relative to the reference.
-     * @param {string} [settings.position=center] The position of the node relative to the reference.
-     * @param {Boolean} [settings.fixed=false] Whether the node position is fixed.
-     * @param {number} [settings.spacing=0] The spacing between the node and the reference.
-     * @param {number} [settings.minContact=false] The minimum amount of contact the node must make with the reference.
-     * @param {Boolean} [settings.useGpu=true] Whether to use GPU acceleration.
      * @returns {Popper} A new Popper object.
      */
     constructor(node, settings) {
-        this._node = node;
-
-        this._settings = Core.extend(
-            {},
-            this.constructor.defaults,
-            dom.getDataset(this._node),
-            settings
-        );
-
-        this._scrollParent = this.constructor.getScrollParent(this._node);
+        super(node, settings);
 
         dom.setStyle(this._node, {
             margin: 0,
@@ -52,19 +32,15 @@ class Popper {
 
         PopperSet.add(this);
 
+        this._scrollParent = this.constructor._getScrollParent(this._node);
+
         if (this._scrollParent) {
             PopperSet.addOverflow(this._scrollParent, this);
         }
 
-        dom.addEvent(this._node, 'remove.frost.popper', _ => {
-            this.destroy();
-        });
-
         window.requestAnimationFrame(_ => {
             this.update();
         });
-
-        dom.setData(this._node, 'popper', this);
     }
 
     /**
@@ -77,7 +53,7 @@ class Popper {
             PopperSet.removeOverflow(this._scrollParent, this);
         }
 
-        dom.removeData(this._node, 'popper');
+        super.destroy();
     }
 
     /**
@@ -98,10 +74,10 @@ class Popper {
         // calculate boxes
         const nodeBox = dom.rect(this._node, true);
         const referenceBox = dom.rect(this._settings.reference, true);
-        const windowBox = this.constructor.windowContainer();
+        const windowBox = this.constructor._windowContainer();
 
         // check object could be seen
-        if (this.constructor.isNodeHidden(nodeBox, referenceBox, windowBox, this._settings.spacing)) {
+        if (this.constructor._isNodeHidden(nodeBox, referenceBox, windowBox, this._settings.spacing)) {
             return;
         }
 
@@ -141,7 +117,7 @@ class Popper {
         // get optimal placement
         const placement = this._settings.fixed ?
             this._settings.placement :
-            this.constructor.getPopperPlacement(
+            this.constructor._getPopperPlacement(
                 nodeBox,
                 referenceBox,
                 minimumBox,
@@ -149,13 +125,13 @@ class Popper {
                 this._settings.spacing + 2
             );
 
-        dom.setDataset(this._settings.reference, 'placement', placement);
-        dom.setDataset(this._node, 'placement', placement);
+        dom.setDataset(this._settings.reference, 'uiPlacement', placement);
+        dom.setDataset(this._node, 'uiPlacement', placement);
 
         // get auto position
         const position = this._settings.position !== 'auto' ?
             this._settings.position :
-            this.constructor.getPopperPosition(
+            this.constructor._getPopperPosition(
                 nodeBox,
                 referenceBox,
                 minimumBox,
@@ -170,7 +146,7 @@ class Popper {
         };
 
         // offset for relative parent
-        const relativeParent = this.constructor.getRelativeParent(this._node);
+        const relativeParent = this.constructor._getRelativeParent(this._node);
         const relativeBox = relativeParent ?
             dom.rect(relativeParent, true) :
             null;
@@ -181,10 +157,10 @@ class Popper {
         }
 
         // offset for placement
-        this.constructor.adjustPlacement(offset, nodeBox, referenceBox, placement, this._settings.spacing);
+        this.constructor._adjustPlacement(offset, nodeBox, referenceBox, placement, this._settings.spacing);
 
         // offset for position
-        this.constructor.adjustPosition(offset, nodeBox, referenceBox, placement, position);
+        this.constructor._adjustPosition(offset, nodeBox, referenceBox, placement, position);
 
         // compensate for margins
         offset.x -= parseInt(dom.css(this._node, 'margin-left'));
@@ -193,7 +169,7 @@ class Popper {
         // compensate for borders
 
         // corrective positioning
-        this.constructor.adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, this._settings.minContact);
+        this.constructor._adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, this._settings.minContact);
 
         // compensate for scroll parent
         if (this._scrollParent) {
@@ -221,62 +197,6 @@ class Popper {
         if (this._settings.afterUpdate) {
             this._settings.afterUpdate(this._node, this._settings.reference, placement, position);
         }
-    }
-
-    /**
-     * Update the position of the arrow for the actual placement and position.
-     * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
-     * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
-     * @param {string} placement The actual placement of the Popper.
-     * @param {string} position The actual position of the Popper.
-     */
-    _updateArrow(nodeBox, referenceBox, placement, position) {
-        const arrowStyles = {
-            position: 'absolute',
-            top: '',
-            right: '',
-            bottom: '',
-            left: ''
-        };
-        dom.setStyle(this._settings.arrow, arrowStyles);
-
-        const arrowBox = dom.rect(this._settings.arrow, true);
-
-        if (['top', 'bottom'].includes(placement)) {
-            arrowStyles[placement === 'top' ? 'bottom' : 'top'] = -arrowBox.height;
-            const diff = (referenceBox.width - nodeBox.width) / 2;
-
-            let offset = (nodeBox.width / 2) - (arrowBox.width / 2);
-            if (position === 'start') {
-                offset += diff;
-            } else if (position === 'end') {
-                offset -= diff;
-            }
-
-            arrowStyles.left = Core.clamp(
-                offset,
-                Math.max(referenceBox.left, nodeBox.left) - arrowBox.left,
-                Math.min(referenceBox.right, nodeBox.right) - arrowBox.left - arrowBox.width
-            );
-        } else {
-            arrowStyles[placement === 'right' ? 'left' : 'right'] = -arrowBox.width;
-            const diff = (referenceBox.height - nodeBox.height) / 2;
-
-            let offset = (nodeBox.height / 2) - arrowBox.height;
-            if (position === 'start') {
-                offset += diff;
-            } else if (position === 'end') {
-                offset -= diff;
-            }
-
-            arrowStyles.top = Core.clamp(
-                offset,
-                Math.max(referenceBox.top, nodeBox.top) - arrowBox.top,
-                Math.min(referenceBox.bottom, nodeBox.bottom) - arrowBox.top - arrowBox.height
-            );
-        }
-
-        dom.setStyle(this._settings.arrow, arrowStyles);
     }
 
 }

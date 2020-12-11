@@ -2,29 +2,16 @@
  * Dropdown Class
  * @class
  */
-class Dropdown {
+class Dropdown extends BaseComponent {
 
     /**
      * New Dropdown constructor.
      * @param {HTMLElement} node The input node.
      * @param {object} [settings] The options to create the Dropdown with.
-     * @param {number} [settings.duration=100] The duration of the animation.
-     * @param {string} [settings.placement=bottom] The placement of the dropdown relative to the toggle.
-     * @param {string} [settings.position=start] The position of the dropdown relative to the toggle.
-     * @param {Boolean} [settings.fixed=false] Whether the dropdown position is fixed.
-     * @param {number} [settings.spacing=2] The spacing between the dropdown and the toggle.
-     * @param {number} [settings.minContact=false] The minimum amount of contact the dropdown must make with the toggle.
      * @returns {Dropdown} A new Dropdown object.
      */
     constructor(node, settings) {
-        this._node = node;
-
-        this._settings = Core.extend(
-            {},
-            this.constructor.defaults,
-            dom.getDataset(this._node),
-            settings
-        );
+        super(node, settings);
 
         this._menuNode = dom.next(this._node, '.dropdown-menu').shift();
 
@@ -56,12 +43,6 @@ class Dropdown {
                 }
             );
         }
-
-        dom.addEvent(this._node, 'remove.frost.dropdown', _ => {
-            this.destroy();
-        });
-
-        dom.setData(this._node, 'dropdown', this);
     }
 
     /**
@@ -72,9 +53,9 @@ class Dropdown {
             this._popper.destroy();
         }
 
-        dom.removeEvent(this._node, 'keyup.frost.dropdown');
-        dom.removeEvent(this._node, 'remove.frost.dropdown');
-        dom.removeData(this._node, 'dropdown');
+        dom.removeEvent(this._node, 'keyup.ui.dropdown');
+
+        super.destroy();
     }
 
     /**
@@ -84,7 +65,7 @@ class Dropdown {
         if (
             this._animating ||
             !dom.hasClass(this._menuNode, 'show') ||
-            !dom.triggerOne(this._node, 'hide.frost.dropdown')
+            !dom.triggerOne(this._node, 'hide.ui.dropdown')
         ) {
             return;
         }
@@ -96,7 +77,7 @@ class Dropdown {
         }).then(_ => {
             dom.removeClass(this._menuNode, 'show');
             dom.setAttribute(this._node, 'aria-expanded', false);
-            dom.triggerEvent(this._node, 'hidden.frost.dropdown');
+            dom.triggerEvent(this._node, 'hidden.ui.dropdown');
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
         });
@@ -109,7 +90,7 @@ class Dropdown {
         if (
             this._animating ||
             dom.hasClass(this._menuNode, 'show') ||
-            !dom.triggerOne(this._node, 'show.frost.dropdown')
+            !dom.triggerOne(this._node, 'show.ui.dropdown')
         ) {
             return;
         }
@@ -121,7 +102,7 @@ class Dropdown {
             duration: this._settings.duration
         }).then(_ => {
             dom.setAttribute(this._node, 'aria-expanded', true);
-            dom.triggerEvent(this._node, 'shown.frost.dropdown');
+            dom.triggerEvent(this._node, 'shown.ui.dropdown');
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
         });
@@ -134,6 +115,17 @@ class Dropdown {
         dom.hasClass(this._menuNode, 'show') ?
             this.hide() :
             this.show();
+    }
+
+    /**
+     * Update the Dropdown position.
+     */
+    update() {
+        if (this._settings.display === 'dynamic') {
+            return;
+        }
+
+        this._popper.update();
     }
 
     /**
@@ -169,24 +161,6 @@ class Dropdown {
             const dropdown = this.init(trigger);
             dropdown.hide();
         }
-    }
-
-    /**
-     * Initialize a Dropdown.
-     * @param {HTMLElement} node The input node.
-     * @param {object} [settings] The options to create the Dropdown with.
-     * @param {number} [settings.duration=100] The duration of the animation.
-     * @param {string} [settings.placement=bottom] The placement of the dropdown relative to the toggle.
-     * @param {string} [settings.position=start] The position of the dropdown relative to the toggle.
-     * @param {Boolean} [settings.fixed=false] Whether the dropdown position is fixed.
-     * @param {number} [settings.spacing=2] The spacing between the dropdown and the toggle.
-     * @param {number} [settings.minContact=false] The minimum amount of contact the dropdown must make with the toggle.
-     * @returns {Dropdown} A new Dropdown object.
-     */
-    static init(node, settings) {
-        return dom.hasData(node, 'dropdown') ?
-            dom.getData(node, 'dropdown') :
-            new this(node, settings);
     }
 
 }
