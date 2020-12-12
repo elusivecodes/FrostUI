@@ -9,6 +9,7 @@ Tooltip.defaults = {
     enable: true,
     html: false,
     trigger: 'hover focus',
+    appendTo: null,
     sanitize: input => dom.sanitize(input),
     placement: 'auto',
     position: 'center',

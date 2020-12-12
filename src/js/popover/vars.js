@@ -9,6 +9,7 @@ Popover.defaults = {
     duration: 100,
     enable: true,
     html: false,
+    appendTo: null,
     sanitize: input => dom.sanitize(input),
     trigger: 'click',
     placement: 'auto',

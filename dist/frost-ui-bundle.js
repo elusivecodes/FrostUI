@@ -12131,10 +12131,10 @@
                         content
                 );
 
-                if (this._container) {
-                    dom.append(this._container, this._popover);
+                if (this._settings.appendTo) {
+                    dom.append(this._settings.appendTo, this._popover);
                 } else {
-                    dom.before(this._node, this._popover);
+                    dom.after(this._node, this._popover);
                 }
 
                 this._popper = new Popper(
@@ -12165,6 +12165,7 @@
             duration: 100,
             enable: true,
             html: false,
+            appendTo: null,
             sanitize: input => dom.sanitize(input),
             trigger: 'click',
             placement: 'auto',
@@ -13464,10 +13465,10 @@
                         title
                 );
 
-                if (this._container) {
-                    dom.append(this._container, this._tooltip);
+                if (this._settings.appendTo) {
+                    dom.append(this._settings.appendTo, this._tooltip);
                 } else {
-                    dom.before(this._node, this._tooltip);
+                    dom.after(this._node, this._tooltip);
                 }
 
                 this._popper = new Popper(
@@ -13498,6 +13499,7 @@
             enable: true,
             html: false,
             trigger: 'hover focus',
+            appendTo: null,
             sanitize: input => dom.sanitize(input),
             placement: 'auto',
             position: 'center',

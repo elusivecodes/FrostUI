@@ -69,10 +69,10 @@ Object.assign(Tooltip.prototype, {
                 title
         );
 
-        if (this._container) {
-            dom.append(this._container, this._tooltip);
+        if (this._settings.appendTo) {
+            dom.append(this._settings.appendTo, this._tooltip);
         } else {
-            dom.before(this._node, this._tooltip);
+            dom.after(this._node, this._tooltip);
         }
 
         this._popper = new Popper(
