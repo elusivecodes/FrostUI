@@ -30,19 +30,16 @@
     &:disabled,
     &.disabled {
         pointer-events: none;
-        background-color: @form-disabled;
 
-        &::placeholder {
-            color: @form-placeholder;
+        &,
+        &:hover {
+            background-color: @form-disabled;
         }
     }
 
-    &[readonly] {
-
-        &,
-        &::placeholder {
-            color: @form-placeholder;
-        }
+    &[readonly],
+    &.readonly {
+        color: @form-placeholder;
     }
 
     select& {

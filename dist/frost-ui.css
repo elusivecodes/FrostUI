@@ -3500,18 +3500,21 @@ button.close:focus {
 .input-filled.disabled,
 .input-outline.disabled {
   pointer-events: none;
-  background-color: gainsboro;
 }
-.input-filled:disabled::placeholder,
-.input-outline:disabled::placeholder,
-.input-filled.disabled::placeholder,
-.input-outline.disabled::placeholder {
-  color: gray;
+.input-filled:disabled,
+.input-outline:disabled,
+.input-filled.disabled,
+.input-outline.disabled,
+.input-filled:disabled:hover,
+.input-outline:disabled:hover,
+.input-filled.disabled:hover,
+.input-outline.disabled:hover {
+  background-color: gainsboro;
 }
 .input-filled[readonly],
 .input-outline[readonly],
-.input-filled[readonly]::placeholder,
-.input-outline[readonly]::placeholder {
+.input-filled.readonly,
+.input-outline.readonly {
   color: gray;
 }
 select.input-filled:not([multiple]),
