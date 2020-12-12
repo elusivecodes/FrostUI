@@ -34,6 +34,6 @@
     },
     "dependencies": {
         "frostcore": "^1.0.11",
-        "frostdom": "^2.0.5"
+        "frostdom": "^2.0.6"
     }
 }
