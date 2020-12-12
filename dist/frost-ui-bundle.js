@@ -1097,7 +1097,7 @@
     });
 
     /**
-     * FrostDOM v2.0.4
+     * FrostDOM v2.0.5
      * https://github.com/elusivecodes/FrostDOM
      */
     (function(global, factory) {
@@ -2619,7 +2619,7 @@
              * @returns {string} The text contents.
              */
             getText(nodes) {
-                return this.getProperty(nodes, 'innerText');
+                return this.getProperty(nodes, 'textContent');
             },
 
             /**
@@ -2741,7 +2741,7 @@
             setText(nodes, text) {
                 this.empty(nodes);
 
-                this.setProperty(nodes, 'innerText', text);
+                this.setProperty(nodes, 'textContent', text);
             },
 
             /**
@@ -3902,7 +3902,7 @@
                 if ('html' in options) {
                     node.innerHTML = options.html;
                 } else if ('text' in options) {
-                    node.innerText = options.text;
+                    node.textContent = options.text;
                 }
 
                 if ('class' in options) {
