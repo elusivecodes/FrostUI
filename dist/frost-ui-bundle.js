@@ -11144,7 +11144,7 @@
                             return;
                         }
 
-                        switch (e.key) {
+                        switch (e.code) {
                             case 'ArrowLeft':
                                 e.preventDefault();
                                 this.prev();
@@ -11695,7 +11695,7 @@
 
         // Dropdown events
         dom.addEventDelegate(document, 'click.ui.dropdown keyup.ui.dropdown', '[data-ui-toggle="dropdown"]', e => {
-            if (e.key && e.key !== ' ') {
+            if (e.code && e.code !== 'Space') {
                 return;
             }
 
@@ -11706,7 +11706,7 @@
         });
 
         dom.addEventDelegate(document, 'keydown.ui.dropdown', '[data-ui-toggle="dropdown"]', e => {
-            switch (e.key) {
+            switch (e.code) {
                 case 'ArrowDown':
                 case 'ArrowUp':
                     e.preventDefault();
@@ -11727,7 +11727,7 @@
         dom.addEventDelegate(document, 'keydown.ui.dropdown', '.dropdown-menu.show .dropdown-item', e => {
             let focusNode;
 
-            switch (e.key) {
+            switch (e.code) {
                 case 'ArrowDown':
                     focusNode = dom.nextAll(e.currentTarget, '.dropdown-item:not([tabindex="-1"])').shift();
                     break;
@@ -11748,7 +11748,7 @@
         });
 
         dom.addEvent(document, 'keyup.ui.dropdown', e => {
-            switch (e.key) {
+            switch (e.code) {
                 case 'Tab':
                     Dropdown.autoHide(e.target, true);
                     break;
@@ -11964,7 +11964,7 @@
         });
 
         dom.addEvent(document, 'keyup.ui.modal', e => {
-            if (e.key !== 'Escape') {
+            if (e.code !== 'Escape') {
                 return;
             }
 

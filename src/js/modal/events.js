@@ -40,7 +40,7 @@ dom.addEvent(document, 'click.ui.modal', e => {
 });
 
 dom.addEvent(document, 'keyup.ui.modal', e => {
-    if (e.key !== 'Escape') {
+    if (e.code !== 'Escape') {
         return;
     }
 

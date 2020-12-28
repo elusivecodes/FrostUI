@@ -15,7 +15,7 @@ Object.assign(Carousel.prototype, {
                     return;
                 }
 
-                switch (e.key) {
+                switch (e.code) {
                     case 'ArrowLeft':
                         e.preventDefault();
                         this.prev();
