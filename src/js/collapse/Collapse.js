@@ -25,6 +25,7 @@ class Collapse extends BaseComponent {
 
     /**
      * Hide the element.
+     * @returns {Collapse} The Collapse.
      */
     hide() {
         if (
@@ -32,7 +33,7 @@ class Collapse extends BaseComponent {
             !dom.hasClass(this._node, 'show') ||
             !dom.triggerOne(this._node, 'hide.ui.collapse')
         ) {
-            return;
+            return this;
         }
 
         this._animating = true;
@@ -48,17 +49,20 @@ class Collapse extends BaseComponent {
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
         });
+
+        return this;
     }
 
     /**
      * Show the element.
+     * @returns {Collapse} The Collapse.
      */
     show() {
         if (
             this._animating ||
             dom.hasClass(this._node, 'show')
         ) {
-            return;
+            return this;
         }
 
         const collapses = [];
@@ -80,7 +84,7 @@ class Collapse extends BaseComponent {
         }
 
         if (!dom.triggerOne(this._node, 'show.ui.collapse')) {
-            return;
+            return this;
         }
 
         for (const collapse of collapses) {
@@ -100,13 +104,16 @@ class Collapse extends BaseComponent {
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
         });
+
+        return this;
     }
 
     /**
      * Toggle the element.
+     * @returns {Collapse} The Collapse.
      */
     toggle() {
-        dom.hasClass(this._node, 'show') ?
+        return dom.hasClass(this._node, 'show') ?
             this.hide() :
             this.show();
     }

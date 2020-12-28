@@ -58,24 +58,31 @@ class Tooltip extends BaseComponent {
 
     /**
      * Disable the Tooltip.
+     * @returns {Tooltip} The Tooltip.
      */
     disable() {
         this._enabled = false;
+
+        return this;
     }
 
     /**
      * Enable the Tooltip.
+     * @returns {Tooltip} The Tooltip.
      */
     enable() {
         this._enabled = true;
+
+        return this;
     }
 
     /**
      * Hide the Tooltip.
+     * @returns {Tooltip} The Tooltip.
      */
     hide() {
         if (!this._enabled) {
-            return;
+            return this;
         }
 
         if (this._animating) {
@@ -86,7 +93,7 @@ class Tooltip extends BaseComponent {
             !dom.isConnected(this._tooltip) ||
             !dom.triggerOne(this._node, 'hide.ui.tooltip')
         ) {
-            return;
+            return this;
         }
 
         this._animating = true;
@@ -101,14 +108,17 @@ class Tooltip extends BaseComponent {
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
         });
+
+        return this;
     }
 
     /**
      * Show the Tooltip.
+     * @returns {Tooltip} The Tooltip.
      */
     show() {
         if (!this._enabled) {
-            return;
+            return this;
         }
 
         if (this._animating) {
@@ -119,7 +129,7 @@ class Tooltip extends BaseComponent {
             dom.isConnected(this._tooltip) ||
             !dom.triggerOne(this._node, 'show.ui.tooltip')
         ) {
-            return;
+            return this;
         }
 
         this._animating = true;
@@ -133,26 +143,30 @@ class Tooltip extends BaseComponent {
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
         });
+
+        return this;
     }
 
     /**
      * Toggle the Tooltip.
+     * @returns {Tooltip} The Tooltip.
      */
     toggle() {
-        dom.isConnected(this._tooltip) ?
+        return dom.isConnected(this._tooltip) ?
             this.hide() :
             this.show();
     }
 
     /**
      * Update the Tooltip position.
+     * @returns {Tooltip} The Tooltip.
      */
     update() {
-        if (!this._popper) {
-            return;
+        if (this._popper) {
+            this._popper.update();
         }
 
-        this._popper.update();
+        return this;
     }
 
 }

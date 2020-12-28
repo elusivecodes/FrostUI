@@ -58,24 +58,31 @@ class Popover extends BaseComponent {
 
     /**
      * Disable the Popover.
+     * @returns {Popover} The Popover.
      */
     disable() {
         this._enabled = false;
+
+        return this;
     }
 
     /**
      * Enable the Popover.
+     * @returns {Popover} The Popover.
      */
     enable() {
         this._enabled = true;
+
+        return this;
     }
 
     /**
      * Hide the Popover.
+     * @returns {Popover} The Popover.
      */
     hide() {
         if (!this._enabled) {
-            return;
+            return this;
         }
 
         if (this._animating) {
@@ -86,7 +93,7 @@ class Popover extends BaseComponent {
             !dom.isConnected(this._popover) ||
             !dom.triggerOne(this._node, 'hide.ui.popover')
         ) {
-            return;
+            return this;
         }
 
         this._animating = true;
@@ -101,14 +108,17 @@ class Popover extends BaseComponent {
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
         });
+
+        return this;
     }
 
     /**
      * Show the Popover.
+     * @returns {Popover} The Popover.
      */
     show() {
         if (!this._enabled) {
-            return;
+            return this;
         }
 
         if (this._animating) {
@@ -119,7 +129,7 @@ class Popover extends BaseComponent {
             dom.isConnected(this._popover) ||
             !dom.triggerOne(this._node, 'show.ui.popover')
         ) {
-            return;
+            return this;
         }
 
         this._animating = true;
@@ -133,26 +143,30 @@ class Popover extends BaseComponent {
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
         });
+
+        return this;
     }
 
     /**
      * Toggle the Popover.
+     * @returns {Popover} The Popover.
      */
     toggle() {
-        dom.isConnected(this._popover) ?
+        return dom.isConnected(this._popover) ?
             this.hide() :
             this.show();
     }
 
     /**
      * Update the Popover position.
+     * @returns {Popover} The Popover.
      */
     update() {
-        if (!this._popper) {
-            return;
+        if (this._popper) {
+            this._popper.update();
         }
 
-        this._popper.update();
+        return this;
     }
 
 }

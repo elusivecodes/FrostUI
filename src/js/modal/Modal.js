@@ -30,6 +30,7 @@ class Modal extends BaseComponent {
 
     /**
      * Hide the Modal.
+     * @returns {Modal} The Modal.
      */
     hide() {
         if (
@@ -37,7 +38,7 @@ class Modal extends BaseComponent {
             !dom.hasClass(this._node, 'show') ||
             !dom.triggerOne(this._node, 'hide.ui.modal')
         ) {
-            return;
+            return this;
         }
 
         this._animating = true;
@@ -73,11 +74,14 @@ class Modal extends BaseComponent {
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
         });
+
+        return this;
     }
 
     /**
      * Show the Modal.
      * @param {HTMLElement} [activeTarget] The active target.
+     * @returns {Modal} The Modal.
      */
     show(activeTarget) {
         if (
@@ -85,7 +89,7 @@ class Modal extends BaseComponent {
             dom.hasClass(this._node, 'show') ||
             !dom.triggerOne(this._node, 'show.ui.modal')
         ) {
-            return;
+            return this;
         }
 
         this._activeTarget = activeTarget;
@@ -124,13 +128,16 @@ class Modal extends BaseComponent {
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
         });
+
+        return this;
     }
 
     /**
      * Toggle the Modal.
+     * @returns {Modal} The Modal.
      */
     toggle() {
-        dom.hasClass(this._node, 'show') ?
+        return dom.hasClass(this._node, 'show') ?
             this.hide() :
             this.show();
     }

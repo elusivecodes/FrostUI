@@ -60,6 +60,7 @@ class Dropdown extends BaseComponent {
 
     /**
      * Hide the Dropdown.
+     * @returns {Dropdown} The Dropdown.
      */
     hide() {
         if (
@@ -67,7 +68,7 @@ class Dropdown extends BaseComponent {
             !dom.hasClass(this._menuNode, 'show') ||
             !dom.triggerOne(this._node, 'hide.ui.dropdown')
         ) {
-            return;
+            return this;
         }
 
         this._animating = true;
@@ -81,10 +82,13 @@ class Dropdown extends BaseComponent {
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
         });
+
+        return this;
     }
 
     /**
      * Show the Dropdown.
+     * @returns {Dropdown} The Dropdown.
      */
     show() {
         if (
@@ -92,7 +96,7 @@ class Dropdown extends BaseComponent {
             dom.hasClass(this._menuNode, 'show') ||
             !dom.triggerOne(this._node, 'show.ui.dropdown')
         ) {
-            return;
+            return this;
         }
 
         this._animating = true;
@@ -106,26 +110,30 @@ class Dropdown extends BaseComponent {
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
         });
+
+        return this;
     }
 
     /**
      * Toggle the Dropdown.
+     * @returns {Dropdown} The Dropdown.
      */
     toggle() {
-        dom.hasClass(this._menuNode, 'show') ?
+        return dom.hasClass(this._menuNode, 'show') ?
             this.hide() :
             this.show();
     }
 
     /**
      * Update the Dropdown position.
+     * @returns {Dropdown} The Dropdown.
      */
     update() {
         if (this._settings.display === 'dynamic') {
-            return;
+            this._popper.update();
         }
 
-        this._popper.update();
+        return this;
     }
 
     /**

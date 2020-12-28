@@ -20,6 +20,7 @@ class Tab extends BaseComponent {
 
     /**
      * Hide the current Tab.
+     * @returns {Tab} The Tab.
      */
     hide() {
         if (
@@ -27,7 +28,7 @@ class Tab extends BaseComponent {
             !dom.hasClass(this._target, 'active') ||
             !dom.triggerOne(this._node, 'hide.ui.tab')
         ) {
-            return;
+            return this;
         }
 
         this._animating = true;
@@ -42,10 +43,13 @@ class Tab extends BaseComponent {
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
         });
+
+        return this;
     }
 
     /**
      * Hide any active Tabs, and show the current Tab.
+     * @returns {Tab} The Tab.
      */
     show() {
         if (
@@ -53,7 +57,7 @@ class Tab extends BaseComponent {
             dom.hasClass(this._target, 'active') ||
             !dom.triggerOne(this._node, 'show.ui.tab')
         ) {
-            return;
+            return this;
         }
 
         const active = this._siblings.find(sibling =>
@@ -64,12 +68,12 @@ class Tab extends BaseComponent {
         if (active) {
             activeTab = this.constructor.init(active);
             if (activeTab._animating) {
-                return;
+                return this;
             }
         }
 
         if (!dom.triggerOne(this._node, 'show.ui.tab')) {
-            return;
+            return this;
         }
 
         const show = _ => {
@@ -88,11 +92,13 @@ class Tab extends BaseComponent {
         };
 
         if (!activeTab) {
-            return show();
+            show();
+
+            return this;
         }
 
         if (!dom.triggerOne(active, 'hide.ui.tab')) {
-            return;
+            return this;
         }
 
         dom.addEventOnce(active, 'hidden.ui.tab', _ => {
@@ -100,6 +106,8 @@ class Tab extends BaseComponent {
         });
 
         activeTab.hide();
+
+        return this;
     }
 
 }

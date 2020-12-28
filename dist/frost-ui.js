@@ -232,12 +232,15 @@
 
         /**
          * Toggle the Button.
+         * @returns {Button} The Button.
          */
         toggle() {
             dom.toggleClass(this._node, 'active');
 
             const pressed = dom.hasClass(this._node, 'active');
             dom.setAttribute('aria-pressed', pressed);
+
+            return this;
         }
 
     }
@@ -290,11 +293,14 @@
 
         /**
          * Cycle to the next carousel item.
+         * @returns {Carousel} The Carousel.
          */
         cycle() {
             dom.isHidden(document) ?
                 this._setTimer() :
                 this.slide(1);
+
+            return this;
         }
 
         /**
@@ -319,40 +325,49 @@
 
         /**
          * Cycle to the next Carousel item.
+         * @returns {Carousel} The Carousel.
          */
         next() {
-            this.slide();
+            return this.slide();
         }
 
         /**
          * Stop the carousel from cycling through items.
+         * @returns {Carousel} The Carousel.
          */
         pause() {
             clearTimeout(this._timer);
             this._timer = null;
+
+            return this;
         }
 
         /**
          * Cycle to the previous Carousel item.
+         * @returns {Carousel} The Carousel.
          */
         prev() {
-            this.slide(-1);
+            return this.slide(-1);
         }
 
         /**
          * Cycle to a specific Carousel item.
          * @param {number} index The item index to cycle to.
+         * @returns {Carousel} The Carousel.
          */
         show(index) {
             this._show(index);
+
+            return this;
         }
 
         /**
          * Slide the Carousel in a specific direction.
          * @param {number} [direction=1] The direction to slide to.
+         * @returns {Carousel} The Carousel.
          */
         slide(direction = 1) {
-            this.show(this._index + direction);
+            return this.show(this._index + direction);
         }
 
     }
@@ -575,6 +590,65 @@
     UI.Carousel = Carousel;
 
 
+    // Clipboard events
+    dom.addEventDelegate(document, 'click', '[data-ui-toggle="clipboard"]', e => {
+        e.preventDefault();
+
+        const node = e.currentTarget;
+        const settings = Core.extend(
+            {
+                action: 'copy',
+                text: false
+            },
+            UI.getDataset(node)
+        );
+
+        if (!['copy', 'cut'].includes(settings.action)) {
+            throw new Error('Invalid clipboard action');
+        }
+
+        let text, input;
+        if (settings.text) {
+            text = settings.text;
+        } else {
+            const target = UI.getTarget(node);
+            if (dom.is(target, 'input, textarea')) {
+                input = target;
+            } else {
+                text = dom.getText(target);
+            }
+        }
+
+        const customText = !input;
+        if (customText) {
+            input = dom.create(
+                'textarea',
+                {
+                    class: 'visually-hidden position-fixed',
+                    value: text
+                }
+            );
+
+            dom.append(document.body, input);
+        }
+
+        dom.select(input);
+
+        if (dom.exec(settings.action)) {
+            dom.triggerEvent(node, 'copied.ui.clipboard', {
+                detail: {
+                    action: settings.action,
+                    text: dom.getValue(input)
+                }
+            });
+        }
+
+        if (customText) {
+            dom.remove(input);
+        }
+    });
+
+
     /**
      * Collapse Class
      * @class
@@ -602,6 +676,7 @@
 
         /**
          * Hide the element.
+         * @returns {Collapse} The Collapse.
          */
         hide() {
             if (
@@ -609,7 +684,7 @@
                 !dom.hasClass(this._node, 'show') ||
                 !dom.triggerOne(this._node, 'hide.ui.collapse')
             ) {
-                return;
+                return this;
             }
 
             this._animating = true;
@@ -625,17 +700,20 @@
             }).catch(_ => { }).finally(_ => {
                 this._animating = false;
             });
+
+            return this;
         }
 
         /**
          * Show the element.
+         * @returns {Collapse} The Collapse.
          */
         show() {
             if (
                 this._animating ||
                 dom.hasClass(this._node, 'show')
             ) {
-                return;
+                return this;
             }
 
             const collapses = [];
@@ -657,7 +735,7 @@
             }
 
             if (!dom.triggerOne(this._node, 'show.ui.collapse')) {
-                return;
+                return this;
             }
 
             for (const collapse of collapses) {
@@ -677,13 +755,16 @@
             }).catch(_ => { }).finally(_ => {
                 this._animating = false;
             });
+
+            return this;
         }
 
         /**
          * Toggle the element.
+         * @returns {Collapse} The Collapse.
          */
         toggle() {
-            dom.hasClass(this._node, 'show') ?
+            return dom.hasClass(this._node, 'show') ?
                 this.hide() :
                 this.show();
         }
@@ -778,6 +859,7 @@
 
         /**
          * Hide the Dropdown.
+         * @returns {Dropdown} The Dropdown.
          */
         hide() {
             if (
@@ -785,7 +867,7 @@
                 !dom.hasClass(this._menuNode, 'show') ||
                 !dom.triggerOne(this._node, 'hide.ui.dropdown')
             ) {
-                return;
+                return this;
             }
 
             this._animating = true;
@@ -799,10 +881,13 @@
             }).catch(_ => { }).finally(_ => {
                 this._animating = false;
             });
+
+            return this;
         }
 
         /**
          * Show the Dropdown.
+         * @returns {Dropdown} The Dropdown.
          */
         show() {
             if (
@@ -810,7 +895,7 @@
                 dom.hasClass(this._menuNode, 'show') ||
                 !dom.triggerOne(this._node, 'show.ui.dropdown')
             ) {
-                return;
+                return this;
             }
 
             this._animating = true;
@@ -824,26 +909,30 @@
             }).catch(_ => { }).finally(_ => {
                 this._animating = false;
             });
+
+            return this;
         }
 
         /**
          * Toggle the Dropdown.
+         * @returns {Dropdown} The Dropdown.
          */
         toggle() {
-            dom.hasClass(this._menuNode, 'show') ?
+            return dom.hasClass(this._menuNode, 'show') ?
                 this.hide() :
                 this.show();
         }
 
         /**
          * Update the Dropdown position.
+         * @returns {Dropdown} The Dropdown.
          */
         update() {
             if (this._settings.display === 'dynamic') {
-                return;
+                this._popper.update();
             }
 
-            this._popper.update();
+            return this;
         }
 
         /**
@@ -998,6 +1087,7 @@
 
         /**
          * Hide the Modal.
+         * @returns {Modal} The Modal.
          */
         hide() {
             if (
@@ -1005,7 +1095,7 @@
                 !dom.hasClass(this._node, 'show') ||
                 !dom.triggerOne(this._node, 'hide.ui.modal')
             ) {
-                return;
+                return this;
             }
 
             this._animating = true;
@@ -1041,11 +1131,14 @@
             }).catch(_ => { }).finally(_ => {
                 this._animating = false;
             });
+
+            return this;
         }
 
         /**
          * Show the Modal.
          * @param {HTMLElement} [activeTarget] The active target.
+         * @returns {Modal} The Modal.
          */
         show(activeTarget) {
             if (
@@ -1053,7 +1146,7 @@
                 dom.hasClass(this._node, 'show') ||
                 !dom.triggerOne(this._node, 'show.ui.modal')
             ) {
-                return;
+                return this;
             }
 
             this._activeTarget = activeTarget;
@@ -1092,13 +1185,16 @@
             }).catch(_ => { }).finally(_ => {
                 this._animating = false;
             });
+
+            return this;
         }
 
         /**
          * Toggle the Modal.
+         * @returns {Modal} The Modal.
          */
         toggle() {
-            dom.hasClass(this._node, 'show') ?
+            return dom.hasClass(this._node, 'show') ?
                 this.hide() :
                 this.show();
         }
@@ -1240,24 +1336,31 @@
 
         /**
          * Disable the Popover.
+         * @returns {Popover} The Popover.
          */
         disable() {
             this._enabled = false;
+
+            return this;
         }
 
         /**
          * Enable the Popover.
+         * @returns {Popover} The Popover.
          */
         enable() {
             this._enabled = true;
+
+            return this;
         }
 
         /**
          * Hide the Popover.
+         * @returns {Popover} The Popover.
          */
         hide() {
             if (!this._enabled) {
-                return;
+                return this;
             }
 
             if (this._animating) {
@@ -1268,7 +1371,7 @@
                 !dom.isConnected(this._popover) ||
                 !dom.triggerOne(this._node, 'hide.ui.popover')
             ) {
-                return;
+                return this;
             }
 
             this._animating = true;
@@ -1283,14 +1386,17 @@
             }).catch(_ => { }).finally(_ => {
                 this._animating = false;
             });
+
+            return this;
         }
 
         /**
          * Show the Popover.
+         * @returns {Popover} The Popover.
          */
         show() {
             if (!this._enabled) {
-                return;
+                return this;
             }
 
             if (this._animating) {
@@ -1301,7 +1407,7 @@
                 dom.isConnected(this._popover) ||
                 !dom.triggerOne(this._node, 'show.ui.popover')
             ) {
-                return;
+                return this;
             }
 
             this._animating = true;
@@ -1315,26 +1421,30 @@
             }).catch(_ => { }).finally(_ => {
                 this._animating = false;
             });
+
+            return this;
         }
 
         /**
          * Toggle the Popover.
+         * @returns {Popover} The Popover.
          */
         toggle() {
-            dom.isConnected(this._popover) ?
+            return dom.isConnected(this._popover) ?
                 this.hide() :
                 this.show();
         }
 
         /**
          * Update the Popover position.
+         * @returns {Popover} The Popover.
          */
         update() {
-            if (!this._popper) {
-                return;
+            if (this._popper) {
+                this._popper.update();
             }
 
-            this._popper.update();
+            return this;
         }
 
     }
@@ -1535,10 +1645,11 @@
 
         /**
          * Update the Popper position.
+         * @returns {Popper} The Popper.
          */
         update() {
             if (!dom.isConnected(this._node)) {
-                return;
+                return this;
             }
 
             // reset position
@@ -1555,7 +1666,7 @@
 
             // check object could be seen
             if (this.constructor._isNodeHidden(nodeBox, referenceBox, windowBox, this._settings.spacing)) {
-                return;
+                return this;
             }
 
             const scrollBox = this._scrollParent ?
@@ -1674,6 +1785,8 @@
             if (this._settings.afterUpdate) {
                 this._settings.afterUpdate(this._node, this._settings.reference, placement, position);
             }
+
+            return this;
         }
 
     }
@@ -2313,6 +2426,7 @@
 
         /**
          * Hide the current Tab.
+         * @returns {Tab} The Tab.
          */
         hide() {
             if (
@@ -2320,7 +2434,7 @@
                 !dom.hasClass(this._target, 'active') ||
                 !dom.triggerOne(this._node, 'hide.ui.tab')
             ) {
-                return;
+                return this;
             }
 
             this._animating = true;
@@ -2335,10 +2449,13 @@
             }).catch(_ => { }).finally(_ => {
                 this._animating = false;
             });
+
+            return this;
         }
 
         /**
          * Hide any active Tabs, and show the current Tab.
+         * @returns {Tab} The Tab.
          */
         show() {
             if (
@@ -2346,7 +2463,7 @@
                 dom.hasClass(this._target, 'active') ||
                 !dom.triggerOne(this._node, 'show.ui.tab')
             ) {
-                return;
+                return this;
             }
 
             const active = this._siblings.find(sibling =>
@@ -2357,12 +2474,12 @@
             if (active) {
                 activeTab = this.constructor.init(active);
                 if (activeTab._animating) {
-                    return;
+                    return this;
                 }
             }
 
             if (!dom.triggerOne(this._node, 'show.ui.tab')) {
-                return;
+                return this;
             }
 
             const show = _ => {
@@ -2381,11 +2498,13 @@
             };
 
             if (!activeTab) {
-                return show();
+                show();
+
+                return this;
             }
 
             if (!dom.triggerOne(active, 'hide.ui.tab')) {
-                return;
+                return this;
             }
 
             dom.addEventOnce(active, 'hidden.ui.tab', _ => {
@@ -2393,6 +2512,8 @@
             });
 
             activeTab.hide();
+
+            return this;
         }
 
     }
@@ -2456,6 +2577,7 @@
 
         /**
          * Hide the Toast.
+         * @returns {Toast} The Toast.
          */
         hide() {
             if (
@@ -2463,7 +2585,7 @@
                 !dom.isVisible(this._node) ||
                 !dom.triggerOne(this._node, 'hide.ui.toast')
             ) {
-                return;
+                return this;
             }
 
             this._animating = true;
@@ -2477,6 +2599,8 @@
             }).catch(_ => { }).finally(_ => {
                 this._animating = false;
             });
+
+            return this;
         }
 
         /**
@@ -2488,7 +2612,7 @@
                 dom.isVisible(this._node) ||
                 !dom.triggerOne(this._node, 'show.ui.toast')
             ) {
-                return;
+                return this;
             }
 
             this._animating = true;
@@ -2502,6 +2626,8 @@
             }).catch(_ => { }).finally(_ => {
                 this._animating = false;
             });
+
+            return this;
         }
 
     }
@@ -2589,24 +2715,31 @@
 
         /**
          * Disable the Tooltip.
+         * @returns {Tooltip} The Tooltip.
          */
         disable() {
             this._enabled = false;
+
+            return this;
         }
 
         /**
          * Enable the Tooltip.
+         * @returns {Tooltip} The Tooltip.
          */
         enable() {
             this._enabled = true;
+
+            return this;
         }
 
         /**
          * Hide the Tooltip.
+         * @returns {Tooltip} The Tooltip.
          */
         hide() {
             if (!this._enabled) {
-                return;
+                return this;
             }
 
             if (this._animating) {
@@ -2617,7 +2750,7 @@
                 !dom.isConnected(this._tooltip) ||
                 !dom.triggerOne(this._node, 'hide.ui.tooltip')
             ) {
-                return;
+                return this;
             }
 
             this._animating = true;
@@ -2632,14 +2765,17 @@
             }).catch(_ => { }).finally(_ => {
                 this._animating = false;
             });
+
+            return this;
         }
 
         /**
          * Show the Tooltip.
+         * @returns {Tooltip} The Tooltip.
          */
         show() {
             if (!this._enabled) {
-                return;
+                return this;
             }
 
             if (this._animating) {
@@ -2650,7 +2786,7 @@
                 dom.isConnected(this._tooltip) ||
                 !dom.triggerOne(this._node, 'show.ui.tooltip')
             ) {
-                return;
+                return this;
             }
 
             this._animating = true;
@@ -2664,26 +2800,30 @@
             }).catch(_ => { }).finally(_ => {
                 this._animating = false;
             });
+
+            return this;
         }
 
         /**
          * Toggle the Tooltip.
+         * @returns {Tooltip} The Tooltip.
          */
         toggle() {
-            dom.isConnected(this._tooltip) ?
+            return dom.isConnected(this._tooltip) ?
                 this.hide() :
                 this.show();
         }
 
         /**
          * Update the Tooltip position.
+         * @returns {Tooltip} The Tooltip.
          */
         update() {
-            if (!this._popper) {
-                return;
+            if (this._popper) {
+                this._popper.update();
             }
 
-            this._popper.update();
+            return this;
         }
 
     }

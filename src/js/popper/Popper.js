@@ -58,10 +58,11 @@ class Popper extends BaseComponent {
 
     /**
      * Update the Popper position.
+     * @returns {Popper} The Popper.
      */
     update() {
         if (!dom.isConnected(this._node)) {
-            return;
+            return this;
         }
 
         // reset position
@@ -78,7 +79,7 @@ class Popper extends BaseComponent {
 
         // check object could be seen
         if (this.constructor._isNodeHidden(nodeBox, referenceBox, windowBox, this._settings.spacing)) {
-            return;
+            return this;
         }
 
         const scrollBox = this._scrollParent ?
@@ -197,6 +198,8 @@ class Popper extends BaseComponent {
         if (this._settings.afterUpdate) {
             this._settings.afterUpdate(this._node, this._settings.reference, placement, position);
         }
+
+        return this;
     }
 
 }

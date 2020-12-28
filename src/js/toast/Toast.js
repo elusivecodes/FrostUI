@@ -23,6 +23,7 @@ class Toast extends BaseComponent {
 
     /**
      * Hide the Toast.
+     * @returns {Toast} The Toast.
      */
     hide() {
         if (
@@ -30,7 +31,7 @@ class Toast extends BaseComponent {
             !dom.isVisible(this._node) ||
             !dom.triggerOne(this._node, 'hide.ui.toast')
         ) {
-            return;
+            return this;
         }
 
         this._animating = true;
@@ -44,6 +45,8 @@ class Toast extends BaseComponent {
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
         });
+
+        return this;
     }
 
     /**
@@ -55,7 +58,7 @@ class Toast extends BaseComponent {
             dom.isVisible(this._node) ||
             !dom.triggerOne(this._node, 'show.ui.toast')
         ) {
-            return;
+            return this;
         }
 
         this._animating = true;
@@ -69,6 +72,8 @@ class Toast extends BaseComponent {
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
         });
+
+        return this;
     }
 
 }

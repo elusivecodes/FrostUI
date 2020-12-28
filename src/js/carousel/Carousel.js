@@ -28,11 +28,14 @@ class Carousel extends BaseComponent {
 
     /**
      * Cycle to the next carousel item.
+     * @returns {Carousel} The Carousel.
      */
     cycle() {
         dom.isHidden(document) ?
             this._setTimer() :
             this.slide(1);
+
+        return this;
     }
 
     /**
@@ -57,40 +60,49 @@ class Carousel extends BaseComponent {
 
     /**
      * Cycle to the next Carousel item.
+     * @returns {Carousel} The Carousel.
      */
     next() {
-        this.slide();
+        return this.slide();
     }
 
     /**
      * Stop the carousel from cycling through items.
+     * @returns {Carousel} The Carousel.
      */
     pause() {
         clearTimeout(this._timer);
         this._timer = null;
+
+        return this;
     }
 
     /**
      * Cycle to the previous Carousel item.
+     * @returns {Carousel} The Carousel.
      */
     prev() {
-        this.slide(-1);
+        return this.slide(-1);
     }
 
     /**
      * Cycle to a specific Carousel item.
      * @param {number} index The item index to cycle to.
+     * @returns {Carousel} The Carousel.
      */
     show(index) {
         this._show(index);
+
+        return this;
     }
 
     /**
      * Slide the Carousel in a specific direction.
      * @param {number} [direction=1] The direction to slide to.
+     * @returns {Carousel} The Carousel.
      */
     slide(direction = 1) {
-        this.show(this._index + direction);
+        return this.show(this._index + direction);
     }
 
 }
