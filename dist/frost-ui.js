@@ -53,16 +53,16 @@
             );
 
             dom.addEvent(this._node, this.constructor.REMOVE_EVENT, _ => {
-                this.destroy();
+                this.dispose();
             });
 
             dom.setData(this._node, this.constructor.DATA_KEY, this);
         }
 
         /**
-         * Destroy the BaseComponent.
+         * Dispose the BaseComponent.
          */
-        destroy() {
+        dispose() {
             dom.removeEvent(this._node, this.constructor.REMOVE_EVENT);
             dom.removeData(this._node, this.constructor.DATA_KEY);
             this._node = null;
@@ -304,9 +304,9 @@
         }
 
         /**
-         * Destroy the Carousel.
+         * Dispose the Carousel.
          */
-        destroy() {
+        dispose() {
             if (this._timer) {
                 clearTimeout(this._timer);
             }
@@ -320,7 +320,9 @@
                 dom.removeEvent(this._node, 'mouseleave.ui.carousel');
             }
 
-            super.destroy();
+            this._items = null;
+
+            super.dispose();
         }
 
         /**
@@ -675,6 +677,16 @@
         }
 
         /**
+         * Dispose the Collapse.
+         */
+        dispose() {
+            this._triggers = null;
+            this._parent = null;
+
+            super.dispose();
+        }
+
+        /**
          * Hide the element.
          * @returns {Collapse} The Collapse.
          */
@@ -845,16 +857,20 @@
         }
 
         /**
-         * Destroy the Dropdown.
+         * Dispose the Dropdown.
          */
-        destroy() {
+        dispose() {
             if (this._popper) {
-                this._popper.destroy();
+                this._popper.dispose();
+                this._popper = null;
             }
 
             dom.removeEvent(this._node, 'keyup.ui.dropdown');
 
-            super.destroy();
+            this._menuNode = null;
+            this._referenceNode = null;
+
+            super.dispose();
         }
 
         /**
@@ -1086,6 +1102,17 @@
         }
 
         /**
+         * Dispose the Modal.
+         */
+        dispose() {
+            this._dialog = null;
+            this._activeTarget = null;
+            this._backdrop = null;
+
+            super.dispose();
+        }
+
+        /**
          * Hide the Modal.
          * @returns {Modal} The Modal.
          */
@@ -1304,11 +1331,12 @@
         }
 
         /**
-         * Destroy the Popover.
+         * Dispose the Popover.
          */
-        destroy() {
+        dispose() {
             if (this._popper) {
-                this._popper.destroy();
+                this._popper.dispose();
+                this._popper = null;
             }
 
             dom.remove(this._popover);
@@ -1331,7 +1359,13 @@
                 dom.removeEvent(this._modal, 'hide.ui.modal', this._hideModalEvent);
             }
 
-            super.destroy();
+            this._modal = null;
+            this._triggers = null;
+            this._popover = null;
+            this._popoverHeader = null;
+            this._popoverBody = null;
+
+            super.dispose();
         }
 
         /**
@@ -1379,7 +1413,9 @@
             dom.fadeOut(this._popover, {
                 duration: this._settings.duration
             }).then(_ => {
-                this._popper.destroy();
+                this._popper.dispose();
+                this._popper = null;
+
                 dom.removeClass(this._popover, 'show');
                 dom.detach(this._popover);
                 dom.triggerEvent(this._node, 'hidden.ui.popover');
@@ -1631,16 +1667,19 @@
         }
 
         /**
-         * Destroy the Popper.
+         * Dispose the Popper.
          */
-        destroy() {
+        dispose() {
             PopperSet.remove(this);
 
             if (this._scrollParent) {
                 PopperSet.removeOverflow(this._scrollParent, this);
             }
 
-            super.destroy();
+            this._resetStyle = null;
+            this._scrollParent = null;
+
+            super.dispose();
         }
 
         /**
@@ -2425,6 +2464,16 @@
         }
 
         /**
+         * Dispose the Tab.
+         */
+        dispose() {
+            this._target = null;
+            this._siblings = null;
+
+            super.dispose();
+        }
+
+        /**
          * Hide the current Tab.
          * @returns {Tab} The Tab.
          */
@@ -2683,11 +2732,12 @@
         }
 
         /**
-         * Destroy the Tooltip.
+         * Dispose the Tooltip.
          */
-        destroy() {
+        dispose() {
             if (this._popper) {
-                this._popper.destroy();
+                this._popper.dispose();
+                this._popper = null;
             }
 
             dom.remove(this._tooltip);
@@ -2710,7 +2760,12 @@
                 dom.removeEvent(this._modal, 'hide.ui.modal');
             }
 
-            super.destroy();
+            this._modal = null;
+            this._triggers = null;
+            this._tooltip = null;
+            this._tooltipInner = null;
+
+            super.dispose();
         }
 
         /**
@@ -2758,7 +2813,9 @@
             dom.fadeOut(this._tooltip, {
                 duration: this._settings.duration
             }).then(_ => {
-                this._popper.destroy();
+                this._popper.dispose();
+                this._popper = null;
+
                 dom.removeClass(this._tooltip, 'show');
                 dom.detach(this._tooltip);
                 dom.triggerEvent(this._node, 'hidden.ui.tooltip');

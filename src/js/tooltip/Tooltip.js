@@ -26,11 +26,12 @@ class Tooltip extends BaseComponent {
     }
 
     /**
-     * Destroy the Tooltip.
+     * Dispose the Tooltip.
      */
-    destroy() {
+    dispose() {
         if (this._popper) {
-            this._popper.destroy();
+            this._popper.dispose();
+            this._popper = null;
         }
 
         dom.remove(this._tooltip);
@@ -53,7 +54,12 @@ class Tooltip extends BaseComponent {
             dom.removeEvent(this._modal, 'hide.ui.modal');
         }
 
-        super.destroy();
+        this._modal = null;
+        this._triggers = null;
+        this._tooltip = null;
+        this._tooltipInner = null;
+
+        super.dispose();
     }
 
     /**
@@ -101,7 +107,9 @@ class Tooltip extends BaseComponent {
         dom.fadeOut(this._tooltip, {
             duration: this._settings.duration
         }).then(_ => {
-            this._popper.destroy();
+            this._popper.dispose();
+            this._popper = null;
+
             dom.removeClass(this._tooltip, 'show');
             dom.detach(this._tooltip);
             dom.triggerEvent(this._node, 'hidden.ui.tooltip');

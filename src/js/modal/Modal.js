@@ -29,6 +29,17 @@ class Modal extends BaseComponent {
     }
 
     /**
+     * Dispose the Modal.
+     */
+    dispose() {
+        this._dialog = null;
+        this._activeTarget = null;
+        this._backdrop = null;
+
+        super.dispose();
+    }
+
+    /**
      * Hide the Modal.
      * @returns {Modal} The Modal.
      */

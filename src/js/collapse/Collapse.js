@@ -24,6 +24,16 @@ class Collapse extends BaseComponent {
     }
 
     /**
+     * Dispose the Collapse.
+     */
+    dispose() {
+        this._triggers = null;
+        this._parent = null;
+
+        super.dispose();
+    }
+
+    /**
      * Hide the element.
      * @returns {Collapse} The Collapse.
      */

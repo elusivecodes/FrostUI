@@ -19,6 +19,16 @@ class Tab extends BaseComponent {
     }
 
     /**
+     * Dispose the Tab.
+     */
+    dispose() {
+        this._target = null;
+        this._siblings = null;
+
+        super.dispose();
+    }
+
+    /**
      * Hide the current Tab.
      * @returns {Tab} The Tab.
      */

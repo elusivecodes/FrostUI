@@ -26,11 +26,12 @@ class Popover extends BaseComponent {
     }
 
     /**
-     * Destroy the Popover.
+     * Dispose the Popover.
      */
-    destroy() {
+    dispose() {
         if (this._popper) {
-            this._popper.destroy();
+            this._popper.dispose();
+            this._popper = null;
         }
 
         dom.remove(this._popover);
@@ -53,7 +54,13 @@ class Popover extends BaseComponent {
             dom.removeEvent(this._modal, 'hide.ui.modal', this._hideModalEvent);
         }
 
-        super.destroy();
+        this._modal = null;
+        this._triggers = null;
+        this._popover = null;
+        this._popoverHeader = null;
+        this._popoverBody = null;
+
+        super.dispose();
     }
 
     /**
@@ -101,7 +108,9 @@ class Popover extends BaseComponent {
         dom.fadeOut(this._popover, {
             duration: this._settings.duration
         }).then(_ => {
-            this._popper.destroy();
+            this._popper.dispose();
+            this._popper = null;
+
             dom.removeClass(this._popover, 'show');
             dom.detach(this._popover);
             dom.triggerEvent(this._node, 'hidden.ui.popover');

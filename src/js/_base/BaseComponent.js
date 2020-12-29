@@ -21,16 +21,16 @@ class BaseComponent {
         );
 
         dom.addEvent(this._node, this.constructor.REMOVE_EVENT, _ => {
-            this.destroy();
+            this.dispose();
         });
 
         dom.setData(this._node, this.constructor.DATA_KEY, this);
     }
 
     /**
-     * Destroy the BaseComponent.
+     * Dispose the BaseComponent.
      */
-    destroy() {
+    dispose() {
         dom.removeEvent(this._node, this.constructor.REMOVE_EVENT);
         dom.removeData(this._node, this.constructor.DATA_KEY);
         this._node = null;

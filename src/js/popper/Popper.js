@@ -44,16 +44,19 @@ class Popper extends BaseComponent {
     }
 
     /**
-     * Destroy the Popper.
+     * Dispose the Popper.
      */
-    destroy() {
+    dispose() {
         PopperSet.remove(this);
 
         if (this._scrollParent) {
             PopperSet.removeOverflow(this._scrollParent, this);
         }
 
-        super.destroy();
+        this._resetStyle = null;
+        this._scrollParent = null;
+
+        super.dispose();
     }
 
     /**

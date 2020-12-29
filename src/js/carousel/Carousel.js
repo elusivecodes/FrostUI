@@ -39,9 +39,9 @@ class Carousel extends BaseComponent {
     }
 
     /**
-     * Destroy the Carousel.
+     * Dispose the Carousel.
      */
-    destroy() {
+    dispose() {
         if (this._timer) {
             clearTimeout(this._timer);
         }
@@ -55,7 +55,9 @@ class Carousel extends BaseComponent {
             dom.removeEvent(this._node, 'mouseleave.ui.carousel');
         }
 
-        super.destroy();
+        this._items = null;
+
+        super.dispose();
     }
 
     /**

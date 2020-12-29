@@ -46,16 +46,20 @@ class Dropdown extends BaseComponent {
     }
 
     /**
-     * Destroy the Dropdown.
+     * Dispose the Dropdown.
      */
-    destroy() {
+    dispose() {
         if (this._popper) {
-            this._popper.destroy();
+            this._popper.dispose();
+            this._popper = null;
         }
 
         dom.removeEvent(this._node, 'keyup.ui.dropdown');
 
-        super.destroy();
+        this._menuNode = null;
+        this._referenceNode = null;
+
+        super.dispose();
     }
 
     /**
