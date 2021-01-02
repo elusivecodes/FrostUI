@@ -1,7 +1,11 @@
 .icon {
     display: inline-block;
-    width: @font-size;
     text-align: center;
+    width: 1em;
+
+    &::before {
+        font-size: .85em;
+    }
 }
 
 .icon-cancel::before {

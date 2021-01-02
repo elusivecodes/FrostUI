@@ -7266,8 +7266,11 @@ select.input-lg[multiple] option {
 }
 .icon {
   display: inline-block;
-  width: 1.1rem;
   text-align: center;
+  width: 1em;
+}
+.icon::before {
+  font-size: 0.85em;
 }
 .icon-cancel::before {
   content: '\1F5D9';
