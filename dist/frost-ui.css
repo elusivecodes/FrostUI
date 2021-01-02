@@ -7264,8 +7264,13 @@ select.input-lg[multiple] option {
     float: none !important;
   }
 }
+.icon {
+  display: inline-block;
+  width: 1.1rem;
+  text-align: center;
+}
 .icon-cancel::before {
-  content: '\2716';
+  content: '\1F5D9';
 }
 .icon-tick::before {
   content: '\2713';
