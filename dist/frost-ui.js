@@ -977,7 +977,7 @@
 
                 const trigger = dom.prev(menu).shift();
 
-                if (trigger === target) {
+                if (dom.isSame(target, trigger)) {
                     continue;
                 }
 
