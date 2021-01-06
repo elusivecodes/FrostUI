@@ -8,6 +8,14 @@
     <title>Document</title>
     <link rel="stylesheet" href="../../dist/frost-ui.css" />
     <script src="../../dist/frost-ui-bundle.js"></script>
+    <style>
+        .icon {
+            display: inline-block;
+            text-align: center;
+            width: 1.2em;
+            font-size: .9em;
+        }
+    </style>
 </head>
 
 <body>
@@ -15,7 +23,7 @@
         <h1>Clipboard</h1>
         <div class="mb-4">
             <button id="copyTextBtn" class="btn btn-secondary ripple" data-ui-toggle="clipboard" data-ui-text="Copy This Text">
-                <span class="icon icon-copy"></span> Copy
+                <span class="icon">📋</span> Copy
             </button>
         </div>
         <h4>Copy Input</h4>
@@ -26,7 +34,7 @@
                     <div class="ripple-line"></div>
                 </div>
                 <button id="copyInputBtn" class="btn ripple btn-outline-dark" role="button" data-ui-toggle="clipboard" data-ui-target="#copyInput">
-                    <span class="icon icon-copy"></span>
+                    <span class="icon">📋</span>
                 </button>
             </div>
         </div>
@@ -38,7 +46,7 @@
                     <div class="ripple-line"></div>
                 </div>
                 <button id="cutInputBtn" class="btn ripple btn-outline-dark" role="button" data-ui-toggle="clipboard" data-ui-target="#cutInput" data-ui-action="cut">
-                    <span class="icon icon-cut"></span>
+                    <span class="icon">✂</span>
                 </button>
             </div>
         </div>
