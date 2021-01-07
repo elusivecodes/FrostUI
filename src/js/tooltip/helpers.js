@@ -59,16 +59,6 @@ Object.assign(Tooltip.prototype, {
      * Update the Tooltip and append to the DOM.
      */
     _show() {
-        const title = dom.getAttribute(this._node, 'title') || this._settings.title;
-        const method = this._settings.html ? 'setHTML' : 'setText';
-
-        dom[method](
-            this._tooltipInner,
-            this._settings.html && this._settings.sanitize ?
-                this._settings.sanitize(title) :
-                title
-        );
-
         if (this._settings.appendTo) {
             dom.append(this._settings.appendTo, this._tooltip);
         } else {

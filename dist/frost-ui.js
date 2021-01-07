@@ -1427,6 +1427,38 @@
         }
 
         /**
+         * Refresh the Popover.
+         * @returns {Popover} The Popover.
+         */
+        refresh() {
+            const method = this._settings.html ? 'setHTML' : 'setText';
+            const title = dom.getAttribute(this._node, 'title') || this._settings.title;
+            const content = this._settings.content;
+
+            dom[method](
+                this._popoverHeader,
+                this._settings.html && this._settings.sanitize ?
+                    this._settings.sanitize(title) :
+                    title
+            );
+
+            if (!title) {
+                dom.hide(this._popoverHeader);
+            } else {
+                dom.show(this._popoverHeader);
+            }
+
+            dom[method](
+                this._popoverBody,
+                this._settings.html && this._settings.sanitize ?
+                    this._settings.sanitize(content) :
+                    content
+            );
+
+            return this;
+        }
+
+        /**
          * Show the Popover.
          * @returns {Popover} The Popover.
          */
@@ -1448,6 +1480,7 @@
 
             this._animating = true;
             dom.addClass(this._popover, 'show');
+            this.refresh();
             this._show();
 
             dom.fadeIn(this._popover, {
@@ -1548,29 +1581,6 @@
          * Update the Popover and append to the DOM.
          */
         _show() {
-            const method = this._settings.html ? 'setHTML' : 'setText';
-            const title = dom.getAttribute(this._node, 'title') || this._settings.title;
-            const content = this._settings.content;
-
-            dom[method](
-                this._popoverHeader,
-                this._settings.html && this._settings.sanitize ?
-                    this._settings.sanitize(title) :
-                    title
-            );
-
-            if (!title) {
-                dom.hide(this._popoverHeader);
-            } else {
-                dom.show(this._popoverHeader);
-            }
-
-            dom[method](
-                this._popoverBody,
-                this._settings.html && this._settings.sanitize ?
-                    this._settings.sanitize(content) :
-                    content
-            );
 
             if (this._settings.appendTo) {
                 dom.append(this._settings.appendTo, this._popover);
@@ -2827,6 +2837,24 @@
         }
 
         /**
+         * Refresh the Tooltip.
+         * @returns {Tooltip} The Tooltip.
+         */
+        refresh() {
+            const title = dom.getAttribute(this._node, 'title') || this._settings.title;
+            const method = this._settings.html ? 'setHTML' : 'setText';
+
+            dom[method](
+                this._tooltipInner,
+                this._settings.html && this._settings.sanitize ?
+                    this._settings.sanitize(title) :
+                    title
+            );
+
+            return this;
+        }
+
+        /**
          * Show the Tooltip.
          * @returns {Tooltip} The Tooltip.
          */
@@ -2848,6 +2876,7 @@
 
             this._animating = true;
             dom.addClass(this._tooltip, 'show');
+            this.refresh();
             this._show();
 
             dom.fadeIn(this._tooltip, {
@@ -2947,16 +2976,6 @@
          * Update the Tooltip and append to the DOM.
          */
         _show() {
-            const title = dom.getAttribute(this._node, 'title') || this._settings.title;
-            const method = this._settings.html ? 'setHTML' : 'setText';
-
-            dom[method](
-                this._tooltipInner,
-                this._settings.html && this._settings.sanitize ?
-                    this._settings.sanitize(title) :
-                    title
-            );
-
             if (this._settings.appendTo) {
                 dom.append(this._settings.appendTo, this._tooltip);
             } else {

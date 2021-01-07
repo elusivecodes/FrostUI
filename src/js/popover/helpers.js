@@ -60,29 +60,6 @@ Object.assign(Popover.prototype, {
      * Update the Popover and append to the DOM.
      */
     _show() {
-        const method = this._settings.html ? 'setHTML' : 'setText';
-        const title = dom.getAttribute(this._node, 'title') || this._settings.title;
-        const content = this._settings.content;
-
-        dom[method](
-            this._popoverHeader,
-            this._settings.html && this._settings.sanitize ?
-                this._settings.sanitize(title) :
-                title
-        );
-
-        if (!title) {
-            dom.hide(this._popoverHeader);
-        } else {
-            dom.show(this._popoverHeader);
-        }
-
-        dom[method](
-            this._popoverBody,
-            this._settings.html && this._settings.sanitize ?
-                this._settings.sanitize(content) :
-                content
-        );
 
         if (this._settings.appendTo) {
             dom.append(this._settings.appendTo, this._popover);

@@ -121,6 +121,24 @@ class Tooltip extends BaseComponent {
     }
 
     /**
+     * Refresh the Tooltip.
+     * @returns {Tooltip} The Tooltip.
+     */
+    refresh() {
+        const title = dom.getAttribute(this._node, 'title') || this._settings.title;
+        const method = this._settings.html ? 'setHTML' : 'setText';
+
+        dom[method](
+            this._tooltipInner,
+            this._settings.html && this._settings.sanitize ?
+                this._settings.sanitize(title) :
+                title
+        );
+
+        return this;
+    }
+
+    /**
      * Show the Tooltip.
      * @returns {Tooltip} The Tooltip.
      */
@@ -142,6 +160,7 @@ class Tooltip extends BaseComponent {
 
         this._animating = true;
         dom.addClass(this._tooltip, 'show');
+        this.refresh();
         this._show();
 
         dom.fadeIn(this._tooltip, {
