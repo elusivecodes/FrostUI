@@ -125,7 +125,15 @@ class Tooltip extends BaseComponent {
      * @returns {Tooltip} The Tooltip.
      */
     refresh() {
-        const title = dom.getAttribute(this._node, 'title') || this._settings.title;
+        let title;
+        if (dom.hasDataset(this._node, 'uiTitle')) {
+            title = dom.getDataset(this._node, 'uiTitle');
+        } else if (this._settings.title) {
+            title = this._settings.title;
+        } else if (dom.hasAttribute(this._node, 'title')) {
+            title = dom.getAttribute(this._node, 'title');
+        }
+
         const method = this._settings.html ? 'setHTML' : 'setText';
 
         dom[method](

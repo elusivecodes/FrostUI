@@ -126,9 +126,24 @@ class Popover extends BaseComponent {
      * @returns {Popover} The Popover.
      */
     refresh() {
+        let title;
+        let content;
+
+        if (dom.hasDataset(this._node, 'uiTitle')) {
+            title = dom.getDataset(this._node, 'uiTitle');
+        } else if (this._settings.title) {
+            title = this._settings.title;
+        } else if (dom.hasAttribute(this._node, 'title')) {
+            title = dom.getAttribute(this._node, 'title');
+        }
+
+        if (dom.hasDataset(this._node, 'uiContent')) {
+            content = dom.getDataset(this._node, 'uiContent');
+        } else if (this._settings.content) {
+            content = this._settings.content;
+        }
+
         const method = this._settings.html ? 'setHTML' : 'setText';
-        const title = dom.getAttribute(this._node, 'title') || this._settings.title;
-        const content = this._settings.content;
 
         dom[method](
             this._popoverHeader,

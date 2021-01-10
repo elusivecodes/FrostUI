@@ -11322,65 +11322,6 @@
         UI.Carousel = Carousel;
 
 
-        // Clipboard events
-        dom.addEventDelegate(document, 'click', '[data-ui-toggle="clipboard"]', e => {
-            e.preventDefault();
-
-            const node = e.currentTarget;
-            const settings = Core.extend(
-                {
-                    action: 'copy',
-                    text: false
-                },
-                UI.getDataset(node)
-            );
-
-            if (!['copy', 'cut'].includes(settings.action)) {
-                throw new Error('Invalid clipboard action');
-            }
-
-            let text, input;
-            if (settings.text) {
-                text = settings.text;
-            } else {
-                const target = UI.getTarget(node);
-                if (dom.is(target, 'input, textarea')) {
-                    input = target;
-                } else {
-                    text = dom.getText(target);
-                }
-            }
-
-            const customText = !input;
-            if (customText) {
-                input = dom.create(
-                    'textarea',
-                    {
-                        class: 'visually-hidden position-fixed',
-                        value: text
-                    }
-                );
-
-                dom.append(document.body, input);
-            }
-
-            dom.select(input);
-
-            if (dom.exec(settings.action)) {
-                dom.triggerEvent(node, 'copied.ui.clipboard', {
-                    detail: {
-                        action: settings.action,
-                        text: dom.getValue(input)
-                    }
-                });
-            }
-
-            if (customText) {
-                dom.remove(input);
-            }
-        });
-
-
         /**
          * Collapse Class
          * @class
@@ -12161,9 +12102,24 @@
              * @returns {Popover} The Popover.
              */
             refresh() {
+                let title;
+                let content;
+
+                if (dom.hasDataset(this._node, 'uiTitle')) {
+                    title = dom.getDataset(this._node, 'uiTitle');
+                } else if (this._settings.title) {
+                    title = this._settings.title;
+                } else if (dom.hasAttribute(this._node, 'title')) {
+                    title = dom.getAttribute(this._node, 'title');
+                }
+
+                if (dom.hasDataset(this._node, 'uiContent')) {
+                    content = dom.getDataset(this._node, 'uiContent');
+                } else if (this._settings.content) {
+                    content = this._settings.content;
+                }
+
                 const method = this._settings.html ? 'setHTML' : 'setText';
-                const title = dom.getAttribute(this._node, 'title') || this._settings.title;
-                const content = this._settings.content;
 
                 dom[method](
                     this._popoverHeader,
@@ -12250,7 +12206,7 @@
 
 
         /**
-         * Popover Helpers
+         * Popover Events
          */
 
         Object.assign(Popover.prototype, {
@@ -12292,7 +12248,16 @@
                         this.hide();
                     });
                 }
-            },
+            }
+
+        });
+
+
+        /**
+         * Popover Helpers
+         */
+
+        Object.assign(Popover.prototype, {
 
             /**
              * Render the Popover element.
@@ -13137,52 +13102,6 @@
         UI.PopperSet = PopperSet;
 
 
-        // Ripple events
-        dom.addEventDelegate(document, 'mousedown.ui.ripple', '.ripple', e => {
-            const pos = dom.position(e.currentTarget, true);
-
-            UI.ripple(e.currentTarget, e.pageX - pos.x, e.pageY - pos.y);
-        });
-
-
-        /**
-         * Create a ripple effect on a node.
-         * @param {HTMLElement} node The input node.
-         * @param {number} x The x position to start the ripple from.
-         * @param {number} y The y position to start the ripple from.
-         * @param {number} [duration=500] The duration of the ripple.
-         */
-        UI.ripple = (node, x, y, duration = 500) => {
-            const width = dom.width(node);
-            const height = dom.height(node);
-            const scaleMultiple = Math.max(width, height) * 6;
-
-            const ripple = dom.create('span', {
-                class: 'ripple-effect',
-                style: {
-                    left: x,
-                    top: y
-                }
-            });
-            dom.append(node, ripple);
-
-            dom.animate(
-                ripple,
-                (node, progress) => {
-                    dom.setStyle(node, {
-                        transform: 'scale(' + Math.floor(progress * scaleMultiple) + ')',
-                        opacity: 1 - Math.pow(progress, 2)
-                    });
-                },
-                {
-                    duration
-                }
-            ).finally(_ => {
-                dom.remove(ripple);
-            })
-        };
-
-
         /**
          * Tab Class
          * @class
@@ -13325,20 +13244,6 @@
         UI.initComponent('tab', Tab);
 
         UI.Tab = Tab;
-
-
-        // Text expand events
-        dom.addEventDelegate(document, 'input.ui.text-expand', '.text-expand', e => {
-            const textArea = e.currentTarget;
-
-            dom.setStyle(textArea, 'height', 'inherit');
-
-            const borderTop = dom.css(textArea, 'borderTop');
-            const borderBottom = dom.css(textArea, 'borderBottom');
-            const height = dom.scrollHeight(textArea) + parseInt(borderTop) + parseInt(borderBottom);
-
-            dom.setStyle(textArea, 'height', height);
-        });
 
 
         /**
@@ -13571,7 +13476,15 @@
              * @returns {Tooltip} The Tooltip.
              */
             refresh() {
-                const title = dom.getAttribute(this._node, 'title') || this._settings.title;
+                let title;
+                if (dom.hasDataset(this._node, 'uiTitle')) {
+                    title = dom.getDataset(this._node, 'uiTitle');
+                } else if (this._settings.title) {
+                    title = this._settings.title;
+                } else if (dom.hasAttribute(this._node, 'title')) {
+                    title = dom.getAttribute(this._node, 'title');
+                }
+
                 const method = this._settings.html ? 'setHTML' : 'setText';
 
                 dom[method](
@@ -13646,7 +13559,7 @@
 
 
         /**
-         * Tooltip Helpers
+         * Tooltip Events
          */
 
         Object.assign(Tooltip.prototype, {
@@ -13688,7 +13601,16 @@
                         this.hide();
                     });
                 }
-            },
+            }
+
+        });
+
+
+        /**
+         * Tooltip Helpers
+         */
+
+        Object.assign(Tooltip.prototype, {
 
             /**
              * Render the Tooltip element.
@@ -13752,6 +13674,125 @@
         UI.initComponent('tooltip', Tooltip);
 
         UI.Tooltip = Tooltip;
+
+
+        // Clipboard events
+        dom.addEventDelegate(document, 'click', '[data-ui-toggle="clipboard"]', e => {
+            e.preventDefault();
+
+            const node = e.currentTarget;
+            const settings = Core.extend(
+                {
+                    action: 'copy',
+                    text: false
+                },
+                UI.getDataset(node)
+            );
+
+            if (!['copy', 'cut'].includes(settings.action)) {
+                throw new Error('Invalid clipboard action');
+            }
+
+            let text, input;
+            if (settings.text) {
+                text = settings.text;
+            } else {
+                const target = UI.getTarget(node);
+                if (dom.is(target, 'input, textarea')) {
+                    input = target;
+                } else {
+                    text = dom.getText(target);
+                }
+            }
+
+            const customText = !input;
+            if (customText) {
+                input = dom.create(
+                    'textarea',
+                    {
+                        class: 'visually-hidden position-fixed',
+                        value: text
+                    }
+                );
+
+                dom.append(document.body, input);
+            }
+
+            dom.select(input);
+
+            if (dom.exec(settings.action)) {
+                dom.triggerEvent(node, 'copied.ui.clipboard', {
+                    detail: {
+                        action: settings.action,
+                        text: dom.getValue(input)
+                    }
+                });
+            }
+
+            if (customText) {
+                dom.remove(input);
+            }
+        });
+
+
+        // Ripple events
+        dom.addEventDelegate(document, 'mousedown.ui.ripple', '.ripple', e => {
+            const pos = dom.position(e.currentTarget, true);
+
+            UI.ripple(e.currentTarget, e.pageX - pos.x, e.pageY - pos.y);
+        });
+
+
+        /**
+         * Create a ripple effect on a node.
+         * @param {HTMLElement} node The input node.
+         * @param {number} x The x position to start the ripple from.
+         * @param {number} y The y position to start the ripple from.
+         * @param {number} [duration=500] The duration of the ripple.
+         */
+        UI.ripple = (node, x, y, duration = 500) => {
+            const width = dom.width(node);
+            const height = dom.height(node);
+            const scaleMultiple = Math.max(width, height) * 6;
+
+            const ripple = dom.create('span', {
+                class: 'ripple-effect',
+                style: {
+                    left: x,
+                    top: y
+                }
+            });
+            dom.append(node, ripple);
+
+            dom.animate(
+                ripple,
+                (node, progress) => {
+                    dom.setStyle(node, {
+                        transform: 'scale(' + Math.floor(progress * scaleMultiple) + ')',
+                        opacity: 1 - Math.pow(progress, 2)
+                    });
+                },
+                {
+                    duration
+                }
+            ).finally(_ => {
+                dom.remove(ripple);
+            })
+        };
+
+
+        // Text expand events
+        dom.addEventDelegate(document, 'input.ui.text-expand', '.text-expand', e => {
+            const textArea = e.currentTarget;
+
+            dom.setStyle(textArea, 'height', 'inherit');
+
+            const borderTop = dom.css(textArea, 'borderTop');
+            const borderBottom = dom.css(textArea, 'borderBottom');
+            const height = dom.scrollHeight(textArea) + parseInt(borderTop) + parseInt(borderBottom);
+
+            dom.setStyle(textArea, 'height', height);
+        });
 
         return {
             UI
