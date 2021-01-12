@@ -34,13 +34,18 @@ Object.assign(Popper.prototype, {
                 offset -= diff;
             }
 
-            arrowStyles.left = Core.clamp(
-                offset,
-                Math.max(referenceBox.left, nodeBox.left) - arrowBox.left,
-                Math.min(referenceBox.right, nodeBox.right) - arrowBox.left - arrowBox.width
-            );
+            let min = Math.max(referenceBox.left, nodeBox.left) - arrowBox.left;
+            let max = Math.min(referenceBox.right, nodeBox.right) - arrowBox.left - arrowBox.width;
+
+            if (referenceBox.width < arrowBox.width) {
+                min -= arrowBox.width / 2 - referenceBox.width / 2;
+                max -= arrowBox.width / 2 - referenceBox.width / 2;
+            }
+
+            arrowStyles.left = Core.clamp(offset, min, max);
         } else {
             arrowStyles[placement === 'right' ? 'left' : 'right'] = -arrowBox.width;
+
             const diff = (referenceBox.height - nodeBox.height) / 2;
 
             let offset = (nodeBox.height / 2) - arrowBox.height;
@@ -50,11 +55,15 @@ Object.assign(Popper.prototype, {
                 offset -= diff;
             }
 
-            arrowStyles.top = Core.clamp(
-                offset,
-                Math.max(referenceBox.top, nodeBox.top) - arrowBox.top,
-                Math.min(referenceBox.bottom, nodeBox.bottom) - arrowBox.top - arrowBox.height
-            );
+            let min = Math.max(referenceBox.top, nodeBox.top) - arrowBox.top;
+            let max = Math.min(referenceBox.bottom, nodeBox.bottom) - arrowBox.top - arrowBox.height;
+
+            if (referenceBox.height < arrowBox.height * 2) {
+                min -= arrowBox.height - referenceBox.height / 2;
+                max -= arrowBox.height - referenceBox.height / 2;
+            }
+
+            arrowStyles.top = Core.clamp(offset, min, max);
         }
 
         dom.setStyle(this._settings.arrow, arrowStyles);
