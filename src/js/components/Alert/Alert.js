@@ -20,6 +20,7 @@ class Alert extends BaseComponent {
         dom.fadeOut(this._node, {
             duration: this._settings.duration
         }).then(_ => {
+            dom.detach(this._node);
             dom.triggerEvent(this._node, 'closed.ui.alert');
             dom.remove(this._node);
         }).catch(_ => { }).finally(_ => {

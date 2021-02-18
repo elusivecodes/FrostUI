@@ -1466,6 +1466,7 @@ fieldset:disabled .btn {
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  background: transparent;
   color: ghostwhite;
   text-align: center;
   opacity: 0.5;

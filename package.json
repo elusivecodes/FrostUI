@@ -17,7 +17,7 @@
     ],
     "scripts": {
         "build": "node build.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "mocha --recursive"
     },
     "repository": {
         "type": "git",
@@ -30,10 +30,12 @@
         "cssmin": "^0.4.3",
         "filepath": "^1.1.0",
         "less": "^3.13.0",
+        "mocha": "^7.2.0",
+        "puppeteer": "^2.1.1",
         "terser": "^4.8.0"
     },
     "dependencies": {
         "frostcore": "^1.0.11",
-        "frostdom": "^2.0.7"
+        "frostdom": "^2.0.8"
     }
 }

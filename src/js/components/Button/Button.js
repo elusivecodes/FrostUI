@@ -12,7 +12,7 @@ class Button extends BaseComponent {
         dom.toggleClass(this._node, 'active');
 
         const pressed = dom.hasClass(this._node, 'active');
-        dom.setAttribute('aria-pressed', pressed);
+        dom.setAttribute(this._node, 'aria-pressed', pressed);
 
         return this;
     }

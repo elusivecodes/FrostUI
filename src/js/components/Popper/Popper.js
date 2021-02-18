@@ -41,6 +41,8 @@ class Popper extends BaseComponent {
         window.requestAnimationFrame(_ => {
             this.update();
         });
+
+        this.update();
     }
 
     /**

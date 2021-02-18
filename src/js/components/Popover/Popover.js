@@ -59,6 +59,7 @@ class Popover extends BaseComponent {
         this._popover = null;
         this._popoverHeader = null;
         this._popoverBody = null;
+        this._arrow = null;
 
         super.dispose();
     }

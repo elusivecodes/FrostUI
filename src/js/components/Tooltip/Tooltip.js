@@ -58,6 +58,7 @@ class Tooltip extends BaseComponent {
         this._triggers = null;
         this._tooltip = null;
         this._tooltipInner = null;
+        this._arrow = null;
 
         super.dispose();
     }

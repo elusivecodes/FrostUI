@@ -39,7 +39,7 @@ class Toast extends BaseComponent {
         dom.fadeOut(this._node, {
             duration: this._settings.duration
         }).then(_ => {
-            dom.hide(this._node);
+            dom.setStyle(this._node, 'display', 'none', true);
             dom.removeClass(this._node, 'show');
             dom.triggerEvent(this._node, 'hidden.ui.toast');
         }).catch(_ => { }).finally(_ => {
@@ -62,7 +62,7 @@ class Toast extends BaseComponent {
         }
 
         this._animating = true;
-        dom.show(this._node);
+        dom.setStyle(this._node, 'display', '');
         dom.addClass(this._node, 'show');
 
         dom.fadeIn(this._node, {

@@ -1,5 +1,5 @@
 // Carousel events
-dom.addEventOnce(window, 'load', _ => {
+dom.addEvent(window, 'load', _ => {
     const nodes = dom.find('[data-ui-ride="carousel"]');
 
     for (const node of nodes) {

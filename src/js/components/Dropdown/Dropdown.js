@@ -54,8 +54,6 @@ class Dropdown extends BaseComponent {
             this._popper = null;
         }
 
-        dom.removeEvent(this._node, 'keyup.ui.dropdown');
-
         this._menuNode = null;
         this._referenceNode = null;
 
@@ -105,6 +103,7 @@ class Dropdown extends BaseComponent {
 
         this._animating = true;
         dom.addClass(this._menuNode, 'show');
+        this.update();
 
         dom.fadeIn(this._menuNode, {
             duration: this._settings.duration

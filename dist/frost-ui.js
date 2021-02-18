@@ -194,6 +194,7 @@
             dom.fadeOut(this._node, {
                 duration: this._settings.duration
             }).then(_ => {
+                dom.detach(this._node);
                 dom.triggerEvent(this._node, 'closed.ui.alert');
                 dom.remove(this._node);
             }).catch(_ => { }).finally(_ => {
@@ -238,7 +239,7 @@
             dom.toggleClass(this._node, 'active');
 
             const pressed = dom.hasClass(this._node, 'active');
-            dom.setAttribute('aria-pressed', pressed);
+            dom.setAttribute(this._node, 'aria-pressed', pressed);
 
             return this;
         }
@@ -376,7 +377,7 @@
 
 
     // Carousel events
-    dom.addEventOnce(window, 'load', _ => {
+    dom.addEvent(window, 'load', _ => {
         const nodes = dom.find('[data-ui-ride="carousel"]');
 
         for (const node of nodes) {
@@ -806,8 +807,6 @@
                 this._popper = null;
             }
 
-            dom.removeEvent(this._node, 'keyup.ui.dropdown');
-
             this._menuNode = null;
             this._referenceNode = null;
 
@@ -857,6 +856,7 @@
 
             this._animating = true;
             dom.addClass(this._menuNode, 'show');
+            this.update();
 
             dom.fadeIn(this._menuNode, {
                 duration: this._settings.duration
@@ -1305,6 +1305,7 @@
             this._popover = null;
             this._popoverHeader = null;
             this._popoverBody = null;
+            this._arrow = null;
 
             super.dispose();
         }
@@ -1639,6 +1640,8 @@
             window.requestAnimationFrame(_ => {
                 this.update();
             });
+
+            this.update();
         }
 
         /**
@@ -2566,7 +2569,7 @@
             dom.fadeOut(this._node, {
                 duration: this._settings.duration
             }).then(_ => {
-                dom.hide(this._node);
+                dom.setStyle(this._node, 'display', 'none', true);
                 dom.removeClass(this._node, 'show');
                 dom.triggerEvent(this._node, 'hidden.ui.toast');
             }).catch(_ => { }).finally(_ => {
@@ -2589,7 +2592,7 @@
             }
 
             this._animating = true;
-            dom.show(this._node);
+            dom.setStyle(this._node, 'display', '');
             dom.addClass(this._node, 'show');
 
             dom.fadeIn(this._node, {
@@ -2688,6 +2691,7 @@
             this._triggers = null;
             this._tooltip = null;
             this._tooltipInner = null;
+            this._arrow = null;
 
             super.dispose();
         }
