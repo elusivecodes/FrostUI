@@ -62,9 +62,54 @@ describe('Modal', function() {
             );
         });
 
+        it('creates multiple modals (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('.modal').modal();
+                    return dom.find('.modal').every(node =>
+                        dom.getData(node, 'modal') instanceof UI.Modal
+                    );
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#dispose', function() {
+
+        it('removes the modal', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const modal1 = dom.findOne('#modal1');
+                    UI.Modal.init(modal1).dispose();
+                    return dom.hasData(modal1, 'modal');
+                }),
+                false
+            );
+        });
+
+        it('removes the modal (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#modal1').modal('dispose');
+                    return dom.hasData('#modal1', 'modal');
+                }),
+                false
+            );
+        });
+
+        it('removes multiple modals (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('.modal').modal('dispose');
+                    return dom.find('.modal').some(node =>
+                        dom.hasData(node, 'modal')
+                    );
+                }),
+                false
+            );
+        });
 
         it('clears modal memory', async function() {
             assert.strictEqual(
@@ -82,17 +127,6 @@ describe('Modal', function() {
                     return true;
                 }),
                 true
-            );
-        });
-
-        it('removes the modal', async function() {
-            assert.strictEqual(
-                await exec(_ => {
-                    const modal1 = dom.findOne('#modal1');
-                    UI.Modal.init(modal1).dispose();
-                    return dom.hasData(modal1, 'modal');
-                }),
-                false
             );
         });
 
@@ -204,13 +238,37 @@ describe('Modal', function() {
             });
         });
 
+        it('shows multiple modals (query)', async function() {
+            await exec(_ => {
+                dom.query('.modal').modal('show');
+            }).then(waitFor(300)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1"></button>' +
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2"></button>' +
+                    '<div id="modal1" class="modal show" aria-modal="true">' +
+                    '<div class="modal-dialog" id="modalDialog1" style="">' +
+                    '<button id="button1" data-ui-dismiss="modal"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div id="modal2" class="modal show" aria-modal="true">' +
+                    '<div class="modal-dialog" id="modalDialog2" style="">' +
+                    '<button id="button2" data-ui-dismiss="modal"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="modal-backdrop" style=""></div>' +
+                    '<div class="modal-backdrop" style=""></div>'
+                );
+            });
+        });
+
         it('can be called multiple times', async function() {
             await exec(_ => {
                 const modal1 = dom.findOne('#modal1');
-                const modal = UI.Modal.init(modal1);
-                modal.show();
-                modal.show();
-                modal.show();
+                UI.Modal.init(modal1)
+                    .show()
+                    .show()
+                    .show();
             });
         });
 
@@ -219,7 +277,10 @@ describe('Modal', function() {
                 const modal1 = dom.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     UI.Modal.init(modal1).show();
@@ -236,7 +297,10 @@ describe('Modal', function() {
                 const modal1 = dom.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const modal1 = dom.findOne('#modal1');
@@ -271,7 +335,10 @@ describe('Modal', function() {
                 const modal1 = dom.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.click('#button1');
@@ -302,10 +369,12 @@ describe('Modal', function() {
 
         it('hides the modal (query)', async function() {
             await exec(_ => {
-                const modal1 = dom.findOne('#modal1');
-                UI.Modal.init(modal1).show();
+                dom.query('#modal1').modal('show');
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.query('#modal1').modal('hide');
@@ -334,12 +403,47 @@ describe('Modal', function() {
             });
         });
 
+        it('hides multiple modals (query)', async function() {
+            await exec(_ => {
+                dom.query('.modal').modal('show');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('#modalDialog2');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.query('.modal').modal('hide');
+                });
+            }).then(waitFor(300)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1"></button>' +
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2"></button>' +
+                    '<div id="modal1" class="modal" aria-hidden="true">' +
+                    '<div class="modal-dialog" id="modalDialog1" style="">' +
+                    '<button id="button1" data-ui-dismiss="modal"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div id="modal2" class="modal" aria-hidden="true">' +
+                    '<div class="modal-dialog" id="modalDialog2" style="">' +
+                    '<button id="button2" data-ui-dismiss="modal"></button>' +
+                    '</div>' +
+                    '</div>'
+                );
+            });
+        });
+
         it('does not remove the modal after hiding', async function() {
             await exec(_ => {
                 const modal1 = dom.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const modal1 = dom.findOne('#modal1');
@@ -358,14 +462,17 @@ describe('Modal', function() {
                 const modal1 = dom.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(async _ => {
                     const modal1 = dom.findOne('#modal1');
-                    const modal = UI.Modal.init(modal1);
-                    modal.hide();
-                    modal.hide();
-                    modal.hide();
+                    UI.Modal.init(modal1)
+                        .hide()
+                        .hide()
+                        .hide();
                 });
             });
         });
@@ -438,13 +545,37 @@ describe('Modal', function() {
             });
         });
 
+        it('shows multiple modals (query)', async function() {
+            await exec(_ => {
+                dom.query('.modal').modal('toggle');
+            }).then(waitFor(300)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1"></button>' +
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2"></button>' +
+                    '<div id="modal1" class="modal show" aria-modal="true">' +
+                    '<div class="modal-dialog" id="modalDialog1" style="">' +
+                    '<button id="button1" data-ui-dismiss="modal"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div id="modal2" class="modal show" aria-modal="true">' +
+                    '<div class="modal-dialog" id="modalDialog2" style="">' +
+                    '<button id="button2" data-ui-dismiss="modal"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="modal-backdrop" style=""></div>' +
+                    '<div class="modal-backdrop" style=""></div>'
+                );
+            });
+        });
+
         it('can be called multiple times', async function() {
             await exec(_ => {
                 const modal1 = dom.findOne('#modal1');
-                const modal = UI.Modal.init(modal1);
-                modal.toggle();
-                modal.toggle();
-                modal.toggle();
+                UI.Modal.init(modal1)
+                    .toggle()
+                    .toggle()
+                    .toggle();
             });
         });
 
@@ -457,7 +588,10 @@ describe('Modal', function() {
                 const modal1 = dom.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const modal1 = dom.findOne('#modal1');
@@ -489,10 +623,12 @@ describe('Modal', function() {
 
         it('hides the modal (query)', async function() {
             await exec(_ => {
-                const modal1 = dom.findOne('#modal1');
-                UI.Modal.init(modal1).show();
+                dom.query('#modal1').modal('show');
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.query('#modal1').modal('toggle');
@@ -521,19 +657,54 @@ describe('Modal', function() {
             });
         });
 
+        it('hides multiple modals (query)', async function() {
+            await exec(_ => {
+                dom.query('.modal').modal('show');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('#modalDialog2');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.query('.modal').modal('toggle');
+                });
+            }).then(waitFor(300)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1"></button>' +
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2"></button>' +
+                    '<div id="modal1" class="modal" aria-hidden="true">' +
+                    '<div class="modal-dialog" id="modalDialog1" style="">' +
+                    '<button id="button1" data-ui-dismiss="modal"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div id="modal2" class="modal" aria-hidden="true">' +
+                    '<div class="modal-dialog" id="modalDialog2" style="">' +
+                    '<button id="button2" data-ui-dismiss="modal"></button>' +
+                    '</div>' +
+                    '</div>'
+                );
+            });
+        });
+
         it('can be called multiple times', async function() {
             await exec(_ => {
                 const modal1 = dom.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(async _ => {
                     const modal1 = dom.findOne('#modal1');
-                    const modal = UI.Modal.init(modal1);
-                    modal.toggle();
-                    modal.toggle();
-                    modal.toggle();
+                    UI.Modal.init(modal1)
+                        .toggle()
+                        .toggle()
+                        .toggle();
                 });
             });
         });
@@ -600,7 +771,10 @@ describe('Modal', function() {
                 const modal1 = dom.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(async _ => {
@@ -634,7 +808,10 @@ describe('Modal', function() {
                 const modal1 = dom.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(async _ => {
@@ -720,7 +897,10 @@ describe('Modal', function() {
                 const modal1 = dom.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(async _ => {
@@ -754,7 +934,10 @@ describe('Modal', function() {
                 const modal1 = dom.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(async _ => {
@@ -839,7 +1022,10 @@ describe('Modal', function() {
                 const modal1 = dom.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(async _ => {
                     const modal1 = dom.findOne('#modal1');
@@ -873,7 +1059,10 @@ describe('Modal', function() {
                 const modal1 = dom.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(async _ => {
                     const modal1 = dom.findOne('#modal1');
@@ -935,7 +1124,7 @@ describe('Modal', function() {
             await exec(_ => {
                 dom.query('#modal1')
                     .modal({ duration: 200 })
-                    .modal('show');
+                    .show();
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.hasAnimation('#modalDialog1') && dom.hasAnimation('.modal-backdrop')),
@@ -949,7 +1138,10 @@ describe('Modal', function() {
                 const modal1 = dom.findOne('#modal1');
                 UI.Modal.init(modal1, { duration: 200 }).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const modal1 = dom.findOne('#modal1');
@@ -969,7 +1161,10 @@ describe('Modal', function() {
                 dom.setDataset(modal1, 'uiDuration', 200);
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const modal1 = dom.findOne('#modal1');
@@ -987,9 +1182,12 @@ describe('Modal', function() {
             await exec(_ => {
                 dom.query('#modal1')
                     .modal({ duration: 200 })
-                    .modal('show');
+                    .show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.query('#modal1').modal('hide');
@@ -1011,7 +1209,10 @@ describe('Modal', function() {
                 const modal1 = dom.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const event = new KeyboardEvent('keyup', {
@@ -1049,7 +1250,10 @@ describe('Modal', function() {
                 const modal1 = dom.findOne('#modal1');
                 UI.Modal.init(modal1, { keyboard: false }).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const event = new KeyboardEvent('keyup', {
@@ -1084,7 +1288,10 @@ describe('Modal', function() {
                 dom.setDataset(modal1, 'uiKeyboard', false);
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const event = new KeyboardEvent('keyup', {
@@ -1117,9 +1324,12 @@ describe('Modal', function() {
             await exec(_ => {
                 dom.query('#modal1')
                     .modal({ keyboard: false })
-                    .modal('show');
+                    .show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const event = new KeyboardEvent('keyup', {
@@ -1241,7 +1451,10 @@ describe('Modal', function() {
                 const modal1 = dom.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.click(document.body);
@@ -1275,7 +1488,10 @@ describe('Modal', function() {
                 const modal1 = dom.findOne('#modal1');
                 UI.Modal.init(modal1, { backdrop: false }).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#modalDialog1, .modal-backdrop'));
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.click(document.body);

@@ -48,9 +48,54 @@ describe('Collapse', function() {
             );
         });
 
+        it('creates multiple collapses (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('div').collapse();
+                    return dom.find('div').every(node =>
+                        dom.getData(node, 'collapse') instanceof UI.Collapse
+                    );
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#dispose', function() {
+
+        it('removes the collapse', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const collapse1 = dom.findOne('#collapse1');
+                    UI.Collapse.init(collapse1).dispose();
+                    return dom.hasData(collapse1, 'collapse');
+                }),
+                false
+            );
+        });
+
+        it('removes the collapse (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#collapse1').collapse('dispose');
+                    return dom.hasData('#collapse1', 'collapse');
+                }),
+                false
+            );
+        });
+
+        it('removes multiple collapses (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('div').collapse('dispose');
+                    return dom.find('div').some(node =>
+                        dom.hasData(node, 'collapse')
+                    );
+                }),
+                false
+            );
+        });
 
         it('clears collapse memory', async function() {
             assert.strictEqual(
@@ -68,17 +113,6 @@ describe('Collapse', function() {
                     return true;
                 }),
                 true
-            );
-        });
-
-        it('removes the collapse', async function() {
-            assert.strictEqual(
-                await exec(_ => {
-                    const collapse1 = dom.findOne('#collapse1');
-                    UI.Collapse.init(collapse1).dispose();
-                    return dom.hasData(collapse1, 'collapse');
-                }),
-                false
             );
         });
 
@@ -144,22 +178,43 @@ describe('Collapse', function() {
             });
         });
 
+        it('shows multiple collapses (query)', async function() {
+            await exec(_ => {
+                dom.query('div').collapse('show');
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button class="" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" aria-expanded="true"></button>' +
+                    '<button class="" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" aria-expanded="true"></button>' +
+                    '<div class="collapse show" id="collapse1" style=""></div>' +
+                    '<div class="collapse show" id="collapse2" style=""></div>'
+                );
+            });
+        });
+
         it('can be called multiple times', async function() {
             await exec(async _ => {
                 const collapse1 = dom.findOne('#collapse1');
-                const collapse = UI.Collapse.init(collapse1);
-                collapse.show();
-                collapse.show();
-                collapse.show();
+                UI.Collapse.init(collapse1)
+                    .show()
+                    .show()
+                    .show();
             });
         });
 
         it('can be called on shown collapse', async function() {
             await exec(async _ => {
                 const collapse1 = dom.findOne('#collapse1');
-                dom.removeClass('#collapseToggle1', 'collapsed');
-                dom.addClass(collapse1, 'show');
                 UI.Collapse.init(collapse1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const collapse1 = dom.findOne('#collapse1');
+                    UI.Collapse.init(collapse1).show();
+                });
             });
         });
 
@@ -172,7 +227,9 @@ describe('Collapse', function() {
                 const collapse1 = dom.findOne('#collapse1');
                 UI.Collapse.init(collapse1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#collapse1'));
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const collapse1 = dom.findOne('#collapse1');
@@ -196,10 +253,11 @@ describe('Collapse', function() {
 
         it('hides the collapse (query)', async function() {
             await exec(_ => {
-                const collapse1 = dom.findOne('#collapse1');
-                UI.Collapse.init(collapse1).show();
+                dom.query('#collapse1').collapse('show');
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#collapse1'));
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.query('#collapse1').collapse('hide');
@@ -220,12 +278,37 @@ describe('Collapse', function() {
             });
         });
 
+        it('hides multiple collapses (query)', async function() {
+            await exec(_ => {
+                dom.query('div').collapse('show');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                    dom.stop('#collapse2');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.query('div').collapse('hide');
+                });
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button class="collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" aria-expanded="false"></button>' +
+                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" aria-expanded="false"></button>' +
+                    '<div class="collapse" id="collapse1" style=""></div>' +
+                    '<div class="collapse" id="collapse2" style=""></div>'
+                );
+            });
+        });
+
         it('does not remove the collapse after hiding', async function() {
             await exec(_ => {
                 const collapse1 = dom.findOne('#collapse1');
                 UI.Collapse.init(collapse1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#collapse1'));
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const collapse1 = dom.findOne('#collapse1');
@@ -248,10 +331,10 @@ describe('Collapse', function() {
             }).then(waitFor(50)).then(async _ => {
                 await exec(async _ => {
                     const collapse1 = dom.findOne('#collapse1');
-                    const collapse = UI.Collapse.init(collapse1);
-                    collapse.hide();
-                    collapse.hide();
-                    collapse.hide();
+                    UI.Collapse.init(collapse1)
+                        .hide()
+                        .hide()
+                        .hide();
                 });
             });
         });
@@ -325,13 +408,27 @@ describe('Collapse', function() {
             });
         });
 
+        it('shows multiple collapses (query)', async function() {
+            await exec(_ => {
+                dom.query('div').collapse('toggle');
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button class="" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" aria-expanded="true"></button>' +
+                    '<button class="" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" aria-expanded="true"></button>' +
+                    '<div class="collapse show" id="collapse1" style=""></div>' +
+                    '<div class="collapse show" id="collapse2" style=""></div>'
+                );
+            });
+        });
+
         it('can be called multiple times', async function() {
             await exec(async _ => {
                 const collapse1 = dom.findOne('#collapse1');
-                const collapse = UI.Collapse.init(collapse1);
-                collapse.toggle();
-                collapse.toggle();
-                collapse.toggle();
+                UI.Collapse.init(collapse1)
+                    .toggle()
+                    .toggle()
+                    .toggle();
             });
         });
 
@@ -344,7 +441,9 @@ describe('Collapse', function() {
                 const collapse1 = dom.findOne('#collapse1');
                 UI.Collapse.init(collapse1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#collapse1'));
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const collapse1 = dom.findOne('#collapse1');
@@ -371,7 +470,9 @@ describe('Collapse', function() {
                 const collapse1 = dom.findOne('#collapse1');
                 UI.Collapse.init(collapse1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#collapse1'));
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.click('#collapseToggle1');
@@ -394,10 +495,11 @@ describe('Collapse', function() {
 
         it('hides the collapse (query)', async function() {
             await exec(_ => {
-                const collapse1 = dom.findOne('#collapse1');
-                UI.Collapse.init(collapse1).show();
+                dom.query('#collapse1').collapse('show');
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#collapse1'));
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.query('#collapse1').collapse('toggle');
@@ -418,6 +520,29 @@ describe('Collapse', function() {
             });
         });
 
+        it('hides multiple collapses (query)', async function() {
+            await exec(_ => {
+                dom.query('div').collapse('show');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                    dom.stop('#collapse2');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.query('div').collapse('toggle');
+                });
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button class="collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" aria-expanded="false"></button>' +
+                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" aria-expanded="false"></button>' +
+                    '<div class="collapse" id="collapse1" style=""></div>' +
+                    '<div class="collapse" id="collapse2" style=""></div>'
+                );
+            });
+        });
+
         it('can be called multiple times', async function() {
             await exec(_ => {
                 const collapse1 = dom.findOne('#collapse1');
@@ -427,10 +552,10 @@ describe('Collapse', function() {
             }).then(waitFor(50)).then(async _ => {
                 await exec(async _ => {
                     const collapse1 = dom.findOne('#collapse1');
-                    const collapse = UI.Collapse.init(collapse1);
-                    collapse.toggle();
-                    collapse.toggle();
-                    collapse.toggle();
+                    UI.Collapse.init(collapse1)
+                        .toggle()
+                        .toggle()
+                        .toggle();
                 });
             });
         });
@@ -480,7 +605,9 @@ describe('Collapse', function() {
                 const collapse1 = dom.findOne('#collapse1');
                 UI.Collapse.init(collapse1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#collapse1'));
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(async _ => {
@@ -505,7 +632,9 @@ describe('Collapse', function() {
                 const collapse1 = dom.findOne('#collapse1');
                 UI.Collapse.init(collapse1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#collapse1'));
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(async _ => {
@@ -566,7 +695,9 @@ describe('Collapse', function() {
                 const collapse1 = dom.findOne('#collapse1');
                 UI.Collapse.init(collapse1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#collapse1'));
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(async _ => {
@@ -591,7 +722,9 @@ describe('Collapse', function() {
                 const collapse1 = dom.findOne('#collapse1');
                 UI.Collapse.init(collapse1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#collapse1'));
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(async _ => {
@@ -652,7 +785,9 @@ describe('Collapse', function() {
                 const collapse1 = dom.findOne('#collapse1');
                 UI.Collapse.init(collapse1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#collapse1'));
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(async _ => {
                     const collapse1 = dom.findOne('#collapse1');
@@ -677,7 +812,9 @@ describe('Collapse', function() {
                 const collapse1 = dom.findOne('#collapse1');
                 UI.Collapse.init(collapse1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#collapse1'));
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(async _ => {
                     const collapse1 = dom.findOne('#collapse1');
@@ -730,7 +867,7 @@ describe('Collapse', function() {
             await exec(_ => {
                 dom.query('#collapse1')
                     .collapse({ duration: 200 })
-                    .collapse('show');
+                    .show();
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.hasAnimation('#collapse1')),
@@ -744,7 +881,9 @@ describe('Collapse', function() {
                 const collapse1 = dom.findOne('#collapse1');
                 UI.Collapse.init(collapse1, { duration: 200 }).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#collapse1'));
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const collapse1 = dom.findOne('#collapse1');
@@ -764,7 +903,9 @@ describe('Collapse', function() {
                 dom.setDataset(collapse1, 'uiDuration', 200);
                 UI.Collapse.init(collapse1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#collapse1'));
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const collapse1 = dom.findOne('#collapse1');
@@ -782,7 +923,11 @@ describe('Collapse', function() {
             await exec(_ => {
                 dom.query('#collapse1')
                     .collapse({ duration: 200 })
-                    .collapse('show').stop();
+                    .show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.query('#collapse1').collapse('hide');

@@ -1,15 +1,17 @@
 .mix-color-links(@name) {
+    @color: @@name;
+
     .link-@{name} {
-        color: @@name;
+        color: @color;
     }
 
     .link-@{name}:hover,
     .link-@{name}:active {
-        .text-dark(@@name);
+        color: shade(@color, @text-dark);
     }
 
     .link-@{name}:focus {
-        .text-light(@@name);
+        color: tint(@color, @text-light);
     }
 }
 

@@ -83,6 +83,7 @@
 }
 
 .navbar-collapse {
+    flex-grow: 1;
     align-items: center;
     width: 100%;
 }
@@ -124,7 +125,7 @@
 
             &:focus {
                 color: @black;
-                .bg-fade(@black);
+                background-color: fade(@black, @bg-fade);
             }
         }
 
@@ -135,11 +136,11 @@
     }
 
     .navbar-text {
-        .text-lighter(@black);
+        color: tint(@color, @text-lighter);
     }
 
     .navbar-toggler:focus {
-        .bg-fade(@black);
+        background-color: fade(@black, @bg-fade);
     }
 }
 
@@ -159,7 +160,7 @@
 
             &:focus {
                 color: @white;
-                .bg-fade(@white);
+                background-color: fade(@white, @bg-fade);
             }
         }
 
@@ -170,11 +171,11 @@
     }
 
     .navbar-text {
-        .text-darker(@white);
+        color: shade(@white, @text-darker);
     }
 
     .navbar-toggler:focus {
-        .bg-fade(@white);
+        background-color: fade(@white, @bg-fade);
     }
 }
 

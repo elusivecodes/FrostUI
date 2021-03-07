@@ -29,11 +29,11 @@
     }
 
     &:hover {
-        .bg-dark(@secondary);
+        background-color: shade(@secondary, @bg-dark);
     }
 
     &:focus {
-        .bg-light(@secondary);
+        background-color: tint(@secondary, @bg-light);
         outline: 0;
         box-shadow: @shadow-xs;
     }
@@ -45,10 +45,10 @@
 
 .page-item {
     &.active .page-link {
-        .bg-darker(@secondary);
+        background-color: shade(@secondary, @bg-darker);
 
         &:focus {
-            .bg-dark(@secondary);
+            background-color: shade(@secondary, @bg-dark);
         }
     }
 

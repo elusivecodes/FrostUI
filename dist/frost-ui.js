@@ -147,7 +147,7 @@
         component.REMOVE_EVENT = `remove.ui.${key}`;
 
         QuerySet.prototype[key] = function(a, ...args) {
-            let settings, method;
+            let settings, method, firstResult;
 
             if (Core.isObject(a)) {
                 settings = a;
@@ -155,19 +155,23 @@
                 method = a;
             }
 
-            for (const node of this) {
+            for (const [index, node] of [...this].entries()) {
                 if (!Core.isElement(node)) {
                     continue;
                 }
 
-                const instance = component.init(node, settings);
+                let result = component.init(node, settings);
 
                 if (method) {
-                    instance[method](...args);
+                    result = result[method](...args);
+                }
+
+                if (index === 0) {
+                    firstResult = result;
                 }
             }
 
-            return this;
+            return firstResult;
         };
     };
 
@@ -186,7 +190,7 @@
                 this._animating ||
                 !dom.triggerOne(this._node, 'close.ui.alert')
             ) {
-                return;
+                return this;
             }
 
             this._animating = true;
@@ -200,6 +204,8 @@
             }).catch(_ => { }).finally(_ => {
                 this._animating = false;
             });
+
+            return this;
         }
 
     }
@@ -1269,12 +1275,20 @@
             if (this._settings.enable) {
                 this.enable();
             }
+
+            this.refresh();
         }
 
         /**
          * Dispose the Popover.
          */
         dispose() {
+            if (dom.hasDataset(this._node, 'uiOriginalTitle')) {
+                const title = dom.getDataset(this._node, 'uiOriginalTitle');
+                dom.setAttribute(this._node, 'title', title);
+                dom.removeDataset(this._node, 'uiOriginalTitle');
+            }
+
             if (this._popper) {
                 this._popper.dispose();
                 this._popper = null;
@@ -1373,17 +1387,22 @@
          * @returns {Popover} The Popover.
          */
         refresh() {
-            let title;
-            let content;
+            if (dom.hasAttribute(this._node, 'title')) {
+                const originalTitle = dom.getAttribute(this._node, 'title')
+                dom.setDataset(this._node, 'uiOriginalTitle', originalTitle);
+                dom.removeAttribute(this._node, 'title');
+            }
 
+            let title = '';
             if (dom.hasDataset(this._node, 'uiTitle')) {
                 title = dom.getDataset(this._node, 'uiTitle');
             } else if (this._settings.title) {
                 title = this._settings.title;
-            } else if (dom.hasAttribute(this._node, 'title')) {
-                title = dom.getAttribute(this._node, 'title');
+            } else if (dom.hasDataset(this._node, 'uiOriginalTitle')) {
+                title = dom.getDataset(this._node, 'uiOriginalTitle', title);
             }
 
+            let content = '';
             if (dom.hasDataset(this._node, 'uiContent')) {
                 content = dom.getDataset(this._node, 'uiContent');
             } else if (this._settings.content) {
@@ -1412,7 +1431,7 @@
                     content
             );
 
-            return this;
+            return this.update();
         }
 
         /**
@@ -2656,12 +2675,20 @@
             if (this._settings.enable) {
                 this.enable();
             }
+
+            this.refresh();
         }
 
         /**
          * Dispose the Tooltip.
          */
         dispose() {
+            if (dom.hasDataset(this._node, 'uiOriginalTitle')) {
+                const title = dom.getDataset(this._node, 'uiOriginalTitle');
+                dom.setAttribute(this._node, 'title', title);
+                dom.removeDataset(this._node, 'uiOriginalTitle');
+            }
+
             if (this._popper) {
                 this._popper.dispose();
                 this._popper = null;
@@ -2759,13 +2786,19 @@
          * @returns {Tooltip} The Tooltip.
          */
         refresh() {
-            let title;
+            if (dom.hasAttribute(this._node, 'title')) {
+                const originalTitle = dom.getAttribute(this._node, 'title')
+                dom.setDataset(this._node, 'uiOriginalTitle', originalTitle);
+                dom.removeAttribute(this._node, 'title');
+            }
+
+            let title = '';
             if (dom.hasDataset(this._node, 'uiTitle')) {
                 title = dom.getDataset(this._node, 'uiTitle');
             } else if (this._settings.title) {
                 title = this._settings.title;
-            } else if (dom.hasAttribute(this._node, 'title')) {
-                title = dom.getAttribute(this._node, 'title');
+            } else if (dom.hasDataset(this._node, 'uiOriginalTitle')) {
+                title = dom.getDataset(this._node, 'uiOriginalTitle', title);
             }
 
             const method = this._settings.html ? 'setHTML' : 'setText';
@@ -2777,7 +2810,7 @@
                     title
             );
 
-            return this;
+            return this.update();
         }
 
         /**
@@ -3036,7 +3069,7 @@
     UI.ripple = (node, x, y, duration = 500) => {
         const width = dom.width(node);
         const height = dom.height(node);
-        const scaleMultiple = Math.max(width, height) * 6;
+        const scaleMultiple = Math.max(width, height) * 3;
 
         const ripple = dom.create('span', {
             class: 'ripple-effect',

@@ -14,58 +14,19 @@
     font-size: @fontSize@suffix;
 }
 
-.text-light(@color) {
-    color: tint(@color, 15%);
-}
-
-.text-lighter(@color) {
-    color: tint(@color, 30%);
-}
-
-.text-dark(@color) {
-    color: shade(@color, 15%);
-}
-
-.text-darker(@color) {
-    color: shade(@color, 30%);
-}
-
-.text-darkest(@color) {
-    color: shade(@color, 75%);
-}
-
-.bg-light(@color) {
-    background-color: tint(@color, 20%);
-}
-
-.bg-lighter(@color) {
-    background-color: tint(@color, 40%);
-}
-
-.bg-lightest(@color) {
-    background-color: tint(@color, 60%);
-}
-
-.bg-dark(@color) {
-    @luma: unit(luma(@color));
-    @result: if((@luma < 55), 20%, 10%);
-    background-color: shade(@color, @result);
-}
-
-.bg-darker(@color) {
-    @luma: unit(luma(@color));
-    @result: if((@luma < 55), 40%, 20%);
-    background-color: shade(@color, @result);
-}
-
-.bg-fade(@color) {
-    background-color: fade(@color, 5%);
-}
-
-.border-dark(@color) {
-    border-color: shade(@color, 25%);
-}
-
-.border-light(@color) {
-    border-color: tint(@color, 25%);
+.reset-text() {
+    font-family: @font-family;
+    font-style: normal;
+    font-weight: @font-weight;
+    line-height: @line-height;
+    text-align: left;
+    text-decoration: none;
+    text-shadow: none;
+    text-transform: none;
+    letter-spacing: normal;
+    word-break: normal;
+    word-spacing: normal;
+    white-space: normal;
+    line-break: auto;
+    font-size: @font-size-sm;
 }

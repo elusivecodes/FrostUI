@@ -44,7 +44,7 @@ caption {
     padding: (@spacing / 2) 0;
     text-align: left;
     caption-side: bottom;
-    .text-lighter(@text);
+    color: tint(@text, @text-lighter);
 }
 
 hr {
@@ -141,7 +141,7 @@ legend {
     width: 100%;
     max-width: 100%;
     margin-bottom: @spacing / 2;
-    font-size: 1.5rem;
+    font-size: @font-size-lg;
     line-height: inherit;
     color: inherit;
     white-space: normal;
@@ -180,11 +180,11 @@ a {
     }
 
     &:hover {
-        .text-dark(@link);
+        color: shade(@link, @text-dark);
     }
 
     &:focus {
-        .text-light(@link);
+        color: tint(@link, @text-light);
         outline: 0;
     }
 }
@@ -240,7 +240,7 @@ dd {
 }
 
 figure {
-    margin: 0 0 1rem;
+    margin: 0 0 @spacing;
 }
 
 h1,

@@ -28,11 +28,11 @@
     }
 
     &:not(.collapsed) {
-        .text-darker(@primary);
-        .bg-fade(@primary);
+        color: shade(@primary, @text-darker);
+        background-color: fade(@primary, @bg-fade);
 
         &:focus {
-            background-color: fade(@primary, 10%);
+            background-color: fade(@primary, @bg-fade * 2);
         }
     
         &::after {
@@ -80,12 +80,12 @@
 }
 
 .accordion-collapse {
-    border: solid rgba(0,0,0,.125);
-    border-width: 0 1px;
+    border: @border-style @border-color;
+    border-width: 0 @border-size;
 }
 
 .accordion-body {
-    padding: 1rem 1.25rem;
+    padding: @spacing (@spacing * 1.25);
 }
 
 .accordion-flush {

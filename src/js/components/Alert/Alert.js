@@ -12,7 +12,7 @@ class Alert extends BaseComponent {
             this._animating ||
             !dom.triggerOne(this._node, 'close.ui.alert')
         ) {
-            return;
+            return this;
         }
 
         this._animating = true;
@@ -26,6 +26,8 @@ class Alert extends BaseComponent {
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
         });
+
+        return this;
     }
 
 }

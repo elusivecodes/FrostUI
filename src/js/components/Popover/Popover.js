@@ -23,12 +23,20 @@ class Popover extends BaseComponent {
         if (this._settings.enable) {
             this.enable();
         }
+
+        this.refresh();
     }
 
     /**
      * Dispose the Popover.
      */
     dispose() {
+        if (dom.hasDataset(this._node, 'uiOriginalTitle')) {
+            const title = dom.getDataset(this._node, 'uiOriginalTitle');
+            dom.setAttribute(this._node, 'title', title);
+            dom.removeDataset(this._node, 'uiOriginalTitle');
+        }
+
         if (this._popper) {
             this._popper.dispose();
             this._popper = null;
@@ -127,17 +135,22 @@ class Popover extends BaseComponent {
      * @returns {Popover} The Popover.
      */
     refresh() {
-        let title;
-        let content;
+        if (dom.hasAttribute(this._node, 'title')) {
+            const originalTitle = dom.getAttribute(this._node, 'title')
+            dom.setDataset(this._node, 'uiOriginalTitle', originalTitle);
+            dom.removeAttribute(this._node, 'title');
+        }
 
+        let title = '';
         if (dom.hasDataset(this._node, 'uiTitle')) {
             title = dom.getDataset(this._node, 'uiTitle');
         } else if (this._settings.title) {
             title = this._settings.title;
-        } else if (dom.hasAttribute(this._node, 'title')) {
-            title = dom.getAttribute(this._node, 'title');
+        } else if (dom.hasDataset(this._node, 'uiOriginalTitle')) {
+            title = dom.getDataset(this._node, 'uiOriginalTitle', title);
         }
 
+        let content = '';
         if (dom.hasDataset(this._node, 'uiContent')) {
             content = dom.getDataset(this._node, 'uiContent');
         } else if (this._settings.content) {
@@ -166,7 +179,7 @@ class Popover extends BaseComponent {
                 content
         );
 
-        return this;
+        return this.update();
     }
 
     /**

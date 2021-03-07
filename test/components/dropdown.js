@@ -60,9 +60,54 @@ describe('dropdown', function() {
             );
         });
 
+        it('creates multiple dropdowns (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('[data-ui-toggle="dropdown"]').dropdown();
+                    return dom.find('[data-ui-toggle="dropdown"]').every(node =>
+                        dom.getData(node, 'dropdown') instanceof UI.Dropdown
+                    );
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#dispose', function() {
+
+        it('removes the dropdown', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const dropdownToggle1 = dom.findOne('#dropdownToggle1');
+                    UI.Dropdown.init(dropdownToggle1).dispose();
+                    return dom.hasData(dropdownToggle1, 'dropdown');
+                }),
+                false
+            );
+        });
+
+        it('removes the dropdown (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#dropdownToggle1').dropdown('dispose');
+                    return dom.hasData('#dropdownToggle1', 'dropdown');
+                }),
+                false
+            );
+        });
+
+        it('removes multiple dropdowns (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('[data-ui-toggle="dropdown"]').dropdown('dispose');
+                    return dom.find('[data-ui-toggle="dropdown"]').some(node =>
+                        dom.hasData(node, 'dropdown')
+                    );
+                }),
+                false
+            );
+        });
 
         it('clears dropdown memory', async function() {
             assert.strictEqual(
@@ -80,17 +125,6 @@ describe('dropdown', function() {
                     return true;
                 }),
                 true
-            );
-        });
-
-        it('removes the dropdown', async function() {
-            assert.strictEqual(
-                await exec(_ => {
-                    const dropdownToggle1 = dom.findOne('#dropdownToggle1');
-                    UI.Dropdown.init(dropdownToggle1).dispose();
-                    return dom.hasData(dropdownToggle1, 'dropdown');
-                }),
-                false
             );
         });
 
@@ -180,13 +214,39 @@ describe('dropdown', function() {
             });
         });
 
+        it('shows multiple dropdowns (query)', async function() {
+            await exec(_ => {
+                dom.query('[data-ui-toggle="dropdown"]').dropdown('show');
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div>' +
+                    '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
+                    '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<button class="dropdown-item" id="dropdown1Item1"></button>' +
+                    '<button class="dropdown-item" id="dropdown1Item2"></button>' +
+                    '<button class="dropdown-item" id="dropdown1Item3"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<button id="dropdownToggle2" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
+                    '<div class="dropdown-menu show" id="dropdown2" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 23px, 0px);">' +
+                    '<button class="dropdown-item" id="dropdown2Item1"></button>' +
+                    '<button class="dropdown-item" id="dropdown2Item2"></button>' +
+                    '<button class="dropdown-item" id="dropdown2Item3"></button>' +
+                    '</div>' +
+                    '</div>'
+                );
+            });
+        });
+
         it('can be called multiple times', async function() {
             await exec(_ => {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
-                const dropdown = UI.Dropdown.init(dropdownToggle1);
-                dropdown.show();
-                dropdown.show();
-                dropdown.show();
+                UI.Dropdown.init(dropdownToggle1)
+                    .show()
+                    .show()
+                    .show();
             });
         });
 
@@ -195,86 +255,14 @@ describe('dropdown', function() {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const dropdownToggle1 = dom.findOne('#dropdownToggle1');
                     UI.Dropdown.init(dropdownToggle1).show();
                 });
-            });
-        });
-
-        it('shows the dropdown on down arrow', async function() {
-            await exec(_ => {
-                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
-                const event = new KeyboardEvent('keydown', {
-                    bubbles: true,
-                    code: 'ArrowDown'
-                });
-                dom.focus(dropdownToggle1);
-                dropdownToggle1.dispatchEvent(event);
-            }).then(waitFor(50)).then(async _ => {
-                assert.strictEqual(
-                    await exec(_ => dom.hasAnimation('#dropdown1')),
-                    true
-                );
-            }).then(waitFor(100)).then(async _ => {
-                assert.strictEqual(
-                    await exec(_ => dom.getHTML(document.body)),
-                    '<div>' +
-                    '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
-                    '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
-                    '<button class="dropdown-item" id="dropdown1Item1"></button>' +
-                    '<button class="dropdown-item" id="dropdown1Item2"></button>' +
-                    '<button class="dropdown-item" id="dropdown1Item3"></button>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div>' +
-                    '<button id="dropdownToggle2" data-ui-toggle="dropdown"></button>' +
-                    '<div class="dropdown-menu" id="dropdown2">' +
-                    '<button class="dropdown-item" id="dropdown2Item1"></button>' +
-                    '<button class="dropdown-item" id="dropdown2Item2"></button>' +
-                    '<button class="dropdown-item" id="dropdown2Item3"></button>' +
-                    '</div>' +
-                    '</div>'
-                );
-            });
-        });
-
-        it('shows the dropdown on up arrow', async function() {
-            await exec(_ => {
-                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
-                const event = new KeyboardEvent('keydown', {
-                    bubbles: true,
-                    code: 'ArrowUp'
-                });
-                dom.focus(dropdownToggle1);
-                dropdownToggle1.dispatchEvent(event);
-            }).then(waitFor(50)).then(async _ => {
-                assert.strictEqual(
-                    await exec(_ => dom.hasAnimation('#dropdown1')),
-                    true
-                );
-            }).then(waitFor(100)).then(async _ => {
-                assert.strictEqual(
-                    await exec(_ => dom.getHTML(document.body)),
-                    '<div>' +
-                    '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
-                    '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
-                    '<button class="dropdown-item" id="dropdown1Item1"></button>' +
-                    '<button class="dropdown-item" id="dropdown1Item2"></button>' +
-                    '<button class="dropdown-item" id="dropdown1Item3"></button>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div>' +
-                    '<button id="dropdownToggle2" data-ui-toggle="dropdown"></button>' +
-                    '<div class="dropdown-menu" id="dropdown2">' +
-                    '<button class="dropdown-item" id="dropdown2Item1"></button>' +
-                    '<button class="dropdown-item" id="dropdown2Item2"></button>' +
-                    '<button class="dropdown-item" id="dropdown2Item3"></button>' +
-                    '</div>' +
-                    '</div>'
-                );
             });
         });
 
@@ -287,7 +275,9 @@ describe('dropdown', function() {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const dropdownToggle1 = dom.findOne('#dropdownToggle1');
@@ -323,10 +313,11 @@ describe('dropdown', function() {
 
         it('hides the dropdown (query)', async function() {
             await exec(_ => {
-                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
-                UI.Dropdown.init(dropdownToggle1).show();
+                dom.query('#dropdownToggle1').dropdown('show');
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.query('#dropdownToggle1').dropdown('hide');
@@ -359,12 +350,49 @@ describe('dropdown', function() {
             });
         });
 
+        it('hides multiple dropdowns (query)', async function() {
+            await exec(_ => {
+                dom.query('[data-ui-toggle="dropdown"]').dropdown('show');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                    dom.stop('#dropdown2');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.query('[data-ui-toggle="dropdown"]').dropdown('hide');
+                });
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div>' +
+                    '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="false"></button>' +
+                    '<div class="dropdown-menu" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<button class="dropdown-item" id="dropdown1Item1"></button>' +
+                    '<button class="dropdown-item" id="dropdown1Item2"></button>' +
+                    '<button class="dropdown-item" id="dropdown1Item3"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<button id="dropdownToggle2" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="false"></button>' +
+                    '<div class="dropdown-menu" id="dropdown2" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 23px, 0px);">' +
+                    '<button class="dropdown-item" id="dropdown2Item1"></button>' +
+                    '<button class="dropdown-item" id="dropdown2Item2"></button>' +
+                    '<button class="dropdown-item" id="dropdown2Item3"></button>' +
+                    '</div>' +
+                    '</div>'
+                );
+            });
+        });
+
         it('does not remove the dropdown after hiding', async function() {
             await exec(_ => {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const dropdownToggle1 = dom.findOne('#dropdownToggle1');
@@ -383,14 +411,16 @@ describe('dropdown', function() {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const dropdownToggle1 = dom.findOne('#dropdownToggle1');
-                    const dropdown = UI.Dropdown.init(dropdownToggle1);
-                    dropdown.hide();
-                    dropdown.hide();
-                    dropdown.hide();
+                    UI.Dropdown.init(dropdownToggle1)
+                        .hide()
+                        .hide()
+                        .hide();
                 });
             });
         });
@@ -399,68 +429,6 @@ describe('dropdown', function() {
             await exec(_ => {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
                 UI.Dropdown.init(dropdownToggle1).hide();
-            });
-        });
-
-        it('hides the dropdown on document click', async function() {
-            await exec(_ => {
-                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
-                UI.Dropdown.init(dropdownToggle1).show();
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    dom.click(document.body);
-                });
-            }).then(waitFor(50)).then(async _ => {
-                assert.strictEqual(
-                    await exec(_ => dom.hasAnimation('#dropdown1')),
-                    true
-                );
-            });
-        });
-
-        it('hides the dropdown on escape', async function() {
-            await exec(_ => {
-                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
-                UI.Dropdown.init(dropdownToggle1).show();
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    const event = new KeyboardEvent('keyup', {
-                        bubbles: true,
-                        code: 'Escape'
-                    });
-                    document.body.dispatchEvent(event);
-                });
-            }).then(waitFor(50)).then(async _ => {
-                assert.strictEqual(
-                    await exec(_ => dom.hasAnimation('#dropdown1')),
-                    true
-                );
-            });
-        });
-
-        it('hides the dropdown on tab', async function() {
-            await exec(_ => {
-                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
-                UI.Dropdown.init(dropdownToggle1).show();
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    const event = new KeyboardEvent('keyup', {
-                        bubbles: true,
-                        code: 'Tab'
-                    });
-                    document.body.dispatchEvent(event);
-                });
-            }).then(waitFor(50)).then(async _ => {
-                assert.strictEqual(
-                    await exec(_ => dom.hasAnimation('#dropdown1')),
-                    true
-                );
             });
         });
 
@@ -562,13 +530,44 @@ describe('dropdown', function() {
             });
         });
 
+        it('shows multiple dropdowns (query)', async function() {
+            await exec(_ => {
+                dom.query('[data-ui-toggle="dropdown"]').dropdown('toggle');
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#dropdown1')),
+                    true
+                );
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div>' +
+                    '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
+                    '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<button class="dropdown-item" id="dropdown1Item1"></button>' +
+                    '<button class="dropdown-item" id="dropdown1Item2"></button>' +
+                    '<button class="dropdown-item" id="dropdown1Item3"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<button id="dropdownToggle2" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
+                    '<div class="dropdown-menu show" id="dropdown2" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 23px, 0px);">' +
+                    '<button class="dropdown-item" id="dropdown2Item1"></button>' +
+                    '<button class="dropdown-item" id="dropdown2Item2"></button>' +
+                    '<button class="dropdown-item" id="dropdown2Item3"></button>' +
+                    '</div>' +
+                    '</div>'
+                );
+            });
+        });
+
         it('can be called multiple times', async function() {
             await exec(_ => {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
-                const dropdown = UI.Dropdown.init(dropdownToggle1);
-                dropdown.toggle();
-                dropdown.toggle();
-                dropdown.toggle();
+                UI.Dropdown.init(dropdownToggle1)
+                    .toggle()
+                    .toggle()
+                    .toggle();
             });
         });
 
@@ -581,7 +580,9 @@ describe('dropdown', function() {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const dropdownToggle1 = dom.findOne('#dropdownToggle1');
@@ -620,7 +621,9 @@ describe('dropdown', function() {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.click('#dropdownToggle1');
@@ -655,10 +658,11 @@ describe('dropdown', function() {
 
         it('hides the dropdown (query)', async function() {
             await exec(_ => {
-                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
-                UI.Dropdown.init(dropdownToggle1).show();
+                dom.query('#dropdownToggle1').dropdown('show');
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.query('#dropdownToggle1').dropdown('toggle');
@@ -691,19 +695,56 @@ describe('dropdown', function() {
             });
         });
 
+        it('hides multiple dropdowns (query)', async function() {
+            await exec(_ => {
+                dom.query('[data-ui-toggle="dropdown"]').dropdown('show');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                    dom.stop('#dropdown2');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.query('[data-ui-toggle="dropdown"]').dropdown('toggle');
+                });
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div>' +
+                    '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="false"></button>' +
+                    '<div class="dropdown-menu" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<button class="dropdown-item" id="dropdown1Item1"></button>' +
+                    '<button class="dropdown-item" id="dropdown1Item2"></button>' +
+                    '<button class="dropdown-item" id="dropdown1Item3"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<button id="dropdownToggle2" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="false"></button>' +
+                    '<div class="dropdown-menu" id="dropdown2" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 23px, 0px);">' +
+                    '<button class="dropdown-item" id="dropdown2Item1"></button>' +
+                    '<button class="dropdown-item" id="dropdown2Item2"></button>' +
+                    '<button class="dropdown-item" id="dropdown2Item3"></button>' +
+                    '</div>' +
+                    '</div>'
+                );
+            });
+        });
+
         it('can be called multiple times', async function() {
             await exec(_ => {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const dropdownToggle1 = dom.findOne('#dropdownToggle1');
-                    const dropdown = UI.Dropdown.init(dropdownToggle1);
-                    dropdown.toggle();
-                    dropdown.toggle();
-                    dropdown.toggle();
+                    UI.Dropdown.init(dropdownToggle1)
+                        .toggle()
+                        .toggle()
+                        .toggle();
                 });
             });
         });
@@ -777,7 +818,9 @@ describe('dropdown', function() {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(async _ => {
@@ -814,7 +857,9 @@ describe('dropdown', function() {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(async _ => {
@@ -911,7 +956,9 @@ describe('dropdown', function() {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(async _ => {
@@ -948,7 +995,9 @@ describe('dropdown', function() {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(async _ => {
@@ -1045,7 +1094,9 @@ describe('dropdown', function() {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(async _ => {
                     const dropdownToggle1 = dom.findOne('#dropdownToggle1');
@@ -1082,7 +1133,9 @@ describe('dropdown', function() {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(async _ => {
                     const dropdownToggle1 = dom.findOne('#dropdownToggle1');
@@ -1117,6 +1170,148 @@ describe('dropdown', function() {
     });
 
     describe('user events', function() {
+
+        it('shows the dropdown on down arrow', async function() {
+            await exec(_ => {
+                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
+                const event = new KeyboardEvent('keydown', {
+                    bubbles: true,
+                    code: 'ArrowDown'
+                });
+                dom.focus(dropdownToggle1);
+                dropdownToggle1.dispatchEvent(event);
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#dropdown1')),
+                    true
+                );
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div>' +
+                    '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
+                    '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<button class="dropdown-item" id="dropdown1Item1"></button>' +
+                    '<button class="dropdown-item" id="dropdown1Item2"></button>' +
+                    '<button class="dropdown-item" id="dropdown1Item3"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<button id="dropdownToggle2" data-ui-toggle="dropdown"></button>' +
+                    '<div class="dropdown-menu" id="dropdown2">' +
+                    '<button class="dropdown-item" id="dropdown2Item1"></button>' +
+                    '<button class="dropdown-item" id="dropdown2Item2"></button>' +
+                    '<button class="dropdown-item" id="dropdown2Item3"></button>' +
+                    '</div>' +
+                    '</div>'
+                );
+            });
+        });
+
+        it('shows the dropdown on up arrow', async function() {
+            await exec(_ => {
+                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
+                const event = new KeyboardEvent('keydown', {
+                    bubbles: true,
+                    code: 'ArrowUp'
+                });
+                dom.focus(dropdownToggle1);
+                dropdownToggle1.dispatchEvent(event);
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#dropdown1')),
+                    true
+                );
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div>' +
+                    '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
+                    '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<button class="dropdown-item" id="dropdown1Item1"></button>' +
+                    '<button class="dropdown-item" id="dropdown1Item2"></button>' +
+                    '<button class="dropdown-item" id="dropdown1Item3"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<button id="dropdownToggle2" data-ui-toggle="dropdown"></button>' +
+                    '<div class="dropdown-menu" id="dropdown2">' +
+                    '<button class="dropdown-item" id="dropdown2Item1"></button>' +
+                    '<button class="dropdown-item" id="dropdown2Item2"></button>' +
+                    '<button class="dropdown-item" id="dropdown2Item3"></button>' +
+                    '</div>' +
+                    '</div>'
+                );
+            });
+        });
+
+        it('hides the dropdown on document click', async function() {
+            await exec(_ => {
+                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
+                UI.Dropdown.init(dropdownToggle1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.click(document.body);
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#dropdown1')),
+                    true
+                );
+            });
+        });
+
+        it('hides the dropdown on escape', async function() {
+            await exec(_ => {
+                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
+                UI.Dropdown.init(dropdownToggle1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const event = new KeyboardEvent('keyup', {
+                        bubbles: true,
+                        code: 'Escape'
+                    });
+                    document.body.dispatchEvent(event);
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#dropdown1')),
+                    true
+                );
+            });
+        });
+
+        it('hides the dropdown on tab', async function() {
+            await exec(_ => {
+                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
+                UI.Dropdown.init(dropdownToggle1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const event = new KeyboardEvent('keyup', {
+                        bubbles: true,
+                        code: 'Tab'
+                    });
+                    document.body.dispatchEvent(event);
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#dropdown1')),
+                    true
+                );
+            });
+        });
 
         it('focuses the first item on down arrow', async function() {
             await exec(_ => {
@@ -1157,7 +1352,9 @@ describe('dropdown', function() {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const dropdown1Item2 = dom.findOne('#dropdown1Item2');
@@ -1181,7 +1378,9 @@ describe('dropdown', function() {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const dropdown1Item2 = dom.findOne('#dropdown1Item2');
@@ -1205,7 +1404,9 @@ describe('dropdown', function() {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const dropdown1Item3 = dom.findOne('#dropdown1Item2');
@@ -1229,7 +1430,9 @@ describe('dropdown', function() {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const dropdown1Item1 = dom.findOne('#dropdown1Item2');
@@ -1281,7 +1484,7 @@ describe('dropdown', function() {
             await exec(_ => {
                 dom.query('#dropdownToggle1')
                     .dropdown({ duration: 200 })
-                    .dropdown('show');
+                    .show();
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.hasAnimation('#dropdown1')),
@@ -1295,7 +1498,9 @@ describe('dropdown', function() {
                 const dropdownToggle1 = dom.findOne('#dropdownToggle1');
                 UI.Dropdown.init(dropdownToggle1, { duration: 200 }).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const dropdownToggle1 = dom.findOne('#dropdownToggle1');
@@ -1315,7 +1520,9 @@ describe('dropdown', function() {
                 dom.setDataset(dropdownToggle1, 'uiDuration', 200);
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const dropdownToggle1 = dom.findOne('#dropdownToggle1');
@@ -1333,9 +1540,11 @@ describe('dropdown', function() {
             await exec(_ => {
                 dom.query('#dropdownToggle1')
                     .dropdown({ duration: 200 })
-                    .dropdown('show');
+                    .show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#dropdown1'));
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.query('#dropdownToggle1').dropdown('hide');

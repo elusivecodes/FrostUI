@@ -50,9 +50,54 @@ describe('Alert', function() {
             );
         });
 
+        it('creates multiple alerts (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('.alert').alert();
+                    return dom.find('.alert').every(node =>
+                        dom.getData(node, 'alert') instanceof UI.Alert
+                    );
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#dispose', function() {
+
+        it('removes the alert', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const alert1 = dom.findOne('#alert1');
+                    UI.Alert.init(alert1).dispose();
+                    return dom.hasData(alert1, 'alert');
+                }),
+                false
+            );
+        });
+
+        it('removes the alert (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#alert1').alert('dispose');
+                    return dom.hasData('#alert1', 'alert');
+                }),
+                false
+            );
+        });
+
+        it('removes multiple alerts (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('.alert').alert('dispose');
+                    return dom.find('.alert').some(node =>
+                        dom.hasData(node, 'alert')
+                    );
+                }),
+                false
+            );
+        });
 
         it('clears alert memory', async function() {
             assert.strictEqual(
@@ -70,17 +115,6 @@ describe('Alert', function() {
                     return true;
                 }),
                 true
-            );
-        });
-
-        it('removes the alert', async function() {
-            assert.strictEqual(
-                await exec(_ => {
-                    const alert1 = dom.findOne('#alert1');
-                    UI.Alert.init(alert1).dispose();
-                    return dom.hasData(alert1, 'alert');
-                }),
-                false
             );
         });
 
@@ -162,6 +196,17 @@ describe('Alert', function() {
             });
         });
 
+        it('closes multiple alerts (query)', async function() {
+            await exec(_ => {
+                dom.query('.alert').alert('close');
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    ''
+                );
+            });
+        });
+
         it('removes the alert after closing', async function() {
             await exec(_ => {
                 const alert1 = dom.findOne('#alert1');
@@ -177,10 +222,10 @@ describe('Alert', function() {
         it('can be called multiple times', async function() {
             await exec(async _ => {
                 const alert1 = dom.findOne('#alert1');
-                const alert = UI.Alert.init(alert1);
-                alert.close();
-                alert.close();
-                alert.close();
+                UI.Alert.init(alert1)
+                    .close()
+                    .close()
+                    .close();
             });
         });
 
@@ -298,7 +343,7 @@ describe('Alert', function() {
             await exec(_ => {
                 dom.query('#alert1')
                     .alert({ duration: 200 })
-                    .alert('close');
+                    .close();
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.hasAnimation('#alert1')),

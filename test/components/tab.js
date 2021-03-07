@@ -15,6 +15,14 @@ describe('Tab', function() {
                 '<div>' +
                 '<div class="active" id="tab1"></div>' +
                 '<div id="tab2"></div>' +
+                '</div>' +
+                '<div>' +
+                '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
+                '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                '</div>' +
+                '<div>' +
+                '<div class="active" id="tab3"></div>' +
+                '<div id="tab4"></div>' +
                 '</div>'
             );
         });
@@ -52,9 +60,54 @@ describe('Tab', function() {
             );
         });
 
+        it('creates multiple tabs (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('a').tab();
+                    return dom.find('a').every(node =>
+                        dom.getData(node, 'tab') instanceof UI.Tab
+                    );
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#dispose', function() {
+
+        it('removes the tab', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const tabToggle1 = dom.findOne('#tabToggle1');
+                    UI.Tab.init(tabToggle1).dispose();
+                    return dom.hasData(tabToggle1, 'tab');
+                }),
+                false
+            );
+        });
+
+        it('removes the tab (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#tabToggle1').tab('dispose');
+                    return dom.hasData('#tabToggle1', 'tab');
+                }),
+                false
+            );
+        });
+
+        it('removes multiple tabs (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('a').tab('dispose');
+                    return dom.find('a').some(node =>
+                        dom.hasData(node, 'tab')
+                    );
+                }),
+                false
+            );
+        });
 
         it('clears tab memory', async function() {
             assert.strictEqual(
@@ -72,17 +125,6 @@ describe('Tab', function() {
                     return true;
                 }),
                 true
-            );
-        });
-
-        it('removes the tab', async function() {
-            assert.strictEqual(
-                await exec(_ => {
-                    const tabToggle1 = dom.findOne('#tabToggle1');
-                    UI.Tab.init(tabToggle1).dispose();
-                    return dom.hasData(tabToggle1, 'tab');
-                }),
-                false
             );
         });
 
@@ -128,6 +170,14 @@ describe('Tab', function() {
                     '<div>' +
                     '<div class="" id="tab1" style=""></div>' +
                     '<div id="tab2"></div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
+                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '</div>' +
+                    '<div>' +
+                    '<div class="active" id="tab3"></div>' +
+                    '<div id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -151,6 +201,40 @@ describe('Tab', function() {
                     '<div>' +
                     '<div class="" id="tab1" style=""></div>' +
                     '<div id="tab2"></div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
+                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '</div>' +
+                    '<div>' +
+                    '<div class="active" id="tab3"></div>' +
+                    '<div id="tab4"></div>' +
+                    '</div>'
+                );
+            });
+        });
+
+        it('hides multiple tabs (query)', async function() {
+            await exec(_ => {
+                dom.query('#tabToggle1, #tabToggle3').tab('hide');
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div>' +
+                    '<a href="#tab1" class="" id="tabToggle1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab"></a>' +
+                    '</div>' +
+                    '<div>' +
+                    '<div class="" id="tab1" style=""></div>' +
+                    '<div id="tab2"></div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<a href="#tab3" class="" id="tabToggle3" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '</div>' +
+                    '<div>' +
+                    '<div class="" id="tab3" style=""></div>' +
+                    '<div id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -171,10 +255,10 @@ describe('Tab', function() {
         it('can be called multiple times', async function() {
             await exec(async _ => {
                 const tabToggle1 = dom.findOne('#tabToggle1');
-                const tab = UI.Tab.init(tabToggle1);
-                tab.hide();
-                tab.hide();
-                tab.hide();
+                UI.Tab.init(tabToggle1)
+                    .hide()
+                    .hide()
+                    .hide();
             });
         });
 
@@ -213,6 +297,14 @@ describe('Tab', function() {
                     '<div>' +
                     '<div class="" id="tab1" style=""></div>' +
                     '<div id="tab2" class="active" style=""></div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
+                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '</div>' +
+                    '<div>' +
+                    '<div class="active" id="tab3"></div>' +
+                    '<div id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -241,6 +333,14 @@ describe('Tab', function() {
                     '<div>' +
                     '<div class="" id="tab1" style=""></div>' +
                     '<div id="tab2" class="active" style=""></div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
+                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '</div>' +
+                    '<div>' +
+                    '<div class="active" id="tab3"></div>' +
+                    '<div id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -269,6 +369,40 @@ describe('Tab', function() {
                     '<div>' +
                     '<div class="" id="tab1" style=""></div>' +
                     '<div id="tab2" class="active" style=""></div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
+                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '</div>' +
+                    '<div>' +
+                    '<div class="active" id="tab3"></div>' +
+                    '<div id="tab4"></div>' +
+                    '</div>'
+                );
+            });
+        });
+
+        it('shows multiple tabs (query)', async function() {
+            await exec(_ => {
+                dom.query('#tabToggle2, #tabToggle4').tab('show');
+            }).then(waitFor(250)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div>' +
+                    '<a href="#tab1" class="" id="tabToggle1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab" class="active" aria-selected="true"></a>' +
+                    '</div>' +
+                    '<div>' +
+                    '<div class="" id="tab1" style=""></div>' +
+                    '<div id="tab2" class="active" style=""></div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<a href="#tab3" class="" id="tabToggle3" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab" class="active" aria-selected="true"></a>' +
+                    '</div>' +
+                    '<div>' +
+                    '<div class="" id="tab3" style=""></div>' +
+                    '<div id="tab4" class="active" style=""></div>' +
                     '</div>'
                 );
             });
@@ -277,10 +411,10 @@ describe('Tab', function() {
         it('can be called multiple times', async function() {
             await exec(async _ => {
                 const tabToggle2 = dom.findOne('#tabToggle2');
-                const tab = UI.Tab.init(tabToggle2);
-                tab.show();
-                tab.show();
-                tab.show();
+                UI.Tab.init(tabToggle2)
+                    .show()
+                    .show()
+                    .show();
             });
         });
 
@@ -313,6 +447,14 @@ describe('Tab', function() {
                 '<div>' +
                 '<div class="active" id="tab1"></div>' +
                 '<div id="tab2"></div>' +
+                '</div>' +
+                '<div>' +
+                '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
+                '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                '</div>' +
+                '<div>' +
+                '<div class="active" id="tab3"></div>' +
+                '<div id="tab4"></div>' +
                 '</div>'
             );
         });
@@ -335,6 +477,14 @@ describe('Tab', function() {
                 '<div>' +
                 '<div class="" id="tab1" style=""></div>' +
                 '<div id="tab2"></div>' +
+                '</div>' +
+                '<div>' +
+                '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
+                '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                '</div>' +
+                '<div>' +
+                '<div class="active" id="tab3"></div>' +
+                '<div id="tab4"></div>' +
                 '</div>'
             );
         });
@@ -357,6 +507,14 @@ describe('Tab', function() {
                 '<div>' +
                 '<div class="active" id="tab1"></div>' +
                 '<div id="tab2"></div>' +
+                '</div>' +
+                '<div>' +
+                '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
+                '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                '</div>' +
+                '<div>' +
+                '<div class="active" id="tab3"></div>' +
+                '<div id="tab4"></div>' +
                 '</div>'
             );
         });
@@ -379,6 +537,14 @@ describe('Tab', function() {
                 '<div>' +
                 '<div class="" id="tab1" style=""></div>' +
                 '<div id="tab2" class="active" style=""></div>' +
+                '</div>' +
+                '<div>' +
+                '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
+                '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                '</div>' +
+                '<div>' +
+                '<div class="active" id="tab3"></div>' +
+                '<div id="tab4"></div>' +
                 '</div>'
             );
         });
@@ -402,6 +568,14 @@ describe('Tab', function() {
                 '<div>' +
                 '<div class="active" id="tab1"></div>' +
                 '<div id="tab2"></div>' +
+                '</div>' +
+                '<div>' +
+                '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
+                '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                '</div>' +
+                '<div>' +
+                '<div class="active" id="tab3"></div>' +
+                '<div id="tab4"></div>' +
                 '</div>'
             );
         });
@@ -425,6 +599,14 @@ describe('Tab', function() {
                 '<div>' +
                 '<div class="" id="tab1" style=""></div>' +
                 '<div id="tab2"></div>' +
+                '</div>' +
+                '<div>' +
+                '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
+                '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                '</div>' +
+                '<div>' +
+                '<div class="active" id="tab3"></div>' +
+                '<div id="tab4"></div>' +
                 '</div>'
             );
         });
@@ -446,6 +628,14 @@ describe('Tab', function() {
                     '<div>' +
                     '<div class="active" id="tab1"></div>' +
                     '<div id="tab2"></div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
+                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '</div>' +
+                    '<div>' +
+                    '<div class="active" id="tab3"></div>' +
+                    '<div id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -468,6 +658,14 @@ describe('Tab', function() {
                     '<div>' +
                     '<div class="active" id="tab1"></div>' +
                     '<div id="tab2"></div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
+                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '</div>' +
+                    '<div>' +
+                    '<div class="active" id="tab3"></div>' +
+                    '<div id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -490,6 +688,14 @@ describe('Tab', function() {
                     '<div>' +
                     '<div class="active" id="tab1"></div>' +
                     '<div id="tab2"></div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
+                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '</div>' +
+                    '<div>' +
+                    '<div class="active" id="tab3"></div>' +
+                    '<div id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -512,6 +718,14 @@ describe('Tab', function() {
                     '<div>' +
                     '<div class="active" id="tab1"></div>' +
                     '<div id="tab2"></div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
+                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '</div>' +
+                    '<div>' +
+                    '<div class="active" id="tab3"></div>' +
+                    '<div id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -535,6 +749,14 @@ describe('Tab', function() {
                     '<div>' +
                     '<div class="active" id="tab1"></div>' +
                     '<div id="tab2"></div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
+                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '</div>' +
+                    '<div>' +
+                    '<div class="active" id="tab3"></div>' +
+                    '<div id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -558,6 +780,14 @@ describe('Tab', function() {
                     '<div>' +
                     '<div class="active" id="tab1"></div>' +
                     '<div id="tab2"></div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
+                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '</div>' +
+                    '<div>' +
+                    '<div class="active" id="tab3"></div>' +
+                    '<div id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -596,7 +826,7 @@ describe('Tab', function() {
             await exec(_ => {
                 dom.query('#tabToggle1')
                     .tab({ duration: 200 })
-                    .tab('hide');
+                    .hide();
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.hasAnimation('#tab1')),
@@ -644,7 +874,7 @@ describe('Tab', function() {
             await exec(_ => {
                 dom.query('#tabToggle2')
                     .tab({ duration: 200 })
-                    .tab('show');
+                    .show();
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.hasAnimation('#tab1')),

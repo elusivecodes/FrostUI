@@ -1,8 +1,8 @@
 .mix-table(@color) {
     &,
     & > * {
-        .bg-lightest(@color);
-        .text-darker(@color);
+        background-color: tint(@color, @bg-lighter);
+        color: shade(@color, @text-darker);
     }
 
     .table-hover > :not(caption) > &:hover > * {
@@ -41,7 +41,7 @@
 }
 
 .table-striped > tbody > tr:nth-child(odd) {
-    .bg-fade(@dark);
+    background-color: fade(@dark, @bg-fade);
 }
 
 .table-hover > tbody > tr:hover {
@@ -58,7 +58,7 @@
     background-color: @dark;
 
     &.table-striped > tbody > tr:nth-child(odd) {
-        .bg-fade(@white);
+        background-color: fade(@white, @bg-fade);
     }
 
     &.table-hover > tbody > tr:hover {
@@ -68,7 +68,7 @@
 
     .table-hover > tbody > tr&:hover {
         color: @white;
-        .bg-light(@dark);
+        background-color: tint(@dark, @bg-light);
     }
 
     > :not(caption) > * > * {

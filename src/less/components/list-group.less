@@ -1,16 +1,16 @@
 .mix-list-group-item(@color) {
-    .bg-lightest(@color);
-    .text-dark(@color);
+    background-color: tint(@color, @bg-lighter);
+    color: shade(@color, @text-dark);
 
     &.list-group-item-action {
         &:hover {
-            .bg-lighter(@color);
-            .text-darker(@color);
+            background-color: shade(tint(@color, @bg-lighter), @bg-dark / 2);
+            color: shade(@color, @text-darker);
         }
 
         &:focus {
-            background-color: tint(@color, 70%);
-            .text-darker(@color);
+            background-color: tint(@color, @bg-lightest);
+            color: shade(@color, @text-darker);
         }
     }
 }
@@ -82,17 +82,17 @@
     }
 
     &:hover {
-        .bg-fade(@dark);
+        background-color: fade(@dark, @bg-fade);
     }
 
     &:focus {
-        .bg-fade(@white);
+        background-color: fade(@white, @bg-fade);
         outline: 0;
         box-shadow: @shadow-sm;
     }
 
     &.active:focus {
-        .bg-light(@link);
+        background-color: tint(@link, @bg-light);
     }
 }
 

@@ -50,9 +50,54 @@ describe('Toast', function() {
             );
         });
 
+        it('creates multiple toasts (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('.toast').toast();
+                    return dom.find('.toast').every(node =>
+                        dom.getData(node, 'toast') instanceof UI.Toast
+                    );
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#dispose', function() {
+
+        it('removes the toast', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const toast1 = dom.findOne('#toast1');
+                    UI.Toast.init(toast1).dispose();
+                    return dom.hasData(toast1, 'toast');
+                }),
+                false
+            );
+        });
+
+        it('removes the toast (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#toast1').toast('dispose');
+                    return dom.hasData('#toast1', 'toast');
+                }),
+                false
+            );
+        });
+
+        it('removes multiple toasts (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('.toast').toast('dispose');
+                    return dom.find('.toast').some(node =>
+                        dom.hasData(node, 'toast')
+                    );
+                }),
+                false
+            );
+        });
 
         it('clears toast memory', async function() {
             assert.strictEqual(
@@ -70,17 +115,6 @@ describe('Toast', function() {
                     return true;
                 }),
                 true
-            );
-        });
-
-        it('removes the toast', async function() {
-            assert.strictEqual(
-                await exec(_ => {
-                    const toast1 = dom.findOne('#toast1');
-                    UI.Toast.init(toast1).dispose();
-                    return dom.hasData(toast1, 'toast');
-                }),
-                false
             );
         });
 
@@ -171,6 +205,22 @@ describe('Toast', function() {
             });
         });
 
+        it('hides multiple toasts (query)', async function() {
+            await exec(_ => {
+                dom.query('.toast').toast('hide');
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div class="toast" id="toast1" style="display: none !important;">' +
+                    '<button id="button1" data-ui-dismiss="toast"></button>' +
+                    '</div>' +
+                    '<div class="toast" id="toast2" style="display: none !important;">' +
+                    '<button id="button2" data-ui-dismiss="toast"></button>' +
+                    '</div>'
+                );
+            });
+        });
+
         it('does not remove the toast after hiding', async function() {
             await exec(_ => {
                 const toast1 = dom.findOne('#toast1');
@@ -186,19 +236,21 @@ describe('Toast', function() {
         it('can be called multiple times', async function() {
             await exec(async _ => {
                 const toast1 = dom.findOne('#toast1');
-                const toast = UI.Toast.init(toast1);
-                toast.hide();
-                toast.hide();
-                toast.hide();
+                UI.Toast.init(toast1)
+                    .hide()
+                    .hide()
+                    .hide();
             });
         });
 
         it('can be called on hidden toast', async function() {
             await exec(async _ => {
                 const toast1 = dom.findOne('#toast1');
-                UI.Toast.init(toast1).show();
+                UI.Toast.init(toast1).hide();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#toast1'));
+                await exec(_ => {
+                    dom.stop('#toast1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(async _ => {
                     const toast1 = dom.findOne('#toast1');
@@ -216,7 +268,9 @@ describe('Toast', function() {
                 const toast1 = dom.findOne('#toast1');
                 UI.Toast.init(toast1).hide();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#toast1'));
+                await exec(_ => {
+                    dom.stop('#toast1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const toast1 = dom.findOne('#toast1');
@@ -242,10 +296,11 @@ describe('Toast', function() {
 
         it('shows the toast (query)', async function() {
             await exec(_ => {
-                const toast1 = dom.findOne('#toast1');
-                UI.Toast.init(toast1).hide();
+                dom.query('#toast1').toast('hide');
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#toast1'));
+                await exec(_ => {
+                    dom.stop('#toast1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.query('#toast1').toast('show');
@@ -268,6 +323,36 @@ describe('Toast', function() {
             });
         });
 
+        it('shows multiple toasts (query)', async function() {
+            await exec(_ => {
+                dom.query('.toast').toast('hide');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#toast1');
+                    dom.stop('#toast2');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.query('.toast').toast('show');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#toast1')),
+                    true
+                );
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div class="toast show" id="toast1" style="">' +
+                    '<button id="button1" data-ui-dismiss="toast"></button>' +
+                    '</div>' +
+                    '<div class="toast show" id="toast2" style="">' +
+                    '<button id="button2" data-ui-dismiss="toast"></button>' +
+                    '</div>'
+                );
+            });
+        });
+
         it('can be called multiple times', async function() {
             await exec(_ => {
                 const toast1 = dom.findOne('#toast1');
@@ -277,10 +362,10 @@ describe('Toast', function() {
             }).then(waitFor(50)).then(async _ => {
                 await exec(async _ => {
                     const toast1 = dom.findOne('#toast1');
-                    const toast = UI.Toast.init(toast1);
-                    toast.show();
-                    toast.show();
-                    toast.show();
+                    UI.Toast.init(toast1)
+                        .show()
+                        .show()
+                        .show();
                 });
             });
         });
@@ -341,7 +426,9 @@ describe('Toast', function() {
                 const toast1 = dom.findOne('#toast1');
                 UI.Toast.init(toast1).hide();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#toast1'));
+                await exec(_ => {
+                    dom.stop('#toast1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(async _ => {
@@ -368,7 +455,9 @@ describe('Toast', function() {
                 const toast1 = dom.findOne('#toast1');
                 UI.Toast.init(toast1).hide();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#toast1'));
+                await exec(_ => {
+                    dom.stop('#toast1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(async _ => {
@@ -435,7 +524,9 @@ describe('Toast', function() {
                 const toast1 = dom.findOne('#toast1');
                 UI.Toast.init(toast1).hide();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#toast1'));
+                await exec(_ => {
+                    dom.stop('#toast1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(async _ => {
                     const toast1 = dom.findOne('#toast1');
@@ -462,7 +553,9 @@ describe('Toast', function() {
                 const toast1 = dom.findOne('#toast1');
                 UI.Toast.init(toast1).hide();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#toast1'));
+                await exec(_ => {
+                    dom.stop('#toast1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(async _ => {
                     const toast1 = dom.findOne('#toast1');
@@ -517,7 +610,7 @@ describe('Toast', function() {
             await exec(_ => {
                 dom.query('#toast1')
                     .toast({ duration: 200 })
-                    .toast('hide');
+                    .hide();
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.hasAnimation('#toast1')),
@@ -531,7 +624,9 @@ describe('Toast', function() {
                 const toast1 = dom.findOne('#toast1');
                 UI.Toast.init(toast1, { duration: 200 }).hide();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#toast1'));
+                await exec(_ => {
+                    dom.stop('#toast1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const toast1 = dom.findOne('#toast1');
@@ -551,7 +646,9 @@ describe('Toast', function() {
                 dom.setDataset(toast1, 'uiDuration', 200);
                 UI.Toast.init(toast1).hide();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#toast1'));
+                await exec(_ => {
+                    dom.stop('#toast1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const toast1 = dom.findOne('#toast1');
@@ -569,8 +666,8 @@ describe('Toast', function() {
             await exec(_ => {
                 dom.query('#toast1')
                     .toast({ duration: 200 })
-                    .hide()
-                    .stop();
+                    .hide();
+                dom.stop('#toast1');
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.query('#toast1').toast('show');

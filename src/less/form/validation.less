@@ -3,18 +3,18 @@
     .input-filled {
 
         &:hover {
-            background-color: @form-success-lighter;
+            background-color: tint(@form-success, @form-lighter);
         }
 
         &:focus,
         &.focus {
-            background-color: @form-success-light;
+            background-color: tint(@form-success, @form-light);
         }
     }
 
     .input-filled,
     .input-group-filled .input-group-text {
-        background-color: @form-success-lightest;
+        background-color: tint(@form-success, @form-lightest);
     }
 
     .input-filled,
@@ -32,7 +32,7 @@
 
             &:focus,
             &.focus {
-                .bg-light(@form-success);
+                background-color: tint(@form-success, @bg-light);
             }
         }
     
@@ -47,18 +47,18 @@
     .input-filled {
 
         &:hover {
-            background-color: @form-error-lighter;
+            background-color: tint(@form-error, @form-lighter);
         }
 
         &:focus,
         &.focus {
-            background-color: @form-error-light;
+            background-color: tint(@form-error, @form-light);
         }
     }
 
     .input-filled,
     .input-group-filled .input-group-text {
-        background-color: @form-error-lightest;
+        background-color: tint(@form-error, @form-lightest);
     }
 
     .input-filled,
@@ -76,7 +76,7 @@
 
             &:focus,
             &.focus {
-                .bg-light(@form-error);
+                background-color: tint(@form-error, @bg-light);
             }
         }
     

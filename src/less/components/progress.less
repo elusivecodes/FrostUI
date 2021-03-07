@@ -31,8 +31,8 @@
 .progress-bar-striped {
     background-image: linear-gradient(-45deg,
         transparent 50%,
-        rgba(255,255,255,.25) 50%,
-        rgba(255,255,255,.25) 70%,
+        @border-light-color 50%,
+        @border-light-color 70%,
         transparent 70%
     );
     background-size: (@spacing * 2) @spacing;
@@ -46,11 +46,11 @@
     align-items: flex-end;
     flex-direction: column;
     width: @spacing;
-    height: 200px;
+    height: @progress-vertical-height;
 
     .progress-bar {
         width: 100%;
-        transition: height .6s ease;
+        transition: height @animation-time @transition-type;
 
         &:first-child {
             margin-top: auto;

@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+const assert = require('assert');
 const server = require('../server/server.js');
 const port = 3001;
 
@@ -26,6 +27,34 @@ before(async function() {
     await page.goto('http://localhost:3001', {
         waitUntil: 'domcontentloaded'
     });
+
+    assert.strictEqual(
+        await page.evaluate(_ => {
+            return UI.Carousel.defaults.interval;
+        }),
+        5000
+    );
+
+    assert.strictEqual(
+        await page.evaluate(_ => {
+            return UI.Carousel.defaults.transition;
+        }),
+        500
+    );
+
+    assert.strictEqual(
+        await page.evaluate(_ => {
+            return UI.Collapse.defaults.duration;
+        }),
+        250
+    );
+
+    assert.strictEqual(
+        await page.evaluate(_ => {
+            return UI.Toast.defaults.delay;
+        }),
+        5000
+    );
 
     await page.evaluate(_ => {
         Animation.useTimeout = true;

@@ -23,12 +23,20 @@ class Tooltip extends BaseComponent {
         if (this._settings.enable) {
             this.enable();
         }
+
+        this.refresh();
     }
 
     /**
      * Dispose the Tooltip.
      */
     dispose() {
+        if (dom.hasDataset(this._node, 'uiOriginalTitle')) {
+            const title = dom.getDataset(this._node, 'uiOriginalTitle');
+            dom.setAttribute(this._node, 'title', title);
+            dom.removeDataset(this._node, 'uiOriginalTitle');
+        }
+
         if (this._popper) {
             this._popper.dispose();
             this._popper = null;
@@ -126,13 +134,19 @@ class Tooltip extends BaseComponent {
      * @returns {Tooltip} The Tooltip.
      */
     refresh() {
-        let title;
+        if (dom.hasAttribute(this._node, 'title')) {
+            const originalTitle = dom.getAttribute(this._node, 'title')
+            dom.setDataset(this._node, 'uiOriginalTitle', originalTitle);
+            dom.removeAttribute(this._node, 'title');
+        }
+
+        let title = '';
         if (dom.hasDataset(this._node, 'uiTitle')) {
             title = dom.getDataset(this._node, 'uiTitle');
         } else if (this._settings.title) {
             title = this._settings.title;
-        } else if (dom.hasAttribute(this._node, 'title')) {
-            title = dom.getAttribute(this._node, 'title');
+        } else if (dom.hasDataset(this._node, 'uiOriginalTitle')) {
+            title = dom.getDataset(this._node, 'uiOriginalTitle', title);
         }
 
         const method = this._settings.html ? 'setHTML' : 'setText';
@@ -144,7 +158,7 @@ class Tooltip extends BaseComponent {
                 title
         );
 
-        return this;
+        return this.update();
     }
 
     /**

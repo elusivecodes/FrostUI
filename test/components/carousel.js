@@ -62,9 +62,54 @@ describe('Carousel', function() {
             );
         });
 
+        it('creates multiple carousels (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('.carousel').carousel();
+                    return dom.find('.carousel').every(node =>
+                        dom.getData(node, 'carousel') instanceof UI.Carousel
+                    );
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#dispose', function() {
+
+        it('removes the carousel', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const carousel1 = dom.findOne('#carousel1');
+                    UI.Carousel.init(carousel1).dispose();
+                    return dom.hasData(carousel1, 'carousel');
+                }),
+                false
+            );
+        });
+
+        it('removes the carousel (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#carousel1').carousel('dispose');
+                    return dom.hasData('#carousel1', 'carousel');
+                }),
+                false
+            );
+        });
+
+        it('removes multiple carousels (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('.carousel').carousel('dispose');
+                    return dom.find('.carousel').some(node =>
+                        dom.hasData(node, 'carousel')
+                    );
+                }),
+                false
+            );
+        });
 
         it('clears carousel memory', async function() {
             assert.strictEqual(
@@ -82,17 +127,6 @@ describe('Carousel', function() {
                     return true;
                 }),
                 true
-            );
-        });
-
-        it('removes the carousel', async function() {
-            assert.strictEqual(
-                await exec(_ => {
-                    const carousel1 = dom.findOne('#carousel1');
-                    UI.Carousel.init(carousel1).dispose();
-                    return dom.hasData(carousel1, 'carousel');
-                }),
-                false
             );
         });
 
@@ -206,13 +240,51 @@ describe('Carousel', function() {
             });
         });
 
+        it('shows the next item for multiple carousels (query)', async function() {
+            await exec(_ => {
+                dom.query('.carousel').carousel('cycle');
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div class="carousel" id="carousel1">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
+                    '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item" id="carousel1Item1" style=""></div>' +
+                    '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
+                    '<div class="carousel-item" id="carousel1Item3"></div>' +
+                    '</div>' +
+                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
+                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '</div>' +
+                    '<div class="carousel" id="carousel2">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li id="carousel2Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li id="carousel2Slide1" data-ui-slide-to="1" class="active"></li>' +
+                    '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item" id="carousel2Item1" style=""></div>' +
+                    '<div class="carousel-item active" id="carousel2Item2" style=""></div>' +
+                    '<div class="carousel-item" id="carousel2Item3"></div>' +
+                    '</div>' +
+                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
+                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '</div>'
+                )
+            });
+        });
+
         it('can be called multiple times', async function() {
             await exec(_ => {
                 const carousel1 = dom.findOne('#carousel1');
-                const carousel = UI.Carousel.init(carousel1);
-                carousel.cycle();
-                carousel.cycle();
-                carousel.cycle();
+                UI.Carousel.init(carousel1)
+                    .cycle()
+                    .cycle()
+                    .cycle();
             });
         });
 
@@ -403,6 +475,44 @@ describe('Carousel', function() {
             });
         });
 
+        it('shows a specified item for multiple carousels (query)', async function() {
+            await exec(_ => {
+                dom.query('.carousel').carousel('show', 2);
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div class="carousel" id="carousel1">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item" id="carousel1Item1" style=""></div>' +
+                    '<div class="carousel-item" id="carousel1Item2"></div>' +
+                    '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
+                    '</div>' +
+                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
+                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '</div>' +
+                    '<div class="carousel" id="carousel2">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li id="carousel2Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel2Slide2" data-ui-slide-to="2" class="active"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item" id="carousel2Item1" style=""></div>' +
+                    '<div class="carousel-item" id="carousel2Item2"></div>' +
+                    '<div class="carousel-item active" id="carousel2Item3" style=""></div>' +
+                    '</div>' +
+                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
+                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '</div>'
+                )
+            });
+        });
+
         it('can be called on current item', async function() {
             await exec(_ => {
                 const carousel1 = dom.findOne('#carousel1');
@@ -494,10 +604,10 @@ describe('Carousel', function() {
         it('can be called multiple times', async function() {
             await exec(_ => {
                 const carousel1 = dom.findOne('#carousel1');
-                const carousel = UI.Carousel.init(carousel1);
-                carousel.show(1);
-                carousel.show(1);
-                carousel.show(1);
+                UI.Carousel.init(carousel1)
+                    .show(1)
+                    .show(1)
+                    .show(1);
             });
         });
 
@@ -592,6 +702,44 @@ describe('Carousel', function() {
             });
         });
 
+        it('slides forwards for multiple carousels (query)', async function() {
+            await exec(_ => {
+                dom.query('.carousel').carousel('slide', 1);
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div class="carousel" id="carousel1">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
+                    '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item" id="carousel1Item1" style=""></div>' +
+                    '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
+                    '<div class="carousel-item" id="carousel1Item3"></div>' +
+                    '</div>' +
+                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
+                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '</div>' +
+                    '<div class="carousel" id="carousel2">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li id="carousel2Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li id="carousel2Slide1" data-ui-slide-to="1" class="active"></li>' +
+                    '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item" id="carousel2Item1" style=""></div>' +
+                    '<div class="carousel-item active" id="carousel2Item2" style=""></div>' +
+                    '<div class="carousel-item" id="carousel2Item3"></div>' +
+                    '</div>' +
+                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
+                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '</div>'
+                )
+            });
+        });
+
         it('slides backwards', async function() {
             await exec(_ => {
                 const carousel1 = dom.findOne('#carousel1');
@@ -647,8 +795,7 @@ describe('Carousel', function() {
 
         it('slides backwards (query)', async function() {
             await exec(_ => {
-                const carousel1 = dom.findOne('#carousel1');
-                UI.Carousel.init(carousel1).show(2);
+                dom.query('#carousel1').carousel('show', 2);
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.stop('#carousel1Item3');
@@ -697,13 +844,60 @@ describe('Carousel', function() {
             });
         });
 
+        it('slides backwards for multiple carousels (query)', async function() {
+            await exec(_ => {
+                dom.query('.carousel').carousel('show', 2);
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#carousel1Item3');
+                    dom.stop('#carousel2Item3');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.query('.carousel').carousel('slide', -1);
+                });
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div class="carousel" id="carousel1">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
+                    '<li id="carousel1Slide2" data-ui-slide-to="2" class=""></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item" id="carousel1Item1" style=""></div>' +
+                    '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
+                    '<div class="carousel-item" id="carousel1Item3" style=""></div>' +
+                    '</div>' +
+                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
+                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '</div>' +
+                    '<div class="carousel" id="carousel2">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li id="carousel2Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li id="carousel2Slide1" data-ui-slide-to="1" class="active"></li>' +
+                    '<li id="carousel2Slide2" data-ui-slide-to="2" class=""></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item" id="carousel2Item1" style=""></div>' +
+                    '<div class="carousel-item active" id="carousel2Item2" style=""></div>' +
+                    '<div class="carousel-item" id="carousel2Item3" style=""></div>' +
+                    '</div>' +
+                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
+                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '</div>'
+                )
+            });
+        });
+
         it('can be called multiple times', async function() {
             await exec(_ => {
                 const carousel1 = dom.findOne('#carousel1');
-                const carousel = UI.Carousel.init(carousel1);
-                carousel.slide(1);
-                carousel.slide(1);
-                carousel.slide(1);
+                UI.Carousel.init(carousel1)
+                    .slide(1)
+                    .slide(1)
+                    .slide(1);
             });
         });
 
@@ -938,13 +1132,51 @@ describe('Carousel', function() {
             });
         });
 
+        it('shows the next item for multiple carousels (query)', async function() {
+            await exec(_ => {
+                dom.query('.carousel').carousel('next');
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div class="carousel" id="carousel1">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
+                    '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item" id="carousel1Item1" style=""></div>' +
+                    '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
+                    '<div class="carousel-item" id="carousel1Item3"></div>' +
+                    '</div>' +
+                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
+                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '</div>' +
+                    '<div class="carousel" id="carousel2">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li id="carousel2Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li id="carousel2Slide1" data-ui-slide-to="1" class="active"></li>' +
+                    '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item" id="carousel2Item1" style=""></div>' +
+                    '<div class="carousel-item active" id="carousel2Item2" style=""></div>' +
+                    '<div class="carousel-item" id="carousel2Item3"></div>' +
+                    '</div>' +
+                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
+                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '</div>'
+                )
+            });
+        });
+
         it('can be called multiple times', async function() {
             await exec(_ => {
                 const carousel1 = dom.findOne('#carousel1');
-                const carousel = UI.Carousel.init(carousel1);
-                carousel.next();
-                carousel.next();
-                carousel.next();
+                UI.Carousel.init(carousel1)
+                    .next()
+                    .next()
+                    .next();
             });
         });
 
@@ -1059,8 +1291,7 @@ describe('Carousel', function() {
 
         it('shows the previous item (query)', async function() {
             await exec(_ => {
-                const carousel1 = dom.findOne('#carousel1');
-                UI.Carousel.init(carousel1).show(2);
+                dom.query('#carousel1').carousel('show', 2);
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.stop('#carousel1Item3');
@@ -1109,13 +1340,60 @@ describe('Carousel', function() {
             });
         });
 
+        it('shows the previous item for multiple carousels (query)', async function() {
+            await exec(_ => {
+                dom.query('.carousel').carousel('show', 2);
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#carousel1Item3');
+                    dom.stop('#carousel2Item3');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.query('.carousel').carousel('prev');
+                });
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div class="carousel" id="carousel1">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
+                    '<li id="carousel1Slide2" data-ui-slide-to="2" class=""></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item" id="carousel1Item1" style=""></div>' +
+                    '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
+                    '<div class="carousel-item" id="carousel1Item3" style=""></div>' +
+                    '</div>' +
+                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
+                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '</div>' +
+                    '<div class="carousel" id="carousel2">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li id="carousel2Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li id="carousel2Slide1" data-ui-slide-to="1" class="active"></li>' +
+                    '<li id="carousel2Slide2" data-ui-slide-to="2" class=""></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item" id="carousel2Item1" style=""></div>' +
+                    '<div class="carousel-item active" id="carousel2Item2" style=""></div>' +
+                    '<div class="carousel-item" id="carousel2Item3" style=""></div>' +
+                    '</div>' +
+                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
+                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '</div>'
+                )
+            });
+        });
+
         it('can be called multiple times', async function() {
             await exec(_ => {
                 const carousel1 = dom.findOne('#carousel1');
-                const carousel = UI.Carousel.init(carousel1);
-                carousel.prev();
-                carousel.prev();
-                carousel.prev();
+                UI.Carousel.init(carousel1)
+                    .prev()
+                    .prev()
+                    .prev();
             });
         });
 
@@ -1724,7 +2002,7 @@ describe('Carousel', function() {
             await exec(_ => {
                 dom.query('#carousel1')
                     .carousel({ interval: 300 })
-                    .carousel('cycle');
+                    .cycle();
             }).then(waitFor(450)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.hasAnimation('#carousel1Item3')),
@@ -1798,7 +2076,7 @@ describe('Carousel', function() {
             await exec(_ => {
                 dom.query('#carousel1')
                     .carousel({ transition: 200 })
-                    .carousel('cycle');
+                    .cycle();
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.hasAnimation('#carousel1Item2')),
@@ -2375,7 +2653,7 @@ describe('Carousel', function() {
             await exec(_ => {
                 dom.query('#carousel1')
                     .carousel({ pause: false })
-                    .carousel('cycle');
+                    .cycle();
             }).then(waitFor(200)).then(async _ => {
                 await exec(_ => {
                     dom.triggerEvent('#carousel1', 'mouseenter');
@@ -2701,7 +2979,7 @@ describe('Carousel', function() {
             await exec(_ => {
                 dom.query('#carousel1')
                     .carousel({ wrap: false })
-                    .carousel('show', 2);
+                    .show(2);
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.stop('#carousel1Item3');
@@ -2749,7 +3027,7 @@ describe('Carousel', function() {
             await exec(_ => {
                 dom.query('#carousel1')
                     .carousel({ wrap: false })
-                    .carousel('prev',);
+                    .prev();
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),

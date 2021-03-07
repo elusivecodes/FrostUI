@@ -36,9 +36,54 @@ describe('Tooltip', function() {
             );
         });
 
+        it('creates multiple tooltips (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('button').tooltip();
+                    return dom.find('button').every(node =>
+                        dom.getData(node, 'tooltip') instanceof UI.Tooltip
+                    );
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#dispose', function() {
+
+        it('removes the tooltip', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const tooltipToggle1 = dom.findOne('#tooltipToggle1');
+                    UI.Tooltip.init(tooltipToggle1).dispose();
+                    return dom.hasData(tooltipToggle1, 'tooltip');
+                }),
+                false
+            );
+        });
+
+        it('removes the tooltip (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#tooltipToggle1').tooltip('dispose');
+                    return dom.hasData('#tooltipToggle1', 'tooltip');
+                }),
+                false
+            );
+        });
+
+        it('removes multiple tooltips (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('button').tooltip('dispose');
+                    return dom.find('button').some(node =>
+                        dom.getData(node, 'tooltip') instanceof UI.Tooltip
+                    );
+                }),
+                false
+            );
+        });
 
         it('clears tooltip memory', async function() {
             assert.strictEqual(
@@ -59,17 +104,6 @@ describe('Tooltip', function() {
             );
         });
 
-        it('removes the tooltip', async function() {
-            assert.strictEqual(
-                await exec(_ => {
-                    const tooltipToggle1 = dom.findOne('#tooltipToggle1');
-                    UI.Tooltip.init(tooltipToggle1).dispose();
-                    return dom.hasData(tooltipToggle1, 'tooltip');
-                }),
-                false
-            );
-        });
-
         it('clears tooltip memory when node is removed', async function() {
             assert.strictEqual(
                 await exec(_ => {
@@ -86,6 +120,21 @@ describe('Tooltip', function() {
                     return true;
                 }),
                 true
+            );
+        });
+
+        it('restores the title attribute', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const tooltipToggle1 = dom.findOne('#tooltipToggle1');
+                    dom.setAttribute(tooltipToggle1, 'title', 'Test');
+                    const tooltip = UI.Tooltip.init(tooltipToggle1);
+                    tooltip.dispose();
+
+                    return dom.getHTML(document.body);
+                }),
+                '<button id="tooltipToggle1" title="Test"></button>' +
+                '<button id="tooltipToggle2"></button>'
             );
         });
 
@@ -130,13 +179,27 @@ describe('Tooltip', function() {
             });
         });
 
+        it('shows multiple tooltips (query)', async function() {
+            await exec(_ => {
+                dom.query('button').tooltip('show');
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="tooltipToggle1" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(26px, 11px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 0px; left: 0px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button id="tooltipToggle2" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(42px, 11px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 0px; left: 0px;"></div><div class="tooltip-inner"></div></div>'
+                );
+            });
+        });
+
         it('can be called multiple times', async function() {
             await exec(_ => {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
-                const tooltip = UI.Tooltip.init(tooltipToggle1);
-                tooltip.show();
-                tooltip.show();
-                tooltip.show();
+                UI.Tooltip.init(tooltipToggle1)
+                    .show()
+                    .show()
+                    .show();
             });
         });
 
@@ -145,7 +208,9 @@ describe('Tooltip', function() {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 UI.Tooltip.init(tooltipToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#tooltipToggle1 + .tooltip'));
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const tooltipToggle1 = dom.findOne('#tooltipToggle1');
@@ -163,7 +228,9 @@ describe('Tooltip', function() {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 UI.Tooltip.init(tooltipToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#tooltipToggle1 + .tooltip'));
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const tooltipToggle1 = dom.findOne('#tooltipToggle1');
@@ -187,7 +254,9 @@ describe('Tooltip', function() {
             await exec(_ => {
                 dom.query('#tooltipToggle1').tooltip('show');
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#tooltipToggle1 + .tooltip'));
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.query('#tooltipToggle1').tooltip('hide');
@@ -206,12 +275,35 @@ describe('Tooltip', function() {
             });
         });
 
+        it('hides multiple tooltips (query)', async function() {
+            await exec(_ => {
+                dom.query('button').tooltip('show');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                    dom.stop('#tooltipToggle2 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.query('button').tooltip('hide');
+                });
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="tooltipToggle1" data-ui-placement="right"></button>' +
+                    '<button id="tooltipToggle2" data-ui-placement="right"></button>'
+                );
+            });
+        });
+
         it('does not remove the tooltip after hiding', async function() {
             await exec(_ => {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 UI.Tooltip.init(tooltipToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#tooltipToggle1 + .tooltip'));
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const tooltipToggle1 = dom.findOne('#tooltipToggle1');
@@ -230,7 +322,9 @@ describe('Tooltip', function() {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 UI.Tooltip.init(tooltipToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#tooltipToggle1 + .tooltip'));
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const tooltipToggle1 = dom.findOne('#tooltipToggle1');
@@ -290,13 +384,27 @@ describe('Tooltip', function() {
             });
         });
 
+        it('shows multiple tooltips (query)', async function() {
+            await exec(_ => {
+                dom.query('button').tooltip('toggle');
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="tooltipToggle1" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(26px, 11px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 0px; left: 0px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button id="tooltipToggle2" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(42px, 11px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 0px; left: 0px;"></div><div class="tooltip-inner"></div></div>'
+                );
+            });
+        });
+
         it('can be called multiple times', async function() {
             await exec(_ => {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
-                const tooltip = UI.Tooltip.init(tooltipToggle1);
-                tooltip.toggle();
-                tooltip.toggle();
-                tooltip.toggle();
+                UI.Tooltip.init(tooltipToggle1)
+                    .toggle()
+                    .toggle()
+                    .toggle();
             });
         });
 
@@ -309,7 +417,9 @@ describe('Tooltip', function() {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 UI.Tooltip.init(tooltipToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#tooltipToggle1 + .tooltip'));
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const tooltipToggle1 = dom.findOne('#tooltipToggle1');
@@ -333,7 +443,9 @@ describe('Tooltip', function() {
             await exec(_ => {
                 dom.query('#tooltipToggle1').tooltip('show');
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#tooltipToggle1 + .tooltip'));
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.query('#tooltipToggle1').tooltip('toggle');
@@ -352,19 +464,42 @@ describe('Tooltip', function() {
             });
         });
 
-        it('hides the tooltip', async function() {
+        it('hide multiple tooltips (query)', async function() {
+            await exec(_ => {
+                dom.query('button').tooltip('show');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                    dom.stop('#tooltipToggle2 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.query('button').tooltip('toggle');
+                });
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="tooltipToggle1" data-ui-placement="right"></button>' +
+                    '<button id="tooltipToggle2" data-ui-placement="right"></button>'
+                );
+            });
+        });
+
+        it('can be called multiple times', async function() {
             await exec(_ => {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 UI.Tooltip.init(tooltipToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#tooltipToggle1 + .tooltip'));
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const tooltipToggle1 = dom.findOne('#tooltipToggle1');
-                    const tooltip = UI.Tooltip.init(tooltipToggle1);
-                    tooltip.toggle();
-                    tooltip.toggle();
-                    tooltip.toggle();
+                    UI.Tooltip.init(tooltipToggle1)
+                        .toggle()
+                        .toggle()
+                        .toggle();
                 });
             });
         });
@@ -376,9 +511,9 @@ describe('Tooltip', function() {
         it('disables the tooltip', async function() {
             await exec(_ => {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
-                const tooltip = UI.Tooltip.init(tooltipToggle1);
-                tooltip.disable();
-                tooltip.show();
+                UI.Tooltip.init(tooltipToggle1)
+                    .disable()
+                    .show();
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
@@ -392,7 +527,20 @@ describe('Tooltip', function() {
             await exec(_ => {
                 dom.query('#tooltipToggle1')
                     .tooltip('disable')
-                    .tooltip('show');
+                    .show();
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="tooltipToggle1"></button>' +
+                    '<button id="tooltipToggle2"></button>'
+                );
+            });
+        });
+
+        it('disables multiple tooltips (query)', async function() {
+            await exec(_ => {
+                dom.query('button').tooltip('disable');
+                dom.query('button').tooltip('show');
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
@@ -405,9 +553,9 @@ describe('Tooltip', function() {
         it('can be called on a disabled tooltip', async function() {
             await exec(_ => {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
-                const tooltip = UI.Tooltip.init(tooltipToggle1);
-                tooltip.disable();
-                tooltip.disable();
+                UI.Tooltip.init(tooltipToggle1)
+                    .disable()
+                    .disable();
             });
         });
 
@@ -418,10 +566,10 @@ describe('Tooltip', function() {
         it('enables the tooltip', async function() {
             await exec(_ => {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
-                const tooltip = UI.Tooltip.init(tooltipToggle1);
-                tooltip.disable();
-                tooltip.enable();
-                tooltip.show();
+                UI.Tooltip.init(tooltipToggle1)
+                    .disable()
+                    .enable()
+                    .show();
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.hasAnimation('#tooltipToggle1 + .tooltip')),
@@ -439,10 +587,10 @@ describe('Tooltip', function() {
 
         it('enables the tooltip (query)', async function() {
             await exec(_ => {
+                dom.query('#tooltipToggle1').tooltip('disable');
                 dom.query('#tooltipToggle1')
-                    .tooltip('disable')
                     .tooltip('enable')
-                    .tooltip('show');
+                    .show();
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.hasAnimation('#tooltipToggle1 + .tooltip')),
@@ -458,12 +606,99 @@ describe('Tooltip', function() {
             });
         });
 
+        it('enables multiple tooltips (query)', async function() {
+            await exec(_ => {
+                dom.query('button').tooltip('disable');
+                dom.query('button').tooltip('enable');
+                dom.query('button').tooltip('show');
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="tooltipToggle1" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(26px, 11px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 0px; left: 0px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button id="tooltipToggle2" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(42px, 11px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 0px; left: 0px;"></div><div class="tooltip-inner"></div></div>'
+                );
+            });
+        });
+
         it('can be called on an enabled tooltip', async function() {
             await exec(_ => {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
-                const tooltip = UI.Tooltip.init(tooltipToggle1);
-                tooltip.enable();
-                tooltip.enable();
+                UI.Tooltip.init(tooltipToggle1).enable();
+            });
+        });
+
+    });
+
+    describe('#refresh', function() {
+
+        it('refreshes the tooltip title', async function() {
+            await exec(_ => {
+                const tooltipToggle1 = dom.findOne('#tooltipToggle1');
+                UI.Tooltip.init(tooltipToggle1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        const tooltipToggle1 = dom.findOne('#tooltipToggle1');
+                        dom.setDataset(tooltipToggle1, 'uiTitle', 'Test');
+                        UI.Tooltip.init(tooltipToggle1).refresh();
+                        return dom.getHTML(document.body);
+                    }),
+                    '<button id="tooltipToggle1" data-ui-placement="right" data-ui-title="Test"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(26px, 2px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 9px; left: 0px;"></div><div class="tooltip-inner">Test</div></div>' +
+                    '<button id="tooltipToggle2"></button>'
+                );
+            });
+        });
+
+        it('refreshes the tooltip title (query)', async function() {
+            await exec(_ => {
+                dom.query('#tooltipToggle1').tooltip('show');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        dom.query('#tooltipToggle1')
+                            .setDataset('uiTitle', 'Test')
+                            .tooltip('refresh');
+                        return dom.getHTML(document.body);
+                    }),
+                    '<button id="tooltipToggle1" data-ui-placement="right" data-ui-title="Test"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(26px, 2px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 9px; left: 0px;"></div><div class="tooltip-inner">Test</div></div>' +
+                    '<button id="tooltipToggle2"></button>'
+                );
+            });
+        });
+
+        it('refreshes multiple tooltip titles (query)', async function() {
+            await exec(_ => {
+                dom.query('button').tooltip('show');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                    dom.stop('#tooltipToggle2 + .tooltip');
+                });
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        dom.query('button')
+                            .setDataset('uiTitle', 'Test')
+                            .tooltip('refresh');
+                        return dom.getHTML(document.body);
+                    }),
+                    '<button id="tooltipToggle1" data-ui-placement="right" data-ui-title="Test"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(26px, 2px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 9px; left: 0px;"></div><div class="tooltip-inner">Test</div></div>' +
+                    '<button id="tooltipToggle2" data-ui-placement="right" data-ui-title="Test"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(42px, 2px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 9px; left: 0px;"></div><div class="tooltip-inner">Test</div></div>'
+                );
             });
         });
 
@@ -509,7 +744,9 @@ describe('Tooltip', function() {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 UI.Tooltip.init(tooltipToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#tooltipToggle1 + .tooltip'));
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(async _ => {
@@ -533,7 +770,9 @@ describe('Tooltip', function() {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 UI.Tooltip.init(tooltipToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#tooltipToggle1 + .tooltip'));
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(async _ => {
@@ -588,7 +827,9 @@ describe('Tooltip', function() {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 UI.Tooltip.init(tooltipToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#tooltipToggle1 + .tooltip'));
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(async _ => {
                     const tooltipToggle1 = dom.findOne('#tooltipToggle1');
@@ -612,7 +853,9 @@ describe('Tooltip', function() {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 UI.Tooltip.init(tooltipToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#tooltipToggle1 + .tooltip'));
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(async _ => {
                     const tooltipToggle1 = dom.findOne('#tooltipToggle1');
@@ -639,20 +882,11 @@ describe('Tooltip', function() {
             await exec(_ => {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 UI.Tooltip.init(tooltipToggle1, { title: 'Test' }).show();
-            }).then(waitFor(150)).then(async _ => {
-                assert.strictEqual(
-                    await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(26px, 2px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 9px; left: 0px;"></div><div class="tooltip-inner">Test</div></div>' +
-                    '<button id="tooltipToggle2"></button>'
-                );
-            });
-        });
-
-        it('works with title option (query)', async function() {
-            await exec(_ => {
-                dom.query('#tooltipToggle1').tooltip({ title: 'Test' }).tooltip('show');
-            }).then(waitFor(150)).then(async _ => {
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<button id="tooltipToggle1" data-ui-placement="right"></button>' +
@@ -667,7 +901,11 @@ describe('Tooltip', function() {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 dom.setDataset(tooltipToggle1, 'uiTitle', 'Test');
                 UI.Tooltip.init(tooltipToggle1).show();
-            }).then(waitFor(150)).then(async _ => {
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<button id="tooltipToggle1" data-ui-title="Test" data-ui-placement="right"></button>' +
@@ -682,10 +920,71 @@ describe('Tooltip', function() {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 dom.setAttribute(tooltipToggle1, 'title', 'Test');
                 UI.Tooltip.init(tooltipToggle1).show();
-            }).then(waitFor(150)).then(async _ => {
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" title="Test" data-ui-placement="right"></button>' +
+                    '<button id="tooltipToggle1" data-ui-original-title="Test" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(26px, 2px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 9px; left: 0px;"></div><div class="tooltip-inner">Test</div></div>' +
+                    '<button id="tooltipToggle2"></button>'
+                );
+            });
+        });
+
+        it('works with title option (query)', async function() {
+            await exec(_ => {
+                dom.query('#tooltipToggle1')
+                    .tooltip({ title: 'Test' })
+                    .show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="tooltipToggle1" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(26px, 2px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 9px; left: 0px;"></div><div class="tooltip-inner">Test</div></div>' +
+                    '<button id="tooltipToggle2"></button>'
+                );
+            });
+        });
+
+        it('prioritizes dataset over setting', async function() {
+            await exec(_ => {
+                const tooltipToggle1 = dom.findOne('#tooltipToggle1');
+                dom.setDataset(tooltipToggle1, 'uiTitle', 'Test');
+                UI.Tooltip.init(tooltipToggle1, { title: 'Test 2' }).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="tooltipToggle1" data-ui-title="Test" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(26px, 2px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 9px; left: 0px;"></div><div class="tooltip-inner">Test</div></div>' +
+                    '<button id="tooltipToggle2"></button>'
+                );
+            });
+        });
+
+        it('prioritizes setting over attribute', async function() {
+            await exec(_ => {
+                const tooltipToggle1 = dom.findOne('#tooltipToggle1');
+                dom.setAttribute(tooltipToggle1, 'title', 'Test 2');
+                UI.Tooltip.init(tooltipToggle1, { title: 'Test' }).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="tooltipToggle1" data-ui-original-title="Test 2" data-ui-placement="right"></button>' +
                     '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(26px, 2px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 9px; left: 0px;"></div><div class="tooltip-inner">Test</div></div>' +
                     '<button id="tooltipToggle2"></button>'
                 );
@@ -702,7 +1001,11 @@ describe('Tooltip', function() {
                 UI.Tooltip.init(tooltipToggle1, {
                     template: '<div class="tooltip" role="tooltip" data-test="Test"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
                 }).show();
-            }).then(waitFor(150)).then(async _ => {
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<button id="tooltipToggle1" data-ui-placement="right"></button>' +
@@ -717,7 +1020,11 @@ describe('Tooltip', function() {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 dom.setDataset(tooltipToggle1, 'uiTemplate', '<div class="tooltip" role="tooltip" data-test="Test"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>');
                 UI.Tooltip.init(tooltipToggle1).show();
-            }).then(waitFor(150)).then(async _ => {
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<button id="tooltipToggle1" data-ui-template="<div class=&quot;tooltip&quot; role=&quot;tooltip&quot; data-test=&quot;Test&quot;><div class=&quot;tooltip-arrow&quot;></div><div class=&quot;tooltip-inner&quot;></div></div>" data-ui-placement="right"></button>' +
@@ -731,8 +1038,12 @@ describe('Tooltip', function() {
             await exec(_ => {
                 dom.query('#tooltipToggle1').tooltip({
                     template: '<div class="tooltip" role="tooltip" data-test="Test"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
-                }).tooltip('show');
-            }).then(waitFor(150)).then(async _ => {
+                }).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<button id="tooltipToggle1" data-ui-placement="right"></button>' +
@@ -750,7 +1061,11 @@ describe('Tooltip', function() {
             await exec(_ => {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 UI.Tooltip.init(tooltipToggle1, { customClass: 'test' }).show();
-            }).then(waitFor(150)).then(async _ => {
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<button id="tooltipToggle1" data-ui-placement="right"></button>' +
@@ -765,7 +1080,11 @@ describe('Tooltip', function() {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 dom.setDataset(tooltipToggle1, 'uiCustomClass', 'test');
                 UI.Tooltip.init(tooltipToggle1).show();
-            }).then(waitFor(150)).then(async _ => {
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<button id="tooltipToggle1" data-ui-custom-class="test" data-ui-placement="right"></button>' +
@@ -777,8 +1096,14 @@ describe('Tooltip', function() {
 
         it('works with customClass option (query)', async function() {
             await exec(_ => {
-                dom.query('#tooltipToggle1').tooltip({ customClass: 'test' }).tooltip('show');
-            }).then(waitFor(150)).then(async _ => {
+                dom.query('#tooltipToggle1')
+                    .tooltip({ customClass: 'test' })
+                    .show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<button id="tooltipToggle1" data-ui-placement="right"></button>' +
@@ -819,7 +1144,9 @@ describe('Tooltip', function() {
 
         it('works with duration option on show (query)', async function() {
             await exec(_ => {
-                dom.query('#tooltipToggle1').tooltip({ duration: 200 }).tooltip('show');
+                dom.query('#tooltipToggle1')
+                    .tooltip({ duration: 200 })
+                    .show();
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.hasAnimation('#tooltipToggle1 + .tooltip')),
@@ -833,7 +1160,9 @@ describe('Tooltip', function() {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 UI.Tooltip.init(tooltipToggle1, { duration: 200 }).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#tooltipToggle1 + .tooltip'));
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const tooltipToggle1 = dom.findOne('#tooltipToggle1');
@@ -853,7 +1182,9 @@ describe('Tooltip', function() {
                 dom.setDataset(tooltipToggle1, 'uiDuration', 200);
                 UI.Tooltip.init(tooltipToggle1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#tooltipToggle1 + .tooltip'));
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     const tooltipToggle1 = dom.findOne('#tooltipToggle1');
@@ -869,9 +1200,13 @@ describe('Tooltip', function() {
 
         it('works with duration option on hide (query)', async function() {
             await exec(_ => {
-                dom.query('#tooltipToggle1').tooltip({ duration: 200 }).tooltip('show');
+                dom.query('#tooltipToggle1')
+                    .tooltip({ duration: 200 })
+                    .show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#tooltipToggle1 + .tooltip'));
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(_ => {
                     dom.query('#tooltipToggle1').tooltip('hide');
@@ -892,7 +1227,11 @@ describe('Tooltip', function() {
             await exec(_ => {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 UI.Tooltip.init(tooltipToggle1, { title: '<b>Test</b>' }).show();
-            }).then(waitFor(150)).then(async _ => {
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<button id="tooltipToggle1" data-ui-placement="right"></button>' +
@@ -906,7 +1245,11 @@ describe('Tooltip', function() {
             await exec(_ => {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 UI.Tooltip.init(tooltipToggle1, { title: '<b>Test</b>', html: true }).show();
-            }).then(waitFor(150)).then(async _ => {
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<button id="tooltipToggle1" data-ui-placement="right"></button>' +
@@ -921,7 +1264,11 @@ describe('Tooltip', function() {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 dom.setDataset(tooltipToggle1, 'uiHtml', true);
                 UI.Tooltip.init(tooltipToggle1, { title: '<b>Test</b>' }).show();
-            }).then(waitFor(150)).then(async _ => {
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<button id="tooltipToggle1" data-ui-html="true" data-ui-placement="right"></button>' +
@@ -933,8 +1280,14 @@ describe('Tooltip', function() {
 
         it('works with html option (query)', async function() {
             await exec(_ => {
-                dom.query('#tooltipToggle1').tooltip({ title: '<b>Test</b>', html: true }).tooltip('show');
-            }).then(waitFor(150)).then(async _ => {
+                dom.query('#tooltipToggle1')
+                    .tooltip({ title: '<b>Test</b>', html: true })
+                    .show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<button id="tooltipToggle1" data-ui-placement="right"></button>' +
@@ -1171,9 +1524,8 @@ describe('Tooltip', function() {
 
         it('works with trigger option (query)', async function() {
             await exec(_ => {
-                dom.query('#tooltipToggle1')
-                    .tooltip({ trigger: 'click' })
-                    .triggerEvent('click');
+                dom.query('#tooltipToggle1').tooltip({ trigger: 'click' });
+                dom.triggerEvent('#tooltipToggle1', 'click');
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.hasAnimation('#tooltipToggle1 + .tooltip')),
@@ -1182,7 +1534,28 @@ describe('Tooltip', function() {
             });
         });
 
-        it('works with multiple trigger options');
+        it('works with multiple trigger options', async function() {
+            await exec(_ => {
+                const tooltipToggle1 = dom.findOne('#tooltipToggle1');
+                UI.Tooltip.init(tooltipToggle1, { trigger: 'hover focus' });
+                dom.triggerEvent(tooltipToggle1, 'mouseover');
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#tooltipToggle1 + .tooltip')),
+                    true
+                );
+            }).then(waitFor(100)).then(async _ => {
+                await exec(_ => {
+                    const tooltipToggle1 = dom.findOne('#tooltipToggle1');
+                    dom.triggerEvent(tooltipToggle1, 'blur');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#tooltipToggle1 + .tooltip')),
+                    true
+                );
+            });
+        });
 
     });
 
@@ -1194,7 +1567,11 @@ describe('Tooltip', function() {
                 dom.append(document.body, test);
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 UI.Tooltip.init(tooltipToggle1, { appendTo: '.test' }).show();
-            }).then(waitFor(150)).then(async _ => {
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('.test .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<button id="tooltipToggle1" data-ui-placement="right"></button>' +
@@ -1213,7 +1590,11 @@ describe('Tooltip', function() {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 dom.setDataset(tooltipToggle1, 'uiAppendTo', '.test');
                 UI.Tooltip.init(tooltipToggle1).show();
-            }).then(waitFor(150)).then(async _ => {
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('.test .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<button id="tooltipToggle1" data-ui-append-to=".test" data-ui-placement="right"></button>' +
@@ -1225,11 +1606,17 @@ describe('Tooltip', function() {
             });
         });
 
-        it('works with appendTo option', async function() {
+        it('works with appendTo option (query)', async function() {
             await exec(_ => {
                 const test = dom.create('div', { class: 'test' });
                 dom.append(document.body, test);
-                dom.query('#tooltipToggle1').tooltip({ appendTo: '.test' }).tooltip('show');
+                dom.query('#tooltipToggle1')
+                    .tooltip({ appendTo: '.test' })
+                    .show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('.test .tooltip');
+                });
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
@@ -1250,7 +1637,11 @@ describe('Tooltip', function() {
             await exec(_ => {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 UI.Tooltip.init(tooltipToggle1, { title: '<b data-test="Test">Test</b>', html: true }).show();
-            }).then(waitFor(150)).then(async _ => {
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<button id="tooltipToggle1" data-ui-placement="right"></button>' +
@@ -1264,7 +1655,11 @@ describe('Tooltip', function() {
             await exec(_ => {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 UI.Tooltip.init(tooltipToggle1, { title: '<b data-test="Test">Test</b>', html: true, sanitize: false }).show();
-            }).then(waitFor(150)).then(async _ => {
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<button id="tooltipToggle1" data-ui-placement="right"></button>' +
@@ -1279,7 +1674,11 @@ describe('Tooltip', function() {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 dom.setDataset(tooltipToggle1, 'uiSanitize', false);
                 UI.Tooltip.init(tooltipToggle1, { title: '<b data-test="Test">Test</b>', html: true }).show();
-            }).then(waitFor(150)).then(async _ => {
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<button id="tooltipToggle1" data-ui-sanitize="false" data-ui-placement="right"></button>' +
@@ -1291,8 +1690,14 @@ describe('Tooltip', function() {
 
         it('works with sanitize option (query)', async function() {
             await exec(_ => {
-                dom.query('#tooltipToggle1').tooltip({ title: '<b data-test="Test">Test</b>', html: true, sanitize: false }).tooltip('show');
-            }).then(waitFor(150)).then(async _ => {
+                dom.query('#tooltipToggle1')
+                    .tooltip({ title: '<b data-test="Test">Test</b>', html: true, sanitize: false })
+                    .show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<button id="tooltipToggle1" data-ui-placement="right"></button>' +
@@ -1303,12 +1708,5 @@ describe('Tooltip', function() {
         });
 
     });
-
-    // show while hiding
-    // hide while showing
-
-    // title priority
-    // refresh
-    // update
 
 });

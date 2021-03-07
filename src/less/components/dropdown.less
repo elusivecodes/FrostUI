@@ -55,7 +55,7 @@
     min-width: @spacing * 10;
     padding: (@spacing / 2) 0;
     margin: (@spacing / 8) 0 0;
-    font-size: 1rem;
+    font-size: @font-size-md;
     color: @dark;
     text-align: left;
     list-style: none;
@@ -107,7 +107,7 @@
         background-color: @link;
 
         &:focus {
-            .bg-light(@link);
+            background-color: tint(@link, @bg-light);
         }
     }
 

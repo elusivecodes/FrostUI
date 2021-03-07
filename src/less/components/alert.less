@@ -1,16 +1,16 @@
 .mix-alert(@color) {
-    .bg-lightest(@color);
-    .text-dark(@color);
+    background-color: tint(@color, @bg-lighter);
+    color: shade(@color, @text-dark);
 
     .alert-link {
-        .text-darker(@color);
+        color: shade(@color, @text-darker);
 
         &:hover {
-            .text-darkest(@color);
+            color: shade(@color, @text-darkest);
         }
 
         &:focus {
-            .text-dark(@color);
+            color: shade(@color, @text-dark);
         }
     }
 }

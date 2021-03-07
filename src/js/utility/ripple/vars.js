@@ -8,7 +8,7 @@
 UI.ripple = (node, x, y, duration = 500) => {
     const width = dom.width(node);
     const height = dom.height(node);
-    const scaleMultiple = Math.max(width, height) * 6;
+    const scaleMultiple = Math.max(width, height) * 3;
 
     const ripple = dom.create('span', {
         class: 'ripple-effect',

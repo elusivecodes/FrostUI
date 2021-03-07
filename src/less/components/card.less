@@ -38,7 +38,7 @@
 .card-header {
     padding: (@spacing / 2) @spacing;
     margin-bottom: 0;
-    background-color: rgba(0, 0, 0, .075);
+    background-color: @hover-color;
     border-bottom: @border-size @border-style @border-color;
 
     &:first-child {
@@ -48,7 +48,7 @@
 
 .card-footer {
     padding: (@spacing / 2) @spacing;
-    background-color: rgba(0, 0, 0, .05);
+    background-color: @shadow-color;
     border-top: @border-size @border-style @border-color;
 
     &:last-child {
@@ -84,7 +84,7 @@
     right: 0;
     bottom: 0;
     left: 0;
-    padding: 1.25rem;
+    padding: @spacing * 1.25;
     border-radius: calc(@border-radius - @border-size);
 }
 

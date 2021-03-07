@@ -60,7 +60,7 @@ UI.initComponent = (key, component) => {
     component.REMOVE_EVENT = `remove.ui.${key}`;
 
     QuerySet.prototype[key] = function(a, ...args) {
-        let settings, method;
+        let settings, method, firstResult;
 
         if (Core.isObject(a)) {
             settings = a;
@@ -68,18 +68,22 @@ UI.initComponent = (key, component) => {
             method = a;
         }
 
-        for (const node of this) {
+        for (const [index, node] of [...this].entries()) {
             if (!Core.isElement(node)) {
                 continue;
             }
 
-            const instance = component.init(node, settings);
+            let result = component.init(node, settings);
 
             if (method) {
-                instance[method](...args);
+                result = result[method](...args);
+            }
+
+            if (index === 0) {
+                firstResult = result;
             }
         }
 
-        return this;
+        return firstResult;
     };
 };

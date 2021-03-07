@@ -45,9 +45,54 @@ describe('Button', function() {
             );
         });
 
+        it('creates multiple buttons (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('button').button();
+                    return dom.find('button').every(node =>
+                        dom.getData(node, 'button') instanceof UI.Button
+                    );
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#dispose', function() {
+
+        it('removes the button', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const button1 = dom.findOne('#button1');
+                    UI.Button.init(button1).dispose();
+                    return dom.hasData(button1, 'button');
+                }),
+                false
+            );
+        });
+
+        it('removes the button (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#button1').button('dispose');
+                    return dom.hasData('#button1', 'button');
+                }),
+                false
+            );
+        });
+
+        it('removes multiple buttons (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('button').button('dispose');
+                    return dom.find('button').some(node =>
+                        dom.hasData(node, 'button')
+                    );
+                }),
+                false
+            );
+        });
 
         it('clears button memory', async function() {
             assert.strictEqual(
@@ -65,17 +110,6 @@ describe('Button', function() {
                     return true;
                 }),
                 true
-            );
-        });
-
-        it('removes the button', async function() {
-            assert.strictEqual(
-                await exec(_ => {
-                    const button1 = dom.findOne('#button1');
-                    UI.Button.init(button1).dispose();
-                    return dom.hasData(button1, 'button');
-                }),
-                false
             );
         });
 
@@ -137,13 +171,24 @@ describe('Button', function() {
             );
         });
 
+        it('toggles multiple buttons (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('button').button('toggle');
+                    return dom.getHTML(document.body);
+                }),
+                '<button id="button1" data-ui-toggle="button" class="active" aria-pressed="true"></button>' +
+                '<button id="button2" data-ui-toggle="button" class="active" aria-pressed="true"></button>'
+            );
+        });
+
         it('toggles the button off', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     const button1 = dom.findOne('#button1');
-                    const button = UI.Button.init(button1);
-                    button.toggle();
-                    button.toggle();
+                    UI.Button.init(button1)
+                        .toggle()
+                        .toggle();
                     return dom.getHTML(document.body);
                 }),
                 '<button id="button1" data-ui-toggle="button" class="" aria-pressed="false"></button>' +
