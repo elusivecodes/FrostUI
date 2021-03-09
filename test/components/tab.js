@@ -72,6 +72,15 @@ describe('Tab', function() {
             );
         });
 
+        it('returns the tab (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#tabToggle1').tab() instanceof UI.Tab;
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#dispose', function() {
@@ -269,6 +278,25 @@ describe('Tab', function() {
             });
         });
 
+        it('returns the tab', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const tabToggle1 = dom.findOne('#tabToggle1');
+                    return UI.Tab.init(tabToggle1).hide() instanceof UI.Tab;
+                }),
+                true
+            );
+        });
+
+        it('returns the tab (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#tabToggle1').tab('hide') instanceof UI.Tab;
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#show', function() {
@@ -423,6 +451,25 @@ describe('Tab', function() {
                 const tabToggle1 = dom.findOne('#tabToggle1');
                 UI.Tab.init(tabToggle1).show();
             });
+        });
+
+        it('returns the tab', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const tabToggle2 = dom.findOne('#tabToggle2');
+                    return UI.Tab.init(tabToggle2).show() instanceof UI.Tab;
+                }),
+                true
+            );
+        });
+
+        it('returns the tab (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#tabToggle2').tab('show') instanceof UI.Tab;
+                }),
+                true
+            );
         });
 
     });

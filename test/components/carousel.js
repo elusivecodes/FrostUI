@@ -74,6 +74,15 @@ describe('Carousel', function() {
             );
         });
 
+        it('returns the carousel (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#carousel1').carousel() instanceof UI.Carousel;
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#dispose', function() {
@@ -339,6 +348,25 @@ describe('Carousel', function() {
                     '</div>'
                 )
             });
+        });
+
+        it('returns the carousel', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const carousel1 = dom.findOne('#carousel1');
+                    return UI.Carousel.init(carousel1).cycle() instanceof UI.Carousel;
+                }),
+                true
+            );
+        });
+
+        it('returns the carousel (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#carousel1').carousel('cycle') instanceof UI.Carousel;
+                }),
+                true
+            );
         });
 
     });
@@ -609,6 +637,25 @@ describe('Carousel', function() {
                     .show(1)
                     .show(1);
             });
+        });
+
+        it('returns the carousel', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const carousel1 = dom.findOne('#carousel1');
+                    return UI.Carousel.init(carousel1).show(1) instanceof UI.Carousel;
+                }),
+                true
+            );
+        });
+
+        it('returns the carousel (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#carousel1').carousel('show', 1) instanceof UI.Carousel;
+                }),
+                true
+            );
         });
 
     });
@@ -998,6 +1045,25 @@ describe('Carousel', function() {
             });
         });
 
+        it('returns the carousel', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const carousel1 = dom.findOne('#carousel1');
+                    return UI.Carousel.init(carousel1).slide(1) instanceof UI.Carousel;
+                }),
+                true
+            );
+        });
+
+        it('returns the carousel (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#carousel1').carousel('slide', 1) instanceof UI.Carousel;
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#next', function() {
@@ -1178,6 +1244,25 @@ describe('Carousel', function() {
                     .next()
                     .next();
             });
+        });
+
+        it('returns the carousel', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const carousel1 = dom.findOne('#carousel1');
+                    return UI.Carousel.init(carousel1).next() instanceof UI.Carousel;
+                }),
+                true
+            );
+        });
+
+        it('returns the carousel (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#carousel1').carousel('next') instanceof UI.Carousel;
+                }),
+                true
+            );
         });
 
     });
@@ -1395,6 +1480,25 @@ describe('Carousel', function() {
                     .prev()
                     .prev();
             });
+        });
+
+        it('returns the carousel', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const carousel1 = dom.findOne('#carousel1');
+                    return UI.Carousel.init(carousel1).prev() instanceof UI.Carousel;
+                }),
+                true
+            );
+        });
+
+        it('returns the carousel (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#carousel1').carousel('prev') instanceof UI.Carousel;
+                }),
+                true
+            );
         });
 
     });

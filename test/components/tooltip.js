@@ -48,6 +48,15 @@ describe('Tooltip', function() {
             );
         });
 
+        it('returns the tooltip (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#tooltipToggle1').tooltip() instanceof UI.Tooltip;
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#dispose', function() {
@@ -219,6 +228,25 @@ describe('Tooltip', function() {
             });
         });
 
+        it('returns the tooltip', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const tooltipToggle1 = dom.findOne('#tooltipToggle1');
+                    return UI.Tooltip.init(tooltipToggle1).show() instanceof UI.Tooltip;
+                }),
+                true
+            );
+        });
+
+        it('returns the tooltip (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#tooltipToggle1').tooltip('show') instanceof UI.Tooltip;
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#hide', function() {
@@ -343,6 +371,42 @@ describe('Tooltip', function() {
             });
         });
 
+        it('returns the tooltip', async function() {
+            await exec(_ => {
+                const tooltipToggle1 = dom.findOne('#tooltipToggle1');
+                UI.Tooltip.init(tooltipToggle1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        const tooltipToggle1 = dom.findOne('#tooltipToggle1');
+                        return UI.Tooltip.init(tooltipToggle1).hide() instanceof UI.Tooltip;
+                    }),
+                    true
+                );
+            });
+        });
+
+        it('returns the tooltip (query)', async function() {
+            await exec(_ => {
+                dom.query('#tooltipToggle1').tooltip('show');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.query('#tooltipToggle1').tooltip('hide') instanceof UI.Tooltip;
+                    }),
+                    true
+                );
+            });
+        });
+
     });
 
     describe('#toggle (show)', function() {
@@ -406,6 +470,25 @@ describe('Tooltip', function() {
                     .toggle()
                     .toggle();
             });
+        });
+
+        it('returns the tooltip', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const tooltipToggle1 = dom.findOne('#tooltipToggle1');
+                    return UI.Tooltip.init(tooltipToggle1).toggle() instanceof UI.Tooltip;
+                }),
+                true
+            );
+        });
+
+        it('returns the tooltip (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#tooltipToggle1').tooltip('toggle') instanceof UI.Tooltip;
+                }),
+                true
+            );
         });
 
     });
@@ -504,6 +587,42 @@ describe('Tooltip', function() {
             });
         });
 
+        it('returns the tooltip', async function() {
+            await exec(_ => {
+                const tooltipToggle1 = dom.findOne('#tooltipToggle1');
+                UI.Tooltip.init(tooltipToggle1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        const tooltipToggle1 = dom.findOne('#tooltipToggle1');
+                        return UI.Tooltip.init(tooltipToggle1).toggle() instanceof UI.Tooltip;
+                    }),
+                    true
+                );
+            });
+        });
+
+        it('returns the tooltip (query)', async function() {
+            await exec(_ => {
+                dom.query('#tooltipToggle1').tooltip('show');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#tooltipToggle1 + .tooltip');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.query('#tooltipToggle1').tooltip('toggle') instanceof UI.Tooltip;
+                    }),
+                    true
+                );
+            });
+        });
+
     });
 
     describe('#disable', function() {
@@ -557,6 +676,25 @@ describe('Tooltip', function() {
                     .disable()
                     .disable();
             });
+        });
+
+        it('returns the tooltip', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const tooltipToggle1 = dom.findOne('#tooltipToggle1');
+                    return UI.Tooltip.init(tooltipToggle1).disable() instanceof UI.Tooltip;
+                }),
+                true
+            );
+        });
+
+        it('returns the tooltip (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#tooltipToggle1').tooltip('disable') instanceof UI.Tooltip;
+                }),
+                true
+            );
         });
 
     });
@@ -627,6 +765,26 @@ describe('Tooltip', function() {
                 const tooltipToggle1 = dom.findOne('#tooltipToggle1');
                 UI.Tooltip.init(tooltipToggle1).enable();
             });
+        });
+
+        it('returns the tooltip', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const tooltipToggle1 = dom.findOne('#tooltipToggle1');
+                    return UI.Tooltip.init(tooltipToggle1).disable().enable() instanceof UI.Tooltip;
+                }),
+                true
+            );
+        });
+
+        it('returns the tooltip (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#tooltipToggle1').tooltip('disable');
+                    return dom.query('#tooltipToggle1').tooltip('enable') instanceof UI.Tooltip;
+                }),
+                true
+            );
         });
 
     });
@@ -700,6 +858,25 @@ describe('Tooltip', function() {
                     '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(42px, 2px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 9px; left: 0px;"></div><div class="tooltip-inner">Test</div></div>'
                 );
             });
+        });
+
+        it('returns the tooltip', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const tooltipToggle1 = dom.findOne('#tooltipToggle1');
+                    return UI.Tooltip.init(tooltipToggle1).refresh() instanceof UI.Tooltip;
+                }),
+                true
+            );
+        });
+
+        it('returns the tooltip (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#tooltipToggle1').tooltip('refresh') instanceof UI.Tooltip;
+                }),
+                true
+            );
         });
 
     });

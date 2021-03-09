@@ -74,6 +74,15 @@ describe('Modal', function() {
             );
         });
 
+        it('returns the modal (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#modal1').modal() instanceof UI.Modal;
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#dispose', function() {
@@ -288,6 +297,25 @@ describe('Modal', function() {
             });
         });
 
+        it('returns the modal', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const modal1 = dom.findOne('#modal1');
+                    return UI.Modal.init(modal1).show() instanceof UI.Modal;
+                }),
+                true
+            );
+        });
+
+        it('returns the modal (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#modal1').modal('show') instanceof UI.Modal;
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#hide', function() {
@@ -484,6 +512,44 @@ describe('Modal', function() {
             });
         });
 
+        it('returns the modal', async function() {
+            await exec(_ => {
+                const modal1 = dom.findOne('#modal1');
+                UI.Modal.init(modal1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        const modal1 = dom.findOne('#modal1');
+                        return UI.Modal.init(modal1).hide() instanceof UI.Modal;
+                    }),
+                    true
+                );
+            });
+        });
+
+        it('returns the modal (query)', async function() {
+            await exec(_ => {
+                dom.query('#modal1').modal('show');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.query('#modal1').modal('hide') instanceof UI.Modal;
+                    }),
+                    true
+                );
+            });
+        });
+
     });
 
     describe('#toggle (show)', function() {
@@ -577,6 +643,25 @@ describe('Modal', function() {
                     .toggle()
                     .toggle();
             });
+        });
+
+        it('returns the modal', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const modal1 = dom.findOne('#modal1');
+                    return UI.Modal.init(modal1).toggle() instanceof UI.Modal;
+                }),
+                true
+            );
+        });
+
+        it('returns the modal (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#modal1').modal('toggle') instanceof UI.Modal;
+                }),
+                true
+            );
         });
 
     });
@@ -706,6 +791,44 @@ describe('Modal', function() {
                         .toggle()
                         .toggle();
                 });
+            });
+        });
+
+        it('returns the modal', async function() {
+            await exec(_ => {
+                const modal1 = dom.findOne('#modal1');
+                UI.Modal.init(modal1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        const modal1 = dom.findOne('#modal1');
+                        return UI.Modal.init(modal1).toggle() instanceof UI.Modal;
+                    }),
+                    true
+                );
+            });
+        });
+
+        it('returns the modal (query)', async function() {
+            await exec(_ => {
+                dom.query('#modal1').modal('show');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.query('#modal1').modal('toggle') instanceof UI.Modal;
+                    }),
+                    true
+                );
             });
         });
 

@@ -62,6 +62,15 @@ describe('Alert', function() {
             );
         });
 
+        it('returns the alert (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#alert1').alert() instanceof UI.Alert;
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#dispose', function() {
@@ -227,6 +236,25 @@ describe('Alert', function() {
                     .close()
                     .close();
             });
+        });
+
+        it('returns the alert', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const alert1 = dom.findOne('#alert1');
+                    return UI.Alert.init(alert1).close() instanceof UI.Alert;
+                }),
+                true
+            );
+        });
+
+        it('returns the alert (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#alert1').alert('close') instanceof UI.Alert;
+                }),
+                true
+            );
         });
 
     });

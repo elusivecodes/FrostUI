@@ -48,6 +48,15 @@ describe('Popover', function() {
             );
         });
 
+        it('returns the popover (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#popoverToggle1').popover() instanceof UI.Popover;
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#dispose', function() {
@@ -219,6 +228,25 @@ describe('Popover', function() {
             });
         });
 
+        it('returns the popover', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const popoverToggle1 = dom.findOne('#popoverToggle1');
+                    return UI.Popover.init(popoverToggle1).show() instanceof UI.Popover;
+                }),
+                true
+            );
+        });
+
+        it('returns the popover (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#popoverToggle1').popover('show') instanceof UI.Popover;
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#hide', function() {
@@ -343,6 +371,42 @@ describe('Popover', function() {
             });
         });
 
+        it('returns the popover', async function() {
+            await exec(_ => {
+                const popoverToggle1 = dom.findOne('#popoverToggle1');
+                UI.Popover.init(popoverToggle1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#popoverToggle1 + .popover');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        const popoverToggle1 = dom.findOne('#popoverToggle1');
+                        return UI.Popover.init(popoverToggle1).hide() instanceof UI.Popover;
+                    }),
+                    true
+                );
+            });
+        });
+
+        it('returns the popover (query)', async function() {
+            await exec(_ => {
+                dom.query('#popoverToggle1').popover('show');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#popoverToggle1 + .popover');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.query('#popoverToggle1').popover('hide') instanceof UI.Popover;
+                    }),
+                    true
+                );
+            });
+        });
+
     });
 
     describe('#toggle (show)', function() {
@@ -406,6 +470,25 @@ describe('Popover', function() {
                     .toggle()
                     .toggle();
             });
+        });
+
+        it('returns the popover', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const popoverToggle1 = dom.findOne('#popoverToggle1');
+                    return UI.Popover.init(popoverToggle1).toggle() instanceof UI.Popover;
+                }),
+                true
+            );
+        });
+
+        it('returns the popover (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#popoverToggle1').popover('toggle') instanceof UI.Popover;
+                }),
+                true
+            );
         });
 
     });
@@ -504,6 +587,42 @@ describe('Popover', function() {
             });
         });
 
+        it('returns the popover', async function() {
+            await exec(_ => {
+                const popoverToggle1 = dom.findOne('#popoverToggle1');
+                UI.Popover.init(popoverToggle1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#popoverToggle1 + .popover');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        const popoverToggle1 = dom.findOne('#popoverToggle1');
+                        return UI.Popover.init(popoverToggle1).toggle() instanceof UI.Popover;
+                    }),
+                    true
+                );
+            });
+        });
+
+        it('returns the popover (query)', async function() {
+            await exec(_ => {
+                dom.query('#popoverToggle1').popover('show');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#popoverToggle1 + .popover');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.query('#popoverToggle1').popover('toggle') instanceof UI.Popover;
+                    }),
+                    true
+                );
+            });
+        });
+
     });
 
     describe('#disable', function() {
@@ -557,6 +676,25 @@ describe('Popover', function() {
                     .disable()
                     .disable();
             });
+        });
+
+        it('returns the popover', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const popoverToggle1 = dom.findOne('#popoverToggle1');
+                    return UI.Popover.init(popoverToggle1).disable() instanceof UI.Popover;
+                }),
+                true
+            );
+        });
+
+        it('returns the popover (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#popoverToggle1').popover('disable') instanceof UI.Popover;
+                }),
+                true
+            );
         });
 
     });
@@ -627,6 +765,26 @@ describe('Popover', function() {
                 const popoverToggle1 = dom.findOne('#popoverToggle1');
                 UI.Popover.init(popoverToggle1).enable();
             });
+        });
+
+        it('returns the popover', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const popoverToggle1 = dom.findOne('#popoverToggle1');
+                    return UI.Popover.init(popoverToggle1).enable().disable() instanceof UI.Popover;
+                }),
+                true
+            );
+        });
+
+        it('returns the popover (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#popoverToggle1').popover('enable');
+                    return dom.query('#popoverToggle1').popover('disable') instanceof UI.Popover;
+                }),
+                true
+            );
         });
 
     });
@@ -769,6 +927,25 @@ describe('Popover', function() {
                     '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(43px, 2px, 0px);"><div class="popover-arrow" style="position: absolute; top: 9px; left: 0px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body">Test</div></div>'
                 );
             });
+        });
+
+        it('returns the popover', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const popoverToggle1 = dom.findOne('#popoverToggle1');
+                    return UI.Popover.init(popoverToggle1).refresh() instanceof UI.Popover;
+                }),
+                true
+            );
+        });
+
+        it('returns the popover (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#popoverToggle1').popover('refresh') instanceof UI.Popover;
+                }),
+                true
+            );
         });
 
     });

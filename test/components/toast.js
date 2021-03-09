@@ -62,6 +62,15 @@ describe('Toast', function() {
             );
         });
 
+        it('returns the toast (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#toast1').toast() instanceof UI.Toast;
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#dispose', function() {
@@ -259,6 +268,25 @@ describe('Toast', function() {
             });
         });
 
+        it('returns the toast', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const toast1 = dom.findOne('#toast1');
+                    return UI.Toast.init(toast1).hide() instanceof UI.Toast;
+                }),
+                true
+            );
+        });
+
+        it('returns the toast (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#toast1').toast('hide') instanceof UI.Toast;
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#show', function() {
@@ -358,7 +386,9 @@ describe('Toast', function() {
                 const toast1 = dom.findOne('#toast1');
                 UI.Toast.init(toast1).hide();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#toast1'));
+                await exec(_ => {
+                    dom.stop('#toast1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(async _ => {
                     const toast1 = dom.findOne('#toast1');
@@ -374,6 +404,42 @@ describe('Toast', function() {
             await exec(async _ => {
                 const toast1 = dom.findOne('#toast1');
                 UI.Toast.init(toast1).show();
+            });
+        });
+
+        it('returns the toast', async function() {
+            await exec(_ => {
+                const toast1 = dom.findOne('#toast1');
+                UI.Toast.init(toast1).hide();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#toast1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        const toast1 = dom.findOne('#toast1');
+                        return UI.Toast.init(toast1).show() instanceof UI.Toast;
+                    }),
+                    true
+                );
+            });
+        });
+
+        it('returns the toast (query)', async function() {
+            await exec(_ => {
+                dom.query('#toast1').toast('hide');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#toast1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.query('#toast1').toast('show') instanceof UI.Toast;
+                    }),
+                    true
+                );
             });
         });
 

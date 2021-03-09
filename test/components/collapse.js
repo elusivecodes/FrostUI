@@ -60,6 +60,15 @@ describe('Collapse', function() {
             );
         });
 
+        it('returns the collapse (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#collapse1').collapse() instanceof UI.Collapse;
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#dispose', function() {
@@ -218,6 +227,25 @@ describe('Collapse', function() {
             });
         });
 
+        it('returns the collapse', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const collapse1 = dom.findOne('#collapse1');
+                    return UI.Collapse.init(collapse1).show() instanceof UI.Collapse;
+                }),
+                true
+            );
+        });
+
+        it('returns the collapse (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#collapse1').collapse('show') instanceof UI.Collapse;
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#hide', function() {
@@ -327,7 +355,9 @@ describe('Collapse', function() {
                 const collapse1 = dom.findOne('#collapse1');
                 UI.Collapse.init(collapse1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#collapse1'));
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(async _ => {
                     const collapse1 = dom.findOne('#collapse1');
@@ -343,6 +373,42 @@ describe('Collapse', function() {
             await exec(async _ => {
                 const collapse1 = dom.findOne('#collapse1');
                 UI.Collapse.init(collapse1).hide();
+            });
+        });
+
+        it('returns the collapse', async function() {
+            await exec(_ => {
+                const collapse1 = dom.findOne('#collapse1');
+                UI.Collapse.init(collapse1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        const collapse1 = dom.findOne('#collapse1');
+                        return UI.Collapse.init(collapse1).hide() instanceof UI.Collapse;
+                    }),
+                    true
+                );
+            });
+        });
+
+        it('returns the collapse (query)', async function() {
+            await exec(_ => {
+                dom.query('#collapse1').collapse('show');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.query('#collapse1').collapse('hide') instanceof UI.Collapse;
+                    }),
+                    true
+                );
             });
         });
 
@@ -430,6 +496,25 @@ describe('Collapse', function() {
                     .toggle()
                     .toggle();
             });
+        });
+
+        it('returns the collapse', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const collapse1 = dom.findOne('#collapse1');
+                    return UI.Collapse.init(collapse1).toggle() instanceof UI.Collapse;
+                }),
+                true
+            );
+        });
+
+        it('returns the collapse (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#collapse1').collapse('toggle') instanceof UI.Collapse;
+                }),
+                true
+            );
         });
 
     });
@@ -548,7 +633,9 @@ describe('Collapse', function() {
                 const collapse1 = dom.findOne('#collapse1');
                 UI.Collapse.init(collapse1).show();
             }).then(waitFor(50)).then(async _ => {
-                await exec(_ => dom.stop('#collapse1'));
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
             }).then(waitFor(50)).then(async _ => {
                 await exec(async _ => {
                     const collapse1 = dom.findOne('#collapse1');
@@ -557,6 +644,42 @@ describe('Collapse', function() {
                         .toggle()
                         .toggle();
                 });
+            });
+        });
+
+        it('returns the collapse', async function() {
+            await exec(_ => {
+                const collapse1 = dom.findOne('#collapse1');
+                UI.Collapse.init(collapse1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        const collapse1 = dom.findOne('#collapse1');
+                        return UI.Collapse.init(collapse1).toggle() instanceof UI.Collapse;
+                    }),
+                    true
+                );
+            });
+        });
+
+        it('returns the collapse (query)', async function() {
+            await exec(_ => {
+                dom.query('#collapse1').collapse('show');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#collapse1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.query('#collapse1').collapse('toggle') instanceof UI.Collapse;
+                    }),
+                    true
+                );
             });
         });
 

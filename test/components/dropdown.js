@@ -72,6 +72,15 @@ describe('dropdown', function() {
             );
         });
 
+        it('returns the dropdown (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#dropdownToggle1').dropdown() instanceof UI.Dropdown;
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#dispose', function() {
@@ -266,6 +275,25 @@ describe('dropdown', function() {
             });
         });
 
+        it('returns the dropdown', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const dropdownToggle1 = dom.findOne('#dropdownToggle1');
+                    return UI.Dropdown.init(dropdownToggle1).show() instanceof UI.Dropdown;
+                }),
+                true
+            );
+        });
+
+        it('returns the dropdown (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#dropdownToggle1').dropdown('show') instanceof UI.Dropdown;
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#hide', function() {
@@ -432,6 +460,42 @@ describe('dropdown', function() {
             });
         });
 
+        it('returns the dropdown', async function() {
+            await exec(_ => {
+                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
+                UI.Dropdown.init(dropdownToggle1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        const dropdownToggle1 = dom.findOne('#dropdownToggle1');
+                        return UI.Dropdown.init(dropdownToggle1).hide() instanceof UI.Dropdown;
+                    }),
+                    true
+                );
+            });
+        });
+
+        it('returns the dropdown (query)', async function() {
+            await exec(_ => {
+                dom.query('#dropdownToggle1').dropdown('show');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.query('#dropdownToggle1').dropdown('hide') instanceof UI.Dropdown;
+                    }),
+                    true
+                );
+            });
+        });
+
     });
 
     describe('#toggle (show)', function() {
@@ -569,6 +633,25 @@ describe('dropdown', function() {
                     .toggle()
                     .toggle();
             });
+        });
+
+        it('returns the dropdown', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const dropdownToggle1 = dom.findOne('#dropdownToggle1');
+                    return UI.Dropdown.init(dropdownToggle1).toggle() instanceof UI.Dropdown;
+                }),
+                true
+            );
+        });
+
+        it('returns the dropdown (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#dropdownToggle1').dropdown('toggle') instanceof UI.Dropdown;
+                }),
+                true
+            );
         });
 
     });
@@ -746,6 +829,42 @@ describe('dropdown', function() {
                         .toggle()
                         .toggle();
                 });
+            });
+        });
+
+        it('returns the dropdown', async function() {
+            await exec(_ => {
+                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
+                UI.Dropdown.init(dropdownToggle1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        const dropdownToggle1 = dom.findOne('#dropdownToggle1');
+                        return UI.Dropdown.init(dropdownToggle1).toggle() instanceof UI.Dropdown;
+                    }),
+                    true
+                );
+            });
+        });
+
+        it('returns the dropdown (query)', async function() {
+            await exec(_ => {
+                dom.query('#dropdownToggle1').dropdown('show');
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.query('#dropdownToggle1').dropdown('toggle') instanceof UI.Dropdown;
+                    }),
+                    true
+                );
             });
         });
 

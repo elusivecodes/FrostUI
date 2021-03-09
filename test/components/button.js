@@ -57,6 +57,15 @@ describe('Button', function() {
             );
         });
 
+        it('returns the button (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#button1').button() instanceof UI.Button;
+                }),
+                true
+            );
+        });
+
     });
 
     describe('#dispose', function() {
@@ -193,6 +202,25 @@ describe('Button', function() {
                 }),
                 '<button id="button1" data-ui-toggle="button" class="" aria-pressed="false"></button>' +
                 '<button id="button2" data-ui-toggle="button"></button>'
+            );
+        });
+
+        it('returns the button', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const button1 = dom.findOne('#button1');
+                    return UI.Button.init(button1).toggle() instanceof UI.Button;
+                }),
+                true
+            );
+        });
+
+        it('returns the buttons (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.query('#button1').button('toggle') instanceof UI.Button;
+                }),
+                true
             );
         });
 
