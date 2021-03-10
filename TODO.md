@@ -1,6 +1,6 @@
 # FrostUI
 
-[ ] Add popper dropdown tests (update)
+[~] Add popper dropdown tests (update)
 [ ] Add popper tooltip tests (update)
 [ ] Add popper popver tests (update)
 

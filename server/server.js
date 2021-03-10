@@ -21,8 +21,8 @@ const server = http.createServer((request, response) => {
         }
         if (filePath === '/assets/frost-ui-bundle.js') {
             filePath = './dist/frost-ui-bundle.js';
-        } else if (filePath === '/assets/frost-ui-bundle.css') {
-            filePath = './dist/frost-ui-bundle.css';
+        } else if (filePath === '/assets/frost-ui.css') {
+            filePath = './dist/frost-ui.css';
         } else {
             filePath = './public/' + filePath;
         }

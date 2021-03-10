@@ -85,6 +85,24 @@ after(async function() {
 const exec = async (callback, data) =>
     await page.evaluate(callback, data);
 
+const loadCSS = async _ => {
+    await exec(_ => {
+        dom.setHTML(
+            document.head,
+            '<link rel="stylesheet" href="assets/frost-ui.css">'
+        );
+    });
+
+    await page.waitForFunction(_ => {
+        const test = dom.create('div', { class: 'text-center' });
+        dom.append(document.body, test);
+        const result = dom.css(test, 'textAlign') === 'center';
+        dom.detach(test);
+        return result;
+    });
+};
+
 module.exports = {
-    exec
+    exec,
+    loadCSS
 };

@@ -32,12 +32,6 @@ class Popper extends BaseComponent {
 
         PopperSet.add(this);
 
-        this._scrollParent = this.constructor._getScrollParent(this._node);
-
-        if (this._scrollParent) {
-            PopperSet.addOverflow(this._scrollParent, this);
-        }
-
         window.requestAnimationFrame(_ => {
             this.update();
         });
@@ -51,12 +45,7 @@ class Popper extends BaseComponent {
     dispose() {
         PopperSet.remove(this);
 
-        if (this._scrollParent) {
-            PopperSet.removeOverflow(this._scrollParent, this);
-        }
-
         this._resetStyle = null;
-        this._scrollParent = null;
 
         super.dispose();
     }
@@ -87,8 +76,10 @@ class Popper extends BaseComponent {
             return this;
         }
 
-        const scrollBox = this._scrollParent ?
-            dom.rect(this._scrollParent, true) :
+        const scrollParent = this.constructor._getScrollParent(this._node);
+
+        const scrollBox = scrollParent ?
+            dom.rect(scrollParent, true) :
             null;
 
         const containerBox = this._settings.container ?
@@ -178,9 +169,9 @@ class Popper extends BaseComponent {
         this.constructor._adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, this._settings.minContact);
 
         // compensate for scroll parent
-        if (this._scrollParent) {
-            offset.x += dom.getScrollX(this._scrollParent);
-            offset.y += dom.getScrollY(this._scrollParent);
+        if (scrollParent) {
+            offset.x += dom.getScrollX(scrollParent);
+            offset.y += dom.getScrollY(scrollParent);
         }
 
         // update position

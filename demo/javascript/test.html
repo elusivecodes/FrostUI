@@ -14,7 +14,7 @@
     <div class="text-center" style="padding: 800px 600px;">
         <div class="dropdown">
             <button id="dropdownLink" class="btn btn-secondary dropdown-toggle" role="button" data-ui-toggle="dropdown">Dropdown</button>
-            <div class="dropdown-menu" aria-labelledby="dropdownLink">
+            <div class="dropdown-menu show" aria-labelledby="dropdownLink">
                 <button class="dropdown-item">Action</button>
                 <button class="dropdown-item">Action</button>
                 <button class="dropdown-item">Action</button>
@@ -22,6 +22,11 @@
         </div>
     </div>
     <script>
+        const dropdownLink = dom.findOne('[data-ui-toggle="dropdown"]');
+        UI.Dropdown.init(dropdownLink, {
+            placement: 'top',
+            position: 'start'
+        });
         window.scrollTo(250, 520);
     </script>
 </body>

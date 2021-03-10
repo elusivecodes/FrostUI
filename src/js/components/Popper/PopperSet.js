@@ -17,36 +17,30 @@ class PopperSet {
 
         dom.addEvent(
             window,
-            'resize.ui.popper scroll.ui.popper',
+            'resize.ui.popper',
             DOM.debounce(_ => {
                 for (const popper of this._poppers) {
                     popper.update();
                 }
             })
         );
-        this._running = true;
-    }
 
-    /**
-     * Add a Popper to a scrolling parent set.
-     * @param {HTMLElement} scrollParent The scrolling container element.
-     * @param {Popper} popper The popper to add.
-     */
-    static addOverflow(scrollParent, popper) {
-        if (!this._popperOverflows.has(scrollParent)) {
-            this._popperOverflows.set(scrollParent, []);
-            dom.addEvent(
-                scrollParent,
-                'scroll.ui.popper',
-                DOM.debounce(_ => {
-                    for (const popper of this._popperOverflows.get(scrollParent)) {
-                        popper.update();
+        dom.addEvent(
+            document,
+            'scroll.ui.popper',
+            DOM.debounce(e => {
+                for (const popper of this._poppers) {
+                    if (!Core.isDocument(e.target) && !dom.hasDescendent(e.target, popper._node)) {
+                        continue;
                     }
-                })
-            );
-        }
 
-        this._popperOverflows.get(scrollParent).push(popper);
+                    popper.update();
+                }
+            }),
+            true
+        );
+
+        this._running = true;
     }
 
     /**
@@ -62,27 +56,6 @@ class PopperSet {
 
         dom.removeEvent(window, 'resize.ui.popper scroll.ui.popper');
         this._running = false;
-    }
-
-    /**
-     * Remove a Popper from a scrolling parent set.
-     * @param {HTMLElement} scrollParent The scrolling container element.
-     * @param {Popper} popper The popper to remove.
-     */
-    static removeOverflow(scrollParent, popper) {
-        if (!this._popperOverflows.has(scrollParent)) {
-            return;
-        }
-
-        const poppers = this._popperOverflows.get(scrollParent).filter(oldPopper => oldPopper !== popper);
-
-        if (poppers.length) {
-            this._popperOverflows.set(scrollParent, poppers);
-            return;
-        }
-
-        this._popperOverflows.delete(scrollParent);
-        dom.removeEvent(scrollParent, 'scroll.ui.popper');
     }
 
 }
