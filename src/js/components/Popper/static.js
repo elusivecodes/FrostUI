@@ -325,6 +325,33 @@ Object.assign(Popper, {
     },
 
     /**
+     * Get the size of the scrollbar.
+     * @returns {number} The scrollbar size.
+     */
+    _getScrollbarSize() {
+        if (this._scrollbarSize) {
+            return this._scrollbarSize;
+        }
+
+        const div = dom.create('div', {
+            style: {
+                width: '100px',
+                height: '100px',
+                overflow: 'scroll',
+                position: 'absolute',
+                top: '-9999px'
+            }
+        });
+        dom.append(document.body, div);
+
+        this._scrollbarSize = dom.getProperty(div, 'offsetWidth') - dom.width(div);
+
+        dom.detach(div);
+
+        return this._scrollbarSize;
+    },
+
+    /**
      * Get the scroll parent of the node.
      * @param {HTMLElement} node The input node.
      * @return {HTMLElement} The scroll parent.
@@ -368,17 +395,30 @@ Object.assign(Popper, {
     _windowContainer() {
         const scrollX = dom.getScrollX(window);
         const scrollY = dom.getScrollY(window);
-        const windowWidth = dom.width(document);
-        const windowHeight = dom.height(document);
+        const windowWidth = dom.width(window);
+        const windowHeight = dom.height(window);
+        const documentWidth = dom.width(document, DOM.SCROLL_BOX);
+        const documentHeight = dom.height(document, DOM.SCROLL_BOX);
+
+        let realWidth = windowWidth;
+        let realHeight = windowHeight;
+
+        if (documentWidth > windowWidth) {
+            realWidth -= this._getScrollbarSize();
+        }
+
+        if (documentHeight > windowHeight) {
+            realHeight -= this._getScrollbarSize();
+        }
 
         return {
             x: scrollX,
             y: scrollY,
-            width: windowWidth,
-            height: windowHeight,
+            width: realWidth,
+            height: realHeight,
             top: scrollY,
-            right: scrollX + windowWidth,
-            bottom: scrollY + windowHeight,
+            right: scrollX + realWidth,
+            bottom: scrollY + realHeight,
             left: scrollX
         };
     }

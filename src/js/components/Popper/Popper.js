@@ -163,10 +163,11 @@ class Popper extends BaseComponent {
         offset.x -= parseInt(dom.css(this._node, 'margin-left'));
         offset.y -= parseInt(dom.css(this._node, 'margin-top'));
 
-        // compensate for borders
-
         // corrective positioning
         this.constructor._adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, this._settings.minContact);
+
+        offset.x = Math.round(offset.x);
+        offset.y = Math.round(offset.y);
 
         // compensate for scroll parent
         if (scrollParent) {

@@ -1,5 +1,7 @@
 const puppeteer = require('puppeteer');
 const assert = require('assert');
+const fs = require('fs');
+const path = require('path');
 const server = require('../server/server.js');
 const port = 3001;
 
@@ -27,6 +29,8 @@ before(async function() {
     await page.goto('http://localhost:3001', {
         waitUntil: 'domcontentloaded'
     });
+
+    await page.setViewport({ width: 800, height: 600 });
 
     assert.strictEqual(
         await page.evaluate(_ => {
@@ -102,7 +106,18 @@ const loadCSS = async _ => {
     });
 };
 
+const screenshot = async (filePath, type = 'jpeg', fullPage = false) => {
+    const dir = path.dirname(filePath);
+
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
+
+    await page.screenshot({ path: filePath, type, fullPage });
+};
+
 module.exports = {
     exec,
-    loadCSS
+    loadCSS,
+    screenshot
 };

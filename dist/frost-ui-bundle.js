@@ -12536,10 +12536,11 @@
                 offset.x -= parseInt(dom.css(this._node, 'margin-left'));
                 offset.y -= parseInt(dom.css(this._node, 'margin-top'));
 
-                // compensate for borders
-
                 // corrective positioning
                 this.constructor._adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, this._settings.minContact);
+
+                offset.x = Math.round(offset.x);
+                offset.y = Math.round(offset.y);
 
                 // compensate for scroll parent
                 if (scrollParent) {
@@ -12663,7 +12664,7 @@
                 const arrowBox = dom.rect(this._settings.arrow, true);
 
                 if (['top', 'bottom'].includes(placement)) {
-                    arrowStyles[placement === 'top' ? 'bottom' : 'top'] = -arrowBox.height;
+                    arrowStyles[placement === 'top' ? 'bottom' : 'top'] = -Math.round(arrowBox.height);
                     const diff = (referenceBox.width - nodeBox.width) / 2;
 
                     let offset = (nodeBox.width / 2) - (arrowBox.width / 2);
@@ -12681,9 +12682,13 @@
                         max -= arrowBox.width / 2 - referenceBox.width / 2;
                     }
 
+                    offset = Math.round(offset);
+                    min = Math.round(min);
+                    max = Math.round(max);
+
                     arrowStyles.left = Core.clamp(offset, min, max);
                 } else {
-                    arrowStyles[placement === 'right' ? 'left' : 'right'] = -arrowBox.width;
+                    arrowStyles[placement === 'right' ? 'left' : 'right'] = -Math.round(arrowBox.width);
 
                     const diff = (referenceBox.height - nodeBox.height) / 2;
 
@@ -12701,6 +12706,10 @@
                         min -= arrowBox.height - referenceBox.height / 2;
                         max -= arrowBox.height - referenceBox.height / 2;
                     }
+
+                    offset = Math.round(offset);
+                    min = Math.round(min);
+                    max = Math.round(max);
 
                     arrowStyles.top = Core.clamp(offset, min, max);
                 }
@@ -13038,6 +13047,33 @@
             },
 
             /**
+             * Get the size of the scrollbar.
+             * @returns {number} The scrollbar size.
+             */
+            _getScrollbarSize() {
+                if (this._scrollbarSize) {
+                    return this._scrollbarSize;
+                }
+
+                const div = dom.create('div', {
+                    style: {
+                        width: '100px',
+                        height: '100px',
+                        overflow: 'scroll',
+                        position: 'absolute',
+                        top: '-9999px'
+                    }
+                });
+                dom.append(document.body, div);
+
+                this._scrollbarSize = dom.getProperty(div, 'offsetWidth') - dom.width(div);
+
+                dom.detach(div);
+
+                return this._scrollbarSize;
+            },
+
+            /**
              * Get the scroll parent of the node.
              * @param {HTMLElement} node The input node.
              * @return {HTMLElement} The scroll parent.
@@ -13081,17 +13117,30 @@
             _windowContainer() {
                 const scrollX = dom.getScrollX(window);
                 const scrollY = dom.getScrollY(window);
-                const windowWidth = dom.width(document);
-                const windowHeight = dom.height(document);
+                const windowWidth = dom.width(window);
+                const windowHeight = dom.height(window);
+                const documentWidth = dom.width(document, DOM.SCROLL_BOX);
+                const documentHeight = dom.height(document, DOM.SCROLL_BOX);
+
+                let realWidth = windowWidth;
+                let realHeight = windowHeight;
+
+                if (documentWidth > windowWidth) {
+                    realWidth -= this._getScrollbarSize();
+                }
+
+                if (documentHeight > windowHeight) {
+                    realHeight -= this._getScrollbarSize();
+                }
 
                 return {
                     x: scrollX,
                     y: scrollY,
-                    width: windowWidth,
-                    height: windowHeight,
+                    width: realWidth,
+                    height: realHeight,
                     top: scrollY,
-                    right: scrollX + windowWidth,
-                    bottom: scrollY + windowHeight,
+                    right: scrollX + realWidth,
+                    bottom: scrollY + realHeight,
                     left: scrollX
                 };
             }
