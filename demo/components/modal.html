@@ -311,6 +311,54 @@
                 </div>
             </div>
         </div>
+
+        <h4>Stackable</h4>
+        <div class="mb-4">
+            <button class="btn ripple btn-primary" role="button" data-ui-toggle="modal" data-ui-target="#modalStack1">Open
+                Modal</button>
+        </div>
+        <div id="modalStack1" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalStack1Title" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content shadow">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalStack1Title">Modal title</h5>
+                        <button type="button" class="btn-close" data-ui-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Modals can be stacked on top of each other.</p>
+                        <p>This modal is larger and contains extra content, to demonstrate how backdrops overlay over other modals.</p>
+                        <button class="btn ripple btn-primary" role="button" data-ui-toggle="modal" data-ui-target="#modalStack2">Open Modal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="modalStack2" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalStack2Title" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content shadow">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalStack2Title">Modal title</h5>
+                        <button type="button" class="btn-close" data-ui-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Modals stacking can go as deep as you want.</p>
+                        <button class="btn ripple btn-primary" role="button" data-ui-toggle="modal" data-ui-target="#modalStack3">Open Modal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="modalStack3" class="modal" tabindex="-1" role="dialog" aria-labelledby="modalStack3Title" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content shadow">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalStack3Title">Modal title</h5>
+                        <button type="button" class="btn-close" data-ui-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>This is the body of the modal.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <script>
         const tooltips = dom.find('[data-ui-toggle="tooltip"]');

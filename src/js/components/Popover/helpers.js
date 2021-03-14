@@ -21,7 +21,6 @@ Object.assign(Popover.prototype, {
      * Update the Popover and append to the DOM.
      */
     _show() {
-
         if (this._settings.appendTo) {
             dom.append(this._settings.appendTo, this._popover);
         } else {
@@ -40,6 +39,10 @@ Object.assign(Popover.prototype, {
                 minContact: this._settings.minContact
             }
         );
+
+        window.requestAnimationFrame(_ => {
+            this.update();
+        });
     }
 
 });

@@ -26,7 +26,7 @@ Object.assign(Popper, {
 
             const minSize = minContact !== false ?
                 minContact :
-                referenceBox.height;
+                Math.min(referenceBox.height, nodeBox.height);
 
             if (offsetY + nodeBox.height > minimumBox.bottom) {
                 // bottom of offset node is below the container
@@ -54,7 +54,7 @@ Object.assign(Popper, {
 
             const minSize = minContact !== false ?
                 minContact :
-                referenceBox.width;
+                Math.min(referenceBox.width, nodeBox.width);
 
             if (offsetX + nodeBox.width > minimumBox.right) {
                 // right of offset node is to the right of the container
@@ -404,11 +404,11 @@ Object.assign(Popper, {
         let realHeight = windowHeight;
 
         if (documentWidth > windowWidth) {
-            realWidth -= this._getScrollbarSize();
+            realHeight -= this._getScrollbarSize();
         }
 
         if (documentHeight > windowHeight) {
-            realHeight -= this._getScrollbarSize();
+            realWidth -= this._getScrollbarSize();
         }
 
         return {

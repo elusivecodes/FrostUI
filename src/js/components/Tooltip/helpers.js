@@ -38,6 +38,10 @@ Object.assign(Tooltip.prototype, {
                 minContact: this._settings.minContact
             }
         );
+
+        window.requestAnimationFrame(_ => {
+            this.update();
+        });
     }
 
 });

@@ -26,17 +26,13 @@ class Popper extends BaseComponent {
         if (this._settings.useGpu) {
             this._resetStyle.transform = ''
         } else {
-            this._resetStyle.marginLeft = ''
-            this._resetStyle.marginTop = '';
+            this._resetStyle.marginLeft = 0;
+            this._resetStyle.marginTop = 0;
         }
 
         PopperSet.add(this);
 
-        window.requestAnimationFrame(_ => {
-            this.update();
-        });
-
-        this.update();
+        this.update(true);
     }
 
     /**
@@ -54,7 +50,7 @@ class Popper extends BaseComponent {
      * Update the Popper position.
      * @returns {Popper} The Popper.
      */
-    update() {
+    update(force = false) {
         if (!dom.isConnected(this._node)) {
             return this;
         }
@@ -72,7 +68,7 @@ class Popper extends BaseComponent {
         const windowBox = this.constructor._windowContainer();
 
         // check object could be seen
-        if (this.constructor._isNodeHidden(nodeBox, referenceBox, windowBox, this._settings.spacing)) {
+        if (!force && this.constructor._isNodeHidden(nodeBox, referenceBox, windowBox, this._settings.spacing)) {
             return this;
         }
 
@@ -178,10 +174,10 @@ class Popper extends BaseComponent {
         // update position
         const style = {};
         if (this._settings.useGpu) {
-            style.transform = 'translate3d(' + offset.x + 'px , ' + offset.y + 'px , 0)'
+            style.transform = `translate3d(${offset.x}px , ${offset.y}px , 0)`;
         } else {
-            style.marginLeft = offset.x;
-            style.marginTop = offset.y;
+            style.marginLeft = `${offset.x}px`;
+            style.marginTop = `${offset.y}px`;
         }
 
         dom.setStyle(this._node, style);

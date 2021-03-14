@@ -24,7 +24,7 @@ Object.assign(Popper.prototype, {
         const arrowBox = dom.rect(this._settings.arrow, true);
 
         if (['top', 'bottom'].includes(placement)) {
-            arrowStyles[placement === 'top' ? 'bottom' : 'top'] = -Math.round(arrowBox.height);
+            arrowStyles[placement === 'top' ? 'bottom' : 'top'] = -Math.floor(arrowBox.height);
             const diff = (referenceBox.width - nodeBox.width) / 2;
 
             let offset = (nodeBox.width / 2) - (arrowBox.width / 2);
@@ -48,7 +48,7 @@ Object.assign(Popper.prototype, {
 
             arrowStyles.left = Core.clamp(offset, min, max);
         } else {
-            arrowStyles[placement === 'right' ? 'left' : 'right'] = -Math.round(arrowBox.width);
+            arrowStyles[placement === 'right' ? 'left' : 'right'] = -Math.floor(arrowBox.width);
 
             const diff = (referenceBox.height - nodeBox.height) / 2;
 
@@ -65,6 +65,8 @@ Object.assign(Popper.prototype, {
             if (referenceBox.height < arrowBox.height * 2) {
                 min -= arrowBox.height - referenceBox.height / 2;
                 max -= arrowBox.height - referenceBox.height / 2;
+            } else {
+                max -= arrowBox.height;
             }
 
             offset = Math.round(offset);

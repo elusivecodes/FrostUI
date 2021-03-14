@@ -103,7 +103,12 @@ class Dropdown extends BaseComponent {
 
         this._animating = true;
         dom.addClass(this._menuNode, 'show');
+
         this.update();
+
+        window.requestAnimationFrame(_ => {
+            this.update();
+        });
 
         dom.fadeIn(this._menuNode, {
             duration: this._settings.duration
@@ -133,7 +138,7 @@ class Dropdown extends BaseComponent {
      */
     update() {
         if (this._settings.display === 'dynamic') {
-            this._popper.update();
+            this._popper.update(true);
         }
 
         return this;

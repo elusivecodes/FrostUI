@@ -54,6 +54,8 @@ class Modal extends BaseComponent {
 
         this._animating = true;
 
+        this.constructor.stack.delete(this);
+
         Promise.all([
             dom.fadeOut(this._dialog, {
                 duration: this._settings.duration
@@ -71,6 +73,7 @@ class Modal extends BaseComponent {
 
             dom.removeClass(this._node, 'show');
             dom.removeClass(document.body, 'modal-open');
+            dom.setStyle(this._node, 'zIndex', '');
 
             if (this._settings.backdrop) {
                 dom.remove(this._backdrop);
@@ -106,14 +109,29 @@ class Modal extends BaseComponent {
         this._activeTarget = activeTarget;
         this._animating = true;
 
+        const stackSize = this.constructor.stack.size;
+
+        if (stackSize) {
+            const zIndex = dom.css(this._node, 'zIndex');
+            dom.setStyle(this._node, 'zIndex', parseInt(zIndex) + (stackSize * 20));
+        }
+
         dom.addClass(this._node, 'show');
         dom.addClass(document.body, 'modal-open');
+
+        this.constructor.stack.add(this);
 
         if (this._settings.backdrop) {
             this._backdrop = dom.create('div', {
                 class: 'modal-backdrop'
             });
+
             dom.append(document.body, this._backdrop);
+
+            if (stackSize) {
+                const zIndex = dom.css(this._backdrop, 'zIndex');
+                dom.setStyle(this._backdrop, 'zIndex', parseInt(zIndex) + (stackSize * 20));
+            }
         }
 
         Promise.all([

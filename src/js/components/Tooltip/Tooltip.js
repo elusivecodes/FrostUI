@@ -100,11 +100,8 @@ class Tooltip extends BaseComponent {
             return this;
         }
 
-        if (this._animating) {
-            dom.stop(this._tooltip);
-        }
-
         if (
+            this._animating ||
             !dom.isConnected(this._tooltip) ||
             !dom.triggerOne(this._node, 'hide.ui.tooltip')
         ) {
@@ -170,11 +167,8 @@ class Tooltip extends BaseComponent {
             return this;
         }
 
-        if (this._animating) {
-            dom.stop(this._tooltip);
-        }
-
         if (
+            this._animating ||
             dom.isConnected(this._tooltip) ||
             !dom.triggerOne(this._node, 'show.ui.tooltip')
         ) {
@@ -213,7 +207,7 @@ class Tooltip extends BaseComponent {
      */
     update() {
         if (this._popper) {
-            this._popper.update();
+            this._popper.update(true);
         }
 
         return this;

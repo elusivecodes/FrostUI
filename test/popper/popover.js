@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { exec, loadCSS } = require('../setup');
+const { exec, loadCSS, screenshot } = require('../setup');
 
 describe('popper popover', function() {
 
@@ -8,87 +8,958 @@ describe('popper popover', function() {
         await exec(_ => {
             dom.setHTML(
                 document.body,
-                ''
+                '<div class="text-center" style="padding: 1600px 1200px;">' +
+                '<button id="popoverToggle" class="btn btn-secondary" role="button" data-ui-title="Title" data-ui-content="This is the popover content.">Popover</button>' +
+                '</div>'
             );
-            window.scrollTo(250, 520);
+            window.scrollTo(850, 1300);
         });
     });
 
     describe('placement/position options', function() {
 
-        it('works with top/start');
-        it('works with top/center');
-        it('works with top/end');
-        it('works with right/start');
-        it('works with right/center');
-        it('works with right/end');
-        it('works with bottom/start');
-        it('works with bottom/center');
-        it('works with bottom/end');
-        it('works with left/start');
-        it('works with left/center');
-        it('works with left/end');
+        it('works with top/start', async function() {
+            await exec(_ => {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'top',
+                    position: 'start',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/placement/top-start.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1200px, 1513px, 0px)'
+            );
+        });
+
+        it('works with top/center', async function() {
+            await exec(_ => {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'top',
+                    position: 'center',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/placement/top-center.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1135px, 1513px, 0px)'
+            );
+        });
+
+        it('works with top/end', async function() {
+            await exec(_ => {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'top',
+                    position: 'end',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/placement/top-end.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1070px, 1513px, 0px)'
+            );
+        });
+
+        it('works with right/start', async function() {
+            await exec(_ => {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'right',
+                    position: 'start',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/placement/right-start.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1290px, 1600px, 0px)'
+            );
+        });
+
+        it('works with right/center', async function() {
+            await exec(_ => {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'right',
+                    position: 'center',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/placement/right-center.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1290px, 1576px, 0px)'
+            );
+        });
+
+        it('works with right/end', async function() {
+            await exec(_ => {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'right',
+                    position: 'end',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/placement/right-end.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1290px, 1553px, 0px)'
+            );
+        });
+
+        it('works with bottom/start', async function() {
+            await exec(_ => {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'bottom',
+                    position: 'start',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/placement/bottom-start.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1200px, 1640px, 0px)'
+            );
+        });
+
+        it('works with bottom/center', async function() {
+            await exec(_ => {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'bottom',
+                    position: 'center',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/placement/bottom-center.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1135px, 1640px, 0px)'
+            );
+        });
+
+        it('works with bottom/end', async function() {
+            await exec(_ => {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'bottom',
+                    position: 'end',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/placement/bottom-end.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1070px, 1640px, 0px)'
+            );
+        });
+
+        it('works with left/start', async function() {
+            await exec(_ => {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'left',
+                    position: 'start',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/placement/left-start.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(980px, 1600px, 0px)'
+            );
+        });
+
+        it('works with left/center', async function() {
+            await exec(_ => {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'left',
+                    position: 'center',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/placement/left-center.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(980px, 1576px, 0px)'
+            );
+        });
+
+        it('works with left/end', async function() {
+            await exec(_ => {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'left',
+                    position: 'end',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/placement/left-end.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(980px, 1553px, 0px)'
+            );
+        });
 
     });
 
-    describe('edges', function() {
+    describe('placement flip', function() {
 
-        it('works with top/start and right edge');
-        it('works with top/center and top edge');
-        it('works with top/center and right edge');
-        it('works with top/center and left edge');
-        it('works with top/end and left edge');
-        it('works with right/start and bottom edge');
-        it('works with right/center and top edge');
-        it('works with right/center and right edge');
-        it('works with right/center and bottom edge');
-        it('works with right/end and top edge');
-        it('works with bottom/start and right edge');
-        it('works with bottom/center and right edge');
-        it('works with bottom/center and bottom edge');
-        it('works with bottom/center and left edge');
-        it('works with bottom/end and left edge');
-        it('works with left/start and bottom edge');
-        it('works with left/center and top edge');
-        it('works with left/center and bottom edge');
-        it('works with left/center and left edge');
-        it('works with left/end and top edge');
+        it('works with top/center and top edge', async function() {
+            await exec(_ => {
+                dom.setScrollY(document, 1520);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'top',
+                    position: 'center',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/placement-flip/top-center-top.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1135px, 1640px, 0px)'
+            );
+        });
+
+        it('works with right/center and right edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(window, 600);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'right',
+                    position: 'center',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/placement-flip/right-center-right.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(980px, 1576px, 0px)'
+            );
+        });
+
+        it('works with bottom/center and bottom edge', async function() {
+            await exec(_ => {
+                dom.setScrollY(window, 1115);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'bottom',
+                    position: 'center',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/placement-flip/bottom-center-bottom.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1135px, 1513px, 0px)'
+            );
+        });
+
+        it('works with left/center and left edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(document, 1100);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'left',
+                    position: 'center',
+                    duration: 0
+                });
+                popover.show();
+                return dom.getStyle('.popover', 'transform');
+            });
+            await screenshot('./screens/popover/placement-flip/left-center-left.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1290px, 1576px, 0px)'
+            );
+        });
+
+    });
+
+    describe('position clamp', function() {
+
+        it('works with top/start and right edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(document, 480);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'top',
+                    position: 'start',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/position-clamp/top-start-right.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1069px, 1513px, 0px)'
+            );
+        });
+
+        it('works with top/center and right edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(document, 480);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'top',
+                    position: 'center',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/position-clamp/top-center-right.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1069px, 1513px, 0px)'
+            );
+        });
+
+        it('works with top/center and left edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(document, 1200);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'top',
+                    position: 'center',
+                    duration: 0
+                });
+                popover.show();
+                return dom.getStyle('.popover', 'transform');
+            });
+            await screenshot('./screens/popover/position-clamp/top-center-left.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1200px, 1513px, 0px)'
+            );
+        });
+
+        it('works with top/end and left edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(document, 1200);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'top',
+                    position: 'end',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/position-clamp/top-end-left.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1200px, 1513px, 0px)'
+            );
+        });
+
+        it('works with right/start and bottom edge', async function() {
+            await exec(_ => {
+                dom.setScrollY(window, 1035);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'right',
+                    position: 'start',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/position-clamp/right-start-bottom.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1290px, 1553px, 0px)'
+            );
+        });
+
+        it('works with right/center and top edge', async function() {
+            await exec(_ => {
+                dom.setScrollY(window, 1600);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'right',
+                    position: 'center',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/position-clamp/right-center-top.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1290px, 1600px, 0px)'
+            );
+        });
+
+        it('works with right/center and bottom edge', async function() {
+            await exec(_ => {
+                dom.setScrollY(window, 1035);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'right',
+                    position: 'center',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/position-clamp/right-center-bottom.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1290px, 1553px, 0px)'
+            );
+        });
+
+        it('works with right/end and top edge', async function() {
+            await exec(_ => {
+                dom.setScrollY(window, 1600);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'right',
+                    position: 'end',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/position-clamp/right-end-top.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1290px, 1600px, 0px)'
+            );
+        });
+
+        it('works with bottom/start and right edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(window, 480);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'bottom',
+                    position: 'start',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/position-clamp/bottom-start-right.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1069px, 1640px, 0px)'
+            );
+        });
+
+        it('works with bottom/center and right edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(window, 480);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'bottom',
+                    position: 'center',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/position-clamp/bottom-center-right.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1069px, 1640px, 0px)'
+            );
+        });
+
+        it('works with bottom/center and left edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(window, 1200);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'bottom',
+                    position: 'center',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/position-clamp/bottom-center-left.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1200px, 1640px, 0px)'
+            );
+        });
+
+        it('works with bottom/end and left edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(window, 1200);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'bottom',
+                    position: 'end',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/position-clamp/bottom-end-left.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1200px, 1640px, 0px)'
+            );
+        });
+
+        it('works with left/start and bottom edge', async function() {
+            await exec(_ => {
+                dom.setScrollY(window, 1035);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'left',
+                    position: 'start',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/position-clamp/left-start-bottom.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(980px, 1553px, 0px)'
+            );
+        });
+
+        it('works with left/center and top edge', async function() {
+            await exec(_ => {
+                dom.setScrollY(document, 1600);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'left',
+                    position: 'center',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/position-clamp/left-center-top.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(980px, 1600px, 0px)'
+            );
+        });
+
+        it('works with left/center and bottom edge', async function() {
+            await exec(_ => {
+                dom.setScrollY(window, 1035);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'left',
+                    position: 'center',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/position-clamp/left-center-bottom.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(980px, 1553px, 0px)'
+            );
+        });
+
+        it('works with left/end and top edge', async function() {
+            await exec(_ => {
+                dom.setScrollY(document, 1600);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'left',
+                    position: 'end',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/position-clamp/left-end-top.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(980px, 1600px, 0px)'
+            );
+        });
 
     });
 
     describe('fixed option', function() {
 
-        it('works with top edge');
-        it('works with right edge');
-        it('works with bottom edge');
-        it('works with left edge');
+        it('works with top edge', async function() {
+            await exec(_ => {
+                dom.setScrollY(document, 1520);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'top',
+                    position: 'center',
+                    fixed: true,
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/fixed/top.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1135px, 1513px, 0px)'
+            );
+        });
+
+        it('works with right edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(window, 600);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'right',
+                    position: 'center',
+                    fixed: true,
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/fixed/right.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1290px, 1576px, 0px)'
+            );
+        });
+
+        it('works with bottom edge', async function() {
+            await exec(_ => {
+                dom.setScrollY(window, 1115);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'bottom',
+                    position: 'center',
+                    fixed: true,
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/fixed/bottom.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1135px, 1640px, 0px)'
+            );
+        });
+
+        it('works with left edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(document, 1100);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'left',
+                    position: 'center',
+                    fixed: true,
+                    duration: 0
+                });
+                popover.show();
+                return dom.getStyle('.popover', 'transform');
+            });
+            await screenshot('./screens/popover/fixed/left.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(980px, 1576px, 0px)'
+            );
+        });
 
     });
 
     describe('spacing option', function() {
 
-        it('withs with spacing and top');
-        it('withs with spacing and right');
-        it('withs with spacing and bottom');
-        it('withs with spacing and left');
+        it('works with spacing and top', async function() {
+            await exec(_ => {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'top',
+                    position: 'center',
+                    spacing: 50,
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/spacing/top.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1135px, 1466px, 0px)'
+            );
+        });
+
+        it('works with spacing and right', async function() {
+            await exec(_ => {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'right',
+                    position: 'center',
+                    spacing: 50,
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/spacing/right.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1337px, 1576px, 0px)'
+            );
+        });
+
+        it('works with spacing and bottom', async function() {
+            await exec(_ => {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'bottom',
+                    position: 'center',
+                    spacing: 50,
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/spacing/bottom.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1135px, 1687px, 0px)'
+            );
+        });
+
+        it('works with spacing and left', async function() {
+            await exec(_ => {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'left',
+                    position: 'center',
+                    spacing: 50,
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/spacing/left.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(933px, 1576px, 0px)'
+            );
+        });
 
     });
 
     describe('minContact option', function() {
 
-        it('withs with minContact and top');
-        it('withs with minContact and right');
-        it('withs with minContact and bottom');
-        it('withs with minContact and left');
+        it('works with minContact and top edge', async function() {
+            await exec(_ => {
+                dom.setScrollY(document, 1620);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'right',
+                    position: 'center',
+                    minContact: 10,
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/min-contact/top.jpeg');
 
-    });
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1290px, 1620px, 0px)'
+            );
+        });
 
-    describe('useGpu option', function() {
+        it('works with minContact and right edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(document, 460);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'top',
+                    position: 'center',
+                    minContact: 10,
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/min-contact/right.jpeg');
 
-        it('withs with useGpu and top');
-        it('withs with useGpu and right');
-        it('withs with useGpu and bottom');
-        it('withs with useGpu and left');
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1043px, 1513px, 0px)'
+            );
+        });
+
+        it('works with minContact and bottom edge', async function() {
+            await exec(_ => {
+                dom.setScrollY(document, 1015);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'left',
+                    position: 'center',
+                    minContact: 10,
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/min-contact/bottom.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(980px, 1531px, 0px)'
+            );
+        });
+
+        it('works with minContact and left edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(document, 1220);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'bottom',
+                    position: 'center',
+                    minContact: 10,
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/min-contact/left.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1220px, 1640px, 0px)'
+            );
+        });
 
     });
 

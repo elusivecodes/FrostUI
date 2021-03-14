@@ -1,4 +1,3 @@
-const { strictEqual } = require('assert');
 const assert = require('assert');
 const { exec, loadCSS, screenshot } = require('../setup');
 
@@ -11,7 +10,7 @@ describe('popper dropdown', function() {
                 document.body,
                 '<div class="text-center" style="padding: 1600px 1200px;">' +
                 '<div class="dropdown">' +
-                '<button id="dropdownToggle" class="btn btn-secondary dropdown-toggle" role="button" data-ui-toggle="dropdown">Dropdown</button>' +
+                '<button id="dropdownToggle" class="btn btn-secondary dropdown-toggle" role="button">Dropdown</button>' +
                 '<div class="dropdown-menu">' +
                 '<button class="dropdown-item">Action</button>' +
                 '<button class="dropdown-item">Action</button>' +
@@ -26,7 +25,7 @@ describe('popper dropdown', function() {
 
     describe('placement/position options', function() {
 
-        it.only('works with top/start', async function() {
+        it('works with top/start', async function() {
             await exec(_ => {
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
@@ -46,7 +45,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with top/center', async function() {
+        it('works with top/center', async function() {
             await exec(_ => {
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
@@ -66,7 +65,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with top/end', async function() {
+        it('works with top/end', async function() {
             await exec(_ => {
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
@@ -86,7 +85,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with right/start', async function() {
+        it('works with right/start', async function() {
             await exec(_ => {
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
@@ -106,7 +105,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with right/center', async function() {
+        it('works with right/center', async function() {
             await exec(_ => {
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
@@ -126,7 +125,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with right/end', async function() {
+        it('works with right/end', async function() {
             await exec(_ => {
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
@@ -146,7 +145,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with bottom/start', async function() {
+        it('works with bottom/start', async function() {
             await exec(_ => {
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
@@ -166,7 +165,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with bottom/center', async function() {
+        it('works with bottom/center', async function() {
             await exec(_ => {
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
@@ -186,7 +185,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with bottom/end', async function() {
+        it('works with bottom/end', async function() {
             await exec(_ => {
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
@@ -206,7 +205,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with left/start', async function() {
+        it('works with left/start', async function() {
             await exec(_ => {
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
@@ -226,7 +225,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with left/center', async function() {
+        it('works with left/center', async function() {
             await exec(_ => {
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
@@ -246,7 +245,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with left/end', async function() {
+        it('works with left/end', async function() {
             await exec(_ => {
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
@@ -268,32 +267,11 @@ describe('popper dropdown', function() {
 
     });
 
-    describe('edges', function() {
+    describe('placement flip', function() {
 
-        it.only('works with top/start and right edge', async function() {
+        it('works with top/center and top edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 500);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
-                    placement: 'top',
-                    position: 'start',
-                    duration: 0
-                });
-                dropdown.show();
-            });
-            await screenshot('./screens/dropdown/edges/top-start-right.jpeg');
-
-            assert.strictEqual(
-                await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
-                }),
-                'translate3d(1145px, 1473px, 0px)'
-            );
-        });
-
-        it.only('works with top/center and top edge', async function() {
-            await exec(_ => {
-                dom.setScrollY(document, 1600);
+                dom.setScrollY(document, 1500);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'top',
@@ -302,7 +280,7 @@ describe('popper dropdown', function() {
                 });
                 dropdown.show();
             });
-            await screenshot('./screens/dropdown/edges/top-center-top.jpeg');
+            await screenshot('./screens/dropdown/placement-flip/top-center-top.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -312,7 +290,96 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with top/center and right edge', async function() {
+        it('works with right/center and right edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(window, 600);
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'right',
+                    position: 'center',
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/placement-flip/right-center-right.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1021px, 1556px, 0px)'
+            );
+        });
+
+        it('works with bottom/center and bottom edge', async function() {
+            await exec(_ => {
+                dom.setScrollY(window, 1135);
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'bottom',
+                    position: 'center',
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/placement-flip/bottom-center-bottom.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1172px, 1473px, 0px)'
+            );
+        });
+
+        it('works with left/center and left edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(document, 1100);
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'left',
+                    position: 'center',
+                    duration: 0
+                });
+                dropdown.show();
+                return dom.getStyle('.dropdown-menu', 'transform');
+            });
+            await screenshot('./screens/dropdown/placement-flip/left-center-left.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1324px, 1556px, 0px)'
+            );
+        });
+
+    });
+
+    describe('position clamp', function() {
+
+        it('works with top/start and right edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(document, 500);
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'top',
+                    position: 'start',
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/position-clamp/top-start-right.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1145px, 1473px, 0px)'
+            );
+        });
+
+        it('works with top/center and right edge', async function() {
             await exec(_ => {
                 dom.setScrollX(document, 500);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
@@ -323,7 +390,7 @@ describe('popper dropdown', function() {
                 });
                 dropdown.show();
             });
-            await screenshot('./screens/dropdown/edges/top-center-right.jpeg');
+            await screenshot('./screens/dropdown/position-clamp/top-center-right.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -333,7 +400,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with top/center and left edge', async function() {
+        it('works with top/center and left edge', async function() {
             await exec(_ => {
                 dom.setScrollX(document, 1200);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
@@ -345,7 +412,7 @@ describe('popper dropdown', function() {
                 dropdown.show();
                 return dom.getStyle('.dropdown-menu', 'transform');
             });
-            await screenshot('./screens/dropdown/edges/top-center-left.jpeg');
+            await screenshot('./screens/dropdown/position-clamp/top-center-left.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -355,7 +422,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with top/end and left edge', async function() {
+        it('works with top/end and left edge', async function() {
             await exec(_ => {
                 dom.setScrollX(document, 1200);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
@@ -366,7 +433,7 @@ describe('popper dropdown', function() {
                 });
                 dropdown.show();
             });
-            await screenshot('./screens/dropdown/edges/top-end-left.jpeg');
+            await screenshot('./screens/dropdown/position-clamp/top-end-left.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -376,7 +443,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with right/start and bottom edge', async function() {
+        it('works with right/start and bottom edge', async function() {
             await exec(_ => {
                 dom.setScrollY(window, 1035);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
@@ -387,7 +454,7 @@ describe('popper dropdown', function() {
                 });
                 dropdown.show();
             });
-            await screenshot('./screens/dropdown/edges/right-start-bottom.jpeg');
+            await screenshot('./screens/dropdown/position-clamp/right-start-bottom.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -397,7 +464,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with right/center and top edge', async function() {
+        it('works with right/center and top edge', async function() {
             await exec(_ => {
                 dom.setScrollY(window, 1600);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
@@ -408,7 +475,7 @@ describe('popper dropdown', function() {
                 });
                 dropdown.show();
             });
-            await screenshot('./screens/dropdown/edges/right-center-top.jpeg');
+            await screenshot('./screens/dropdown/position-clamp/right-center-top.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -418,28 +485,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with right/center and right edge', async function() {
-            await exec(_ => {
-                dom.setScrollX(window, 500);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
-                    placement: 'right',
-                    position: 'center',
-                    duration: 0
-                });
-                dropdown.show();
-            });
-            await screenshot('./screens/dropdown/edges/right-center-right.jpeg');
-
-            assert.strictEqual(
-                await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
-                }),
-                'translate3d(1021px, 1556px, 0px)'
-            );
-        });
-
-        it.only('works with right/center and bottom edge', async function() {
+        it('works with right/center and bottom edge', async function() {
             await exec(_ => {
                 dom.setScrollY(window, 1035);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
@@ -450,7 +496,7 @@ describe('popper dropdown', function() {
                 });
                 dropdown.show();
             });
-            await screenshot('./screens/dropdown/edges/right-center-bottom.jpeg');
+            await screenshot('./screens/dropdown/position-clamp/right-center-bottom.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -460,7 +506,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with right/end and top edge', async function() {
+        it('works with right/end and top edge', async function() {
             await exec(_ => {
                 dom.setScrollY(window, 1600);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
@@ -471,7 +517,7 @@ describe('popper dropdown', function() {
                 });
                 dropdown.show();
             });
-            await screenshot('./screens/dropdown/edges/right-end-top.jpeg');
+            await screenshot('./screens/dropdown/position-clamp/right-end-top.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -481,7 +527,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with bottom/start and right edge', async function() {
+        it('works with bottom/start and right edge', async function() {
             await exec(_ => {
                 dom.setScrollX(window, 500);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
@@ -492,7 +538,7 @@ describe('popper dropdown', function() {
                 });
                 dropdown.show();
             });
-            await screenshot('./screens/dropdown/edges/bottom-start-right.jpeg');
+            await screenshot('./screens/dropdown/position-clamp/bottom-start-right.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -502,7 +548,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with bottom/center and right edge', async function() {
+        it('works with bottom/center and right edge', async function() {
             await exec(_ => {
                 dom.setScrollX(window, 500);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
@@ -513,7 +559,7 @@ describe('popper dropdown', function() {
                 });
                 dropdown.show();
             });
-            await screenshot('./screens/dropdown/edges/bottom-center-right.jpeg');
+            await screenshot('./screens/dropdown/position-clamp/bottom-center-right.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -523,28 +569,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with bottom/center and bottom edge', async function() {
-            await exec(_ => {
-                dom.setScrollY(window, 1035);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
-                    placement: 'bottom',
-                    position: 'center',
-                    duration: 0
-                });
-                dropdown.show();
-            });
-            await screenshot('./screens/dropdown/edges/bottom-center-bottom.jpeg');
-
-            assert.strictEqual(
-                await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
-                }),
-                'translate3d(1172px, 1473px, 0px)'
-            );
-        });
-
-        it.only('works with bottom/center and left edge', async function() {
+        it('works with bottom/center and left edge', async function() {
             await exec(_ => {
                 dom.setScrollX(window, 1200);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
@@ -555,7 +580,7 @@ describe('popper dropdown', function() {
                 });
                 dropdown.show();
             });
-            await screenshot('./screens/dropdown/edges/bottom-center-left.jpeg');
+            await screenshot('./screens/dropdown/position-clamp/bottom-center-left.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -565,7 +590,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with bottom/end and left edge', async function() {
+        it('works with bottom/end and left edge', async function() {
             await exec(_ => {
                 dom.setScrollX(window, 1200);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
@@ -576,7 +601,7 @@ describe('popper dropdown', function() {
                 });
                 dropdown.show();
             });
-            await screenshot('./screens/dropdown/edges/bottom-end-left.jpeg');
+            await screenshot('./screens/dropdown/position-clamp/bottom-end-left.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -586,7 +611,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with left/start and bottom edge', async function() {
+        it('works with left/start and bottom edge', async function() {
             await exec(_ => {
                 dom.setScrollY(window, 1035);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
@@ -597,7 +622,7 @@ describe('popper dropdown', function() {
                 });
                 dropdown.show();
             });
-            await screenshot('./screens/dropdown/edges/left-start-bottom.jpeg');
+            await screenshot('./screens/dropdown/position-clamp/left-start-bottom.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -607,7 +632,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with left/center and top edge', async function() {
+        it('works with left/center and top edge', async function() {
             await exec(_ => {
                 dom.setScrollY(document, 1600);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
@@ -618,7 +643,7 @@ describe('popper dropdown', function() {
                 });
                 dropdown.show();
             });
-            await screenshot('./screens/dropdown/edges/left-center-top.jpeg');
+            await screenshot('./screens/dropdown/position-clamp/left-center-top.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -628,7 +653,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with left/center and bottom edge', async function() {
+        it('works with left/center and bottom edge', async function() {
             await exec(_ => {
                 dom.setScrollY(window, 1035);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
@@ -639,7 +664,7 @@ describe('popper dropdown', function() {
                 });
                 dropdown.show();
             });
-            await screenshot('./screens/dropdown/edges/left-center-bottom.jpeg');
+            await screenshot('./screens/dropdown/position-clamp/left-center-bottom.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -649,29 +674,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it.only('works with left/center and left edge', async function() {
-            await exec(_ => {
-                dom.setScrollX(document, 1200);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
-                    placement: 'left',
-                    position: 'center',
-                    duration: 0
-                });
-                dropdown.show();
-                return dom.getStyle('.dropdown-menu', 'transform');
-            });
-            await screenshot('./screens/dropdown/edges/left-center-left.jpeg');
-
-            assert.strictEqual(
-                await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
-                }),
-                'translate3d(1324px, 1556px, 0px)'
-            );
-        });
-
-        it.only('works with left/end and top edge', async function() {
+        it('works with left/end and top edge', async function() {
             await exec(_ => {
                 dom.setScrollY(document, 1600);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
@@ -682,7 +685,7 @@ describe('popper dropdown', function() {
                 });
                 dropdown.show();
             });
-            await screenshot('./screens/dropdown/edges/left-end-top.jpeg');
+            await screenshot('./screens/dropdown/position-clamp/left-end-top.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -696,37 +699,274 @@ describe('popper dropdown', function() {
 
     describe('fixed option', function() {
 
-        it('works with top edge');
-        it('works with right edge');
-        it('works with bottom edge');
-        it('works with left edge');
+        it('works with top edge', async function() {
+            await exec(_ => {
+                dom.setScrollY(document, 1500);
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'top',
+                    position: 'center',
+                    fixed: true,
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/fixed/top.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1172px, 1473px, 0px)'
+            );
+        });
+
+        it('works with right edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(window, 600);
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'right',
+                    position: 'center',
+                    fixed: true,
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/fixed/right.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1324px, 1556px, 0px)'
+            );
+        });
+
+        it('works with bottom edge', async function() {
+            await exec(_ => {
+                dom.setScrollY(window, 1135);
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'bottom',
+                    position: 'center',
+                    fixed: true,
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/fixed/bottom.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1172px, 1640px, 0px)'
+            );
+        });
+
+        it('works with left edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(document, 1100);
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'left',
+                    position: 'center',
+                    fixed: true,
+                    duration: 0
+                });
+                dropdown.show();
+                return dom.getStyle('.dropdown-menu', 'transform');
+            });
+            await screenshot('./screens/dropdown/fixed/left.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1021px, 1556px, 0px)'
+            );
+        });
 
     });
 
     describe('spacing option', function() {
 
-        it('withs with spacing and top');
-        it('withs with spacing and right');
-        it('withs with spacing and bottom');
-        it('withs with spacing and left');
+        it('works with spacing and top', async function() {
+            await exec(_ => {
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'top',
+                    position: 'center',
+                    spacing: 50,
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/spacing/top.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1172px, 1426px, 0px)'
+            );
+        });
+
+        it('works with spacing and right', async function() {
+            await exec(_ => {
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'right',
+                    position: 'center',
+                    spacing: 50,
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/spacing/right.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1371px, 1556px, 0px)'
+            );
+        });
+
+        it('works with spacing and bottom', async function() {
+            await exec(_ => {
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'bottom',
+                    position: 'center',
+                    spacing: 50,
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/spacing/bottom.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1172px, 1687px, 0px)'
+            );
+        });
+
+        it('works with spacing and left', async function() {
+            await exec(_ => {
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'left',
+                    position: 'center',
+                    spacing: 50,
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/spacing/left.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(974px, 1556px, 0px)'
+            );
+        });
 
     });
 
     describe('minContact option', function() {
 
-        it('withs with minContact and top');
-        it('withs with minContact and right');
-        it('withs with minContact and bottom');
-        it('withs with minContact and left');
+        it('works with minContact and top edge', async function() {
+            await exec(_ => {
+                dom.setScrollY(document, 1620);
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'right',
+                    position: 'center',
+                    minContact: 10,
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/min-contact/top.jpeg');
 
-    });
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1324px, 1620px, 0px)'
+            );
+        });
 
-    describe('useGpu option', function() {
+        it('works with minContact and right edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(document, 480);
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'top',
+                    position: 'center',
+                    minContact: 10,
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/min-contact/right.jpeg');
 
-        it('withs with useGpu and top');
-        it('withs with useGpu and right');
-        it('withs with useGpu and bottom');
-        it('withs with useGpu and left');
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1104px, 1473px, 0px)'
+            );
+        });
+
+        it('works with minContact and bottom edge', async function() {
+            await exec(_ => {
+                dom.setScrollY(document, 1015);
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'left',
+                    position: 'center',
+                    minContact: 10,
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/min-contact/bottom.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1021px, 1491px, 0px)'
+            );
+        });
+
+        it('works with minContact and left edge', async function() {
+            await exec(_ => {
+                dom.setScrollX(document, 1220);
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'bottom',
+                    position: 'center',
+                    minContact: 10,
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/min-contact/left.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1220px, 1640px, 0px)'
+            );
+        });
 
     });
 

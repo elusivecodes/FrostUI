@@ -16,27 +16,26 @@ dom.addEventDelegate(document, 'click.ui.modal', '[data-ui-dismiss="modal"]', e 
 });
 
 dom.addEvent(document, 'click.ui.modal', e => {
-    const backdrop = dom.findOne('.modal-backdrop');
-
-    if (!backdrop) {
+    if (dom.is(e.target, '[data-ui-dismiss="modal"]')) {
         return;
     }
 
-    const targets = dom.find('.modal.show');
-
-    for (const target of targets) {
-        if (target !== e.target && dom.hasDescendent(target, e.target)) {
-            continue;
-        }
-
-        const modal = Modal.init(target);
-
-        if (modal._settings.backdrop === 'static') {
-            continue;
-        }
-
-        modal.hide();
+    if (!Modal.stack.size) {
+        return;
     }
+
+    let modal;
+    for (modal of Modal.stack);
+
+    if (modal._settings.backdrop === 'static' || !modal._settings.backdrop) {
+        return;
+    }
+
+    if (modal._node !== e.target && dom.hasDescendent(modal._node, e.target)) {
+        return;
+    }
+
+    modal.hide();
 });
 
 dom.addEvent(document, 'keyup.ui.modal', e => {
@@ -44,15 +43,16 @@ dom.addEvent(document, 'keyup.ui.modal', e => {
         return;
     }
 
-    const targets = dom.find('.modal.show');
-
-    for (const target of targets) {
-        const modal = Modal.init(target);
-
-        if (!modal._settings.keyboard) {
-            continue;
-        }
-
-        modal.hide();
+    if (!Modal.stack.size) {
+        return;
     }
+
+    let modal;
+    for (modal of Modal.stack);
+
+    if (!modal._settings.keyboard) {
+        return;
+    }
+
+    modal.hide();
 });
