@@ -73,8 +73,19 @@ beforeEach(async function() {
     this.timeout(30000);
 
     await page.evaluate(_ => {
-        document.head.innerHTML = '';
-        document.body.innerHTML = '';
+        dom.empty(document.body);
+        dom.setHTML(
+            document.head,
+            '<link rel="stylesheet" href="assets/frost-ui.css">'
+        );
+    });
+
+    await page.waitForFunction(_ => {
+        const test = dom.create('div', { class: 'text-center' });
+        dom.append(document.body, test);
+        const result = dom.css(test, 'textAlign') === 'center';
+        dom.detach(test);
+        return result;
     });
 });
 
@@ -89,23 +100,6 @@ after(async function() {
 const exec = async (callback, data) =>
     await page.evaluate(callback, data);
 
-const loadCSS = async _ => {
-    await exec(_ => {
-        dom.setHTML(
-            document.head,
-            '<link rel="stylesheet" href="assets/frost-ui.css">'
-        );
-    });
-
-    await page.waitForFunction(_ => {
-        const test = dom.create('div', { class: 'text-center' });
-        dom.append(document.body, test);
-        const result = dom.css(test, 'textAlign') === 'center';
-        dom.detach(test);
-        return result;
-    });
-};
-
 const screenshot = async (filePath, type = 'jpeg', fullPage = false) => {
     const dir = path.dirname(filePath);
 
@@ -118,6 +112,5 @@ const screenshot = async (filePath, type = 'jpeg', fullPage = false) => {
 
 module.exports = {
     exec,
-    loadCSS,
     screenshot
 };

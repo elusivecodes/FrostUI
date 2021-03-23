@@ -62,18 +62,6 @@ describe('Modal', function() {
             );
         });
 
-        it('creates multiple modals (query)', async function() {
-            assert.strictEqual(
-                await exec(_ => {
-                    dom.query('.modal').modal();
-                    return dom.find('.modal').every(node =>
-                        dom.getData(node, 'modal') instanceof UI.Modal
-                    );
-                }),
-                true
-            );
-        });
-
         it('returns the modal (query)', async function() {
             assert.strictEqual(
                 await exec(_ => {
@@ -108,18 +96,6 @@ describe('Modal', function() {
             );
         });
 
-        it('removes multiple modals (query)', async function() {
-            assert.strictEqual(
-                await exec(_ => {
-                    dom.query('.modal').modal('dispose');
-                    return dom.find('.modal').some(node =>
-                        dom.hasData(node, 'modal')
-                    );
-                }),
-                false
-            );
-        });
-
         it('clears modal memory', async function() {
             assert.strictEqual(
                 await exec(_ => {
@@ -144,7 +120,8 @@ describe('Modal', function() {
                 await exec(_ => {
                     const modal1 = dom.findOne('#modal1');
                     const modal = UI.Modal.init(modal1);
-                    dom.remove(modal1);
+                    dom.setHTML(document.body, '');
+                    // dom.remove(modal1);
 
                     for (const key in modal) {
                         if (Core.isObject(modal[key]) && !Core.isFunction(modal[key])) {
@@ -155,6 +132,12 @@ describe('Modal', function() {
                     return true;
                 }),
                 true
+            );
+            assert.strictEqual(
+                await exec(_ => {
+                    return UI.Modal.stack.size;
+                }),
+                0
             );
         });
 
@@ -247,30 +230,6 @@ describe('Modal', function() {
             });
         });
 
-        it('shows multiple modals (query)', async function() {
-            await exec(_ => {
-                dom.query('.modal').modal('show');
-            }).then(waitFor(300)).then(async _ => {
-                assert.strictEqual(
-                    await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2"></button>' +
-                    '<div id="modal1" class="modal show" aria-modal="true">' +
-                    '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal"></button>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div id="modal2" class="modal show" aria-modal="true">' +
-                    '<div class="modal-dialog" id="modalDialog2" style="">' +
-                    '<button id="button2" data-ui-dismiss="modal"></button>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="modal-backdrop" style=""></div>' +
-                    '<div class="modal-backdrop" style=""></div>'
-                );
-            });
-        });
-
         it('can be called multiple times', async function() {
             await exec(_ => {
                 const modal1 = dom.findOne('#modal1');
@@ -294,6 +253,48 @@ describe('Modal', function() {
                 await exec(_ => {
                     UI.Modal.init(modal1).show();
                 });
+            });
+        });
+
+        it('allows modals to stack', async function() {
+            await exec(_ => {
+                const modal1 = dom.findOne('#modal1');
+                UI.Modal.init(modal1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const modal2 = dom.findOne('#modal2');
+                    UI.Modal.init(modal2).show();
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog2');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.getHTML(document.body);
+                    }),
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1"></button>' +
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2"></button>' +
+                    '<div id="modal1" class="modal show" aria-modal="true">' +
+                    '<div class="modal-dialog" id="modalDialog1" style="">' +
+                    '<button id="button1" data-ui-dismiss="modal"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div id="modal2" class="modal show" aria-modal="true" style="z-index: 1070;">' +
+                    '<div class="modal-dialog" id="modalDialog2" style="">' +
+                    '<button id="button2" data-ui-dismiss="modal"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="modal-backdrop" style=""></div>' +
+                    '<div class="modal-backdrop" style="z-index: 1060;"></div>'
+                );
             });
         });
 
@@ -431,38 +432,6 @@ describe('Modal', function() {
             });
         });
 
-        it('hides multiple modals (query)', async function() {
-            await exec(_ => {
-                dom.query('.modal').modal('show');
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    dom.stop('#modalDialog1');
-                    dom.stop('#modalDialog2');
-                    dom.stop('.modal-backdrop');
-                });
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    dom.query('.modal').modal('hide');
-                });
-            }).then(waitFor(300)).then(async _ => {
-                assert.strictEqual(
-                    await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2"></button>' +
-                    '<div id="modal1" class="modal" aria-hidden="true">' +
-                    '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal"></button>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div id="modal2" class="modal" aria-hidden="true">' +
-                    '<div class="modal-dialog" id="modalDialog2" style="">' +
-                    '<button id="button2" data-ui-dismiss="modal"></button>' +
-                    '</div>' +
-                    '</div>'
-                );
-            });
-        });
-
         it('does not remove the modal after hiding', async function() {
             await exec(_ => {
                 const modal1 = dom.findOne('#modal1');
@@ -509,6 +478,56 @@ describe('Modal', function() {
             await exec(async _ => {
                 const modal1 = dom.findOne('#modal1');
                 UI.Modal.init(modal1).hide();
+            });
+        });
+
+        it('does not close stacked modals (data-ui-dismiss)', async function() {
+            await exec(_ => {
+                const modal1 = dom.findOne('#modal1');
+                UI.Modal.init(modal1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const modal2 = dom.findOne('#modal2');
+                    UI.Modal.init(modal2).show();
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog2');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.click('#button2');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog2');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.getHTML(document.body);
+                    }),
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1"></button>' +
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2"></button>' +
+                    '<div id="modal1" class="modal show" aria-modal="true">' +
+                    '<div class="modal-dialog" id="modalDialog1" style="">' +
+                    '<button id="button1" data-ui-dismiss="modal"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div id="modal2" class="modal" aria-hidden="true" style="">' +
+                    '<div class="modal-dialog" id="modalDialog2" style="">' +
+                    '<button id="button2" data-ui-dismiss="modal"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="modal-backdrop" style=""></div>'
+                );
             });
         });
 
@@ -606,30 +625,6 @@ describe('Modal', function() {
                     '<button id="button2" data-ui-dismiss="modal"></button>' +
                     '</div>' +
                     '</div>' +
-                    '<div class="modal-backdrop" style=""></div>'
-                );
-            });
-        });
-
-        it('shows multiple modals (query)', async function() {
-            await exec(_ => {
-                dom.query('.modal').modal('toggle');
-            }).then(waitFor(300)).then(async _ => {
-                assert.strictEqual(
-                    await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2"></button>' +
-                    '<div id="modal1" class="modal show" aria-modal="true">' +
-                    '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal"></button>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div id="modal2" class="modal show" aria-modal="true">' +
-                    '<div class="modal-dialog" id="modalDialog2" style="">' +
-                    '<button id="button2" data-ui-dismiss="modal"></button>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="modal-backdrop" style=""></div>' +
                     '<div class="modal-backdrop" style=""></div>'
                 );
             });
@@ -742,38 +737,6 @@ describe('Modal', function() {
             });
         });
 
-        it('hides multiple modals (query)', async function() {
-            await exec(_ => {
-                dom.query('.modal').modal('show');
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    dom.stop('#modalDialog1');
-                    dom.stop('#modalDialog2');
-                    dom.stop('.modal-backdrop');
-                });
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    dom.query('.modal').modal('toggle');
-                });
-            }).then(waitFor(300)).then(async _ => {
-                assert.strictEqual(
-                    await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2"></button>' +
-                    '<div id="modal1" class="modal" aria-hidden="true">' +
-                    '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal"></button>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div id="modal2" class="modal" aria-hidden="true">' +
-                    '<div class="modal-dialog" id="modalDialog2" style="">' +
-                    '<button id="button2" data-ui-dismiss="modal"></button>' +
-                    '</div>' +
-                    '</div>'
-                );
-            });
-        });
-
         it('can be called multiple times', async function() {
             await exec(_ => {
                 const modal1 = dom.findOne('#modal1');
@@ -830,6 +793,42 @@ describe('Modal', function() {
                     true
                 );
             });
+        });
+
+    });
+
+    describe('direction', function() {
+
+        it('uses top direction by default', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const modal1 = dom.findOne('#modal1');
+                    return UI.Modal.init(modal1)._getDirection();
+                }),
+                'top'
+            );
+        });
+
+        it('uses left direction for modal-left', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const modal1 = dom.findOne('#modal1');
+                    dom.addClass(modal1, 'modal-left');
+                    return UI.Modal.init(modal1)._getDirection();
+                }),
+                'left'
+            );
+        });
+
+        it('uses right direction for modal-right', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const modal1 = dom.findOne('#modal1');
+                    dom.addClass(modal1, 'modal-right');
+                    return UI.Modal.init(modal1)._getDirection();
+                }),
+                'right'
+            );
         });
 
     });
@@ -1633,6 +1632,56 @@ describe('Modal', function() {
                     '<button id="button2" data-ui-dismiss="modal"></button>' +
                     '</div>' +
                     '</div>'
+                );
+            });
+        });
+
+        it('does not close stacked modals on document click', async function() {
+            await exec(_ => {
+                const modal1 = dom.findOne('#modal1');
+                UI.Modal.init(modal1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const modal2 = dom.findOne('#modal2');
+                    UI.Modal.init(modal2).show();
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog2');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.click(document.body);
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog2');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.getHTML(document.body);
+                    }),
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1"></button>' +
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2"></button>' +
+                    '<div id="modal1" class="modal show" aria-modal="true">' +
+                    '<div class="modal-dialog" id="modalDialog1" style="">' +
+                    '<button id="button1" data-ui-dismiss="modal"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div id="modal2" class="modal" aria-hidden="true" style="">' +
+                    '<div class="modal-dialog" id="modalDialog2" style="">' +
+                    '<button id="button2" data-ui-dismiss="modal"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="modal-backdrop" style=""></div>'
                 );
             });
         });

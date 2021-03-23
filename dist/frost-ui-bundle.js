@@ -11041,7 +11041,7 @@
                 }
 
                 // get optimal placement
-                const placement = this._settings.fixed ?
+                const placement = this._settings.fixed && this._settings.placement !== 'auto' ?
                     this._settings.placement :
                     this.constructor._getPopperPlacement(
                         nodeBox,
@@ -12089,8 +12089,13 @@
 
                 dom.animate(
                     this._items[this._index],
-                    (node, progress) =>
-                        this._update(node, this._items[oldIndex], progress, direction),
+                    (node, progress) => {
+                        if (!this._items) {
+                            return;
+                        }
+
+                        this._update(node, this._items[oldIndex], progress, direction);
+                    },
                     {
                         duration: this._settings.transition
                     }
@@ -12593,14 +12598,6 @@
 
                 this._dialog = dom.child(this._node, '.modal-dialog').shift();
 
-                if (dom.hasClass(this._node, 'modal-left')) {
-                    this._direction = 'left';
-                } else if (dom.hasClass(this._node, 'modal-right')) {
-                    this._direction = 'right';
-                } else {
-                    this._direction = 'top';
-                }
-
                 if (this._settings.show) {
                     this.show();
                 }
@@ -12613,6 +12610,8 @@
                 this._dialog = null;
                 this._activeTarget = null;
                 this._backdrop = null;
+
+                this.constructor.stack.delete(this);
 
                 super.dispose();
             }
@@ -12640,7 +12639,7 @@
                     }),
                     dom.dropOut(this._dialog, {
                         duration: this._settings.duration,
-                        direction: this._direction
+                        direction: this._getDirection()
                     }),
                     dom.fadeOut(this._backdrop, {
                         duration: this._settings.duration
@@ -12690,8 +12689,11 @@
                 const stackSize = this.constructor.stack.size;
 
                 if (stackSize) {
-                    const zIndex = dom.css(this._node, 'zIndex');
-                    dom.setStyle(this._node, 'zIndex', parseInt(zIndex) + (stackSize * 20));
+                    let zIndex = dom.css(this._node, 'zIndex');
+                    zIndex = parseInt(zIndex);
+                    zIndex += stackSize * 20;
+
+                    dom.setStyle(this._node, 'zIndex', zIndex);
                 }
 
                 dom.addClass(this._node, 'show');
@@ -12707,8 +12709,11 @@
                     dom.append(document.body, this._backdrop);
 
                     if (stackSize) {
-                        const zIndex = dom.css(this._backdrop, 'zIndex');
-                        dom.setStyle(this._backdrop, 'zIndex', parseInt(zIndex) + (stackSize * 20));
+                        let zIndex = dom.css(this._backdrop, 'zIndex');
+                        zIndex = parseInt(zIndex);
+                        zIndex += stackSize * 20;
+
+                        dom.setStyle(this._backdrop, 'zIndex', zIndex);
                     }
                 }
 
@@ -12718,7 +12723,7 @@
                     }),
                     dom.dropIn(this._dialog, {
                         duration: this._settings.duration,
-                        direction: this._direction
+                        direction: this._getDirection()
                     }),
                     dom.fadeIn(this._backdrop, {
                         duration: this._settings.duration
@@ -12809,6 +12814,31 @@
             }
 
             modal.hide();
+        });
+
+
+        /**
+         * Modal Helpers
+         */
+
+        Object.assign(Modal.prototype, {
+
+            /**
+             * Get the slide animation direction.
+             * @returns {string} The animation direction.
+             */
+            _getDirection() {
+                if (dom.hasClass(this._node, 'modal-left')) {
+                    return 'left';
+                }
+
+                if (dom.hasClass(this._node, 'modal-right')) {
+                    return 'right';
+                }
+
+                return 'top';
+            }
+
         });
 
 

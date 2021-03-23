@@ -1,10 +1,9 @@
 const assert = require('assert');
-const { exec, loadCSS, screenshot } = require('../setup');
+const { exec, screenshot } = require('../setup');
 
 describe('popper popover', function() {
 
     beforeEach(async function() {
-        await loadCSS();
         await exec(_ => {
             dom.setHTML(
                 document.body,
@@ -12,11 +11,135 @@ describe('popper popover', function() {
                 '<button id="popoverToggle" class="btn btn-secondary" role="button" data-ui-title="Title" data-ui-content="This is the popover content.">Popover</button>' +
                 '</div>'
             );
-            window.scrollTo(850, 1300);
+            dom.setScroll(window, 850, 1300);
         });
     });
 
+    describe('#update', function() {
+
+        it('updates the popper position', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const popoverToggle = dom.findOne('#popoverToggle');
+                    const popover = UI.Popover.init(popoverToggle, {
+                        placement: 'top',
+                        position: 'center',
+                        duration: 0
+                    });
+                    popover.show();
+                    dom.setScrollY(document, 1520);
+                    popover.update();
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1135px, 1640px, 0px)'
+            );
+        });
+
+        it('updates the popper position (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#popoverToggle').popover({
+                        placement: 'top',
+                        position: 'center',
+                        duration: 0
+                    }).show();
+                    dom.setScrollY(document, 1520);
+                    dom.query('#popoverToggle').popover('update');
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1135px, 1640px, 0px)'
+            );
+        });
+
+    });
+
     describe('placement/position options', function() {
+
+        it('works with placement option', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const popoverToggle = dom.findOne('#popoverToggle');
+                    const popover = UI.Popover.init(popoverToggle, {
+                        placement: 'bottom',
+                        duration: 0
+                    });
+                    popover.show();
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1135px, 1640px, 0px)'
+            );
+        });
+
+        it('works with placement option (data-ui-placement)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const popoverToggle = dom.findOne('#popoverToggle');
+                    dom.setDataset(popoverToggle, 'uiPlacement', 'bottom');
+                    const popover = UI.Popover.init(popoverToggle, {
+                        duration: 0
+                    });
+                    popover.show();
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1135px, 1640px, 0px)'
+            );
+        });
+
+        it('works with placement option (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#popoverToggle').popover({
+                        placement: 'bottom',
+                        duration: 0
+                    }).show();
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1135px, 1640px, 0px)'
+            );
+        });
+
+        it('works with position option', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const popoverToggle = dom.findOne('#popoverToggle');
+                    const popover = UI.Popover.init(popoverToggle, {
+                        position: 'start',
+                        duration: 0
+                    });
+                    popover.show();
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1290px, 1600px, 0px)'
+            );
+        });
+
+        it('works with position option (data-ui-position)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const popoverToggle = dom.findOne('#popoverToggle');
+                    dom.setDataset(popoverToggle, 'uiPosition', 'start');
+                    const popover = UI.Popover.init(popoverToggle, {
+                        duration: 0
+                    });
+                    popover.show();
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1290px, 1600px, 0px)'
+            );
+        });
+
+        it('works with position option (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#popoverToggle').popover({
+                        position: 'start',
+                        duration: 0
+                    }).show();
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1290px, 1600px, 0px)'
+            );
+        });
 
         it('works with top/start', async function() {
             await exec(_ => {
@@ -692,6 +815,58 @@ describe('popper popover', function() {
 
     describe('fixed option', function() {
 
+        it('works with fixed option', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.setScrollY(document, 1520);
+                    const popoverToggle = dom.findOne('#popoverToggle');
+                    const popover = UI.Popover.init(popoverToggle, {
+                        placement: 'top',
+                        fixed: true,
+                        duration: 0
+                    });
+                    popover.show();
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1135px, 1513px, 0px)'
+            );
+            await screenshot('./screens/test.jpeg');
+        });
+
+        it('works with fixed option (data-ui-fixed)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.setScrollY(document, 1520);
+                    const popoverToggle = dom.findOne('#popoverToggle');
+                    dom.setDataset(popoverToggle, 'uiFixed', true);
+                    const popover = UI.Popover.init(popoverToggle, {
+                        placement: 'top',
+                        duration: 0
+                    });
+                    popover.show();
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1135px, 1513px, 0px)'
+            );
+            await screenshot('./screens/test.jpeg');
+        });
+
+        it('works with fixed option (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.setScrollY(document, 1520);
+                    dom.query('#popoverToggle').popover({
+                        placement: 'top',
+                        fixed: true,
+                        duration: 0
+                    }).show();
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1135px, 1513px, 0px)'
+            );
+            await screenshot('./screens/test.jpeg');
+        });
+
         it('works with top edge', async function() {
             await exec(_ => {
                 dom.setScrollY(document, 1520);
@@ -785,6 +960,49 @@ describe('popper popover', function() {
 
     describe('spacing option', function() {
 
+        it('works with spacing option', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const popoverToggle = dom.findOne('#popoverToggle');
+                    const popover = UI.Popover.init(popoverToggle, {
+                        spacing: 50,
+                        duration: 0
+                    });
+                    popover.show();
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1337px, 1576px, 0px)'
+            );
+        });
+
+        it('works with spacing option (data-ui-spacing)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const popoverToggle = dom.findOne('#popoverToggle');
+                    dom.setDataset(popoverToggle, 'uiSpacing', 50);
+                    const popover = UI.Popover.init(popoverToggle, {
+                        duration: 0
+                    });
+                    popover.show();
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1337px, 1576px, 0px)'
+            );
+        });
+
+        it('works with spacing option', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#popoverToggle').popover({
+                        spacing: 50,
+                        duration: 0
+                    }).show();
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1337px, 1576px, 0px)'
+            );
+        });
+
         it('works with spacing and top', async function() {
             await exec(_ => {
                 const popoverToggle = dom.findOne('#popoverToggle');
@@ -872,6 +1090,55 @@ describe('popper popover', function() {
     });
 
     describe('minContact option', function() {
+
+        it('works with minContact option', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.setScrollX(document, 460);
+                    const popoverToggle = dom.findOne('#popoverToggle');
+                    const popover = UI.Popover.init(popoverToggle, {
+                        placement: 'top',
+                        minContact: 10,
+                        duration: 0
+                    });
+                    popover.show();
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1043px, 1513px, 0px)'
+            );
+        });
+
+        it('works with minContact option (data-ui-min-contact)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.setScrollX(document, 460);
+                    const popoverToggle = dom.findOne('#popoverToggle');
+                    dom.setDataset(popoverToggle, 'uiMinContact', 10);
+                    const popover = UI.Popover.init(popoverToggle, {
+                        placement: 'top',
+                        duration: 0
+                    });
+                    popover.show();
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1043px, 1513px, 0px)'
+            );
+        });
+
+        it('works with minContact option', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.setScrollX(document, 460);
+                    dom.query('#popoverToggle').popover({
+                        placement: 'top',
+                        minContact: 10,
+                        duration: 0
+                    }).show();
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1043px, 1513px, 0px)'
+            );
+        });
 
         it('works with minContact and top edge', async function() {
             await exec(_ => {

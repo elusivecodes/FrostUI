@@ -174,7 +174,7 @@ describe('dropdown', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
-                    '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu show" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -205,7 +205,7 @@ describe('dropdown', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
-                    '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu show" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -231,7 +231,7 @@ describe('dropdown', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
-                    '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu show" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -239,7 +239,7 @@ describe('dropdown', function() {
                     '</div>' +
                     '<div>' +
                     '<button id="dropdownToggle2" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
-                    '<div class="dropdown-menu show" id="dropdown2" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 23px, 0px);">' +
+                    '<div class="dropdown-menu show" id="dropdown2" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown2Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown2Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown2Item3"></button>' +
@@ -321,7 +321,7 @@ describe('dropdown', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="false"></button>' +
-                    '<div class="dropdown-menu" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -360,7 +360,7 @@ describe('dropdown', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="false"></button>' +
-                    '<div class="dropdown-menu" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -395,7 +395,7 @@ describe('dropdown', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="false"></button>' +
-                    '<div class="dropdown-menu" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -403,7 +403,7 @@ describe('dropdown', function() {
                     '</div>' +
                     '<div>' +
                     '<button id="dropdownToggle2" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="false"></button>' +
-                    '<div class="dropdown-menu" id="dropdown2" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 23px, 0px);">' +
+                    '<div class="dropdown-menu" id="dropdown2" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown2Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown2Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown2Item3"></button>' +
@@ -514,7 +514,7 @@ describe('dropdown', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
-                    '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu show" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -545,7 +545,7 @@ describe('dropdown', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
-                    '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu show" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -576,7 +576,7 @@ describe('dropdown', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
-                    '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu show" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -607,7 +607,7 @@ describe('dropdown', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
-                    '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu show" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -615,7 +615,7 @@ describe('dropdown', function() {
                     '</div>' +
                     '<div>' +
                     '<button id="dropdownToggle2" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
-                    '<div class="dropdown-menu show" id="dropdown2" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 23px, 0px);">' +
+                    '<div class="dropdown-menu show" id="dropdown2" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown2Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown2Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown2Item3"></button>' +
@@ -681,7 +681,7 @@ describe('dropdown', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="false"></button>' +
-                    '<div class="dropdown-menu" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -721,7 +721,7 @@ describe('dropdown', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="false"></button>' +
-                    '<div class="dropdown-menu" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -760,7 +760,7 @@ describe('dropdown', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="false"></button>' +
-                    '<div class="dropdown-menu" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -795,7 +795,7 @@ describe('dropdown', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="false"></button>' +
-                    '<div class="dropdown-menu" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -803,7 +803,7 @@ describe('dropdown', function() {
                     '</div>' +
                     '<div>' +
                     '<button id="dropdownToggle2" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="false"></button>' +
-                    '<div class="dropdown-menu" id="dropdown2" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 23px, 0px);">' +
+                    '<div class="dropdown-menu" id="dropdown2" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown2Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown2Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown2Item3"></button>' +
@@ -885,7 +885,7 @@ describe('dropdown', function() {
                 }),
                 '<div>' +
                 '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom"></button>' +
-                '<div class="dropdown-menu" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                '<div class="dropdown-menu" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                 '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                 '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                 '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -915,7 +915,7 @@ describe('dropdown', function() {
                 }),
                 '<div>' +
                 '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
-                '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                '<div class="dropdown-menu show" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                 '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                 '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                 '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -953,7 +953,7 @@ describe('dropdown', function() {
                     }),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
-                    '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu show" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -992,7 +992,7 @@ describe('dropdown', function() {
                     }),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="false"></button>' +
-                    '<div class="dropdown-menu" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -1023,7 +1023,7 @@ describe('dropdown', function() {
                 }),
                 '<div>' +
                 '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom"></button>' +
-                '<div class="dropdown-menu" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                '<div class="dropdown-menu" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                 '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                 '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                 '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -1053,7 +1053,7 @@ describe('dropdown', function() {
                 }),
                 '<div>' +
                 '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
-                '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                '<div class="dropdown-menu show" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                 '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                 '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                 '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -1091,7 +1091,7 @@ describe('dropdown', function() {
                     }),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
-                    '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu show" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -1130,7 +1130,7 @@ describe('dropdown', function() {
                     }),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="false"></button>' +
-                    '<div class="dropdown-menu" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -1160,7 +1160,7 @@ describe('dropdown', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom"></button>' +
-                    '<div class="dropdown-menu" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -1190,7 +1190,7 @@ describe('dropdown', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom"></button>' +
-                    '<div class="dropdown-menu" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -1229,7 +1229,7 @@ describe('dropdown', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
-                    '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu show" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -1268,7 +1268,7 @@ describe('dropdown', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
-                    '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu show" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -1309,7 +1309,7 @@ describe('dropdown', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
-                    '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu show" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -1346,7 +1346,7 @@ describe('dropdown', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
                     '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-placement="bottom" aria-expanded="true"></button>' +
-                    '<div class="dropdown-menu show" id="dropdown1" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(8px, 17px, 0px);">' +
+                    '<div class="dropdown-menu show" id="dropdown1" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 3px, 0px);" data-ui-placement="bottom">' +
                     '<button class="dropdown-item" id="dropdown1Item1"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item2"></button>' +
                     '<button class="dropdown-item" id="dropdown1Item3"></button>' +
@@ -1566,6 +1566,110 @@ describe('dropdown', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getAttribute(document.activeElement, 'id')),
                     'dropdown1Item1'
+                );
+            });
+        });
+
+    });
+
+    describe('display option', function() {
+
+        it('works with static display option', async function() {
+            await exec(_ => {
+                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
+                UI.Dropdown.init(dropdownToggle1, {
+                    display: 'static'
+                }).show();
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#dropdown1')),
+                    true
+                );
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div>' +
+                    '<button id="dropdownToggle1" data-ui-toggle="dropdown" aria-expanded="true"></button>' +
+                    '<div class="dropdown-menu show" id="dropdown1" style="">' +
+                    '<button class="dropdown-item" id="dropdown1Item1"></button>' +
+                    '<button class="dropdown-item" id="dropdown1Item2"></button>' +
+                    '<button class="dropdown-item" id="dropdown1Item3"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<button id="dropdownToggle2" data-ui-toggle="dropdown"></button>' +
+                    '<div class="dropdown-menu" id="dropdown2">' +
+                    '<button class="dropdown-item" id="dropdown2Item1"></button>' +
+                    '<button class="dropdown-item" id="dropdown2Item2"></button>' +
+                    '<button class="dropdown-item" id="dropdown2Item3"></button>' +
+                    '</div>' +
+                    '</div>'
+                );
+            });
+        });
+
+        it('works with static display option (data-ui-display)', async function() {
+            await exec(_ => {
+                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
+                dom.setDataset(dropdownToggle1, 'uiDisplay', 'static');
+                UI.Dropdown.init(dropdownToggle1).show();
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#dropdown1')),
+                    true
+                );
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div>' +
+                    '<button id="dropdownToggle1" data-ui-toggle="dropdown" data-ui-display="static" aria-expanded="true"></button>' +
+                    '<div class="dropdown-menu show" id="dropdown1" style="">' +
+                    '<button class="dropdown-item" id="dropdown1Item1"></button>' +
+                    '<button class="dropdown-item" id="dropdown1Item2"></button>' +
+                    '<button class="dropdown-item" id="dropdown1Item3"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<button id="dropdownToggle2" data-ui-toggle="dropdown"></button>' +
+                    '<div class="dropdown-menu" id="dropdown2">' +
+                    '<button class="dropdown-item" id="dropdown2Item1"></button>' +
+                    '<button class="dropdown-item" id="dropdown2Item2"></button>' +
+                    '<button class="dropdown-item" id="dropdown2Item3"></button>' +
+                    '</div>' +
+                    '</div>'
+                );
+            });
+        });
+
+        it('works with static display option (query)', async function() {
+            await exec(_ => {
+                dom.query('#dropdownToggle1')
+                    .dropdown({ display: 'static' })
+                    .show();
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#dropdown1')),
+                    true
+                );
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div>' +
+                    '<button id="dropdownToggle1" data-ui-toggle="dropdown" aria-expanded="true"></button>' +
+                    '<div class="dropdown-menu show" id="dropdown1" style="">' +
+                    '<button class="dropdown-item" id="dropdown1Item1"></button>' +
+                    '<button class="dropdown-item" id="dropdown1Item2"></button>' +
+                    '<button class="dropdown-item" id="dropdown1Item3"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<button id="dropdownToggle2" data-ui-toggle="dropdown"></button>' +
+                    '<div class="dropdown-menu" id="dropdown2">' +
+                    '<button class="dropdown-item" id="dropdown2Item1"></button>' +
+                    '<button class="dropdown-item" id="dropdown2Item2"></button>' +
+                    '<button class="dropdown-item" id="dropdown2Item3"></button>' +
+                    '</div>' +
+                    '</div>'
                 );
             });
         });

@@ -1,11 +1,9 @@
 const assert = require('assert');
-const { exec, loadCSS, screenshot } = require('../setup');
-const { waitFor } = require('../helpers');
+const { exec, screenshot } = require('../setup');
 
 describe('popper tooltip', function() {
 
     beforeEach(async function() {
-        await loadCSS();
         await exec(_ => {
             dom.setHTML(
                 document.body,
@@ -13,11 +11,135 @@ describe('popper tooltip', function() {
                 '<button id="tooltipToggle" class="btn btn-secondary" role="button" data-ui-title="This is a tooltip.">Tooltip</button>' +
                 '</div>'
             );
-            window.scrollTo(850, 1300);
+            dom.setScroll(window, 850, 1300);
         });
     });
 
+    describe('#update', function() {
+
+        it('updates the popper position', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const tooltipToggle = dom.findOne('#tooltipToggle');
+                    const tooltip = UI.Tooltip.init(tooltipToggle, {
+                        placement: 'top',
+                        position: 'center',
+                        duration: 0
+                    });
+                    tooltip.show();
+                    dom.setScrollY(document, 1570);
+                    tooltip.update();
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1176px, 1639px, 0px)'
+            );
+        });
+
+        it('updates the popper position (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#tooltipToggle').tooltip({
+                        placement: 'top',
+                        position: 'center',
+                        duration: 0
+                    }).show();
+                    dom.setScrollY(document, 1570);
+                    dom.query('#tooltipToggle').tooltip('update');
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1176px, 1639px, 0px)'
+            );
+        });
+
+    });
+
     describe('placement/position options', function() {
+
+        it('works with placement option', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const tooltipToggle = dom.findOne('#tooltipToggle');
+                    const tooltip = UI.Tooltip.init(tooltipToggle, {
+                        placement: 'bottom',
+                        duration: 0
+                    });
+                    tooltip.show();
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1176px, 1639px, 0px)'
+            );
+        });
+
+        it('works with placement option (data-ui-placement)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const tooltipToggle = dom.findOne('#tooltipToggle');
+                    dom.setDataset(tooltipToggle, 'uiPlacement', 'bottom');
+                    const tooltip = UI.Tooltip.init(tooltipToggle, {
+                        duration: 0
+                    });
+                    tooltip.show();
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1176px, 1639px, 0px)'
+            );
+        });
+
+        it('works with placement option (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#tooltipToggle').tooltip({
+                        placement: 'bottom',
+                        duration: 0
+                    }).show();
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1176px, 1639px, 0px)'
+            );
+        });
+
+        it('works with position option', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const tooltipToggle = dom.findOne('#tooltipToggle');
+                    const tooltip = UI.Tooltip.init(tooltipToggle, {
+                        position: 'start',
+                        duration: 0
+                    });
+                    tooltip.show();
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1274px, 1600px, 0px)'
+            );
+        });
+
+        it('works with position option (data-ui-position)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const tooltipToggle = dom.findOne('#tooltipToggle');
+                    dom.setDataset(tooltipToggle, 'uiPosition', 'start');
+                    const tooltip = UI.Tooltip.init(tooltipToggle, {
+                        duration: 0
+                    });
+                    tooltip.show();
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1274px, 1600px, 0px)'
+            );
+        });
+
+        it('works with position option (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#tooltipToggle').tooltip({
+                        position: 'start',
+                        duration: 0
+                    }).show();
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1274px, 1600px, 0px)'
+            );
+        });
 
         it('works with top/start', async function() {
             await exec(_ => {
@@ -693,6 +815,55 @@ describe('popper tooltip', function() {
 
     describe('fixed option', function() {
 
+        it('works with fixed option', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.setScrollY(document, 1570);
+                    const tooltipToggle = dom.findOne('#tooltipToggle');
+                    const tooltip = UI.Tooltip.init(tooltipToggle, {
+                        placement: 'top',
+                        fixed: true,
+                        duration: 0
+                    });
+                    tooltip.show();
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1176px, 1566px, 0px)'
+            );
+        });
+
+        it('works with fixed option (data-ui-fixed)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.setScrollY(document, 1570);
+                    const tooltipToggle = dom.findOne('#tooltipToggle');
+                    dom.setDataset(tooltipToggle, 'uiFixed', true);
+                    const tooltip = UI.Tooltip.init(tooltipToggle, {
+                        placement: 'top',
+                        duration: 0
+                    });
+                    tooltip.show();
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1176px, 1566px, 0px)'
+            );
+        });
+
+        it('works with fixed option', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.setScrollY(document, 1570);
+                    dom.query('#tooltipToggle').tooltip({
+                        placement: 'top',
+                        fixed: true,
+                        duration: 0
+                    }).show();
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1176px, 1566px, 0px)'
+            );
+        });
+
         it('works with top edge', async function() {
             await exec(_ => {
                 dom.setScrollY(document, 1570);
@@ -786,6 +957,49 @@ describe('popper tooltip', function() {
 
     describe('spacing option', function() {
 
+        it('works with spacing option', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const tooltipToggle = dom.findOne('#tooltipToggle');
+                    const tooltip = UI.Tooltip.init(tooltipToggle, {
+                        spacing: 50,
+                        duration: 0
+                    });
+                    tooltip.show();
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1322px, 1602px, 0px)'
+            );
+        });
+
+        it('works with spacing option (data-ui-spacing)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const tooltipToggle = dom.findOne('#tooltipToggle');
+                    dom.setDataset(tooltipToggle, 'uiSpacing', 50);
+                    const tooltip = UI.Tooltip.init(tooltipToggle, {
+                        duration: 0
+                    });
+                    tooltip.show();
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1322px, 1602px, 0px)'
+            );
+        });
+
+        it('works with spacing option (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#tooltipToggle').tooltip({
+                        spacing: 50,
+                        duration: 0
+                    }).show();
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1322px, 1602px, 0px)'
+            );
+        });
+
         it('works with spacing and top', async function() {
             await exec(_ => {
                 const tooltipToggle = dom.findOne('#tooltipToggle');
@@ -873,6 +1087,55 @@ describe('popper tooltip', function() {
     });
 
     describe('minContact option', function() {
+
+        it('works with minContact option', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.setScrollX(document, 450);
+                    const tooltipToggle = dom.findOne('#tooltipToggle');
+                    const tooltip = UI.Tooltip.init(tooltipToggle, {
+                        placement: 'top',
+                        minContact: 10,
+                        duration: 0
+                    });
+                    tooltip.show();
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1131px, 1566px, 0px)'
+            );
+        });
+
+        it('works with minContact option (data-ui-min-contact)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.setScrollX(document, 450);
+                    const tooltipToggle = dom.findOne('#tooltipToggle');
+                    dom.setDataset(tooltipToggle, 'uiMinContact', 10);
+                    const tooltip = UI.Tooltip.init(tooltipToggle, {
+                        placement: 'top',
+                        duration: 0
+                    });
+                    tooltip.show();
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1131px, 1566px, 0px)'
+            );
+        });
+
+        it('works with minContact option (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.setScrollX(document, 450);
+                    dom.query('#tooltipToggle').tooltip({
+                        placement: 'top',
+                        minContact: 10,
+                        duration: 0
+                    }).show();
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1131px, 1566px, 0px)'
+            );
+        });
 
         it('works with minContact and top edge', async function() {
             await exec(_ => {

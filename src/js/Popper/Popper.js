@@ -108,7 +108,7 @@ class Popper extends BaseComponent {
         }
 
         // get optimal placement
-        const placement = this._settings.fixed ?
+        const placement = this._settings.fixed && this._settings.placement !== 'auto' ?
             this._settings.placement :
             this.constructor._getPopperPlacement(
                 nodeBox,

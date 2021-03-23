@@ -118,8 +118,13 @@ Object.assign(Carousel.prototype, {
 
         dom.animate(
             this._items[this._index],
-            (node, progress) =>
-                this._update(node, this._items[oldIndex], progress, direction),
+            (node, progress) => {
+                if (!this._items) {
+                    return;
+                }
+
+                this._update(node, this._items[oldIndex], progress, direction);
+            },
             {
                 duration: this._settings.transition
             }

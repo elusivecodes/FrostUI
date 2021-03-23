@@ -1,10 +1,9 @@
 const assert = require('assert');
-const { exec, loadCSS, screenshot } = require('../setup');
+const { exec, screenshot } = require('../setup');
 
 describe('popper dropdown', function() {
 
     beforeEach(async function() {
-        await loadCSS();
         await exec(_ => {
             dom.setHTML(
                 document.body,
@@ -19,11 +18,135 @@ describe('popper dropdown', function() {
                 '</div>' +
                 '</div>'
             );
-            window.scrollTo(850, 1300);
+            dom.setScroll(window, 850, 1300);
         });
     });
 
+    describe('#update', function() {
+
+        it('updates the popper position', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const dropdownToggle = dom.findOne('#dropdownToggle');
+                    const dropdown = UI.Dropdown.init(dropdownToggle, {
+                        placement: 'top',
+                        position: 'center',
+                        duration: 0
+                    });
+                    dropdown.show();
+                    dom.setScrollY(document, 1500);
+                    dropdown.update();
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1172px, 1640px, 0px)'
+            );
+        });
+
+        it('updates the popper position (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#dropdownToggle').dropdown({
+                        placement: 'top',
+                        position: 'center',
+                        duration: 0
+                    }).show();
+                    dom.setScrollY(document, 1500);
+                    dom.query('#dropdownToggle').dropdown('update');
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1172px, 1640px, 0px)'
+            );
+        });
+
+    });
+
     describe('placement/position options', function() {
+
+        it('works with placement option', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const dropdownToggle = dom.findOne('#dropdownToggle');
+                    const dropdown = UI.Dropdown.init(dropdownToggle, {
+                        placement: 'top',
+                        duration: 0
+                    });
+                    dropdown.show();
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1200px, 1473px, 0px)'
+            );
+        });
+
+        it('works with placement option (data-ui-placement)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const dropdownToggle = dom.findOne('#dropdownToggle');
+                    dom.setDataset(dropdownToggle, 'uiPlacement', 'top');
+                    const dropdown = UI.Dropdown.init(dropdownToggle, {
+                        duration: 0
+                    });
+                    dropdown.show();
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1200px, 1473px, 0px)'
+            );
+        });
+
+        it('works with placement option (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#dropdownToggle').dropdown({
+                        placement: 'top',
+                        duration: 0
+                    }).show();
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1200px, 1473px, 0px)'
+            );
+        });
+
+        it('works with position option', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const dropdownToggle = dom.findOne('#dropdownToggle');
+                    const dropdown = UI.Dropdown.init(dropdownToggle, {
+                        position: 'center',
+                        duration: 0
+                    });
+                    dropdown.show();
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1172px, 1640px, 0px)'
+            );
+        });
+
+        it('works with position option (data-ui-position)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const dropdownToggle = dom.findOne('#dropdownToggle');
+                    dom.setDataset(dropdownToggle, 'uiPosition', 'center');
+                    const dropdown = UI.Dropdown.init(dropdownToggle, {
+                        duration: 0
+                    });
+                    dropdown.show();
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1172px, 1640px, 0px)'
+            );
+        });
+
+        it('works with position option (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#dropdownToggle').dropdown({
+                        position: 'center',
+                        duration: 0
+                    }).show();
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1172px, 1640px, 0px)'
+            );
+        });
 
         it('works with top/start', async function() {
             await exec(_ => {
@@ -699,6 +822,52 @@ describe('popper dropdown', function() {
 
     describe('fixed option', function() {
 
+        it('works with fixed option', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.setScrollY(window, 1135);
+                    const dropdownToggle = dom.findOne('#dropdownToggle');
+                    const dropdown = UI.Dropdown.init(dropdownToggle, {
+                        fixed: true,
+                        duration: 0
+                    });
+                    dropdown.show();
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1200px, 1640px, 0px)'
+            );
+        });
+
+        it('works with fixed option (data-ui-fixed)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.setScrollY(window, 1135);
+                    const dropdownToggle = dom.findOne('#dropdownToggle');
+                    dom.setDataset(dropdownToggle, 'uiFixed', 'true');
+                    const dropdown = UI.Dropdown.init(dropdownToggle, {
+                        duration: 0
+                    });
+                    dropdown.show();
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1200px, 1640px, 0px)'
+            );
+        });
+
+        it('works with fixed option (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.setScrollY(window, 1135);
+                    dom.query('#dropdownToggle').dropdown({
+                        fixed: true,
+                        duration: 0
+                    }).show();
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1200px, 1640px, 0px)'
+            );
+        });
+
         it('works with top edge', async function() {
             await exec(_ => {
                 dom.setScrollY(document, 1500);
@@ -792,6 +961,49 @@ describe('popper dropdown', function() {
 
     describe('spacing option', function() {
 
+        it('works with spacing option', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const dropdownToggle = dom.findOne('#dropdownToggle');
+                    const dropdown = UI.Dropdown.init(dropdownToggle, {
+                        spacing: 50,
+                        duration: 0
+                    });
+                    dropdown.show();
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1200px, 1687px, 0px)'
+            );
+        });
+
+        it('works with spacing option (data-ui-spacing)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    const dropdownToggle = dom.findOne('#dropdownToggle');
+                    dom.setDataset(dropdownToggle, 'uiSpacing', 50);
+                    const dropdown = UI.Dropdown.init(dropdownToggle, {
+                        duration: 0
+                    });
+                    dropdown.show();
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1200px, 1687px, 0px)'
+            );
+        });
+
+        it('works with spacing option', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.query('#dropdownToggle').dropdown({
+                        spacing: 50,
+                        duration: 0
+                    }).show();
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1200px, 1687px, 0px)'
+            );
+        });
+
         it('works with spacing and top', async function() {
             await exec(_ => {
                 const dropdownToggle = dom.findOne('#dropdownToggle');
@@ -879,6 +1091,52 @@ describe('popper dropdown', function() {
     });
 
     describe('minContact option', function() {
+
+        it('works with minContact option', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.setScrollX(document, 1220);
+                    const dropdownToggle = dom.findOne('#dropdownToggle');
+                    const dropdown = UI.Dropdown.init(dropdownToggle, {
+                        minContact: 10,
+                        duration: 0
+                    });
+                    dropdown.show();
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1220px, 1640px, 0px)'
+            );
+        });
+
+        it('works with minContact option (data-ui-min-contact)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.setScrollX(document, 1220);
+                    const dropdownToggle = dom.findOne('#dropdownToggle');
+                    dom.setDataset(dropdownToggle, 'uiMinContact', 10);
+                    const dropdown = UI.Dropdown.init(dropdownToggle, {
+                        duration: 0
+                    });
+                    dropdown.show();
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1220px, 1640px, 0px)'
+            );
+        });
+
+        it('works with minContact option (query)', async function() {
+            assert.strictEqual(
+                await exec(_ => {
+                    dom.setScrollX(document, 1220);
+                    dom.query('#dropdownToggle').dropdown({
+                        minContact: 10,
+                        duration: 0
+                    }).show();
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1220px, 1640px, 0px)'
+            );
+        });
 
         it('works with minContact and top edge', async function() {
             await exec(_ => {

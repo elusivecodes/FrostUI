@@ -1,21 +1,3 @@
-// Relative
-
-// Test top/start
-// Test top/center
-// Test top/end
-
-// Test right/start
-// Test right/center
-// Test right/end
-
-// Test bottom/start
-// Test bottom/center
-// Test bottom/end
-
-// Test left/start
-// Test left/center
-// Test left/end
-
 // Fixed
 
 // Test top/start

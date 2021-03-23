@@ -15,14 +15,6 @@ class Modal extends BaseComponent {
 
         this._dialog = dom.child(this._node, '.modal-dialog').shift();
 
-        if (dom.hasClass(this._node, 'modal-left')) {
-            this._direction = 'left';
-        } else if (dom.hasClass(this._node, 'modal-right')) {
-            this._direction = 'right';
-        } else {
-            this._direction = 'top';
-        }
-
         if (this._settings.show) {
             this.show();
         }
@@ -35,6 +27,8 @@ class Modal extends BaseComponent {
         this._dialog = null;
         this._activeTarget = null;
         this._backdrop = null;
+
+        this.constructor.stack.delete(this);
 
         super.dispose();
     }
@@ -62,7 +56,7 @@ class Modal extends BaseComponent {
             }),
             dom.dropOut(this._dialog, {
                 duration: this._settings.duration,
-                direction: this._direction
+                direction: this._getDirection()
             }),
             dom.fadeOut(this._backdrop, {
                 duration: this._settings.duration
@@ -112,8 +106,11 @@ class Modal extends BaseComponent {
         const stackSize = this.constructor.stack.size;
 
         if (stackSize) {
-            const zIndex = dom.css(this._node, 'zIndex');
-            dom.setStyle(this._node, 'zIndex', parseInt(zIndex) + (stackSize * 20));
+            let zIndex = dom.css(this._node, 'zIndex');
+            zIndex = parseInt(zIndex);
+            zIndex += stackSize * 20;
+
+            dom.setStyle(this._node, 'zIndex', zIndex);
         }
 
         dom.addClass(this._node, 'show');
@@ -129,8 +126,11 @@ class Modal extends BaseComponent {
             dom.append(document.body, this._backdrop);
 
             if (stackSize) {
-                const zIndex = dom.css(this._backdrop, 'zIndex');
-                dom.setStyle(this._backdrop, 'zIndex', parseInt(zIndex) + (stackSize * 20));
+                let zIndex = dom.css(this._backdrop, 'zIndex');
+                zIndex = parseInt(zIndex);
+                zIndex += stackSize * 20;
+
+                dom.setStyle(this._backdrop, 'zIndex', zIndex);
             }
         }
 
@@ -140,7 +140,7 @@ class Modal extends BaseComponent {
             }),
             dom.dropIn(this._dialog, {
                 duration: this._settings.duration,
-                direction: this._direction
+                direction: this._getDirection()
             }),
             dom.fadeIn(this._backdrop, {
                 duration: this._settings.duration
