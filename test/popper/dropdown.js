@@ -148,6 +148,90 @@ describe('popper dropdown', function() {
             );
         });
 
+        it('works with auto placement (top)', async function() {
+            await exec(_ => {
+                dom.setScrollY(document, 1100);
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'auto',
+                    position: 'center',
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/placement-auto/top.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1172px, 1473px, 0px)'
+            );
+        });
+
+        it('works with auto placement (right)', async function() {
+            await exec(_ => {
+                dom.setScrollX(document, 1050);
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'auto',
+                    position: 'center',
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/placement-auto/right.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1324px, 1556px, 0px)'
+            );
+        });
+
+        it('works with auto placement (bottom)', async function() {
+            await exec(_ => {
+                dom.setScrollY(document, 1500);
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'auto',
+                    position: 'center',
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/placement-auto/bottom.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1172px, 1640px, 0px)'
+            );
+        });
+
+        it('works with auto placement (left)', async function() {
+            await exec(_ => {
+                dom.setScrollX(document, 650);
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'auto',
+                    position: 'center',
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/placement-auto/left.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1021px, 1556px, 0px)'
+            );
+        });
+
         it('works with top/start', async function() {
             await exec(_ => {
                 const dropdownToggle = dom.findOne('#dropdownToggle');

@@ -141,6 +141,90 @@ describe('popper popover', function() {
             );
         });
 
+        it('works with auto placement (top)', async function() {
+            await exec(_ => {
+                dom.setScrollY(document, 1100);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'auto',
+                    position: 'center',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/placement-auto/top.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1135px, 1513px, 0px)'
+            );
+        });
+
+        it('works with auto placement (right)', async function() {
+            await exec(_ => {
+                dom.setScrollX(document, 1050);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'auto',
+                    position: 'center',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/placement-auto/right.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1290px, 1576px, 0px)'
+            );
+        });
+
+        it('works with auto placement (bottom)', async function() {
+            await exec(_ => {
+                dom.setScrollY(document, 1500);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'auto',
+                    position: 'center',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/placement-auto/bottom.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(1135px, 1640px, 0px)'
+            );
+        });
+
+        it('works with auto placement (left)', async function() {
+            await exec(_ => {
+                dom.setScrollX(document, 650);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
+                    placement: 'auto',
+                    position: 'center',
+                    duration: 0
+                });
+                popover.show();
+            });
+            await screenshot('./screens/popover/placement-auto/left.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.popover', 'transform');
+                }),
+                'translate3d(980px, 1576px, 0px)'
+            );
+        });
+
         it('works with top/start', async function() {
             await exec(_ => {
                 const popoverToggle = dom.findOne('#popoverToggle');

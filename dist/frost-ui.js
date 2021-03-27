@@ -300,7 +300,7 @@
             dom.setDataset(this._node, 'uiPlacement', placement);
 
             // get auto position
-            const position = this._settings.position !== 'auto' ?
+            const position = this._settings.fixed ?
                 this._settings.position :
                 this.constructor._getPopperPosition(
                     nodeBox,

@@ -141,6 +141,90 @@ describe('popper tooltip', function() {
             );
         });
 
+        it('works with auto placement (top)', async function() {
+            await exec(_ => {
+                dom.setScrollY(document, 1100);
+                const tooltipToggle = dom.findOne('#tooltipToggle');
+                const tooltip = UI.Tooltip.init(tooltipToggle, {
+                    placement: 'auto',
+                    position: 'center',
+                    duration: 0
+                });
+                tooltip.show();
+            });
+            await screenshot('./screens/tooltip/placement-auto/top.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1176px, 1566px, 0px)'
+            );
+        });
+
+        it('works with auto placement (right)', async function() {
+            await exec(_ => {
+                dom.setScrollX(document, 1050);
+                const tooltipToggle = dom.findOne('#tooltipToggle');
+                const tooltip = UI.Tooltip.init(tooltipToggle, {
+                    placement: 'auto',
+                    position: 'center',
+                    duration: 0
+                });
+                tooltip.show();
+            });
+            await screenshot('./screens/tooltip/placement-auto/right.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1274px, 1602px, 0px)'
+            );
+        });
+
+        it('works with auto placement (bottom)', async function() {
+            await exec(_ => {
+                dom.setScrollY(document, 1500);
+                const tooltipToggle = dom.findOne('#tooltipToggle');
+                const tooltip = UI.Tooltip.init(tooltipToggle, {
+                    placement: 'auto',
+                    position: 'center',
+                    duration: 0
+                });
+                tooltip.show();
+            });
+            await screenshot('./screens/tooltip/placement-auto/bottom.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1176px, 1639px, 0px)'
+            );
+        });
+
+        it('works with auto placement (left)', async function() {
+            await exec(_ => {
+                dom.setScrollX(document, 650);
+                const tooltipToggle = dom.findOne('#tooltipToggle');
+                const tooltip = UI.Tooltip.init(tooltipToggle, {
+                    placement: 'auto',
+                    position: 'center',
+                    duration: 0
+                });
+                tooltip.show();
+            });
+            await screenshot('./screens/tooltip/placement-auto/left.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.tooltip', 'transform');
+                }),
+                'translate3d(1079px, 1602px, 0px)'
+            );
+        });
+
         it('works with top/start', async function() {
             await exec(_ => {
                 const tooltipToggle = dom.findOne('#tooltipToggle');

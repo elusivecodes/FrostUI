@@ -17,3 +17,5 @@ docker build --tag frostui-test .
 
 echo Starting container..
 docker run -it -v "%CD%:/app" --name frostui-test frostui-test npm test
+
+pause
