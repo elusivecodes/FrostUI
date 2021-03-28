@@ -243,7 +243,7 @@
             // calculate boxes
             const nodeBox = dom.rect(this._node, true);
             const referenceBox = dom.rect(this._settings.reference, true);
-            const windowBox = this.constructor._windowContainer();
+            const windowBox = this.constructor._scrollContainer(window, document);
 
             // check object could be seen
             if (!force && this.constructor._isNodeHidden(nodeBox, referenceBox, windowBox, this._settings.spacing)) {
@@ -253,7 +253,7 @@
             const scrollParent = this.constructor._getScrollParent(this._node);
 
             const scrollBox = scrollParent ?
-                dom.rect(scrollParent, true) :
+                this.constructor._scrollContainer(scrollParent, scrollParent) :
                 null;
 
             const containerBox = this._settings.container ?
@@ -300,15 +300,7 @@
             dom.setDataset(this._node, 'uiPlacement', placement);
 
             // get auto position
-            const position = this._settings.fixed ?
-                this._settings.position :
-                this.constructor._getPopperPosition(
-                    nodeBox,
-                    referenceBox,
-                    minimumBox,
-                    placement,
-                    this._settings.position
-                );
+            const position = this._settings.position;
 
             // calculate actual offset
             const offset = {
@@ -741,101 +733,6 @@
         },
 
         /**
-         * Get the actual position of the Popper.
-         * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
-         * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
-         * @param {object} minimumBox The computed minimum bounding rectangle of the container.
-         * @param {string} placement The actual placement of the Popper.
-         * @param {string} position The initial position of the Popper.
-         * @returns {string} The new position of the Popper.
-         */
-        _getPopperPosition(nodeBox, referenceBox, minimumBox, placement, position) {
-
-            const deltaX = nodeBox.width - referenceBox.width;
-            const deltaY = nodeBox.height - referenceBox.height;
-
-            if (['bottom', 'top'].includes(placement)) {
-                const spaceLeft = referenceBox.left - minimumBox.left;
-                const spaceRight = minimumBox.right - referenceBox.right;
-
-                if (position === 'start') {
-                    if (spaceRight < deltaX) {
-                        if (spaceLeft >= deltaX / 2 && spaceRight >= deltaX / 2) {
-                            return 'center';
-                        }
-
-                        if (spaceLeft >= deltaX) {
-                            return 'end';
-                        }
-                    }
-
-                } else if (position === 'center') {
-                    if (spaceLeft < deltaX / 2 || spaceRight < deltaX / 2) {
-                        if (spaceRight >= deltaX) {
-                            return 'start';
-                        }
-
-                        if (spaceLeft >= deltaX) {
-                            return 'end';
-                        }
-                    }
-
-                } else if (position === 'end') {
-                    if (spaceLeft < deltaX) {
-                        if (spaceLeft >= deltaX / 2 && spaceRight >= deltaX / 2) {
-                            return 'center';
-                        }
-
-                        if (spaceRight >= deltaX) {
-                            return 'start';
-                        }
-                    }
-                }
-
-            } else {
-                const spaceTop = referenceBox.top - minimumBox.top;
-                const spaceBottom = minimumBox.bottom - referenceBox.bottom;
-
-                if (position === 'start') {
-                    if (spaceBottom < deltaY) {
-                        if (spaceBottom >= deltaY / 2 && spaceTop >= deltaY / 2) {
-                            return 'center';
-                        }
-
-                        if (spaceTop >= deltaY) {
-                            return 'end';
-                        }
-                    }
-
-                } else if (position === 'center') {
-                    if (spaceTop < deltaY / 2 || spaceBottom < deltaY / 2) {
-                        if (spaceBottom >= deltaY) {
-                            return 'start';
-                        }
-
-                        if (spaceTop >= deltaY) {
-                            return 'end';
-                        }
-                    }
-
-                } else if (position === 'end') {
-                    if (spaceTop < deltaY) {
-                        if (spaceTop >= deltaY / 2 && spaceBottom >= deltaY / 2) {
-                            return 'center';
-                        }
-
-                        if (spaceBottom >= deltaY) {
-                            return 'start';
-                        }
-                    }
-
-                }
-            }
-
-            return position;
-        },
-
-        /**
          * Get the relative parent of the node.
          * @param {HTMLElement} node The input node.
          * @return {HTMLElement} The relative parent.
@@ -885,12 +782,10 @@
             return dom.closest(
                 node,
                 parent =>
-                    !!['overflow', 'overflowX', 'overflowY'].find(overflow =>
-                        !!['auto', 'scroll'].find(value =>
-                            new RegExp(value)
-                                .test(
-                                    dom.css(parent, overflow)
-                                )
+                    dom.css(parent, 'position') === 'relative' &&
+                    ['overflow', 'overflowX', 'overflowY'].some(overflow =>
+                        ['auto', 'scroll'].includes(
+                            dom.css(parent, overflow)
                         )
                     ),
                 document.body
@@ -914,41 +809,56 @@
         },
 
         /**
-         * Calculate the computed bounding rectangle of the window.
+         * Calculate the computed bounding rectangle of a node (minus scroll bars).
+         * @param {HTMLElement|Window} node The input node.
+         * @param {HTMLElement|Document} scrollNode The scroll node.
+         * @returns {object} The computed bounding rectangle of the node.
+         */
+        _scrollContainer(node, scrollNode) {
+            const rect = Core.isWindow(node) ?
+                this._windowContainer(node) :
+                dom.rect(node, true);
+
+            const scrollWidth = dom.width(scrollNode, DOM.SCROLL_BOX);
+            const scrollHeight = dom.height(scrollNode, DOM.SCROLL_BOX);
+
+            if (scrollWidth > rect.width) {
+                const scrollSize = this._getScrollbarSize();
+                rect.height -= scrollSize;
+            }
+
+            if (scrollHeight > rect.height) {
+                const scrollSize = this._getScrollbarSize();
+                rect.width -= scrollSize;
+            }
+
+            return rect;
+        },
+
+        /**
+         * Calculate the computed bounding rectangle of a window.
          * @returns {object} The computed bounding rectangle of the window.
          */
-        _windowContainer() {
-            const scrollX = dom.getScrollX(window);
-            const scrollY = dom.getScrollY(window);
-            const windowWidth = dom.width(window);
-            const windowHeight = dom.height(window);
-            const documentWidth = dom.width(document, DOM.SCROLL_BOX);
-            const documentHeight = dom.height(document, DOM.SCROLL_BOX);
-
-            let realWidth = windowWidth;
-            let realHeight = windowHeight;
-
-            if (documentWidth > windowWidth) {
-                realHeight -= this._getScrollbarSize();
-            }
-
-            if (documentHeight > windowHeight) {
-                realWidth -= this._getScrollbarSize();
-            }
+        _windowContainer(node) {
+            const scrollX = dom.getScrollX(node);
+            const scrollY = dom.getScrollY(node);
+            const width = dom.width(node);
+            const height = dom.height(node);
 
             return {
                 x: scrollX,
                 y: scrollY,
-                width: realWidth,
-                height: realHeight,
+                width,
+                height,
                 top: scrollY,
-                right: scrollX + realWidth,
-                bottom: scrollY + realHeight,
+                right: scrollX + width,
+                bottom: scrollY + height,
                 left: scrollX
             };
         }
 
     });
+
 
     // Popper default options
     Popper.defaults = {

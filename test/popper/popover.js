@@ -11,7 +11,7 @@ describe('popper popover', function() {
                 '<button id="popoverToggle" class="btn btn-secondary" role="button" data-ui-title="Title" data-ui-content="This is the popover content.">Popover</button>' +
                 '</div>'
             );
-            dom.setScroll(window, 850, 1300);
+            dom.setScroll(document, 850, 1300);
         });
     });
 
@@ -492,7 +492,7 @@ describe('popper popover', function() {
 
         it('works with right/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(window, 600);
+                dom.setScrollX(document, 600);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'right',
@@ -513,7 +513,7 @@ describe('popper popover', function() {
 
         it('works with bottom/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(window, 1115);
+                dom.setScrollY(document, 1115);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'bottom',
@@ -645,7 +645,7 @@ describe('popper popover', function() {
 
         it('works with right/start and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(window, 1035);
+                dom.setScrollY(document, 1035);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'right',
@@ -666,7 +666,7 @@ describe('popper popover', function() {
 
         it('works with right/center and top edge', async function() {
             await exec(_ => {
-                dom.setScrollY(window, 1600);
+                dom.setScrollY(document, 1600);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'right',
@@ -687,7 +687,7 @@ describe('popper popover', function() {
 
         it('works with right/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(window, 1035);
+                dom.setScrollY(document, 1035);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'right',
@@ -708,7 +708,7 @@ describe('popper popover', function() {
 
         it('works with right/end and top edge', async function() {
             await exec(_ => {
-                dom.setScrollY(window, 1600);
+                dom.setScrollY(document, 1600);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'right',
@@ -729,7 +729,7 @@ describe('popper popover', function() {
 
         it('works with bottom/start and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(window, 480);
+                dom.setScrollX(document, 480);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'bottom',
@@ -750,7 +750,7 @@ describe('popper popover', function() {
 
         it('works with bottom/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(window, 480);
+                dom.setScrollX(document, 480);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'bottom',
@@ -771,7 +771,7 @@ describe('popper popover', function() {
 
         it('works with bottom/center and left edge', async function() {
             await exec(_ => {
-                dom.setScrollX(window, 1200);
+                dom.setScrollX(document, 1200);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'bottom',
@@ -792,7 +792,7 @@ describe('popper popover', function() {
 
         it('works with bottom/end and left edge', async function() {
             await exec(_ => {
-                dom.setScrollX(window, 1200);
+                dom.setScrollX(document, 1200);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'bottom',
@@ -813,7 +813,7 @@ describe('popper popover', function() {
 
         it('works with left/start and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(window, 1035);
+                dom.setScrollY(document, 1035);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'left',
@@ -855,7 +855,7 @@ describe('popper popover', function() {
 
         it('works with left/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(window, 1035);
+                dom.setScrollY(document, 1035);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'left',
@@ -975,7 +975,7 @@ describe('popper popover', function() {
 
         it('works with right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(window, 600);
+                dom.setScrollX(document, 600);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'right',
@@ -997,7 +997,7 @@ describe('popper popover', function() {
 
         it('works with bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(window, 1115);
+                dom.setScrollY(document, 1115);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'bottom',

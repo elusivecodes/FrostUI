@@ -18,7 +18,7 @@ describe('popper dropdown', function() {
                 '</div>' +
                 '</div>'
             );
-            dom.setScroll(window, 850, 1300);
+            dom.setScroll(document, 850, 1300);
         });
     });
 
@@ -499,7 +499,7 @@ describe('popper dropdown', function() {
 
         it('works with right/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(window, 600);
+                dom.setScrollX(document, 600);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'right',
@@ -520,7 +520,7 @@ describe('popper dropdown', function() {
 
         it('works with bottom/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(window, 1135);
+                dom.setScrollY(document, 1135);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'bottom',
@@ -652,7 +652,7 @@ describe('popper dropdown', function() {
 
         it('works with right/start and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(window, 1035);
+                dom.setScrollY(document, 1035);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'right',
@@ -673,7 +673,7 @@ describe('popper dropdown', function() {
 
         it('works with right/center and top edge', async function() {
             await exec(_ => {
-                dom.setScrollY(window, 1600);
+                dom.setScrollY(document, 1600);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'right',
@@ -694,7 +694,7 @@ describe('popper dropdown', function() {
 
         it('works with right/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(window, 1035);
+                dom.setScrollY(document, 1035);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'right',
@@ -715,7 +715,7 @@ describe('popper dropdown', function() {
 
         it('works with right/end and top edge', async function() {
             await exec(_ => {
-                dom.setScrollY(window, 1600);
+                dom.setScrollY(document, 1600);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'right',
@@ -736,7 +736,7 @@ describe('popper dropdown', function() {
 
         it('works with bottom/start and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(window, 500);
+                dom.setScrollX(document, 500);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'bottom',
@@ -757,7 +757,7 @@ describe('popper dropdown', function() {
 
         it('works with bottom/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(window, 500);
+                dom.setScrollX(document, 500);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'bottom',
@@ -778,7 +778,7 @@ describe('popper dropdown', function() {
 
         it('works with bottom/center and left edge', async function() {
             await exec(_ => {
-                dom.setScrollX(window, 1200);
+                dom.setScrollX(document, 1200);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'bottom',
@@ -799,7 +799,7 @@ describe('popper dropdown', function() {
 
         it('works with bottom/end and left edge', async function() {
             await exec(_ => {
-                dom.setScrollX(window, 1200);
+                dom.setScrollX(document, 1200);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'bottom',
@@ -820,7 +820,7 @@ describe('popper dropdown', function() {
 
         it('works with left/start and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(window, 1035);
+                dom.setScrollY(document, 1035);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'left',
@@ -862,7 +862,7 @@ describe('popper dropdown', function() {
 
         it('works with left/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(window, 1035);
+                dom.setScrollY(document, 1035);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'left',
@@ -909,7 +909,7 @@ describe('popper dropdown', function() {
         it('works with fixed option', async function() {
             assert.strictEqual(
                 await exec(_ => {
-                    dom.setScrollY(window, 1135);
+                    dom.setScrollY(document, 1135);
                     const dropdownToggle = dom.findOne('#dropdownToggle');
                     const dropdown = UI.Dropdown.init(dropdownToggle, {
                         fixed: true,
@@ -925,7 +925,7 @@ describe('popper dropdown', function() {
         it('works with fixed option (data-ui-fixed)', async function() {
             assert.strictEqual(
                 await exec(_ => {
-                    dom.setScrollY(window, 1135);
+                    dom.setScrollY(document, 1135);
                     const dropdownToggle = dom.findOne('#dropdownToggle');
                     dom.setDataset(dropdownToggle, 'uiFixed', 'true');
                     const dropdown = UI.Dropdown.init(dropdownToggle, {
@@ -941,7 +941,7 @@ describe('popper dropdown', function() {
         it('works with fixed option (query)', async function() {
             assert.strictEqual(
                 await exec(_ => {
-                    dom.setScrollY(window, 1135);
+                    dom.setScrollY(document, 1135);
                     dom.query('#dropdownToggle').dropdown({
                         fixed: true,
                         duration: 0
@@ -976,7 +976,7 @@ describe('popper dropdown', function() {
 
         it('works with right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(window, 600);
+                dom.setScrollX(document, 600);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'right',
@@ -998,7 +998,7 @@ describe('popper dropdown', function() {
 
         it('works with bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(window, 1135);
+                dom.setScrollY(document, 1135);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'bottom',

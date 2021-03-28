@@ -1,7 +1,7 @@
 const assert = require('assert');
 const { exec, screenshot } = require('../setup');
 
-describe('popper dropdown', function() {
+describe('popper dropdown (fixed)', function() {
 
     beforeEach(async function() {
         await exec(_ => {

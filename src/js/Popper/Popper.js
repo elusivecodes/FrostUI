@@ -65,7 +65,7 @@ class Popper extends BaseComponent {
         // calculate boxes
         const nodeBox = dom.rect(this._node, true);
         const referenceBox = dom.rect(this._settings.reference, true);
-        const windowBox = this.constructor._windowContainer();
+        const windowBox = this.constructor._scrollContainer(window, document);
 
         // check object could be seen
         if (!force && this.constructor._isNodeHidden(nodeBox, referenceBox, windowBox, this._settings.spacing)) {
@@ -75,7 +75,7 @@ class Popper extends BaseComponent {
         const scrollParent = this.constructor._getScrollParent(this._node);
 
         const scrollBox = scrollParent ?
-            dom.rect(scrollParent, true) :
+            this.constructor._scrollContainer(scrollParent, scrollParent) :
             null;
 
         const containerBox = this._settings.container ?
@@ -122,15 +122,7 @@ class Popper extends BaseComponent {
         dom.setDataset(this._node, 'uiPlacement', placement);
 
         // get auto position
-        const position = this._settings.fixed ?
-            this._settings.position :
-            this.constructor._getPopperPosition(
-                nodeBox,
-                referenceBox,
-                minimumBox,
-                placement,
-                this._settings.position
-            );
+        const position = this._settings.position;
 
         // calculate actual offset
         const offset = {

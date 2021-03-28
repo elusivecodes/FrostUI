@@ -1,7 +1,7 @@
 const assert = require('assert');
 const { exec, screenshot } = require('../setup');
 
-describe('popper popover', function() {
+describe('popper popover (fixed)', function() {
 
     beforeEach(async function() {
         await exec(_ => {
@@ -11,7 +11,7 @@ describe('popper popover', function() {
                 '<button id="popoverToggle" class="btn btn-secondary" role="button" data-ui-title="Title" data-ui-content="This is the popover content." style="position: fixed; top: 300px; left: 350px;">Popover</button>' +
                 '</div>'
             );
-            dom.setScroll(window, 850, 1300);
+            dom.setScroll(document, 850, 1300);
         });
     });
 

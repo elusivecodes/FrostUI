@@ -1,7 +1,7 @@
 const assert = require('assert');
 const { exec, screenshot } = require('../setup');
 
-describe('popper tooltip', function() {
+describe('popper tooltip (fixed)', function() {
 
     beforeEach(async function() {
         await exec(_ => {
@@ -11,7 +11,7 @@ describe('popper tooltip', function() {
                 '<button id="tooltipToggle" class="btn btn-secondary" role="button" data-ui-title="This is a tooltip." style="position: fixed; top: 300px; left: 350px;">Tooltip</button>' +
                 '</div>'
             );
-            dom.setScroll(window, 850, 1300);
+            dom.setScroll(document, 850, 1300);
         });
     });
 

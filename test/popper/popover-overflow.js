@@ -1,7 +1,7 @@
 const assert = require('assert');
 const { exec, screenshot } = require('../setup');
 
-describe('popper dropdown (overflow)', function() {
+describe('popper popover (overflow)', function() {
 
     beforeEach(async function() {
         await exec(_ => {
@@ -9,14 +9,7 @@ describe('popper dropdown (overflow)', function() {
                 document.body,
                 '<div id="scroll" style="position: relative; overflow: auto; width: 100vw; height: 100vh;">' +
                 '<div class="text-center" style="padding: 1600px 1200px;">' +
-                '<div class="dropdown">' +
-                '<button id="dropdownToggle" class="btn btn-secondary dropdown-toggle" role="button">Dropdown</button>' +
-                '<div class="dropdown-menu">' +
-                '<button class="dropdown-item">Action</button>' +
-                '<button class="dropdown-item">Action</button>' +
-                '<button class="dropdown-item">Action</button>' +
-                '</div>' +
-                '</div>' +
+                '<button id="popoverToggle" class="btn btn-secondary" role="button" data-ui-title="Title" data-ui-content="This is the popover content.">Popover</button>' +
                 '</div>' +
                 '</div>'
             );
@@ -29,222 +22,222 @@ describe('popper dropdown (overflow)', function() {
         it('works with auto placement (top)', async function() {
             await exec(_ => {
                 dom.setScrollY('#scroll', 1100);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'auto',
                     position: 'center',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-placement-auto/top.jpeg');
+            await screenshot('./screens/popover/overflow-placement-auto/top.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1172px, 1473px, 0px)'
+                'translate3d(1135px, 1513px, 0px)'
             );
         });
 
         it('works with auto placement (right)', async function() {
             await exec(_ => {
                 dom.setScrollX('#scroll', 1050);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'auto',
                     position: 'center',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-placement-auto/right.jpeg');
+            await screenshot('./screens/popover/overflow-placement-auto/right.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1324px, 1556px, 0px)'
+                'translate3d(1290px, 1576px, 0px)'
             );
         });
 
         it('works with auto placement (bottom)', async function() {
             await exec(_ => {
                 dom.setScrollY('#scroll', 1500);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'auto',
                     position: 'center',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-placement-auto/bottom.jpeg');
+            await screenshot('./screens/popover/overflow-placement-auto/bottom.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1172px, 1640px, 0px)'
+                'translate3d(1135px, 1640px, 0px)'
             );
         });
 
         it('works with auto placement (left)', async function() {
             await exec(_ => {
                 dom.setScrollX('#scroll', 650);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'auto',
                     position: 'center',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-placement-auto/left.jpeg');
+            await screenshot('./screens/popover/overflow-placement-auto/left.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1021px, 1556px, 0px)'
+                'translate3d(980px, 1576px, 0px)'
             );
         });
 
         it('works with top/start', async function() {
             await exec(_ => {
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'top',
                     position: 'start',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-placement/top-start.jpeg');
+            await screenshot('./screens/popover/overflow-placement/top-start.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1200px, 1473px, 0px)'
+                'translate3d(1200px, 1513px, 0px)'
             );
         });
 
         it('works with top/center', async function() {
             await exec(_ => {
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'top',
                     position: 'center',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-placement/top-center.jpeg');
+            await screenshot('./screens/popover/overflow-placement/top-center.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1172px, 1473px, 0px)'
+                'translate3d(1135px, 1513px, 0px)'
             );
         });
 
         it('works with top/end', async function() {
             await exec(_ => {
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'top',
                     position: 'end',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-placement/top-end.jpeg');
+            await screenshot('./screens/popover/overflow-placement/top-end.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1145px, 1473px, 0px)'
+                'translate3d(1070px, 1513px, 0px)'
             );
         });
 
         it('works with right/start', async function() {
             await exec(_ => {
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'right',
                     position: 'start',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-placement/right-start.jpeg');
+            await screenshot('./screens/popover/overflow-placement/right-start.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1324px, 1600px, 0px)'
+                'translate3d(1290px, 1600px, 0px)'
             );
         });
 
         it('works with right/center', async function() {
             await exec(_ => {
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'right',
                     position: 'center',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-placement/right-center.jpeg');
+            await screenshot('./screens/popover/overflow-placement/right-center.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1324px, 1556px, 0px)'
+                'translate3d(1290px, 1576px, 0px)'
             );
         });
 
         it('works with right/end', async function() {
             await exec(_ => {
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'right',
                     position: 'end',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-placement/right-end.jpeg');
+            await screenshot('./screens/popover/overflow-placement/right-end.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1324px, 1513px, 0px)'
+                'translate3d(1290px, 1553px, 0px)'
             );
         });
 
         it('works with bottom/start', async function() {
             await exec(_ => {
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'bottom',
                     position: 'start',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-placement/bottom-start.jpeg');
+            await screenshot('./screens/popover/overflow-placement/bottom-start.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
                 'translate3d(1200px, 1640px, 0px)'
             );
@@ -252,101 +245,101 @@ describe('popper dropdown (overflow)', function() {
 
         it('works with bottom/center', async function() {
             await exec(_ => {
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'bottom',
                     position: 'center',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-placement/bottom-center.jpeg');
+            await screenshot('./screens/popover/overflow-placement/bottom-center.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1172px, 1640px, 0px)'
+                'translate3d(1135px, 1640px, 0px)'
             );
         });
 
         it('works with bottom/end', async function() {
             await exec(_ => {
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'bottom',
                     position: 'end',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-placement/bottom-end.jpeg');
+            await screenshot('./screens/popover/overflow-placement/bottom-end.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1145px, 1640px, 0px)'
+                'translate3d(1070px, 1640px, 0px)'
             );
         });
 
         it('works with left/start', async function() {
             await exec(_ => {
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'left',
                     position: 'start',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-placement/left-start.jpeg');
+            await screenshot('./screens/popover/overflow-placement/left-start.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1021px, 1600px, 0px)'
+                'translate3d(980px, 1600px, 0px)'
             );
         });
 
         it('works with left/center', async function() {
             await exec(_ => {
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'left',
                     position: 'center',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-placement/left-center.jpeg');
+            await screenshot('./screens/popover/overflow-placement/left-center.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1021px, 1556px, 0px)'
+                'translate3d(980px, 1576px, 0px)'
             );
         });
 
         it('works with left/end', async function() {
             await exec(_ => {
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'left',
                     position: 'end',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-placement/left-end.jpeg');
+            await screenshot('./screens/popover/overflow-placement/left-end.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1021px, 1513px, 0px)'
+                'translate3d(980px, 1553px, 0px)'
             );
         });
 
@@ -356,86 +349,86 @@ describe('popper dropdown (overflow)', function() {
 
         it('works with top/center and top edge', async function() {
             await exec(_ => {
-                dom.setScrollY('#scroll', 1500);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                dom.setScrollY('#scroll', 1520);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'top',
                     position: 'center',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-placement-flip/top-center-top.jpeg');
+            await screenshot('./screens/popover/overflow-placement-flip/top-center-top.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1172px, 1640px, 0px)'
+                'translate3d(1135px, 1640px, 0px)'
             );
         });
 
         it('works with right/center and right edge', async function() {
             await exec(_ => {
                 dom.setScrollX('#scroll', 600);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'right',
                     position: 'center',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-placement-flip/right-center-right.jpeg');
+            await screenshot('./screens/popover/overflow-placement-flip/right-center-right.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1021px, 1556px, 0px)'
+                'translate3d(980px, 1576px, 0px)'
             );
         });
 
         it('works with bottom/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY('#scroll', 1135);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                dom.setScrollY('#scroll', 1115);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'bottom',
                     position: 'center',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-placement-flip/bottom-center-bottom.jpeg');
+            await screenshot('./screens/popover/overflow-placement-flip/bottom-center-bottom.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1172px, 1473px, 0px)'
+                'translate3d(1135px, 1513px, 0px)'
             );
         });
 
         it('works with left/center and left edge', async function() {
             await exec(_ => {
                 dom.setScrollX('#scroll', 1100);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'left',
                     position: 'center',
                     duration: 0
                 });
-                dropdown.show();
-                return dom.getStyle('.dropdown-menu', 'transform');
+                popover.show();
+                return dom.getStyle('.popover', 'transform');
             });
-            await screenshot('./screens/dropdown/overflow-placement-flip/left-center-left.jpeg');
+            await screenshot('./screens/popover/overflow-placement-flip/left-center-left.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1324px, 1556px, 0px)'
+                'translate3d(1290px, 1576px, 0px)'
             );
         });
 
@@ -445,231 +438,231 @@ describe('popper dropdown (overflow)', function() {
 
         it('works with top/start and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX('#scroll', 500);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                dom.setScrollX('#scroll', 480);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'top',
                     position: 'start',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-position-clamp/top-start-right.jpeg');
+            await screenshot('./screens/popover/overflow-position-clamp/top-start-right.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1145px, 1473px, 0px)'
+                'translate3d(1069px, 1513px, 0px)'
             );
         });
 
         it('works with top/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX('#scroll', 500);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                dom.setScrollX('#scroll', 480);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'top',
                     position: 'center',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-position-clamp/top-center-right.jpeg');
+            await screenshot('./screens/popover/overflow-position-clamp/top-center-right.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1145px, 1473px, 0px)'
+                'translate3d(1069px, 1513px, 0px)'
             );
         });
 
         it('works with top/center and left edge', async function() {
             await exec(_ => {
                 dom.setScrollX('#scroll', 1200);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'top',
                     position: 'center',
                     duration: 0
                 });
-                dropdown.show();
-                return dom.getStyle('.dropdown-menu', 'transform');
+                popover.show();
+                return dom.getStyle('.popover', 'transform');
             });
-            await screenshot('./screens/dropdown/overflow-position-clamp/top-center-left.jpeg');
+            await screenshot('./screens/popover/overflow-position-clamp/top-center-left.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1200px, 1473px, 0px)'
+                'translate3d(1200px, 1513px, 0px)'
             );
         });
 
         it('works with top/end and left edge', async function() {
             await exec(_ => {
                 dom.setScrollX('#scroll', 1200);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'top',
                     position: 'end',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-position-clamp/top-end-left.jpeg');
+            await screenshot('./screens/popover/overflow-position-clamp/top-end-left.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1200px, 1473px, 0px)'
+                'translate3d(1200px, 1513px, 0px)'
             );
         });
 
         it('works with right/start and bottom edge', async function() {
             await exec(_ => {
                 dom.setScrollY('#scroll', 1035);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'right',
                     position: 'start',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-position-clamp/right-start-bottom.jpeg');
+            await screenshot('./screens/popover/overflow-position-clamp/right-start-bottom.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1324px, 1513px, 0px)'
+                'translate3d(1290px, 1553px, 0px)'
             );
         });
 
         it('works with right/center and top edge', async function() {
             await exec(_ => {
                 dom.setScrollY('#scroll', 1600);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'right',
                     position: 'center',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-position-clamp/right-center-top.jpeg');
+            await screenshot('./screens/popover/overflow-position-clamp/right-center-top.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1324px, 1600px, 0px)'
+                'translate3d(1290px, 1600px, 0px)'
             );
         });
 
         it('works with right/center and bottom edge', async function() {
             await exec(_ => {
                 dom.setScrollY('#scroll', 1035);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'right',
                     position: 'center',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-position-clamp/right-center-bottom.jpeg');
+            await screenshot('./screens/popover/overflow-position-clamp/right-center-bottom.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1324px, 1513px, 0px)'
+                'translate3d(1290px, 1553px, 0px)'
             );
         });
 
         it('works with right/end and top edge', async function() {
             await exec(_ => {
                 dom.setScrollY('#scroll', 1600);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'right',
                     position: 'end',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-position-clamp/right-end-top.jpeg');
+            await screenshot('./screens/popover/overflow-position-clamp/right-end-top.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1324px, 1600px, 0px)'
+                'translate3d(1290px, 1600px, 0px)'
             );
         });
 
         it('works with bottom/start and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX('#scroll', 500);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                dom.setScrollX('#scroll', 480);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'bottom',
                     position: 'start',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-position-clamp/bottom-start-right.jpeg');
+            await screenshot('./screens/popover/overflow-position-clamp/bottom-start-right.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1145px, 1640px, 0px)'
+                'translate3d(1069px, 1640px, 0px)'
             );
         });
 
         it('works with bottom/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX('#scroll', 500);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                dom.setScrollX('#scroll', 480);
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'bottom',
                     position: 'center',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-position-clamp/bottom-center-right.jpeg');
+            await screenshot('./screens/popover/overflow-position-clamp/bottom-center-right.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1145px, 1640px, 0px)'
+                'translate3d(1069px, 1640px, 0px)'
             );
         });
 
         it('works with bottom/center and left edge', async function() {
             await exec(_ => {
                 dom.setScrollX('#scroll', 1200);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'bottom',
                     position: 'center',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-position-clamp/bottom-center-left.jpeg');
+            await screenshot('./screens/popover/overflow-position-clamp/bottom-center-left.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
                 'translate3d(1200px, 1640px, 0px)'
             );
@@ -678,19 +671,19 @@ describe('popper dropdown (overflow)', function() {
         it('works with bottom/end and left edge', async function() {
             await exec(_ => {
                 dom.setScrollX('#scroll', 1200);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'bottom',
                     position: 'end',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-position-clamp/bottom-end-left.jpeg');
+            await screenshot('./screens/popover/overflow-position-clamp/bottom-end-left.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
                 'translate3d(1200px, 1640px, 0px)'
             );
@@ -699,84 +692,84 @@ describe('popper dropdown (overflow)', function() {
         it('works with left/start and bottom edge', async function() {
             await exec(_ => {
                 dom.setScrollY('#scroll', 1035);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'left',
                     position: 'start',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-position-clamp/left-start-bottom.jpeg');
+            await screenshot('./screens/popover/overflow-position-clamp/left-start-bottom.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1021px, 1513px, 0px)'
+                'translate3d(980px, 1553px, 0px)'
             );
         });
 
         it('works with left/center and top edge', async function() {
             await exec(_ => {
                 dom.setScrollY('#scroll', 1600);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'left',
                     position: 'center',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-position-clamp/left-center-top.jpeg');
+            await screenshot('./screens/popover/overflow-position-clamp/left-center-top.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1021px, 1600px, 0px)'
+                'translate3d(980px, 1600px, 0px)'
             );
         });
 
         it('works with left/center and bottom edge', async function() {
             await exec(_ => {
                 dom.setScrollY('#scroll', 1035);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'left',
                     position: 'center',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-position-clamp/left-center-bottom.jpeg');
+            await screenshot('./screens/popover/overflow-position-clamp/left-center-bottom.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1021px, 1513px, 0px)'
+                'translate3d(980px, 1553px, 0px)'
             );
         });
 
         it('works with left/end and top edge', async function() {
             await exec(_ => {
                 dom.setScrollY('#scroll', 1600);
-                const dropdownToggle = dom.findOne('#dropdownToggle');
-                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                const popoverToggle = dom.findOne('#popoverToggle');
+                const popover = UI.Popover.init(popoverToggle, {
                     placement: 'left',
                     position: 'end',
                     duration: 0
                 });
-                dropdown.show();
+                popover.show();
             });
-            await screenshot('./screens/dropdown/overflow-position-clamp/left-end-top.jpeg');
+            await screenshot('./screens/popover/overflow-position-clamp/left-end-top.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
-                    return dom.getStyle('.dropdown-menu', 'transform');
+                    return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1021px, 1600px, 0px)'
+                'translate3d(980px, 1600px, 0px)'
             );
         });
 
