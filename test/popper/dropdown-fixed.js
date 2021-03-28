@@ -1,0 +1,269 @@
+const assert = require('assert');
+const { exec, screenshot } = require('../setup');
+
+describe('popper dropdown', function() {
+
+    beforeEach(async function() {
+        await exec(_ => {
+            dom.setHTML(
+                document.body,
+                '<div class="text-center" style="padding: 1600px 1200px;">' +
+                '<div class="dropdown">' +
+                '<button id="dropdownToggle" class="btn btn-secondary dropdown-toggle" role="button" style="position: fixed; top: 300px; left: 350px;">Dropdown</button>' +
+                '<div class="dropdown-menu">' +
+                '<button class="dropdown-item">Action</button>' +
+                '<button class="dropdown-item">Action</button>' +
+                '<button class="dropdown-item">Action</button>' +
+                '</div>' +
+                '</div>' +
+                '</div>'
+            );
+            dom.setScroll(window, 850, 1300);
+        });
+    });
+
+    describe('placement/position options', function() {
+
+        it('works with top/start', async function() {
+            await exec(_ => {
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'top',
+                    position: 'start',
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/position-fixed/top-start.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1200px, 1473px, 0px)'
+            );
+        });
+
+        it('works with top/center', async function() {
+            await exec(_ => {
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'top',
+                    position: 'center',
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/position-fixed/top-center.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1172px, 1473px, 0px)'
+            );
+        });
+
+        it('works with top/end', async function() {
+            await exec(_ => {
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'top',
+                    position: 'end',
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/position-fixed/top-end.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1145px, 1473px, 0px)'
+            );
+        });
+
+        it('works with right/start', async function() {
+            await exec(_ => {
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'right',
+                    position: 'start',
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/position-fixed/right-start.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1324px, 1600px, 0px)'
+            );
+        });
+
+        it('works with right/center', async function() {
+            await exec(_ => {
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'right',
+                    position: 'center',
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/position-fixed/right-center.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1324px, 1556px, 0px)'
+            );
+        });
+
+        it('works with right/end', async function() {
+            await exec(_ => {
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'right',
+                    position: 'end',
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/position-fixed/right-end.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1324px, 1513px, 0px)'
+            );
+        });
+
+        it('works with bottom/start', async function() {
+            await exec(_ => {
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'bottom',
+                    position: 'start',
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/position-fixed/bottom-start.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1200px, 1640px, 0px)'
+            );
+        });
+
+        it('works with bottom/center', async function() {
+            await exec(_ => {
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'bottom',
+                    position: 'center',
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/position-fixed/bottom-center.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1172px, 1640px, 0px)'
+            );
+        });
+
+        it('works with bottom/end', async function() {
+            await exec(_ => {
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'bottom',
+                    position: 'end',
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/position-fixed/bottom-end.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1145px, 1640px, 0px)'
+            );
+        });
+
+        it('works with left/start', async function() {
+            await exec(_ => {
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'left',
+                    position: 'start',
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/position-fixed/left-start.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1021px, 1600px, 0px)'
+            );
+        });
+
+        it('works with left/center', async function() {
+            await exec(_ => {
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'left',
+                    position: 'center',
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/position-fixed/left-center.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1021px, 1556px, 0px)'
+            );
+        });
+
+        it('works with left/end', async function() {
+            await exec(_ => {
+                const dropdownToggle = dom.findOne('#dropdownToggle');
+                const dropdown = UI.Dropdown.init(dropdownToggle, {
+                    placement: 'left',
+                    position: 'end',
+                    duration: 0
+                });
+                dropdown.show();
+            });
+            await screenshot('./screens/dropdown/position-fixed/left-end.jpeg');
+
+            assert.strictEqual(
+                await exec(_ => {
+                    return dom.getStyle('.dropdown-menu', 'transform');
+                }),
+                'translate3d(1021px, 1513px, 0px)'
+            );
+        });
+
+    });
+
+});

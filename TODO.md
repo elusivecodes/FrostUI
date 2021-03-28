@@ -1,6 +1,7 @@
 # FrostUI
 
-[ ] Add popper fixed/overflow tests
+[ ] Add popper overflow tests
+
 [ ] Add popper init/dispose/update/useGpu/callback/return value tests
 
 [ ] Add ripple tests
