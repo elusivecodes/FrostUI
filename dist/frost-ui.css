@@ -1589,7 +1589,7 @@ fieldset:disabled .btn {
   display: none;
   min-width: 10rem;
   padding: 0.5rem 0;
-  margin: 0.125rem 0 0;
+  margin: 0;
   font-size: 1rem;
   color: darkslategray;
   text-align: left;
@@ -1753,6 +1753,14 @@ button.dropdown-item:focus {
 }
 .list-group-flush > .list-group-item:last-child {
   border-bottom-width: 0;
+}
+.list-group-numbered {
+  list-style-type: none;
+  counter-reset: section;
+}
+.list-group-numbered > li::before {
+  content: counters(section, ".") ". ";
+  counter-increment: section;
 }
 .list-group-item-primary {
   background-color: #b3c3f3;
@@ -2384,6 +2392,10 @@ button.dropdown-item:focus {
   flex-grow: 1;
   text-align: center;
 }
+.navbar-nav-scroll {
+  max-height: 75vh;
+  overflow-y: auto;
+}
 .tab-content > .tab-pane {
   display: none;
 }
@@ -2435,10 +2447,6 @@ button.dropdown-item:focus {
   margin-bottom: 0;
   list-style: none;
 }
-.navbar-nav .nav-link {
-  padding-right: 0;
-  padding-left: 0;
-}
 .navbar-nav .nav-link.disabled {
   opacity: 0.5;
   pointer-events: none;
@@ -2454,6 +2462,10 @@ button.dropdown-item:focus {
   flex-grow: 1;
   align-items: center;
   width: 100%;
+}
+.navbar-collapse .navbar-nav {
+  margin-left: -1rem;
+  margin-right: -1rem;
 }
 .navbar-toggler {
   padding: 0.25rem 0.5rem;
@@ -2532,6 +2544,8 @@ button.dropdown-item:focus {
 }
 .navbar-expand .navbar-nav {
   flex-direction: row;
+  margin-left: 0;
+  margin-right: 0;
 }
 .navbar-expand .navbar-nav .dropdown-menu {
   position: absolute;
@@ -2553,6 +2567,8 @@ button.dropdown-item:focus {
   }
   .navbar-expand-sm .navbar-nav {
     flex-direction: row;
+    margin-left: 0;
+    margin-right: 0;
   }
   .navbar-expand-sm .navbar-nav .dropdown-menu {
     position: absolute;
@@ -2575,6 +2591,8 @@ button.dropdown-item:focus {
   }
   .navbar-expand-md .navbar-nav {
     flex-direction: row;
+    margin-left: 0;
+    margin-right: 0;
   }
   .navbar-expand-md .navbar-nav .dropdown-menu {
     position: absolute;
@@ -2597,6 +2615,8 @@ button.dropdown-item:focus {
   }
   .navbar-expand-lg .navbar-nav {
     flex-direction: row;
+    margin-left: 0;
+    margin-right: 0;
   }
   .navbar-expand-lg .navbar-nav .dropdown-menu {
     position: absolute;
@@ -2619,6 +2639,8 @@ button.dropdown-item:focus {
   }
   .navbar-expand-xl .navbar-nav {
     flex-direction: row;
+    margin-left: 0;
+    margin-right: 0;
   }
   .navbar-expand-xl .navbar-nav .dropdown-menu {
     position: absolute;

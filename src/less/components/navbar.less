@@ -12,6 +12,8 @@
 
     .navbar-nav {
         flex-direction: row;
+        margin-left: 0;
+        margin-right: 0;
 
         .dropdown-menu {
             position: absolute;
@@ -62,14 +64,9 @@
     margin-bottom: 0;
     list-style: none;
 
-    .nav-link {
-        padding-right: 0;
-        padding-left: 0;
-
-        &.disabled {
-            opacity: @disabled-opacity;
-            pointer-events: none;
-        }
+    .nav-link.disabled {
+        opacity: @disabled-opacity;
+        pointer-events: none;
     }
 
     .dropdown-menu {
@@ -86,6 +83,11 @@
     flex-grow: 1;
     align-items: center;
     width: 100%;
+
+    .navbar-nav {
+        margin-left: -@spacing;
+        margin-right: -@spacing;
+    }
 }
 
 .navbar-toggler {

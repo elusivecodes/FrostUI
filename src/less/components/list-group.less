@@ -149,6 +149,16 @@
     }
 }
 
+.list-group-numbered {
+    list-style-type: none;
+    counter-reset: section;
+
+    > li::before {
+        content: counters(section, ".") ". ";
+        counter-increment: section;
+    }
+}
+
 .list-group-item-primary {
     .mix-list-group-item(@primary);
 }
