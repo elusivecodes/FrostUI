@@ -33,7 +33,7 @@ describe('popper popover (overflow/window)', function() {
                 });
                 popover.show();
             });
-            await screenshot('./screens/popover/placement-flip/top-center-top.jpeg');
+            await screenshot('./screens/popover/overflow-window-placement-flip/top-center-top.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -54,7 +54,7 @@ describe('popper popover (overflow/window)', function() {
                 });
                 popover.show();
             });
-            await screenshot('./screens/popover/placement-flip/right-center-right.jpeg');
+            await screenshot('./screens/popover/overflow-window-placement-flip/right-center-right.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -75,7 +75,7 @@ describe('popper popover (overflow/window)', function() {
                 });
                 popover.show();
             });
-            await screenshot('./screens/popover/placement-flip/bottom-center-bottom.jpeg');
+            await screenshot('./screens/popover/overflow-window-placement-flip/bottom-center-bottom.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -97,7 +97,7 @@ describe('popper popover (overflow/window)', function() {
                 popover.show();
                 return dom.getStyle('.popover', 'transform');
             });
-            await screenshot('./screens/popover/placement-flip/left-center-left.jpeg');
+            await screenshot('./screens/popover/overflow-window-placement-flip/left-center-left.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {

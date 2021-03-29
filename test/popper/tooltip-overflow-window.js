@@ -33,7 +33,7 @@ describe('popper tooltip (overflow/window)', function() {
                 });
                 tooltip.show();
             });
-            await screenshot('./screens/tooltip/placement-flip/top-center-top.jpeg');
+            await screenshot('./screens/tooltip/overflow-window-placement-flip/top-center-top.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -54,7 +54,7 @@ describe('popper tooltip (overflow/window)', function() {
                 });
                 tooltip.show();
             });
-            await screenshot('./screens/tooltip/placement-flip/right-center-right.jpeg');
+            await screenshot('./screens/tooltip/overflow-window-placement-flip/right-center-right.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -75,7 +75,7 @@ describe('popper tooltip (overflow/window)', function() {
                 });
                 tooltip.show();
             });
-            await screenshot('./screens/tooltip/placement-flip/bottom-center-bottom.jpeg');
+            await screenshot('./screens/tooltip/overflow-window-placement-flip/bottom-center-bottom.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
@@ -97,7 +97,7 @@ describe('popper tooltip (overflow/window)', function() {
                 tooltip.show();
                 return dom.getStyle('.tooltip', 'transform');
             });
-            await screenshot('./screens/tooltip/placement-flip/left-center-left.jpeg');
+            await screenshot('./screens/tooltip/overflow-window-placement-flip/left-center-left.jpeg');
 
             assert.strictEqual(
                 await exec(_ => {
