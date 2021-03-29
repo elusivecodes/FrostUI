@@ -1,16 +1,24 @@
 # FrostUI
 
-[ ] Add popper overflow/window tests (flip, clamp)
 [ ] Add ripple tests
 [ ] Add text-expand tests
 [ ] Add clipboard tests*
 
-[ ] Add popper init/dispose/update/useGpu/callback/return value tests
+[ ] Replace popper callbacks with events
+[ ] Add popper tests
+
+[ ] Remove default margins for dropdowns/popovers
+[ ] Remove vertical-align from form-select
+[ ] Add flex-grow for buttons in nav-fill and nav-justified
+[ ] Add flex-grow on navbar-colapse
+[ ] Add word-break to toast-body
+[ ] Add list-group-numbered class
+[ ] Add navbar-nav-scroll class
+
+[ ] Add Offcanvas component
 
 [ ] Replace LESS with SASS
 [ ] Separate SASS variables
 [ ] Implement CSS variables
-
-[ ] Check BS5 beta 2/3
 
 [ ] Add README

@@ -13,7 +13,7 @@ describe('popper popover (overflow)', function() {
                 '</div>' +
                 '</div>'
             );
-            dom.setScroll('#scroll', 850, 1300);
+            dom.setScroll('#scroll', 900, 1300);
         });
     });
 
