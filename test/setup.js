@@ -24,6 +24,9 @@ before(async function() {
         ]
     });
 
+    const context = browser.defaultBrowserContext();
+    context.overridePermissions('http://localhost:3001', ['clipboard-read']);
+
     page = await browser.newPage();
 
     await page.goto('http://localhost:3001', {

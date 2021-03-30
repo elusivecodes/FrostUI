@@ -3050,30 +3050,18 @@
     dom.addEventDelegate(document, 'mousedown.ui.ripple', '.ripple', e => {
         const pos = dom.position(e.currentTarget, true);
 
-        UI.ripple(e.currentTarget, e.pageX - pos.x, e.pageY - pos.y);
-    });
-
-
-    /**
-     * Create a ripple effect on a node.
-     * @param {HTMLElement} node The input node.
-     * @param {number} x The x position to start the ripple from.
-     * @param {number} y The y position to start the ripple from.
-     * @param {number} [duration=1000] The duration of the ripple.
-     */
-    UI.ripple = (node, x, y, duration = 1000) => {
-        const width = dom.width(node);
-        const height = dom.height(node);
+        const width = dom.width(e.currentTarget);
+        const height = dom.height(e.currentTarget);
         const scaleMultiple = Math.max(width, height) * 3;
 
         const ripple = dom.create('span', {
             class: 'ripple-effect',
             style: {
-                left: x,
-                top: y
+                left: e.pageX - pos.x,
+                top: e.pageY - pos.y
             }
         });
-        dom.append(node, ripple);
+        dom.append(e.currentTarget, ripple);
 
         dom.animate(
             ripple,
@@ -3084,23 +3072,23 @@
                 });
             },
             {
-                duration
+                duration: 1000
             }
         ).finally(_ => {
             dom.remove(ripple);
         })
-    };
+    });
 
 
     // Text expand events
-    dom.addEventDelegate(document, 'input.ui.text-expand', '.text-expand', e => {
+    dom.addEventDelegate(document, 'change.ui.expand input.ui.expand', '.text-expand', e => {
         const textArea = e.currentTarget;
 
         dom.setStyle(textArea, 'height', 'inherit');
 
         const borderTop = dom.css(textArea, 'borderTop');
         const borderBottom = dom.css(textArea, 'borderBottom');
-        const height = dom.scrollHeight(textArea) + parseInt(borderTop) + parseInt(borderBottom);
+        const height = dom.height(textArea, DOM.SCROLL_BOX) + parseInt(borderTop) + parseInt(borderBottom);
 
         dom.setStyle(textArea, 'height', height);
     });
