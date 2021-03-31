@@ -1,0 +1,10 @@
+@function text-size($size, $important: false) {
+    $ratio: ($size / .5) - 2;
+    $minSize: ($ratio * .1rem) + 1.25rem;
+    $maxSize: $size * 1rem;
+    $offset: $ratio * .33vw;
+    $fontSize: if($size < 1.5, #{$maxSize}, clamp(#{$minSize}, calc(#{$minSize} + #{$offset}), #{$maxSize}));
+    $suffix: if($important, ' !important', '');
+
+    @return $fontSize + $suffix;
+}

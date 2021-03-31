@@ -1,0 +1,75 @@
+$white: white;
+$gray-light: gainsboro;
+$gray-dark: slategray;
+$gray: gray;
+$text: #121212;
+$black: black;
+
+$link: steelblue;
+$primary: royalblue;
+$secondary: lightslategray;
+$success: mediumseagreen;
+$info: lightseagreen;
+$warning: coral;
+$danger: indianred;
+$light: ghostwhite;
+$dark: darkslategray;
+
+$form-placeholder: $gray;
+$form-disabled: $gray-light;
+$form-success: forestgreen;
+$form-error: crimson;
+
+$shadow-color: fade($black, .05);
+$hover-color: fade($black, .1);
+$border-color: fade($black, .15);
+$divider-color: fade($black, .5);
+$backdrop-color: fade($black, .5);
+$hover-light-color: fade($white, .1);
+$border-light-color: fade($white, .15);
+$ripple-color: fade($white, .4);
+
+$link-hover-color: shade($link, 15%);
+$link-focus-color: tint($link, 15%);
+
+$figure-caption-color: $secondary;
+
+$table-border-color: $gray-light;
+$table-hover-color: $dark;
+$table-hover-background-color: fade($black, .1);
+$table-hover-dark-background-color: tint($dark, 20%);
+$table-striped-background-color: fade($dark, .1);
+$table-dark-color: $white;
+$table-dark-background-color: $dark;
+$table-dark-border-color: $secondary;
+$table-dark-striped-background-color: fade($white, .1);
+$table-dark-hover-background-color: fade($white, .1);
+$thead-dark-color: $white;
+$thead-dark-background-color: $dark;
+$thead-light-color: $dark;
+$thead-light-background-color: $light;
+$blockquote-footer-color: $gray-dark;
+
+// Color adjustments
+$table-color-shade: 30%;
+$table-background-color-tint: 60%;
+$table-hover-background-color-tint: 70%;
+
+$text-light: 15%;
+$text-lighter: 30%;
+$text-dark: 15%;
+$text-darker: 30%;
+$text-darkest: 75%;
+$bg-light: 20%;
+$bg-lighter: 60%;
+$bg-lightest: 70%;
+$bg-dark: 20%;
+$bg-darker: 40%;
+$bg-fade: 10%;
+$border-light: 15%;
+$border-dark: 15%;
+$form-light: 70%;
+$form-lighter: 80%;
+$form-lightest: 90%;
+
+$toast-color: fade($white, .85);

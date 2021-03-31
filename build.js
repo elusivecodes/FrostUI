@@ -3,6 +3,7 @@ const fs = require('fs');
 const filepath = require('filepath');
 const terser = require('terser');
 const less = require('less');
+const sass = require('sass');
 const cssmin = require('cssmin');
 
 const srcFolder = 'src';
@@ -104,6 +105,23 @@ if (minifiedBundle.error) {
 }
 
 // css
+sass.render({
+    file: path.join(srcFolder, 'scss/ui.scss'),
+    includePaths: [path.join(srcFolder, 'scss/')],
+    outputStyle: 'expanded'
+}, (error, result) => {
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    fs.writeFileSync(
+        path.join(distFolder, name + '-sass.css'),
+        result.css.toString()
+    );
+
+});
+
 less.render(
     fs.readFileSync(
         path.join(srcFolder, 'less/wrapper.less')

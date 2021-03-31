@@ -1,0 +1,325 @@
+* {
+    margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: sans-serif;
+    line-height: $line-height;
+    font-size: $font-size;
+}
+
+body {
+    font-family: $font-family;
+    font-weight: $font-weight;
+    line-height: $line-height;
+    color: $text;
+    text-align: left;
+    background-color: $white;
+}
+
+blockquote,
+q {
+	quotes: none;
+}
+
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+	content: '';
+}
+
+caption {
+    padding: ($spacing / 2) 0;
+    text-align: left;
+    caption-side: bottom;
+    color: tint($text, $text-lighter);
+}
+
+hr {
+    margin: ($spacing / 2) 0;
+    box-sizing: content-box;
+    border: 0;
+    border-top: $border-size $border-style $border-color;
+    height: 0;
+    overflow: visible;
+}
+
+img {
+    vertical-align: middle;
+    border: none;
+}
+
+output {
+    display: inline-block;
+}
+
+summary {
+    display: list-item;
+    cursor: pointer;
+}
+
+svg {
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+template,
+[hidden] {
+    display: none !important;
+}
+
+th {
+    text-align: inherit;
+}
+
+// Form
+
+label {
+    display: inline-block;
+}
+
+button {
+    border-radius: 0;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+button,
+input {
+    overflow: visible;
+}
+
+button,
+select {
+    text-transform: none;
+}
+
+button:not(:disabled),
+[type=button]:not(:disabled),
+[type=reset]:not(:disabled),
+[type=submit]:not(:disabled) {
+    cursor: pointer;
+}
+
+fieldset {
+    min-width: 0;
+    border: 0;
+}
+
+[type="radio"],
+[type="checkbox"] {
+    box-sizing: border-box;
+}
+
+legend {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: $spacing / 2;
+    font-size: $font-size-lg;
+    line-height: inherit;
+    color: inherit;
+    white-space: normal;
+}
+
+progress {
+    vertical-align: baseline;
+}
+
+textarea {
+    overflow: auto;
+    resize: vertical;
+}
+
+[type="search"] {
+    outline-offset: -2px;
+
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-results-button,
+    &::-webkit-search-results-decoration {
+        display: none;
+    }
+}
+
+// Typography
+
+a {
+    color: $link;
+    background-color: transparent;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+        text-decoration: underline;
+    }
+
+    &:hover {
+        color: $link-hover-color;
+    }
+
+    &:focus {
+        color: $link-focus-color;
+        outline: 0;
+    }
+}
+
+abbr[title],
+abbr[data-original-title] {
+    text-decoration: underline dotted;
+    cursor: help;
+    border-bottom: none;
+}
+
+address {
+    margin: 0 0 $spacing;
+    font-style: normal;
+    line-height: inherit;
+}
+
+b,
+strong {
+    font-weight: $font-weight-bold;
+}
+
+blockquote {
+    margin: 0 0 $spacing;
+}
+
+cite,
+dfn,
+i,
+em {
+    font-style: italic;
+}
+
+code,
+kbd,
+pre,
+samp,
+xmp {
+    font-family: $font-mono;
+    font-size: 1em;
+}
+
+dl {
+    margin: 0 0 $spacing;
+}
+
+dt {
+    font-weight: $font-weight-bolder;
+}
+
+dd {
+    margin-bottom: $spacing / 2;
+}
+
+figure {
+    margin: 0 0 $spacing;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 0;
+    margin-bottom: $spacing / 2;
+    line-height: 1.2;
+    font-weight: $font-weight-bold;
+}
+
+h1 {
+    font-size: $h1-font-size;
+}
+
+h2 {
+    font-size: $h2-font-size;
+}
+
+h3 {
+    font-size: $h3-font-size;
+}
+
+h4 {
+    font-size: $h4-font-size;
+}
+
+h5 {
+    font-size: $h5-font-size;
+}
+
+h6 {
+    font-size: $h6-font-size;
+}
+
+ol,
+ul {
+    margin: 0 0 $spacing $spacing;
+}
+
+ol ul,
+ul ul,
+ol ol,
+ul ol {
+    margin-bottom: 0;
+}
+
+p {
+    margin: 0 0 $spacing;
+}
+
+pre {
+    margin: 0 0 $spacing;
+    overflow: auto;
+}
+
+small {
+    font-size: $small-font-size;
+}
+
+sub,
+sup {
+    position: relative;
+    font-size: $small-font-size;
+    line-height: 0;
+    vertical-align: baseline;
+}
+
+sub {
+    bottom: -.25em;
+}
+
+sup {
+    top: -.25em;
+}
+
+u {
+    text-decoration: underline;
+}

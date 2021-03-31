@@ -1,0 +1,91 @@
+.table {
+    width: 100%;
+    margin-bottom: $table-margin-bottom;
+
+    > :not(caption) > * > * {
+        padding: $table-cell-padding-y $table-cell-padding-x;
+        border-bottom: $border-size $border-style $table-border-color;
+    }
+
+    > :not(:last-child) > :last-child > * {
+        border-bottom-width: $border-size * 2;
+    }
+
+    .thead-dark th {
+        color: $thead-dark-color;
+        background-color: $thead-dark-background-color;
+    }
+
+    .thead-light th {
+        color: $thead-light-color;
+        background-color: $thead-light-background-color;
+    }
+}
+
+.table-bordered > :not(caption) > * > * {
+    border: $border-size $border-style $table-border-color;
+}
+
+.table-borderless > :not(caption) > * > * {
+    border: 0;
+}
+
+.table-striped > tbody > tr:nth-child(odd) {
+    background-color: $table-striped-background-color;
+}
+
+.table-hover > tbody > tr:hover {
+    color: $table-hover-color;
+    background-color: $table-hover-background-color;
+}
+
+.table-sm > :not(caption) > * > * {
+    padding: $table-sm-cell-padding;
+}
+
+.table-dark {
+    color: $table-dark-color;
+    background-color: $table-dark-background-color;
+
+    &.table-striped > tbody > tr:nth-child(odd) {
+        background-color: $table-dark-striped-background-color;
+    }
+
+    &.table-hover > tbody > tr:hover {
+        color: $table-dark-color;
+        background-color: $table-dark-hover-background-color;
+    }
+
+    @at-root .table-hover > tbody > tr#{&}:hover {
+        color: $table-dark-color;
+        background-color: $table-hover-dark-background-color;
+    }
+
+    > :not(caption) > * > * {
+        border-color: $table-dark-border-color;
+    }
+}
+
+@each $name, $color in $table-variants {
+    .table-#{$name} {
+        &,
+        & > * {
+            color: shade($color, $table-color-shade);
+            background-color: tint($color, $table-background-color-tint);
+        }
+
+        @at-root .table-hover > :not(caption) > #{&}:hover > * {
+            background-color: tint($color, $table-hover-background-color-tint);
+        }
+    }
+}
+
+@each $breakpoint in map-keys($breakpoints) {
+    $suffix: breakpoint-suffix($breakpoint);
+
+    @include media-breakpoint-down($breakpoint) {
+        .table-responsive#{$suffix} {
+            overflow-x: auto;
+        }
+    }
+}

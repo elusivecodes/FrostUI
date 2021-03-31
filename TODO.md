@@ -1,13 +1,10 @@
 # FrostUI
 
-[ ] Replace popper callbacks with events
-[ ] Add popper tests
-
 [ ] Remove Model direction handling
 [ ] Add Offcanvas component
 
-[ ] Replace LESS with SASS
-[ ] Separate SASS variables
+[~] Replace LESS with SASS
+[?] Separate SASS variables
 [ ] Implement CSS variables
 
 [ ] Add README

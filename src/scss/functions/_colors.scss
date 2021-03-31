@@ -1,0 +1,23 @@
+@function fade($color, $amount) {
+    @return adjust-color($color, $alpha: $amount);
+}
+
+@function luma($color) {
+    $r: red($color);
+    $g: green($color);
+    $b: blue($color);
+    
+    @return 0.299 * $r + 0.587 * $g + 0.114 * $b;
+}
+
+@function shade($color, $amount) {
+    @return mix($color, #000, $amount);
+}
+
+@function text-color($color, $dark: #000, $light: #fff, $threshold: 130) {
+    @return if(luma($color) < $threshold, $light, $dark);
+}
+
+@function tint($color, $amount) {
+    @return mix($color, #fff, $amount);
+}
