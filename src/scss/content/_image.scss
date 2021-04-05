@@ -4,10 +4,10 @@
 }
 
 .img-thumbnail {
-    padding: $img-thumbnail-padding;
-    background-color: $white;
-    border: $border-size $border-style $border-color;
-    border-radius: $border-radius;
     max-width: 100%;
     height: auto;
+    padding: $img-thumbnail-padding;
+    background-color: $img-thumbnail-background-color;
+    border: $img-thumbnail-border-size $border-style $img-thumbnail-border-color;
+    @include border-radius($img-thumbnail-border-radius);
 }

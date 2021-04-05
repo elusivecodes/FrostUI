@@ -1,10 +1,10 @@
 * {
+    padding: 0;
     margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+    font: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
+    border: 0;
 }
 
 *,
@@ -13,47 +13,51 @@
     box-sizing: border-box;
 }
 
+:focus {
+    outline: 0;
+}
+
 html {
     font-family: sans-serif;
-    line-height: $line-height;
     font-size: $font-size;
+    line-height: 1.5;
 }
 
 body {
     font-family: $font-family;
-    font-weight: $font-weight;
-    line-height: $line-height;
-    color: $text;
+    font-weight: 400;
+    line-height: 1.5;
+    color: $text-color;
     text-align: left;
-    background-color: $white;
+    background-color: $body-background-color;
 }
 
 blockquote,
 q {
-	quotes: none;
+    quotes: none;
 }
 
 blockquote::before,
 blockquote::after,
 q::before,
 q::after {
-	content: '';
+    content: "";
 }
 
 caption {
-    padding: ($spacing / 2) 0;
+    padding: $caption-padding-y 0;
+    color: $caption-color;
     text-align: left;
     caption-side: bottom;
-    color: tint($text, $text-lighter);
 }
 
 hr {
-    margin: ($spacing / 2) 0;
     box-sizing: content-box;
-    border: 0;
-    border-top: $border-size $border-style $border-color;
     height: 0;
+    margin: $hr-margin-y 0;
     overflow: visible;
+    border: 0;
+    border-top: $hr-border-size $border-style $hr-border-color;
 }
 
 img {
@@ -76,8 +80,8 @@ svg {
 }
 
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
 }
 
 template,
@@ -89,14 +93,14 @@ th {
     text-align: inherit;
 }
 
-// Form
+// form
 
 label {
     display: inline-block;
 }
 
 button {
-    border-radius: 0;
+    @include border-radius(0);
 }
 
 button,
@@ -120,9 +124,9 @@ select {
 }
 
 button:not(:disabled),
-[type=button]:not(:disabled),
-[type=reset]:not(:disabled),
-[type=submit]:not(:disabled) {
+[type="button"]:not(:disabled),
+[type="reset"]:not(:disabled),
+[type="submit"]:not(:disabled) {
     cursor: pointer;
 }
 
@@ -140,8 +144,8 @@ legend {
     display: block;
     width: 100%;
     max-width: 100%;
-    margin-bottom: $spacing / 2;
-    font-size: $font-size-lg;
+    margin-bottom: $legend-margin-bottom;
+    font-size: $legend-font-size;
     line-height: inherit;
     color: inherit;
     white-space: normal;
@@ -167,12 +171,12 @@ textarea {
     }
 }
 
-// Typography
+// typography
 
 a {
-    color: $link;
-    background-color: transparent;
+    color: $link-color;
     text-decoration: none;
+    background-color: transparent;
 
     &:hover,
     &:focus {
@@ -185,7 +189,6 @@ a {
 
     &:focus {
         color: $link-focus-color;
-        outline: 0;
     }
 }
 
@@ -197,18 +200,18 @@ abbr[data-original-title] {
 }
 
 address {
-    margin: 0 0 $spacing;
+    margin: 0 0 $address-margin-bottom;
     font-style: normal;
     line-height: inherit;
 }
 
 b,
 strong {
-    font-weight: $font-weight-bold;
+    font-weight: 500;
 }
 
 blockquote {
-    margin: 0 0 $spacing;
+    margin: 0 0 $blockquote-margin-bottom;
 }
 
 cite,
@@ -228,19 +231,19 @@ xmp {
 }
 
 dl {
-    margin: 0 0 $spacing;
+    margin: 0 0 $dl-margin-bottom;
 }
 
 dt {
-    font-weight: $font-weight-bolder;
+    font-weight: $dt-font-weight;
 }
 
 dd {
-    margin-bottom: $spacing / 2;
+    margin-bottom: $dd-margin-bottom;
 }
 
 figure {
-    margin: 0 0 $spacing;
+    margin: 0 0 $figure-margin-bottom;
 }
 
 h1,
@@ -250,38 +253,38 @@ h4,
 h5,
 h6 {
     margin-top: 0;
-    margin-bottom: $spacing / 2;
-    line-height: 1.2;
-    font-weight: $font-weight-bold;
+    margin-bottom: $h-margin-bottom;
+    font-weight: $h-font-weight;
+    line-height: $h-line-height;
 }
 
 h1 {
-    font-size: $h1-font-size;
+    font-size: text-size($h1-font-size);
 }
 
 h2 {
-    font-size: $h2-font-size;
+    font-size: text-size($h2-font-size);
 }
 
 h3 {
-    font-size: $h3-font-size;
+    font-size: text-size($h3-font-size);
 }
 
 h4 {
-    font-size: $h4-font-size;
+    font-size: text-size($h4-font-size);
 }
 
 h5 {
-    font-size: $h5-font-size;
+    font-size: text-size($h5-font-size);
 }
 
 h6 {
-    font-size: $h6-font-size;
+    font-size: text-size($h6-font-size);
 }
 
 ol,
 ul {
-    margin: 0 0 $spacing $spacing;
+    margin: 0 0 $list-margin-bottom $list-margin-left;
 }
 
 ol ul,
@@ -292,11 +295,11 @@ ul ol {
 }
 
 p {
-    margin: 0 0 $spacing;
+    margin: 0 0 $p-margin-bottom;
 }
 
 pre {
-    margin: 0 0 $spacing;
+    margin: 0 0 $pre-margin-bottom;
     overflow: auto;
 }
 
@@ -313,11 +316,11 @@ sup {
 }
 
 sub {
-    bottom: -.25em;
+    bottom: $sub-bottom;
 }
 
 sup {
-    top: -.25em;
+    top: $sup-top;
 }
 
 u {

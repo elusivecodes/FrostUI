@@ -1,38 +1,5 @@
-@import 'colors';
-@import 'fonts';
-@import 'shadows';
-@import 'spacing';
-@import 'icons';
-
-$grid-size: 12;
-$row-grid-size: 5;
-
-$border-size: 1px;
-$border-style: solid;
-$border-radius: .2rem;
-
-$disabled-opacity: .5;
-
-$transition-time: .25s;
-$animation-time: 1s;
-$animation-time-longer: 5s;
-$transition-type: ease-in-out;
-
-$breakpoints: (
-    xs: 0,
-    sm: 576px,
-    md: 768px,
-    lg: 992px,
-    xl: 1200px,
-    xxl: 1400px
-);
-
-$table-variants: (
-    active: $link,
-    primary: $primary,
-    secondary: $secondary,
-    success: $success,
-    info: $info,
-    warning: $warning,
-    danger: $danger
-);
+@import "vars";
+@import "content";
+@import "helpers";
+@import "components";
+@import "form";

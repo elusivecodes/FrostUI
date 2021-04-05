@@ -48,12 +48,14 @@ class Collapse extends BaseComponent {
 
         this._animating = true;
         dom.addClass(this._triggers, 'collapsed');
+        dom.addClass(this._triggers, 'collapsing');
 
         dom.squeezeOut(this._node, {
             direction: this._settings.direction,
             duration: this._settings.duration
         }).then(_ => {
             dom.removeClass(this._node, 'show');
+            dom.removeClass(this._triggers, 'collapsing');
             dom.setAttribute(this._triggers, 'aria-expanded', false);
             dom.triggerEvent(this._node, 'hidden.ui.collapse');
         }).catch(_ => { }).finally(_ => {
@@ -104,11 +106,13 @@ class Collapse extends BaseComponent {
         this._animating = true;
         dom.addClass(this._node, 'show');
         dom.removeClass(this._triggers, 'collapsed');
+        dom.addClass(this._triggers, 'collapsing');
 
         dom.squeezeIn(this._node, {
             direction: this._settings.direction,
             duration: this._settings.duration
         }).then(_ => {
+            dom.removeClass(this._triggers, 'collapsing');
             dom.setAttribute(this._triggers, 'aria-expanded', true);
             dom.triggerEvent(this._node, 'shown.ui.collapse');
         }).catch(_ => { }).finally(_ => {

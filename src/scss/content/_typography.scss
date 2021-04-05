@@ -47,23 +47,23 @@
 }
 
 .heading-1 {
-    font-size: $heading-1-font-size;
+    font-size: text-size($heading-1-font-size);
 }
 
 .heading-2 {
-    font-size: $heading-2-font-size;
+    font-size: text-size($heading-2-font-size);
 }
 
 .heading-3 {
-    font-size: $heading-3-font-size;
+    font-size: text-size($heading-3-font-size);
 }
 
 .heading-4 {
-    font-size: $heading-4-font-size;
+    font-size: text-size($heading-4-font-size);
 }
 
 .lead {
-    font-size: $lead-font-size;
+    font-size: text-size($lead-font-size);
 }
 
 .list-inline {

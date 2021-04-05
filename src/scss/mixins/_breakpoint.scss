@@ -1,0 +1,26 @@
+// Media selector for breakpoint max width.
+// @param $name
+@mixin media-breakpoint-down($name) {
+    $max: breakpoint-max($name);
+    @if $max {
+        @media (max-width: $max) {
+            @content;
+        }
+    } @else {
+        @content;
+    }
+}
+
+// Media selector for breakpoint min width.
+// @param $name
+@mixin media-breakpoint-up($name) {
+    $min: breakpoint-min($name);
+
+    @if $min {
+        @media (min-width: $min) {
+            @content;
+        }
+    } @else {
+        @content;
+    }
+}

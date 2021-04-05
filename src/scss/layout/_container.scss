@@ -1,0 +1,35 @@
+.container,
+.container-fluid {
+    width: 100%;
+    padding-right: $gutter-x / 2;
+    padding-left: $gutter-x / 2;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@each $breakpoint, $max-width in $containers {
+    .container-#{$breakpoint} {
+        @extend .container-fluid;
+    }
+
+    $extend-breakpoint: true;
+    @include media-breakpoint-up($breakpoint) {
+        %responsive-container-#{$breakpoint} {
+            max-width: $max-width;
+        }
+
+        @each $name, $width in $breakpoints {
+            @if ($extend-breakpoint) {
+                $infix: breakpoint-infix($name);
+
+                .container#{$infix} {
+                    @extend %responsive-container-#{$breakpoint};
+                }
+
+                @if ($breakpoint == $name) {
+                    $extend-breakpoint: false;
+                }
+            }
+        }
+    }
+}

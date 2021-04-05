@@ -1,29 +1,33 @@
 .table {
+    --ui-table-border: #{$table-border-color};
     width: 100%;
     margin-bottom: $table-margin-bottom;
 
     > :not(caption) > * > * {
         padding: $table-cell-padding-y $table-cell-padding-x;
-        border-bottom: $border-size $border-style $table-border-color;
+        color: var(--ui-table-color, #{$text-color});
+        background-color: var(--ui-table-bg);
+        border-bottom: $table-border-size $border-style var(--ui-table-border);
+        box-shadow: inset 0 0 0 9999px var(--ui-table-accent-bg, transparent);
     }
 
     > :not(:last-child) > :last-child > * {
-        border-bottom-width: $border-size * 2;
+        border-bottom-width: $table-border-size * 2;
     }
 
     .thead-dark th {
-        color: $thead-dark-color;
-        background-color: $thead-dark-background-color;
+        --ui-table-bg: #{$thead-dark-background-color};
+        --ui-table-color: #{$thead-dark-color};
     }
 
     .thead-light th {
-        color: $thead-light-color;
-        background-color: $thead-light-background-color;
+        --ui-table-bg: #{$thead-light-background-color};
+        --ui-table-color: #{$thead-light-color};
     }
 }
 
 .table-bordered > :not(caption) > * > * {
-    border: $border-size $border-style $table-border-color;
+    border: $table-border-size $border-style var(--ui-table-border);
 }
 
 .table-borderless > :not(caption) > * > * {
@@ -31,60 +35,46 @@
 }
 
 .table-striped > tbody > tr:nth-child(odd) {
-    background-color: $table-striped-background-color;
+    --ui-table-accent-bg: var(--ui-table-striped-bg, #{$table-striped-background-color});
 }
 
 .table-hover > tbody > tr:hover {
-    color: $table-hover-color;
-    background-color: $table-hover-background-color;
+    --ui-table-color: var(--ui-table-hover-color, #{$table-hover-color});
+    --ui-table-accent-bg: var(--ui-table-hover-bg, #{$table-hover-background-color});
 }
 
 .table-sm > :not(caption) > * > * {
-    padding: $table-sm-cell-padding;
+    padding: $table-sm-cell-padding-y $table-sm-cell-padding-x;
 }
 
 .table-dark {
-    color: $table-dark-color;
-    background-color: $table-dark-background-color;
-
-    &.table-striped > tbody > tr:nth-child(odd) {
-        background-color: $table-dark-striped-background-color;
-    }
-
-    &.table-hover > tbody > tr:hover {
-        color: $table-dark-color;
-        background-color: $table-dark-hover-background-color;
-    }
-
-    @at-root .table-hover > tbody > tr#{&}:hover {
-        color: $table-dark-color;
-        background-color: $table-hover-dark-background-color;
-    }
-
-    > :not(caption) > * > * {
-        border-color: $table-dark-border-color;
-    }
+    --ui-table-bg: #{$table-dark-background-color};
+    --ui-table-color: #{$table-dark-color};
+    --ui-table-striped-bg: #{$table-dark-striped-background-color};
+    --ui-table-hover-bg: #{$table-dark-hover-background-color};
+    --ui-table-hover-color: #{$table-dark-color};
+    --ui-table-border: #{$table-dark-border-color};
 }
 
 @each $name, $color in $table-variants {
     .table-#{$name} {
-        &,
-        & > * {
-            color: shade($color, $table-color-shade);
-            background-color: tint($color, $table-background-color-tint);
-        }
+        $background-color: tint($color, $table-background-color-tint);
+        $text-color: text-color-contrast($background-color, $color);
+        $hover-color: shade($text-color, $table-hover-color-shade);
+        $border-color: tint($color, $table-border-color-tint);
 
-        @at-root .table-hover > :not(caption) > #{&}:hover > * {
-            background-color: tint($color, $table-hover-background-color-tint);
-        }
+        --ui-table-bg: #{$background-color};
+        --ui-table-color: #{$text-color};
+        --ui-table-hover-color: #{$hover-color};
+        --ui-table-border: #{$border-color};
     }
 }
 
 @each $breakpoint in map-keys($breakpoints) {
-    $suffix: breakpoint-suffix($breakpoint);
+    $infix: breakpoint-infix($breakpoint);
 
     @include media-breakpoint-down($breakpoint) {
-        .table-responsive#{$suffix} {
+        .table-responsive#{$infix} {
             overflow-x: auto;
         }
     }

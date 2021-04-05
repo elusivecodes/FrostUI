@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Dropdown</title>
     <link rel="stylesheet" href="../../dist/frost-ui.css" />
     <script src="../../dist/frost-ui-bundle.js"></script>
     <style>
@@ -20,17 +20,11 @@
         <h1>Dropdown</h1>
         <div class="mb-4">
             <div class="dropdown">
-                <button id="dropdown" class="btn ripple btn-primary dropdown-toggle" role="button" data-ui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
+                <button class="btn ripple btn-primary dropdown-toggle" id="dropdown" data-ui-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">Dropdown</button>
                 <div class="dropdown-menu shadow-sm" aria-labelledby="dropdown">
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
                 </div>
             </div>
         </div>
@@ -38,18 +32,12 @@
         <h4>Split</h4>
         <div class="mb-4">
             <div class="btn-group">
-                <button class="btn ripple btn-secondary" id="splitButton" role="button">Button</button>
-                <button id="dropdownSplit" class="btn ripple btn-secondary dropdown-toggle dropdown-toggle-split" role="button" data-ui-toggle="dropdown" data-ui-reference="#splitButton" aria-haspopup="true" aria-expanded="false"></button>
+                <button class="btn ripple btn-secondary" id="splitButton" type="button">Button</button>
+                <button class="btn ripple btn-secondary dropdown-toggle dropdown-toggle-split" id="dropdownSplit" data-ui-toggle="dropdown" data-ui-reference="#splitButton" type="button" aria-haspopup="true" aria-expanded="false"></button>
                 <div class="dropdown-menu shadow-sm" aria-labelledby="dropdownSplit">
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
                 </div>
             </div>
         </div>
@@ -57,17 +45,11 @@
         <h4>Dark</h4>
         <div class="mb-4">
             <div class="dropdown">
-                <button id="dropdown" class="btn ripple btn-dark dropdown-toggle" role="button" data-ui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
+                <button class="btn ripple btn-dark dropdown-toggle" id="dropdown" data-ui-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">Dropdown</button>
                 <div class="dropdown-menu dropdown-menu-dark shadow-sm" aria-labelledby="dropdown">
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
                 </div>
             </div>
         </div>
@@ -75,59 +57,35 @@
         <h4>Placement</h4>
         <div class="mb-4">
             <div class="btn-group">
-                <button id="dropdownUp" class="btn ripple btn-secondary dropdown-toggle" role="button" data-ui-toggle="dropdown" data-ui-placement="top" data-ui-fixed="true" aria-haspopup="true" aria-expanded="false">Drop Up</button>
+                <button class="btn ripple btn-secondary dropdown-toggle" id="dropdownUp" data-ui-toggle="dropdown" data-ui-placement="top" data-ui-fixed="true" type="button" aria-haspopup="true" aria-expanded="false">Drop Up</button>
                 <div class="dropdown-menu shadow-sm" aria-labelledby="dropdownUp">
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
                 </div>
             </div>
             <div class="btn-group">
-                <button id="dropdownRight" class="btn ripple btn-secondary dropdown-toggle" role="button" data-ui-toggle="dropdown" data-ui-placement="right" data-ui-fixed="true" aria-haspopup="true" aria-expanded="false">Drop Right</button>
+                <button class="btn ripple btn-secondary dropdown-toggle" id="dropdownRight" data-ui-toggle="dropdown" data-ui-placement="right" data-ui-fixed="true" type="button" aria-haspopup="true" aria-expanded="false">Drop Right</button>
                 <div class="dropdown-menu shadow-sm" aria-labelledby="dropdownRight">
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
                 </div>
             </div>
             <div class="btn-group">
-                <button id="dropdownDown" class="btn ripple btn-secondary dropdown-toggle" role="button" data-ui-toggle="dropdown" data-ui-placement="bottom" data-ui-fixed="true" aria-haspopup="true" aria-expanded="false">Drop Down</button>
+                <button class="btn ripple btn-secondary dropdown-toggle" id="dropdownDown" data-ui-toggle="dropdown" data-ui-placement="bottom" data-ui-fixed="true" type="button" aria-haspopup="true" aria-expanded="false">Drop Down</button>
                 <div class="dropdown-menu shadow-sm" aria-labelledby="dropdownDown">
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
                 </div>
             </div>
             <div class="btn-group">
-                <button id="dropdownLeft" class="btn ripple btn-secondary dropdown-toggle" role="button" data-ui-toggle="dropdown" data-ui-placement="left" data-ui-fixed="true" aria-haspopup="true" aria-expanded="false">Drop Left</button>
+                <button class="btn ripple btn-secondary dropdown-toggle" id="dropdownLeft" data-ui-toggle="dropdown" data-ui-placement="left" data-ui-fixed="true" type="button" aria-haspopup="true" aria-expanded="false">Drop Left</button>
                 <div class="dropdown-menu shadow-sm" aria-labelledby="dropdownLeft">
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
                 </div>
             </div>
         </div>
@@ -135,45 +93,27 @@
         <h4>Position</h4>
         <div class="mb-4">
             <div class="btn-group">
-                <button id="dropdownStart" class="btn ripple btn-secondary dropdown-toggle" role="button" data-ui-toggle="dropdown" data-ui-placement="bottom" data-ui-position="start" data-ui-fixed="true" aria-haspopup="true" aria-expanded="false">Drop Start</button>
+                <button class="btn ripple btn-secondary dropdown-toggle" id="dropdownStart" data-ui-toggle="dropdown" data-ui-placement="bottom" data-ui-position="start" data-ui-fixed="true" type="button" aria-haspopup="true" aria-expanded="false">Drop Start</button>
                 <div class="dropdown-menu shadow-sm" aria-labelledby="dropdownStart">
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
                 </div>
             </div>
             <div class="btn-group">
-                <button id="dropdownCenter" class="btn ripple btn-secondary dropdown-toggle" role="button" data-ui-toggle="dropdown" data-ui-placement="bottom" data-ui-position="center" data-ui-fixed="true" aria-haspopup="true" aria-expanded="false">Drop Center</button>
+                <button class="btn ripple btn-secondary dropdown-toggle" id="dropdownCenter" data-ui-toggle="dropdown" data-ui-placement="bottom" data-ui-position="center" data-ui-fixed="true" type="button" aria-haspopup="true" aria-expanded="false">Drop Center</button>
                 <div class="dropdown-menu shadow-sm" aria-labelledby="dropdownCenter">
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
                 </div>
             </div>
             <div class="btn-group">
-                <button id="dropdownEnd" class="btn ripple btn-secondary dropdown-toggle" role="button" data-ui-toggle="dropdown" data-ui-placement="bottom" data-ui-position="end" data-ui-fixed="true" aria-haspopup="true" aria-expanded="false">Drop End</button>
+                <button class="btn ripple btn-secondary dropdown-toggle" id="dropdownEnd" data-ui-toggle="dropdown" data-ui-placement="bottom" data-ui-position="end" data-ui-fixed="true" type="button" aria-haspopup="true" aria-expanded="false">Drop End</button>
                 <div class="dropdown-menu shadow-sm" aria-labelledby="dropdownEnd">
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
                 </div>
             </div>
         </div>
@@ -181,17 +121,11 @@
         <h4>Active</h4>
         <div class="mb-4">
             <div class="dropdown">
-                <button id="dropdownActive" class="btn ripple btn-primary dropdown-toggle" role="button" data-ui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
+                <button class="btn ripple btn-primary dropdown-toggle" id="dropdownActive" data-ui-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">Dropdown</button>
                 <div class="dropdown-menu shadow-sm" aria-labelledby="dropdownActive">
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item active">
-                        Active
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item active" type="button">Active</button>
+                    <button class="dropdown-item" type="button">Action</button>
                 </div>
             </div>
         </div>
@@ -199,17 +133,11 @@
         <h4>Disabled</h4>
         <div class="mb-4">
             <div class="dropdown">
-                <button id="dropdownDisabled" class="btn ripple btn-primary dropdown-toggle" role="button" data-ui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
+                <button class="btn ripple btn-primary dropdown-toggle" id="dropdownDisabled" data-ui-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">Dropdown</button>
                 <div class="dropdown-menu shadow-sm" aria-labelledby="dropdownDisabled">
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item disabled" aria-disabled="true" tabindex="-1">
-                        Disabled
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item disabled" tabindex="-1" type="button" aria-disabled="true">Disabled</button>
+                    <button class="dropdown-item" type="button">Action</button>
                 </div>
             </div>
         </div>
@@ -217,15 +145,11 @@
         <h4>Headers</h4>
         <div class="mb-4">
             <div class="dropdown">
-                <button id="dropdownHeader" class="btn ripple btn-primary dropdown-toggle" role="button" data-ui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
+                <button class="btn ripple btn-primary dropdown-toggle" id="dropdownHeader" data-ui-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">Dropdown</button>
                 <div class="dropdown-menu shadow-sm" aria-labelledby="dropdownHeader">
                     <h6 class="dropdown-header">Header</h6>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
                 </div>
             </div>
         </div>
@@ -233,15 +157,11 @@
         <h4>Dividers</h4>
         <div class="mb-4">
             <div class="dropdown">
-                <button id="dropdownDivider" class="btn ripple btn-primary dropdown-toggle" role="button" data-ui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
+                <button class="btn ripple btn-primary dropdown-toggle" id="dropdownDivider" data-ui-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">Dropdown</button>
                 <div class="dropdown-menu shadow-sm" aria-labelledby="dropdownDivider">
-                    <button class="dropdown-item">
-                        Action
-                    </button>
+                    <button class="dropdown-item" type="button">Action</button>
                     <div class="dropdown-divider"></div>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
+                    <button class="dropdown-item" type="button">Action</button>
                 </div>
             </div>
         </div>
@@ -249,20 +169,12 @@
         <h4>Text</h4>
         <div class="mb-4">
             <div class="dropdown">
-                <button id="dropdownText" class="btn ripple btn-primary dropdown-toggle" role="button" data-ui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
+                <button class="btn ripple btn-primary dropdown-toggle" id="dropdownText" data-ui-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">Dropdown</button>
                 <div class="dropdown-menu shadow-sm" aria-labelledby="dropdownText">
-                    <div class="dropdown-item-text">
-                        Dropdown text.
-                    </div>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
-                    <button class="dropdown-item">
-                        Action
-                    </button>
+                    <div class="dropdown-item-text">Dropdown text.</div>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
                 </div>
             </div>
         </div>
@@ -270,28 +182,28 @@
         <h4>Forms</h4>
         <div class="mb-4">
             <div class="dropdown">
-                <button id="dropdownForm" class="btn ripple btn-primary dropdown-toggle" role="button" data-ui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
+                <button class="btn ripple btn-primary dropdown-toggle" id="dropdownForm" data-ui-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">Dropdown</button>
                 <div class="dropdown-menu shadow-sm" style="min-width: 300px;" aria-labelledby="dropdownForm">
                     <form class="px-2 pt-2">
                         <div class="mb-2">
                             <div class="form-input">
-                                <input type="text" class="input-filled" placeholder="Placeholder" aria-label="Label" />
+                                <input class="input-filled" type="text" placeholder="Placeholder" aria-label="Label" />
                                 <div class="ripple-line"></div>
                             </div>
                         </div>
                         <div class="mb-2">
                             <div class="form-input">
-                                <input type="text" class="input-filled" placeholder="Placeholder" aria-label="Label" />
+                                <input class="input-filled" type="text" placeholder="Placeholder" aria-label="Label" />
                                 <div class="ripple-line"></div>
                             </div>
                         </div>
                         <div class="d-grid">
-                            <button type="submit" class="btn ripple btn-primary">Action</button>
+                            <button class="btn ripple btn-primary" type="submit">Action</button>
                         </div>
                     </form>
                     <div class="dropdown-divider"></div>
-                    <button class="dropdown-item" href="#">Action</button>
-                    <button class="dropdown-item" href="#">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Action</button>
                 </div>
             </div>
         </div>

@@ -1,0 +1,33 @@
+// Set the border radius.
+// @param $amount
+@mixin border-radius($amount) {
+    border-radius: $amount;
+}
+
+// Set the top border radius.
+// @param $amount
+@mixin border-top-radius($amount) {
+    border-top-left-radius: $amount;
+    border-top-right-radius: $amount;
+}
+
+// Set the right border radius.
+// @param $amount
+@mixin border-right-radius($amount) {
+    border-top-right-radius: $amount;
+    border-bottom-right-radius: $amount;
+}
+
+// Set the bottom border radius.
+// @param $amount
+@mixin border-bottom-radius($amount) {
+    border-bottom-right-radius: $amount;
+    border-bottom-left-radius: $amount;
+}
+
+// Set the left border radius.
+// @param $amount
+@mixin border-left-radius($amount) {
+    border-top-left-radius: $amount;
+    border-bottom-left-radius: $amount;
+}

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Outline Input Validation</title>
     <link rel="stylesheet" href="../../dist/frost-ui.min.css" />
     <script src="../../dist/frost-ui-bundle.js"></script>
 </head>
@@ -19,7 +19,7 @@
                 <div class="form-success">
                     <div class="mb-4">
                         <label for="outlineTextSuccess">Label</label>
-                        <input class="input-outline" type="text" id="outlineTextSuccess" placeholder="Placeholder" />
+                        <input class="input-outline" id="outlineTextSuccess" type="text" placeholder="Placeholder" />
                         <div class="valid-feedback">This is validation feedback.</div>
                     </div>
                     <div class="mb-4">
@@ -39,7 +39,7 @@
                     </div>
                     <div class="mb-4">
                         <label for="outlineMultiSelectSuccess">Label</label>
-                        <select class="input-outline" id="outlineMultiSelectSuccess" multiple="true">
+                        <select class="input-outline" id="outlineMultiSelectSuccess" multiple>
                             <option>Option 1</option>
                             <option>Option 2</option>
                             <option>Option 3</option>
@@ -51,7 +51,7 @@
                     <div class="mb-4">
                         <label for="outlineGroupSuccess">Label</label>
                         <div class="input-group">
-                            <input class="input-outline" type="text" id="outlineGroupSuccess" placeholder="Placeholder" />
+                            <input class="input-outline" id="outlineGroupSuccess" type="text" placeholder="Placeholder" />
                             <div class="input-group-text">Text</div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                 <div class="form-error">
                     <div class="mb-4">
                         <label for="outlineTextError">Label</label>
-                        <input class="input-outline" type="text" id="outlineTextError" placeholder="Placeholder" />
+                        <input class="input-outline" id="outlineTextError" type="text" placeholder="Placeholder" />
                         <div class="invalid-feedback">This is validation feedback.</div>
                     </div>
                     <div class="mb-4">
@@ -83,7 +83,7 @@
                     </div>
                     <div class="mb-4">
                         <label for="outlineMultiSelectError">Label</label>
-                        <select class="input-outline" id="outlineMultiSelectError" multiple="true">
+                        <select class="input-outline" id="outlineMultiSelectError" multiple>
                             <option>Option 1</option>
                             <option>Option 2</option>
                             <option>Option 3</option>
@@ -95,7 +95,7 @@
                     <div class="mb-4">
                         <label for="outlineGroupError">Label</label>
                         <div class="input-group">
-                            <input type="text" id="outlineGroupError" class="input-outline" placeholder="Placeholder" />
+                            <input class="input-outline" id="outlineGroupError" type="text" placeholder="Placeholder" />
                             <div class="input-group-text">Text</div>
                         </div>
                     </div>

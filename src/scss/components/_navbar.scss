@@ -1,0 +1,165 @@
+.navbar {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: $navbar-padding-y;
+    padding-bottom: $navbar-padding-y;
+
+    > .container,
+    > .container-fluid,
+    %responsive-navbar-container {
+        display: flex;
+        flex-wrap: inherit;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    @each $breakpoint, $max-width in $containers {
+        > .container-#{$breakpoint} {
+            @extend %responsive-navbar-container;
+        }
+    }
+}
+
+.navbar-brand {
+    padding-top: $navbar-brand-padding-y;
+    padding-bottom: $navbar-brand-padding-y;
+    margin-right: $navbar-brand-margin-right;
+    font-size: $navbar-brand-font-size;
+    color: var(--ui-navbar-brand-color);
+    white-space: nowrap;
+}
+
+.navbar-nav {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+
+    .nav-link {
+        color: var(--ui-navbar-nav-link-color);
+
+        &:hover {
+            color: var(--ui-navbar-nav-link-hover-color);
+        }
+
+        &:focus {
+            color: var(--ui-navbar-nav-link-focus-color);
+            background-color: var(--ui-navbar-nav-link-focus-bg);
+        }
+
+        &.disabled {
+            pointer-events: none;
+            opacity: $navbar-nav-link-disabled-opacity;
+        }
+    }
+
+    .nav-link.active,
+    .show > .nav-link {
+        color: var(--ui-navbar-nav-link-active-color);
+    }
+
+    .dropdown-menu {
+        position: static;
+    }
+}
+
+.navbar-text {
+    padding-top: $navbar-text-padding-y;
+    padding-bottom: $navbar-text-padding-y;
+    color: var(--ui-navbar-text-color);
+}
+
+.navbar-collapse {
+    flex-grow: 1;
+    align-items: center;
+    width: 100%;
+
+    .navbar-nav {
+        margin-right: -$nav-link-padding-x;
+        margin-left: -$nav-link-padding-x;
+    }
+}
+
+.navbar-toggler {
+    padding: $navbar-toggler-padding-y $navbar-toggler-padding-x;
+    font-size: $navbar-toggler-font-size;
+    line-height: map-get($line-heights, 1);
+    background-color: transparent;
+    border: $navbar-toggler-border-size $border-style transparent;
+    @include border-radius($navbar-toggler-border-radius);
+
+    .navbar-toggler-icon {
+        position: relative;
+        top: -$border-size;
+    }
+
+    &:focus {
+        background-color: var(--ui-navbar-toggler-focus-bg);
+    }
+}
+
+.navbar-toggler-icon::before {
+    content: $navbar-toggler-icon;
+}
+
+.navbar-light {
+    --ui-navbar-brand-color: #{$navbar-light-navbar-brand-color};
+    --ui-navbar-nav-link-color: #{$navbar-light-nav-link-color};
+    --ui-navbar-nav-link-hover-color: #{$navbar-light-nav-link-hover-color};
+    --ui-navbar-nav-link-focus-bg: #{$navbar-light-nav-link-focus-background-color};
+    --ui-navbar-nav-link-focus-color: #{$navbar-light-nav-link-focus-color};
+    --ui-navbar-nav-link-active-color: #{$navbar-light-nav-link-active-color};
+    --ui-navbar-text-color: #{$navbar-light-nav-text-color};
+    --ui-navbar-toggler-color: #{$navbar-light-navbar-toggler-color};
+    --ui-navbar-toggler-focus-bg: #{$navbar-light-navbar-toggler-focus-background-color};
+}
+
+.navbar-dark {
+    --ui-navbar-brand-color: #{$navbar-dark-navbar-brand-color};
+    --ui-navbar-nav-link-color: #{$navbar-dark-nav-link-color};
+    --ui-navbar-nav-link-hover-color: #{$navbar-dark-nav-link-hover-color};
+    --ui-navbar-nav-link-focus-bg: #{$navbar-dark-nav-link-focus-background-color};
+    --ui-navbar-nav-link-focus-color: #{$navbar-dark-nav-link-focus-color};
+    --ui-navbar-nav-link-active-color: #{$navbar-dark-nav-link-active-color};
+    --ui-navbar-text-color: #{$navbar-dark-nav-text-color};
+    --ui-navbar-toggler-color: #{$navbar-dark-navbar-toggler-color};
+    --ui-navbar-toggler-focus-bg: #{$navbar-dark-navbar-toggler-focus-background-color};
+}
+
+@each $breakpoint in map-keys($breakpoints) {
+    $infix: breakpoint-infix($breakpoint);
+
+    @include media-breakpoint-up($breakpoint) {
+        .navbar-expand#{$infix} {
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+
+            .navbar-collapse {
+                display: flex !important;
+            }
+
+            .navbar-toggler {
+                display: none;
+            }
+
+            .navbar-nav {
+                flex-direction: row;
+                margin-right: 0;
+                margin-left: 0;
+
+                .dropdown-menu {
+                    position: absolute;
+                }
+
+                .nav-link {
+                    padding-right: $navbar-nav-link-padding-x;
+                    padding-left: $navbar-nav-link-padding-x;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,33 @@
+.btn-close {
+    padding: 0;
+    font-weight: $btn-close-font-weight;
+    line-height: $btn-close-line-height;
+    color: $btn-close-color;
+    text-shadow: $btn-close-text-shadow;
+    background-color: transparent;
+    border: 0;
+    opacity: $btn-close-opacity;
+
+    &::before {
+        content: $btn-close-icon;
+    }
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+
+    &:hover {
+        opacity: $btn-close-hover-opacity;
+    }
+
+    &:focus {
+        opacity: $btn-close-focus-opacity;
+    }
+
+    &.disabled,
+    &:disabled {
+        pointer-events: none;
+        opacity: $btn-close-disabled-opacity;
+    }
+}

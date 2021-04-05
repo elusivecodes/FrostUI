@@ -1,0 +1,73 @@
+.row {
+    --ui-gutter-y: #{$gutter-y};
+    --ui-gutter-x: #{$gutter-x};
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(var(--ui-gutter-y) * -1);
+    margin-right: calc(var(--ui-gutter-x) / -2);
+    margin-left: calc(var(--ui-gutter-x) / -2);
+
+    > * {
+        flex-shrink: 0;
+        width: 100%;
+        max-width: 100%;
+        padding-right: calc(var(--ui-gutter-x) / 2);
+        padding-left: calc(var(--ui-gutter-x) / 2);
+        margin-top: var(--ui-gutter-y);
+    }
+}
+
+@each $breakpoint in map-keys($breakpoints) {
+    $infix: breakpoint-infix($breakpoint);
+
+    @include media-breakpoint-up($breakpoint) {
+        .col#{$infix} {
+            flex: 1 0 0%;
+        }
+
+        .col#{$infix}-auto,
+        .row-cols#{$infix}-auto > * {
+            flex: 0 0 auto;
+            width: auto;
+        }
+
+        @if $row-grid-size > 0 {
+            @for $i from 1 through $row-grid-size {
+                .row-cols#{$infix}-#{$i} > * {
+                    flex: 0 0 auto;
+                    width: 100% / $i;
+                }
+            }
+        }
+
+        @if $grid-size > 0 {
+            @for $i from 1 through $grid-size {
+                .col#{$infix}-#{$i} {
+                    flex: 0 0 auto;
+                    width: percentage($i / $grid-size);
+                }
+            }
+
+            @for $i from 0 through ($grid-size - 1) {
+                @if $infix != "" and $i > 0 {
+                    .offset#{$infix}-#{$i} {
+                        $num: $i / $grid-size;
+                        margin-left: if($num == 0, 0, percentage($num));
+                    }
+                }
+            }
+        }
+
+        @each $key, $value in $gutters {
+            .g#{$infix}-#{$key},
+            .gx#{$infix}-#{$key} {
+                --ui-gutter-x: #{$value};
+            }
+
+            .g#{$infix}-#{$key},
+            .gy#{$infix}-#{$key} {
+                --ui-gutter-y: #{$value};
+            }
+        }
+    }
+}

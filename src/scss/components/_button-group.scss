@@ -1,0 +1,88 @@
+.btn-group,
+.btn-group-vertical {
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
+
+    > .btn {
+        position: relative;
+        flex: 1 1 auto;
+    }
+
+    > .btn:hover {
+        z-index: 1;
+    }
+
+    > .btn-check:focus + .btn,
+    > .btn:focus {
+        z-index: 2;
+    }
+
+    > .btn-check:checked + .btn,
+    > .btn:active,
+    > .btn.active {
+        z-index: 3;
+    }
+}
+
+.btn-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    .input-group {
+        width: auto;
+    }
+}
+
+.btn-group {
+    > .btn:not(:first-child),
+    > .btn-group:not(:first-child) {
+        margin-left: -$btn-border-size;
+    }
+
+    > .btn:not(:last-child):not(.dropdown-toggle),
+    > .btn-group:not(:last-child) > .btn {
+        @include border-right-radius(0);
+    }
+
+    > .btn:nth-child(n + 3),
+    > :not(.btn-check) + .btn,
+    > .btn-group:not(:first-child) > .btn {
+        @include border-left-radius(0);
+    }
+}
+
+.btn-group-vertical {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    > .btn,
+    > .btn-group {
+        width: 100%;
+    }
+
+    > .btn:not(:first-child),
+    > .btn-group:not(:first-child) {
+        margin-top: -$btn-border-size;
+    }
+
+    > .btn:not(:last-child):not(.dropdown-toggle),
+    > .btn-group:not(:last-child) > .btn {
+        @include border-bottom-radius(0);
+    }
+
+    > .btn:not(:first-child),
+    > .btn-group:not(:first-child) > .btn {
+        @include border-top-radius(0);
+    }
+}
+
+.btn-group-lg > .btn {
+    @extend .btn-lg;
+}
+
+.btn-group-sm > .btn {
+    @extend .btn-sm;
+}

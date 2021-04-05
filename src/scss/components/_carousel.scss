@@ -1,0 +1,132 @@
+.carousel {
+    --ui-carousel-bg: #{$carousel-background-color};
+    --ui-carousel-control-color: #{$carousel-control-color};
+    --ui-carousel-indicator-bg: #{$carousel-indicator-background-color};
+    --ui-carousel-caption-color: #{$carousel-caption-color};
+
+    position: relative;
+    background-color: var(--ui-carousel-bg);
+}
+
+.carousel-inner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.carousel-item {
+    display: none;
+    backface-visibility: hidden;
+
+    &:not(.active) {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    &.active {
+        position: relative;
+        display: block;
+        width: 100%;
+    }
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $carousel-control-padding-y $carousel-control-padding-x;
+    font-size: $carousel-control-font-size;
+    color: var(--ui-carousel-control-color);
+    text-align: center;
+    background: transparent;
+    opacity: $carousel-control-opacity;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+
+    &:hover {
+        opacity: $carousel-control-hover-opacity;
+    }
+
+    &:focus {
+        opacity: $carousel-control-focus-opacity;
+    }
+}
+
+.carousel-control-prev {
+    left: 0;
+}
+
+.carousel-control-next {
+    right: 0;
+}
+
+.carousel-control-prev-arrow::before {
+    content: $carousel-control-prev-arrow;
+}
+
+.carousel-control-next-arrow::before {
+    content: $carousel-control-next-arrow;
+}
+
+.carousel-indicators {
+    position: absolute;
+    right: 0;
+    bottom: $carousel-indicators-bottom;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 0;
+    margin-right: $carousel-indicators-margin-x;
+    margin-left: $carousel-indicators-margin-x;
+    list-style: none;
+
+    > * {
+        box-sizing: content-box;
+        flex: 0 1 auto;
+        width: $carousel-indicator-width;
+        height: $carousel-indicator-height;
+        margin-right: $carousel-indicator-margin-x;
+        margin-left: $carousel-indicator-margin-x;
+        text-indent: -999px;
+        cursor: pointer;
+        background-color: var(--ui-carousel-indicator-bg);
+        background-clip: padding-box;
+        @include border-radius($carousel-indicator-border-radius);
+        opacity: $carousel-indicator-opacity;
+
+        &.active {
+            opacity: $carousel-indicator-active-opacity;
+        }
+    }
+}
+
+.carousel-caption {
+    position: absolute;
+    right: $carousel-caption-right;
+    bottom: $carousel-caption-bottom;
+    left: $carousel-caption-left;
+    padding-top: $carousel-caption-padding-y;
+    padding-bottom: $carousel-caption-padding-y;
+    color: var(--ui-carousel-caption-color);
+    text-align: center;
+}
+
+.carousel-dark {
+    --ui-carousel-bg: #{$carousel-dark-background-color};
+    --ui-carousel-control-color: #{$carousel-dark-control-color};
+    --ui-carousel-indicator-bg: #{$carousel-dark-indicator-background-color};
+    --ui-carousel-caption-color: #{$carousel-dark-caption-color};
+}

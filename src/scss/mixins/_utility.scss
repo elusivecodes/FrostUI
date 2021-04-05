@@ -1,0 +1,56 @@
+// Generate a set of utility classes.
+// @param $properties
+// @param $values
+// @param $class: false
+// @param $responsive: false
+// @param $print = false
+// @param $important = true
+@mixin utility($properties, $values, $class: false, $responsive: false, $print: false, $important: true) {
+    @if type-of($properties) == "string" {
+        $properties: append((), $properties);
+    }
+
+    @if type-of($values) == "string" or type-of(nth($values, 1)) != "list" {
+        $values: zip($values, $values);
+    }
+
+    @each $breakpoint in map-keys($breakpoints) {
+        @include media-breakpoint-up($breakpoint) {
+            $infix: breakpoint-infix($breakpoint);
+
+            @if $responsive or $infix == "" {
+                @include utility-class($properties, $values, $infix, $class, $important);
+            }
+        }
+    }
+
+    @if $print {
+        @media print {
+            @include utility-class($properties, $values, "-print", $class, $important);
+        }
+    }
+}
+
+// Generate a utility class.
+// @param $properties
+// @param $values
+// @param $infix
+// @param $class
+// @param $important
+@mixin utility-class($properties, $values, $infix, $class, $important) {
+    $class: if($class != false, $class, nth($properties, 1));
+    $class: if($class == null, "", $class);
+    $infix: if($class == "" and str-slice($infix, 1, 1) == "-", str-slice($infix, 2), $infix);
+
+    @each $key, $value in $values {
+        $class-modifier: if($key, if($class == "" and $infix == "", "", "-") + $key, "");
+
+        @if $value != null {
+            .#{$class + $infix + $class-modifier} {
+                @each $property in $properties {
+                    #{$property}: $value if($important, !important, null);
+                }
+            }
+        }
+    }
+}

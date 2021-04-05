@@ -1,0 +1,48 @@
+.card-group {
+    > .card {
+        margin-bottom: $card-group-card-margin-bottom;
+    }
+
+    @include media-breakpoint-up(sm) {
+        display: flex;
+        flex-flow: row wrap;
+
+        > .card {
+            flex: 1 0 0%;
+            margin-bottom: 0;
+
+            + .card {
+                margin-left: 0;
+                border-left: 0;
+            }
+
+            &:not(:first-child) {
+                @include border-left-radius(0);
+
+                .card-img-top,
+                .card-header {
+                    border-top-left-radius: 0;
+                }
+
+                .card-img-bottom,
+                .card-footer {
+                    border-bottom-left-radius: 0;
+                }
+            }
+
+            &:not(:last-child) {
+                @include border-right-radius(0);
+
+                .card-img-top,
+                .card-header {
+                    border-top-right-radius: 0;
+                }
+
+                .card-img-bottom,
+                .card-footer {
+                    border-bottom-right-radius: 0;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,25 @@
+.breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 0 $breadcrumb-margin-bottom;
+    list-style: none;
+}
+
+.breadcrumb-item {
+    display: flex;
+
+    &.active {
+        color: $breadcrumb-item-active-color;
+    }
+
+    + .breadcrumb-item {
+        padding-left: $breadcrumb-spacing / 2;
+
+        &::before {
+            display: inline-block;
+            padding-right: $breadcrumb-spacing / 2;
+            color: $breadcrumb-divider-color;
+            content: $breadcrumb-divider;
+        }
+    }
+}

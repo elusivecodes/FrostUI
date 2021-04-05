@@ -1,0 +1,115 @@
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: $card-background-color;
+    background-clip: border-box;
+    border: $card-border-size $border-style $card-border-color;
+    @include border-radius($card-border-radius);
+
+    > hr {
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+    > .list-group {
+        border-top: inherit;
+        border-bottom: inherit;
+
+        &:first-child {
+            @include border-top-radius($card-inner-border-radius);
+        }
+
+        &:last-child {
+            @include border-bottom-radius($card-inner-border-radius);
+        }
+    }
+
+    > .card-header + .list-group,
+    > .list-group + .card-footer {
+        border-top: 0;
+    }
+}
+
+.card-header {
+    padding: $card-header-padding-y $card-header-padding-x;
+    margin-bottom: 0;
+    background-color: $card-header-background-color;
+    border-bottom: $card-border-size $border-style $card-border-color;
+
+    &:first-child {
+        $card-header-border-radius: $card-inner-border-radius $card-inner-border-radius 0 0;
+        @include border-radius($card-header-border-radius);
+    }
+}
+
+.card-footer {
+    padding: $card-footer-padding-y $card-footer-padding-x;
+    background-color: $card-footer-background-color;
+    border-top: $card-border-size $border-style $card-border-color;
+
+    &:last-child {
+        $card-footer-border-radius: 0 0 $card-inner-border-radius $card-inner-border-radius;
+        @include border-radius($card-footer-border-radius);
+    }
+}
+
+.card-body {
+    flex: 1 1 auto;
+    padding: $card-body-padding-y $card-body-padding-x;
+}
+
+.card-title {
+    margin-bottom: $card-title-margin-bottom;
+}
+
+.card-subtitle {
+    margin-top: $card-subtitle-margin-top;
+    margin-bottom: 0;
+}
+
+.card-text:last-child {
+    margin-bottom: 0;
+}
+
+.card-link + .card-link {
+    margin-left: $card-link-spacing;
+}
+
+.card-img-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: $card-img-overlay-padding-y $card-img-overlay-padding-x;
+    @include border-radius($card-inner-border-radius);
+}
+
+.card-img {
+    width: 100%;
+}
+
+.card-img-top {
+    @extend .card-img;
+    @include border-top-radius($card-inner-border-radius);
+}
+
+.card-img-bottom {
+    @extend .card-img;
+    @include border-bottom-radius($card-inner-border-radius);
+}
+
+.card-header-tabs {
+    margin-right: -$card-header-padding-x;
+    margin-bottom: -$card-header-padding-y;
+    margin-left: -$card-header-padding-x;
+    border-bottom: 0;
+}
+
+.card-header-pills {
+    margin-right: -$card-header-padding-x;
+    margin-left: -$card-header-padding-x;
+}

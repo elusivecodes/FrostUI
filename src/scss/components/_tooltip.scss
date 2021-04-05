@@ -1,0 +1,78 @@
+.tooltip {
+    position: absolute;
+    z-index: $tooltip-z-index;
+    display: block;
+    margin: 0;
+    font-size: $tooltip-font-size;
+    word-wrap: break-word;
+    opacity: 0;
+    @include reset-text();
+
+    &.show {
+        opacity: $tooltip-show-opacity;
+    }
+
+    .tooltip-arrow {
+        position: absolute;
+        display: block;
+        width: $tooltip-arrow-size;
+        height: $tooltip-arrow-size / 2;
+        pointer-events: none;
+
+        &::before {
+            position: absolute;
+            content: "";
+            border-color: transparent;
+            border-style: solid;
+        }
+    }
+
+    &[data-ui-placement="top"] .tooltip-arrow {
+        bottom: 0;
+
+        &::before {
+            top: 0;
+            border-width: ($tooltip-arrow-size / 2) ($tooltip-arrow-size / 2) 0;
+            border-top-color: $tooltip-inner-background-color;
+        }
+    }
+
+    &[data-ui-placement="right"] .tooltip-arrow {
+        left: 0;
+
+        &::before {
+            right: 0;
+            border-width: ($tooltip-arrow-size / 2) ($tooltip-arrow-size / 2) ($tooltip-arrow-size / 2) 0;
+            border-right-color: $tooltip-inner-background-color;
+        }
+    }
+
+    &[data-ui-placement="bottom"] .tooltip-arrow {
+        top: 0;
+
+        &::before {
+            bottom: 0;
+            border-width: 0 ($tooltip-arrow-size / 2) ($tooltip-arrow-size / 2);
+            border-bottom-color: $tooltip-inner-background-color;
+        }
+    }
+
+    &[data-ui-placement="left"] .tooltip-arrow {
+        right: 0;
+
+        &::before {
+            left: 0;
+            border-width: ($tooltip-arrow-size / 2) 0 ($tooltip-arrow-size / 2) ($tooltip-arrow-size / 2);
+            border-left-color: $tooltip-inner-background-color;
+        }
+    }
+}
+
+.tooltip-inner {
+    max-width: $tooltip-inner-max-width;
+    padding: $tooltip-inner-padding-y $tooltip-inner-padding-x;
+    color: $tooltip-inner-color;
+    text-align: center;
+    background-color: $tooltip-inner-background-color;
+    @include border-radius($tooltip-inner-border-radius);
+}

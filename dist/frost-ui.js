@@ -1362,12 +1362,14 @@
 
             this._animating = true;
             dom.addClass(this._triggers, 'collapsed');
+            dom.addClass(this._triggers, 'collapsing');
 
             dom.squeezeOut(this._node, {
                 direction: this._settings.direction,
                 duration: this._settings.duration
             }).then(_ => {
                 dom.removeClass(this._node, 'show');
+                dom.removeClass(this._triggers, 'collapsing');
                 dom.setAttribute(this._triggers, 'aria-expanded', false);
                 dom.triggerEvent(this._node, 'hidden.ui.collapse');
             }).catch(_ => { }).finally(_ => {
@@ -1418,11 +1420,13 @@
             this._animating = true;
             dom.addClass(this._node, 'show');
             dom.removeClass(this._triggers, 'collapsed');
+            dom.addClass(this._triggers, 'collapsing');
 
             dom.squeezeIn(this._node, {
                 direction: this._settings.direction,
                 duration: this._settings.duration
             }).then(_ => {
+                dom.removeClass(this._triggers, 'collapsing');
                 dom.setAttribute(this._triggers, 'aria-expanded', true);
                 dom.triggerEvent(this._node, 'shown.ui.collapse');
             }).catch(_ => { }).finally(_ => {
@@ -1794,7 +1798,7 @@
                 }),
                 dom.dropOut(this._dialog, {
                     duration: this._settings.duration,
-                    direction: this._getDirection()
+                    direction: 'top'
                 }),
                 dom.fadeOut(this._backdrop, {
                     duration: this._settings.duration
@@ -1878,7 +1882,7 @@
                 }),
                 dom.dropIn(this._dialog, {
                     duration: this._settings.duration,
-                    direction: this._getDirection()
+                    direction: 'top'
                 }),
                 dom.fadeIn(this._backdrop, {
                     duration: this._settings.duration
@@ -1972,31 +1976,6 @@
     });
 
 
-    /**
-     * Modal Helpers
-     */
-
-    Object.assign(Modal.prototype, {
-
-        /**
-         * Get the slide animation direction.
-         * @returns {string} The animation direction.
-         */
-        _getDirection() {
-            if (dom.hasClass(this._node, 'modal-left')) {
-                return 'left';
-            }
-
-            if (dom.hasClass(this._node, 'modal-right')) {
-                return 'right';
-            }
-
-            return 'top';
-        }
-
-    });
-
-
     // Modal default options
     Modal.defaults = {
         duration: 250,
@@ -2011,6 +1990,250 @@
     UI.initComponent('modal', Modal);
 
     UI.Modal = Modal;
+
+
+    /**
+     * Offcanvas Class
+     * @class
+     */
+    class Offcanvas extends BaseComponent {
+
+        /**
+         * Dispose the Offcanvas.
+         */
+        dispose() {
+            this._activeTarget = null;
+
+            if (this._settings.backdrop) {
+                dom.removeClass(document.body, 'offcanvas-backdrop');
+            }
+
+            if (!this._settings.scroll) {
+                dom.setStyle(document.body, 'overflow', '');
+            }
+
+            this.constructor.current = null;
+
+            super.dispose();
+        }
+
+        /**
+         * Hide the Offcanvas.
+         * @returns {Offcanvas} The Offcanvas.
+         */
+        hide() {
+            if (
+                this._animating ||
+                !dom.hasClass(this._node, 'show') ||
+                !dom.triggerOne(this._node, 'hide.ui.offcanvas')
+            ) {
+                return this;
+            }
+
+            this._animating = true;
+
+            this.constructor.current = null;
+
+            Promise.all([
+                dom.fadeOut(this._node, {
+                    duration: this._settings.duration
+                }),
+                dom.dropOut(this._node, {
+                    duration: this._settings.duration,
+                    direction: this._getDirection()
+                }),
+                dom.fadeOut(this._backdrop, {
+                    duration: this._settings.duration
+                })
+            ]).then(_ => {
+                dom.removeAttribute(this._node, 'aria-modal');
+                dom.setAttribute(this._node, 'aria-hidden', true);
+
+                dom.removeClass(this._node, 'show');
+
+                if (this._settings.backdrop) {
+                    dom.removeClass(document.body, 'offcanvas-backdrop');
+                }
+
+                if (!this._settings.scroll) {
+                    dom.setStyle(document.body, 'overflow', '');
+                }
+
+                if (this._activeTarget) {
+                    dom.focus(this._activeTarget);
+                }
+
+                dom.triggerEvent(this._node, 'hidden.ui.offcanvas');
+            }).catch(_ => { }).finally(_ => {
+                this._animating = false;
+            });
+
+            return this;
+        }
+
+        /**
+         * Show the Offcanvas.
+         * @param {HTMLElement} [activeTarget] The active target.
+         * @returns {Offcanvas} The Offcanvas.
+         */
+        show(activeTarget) {
+            if (
+                this._animating ||
+                dom.hasClass(this._node, 'show') ||
+                !dom.triggerOne(this._node, 'show.ui.offcanvas')
+            ) {
+                return this;
+            }
+
+            this._activeTarget = activeTarget;
+            this._animating = true;
+
+            dom.addClass(this._node, 'show');
+
+            this.constructor.current = this;
+
+            if (this._settings.backdrop) {
+                dom.addClass(document.body, 'offcanvas-backdrop');
+            }
+
+            if (!this._settings.scroll) {
+                dom.setStyle(document.body, 'overflow', 'hidden');
+            }
+
+            Promise.all([
+                dom.fadeIn(this._node, {
+                    duration: this._settings.duration
+                }),
+                dom.dropIn(this._node, {
+                    duration: this._settings.duration,
+                    direction: this._getDirection()
+                }),
+                dom.fadeIn(this._backdrop, {
+                    duration: this._settings.duration
+                })
+            ]).then(_ => {
+                dom.removeAttribute(this._node, 'aria-hidden');
+                dom.setAttribute(this._node, 'aria-modal', true);
+
+                dom.triggerEvent(this._node, 'shown.ui.offcanvas');
+            }).catch(_ => { }).finally(_ => {
+                this._animating = false;
+            });
+
+            return this;
+        }
+
+        /**
+         * Toggle the Offcanvas.
+         * @returns {Offcanvas} The Offcanvas.
+         */
+        toggle() {
+            return dom.hasClass(this._node, 'show') ?
+                this.hide() :
+                this.show();
+        }
+
+    }
+
+
+    // Offcanvas events
+    dom.addEventDelegate(document, 'click.ui.offcanvas', '[data-ui-toggle="offcanvas"]', e => {
+        e.preventDefault();
+
+        const target = UI.getTarget(e.currentTarget, '.offcanvas');
+        const offcanvas = Offcanvas.init(target);
+        offcanvas.show(e.currentTarget);
+    });
+
+    dom.addEventDelegate(document, 'click.ui.offcanvas', '[data-ui-dismiss="offcanvas"]', e => {
+        e.preventDefault();
+
+        const target = UI.getTarget(e.currentTarget, '.offcanvas');
+        const offcanvas = Offcanvas.init(target);
+        offcanvas.hide();
+    });
+
+    dom.addEvent(document, 'click.ui.offcanvas', e => {
+        if (dom.is(e.target, '[data-ui-dismiss="offcanvas"]')) {
+            return;
+        }
+
+        if (!Offcanvas.current) {
+            return;
+        }
+
+        const offcanvas = Offcanvas.current;
+
+        if (!offcanvas._settings.backdrop) {
+            return;
+        }
+
+        if (offcanvas._node === e.target || dom.hasDescendent(offcanvas._node, e.target)) {
+            return;
+        }
+
+        offcanvas.hide();
+    });
+
+    dom.addEvent(document, 'keyup.ui.offcanvas', e => {
+        if (e.code !== 'Escape') {
+            return;
+        }
+
+        if (!Offcanvas.current) {
+            return;
+        }
+
+        const offcanvas = Offcanvas.current;
+
+        if (!offcanvas._settings.keyboard) {
+            return;
+        }
+
+        offcanvas.hide();
+    });
+
+
+    /**
+     * Offcanvas Helpers
+     */
+
+    Object.assign(Offcanvas.prototype, {
+
+        /**
+         * Get the slide animation direction.
+         * @returns {string} The animation direction.
+         */
+        _getDirection() {
+            if (dom.hasClass(this._node, 'offcanvas-end')) {
+                return 'right';
+            }
+
+            if (dom.hasClass(this._node, 'offcanvas-bottom')) {
+                return 'bottom';
+            }
+
+            if (dom.hasClass(this._node, 'offcanvas-start')) {
+                return 'left';
+            }
+
+            return 'top';
+        }
+
+    });
+
+
+    // Offcanvas default options
+    Offcanvas.defaults = {
+        duration: 250,
+        backdrop: true,
+        keyboard: true,
+        scroll: false
+    };
+
+    UI.initComponent('offcanvas', Offcanvas);
+
+    UI.Offcanvas = Offcanvas;
 
 
     /**

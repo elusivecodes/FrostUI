@@ -1,0 +1,445 @@
+// accordion
+$accordion-padding-x: $spacing * 1.25 !default;
+$accordion-padding-y: $spacing !default;
+$accordion-border-size: $border-size !default;
+$accordion-border-color: $border-color !default;
+$accordion-border-radius: $border-radius !default;
+
+$accordion-button-padding-x: $accordion-padding-x !default;
+$accordion-button-padding-y: $accordion-padding-y !default;
+$accordion-button-font-size: $font-size !default;
+
+$accordion-button-collapsed-color: $text-color !default;
+$accordion-button-collapsed-focus-background-color: tint($black, 95%) !default;
+
+$accordion-button-expanded-background-color: tint(map-get($color-variants, primary), 90%) !default;
+$accordion-button-expanded-color: text-color-contrast($accordion-button-expanded-background-color, map-get($color-variants, primary)) !default;
+$accordion-button-expanded-focus-background-color: tint(map-get($color-variants, primary), 80%) !default;
+
+$accordion-icon: $arrow-down !default;
+
+$accordion-body-padding-x: $accordion-padding-x !default;
+$accordion-body-padding-y: $accordion-padding-y !default;
+
+// alert
+$alert-variants: $color-variants;
+
+$alert-padding-x: $spacing !default;
+$alert-padding-y: $spacing !default;
+$alert-margin-bottom: $spacing !default;
+$alert-border-size: $border-size !default;
+$alert-border-color: $border-color !default;
+$alert-border-radius: $border-radius !default;
+
+$alert-dismissable-padding-right: ($alert-padding-x * 2) + $font-size !default;
+$alert-link-font-weight: map-get($font-weights, bold) !default;
+
+$alert-background-color-tint: 60% !default;
+$alert-link-color-shade: 20% !default;
+
+// badge
+$badge-padding-x: .65em !default;
+$badge-padding-y: .35em !default;
+$badge-font-size: .75em !default;
+$badge-font-weight: map-get($font-weights, bolder) !default;
+$badge-line-height: map-get($line-heights, 1) !default;
+$badge-color: $white !default;
+$badge-border-radius: $border-radius !default;
+
+// breadcrumb
+$breadcrumb-margin-bottom: $spacing !default;
+$breadcrumb-spacing: $spacing !default;
+$breadcrumb-item-active-color: map-get($color-variants, secondary) !default;
+$breadcrumb-divider-color: fade($black, .5) !default;
+$breadcrumb-divider: "\002f" !default;
+
+// button
+$btn-variants: $color-variants !default;
+
+$btn-padding-x: $spacing / 2 !default;
+$btn-padding-y: $spacing / 4 !default;
+$btn-font-family: $font-family !default;
+$btn-font-size: $font-size-md !default;
+$btn-font-weight: map-get($font-weights, normal) !default;
+$btn-line-height: map-get($line-heights, base) !default;
+$btn-border-size: $border-size !default;
+$btn-border-color: $border-color !default;
+$btn-border-radius: $border-radius !default;
+$btn-focus-box-shadow: $shadow-sm !default;
+$btn-active-box-shadow: $shadow !default;
+$btn-disabled-opacity: $disabled-opacity !default;
+
+$btn-lg-padding-x: $spacing !default;
+$btn-lg-padding-y: $spacing / 3 !default;
+$btn-lg-font-size: $font-size-lg !default;
+$btn-sm-padding-x: $spacing / 2 !default;
+$btn-sm-padding-y: $spacing / 4 !default;
+$btn-sm-font-size: $font-size-sm !default;
+
+$btn-hover-background-color-shade: 20% !default;
+$btn-focus-background-color-tint: 20% !default;
+$btn-active-background-color-shade: 40% !default;
+$btn-ripple-background-color-fade: .4 !default;
+
+$btn-outline-hover-background-color-fade: .15 !default;
+$btn-outline-focus-background-color-fade: .25 !default;
+$btn-outline-active-color-shade: 15% !default;
+$btn-outline-active-border-color-shade: 15% !default;
+$btn-outline-ripple-background-color-fade: .3 !default;
+
+// card
+$card-padding-x: $spacing !default;
+$card-padding-y: $spacing / 2 !default;
+$card-background-color: $white !default;
+$card-border-size: $border-size !default;
+$card-border-color: $border-color !default;
+$card-border-radius: $border-radius !default;
+$card-inner-border-radius: calc(#{$card-border-radius} - #{$card-border-size}) !default;
+
+$card-header-padding-x: $card-padding-x !default;
+$card-header-padding-y: $card-padding-y !default;
+$card-header-background-color: fade($black, .1) !default;
+$card-footer-padding-x: $card-padding-x !default;
+$card-footer-padding-y: $card-padding-y !default;
+$card-footer-background-color: fade($black, .05) !default;
+$card-body-padding-x: $card-padding-x !default;
+$card-body-padding-y: $spacing !default;
+
+$card-title-margin-bottom: $spacing / 4 !default;
+$card-subtitle-margin-top: $spacing / -3 !default;
+$card-link-spacing: $spacing !default;
+$card-img-overlay-padding-x: $spacing * 1.25 !default;
+$card-img-overlay-padding-y: $spacing * 1.25 !default;
+
+$card-group-card-margin-bottom: $spacing !default;
+
+// carousel
+$carousel-background-color: map-get($color-variants, dark) !default;
+
+$carousel-control-padding-x: $spacing !default;
+$carousel-control-padding-y: $spacing !default;
+$carousel-control-font-size: 2em !default;
+$carousel-control-color: map-get($color-variants, light) !default;
+$carousel-control-opacity: .5;
+$carousel-control-hover-opacity: .75;
+$carousel-control-focus-opacity: 1;
+$carousel-control-prev-arrow: $arrow-left !default;
+$carousel-control-next-arrow: $arrow-right !default;
+
+$carousel-indicators-bottom: $spacing !default;
+$carousel-indicators-margin-x: $spacing * 2 !default;
+
+$carousel-indicator-width: 1.5rem !default;
+$carousel-indicator-height: .5rem !default;
+$carousel-indicator-margin-x: $spacing / 4 !default;
+$carousel-indicator-background-color: map-get($color-variants, light) !default;
+$carousel-indicator-border-radius: $border-radius !default;
+$carousel-indicator-opacity: .5 !default;
+$carousel-indicator-active-opacity: 1 !default;
+
+$carousel-caption-right: 15% !default;
+$carousel-caption-bottom: $spacing * 2 !default;
+$carousel-caption-left: 15% !default;
+$carousel-caption-padding-y: $spacing !default;
+$carousel-caption-color: map-get($color-variants, light) !default;
+
+$carousel-dark-background-color: map-get($color-variants, light) !default;
+$carousel-dark-control-color: map-get($color-variants, dark) !default;
+$carousel-dark-indicator-background-color: map-get($color-variants, dark) !default;
+$carousel-dark-caption-color: map-get($color-variants, dark) !default;
+
+// dropdown
+$dropdown-padding-x: $spacing !default;
+$dropdown-padding-y: $spacing / 2 !default;
+$dropdown-color: $text-color !default;
+
+$dropdown-menu-min-width: 10rem !default;
+$dropdown-menu-padding-y: $dropdown-padding-y !default;
+$dropdown-menu-font-size: $font-size-md !default;
+$dropdown-menu-color: $text-color !default;
+$dropdown-menu-background-color: $white !default;
+$dropdown-menu-border-size: $border-size !default;
+$dropdown-menu-border-color: $border-color !default;
+$dropdown-menu-border-radius: $border-radius !default;
+
+$dropdown-item-padding-x: $dropdown-padding-x !default;
+$dropdown-item-padding-y: $spacing / 4 !default;
+$dropdown-item-font-weight: map-get($font-weights, normal) !default;
+$dropdown-item-color: $dropdown-menu-color !default;
+$dropdown-item-focus-background-color: fade($black, .1) !default;
+$dropdown-item-active-background-color: $link-color !default;
+$dropdown-item-active-color: text-color($dropdown-item-active-background-color) !default;
+$dropdown-item-active-focus-background-color: tint($dropdown-item-active-background-color, 20%) !default;
+$dropdown-item-disabled-opacity: $disabled-opacity !default;
+
+$dropdown-header-padding-x: $dropdown-padding-x !default;
+$dropdown-header-padding-y: $dropdown-padding-y !default;
+$dropdown-header-font-size: $font-size-sm !default;
+$dropdown-header-color: map-get($color-variants, dark) !default;
+
+$dropdown-divider-margin-y: $dropdown-padding-y !default;
+$dropdown-divider-border-size: $border-size !default;
+$dropdown-divider-border-color: $border-color !default;
+
+$dropdown-item-text-padding-x: $dropdown-padding-x !default;
+$dropdown-item-text-padding-y: $dropdown-item-padding-y !default;
+$dropdown-item-text-color: $dropdown-menu-color !default;
+
+$dropdown-menu-dark-color: map-get($color-variants, light) !default;
+$dropdown-menu-dark-background-color: map-get($color-variants, dark) !default;
+$dropdown-menu-dark-item-color: $dropdown-menu-dark-color !default;
+$dropdown-menu-dark-item-focus-background-color: fade($white, .1) !default;
+$dropdown-menu-dark-header-color: $gray-light !default;
+$dropdown-menu-dark-item-text-color: $dropdown-menu-dark-color !default;
+
+$dropdown-toggle-margin-left: $spacing / 2 !default;
+$dropdown-toggle-arrow-up: $arrow-up !default;
+$dropdown-toggle-arrow-right: $arrow-right !default;
+$dropdown-toggle-arrow-down: $arrow-down !default;
+$dropdown-toggle-arrow-left: $arrow-left !default;
+
+// hero
+$hero-padding-x: $spacing * 1.5 !default;
+$hero-padding-y: $spacing * 2.5 !default;
+$hero-margin-bottom: $spacing !default;
+$hero-border-size: $border-size !default;
+$hero-border-color: $border-color !default;
+$hero-border-radius: 2rem !default;
+
+// list group
+$list-group-variants: $color-variants !default;
+
+$list-group-border-size: $border-size !default;
+$list-group-border-color: $border-color !default;
+$list-group-border-radius: $border-radius !default;
+
+$list-group-item-action-color: $text-color !default;
+$list-group-item-action-focus-background-color: tint($black, 90%) !default;
+$list-group-item-action-focus-box-shadow: $shadow-sm !default;
+
+$list-group-item-padding-x: $spacing !default;
+$list-group-item-padding-y: $spacing / 2 !default;
+$list-group-item-color: $text-color !default;
+$list-group-item-disabled-color: map-get($color-variants, secondary) !default;
+$list-group-item-active-background-color: $link-color !default;
+$list-group-item-active-color: text-color($list-group-item-active-background-color) !default;
+$list-group-item-action-active-focus-background-color: tint($list-group-item-active-background-color, 30%) !default;
+
+$list-group-item-background-color-tint: 70% !default;
+$list-group-item-focus-background-color-tint: 30% !default;
+$list-group-item-focus-color-shade: 35% !default;
+
+// modal
+$modal-sm-max-width: 300px !default;
+$modal-md-max-width: 500px !default;
+$modal-lg-max-width: 800px !default;
+$modal-xl-max-width: 1140px !default;
+
+$modal-md-dialog-margin-y: $spacing * 2 !default;
+
+$modal-padding-x: $spacing !default;
+$modal-padding-y: $spacing !default;
+
+$modal-dialog-margin-x: $spacing / 2 !default;
+$modal-dialog-margin-y: $spacing / 2 !default;
+$modal-dialog-scrollable-gap: $spacing !default;
+$modal-dialog-centered-gap: $spacing !default;
+
+$modal-content-color: $text-color !default;
+$modal-content-background-color: $white !default;
+$modal-content-border-size: $border-size !default;
+$modal-content-border-color: $border-color !default;
+$modal-content-border-radius: $border-radius !default;
+$modal-content-box-shadow: $shadow-lg !default;
+
+$modal-backdrop-background-color: fade($black, .5) !default;
+
+$modal-header-padding-x: $modal-padding-x !default;
+$modal-header-padding-y: $modal-padding-y !default;
+$modal-title-line-height: map-get($line-heights, base) !default;
+$modal-body-padding-x: $modal-padding-x !default;
+$modal-body-padding-y: $modal-padding-y !default;
+$modal-footer-padding-x: $modal-padding-x !default;
+$modal-footer-padding-y: $modal-padding-y !default;
+$modal-footer-child-margin-y: $spacing / 4 !default;
+$modal-footer-child-margin-x: $spacing / 4 !default;
+
+// nav
+$nav-link-padding-x: $spacing !default;
+$nav-link-padding-y: $spacing / 2 !default;
+$nav-link-border-radius: $border-radius !default;
+$nav-link-focus-background-color: tint($link-color, 90%) !default;
+$nav-link-disabled-opacity: $disabled-opacity !default;
+
+$nav-tabs-border-size: $border-size !default;
+$nav-tabs-border-color: $border-color !default;
+$nav-tabs-nav-link-active-color: $text-color !default;
+$nav-tabs-nav-link-active-background-color: $white !default;
+$nav-tabs-nav-link-active-border-color: $link-color !default;
+
+$nav-pills-nav-link-active-background-color: $link-color !default;
+$nav-pills-nav-link-active-focus-background-color: tint($nav-pills-nav-link-active-background-color, 30%) !default;
+
+$navbar-nav-scroll-height: 75vh !default;
+
+// navbar
+$navbar-padding-x: $spacing / 2 !default;
+$navbar-padding-y: $spacing / 2 !default;
+
+$navbar-nav-link-padding-x: $navbar-padding-x !default;
+$navbar-nav-link-disabled-opacity: $disabled-opacity !default;
+$navbar-brand-padding-y: $spacing / 4 !default;
+$navbar-brand-margin-right: $spacing !default;
+$navbar-brand-font-size: $font-size-lg !default;
+$navbar-text-padding-y: $navbar-padding-y !default;
+
+$navbar-toggler-padding-x: $navbar-padding-x !default;
+$navbar-toggler-padding-y: $spacing / 4 !default;
+$navbar-toggler-font-size: $font-size-lg !default;
+$navbar-toggler-border-size: $border-size !default;
+$navbar-toggler-border-radius: $border-radius !default;
+$navbar-toggler-icon: "\2630" !default;
+
+$navbar-light-color: $black !default;
+$navbar-light-navbar-brand-color: $navbar-light-color !default;
+$navbar-light-nav-link-color: fade($navbar-light-color, .7) !default;
+$navbar-light-nav-link-hover-color: fade($navbar-light-color, .9) !default;
+$navbar-light-nav-link-focus-color: $navbar-light-color !default;
+$navbar-light-nav-link-focus-background-color: fade($navbar-light-color, .1) !default;
+$navbar-light-nav-link-active-color: $navbar-light-color !default;
+$navbar-light-nav-text-color: map-get($color-variants, dark) !default;
+$navbar-light-navbar-toggler-color: $navbar-light-color !default;
+$navbar-light-navbar-toggler-focus-background-color: $navbar-light-nav-link-focus-background-color !default;
+
+$navbar-dark-color: $white !default;
+$navbar-dark-navbar-brand-color: $navbar-dark-color !default;
+$navbar-dark-nav-link-color: fade($navbar-dark-color, .7) !default;
+$navbar-dark-nav-link-hover-color: fade($navbar-dark-color, .9) !default;
+$navbar-dark-nav-link-focus-color: $navbar-dark-color !default;
+$navbar-dark-nav-link-focus-background-color: fade($navbar-dark-color, .1) !default;
+$navbar-dark-nav-link-active-color: $navbar-dark-color !default;
+$navbar-dark-nav-text-color: map-get($color-variants, light) !default;
+$navbar-dark-navbar-toggler-color: $navbar-dark-color !default;
+$navbar-dark-navbar-toggler-focus-background-color: $navbar-dark-nav-link-focus-background-color !default;
+
+// offcanvas
+$offcanvas-horizontal-width: 400px !default;
+$offcanvas-vertical-height: 30vh !default;
+
+$offcanvas-padding-x: $spacing;
+$offcanvas-padding-y: $spacing;
+$offcanvas-color: $text-color;
+$offcanvas-background-color: $white;
+$offcanvas-border-size: $border-size;
+$offcanvas-border-color: $border-color;
+
+$offcanvas-backdrop-background-color: fade($black, .5);
+
+$offcanvas-header-padding-x: $offcanvas-padding-x;
+$offcanvas-header-padding-y: $offcanvas-padding-y;
+$offcanvas-title-line-height: map-get($line-heights, base);
+$offcanvas-body-padding-x: $offcanvas-padding-x;
+$offcanvas-body-padding-y: $offcanvas-padding-y;
+
+// pagination
+$pagination-border-radius: $border-radius !default;
+
+$page-link-padding-x: $spacing / 2 !default;
+$page-link-padding-y: $spacing / 2 !default;
+$page-link-background-color: map-get($color-variants, secondary) !default;
+$page-link-color: text-color($page-link-background-color) !default;
+$page-link-border-size: $border-size !default;
+$page-link-border-color: $border-color !default;
+$page-link-hover-background-color: shade($page-link-background-color, 20%) !default;
+$page-link-focus-background-color: tint($page-link-background-color, 20%) !default;
+$page-link-focus-box-shadow: $shadow-sm !default;
+$page-link-active-box-shadow: $shadow !default;
+
+$page-item-active-background-color: shade($page-link-background-color, 30%) !default;
+$page-item-active-focus-background-color: shade($page-link-background-color, 20%) !default;
+$page-item-disabled-opacity: $disabled-opacity !default;
+
+$pagination-sm-padding-x: $spacing / 2 !default;
+$pagination-sm-padding-y: $spacing / 4 !default;
+$pagination-sm-font-size: $font-size-sm !default;
+$pagination-sm-line-height: map-get($line-heights, base) !default;
+
+$pagination-lg-padding-x: $spacing * 1.5 !default;
+$pagination-lg-padding-y: $spacing * .75 !default;
+$pagination-lg-font-size: $font-size-lg !default;
+$pagination-lg-line-height: map-get($line-heights, base) !default;
+
+// popover
+$popover-max-width: 276px !default;
+$popover-padding-x: $spacing / 2 !default;
+$popover-padding-y: $spacing !default;
+$popover-font-size: $font-size-sm !default;
+$popover-background-color: $white !default;
+$popover-border-size: $border-size !default;
+$popover-border-color: $border-color !default;
+$popover-border-radius: $border-radius !default;
+$popover-arrow-size: 1.2rem !default;
+
+$popover-header-padding-x: $popover-padding-y !default;
+$popover-header-padding-y: $popover-padding-x !default;
+$popover-header-font-size: $font-size !default;
+$popover-header-background-color: fade($black, .05) !default;
+
+$popover-body-padding-x: $popover-padding-y !default;
+$popover-body-padding-y: $popover-padding-x !default;
+$popover-body-color: map-get($color-variants, dark) !default;
+
+// progress
+$progress-height: 1rem !default;
+$progress-font-size: $font-size-xs !default;
+$progress-background-color: map-get($color-variants, light) !default;
+$progress-border-radius: $border-radius !default;
+$progress-bar-color: $white !default;
+$progress-bar-background-color: map-get($color-variants, primary) !default;
+
+$progress-bar-striped-background-image: linear-gradient(-45deg, transparent 50%, fade($white, .15) 50%, fade($white, .15) 70%, transparent 70%) !default;
+$progress-bar-striped-background-size-x: 2rem !default;
+$progress-bar-striped-background-size-y: 1rem !default;
+
+$progress-bar-vertical-width: 1rem !default;
+$progress-bar-vertical-height: 200px !default;
+
+// spinner
+$spinner-size: 2em !default;
+$spinner-sm-size: 1em !default;
+
+$spinner-border-line-height: map-get($line-heights, base) !default;
+$spinner-border-width: .25em !default;
+$spinner-border-sm-width: .2em !default;
+
+// toast
+$toast-width: 350px !default;
+$toast-padding-x: $spacing * .75;
+$toast-padding-y: $spacing * .75;
+$toast-margin-bottom: $spacing !default;
+$toast-font-size: $font-size-sm !default;
+$toast-color: $text-color !default;
+$toast-background-color: fade($white, .85) !default;
+$toast-border-size: $border-size !default;
+$toast-border-color: $border-color !default;
+$toast-border-radius: $border-radius !default;
+$toast-backdrop-filter: blur(10px) !default;
+
+$toast-header-padding-x: $toast-padding-x !default;
+$toast-header-padding-y: $spacing / 2 !default;
+$toast-header-color: map-get($color-variants, dark) !default;
+$toast-header-background-color: $toast-background-color !default;
+$toast-body-padding-x: $toast-padding-x !default;
+$toast-body-padding-y: $toast-padding-y !default;
+
+// tooltip
+$tooltip-font-size: $font-size-sm !default;
+$tooltip-show-opacity: .9 !default;
+$tooltip-arrow-size: .8rem !default;
+
+$tooltip-inner-max-width: 200px !default;
+$tooltip-inner-padding-x: $spacing / 2 !default;
+$tooltip-inner-padding-y: $spacing / 4 !default;
+$tooltip-inner-color: $white !default;
+$tooltip-inner-background-color: $black !default;
+$tooltip-inner-border-radius: $border-radius !default;

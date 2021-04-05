@@ -1,0 +1,21 @@
+// Get the breakpoint infix.
+// @param $name
+@function breakpoint-infix($name) {
+    @return if(breakpoint-min($name) == null, "", "-#{$name}");
+}
+
+// Get the maximum breakpoint width (-.02px).
+// @param $name
+@function breakpoint-max($name) {
+    $max: map-get($breakpoints, $name);
+
+    @return if($max and $max > 0, $max - .02, null);
+}
+
+// Get the minimum breakpoint width.
+// @param $name
+@function breakpoint-min($name) {
+    $min: map-get($breakpoints, $name);
+
+    @return if($min != 0, $min, null);
+}

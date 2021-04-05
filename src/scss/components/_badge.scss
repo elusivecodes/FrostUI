@@ -1,0 +1,25 @@
+.badge {
+    display: inline-block;
+    padding: $badge-padding-y $badge-padding-x;
+    font-size: $badge-font-size;
+    font-weight: $badge-font-weight;
+    line-height: $badge-line-height;
+    color: $badge-color;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    @include border-radius($badge-border-radius);
+
+    &.rounded-pill {
+        vertical-align: top;
+    }
+}
+
+.badge:empty {
+    display: none;
+}
+
+.btn .badge {
+    position: relative;
+    top: -$btn-border-size;
+}

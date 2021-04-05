@@ -4,7 +4,7 @@
 
 .figure-img {
     margin-bottom: $figure-img-margin-bottom;
-    line-height: 1;
+    line-height: map-get($line-heights, 1);
 }
 
 .figure-caption {

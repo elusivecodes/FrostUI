@@ -1,0 +1,131 @@
+// address
+$address-margin-bottom: $spacing !default;
+
+// blockquote
+$blockquote-margin-bottom: $spacing !default;
+$blockquote-font-size: $font-size-lg !default;
+$blockquote-footer-margin-top: -$spacing !default;
+$blockquote-footer-font-size: 80% !default;
+$blockquote-footer-color: $gray-dark !default;
+$blockquote-footer-prefix: "\2014 \00A0" !default;
+
+// caption
+$caption-padding-y: $spacing / 2 !default;
+$caption-color: tint($text-color, 15%) !default;
+
+// dd
+$dd-margin-bottom: $spacing / 2 !default;
+
+// dl
+$dl-margin-bottom: $spacing !default;
+
+// dt
+$dt-font-weight: map-get($font-weights, bolder) !default;
+
+// figure
+$figure-margin-bottom: $spacing !default;
+$figure-img-margin-bottom: $spacing / 2 !default;
+$figure-caption-font-size: 90% !default;
+$figure-caption-color: map-get($color-variants, secondary) !default;
+
+// heading
+$h-margin-bottom: $spacing / 2 !default;
+$h-font-weight: map-get($font-weights, bold) !default;
+$h-line-height: 1.2 !default;
+$h1-font-size: 3 !default;
+$h2-font-size: 2.5 !default;
+$h3-font-size: 2 !default;
+$h4-font-size: 1.5 !default;
+$h5-font-size: 1.25 !default;
+$h6-font-size: 1 !default;
+
+$heading-font-weight: map-get($font-weights, light) !default;
+$heading-line-height: 1.2 !default;
+$heading-1-font-size: 5 !default;
+$heading-2-font-size: 4.5 !default;
+$heading-3-font-size: 3.5 !default;
+$heading-4-font-size: 2.5 !default;
+
+// horizontal rule
+$hr-margin-y: $spacing / 2 !default;
+$hr-border-size: $border-size !default;
+$hr-border-color: $border-color !default;
+
+// image
+$img-thumbnail-padding: $spacing / 4 !default;
+$img-thumbnail-background-color: $white !default;
+$img-thumbnail-border-size: $border-size !default;
+$img-thumbnail-border-color: $border-color !default;
+$img-thumbnail-border-radius: $border-radius !default;
+
+// lead
+$lead-font-size: 1.25 !default;
+
+// legend
+$legend-margin-bottom: $spacing / 2 !default;
+$legend-font-size: $font-size-lg !default;
+
+// link
+$link-hover-color-shade: 20% !default;
+$link-focus-color-tint: 20% !default;
+
+$link-hover-color: shade($link-color, $link-hover-color-shade) !default;
+$link-focus-color: tint($link-color, $link-focus-color-tint) !default;
+
+// list
+$list-margin-bottom: $spacing !default;
+$list-margin-left: $spacing !default;
+$list-inline-item-margin-right: $spacing / 2 !default;
+
+// paragraph
+$p-margin-bottom: $spacing !default;
+
+// pre
+$pre-margin-bottom: $spacing !default;
+
+// small
+$small-font-size: 75% !default;
+
+// sub
+$sub-bottom: -.25em !default;
+
+// sup
+$sup-top: -.25em !default;
+
+// table
+$table-variants: (
+    active: $link-color,
+    primary: map-get($color-variants, primary),
+    secondary: map-get($color-variants, secondary),
+    success: map-get($color-variants, success),
+    info: map-get($color-variants, info),
+    warning: map-get($color-variants, warning),
+    danger: map-get($color-variants, danger)
+) !default;
+
+$table-margin-bottom: $spacing !default;
+$table-border-size: $border-size !default;
+$table-border-color: $gray-light !default;
+$table-cell-padding-x: $spacing !default;
+$table-cell-padding-y: $spacing / 2 !default;
+$table-hover-color: map-get($color-variants, dark) !default;
+$table-hover-background-color: fade($black, .05) !default;
+$table-striped-background-color: fade(map-get($color-variants, dark), .1) !default;
+
+$table-sm-cell-padding-x: $spacing / 3 !default;
+$table-sm-cell-padding-y: $spacing / 4 !default;
+
+$table-dark-color: $white !default;
+$table-dark-background-color: map-get($color-variants, dark) !default;
+$table-dark-border-color: map-get($color-variants, secondary) !default;
+$table-dark-hover-background-color: fade($white, .05) !default;
+$table-dark-striped-background-color: fade(map-get($color-variants, light), .1) !default;
+
+$thead-dark-color: $white !default;
+$thead-dark-background-color: map-get($color-variants, dark) !default;
+$thead-light-color: map-get($color-variants, dark) !default;
+$thead-light-background-color: map-get($color-variants, light) !default;
+
+$table-background-color-tint: 70% !default;
+$table-hover-color-shade: 40% !default;
+$table-border-color-tint: 35% !default;

@@ -1,0 +1,244 @@
+// alignment
+@include utility(vertical-align, baseline top middle bottom text-top text-bottom, align);
+@include utility(text-align, (
+    start: left,
+    center: center,
+    end: right,
+    justify: justify
+), text, true);
+
+// border
+@include utility(border, (
+    null: $border-size $border-style $border-color,
+    0: 0
+));
+@include utility(border-top, (
+    null: $border-size $border-style $border-color,
+    0: 0
+));
+@include utility(border-right, (
+    null: $border-size $border-style $border-color,
+    0: 0
+), border-end);
+@include utility(border-bottom, (
+    null: $border-size $border-style $border-color,
+    0: 0
+));
+@include utility(border-left, (
+    null: $border-size $border-style $border-color,
+    0: 0
+), border-start);
+@include utility(border-width, (
+    1: $border-size,
+    2: $border-size * 2,
+    3: $border-size * 3
+), border);
+@include utility(border-radius, (
+    null: $border-radius,
+    0: 0,
+    1: $border-radius-base,
+    2: $border-radius-base * 2,
+    3: $border-radius-base * 3,
+    circle: $rounded-circle-border-radius,
+    pill: $rounded-pill-border-radius
+), rounded);
+@include utility(border-top-left-radius border-top-right-radius, (
+    null: $border-radius
+), rounded-top);
+@include utility(border-top-right-radius border-bottom-right-radius, (
+    null: $border-radius
+), rounded-end);
+@include utility(border-bottom-left-radius border-bottom-right-radius, (
+    null: $border-radius
+), rounded-bottom);
+@include utility(border-top-left-radius border-bottom-left-radius, (
+    null: $border-radius
+), rounded-start);
+
+// color
+@include utility(color, map-merge(
+    $color-variants,
+    (
+        white: $white,
+        body: $text-color,
+        muted: $text-muted-color,
+        black-50: fade($black, .5),
+        white-50: fade($white, .5),
+        reset: inherit
+    )
+), text);
+@include utility(border-color, map-merge(
+    $color-variants,
+    (
+        white: $white
+    )
+), border);
+@include utility(background-color, map-merge(
+    $color-variants,
+    (
+        body: $body-background-color,
+        white: $white,
+        transparent: transparent
+    )
+), bg);
+@include utility(background-image, (
+    gradient: $bg-gradient-background-image
+), bg);
+
+// display
+@include utility(display, inline inline-block block table table-cell table-row flex inline-flex grid none, d, true, true);
+
+// flex
+@include utility(flex-direction, row column row-reverse column-reverse, flex, true);
+@include utility(flex-wrap, wrap no-wrap wrap-reverse, flex, true);
+@include utility(justify-content, (
+    start: flex-start,
+    end: flex-end,
+    center: center,
+    between: space-between,
+    around: space-around,
+    evenly: space-evenly
+), $responsive: true);
+@include utility(align-items, (
+    start: flex-start,
+    end: flex-end,
+    center: center,
+    baseline: baseline,
+    stretch: stretch
+), $responsive: true);
+@include utility(align-content, (
+    start: flex-start,
+    end: flex-end,
+    center: center,
+    between: space-between,
+    around: space-around,
+    stretch: stretch
+), $responsive: true);
+@include utility(align-self, (
+    start: flex-start,
+    end: flex-end,
+    center: center,
+    baseline: baseline,
+    stretch: stretch
+), $responsive: true);
+@include utility(flex, (
+    fill: 1 1 auto
+), $responsive: true);
+@include utility(flex-grow, (
+    grow-0: 0,
+    grow-1: 1
+), flex, true);
+@include utility(flex-shrink, (
+    shrink-0: 0,
+    shrink-1: 1
+), flex, true);
+@include utility(order, (
+    first: -1,
+    0: 0,
+    1: 1,
+    2: 2,
+    3: 3,
+    4: 4,
+    5: 5,
+    last: 6
+), $responsive: true);
+
+// float
+@include utility(float, (
+    start: left,
+    end: right,
+    none: none
+), $responsive: true);
+
+// interaction
+@include utility(user-select, auto all none);
+@include utility(pointer-events, auto none, pe);
+
+// overflow
+@include utility(overflow, auto hidden visible scroll);
+
+// position
+@include utility(position, static relative absolute fixed sticky);
+@include utility(top, $positions);
+@include utility(right, $positions, end);
+@include utility(bottom, $positions);
+@include utility(left, $positions, start);
+@include utility(transform, (
+    null: translate(-50%, -50%),
+    x: translateX(-50%),
+    y: translateY(-50%)
+), translate-middle);
+
+// shadow
+@include utility(box-shadow, (
+    null: $shadow,
+    xs: $shadow-xs,
+    sm: $shadow-sm,
+    lg: $shadow-lg,
+    none: none
+), shadow);
+
+// sizing
+@include utility(width, $sizes, w);
+@include utility(max-width, (
+    100: 100%
+), mw);
+@include utility(width, (
+    100: 100vw
+), vw);
+@include utility(min-width, (
+    100: 100vw
+), min-vw);
+@include utility(height, $sizes, h);
+@include utility(max-height, (
+    100: 100%
+), mh);
+@include utility(height, (
+    100: 100vw
+), vh);
+@include utility(min-height, (
+    100: 100vw
+), min-vh);
+
+// spacing
+@include utility(padding, $paddings, p, true, true);
+@include utility(padding-top padding-bottom, $paddings, py, true, true);
+@include utility(padding-left padding-right, $paddings, px, true, true);
+@include utility(padding, $paddings, p, true, true);
+@include utility(padding-top, $paddings, pt, true, true);
+@include utility(padding-right, $paddings, pe, true, true);
+@include utility(padding-bottom, $paddings, pb, true, true);
+@include utility(padding-left, $paddings, ps, true, true);
+@include utility(margin, $margins, m, true, true);
+@include utility(margin-top margin-bottom, $margins, my, true, true);
+@include utility(margin-left margin-right, $margins, mx, true, true);
+@include utility(margin, $margins, m, true, true);
+@include utility(margin-top, $margins, mt, true, true);
+@include utility(margin-right, $margins, me, true, true);
+@include utility(margin-bottom, $margins, mb, true, true);
+@include utility(margin-left, $margins, ms, true, true);
+@include utility(gap, $gaps, gap, true, true);
+
+// text
+@include utility(white-space, (
+    wrap: normal,
+    nowrap: nowrap
+), text);
+@include utility(word-break overflow-wrap, (
+    break: break-word
+), text);
+@include utility(text-transform, lowercase uppercase capitalize, text);
+@include utility(font-weight, $font-weights, fw);
+@include utility(font-style, italic normal, fst);
+@include utility(font-size, $font-sizes, fs);
+@include utility(line-height, $line-heights, lh);
+@include utility(font-family, (
+    monospace: $font-family-mono
+), font);
+@include utility(text-decoration, underline line-through none);
+
+// visibility
+@include utility(visibility, (
+    visible: visible,
+    invisible: hidden
+), null);

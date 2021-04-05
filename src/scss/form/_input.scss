@@ -1,0 +1,137 @@
+.form-input {
+    position: relative;
+    width: 100%;
+}
+
+.input-filled,
+.input-outline {
+    display: block;
+    width: 100%;
+    min-height: calc(#{$input-font-size} + #{$input-padding-y * 2} + #{$input-border-size * 2});
+    padding: $input-padding-y $input-padding-x;
+    font-size: $input-font-size;
+    line-height: $input-line-height;
+
+    &::placeholder {
+        color: $input-placeholder-color;
+    }
+
+    &:hover {
+        z-index: 1;
+    }
+
+    &:focus {
+        z-index: 2;
+    }
+
+    &:active,
+    &.active {
+        z-index: 3;
+    }
+
+    &:disabled,
+    &.disabled {
+        pointer-events: none;
+
+        &,
+        &:hover {
+            background-color: $input-disabled-background-color;
+        }
+    }
+
+    &[readonly],
+    &.readonly {
+        color: $input-placeholder-color;
+    }
+
+    @at-root #{selector-append("select", &)} {
+
+        &:not([multiple]) {
+            padding-right: calc(#{$input-padding-x * 2} + #{$input-select-arrow-size});
+            background-image: $input-select-arrow-background-image;
+            background-repeat: no-repeat;
+            background-position: right $input-padding-x center;
+            background-size: $input-select-arrow-size #{$input-select-arrow-size * .75};
+            appearance: none;
+        }
+
+        &[multiple] {
+            padding: 0;
+
+            option {
+                padding: $input-padding-y $input-padding-x;
+            }
+        }
+    }
+}
+
+.input-filled {
+    background-color: var(--ui-input-filled-bg, #{$input-filled-background-color});
+    border: 0;
+    border-bottom: $input-border-size $border-style var(--ui-input-border-color, #{input-filled-border-color});
+
+    &:hover {
+        background-color: var(--ui-input-filled-hover-bg, #{$input-filled-hover-background-color});
+    }
+
+    &:focus,
+    &.focus {
+        background-color: var(--ui-input-filled-focus-bg, #{$input-filled-focus-background-color});
+    }
+}
+
+.input-outline {
+    background-color: $input-outline-background-color;
+    border: $input-border-size $border-style var(--ui-input-border-color, #{$input-border-color});
+    @include border-radius($input-outline-border-radius);
+
+    &:hover {
+        border-color: $input-outline-hover-border-color;
+    }
+
+    &:focus,
+    &.focus {
+        border-color: $input-outline-focus-border-color;
+        box-shadow: 0 0 0 $input-border-size $input-outline-focus-border-color;
+    }
+}
+
+.input-sm {
+    padding: $input-sm-padding-y $input-sm-padding-x;
+    font-size: $input-sm-font-size;
+
+    @at-root select#{&}[multiple] option {
+        padding: $input-sm-padding-y $input-sm-padding-x;
+    }
+}
+
+.input-lg {
+    padding: $input-lg-padding-y $input-lg-padding-x;
+    font-size: $input-lg-font-size;
+
+    @at-root select#{&}[multiple] option {
+        padding: $input-lg-padding-y $input-lg-padding-x;
+    }
+}
+
+.ripple-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: $input-border-size * 2;
+    background-color: $ripple-line-background-color;
+    opacity: 0;
+    transition: all $transition-time $transition-type;
+    transition-property: transform, opacity;
+    transform: scaleX(0);
+
+    @at-root {
+        .input-filled:focus ~ #{&},
+        .input-filled.focus ~ #{&} {
+            opacity: 1;
+            transform: scaleX(1);
+        }
+    }
+}

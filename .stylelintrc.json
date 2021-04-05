@@ -1,0 +1,18 @@
+{
+    "extends": "stylelint-config-twbs-bootstrap/scss",
+    "rules": {
+        "declaration-no-important": null,
+        "indentation": 4,
+        "scss/at-function-named-arguments": null,
+        "selector-max-universal": 2,
+        "selector-no-qualifying-type": [
+            true,
+            {
+                "ignore": [
+                    "attribute"
+                ]
+            }
+        ],
+        "string-quotes": "double"
+    }
+}

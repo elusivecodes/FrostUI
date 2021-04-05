@@ -1,8 +1,10 @@
+// Reset the text styles.
 @mixin reset-text() {
     font-family: $font-family;
+    font-size: $font-size-sm;
     font-style: normal;
-    font-weight: $font-weight;
-    line-height: $line-height;
+    font-weight: 400;
+    line-height: 1.5;
     text-align: left;
     text-decoration: none;
     text-shadow: none;
@@ -12,5 +14,4 @@
     word-spacing: normal;
     white-space: normal;
     line-break: auto;
-    font-size: $font-size-sm;
 }

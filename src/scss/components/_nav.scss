@@ -1,0 +1,112 @@
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+    margin-left: 0;
+    list-style: none;
+}
+
+.nav-link {
+    display: block;
+    padding: $nav-link-padding-y $nav-link-padding-x;
+    text-decoration: none;
+    @include border-radius($nav-link-border-radius);
+    transition: all $transition-time $transition-type;
+    transition-property: color, background-color, border-color;
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    &:focus {
+        text-decoration: none;
+        background-color: $nav-link-focus-background-color;
+    }
+
+    &.disabled {
+        pointer-events: none;
+        cursor: default;
+        opacity: $nav-link-disabled-opacity;
+    }
+}
+
+.nav-tabs {
+    border-bottom: $nav-tabs-border-size $border-style $nav-tabs-border-color;
+
+    .nav-link {
+        margin-bottom: -$nav-tabs-border-size;
+        background-color: transparent;
+        border: $nav-tabs-border-size $border-style transparent;
+        @include border-bottom-radius(0);
+
+        &:hover,
+        &:focus {
+            border-color: $nav-tabs-border-color;
+        }
+
+        &.disabled {
+            border-color: transparent;
+        }
+    }
+
+    .nav-link.active,
+    .nav-item.show .nav-link {
+        color: $nav-tabs-nav-link-active-color;
+        background-color: $nav-tabs-nav-link-active-background-color;
+        border-color: $nav-tabs-border-color $nav-tabs-border-color $nav-tabs-nav-link-active-background-color;
+
+        &:focus {
+            background-color: $nav-link-focus-background-color;
+            border-color: $nav-tabs-nav-link-active-border-color $nav-tabs-nav-link-active-border-color $nav-tabs-nav-link-active-background-color;
+        }
+    }
+
+    .dropdown-menu {
+        @include border-top-radius(0);
+    }
+}
+
+.nav-pills {
+
+    .nav-link.active,
+    .nav-item.show .nav-link {
+        color: text-color($nav-pills-nav-link-active-background-color);
+        background-color: $nav-pills-nav-link-active-background-color;
+
+        &:focus {
+            background-color: $nav-pills-nav-link-active-focus-background-color;
+        }
+    }
+}
+
+.nav-fill {
+    > .nav-link,
+    .nav-item {
+        flex: 1 1 auto;
+        text-align: center;
+    }
+}
+
+.nav-justified {
+    > .nav-link,
+    .nav-item {
+        flex-basis: 0;
+        flex-grow: 1;
+        text-align: center;
+    }
+}
+
+.navbar-nav-scroll {
+    max-height: $navbar-nav-scroll-height;
+    overflow-y: auto;
+}
+
+.tab-content {
+    > .tab-pane {
+        display: none;
+
+        &.active {
+            display: block;
+        }
+    }
+}

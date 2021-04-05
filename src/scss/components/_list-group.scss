@@ -1,0 +1,156 @@
+.list-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+    margin-left: 0;
+    @include border-radius($list-group-border-radius);
+}
+
+.list-group-item-action {
+    width: 100%;
+    text-align: inherit;
+    transition: all $transition-time $transition-type;
+    transition-property: color, background-color, box-shadow;
+
+    &,
+    &:hover,
+    &:focus {
+        color: var(--ui-list-group-item-color, #{$list-group-item-action-color});
+        text-decoration: none;
+    }
+
+    &:hover {
+        z-index: 1;
+        color: var(--ui-list-group-item-focus-color);
+        background-color: var(--ui-list-group-item-hover-bg, #{$list-group-item-action-focus-background-color});
+    }
+
+    &:focus {
+        z-index: 2;
+        color: var(--ui-list-group-item-focus-color);
+        background-color: var(--ui-list-group-item-focus-bg, #{$list-group-item-action-focus-background-color});
+        box-shadow: $list-group-item-action-focus-box-shadow;
+    }
+
+    &:active,
+    &.active {
+        z-index: 3;
+    }
+}
+
+.list-group-item {
+    --ui-list-group-item-color: #{$list-group-item-color};
+    position: relative;
+    display: block;
+    padding: $list-group-item-padding-y $list-group-item-padding-x;
+    color: var(--ui-list-group-item-color);
+    text-decoration: none;
+    background-color: var(--ui-list-group-item-bg);
+    border: $list-group-border-size $border-style $list-group-border-color;
+
+    &:first-child {
+        @include border-top-radius(inherit);
+    }
+
+    &:last-child {
+        @include border-bottom-radius(inherit);
+    }
+
+    &:disabled,
+    &.disabled {
+        --ui-list-group-item-color: #{$list-group-item-disabled-color};
+        pointer-events: none;
+    }
+
+    &.active {
+        --ui-list-group-item-color: #{$list-group-item-active-color};
+        --ui-list-group-item-bg: #{$list-group-item-active-background-color};
+        --ui-list-group-item-hover-bg: #{$list-group-item-active-background-color};
+        --ui-list-group-item-focus-bg: #{$list-group-item-action-active-focus-background-color};
+        --ui-list-group-item-focus-color: #{$list-group-item-active-color};
+        z-index: 2;
+    }
+
+    & + & {
+        border-top-width: 0;
+
+        &.active {
+            margin-top: -$list-group-border-size;
+            border-top-width: $list-group-border-size;
+        }
+    }
+}
+
+.list-group-flush {
+    @include border-radius(0);
+
+    > .list-group-item {
+        border-width: 0 0 $list-group-border-size;
+
+        &:last-child {
+            border-bottom-width: 0;
+        }
+    }
+}
+
+.list-group-numbered {
+    list-style-type: none;
+    counter-reset: section;
+
+    > li::before {
+        content: counters(section, ".") ". ";
+        counter-increment: section;
+    }
+}
+
+@each $name, $color in $list-group-variants {
+    .list-group-item-#{$name} {
+        $background-color: tint($color, $list-group-item-background-color-tint);
+        $text-color: text-color-contrast($background-color, $color);
+        $focus-background-color: tint($background-color, $list-group-item-focus-background-color-tint);
+        $focus-color: shade($text-color, $list-group-item-focus-color-shade);
+
+        --ui-list-group-item-bg: #{$background-color};
+        --ui-list-group-item-color: #{$text-color};
+        --ui-list-group-item-hover-bg: #{$focus-background-color};
+        --ui-list-group-item-focus-bg: #{$focus-background-color};
+        --ui-list-group-item-focus-color: #{$focus-color};
+    }
+}
+
+@each $breakpoint in map-keys($breakpoints) {
+    $infix: breakpoint-infix($breakpoint);
+
+    @include media-breakpoint-up($breakpoint) {
+        .list-group-horizontal#{$infix} {
+            flex-direction: row;
+
+            .list-group-item-action {
+                width: auto;
+            }
+
+            .list-group-item {
+
+                &:first-child {
+                    @include border-radius($list-group-border-radius 0 0 $list-group-border-radius);
+                }
+
+                &:last-child {
+                    @include border-radius(0 $list-group-border-radius $list-group-border-radius 0);
+                }
+
+
+                + .list-group-item {
+                    border-top-width: $list-group-border-size;
+                    border-left-width: 0;
+                }
+
+                &.active {
+                    margin-top: 0;
+                    margin-left: -$list-group-border-size;
+                    border-left-width: $list-group-border-size;
+                }
+            }
+        }
+    }
+}

@@ -56,7 +56,7 @@ class Modal extends BaseComponent {
             }),
             dom.dropOut(this._dialog, {
                 duration: this._settings.duration,
-                direction: this._getDirection()
+                direction: 'top'
             }),
             dom.fadeOut(this._backdrop, {
                 duration: this._settings.duration
@@ -140,7 +140,7 @@ class Modal extends BaseComponent {
             }),
             dom.dropIn(this._dialog, {
                 duration: this._settings.duration,
-                direction: this._getDirection()
+                direction: 'top'
             }),
             dom.fadeIn(this._backdrop, {
                 duration: this._settings.duration

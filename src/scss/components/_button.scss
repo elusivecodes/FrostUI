@@ -1,0 +1,128 @@
+.btn {
+    display: inline-block;
+    padding: $btn-padding-y $btn-padding-x;
+    font-family: $btn-font-family;
+    font-size: $btn-font-size;
+    font-weight: $btn-font-weight;
+    line-height: $btn-line-height;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: var(--ui-btn-bg);
+    border: $btn-border-size $border-style var(--ui-btn-border, #{$btn-border-color});
+    @include border-radius($btn-border-radius);
+    transition: all $transition-time $transition-type;
+    transition-property: color, background-color, box-shadow;
+
+    &,
+    &:hover,
+    &:focus {
+        color: var(--ui-btn-color);
+        text-decoration: none;
+    }
+
+    @at-root {
+        .btn-check:checked + #{&}:focus,
+        .btn-check:checked:focus + #{&},
+        #{&}.active:focus,
+        #{&}:hover {
+            background-color: var(--ui-btn-hover-bg);
+        }
+
+        .btn-check:focus + #{&},
+        #{&}:focus {
+            background-color: var(--ui-btn-focus-bg);
+            box-shadow: $btn-focus-box-shadow;
+        }
+
+        .btn-check:checked + #{&},
+        #{&}.active {
+            color: var(--ui-btn-active-color, var(--ui-btn-color));
+            background-color: var(--ui-btn-active-bg);
+        }
+
+        .btn-check:checked + #{&},
+        .btn-check:active + #{&},
+        #{&}:active,
+        #{&}.active {
+            box-shadow: $btn-active-box-shadow;
+        }
+
+        #{&}:disabled,
+        #{&}.disabled,
+        fieldset:disabled #{&} {
+            pointer-events: none;
+            opacity: $btn-disabled-opacity;
+        }
+    }
+}
+
+.btn-lg {
+    padding: $btn-lg-padding-y $btn-lg-padding-x;
+    font-size: $btn-lg-font-size;
+}
+
+.btn-sm {
+    padding: $btn-sm-padding-y $btn-sm-padding-x;
+    font-size: $btn-sm-font-size;
+}
+
+.btn-link {
+    --ui-btn-color: #{$link-color};
+    --ui-btn-border: transparent;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+        text-decoration: underline;
+    }
+
+    &:hover {
+        --ui-btn-color: #{$link-hover-color};
+    }
+
+    &:focus {
+        --ui-btn-color: #{$link-focus-color};
+        box-shadow: none;
+    }
+
+    &:disabled,
+    &.disabled {
+        --ui-btn-color: #{$gray-dark};
+    }
+}
+
+@each $name, $color in $btn-variants {
+    .btn-#{$name} {
+        $text-color: text-color($color);
+        $hover-background-color: shade($color, $btn-hover-background-color-shade);
+        $focus-background-color: tint($color, $btn-focus-background-color-tint);
+        $active-background-color: shade($color, $btn-active-background-color-shade);
+        $ripple-background-color: fade($text-color, $btn-ripple-background-color-fade);
+
+        --ui-btn-bg: #{$color};
+        --ui-btn-color: #{$text-color};
+        --ui-btn-hover-bg: #{$hover-background-color};
+        --ui-btn-focus-bg: #{$focus-background-color};
+        --ui-btn-active-bg: #{$active-background-color};
+        --ui-ripple-bg: #{$ripple-background-color};
+    }
+
+    .btn-outline-#{$name} {
+        $hover-background-color: fade($color, $btn-outline-hover-background-color-fade);
+        $focus-background-color: fade($color, $btn-outline-focus-background-color-fade);
+        $active-color: shade($color, $btn-outline-active-color-shade);
+        $active-border: shade($color, $btn-outline-active-border-color-shade);
+        $ripple-background-color: fade($color, $btn-outline-ripple-background-color-fade);
+
+        --ui-btn-color: #{$color};
+        --ui-btn-border: #{$color};
+        --ui-btn-hover-bg: #{$hover-background-color};
+        --ui-btn-focus-bg: #{$focus-background-color};
+        --ui-btn-active-color: #{$active-color};
+        --ui-btn-active-border: #{$active-border};
+        --ui-ripple-bg: #{$ripple-background-color};
+    }
+}

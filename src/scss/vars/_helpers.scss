@@ -1,0 +1,30 @@
+// close icon
+$btn-close-font-weight: map-get($font-weights, bolder) !default;
+$btn-close-line-height: map-get($line-heights, base) !default;
+$btn-close-color: $black !default;
+$btn-close-text-shadow: 0 1px 0 $white !default;
+$btn-close-opacity: .5 !default;
+$btn-close-hover-opacity: .75 !default;
+$btn-close-focus-opacity: 1 !default;
+$btn-close-disabled-opacity: .25 !default;
+$btn-close-icon: "\1F5D9" !default;
+
+// color links
+$color-link-variants: map-merge(
+    (
+        white: $white,
+        black: $black
+    ),
+    $color-variants
+) !default;
+
+// ratio
+$ratios: (
+    1x1: 100%,
+    4x3: 75%,
+    16x9: 56.25%,
+    21x9: 42.857143%
+) !default;
+
+// ripple
+$ripple-effect-background-color: fade($white, .4) !default;

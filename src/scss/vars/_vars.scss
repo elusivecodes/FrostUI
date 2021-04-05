@@ -1,0 +1,197 @@
+$spacing: 1rem !default;
+
+$disabled-opacity: .5 !default;
+
+// border
+$border-size: 1px !default;
+$border-style: solid !default;
+$border-radius: .2rem !default;
+
+$border-radius-base: .25rem !default;
+
+$rounded-circle-border-radius: 50% !default;
+$rounded-pill-border-radius: 5rem !default;
+
+// breakpoint
+$breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1400px
+) !default;
+
+// color
+$white: #fff !default;
+$black: #000 !default;
+$gray: #808080 !default;
+
+$gray-light: #dcdcdc !default;
+$gray-dark: #708090 !default;
+
+$color-variants: (
+    primary: #2b55d4,
+    secondary: #606d7b,
+    success: #228c22,
+    info: #0f7f85,
+    warning: #f5a119,
+    danger: #dc143c,
+    light: #fafaff,
+    dark: #1f3333
+) !default;
+
+$text-color: #121212 !default;
+$link-color: #3e78a8 !default;
+$border-color: fade($black, .15) !default;
+$body-background-color: $white !default;
+$text-muted-color: tint($text-color, 30%) !default;
+
+$bg-gradient-background-image: linear-gradient(180deg, fade($white, .25), fade($white, 0)) !default;
+
+// container
+$containers: (
+    sm: 540px,
+    md: 720px,
+    lg: 960px,
+    xl: 1140px,
+    xxl: 1320px
+) !default;
+
+// grid
+$grid-size: 12 !default;
+$row-grid-size: 5 !default;
+
+$gutter-base: $spacing / 2 !default;
+
+$gutters: (
+    0: 0,
+    1: $gutter-base,
+    2: $gutter-base * 2,
+    3: $gutter-base * 3,
+    4: $gutter-base * 4,
+    5: $gutter-base * 5
+) !default;
+
+$gutter-y: 0 !default;
+$gutter-x: 3rem !default;
+
+// icon
+$arrow-up: "\2b9d" !default;
+$arrow-right: "\2b9e" !default;
+$arrow-down: "\2b9f" !default;
+$arrow-left: "\2b9c" !default;
+
+// positions
+$positions: (
+    0: 0%,
+    50: 50%,
+    100: 100%
+) !default;
+
+// shadow
+$shadow: 0 4px 5px 0 fade($black, .05), 0 1px 10px 0 fade($black, .05), 0 2px 4px -1px fade($black, .15) !default;
+$shadow-xs: 0 2px 3px 0 fade($black, .05), 0 2px 2px 0 fade($black, .15) !default;
+$shadow-sm: 0 2px 2px 0 fade($black, .05), 0 3px 1px -2px fade($black, .15), 0 1px 5px 0 fade($black, .05) !default;
+$shadow-lg: 0 8px 10px 1px fade($black, .05), 0 3px 14px 2px fade($black, .05), 0 5px 5px -3px fade($black, .15) !default;
+
+// sizing
+$sizes: (
+    25: 25%,
+    50: 50%,
+    75: 75%,
+    100: 100%,
+    auto: auto
+) !default;
+
+// spacing
+$spacing-base: $spacing / 4 !default;
+
+$paddings: (
+    0: 0,
+    1: $spacing-base,
+    2: $spacing-base * 2,
+    3: $spacing-base * 3,
+    4: $spacing-base * 4,
+    5: $spacing-base * 5
+) !default;
+
+$margins: (
+    0: 0,
+    1: $spacing-base,
+    2: $spacing-base * 2,
+    3: $spacing-base * 3,
+    4: $spacing-base * 4,
+    5: $spacing-base * 5,
+    n1: ($spacing-base * -1),
+    n2: ($spacing-base * -2),
+    n3: ($spacing-base * -3),
+    n4: ($spacing-base * -4),
+    n5: ($spacing-base * -5),
+    auto: auto
+) !default;
+
+$gaps: (
+    0: 0,
+    1: $spacing-base,
+    2: $spacing-base * 2,
+    3: $spacing-base * 3,
+    4: $spacing-base * 4,
+    5: $spacing-base * 5
+) !default;
+
+// text
+$font-family: -apple-system, blinkmacsystemfont, "Segoe UI", tahoma, geneva, verdana, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
+$font-family-mono: sfmono-regular, menlo, monaco, consolas, "Liberation Mono", "Courier New", monospace !default;
+$font-mono: monospace, monospace !default;
+
+$font-sizes: (
+    1: 3,
+    2: 2.5,
+    3: 2,
+    4: 1.5,
+    5: 1.25,
+    6: 1
+) !default;
+
+@each $key, $size in $font-sizes {
+    $size: text-size($size);
+    $rgb: map-merge($font-sizes, ($key: $size));
+}
+
+$font-size: 1.1rem !default;
+$font-size-xs: .65rem !default;
+$font-size-sm: .875rem !default;
+$font-size-md: 1rem !default;
+$font-size-lg: 1.25rem !default;
+
+$font-weights: (
+    lighter: 200,
+    light: 300,
+    normal: 400,
+    bold: 500,
+    bolder: 700
+) !default;
+
+$line-heights: (
+    1: 1,
+    base: 1.5,
+    sm: 1.25,
+    lg: 2
+) !default;
+
+// transition
+$animation-time: 1s !default;
+$animation-time-reduced-motion: 5s !default;
+$transition-time: .25s !default;
+$transition-type: ease-in-out !default;
+
+// z index
+$dropdown-z-index: 1000 !default;
+$sticky-z-index: 1020 !default;
+$fixed-z-index: 1030 !default;
+$offcanvas-z-index: 1040 !default;
+$modal-backdrop-z-index: 1050 !default;
+$modal-z-index: 1060 !default;
+$popover-z-index: 10760 !default;
+$tooltip-z-index: 1080 !default;

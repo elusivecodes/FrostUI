@@ -1,0 +1,13 @@
+@each $name, $color in $color-link-variants {
+    .link-#{'' + $name} {
+        color: $color;
+
+        &:hover {
+            color: shade($color, $link-hover-color-shade);
+        }
+
+        &:focus {
+            color: tint($color, $link-focus-color-tint);
+        }
+    }
+}

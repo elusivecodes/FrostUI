@@ -1,0 +1,13 @@
+.ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple-effect {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    pointer-events: none;
+    background-color: var(--ui-ripple-bg, #{$ripple-effect-background-color});
+    border-radius: 50%;
+}
