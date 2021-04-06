@@ -230,33 +230,6 @@ Object.assign(Popper, {
     },
 
     /**
-     * Get the size of the scrollbar.
-     * @returns {number} The scrollbar size.
-     */
-    _getScrollbarSize() {
-        if (this._scrollbarSize) {
-            return this._scrollbarSize;
-        }
-
-        const div = dom.create('div', {
-            style: {
-                width: '100px',
-                height: '100px',
-                overflow: 'scroll',
-                position: 'absolute',
-                top: '-9999px'
-            }
-        });
-        dom.append(document.body, div);
-
-        this._scrollbarSize = dom.getProperty(div, 'offsetWidth') - dom.width(div);
-
-        dom.detach(div);
-
-        return this._scrollbarSize;
-    },
-
-    /**
      * Get the scroll parent of the node.
      * @param {HTMLElement} node The input node.
      * @return {HTMLElement} The scroll parent.
@@ -302,18 +275,8 @@ Object.assign(Popper, {
             this._windowContainer(node) :
             dom.rect(node, true);
 
-        const scrollWidth = dom.width(scrollNode, DOM.SCROLL_BOX);
-        const scrollHeight = dom.height(scrollNode, DOM.SCROLL_BOX);
-
-        if (scrollWidth > rect.width) {
-            const scrollSize = this._getScrollbarSize();
-            rect.height -= scrollSize;
-        }
-
-        if (scrollHeight > rect.height) {
-            const scrollSize = this._getScrollbarSize();
-            rect.width -= scrollSize;
-        }
+        rect.height -= UI.getScrollbarSize(node, scrollNode);
+        rect.width -= UI.getScrollbarSize(node, scrollNode, 'x');
 
         return rect;
     },

@@ -10,7 +10,7 @@ describe('popper tooltip (overflow/window)', function() {
                 '<div style="width: calc(100vw + 1800px); padding: 1300px 900px;">' +
                 '<div id="scroll" style="position: relative; overflow: auto; width: 100vw; height: 100vh;">' +
                 '<div class="text-center" style="padding: 1600px 1200px;">' +
-                '<button id="tooltipToggle" class="btn btn-secondary" role="button" data-ui-title="This is a tooltip.">Tooltip</button>' +
+                '<button class="btn btn-secondary" id="tooltipToggle" data-ui-title="This is a tooltip." type="button">Tooltip</button>' +
                 '</div>' +
                 '</div>' +
                 '</div>'

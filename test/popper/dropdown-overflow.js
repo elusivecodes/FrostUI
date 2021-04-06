@@ -10,11 +10,11 @@ describe('popper dropdown (overflow)', function() {
                 '<div id="scroll" style="position: relative; overflow: auto; width: 100vw; height: 100vh;">' +
                 '<div class="text-center" style="padding: 1600px 1200px;">' +
                 '<div class="dropdown">' +
-                '<button id="dropdownToggle" class="btn btn-secondary dropdown-toggle" role="button">Dropdown</button>' +
+                '<button class="btn btn-secondary dropdown-toggle" id="dropdownToggle" type="button">Dropdown</button>' +
                 '<div class="dropdown-menu">' +
-                '<button class="dropdown-item">Action</button>' +
-                '<button class="dropdown-item">Action</button>' +
-                '<button class="dropdown-item">Action</button>' +
+                '<button class="dropdown-item" type="button">Action</button>' +
+                '<button class="dropdown-item" type="button">Action</button>' +
+                '<button class="dropdown-item" type="button">Action</button>' +
                 '</div>' +
                 '</div>' +
                 '</div>' +

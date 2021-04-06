@@ -50,6 +50,9 @@ class Modal extends BaseComponent {
 
         this.constructor.stack.delete(this);
 
+        const stackSize = this.constructor.stack.size;
+        const offcanvas = Offcanvas.current;
+
         Promise.all([
             dom.fadeOut(this._dialog, {
                 duration: this._settings.duration
@@ -65,9 +68,17 @@ class Modal extends BaseComponent {
             dom.removeAttribute(this._node, 'aria-modal');
             dom.setAttribute(this._node, 'aria-hidden', true);
 
+            if (stackSize) {
+                dom.setStyle(this._node, 'zIndex', '');
+            } else {
+                if (!offcanvas) {
+                    UI.resetScrollPadding();
+                }
+
+                dom.removeClass(document.body, 'modal-open');
+            }
+
             dom.removeClass(this._node, 'show');
-            dom.removeClass(document.body, 'modal-open');
-            dom.setStyle(this._node, 'zIndex', '');
 
             if (this._settings.backdrop) {
                 dom.remove(this._backdrop);
@@ -111,10 +122,15 @@ class Modal extends BaseComponent {
             zIndex += stackSize * 20;
 
             dom.setStyle(this._node, 'zIndex', zIndex);
+        } else {
+            if (!Offcanvas.current) {
+                UI.addScrollPadding();
+            }
+
+            dom.addClass(document.body, 'modal-open');
         }
 
         dom.addClass(this._node, 'show');
-        dom.addClass(document.body, 'modal-open');
 
         this.constructor.stack.add(this);
 

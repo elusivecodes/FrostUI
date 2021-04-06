@@ -11502,33 +11502,6 @@
             },
 
             /**
-             * Get the size of the scrollbar.
-             * @returns {number} The scrollbar size.
-             */
-            _getScrollbarSize() {
-                if (this._scrollbarSize) {
-                    return this._scrollbarSize;
-                }
-
-                const div = dom.create('div', {
-                    style: {
-                        width: '100px',
-                        height: '100px',
-                        overflow: 'scroll',
-                        position: 'absolute',
-                        top: '-9999px'
-                    }
-                });
-                dom.append(document.body, div);
-
-                this._scrollbarSize = dom.getProperty(div, 'offsetWidth') - dom.width(div);
-
-                dom.detach(div);
-
-                return this._scrollbarSize;
-            },
-
-            /**
              * Get the scroll parent of the node.
              * @param {HTMLElement} node The input node.
              * @return {HTMLElement} The scroll parent.
@@ -11574,18 +11547,8 @@
                     this._windowContainer(node) :
                     dom.rect(node, true);
 
-                const scrollWidth = dom.width(scrollNode, DOM.SCROLL_BOX);
-                const scrollHeight = dom.height(scrollNode, DOM.SCROLL_BOX);
-
-                if (scrollWidth > rect.width) {
-                    const scrollSize = this._getScrollbarSize();
-                    rect.height -= scrollSize;
-                }
-
-                if (scrollHeight > rect.height) {
-                    const scrollSize = this._getScrollbarSize();
-                    rect.width -= scrollSize;
-                }
+                rect.height -= UI.getScrollbarSize(node, scrollNode);
+                rect.width -= UI.getScrollbarSize(node, scrollNode, 'x');
 
                 return rect;
             },
@@ -12547,6 +12510,9 @@
 
                 this.constructor.stack.delete(this);
 
+                const stackSize = this.constructor.stack.size;
+                const offcanvas = Offcanvas.current;
+
                 Promise.all([
                     dom.fadeOut(this._dialog, {
                         duration: this._settings.duration
@@ -12562,9 +12528,17 @@
                     dom.removeAttribute(this._node, 'aria-modal');
                     dom.setAttribute(this._node, 'aria-hidden', true);
 
+                    if (stackSize) {
+                        dom.setStyle(this._node, 'zIndex', '');
+                    } else {
+                        if (!offcanvas) {
+                            UI.resetScrollPadding();
+                        }
+
+                        dom.removeClass(document.body, 'modal-open');
+                    }
+
                     dom.removeClass(this._node, 'show');
-                    dom.removeClass(document.body, 'modal-open');
-                    dom.setStyle(this._node, 'zIndex', '');
 
                     if (this._settings.backdrop) {
                         dom.remove(this._backdrop);
@@ -12608,10 +12582,15 @@
                     zIndex += stackSize * 20;
 
                     dom.setStyle(this._node, 'zIndex', zIndex);
+                } else {
+                    if (!Offcanvas.current) {
+                        UI.addScrollPadding();
+                    }
+
+                    dom.addClass(document.body, 'modal-open');
                 }
 
                 dom.addClass(this._node, 'show');
-                dom.addClass(document.body, 'modal-open');
 
                 this.constructor.stack.add(this);
 
@@ -12689,22 +12668,16 @@
         });
 
         dom.addEvent(document, 'click.ui.modal', e => {
-            if (dom.is(e.target, '[data-ui-dismiss="modal"]')) {
-                return;
-            }
-
-            if (!Modal.stack.size) {
-                return;
-            }
-
             let modal;
             for (modal of Modal.stack);
 
-            if (modal._settings.backdrop === 'static' || !modal._settings.backdrop) {
-                return;
-            }
-
-            if (modal._node !== e.target && dom.hasDescendent(modal._node, e.target)) {
+            if (
+                dom.is(e.target, '[data-ui-dismiss="modal"]') ||
+                !Modal.stack.size ||
+                !modal._settings.backdrop ||
+                modal._settings.backdrop === 'static' ||
+                modal._node !== e.target && dom.hasDescendent(modal._node, e.target)
+            ) {
                 return;
             }
 
@@ -12712,18 +12685,14 @@
         });
 
         dom.addEvent(document, 'keyup.ui.modal', e => {
-            if (e.code !== 'Escape') {
-                return;
-            }
-
-            if (!Modal.stack.size) {
-                return;
-            }
-
             let modal;
             for (modal of Modal.stack);
 
-            if (!modal._settings.keyboard) {
+            if (
+                e.code !== 'Escape' ||
+                !modal ||
+                !modal._settings.keyboard
+            ) {
                 return;
             }
 
@@ -12758,15 +12727,6 @@
              */
             dispose() {
                 this._activeTarget = null;
-
-                if (this._settings.backdrop) {
-                    dom.removeClass(document.body, 'offcanvas-backdrop');
-                }
-
-                if (!this._settings.scroll) {
-                    dom.setStyle(document.body, 'overflow', '');
-                }
-
                 this.constructor.current = null;
 
                 super.dispose();
@@ -12811,6 +12771,7 @@
                     }
 
                     if (!this._settings.scroll) {
+                        UI.resetScrollPadding();
                         dom.setStyle(document.body, 'overflow', '');
                     }
 
@@ -12833,6 +12794,7 @@
              */
             show(activeTarget) {
                 if (
+                    this.constructor.current ||
                     this._animating ||
                     dom.hasClass(this._node, 'show') ||
                     !dom.triggerOne(this._node, 'show.ui.offcanvas')
@@ -12852,6 +12814,7 @@
                 }
 
                 if (!this._settings.scroll) {
+                    UI.addScrollPadding();
                     dom.setStyle(document.body, 'overflow', 'hidden');
                 }
 
@@ -12909,44 +12872,36 @@
         });
 
         dom.addEvent(document, 'click.ui.offcanvas', e => {
-            if (dom.is(e.target, '[data-ui-dismiss="offcanvas"]')) {
-                return;
-            }
-
-            if (!Offcanvas.current) {
-                return;
-            }
-
             const offcanvas = Offcanvas.current;
 
-            if (!offcanvas._settings.backdrop) {
-                return;
-            }
-
-            if (offcanvas._node === e.target || dom.hasDescendent(offcanvas._node, e.target)) {
+            if (
+                dom.is(e.target, '[data-ui-dismiss="offcanvas"]') ||
+                Modal.stack.size ||
+                !offcanvas ||
+                !offcanvas._settings.backdrop ||
+                offcanvas._node === e.target ||
+                dom.hasDescendent(offcanvas._node, e.target)
+            ) {
                 return;
             }
 
             offcanvas.hide();
-        });
+        }, { capture: true });
 
         dom.addEvent(document, 'keyup.ui.offcanvas', e => {
-            if (e.code !== 'Escape') {
-                return;
-            }
-
-            if (!Offcanvas.current) {
-                return;
-            }
-
             const offcanvas = Offcanvas.current;
 
-            if (!offcanvas._settings.keyboard) {
+            if (
+                e.code !== 'Escape' ||
+                Modal.stack.size ||
+                !offcanvas ||
+                !offcanvas._settings.keyboard
+            ) {
                 return;
             }
 
             offcanvas.hide();
-        });
+        }, { capture: true });
 
 
         /**
@@ -13963,6 +13918,89 @@
         UI.initComponent('tooltip', Tooltip);
 
         UI.Tooltip = Tooltip;
+
+
+        /**
+         * Add scrollbar padding to the body.
+         */
+        UI.addScrollPadding = _ => {
+            const scrollSizeX = UI.getScrollbarSize(window, document, 'x');
+            const scrollSizeY = UI.getScrollbarSize(window, document, 'y');
+
+            if (scrollSizeX) {
+                const currentPaddingRight = dom.getStyle(document.body, 'paddingRight');
+                const paddingRight = dom.css(document.body, 'paddingRight');
+
+                dom.setDataset(document.body, 'uiPaddingRight', currentPaddingRight);
+                dom.setStyle(document.body, 'paddingRight', `${scrollSizeX + parseInt(paddingRight)}px`);
+            }
+
+            if (scrollSizeY) {
+                const currentPaddingBottom = dom.getStyle(document.body, 'paddingBottom');
+                const paddingBottom = dom.css(document.body, 'paddingBottom');
+
+                dom.setDataset(document.body, 'uiPaddingBottom', currentPaddingBottom);
+                dom.setStyle(document.body, 'paddingBottom', `${scrollSizeY + parseInt(paddingBottom)}px`);
+            }
+        };
+
+        /**
+         * Get the size of the scrollbar.
+         * @returns {number} The scrollbar size.
+         */
+        UI.calculateScrollbarSize = _ => {
+            if (UI._scrollbarSize) {
+                return UI._scrollbarSize;
+            }
+
+            const div = dom.create('div', {
+                style: {
+                    width: '100px',
+                    height: '100px',
+                    overflow: 'scroll',
+                    position: 'absolute',
+                    top: '-9999px'
+                }
+            });
+            dom.append(document.body, div);
+
+            UI._scrollbarSize = dom.getProperty(div, 'offsetWidth') - dom.width(div);
+
+            dom.detach(div);
+
+            return UI._scrollbarSize;
+        };
+
+        /**
+         * Get the scrollbar size for a given axis.
+         * @param {HTMLElement|Window} node The input node.
+         * @param {HTMLElement|Document} scrollNode The scroll node.
+         * @param {string} [axis] The axis to check.
+         * @returns {number} The scrollbar size.
+         */
+        UI.getScrollbarSize = (node = window, scrollNode = document, axis) => {
+            const method = axis === 'x' ? 'width' : 'height';
+            const size = dom[method](node);
+            const scrollSize = dom[method](scrollNode, DOM.SCROLL_BOX);
+
+            if (size > scrollSize) {
+                return UI.calculateScrollbarSize();
+            }
+
+            return 0;
+        };
+        /**
+         * Reset body scrollbar padding.
+         */
+        UI.resetScrollPadding = _ => {
+            const paddingRight = dom.getDataset(document.body, 'uiPaddingRight');
+            const paddingBottom = dom.getDataset(document.body, 'uiPaddingBottom');
+
+            dom.setStyle(document.body, { paddingRight, paddingBottom });
+
+            dom.removeDataset(document.body, 'uiPaddingRight');
+            dom.removeDataset(document.body, 'uiPaddingBottom');
+        };
 
 
         // Clipboard events

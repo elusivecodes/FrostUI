@@ -9,15 +9,6 @@ class Offcanvas extends BaseComponent {
      */
     dispose() {
         this._activeTarget = null;
-
-        if (this._settings.backdrop) {
-            dom.removeClass(document.body, 'offcanvas-backdrop');
-        }
-
-        if (!this._settings.scroll) {
-            dom.setStyle(document.body, 'overflow', '');
-        }
-
         this.constructor.current = null;
 
         super.dispose();
@@ -62,6 +53,7 @@ class Offcanvas extends BaseComponent {
             }
 
             if (!this._settings.scroll) {
+                UI.resetScrollPadding();
                 dom.setStyle(document.body, 'overflow', '');
             }
 
@@ -84,6 +76,7 @@ class Offcanvas extends BaseComponent {
      */
     show(activeTarget) {
         if (
+            this.constructor.current ||
             this._animating ||
             dom.hasClass(this._node, 'show') ||
             !dom.triggerOne(this._node, 'show.ui.offcanvas')
@@ -103,6 +96,7 @@ class Offcanvas extends BaseComponent {
         }
 
         if (!this._settings.scroll) {
+            UI.addScrollPadding();
             dom.setStyle(document.body, 'overflow', 'hidden');
         }
 

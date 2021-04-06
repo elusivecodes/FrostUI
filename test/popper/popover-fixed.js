@@ -8,7 +8,7 @@ describe('popper popover (fixed)', function() {
             dom.setHTML(
                 document.body,
                 '<div class="text-center" style="padding: 1600px 1200px;">' +
-                '<button id="popoverToggle" class="btn btn-secondary" role="button" data-ui-title="Title" data-ui-content="This is the popover content." style="position: fixed; top: 300px; left: 350px;">Popover</button>' +
+                '<button class="btn btn-secondary" id="popoverToggle" data-ui-title="Title" data-ui-content="This is the popover content." type="button" style="position: fixed; top: 300px; left: 350px;">Popover</button>' +
                 '</div>'
             );
             dom.setScroll(document, 850, 1300);

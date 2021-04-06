@@ -8,7 +8,7 @@ describe('Ripple', function() {
         await exec(_ => {
             dom.setHTML(
                 document.body,
-                '<button id="button" class="ripple"></button>'
+                '<button class="ripple" id="button"></button>'
             );
         });
     });

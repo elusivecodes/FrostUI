@@ -7,7 +7,7 @@ describe('Popper', function() {
         await exec(_ => {
             dom.setHTML(
                 document.body,
-                '<button id="button" class="btn btn-secondary" role="button">Button</button>' +
+                '<button class="btn btn-secondary" id="button" type="button">Button</button>' +
                 '<div class="badge" id="badge">Badge</div>'
             );
         });
@@ -15,7 +15,7 @@ describe('Popper', function() {
 
     describe('#init', function() {
 
-        it.only('creates a popper', async function() {
+        it('creates a popper', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     const badge = dom.findOne('#badge');
@@ -27,7 +27,7 @@ describe('Popper', function() {
             );
         });
 
-        it.only('creates a popper (query)', async function() {
+        it('creates a popper (query)', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     dom.query('#badge').popper({
@@ -39,7 +39,7 @@ describe('Popper', function() {
             );
         });
 
-        it.only('returns the popper (query)', async function() {
+        it('returns the popper (query)', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     return dom.query('#badge').popper({
@@ -54,7 +54,7 @@ describe('Popper', function() {
 
     describe('#dispose', function() {
 
-        it.only('removes the alert', async function() {
+        it('removes the alert', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     const badge = dom.findOne('#badge');
@@ -67,7 +67,7 @@ describe('Popper', function() {
             );
         });
 
-        it.only('removes the alert (query)', async function() {
+        it('removes the alert (query)', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     dom.query('#badge').popper({
@@ -126,7 +126,7 @@ describe('Popper', function() {
 
     describe('#update', function() {
 
-        it.only('updates the popper', async function() {
+        it('updates the popper', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     const badge = dom.findOne('#badge');
@@ -144,7 +144,7 @@ describe('Popper', function() {
             );
         });
 
-        it.only('updates the popper (query)', async function() {
+        it('updates the popper (query)', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     const button = dom.findOne('#button');
@@ -164,7 +164,7 @@ describe('Popper', function() {
 
     describe('beforeUpdate option', function() {
 
-        it.only('executes a callback before updating the popper', async function() {
+        it('executes a callback before updating the popper', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     let result;
@@ -181,7 +181,7 @@ describe('Popper', function() {
             );
         });
 
-        it.only('executes a callback after updating the popper (query)', async function() {
+        it('executes a callback after updating the popper (query)', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     let result;
@@ -197,7 +197,7 @@ describe('Popper', function() {
             );
         });
 
-        it.only('uses the node as the first argument', async function() {
+        it('uses the node as the first argument', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     let result;
@@ -214,7 +214,7 @@ describe('Popper', function() {
             );
         });
 
-        it.only('uses the reference as the second argument', async function() {
+        it('uses the reference as the second argument', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     let result;
@@ -231,7 +231,7 @@ describe('Popper', function() {
             );
         });
 
-        it.only('executes every time the popper is updated', async function() {
+        it('executes every time the popper is updated', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     let count = 0;
@@ -253,7 +253,7 @@ describe('Popper', function() {
 
     describe('afterUpdate option', function() {
 
-        it.only('executes a callback after updating the popper', async function() {
+        it('executes a callback after updating the popper', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     let result;
@@ -270,7 +270,7 @@ describe('Popper', function() {
             );
         });
 
-        it.only('executes a callback after updating the popper (query)', async function() {
+        it('executes a callback after updating the popper (query)', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     let result;
@@ -286,7 +286,7 @@ describe('Popper', function() {
             );
         });
 
-        it.only('uses the node as the first argument', async function() {
+        it('uses the node as the first argument', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     let result;
@@ -303,7 +303,7 @@ describe('Popper', function() {
             );
         });
 
-        it.only('uses the reference as the second argument', async function() {
+        it('uses the reference as the second argument', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     let result;
@@ -320,7 +320,7 @@ describe('Popper', function() {
             );
         });
 
-        it.only('uses the placement as the third argument', async function() {
+        it('uses the placement as the third argument', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     let result;
@@ -337,7 +337,7 @@ describe('Popper', function() {
             );
         });
 
-        it.only('uses the position as the third argument', async function() {
+        it('uses the position as the third argument', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     let result;
@@ -354,7 +354,7 @@ describe('Popper', function() {
             );
         });
 
-        it.only('executes every time the popper is updated', async function() {
+        it('executes every time the popper is updated', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     let count = 0;
@@ -376,7 +376,7 @@ describe('Popper', function() {
 
     describe('useGpu option', function() {
 
-        it.only('uses margin offsets when not using gpu', async function() {
+        it('uses margin offsets when not using gpu', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     const badge = dom.findOne('#badge');
@@ -390,7 +390,7 @@ describe('Popper', function() {
             );
         });
 
-        it.only('uses margin offsets when not using gpu (query)', async function() {
+        it('uses margin offsets when not using gpu (query)', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     dom.query('#badge').popper({
@@ -407,8 +407,8 @@ describe('Popper', function() {
 
     describe('container option', function() {
 
-        it.only('constrains popper to container');
-        it.only('constrains popper to container (query)');
+        it('constrains popper to container');
+        it('constrains popper to container (query)');
 
     });
 

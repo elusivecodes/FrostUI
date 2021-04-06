@@ -9,11 +9,11 @@ describe('popper dropdown (fixed)', function() {
                 document.body,
                 '<div class="text-center" style="padding: 1600px 1200px;">' +
                 '<div class="dropdown">' +
-                '<button id="dropdownToggle" class="btn btn-secondary dropdown-toggle" role="button" style="position: fixed; top: 300px; left: 350px;">Dropdown</button>' +
+                '<button class="btn btn-secondary dropdown-toggle" id="dropdownToggle" type="button" style="position: fixed; top: 300px; left: 350px;">Dropdown</button>' +
                 '<div class="dropdown-menu">' +
-                '<button class="dropdown-item">Action</button>' +
-                '<button class="dropdown-item">Action</button>' +
-                '<button class="dropdown-item">Action</button>' +
+                '<button class="dropdown-item" type="button">Action</button>' +
+                '<button class="dropdown-item" type="button">Action</button>' +
+                '<button class="dropdown-item" type="button">Action</button>' +
                 '</div>' +
                 '</div>' +
                 '</div>'

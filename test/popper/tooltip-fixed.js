@@ -8,7 +8,7 @@ describe('popper tooltip (fixed)', function() {
             dom.setHTML(
                 document.body,
                 '<div class="text-center" style="padding: 1600px 1200px;">' +
-                '<button id="tooltipToggle" class="btn btn-secondary" role="button" data-ui-title="This is a tooltip." style="position: fixed; top: 300px; left: 350px;">Tooltip</button>' +
+                '<button class="btn btn-secondary" id="tooltipToggle" data-ui-title="This is a tooltip." type="button" style="position: fixed; top: 300px; left: 350px;">Tooltip</button>' +
                 '</div>'
             );
             dom.setScroll(document, 850, 1300);

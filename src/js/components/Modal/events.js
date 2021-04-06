@@ -16,22 +16,16 @@ dom.addEventDelegate(document, 'click.ui.modal', '[data-ui-dismiss="modal"]', e 
 });
 
 dom.addEvent(document, 'click.ui.modal', e => {
-    if (dom.is(e.target, '[data-ui-dismiss="modal"]')) {
-        return;
-    }
-
-    if (!Modal.stack.size) {
-        return;
-    }
-
     let modal;
     for (modal of Modal.stack);
 
-    if (modal._settings.backdrop === 'static' || !modal._settings.backdrop) {
-        return;
-    }
-
-    if (modal._node !== e.target && dom.hasDescendent(modal._node, e.target)) {
+    if (
+        dom.is(e.target, '[data-ui-dismiss="modal"]') ||
+        !Modal.stack.size ||
+        !modal._settings.backdrop ||
+        modal._settings.backdrop === 'static' ||
+        modal._node !== e.target && dom.hasDescendent(modal._node, e.target)
+    ) {
         return;
     }
 
@@ -39,18 +33,14 @@ dom.addEvent(document, 'click.ui.modal', e => {
 });
 
 dom.addEvent(document, 'keyup.ui.modal', e => {
-    if (e.code !== 'Escape') {
-        return;
-    }
-
-    if (!Modal.stack.size) {
-        return;
-    }
-
     let modal;
     for (modal of Modal.stack);
 
-    if (!modal._settings.keyboard) {
+    if (
+        e.code !== 'Escape' ||
+        !modal ||
+        !modal._settings.keyboard
+    ) {
         return;
     }
 

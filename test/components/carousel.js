@@ -10,7 +10,7 @@ describe('Carousel', function() {
                 document.body,
                 '<div class="carousel" id="carousel1">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                 '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -19,12 +19,12 @@ describe('Carousel', function() {
                 '<div class="carousel-item" id="carousel1Item2"></div>' +
                 '<div class="carousel-item" id="carousel1Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                 '</div>' +
                 '<div class="carousel" id="carousel2">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                 '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -33,8 +33,8 @@ describe('Carousel', function() {
                 '<div class="carousel-item" id="carousel2Item2"></div>' +
                 '<div class="carousel-item" id="carousel2Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                 '</div>'
             );
         });
@@ -176,7 +176,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -185,12 +185,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -199,8 +199,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -219,7 +219,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -228,12 +228,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -242,8 +242,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -257,7 +257,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -266,12 +266,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -280,8 +280,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel2Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -320,7 +320,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class=""></li>' +
                     '</ol>' +
@@ -329,12 +329,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -343,8 +343,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -387,7 +387,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -396,12 +396,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -410,8 +410,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -430,7 +430,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -439,12 +439,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -453,8 +453,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -473,7 +473,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -482,12 +482,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -496,8 +496,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -511,7 +511,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -520,12 +520,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -534,8 +534,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item active" id="carousel2Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -555,7 +555,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -564,12 +564,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -578,8 +578,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -599,7 +599,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -608,12 +608,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -622,8 +622,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -676,7 +676,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -685,12 +685,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -699,8 +699,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -719,7 +719,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -728,12 +728,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -742,8 +742,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -757,7 +757,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -766,12 +766,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -780,8 +780,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel2Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -810,7 +810,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class=""></li>' +
                     '</ol>' +
@@ -819,12 +819,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -833,8 +833,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -861,7 +861,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class=""></li>' +
                     '</ol>' +
@@ -870,12 +870,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -884,8 +884,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -908,7 +908,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class=""></li>' +
                     '</ol>' +
@@ -917,12 +917,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2" class=""></li>' +
                     '</ol>' +
@@ -931,8 +931,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel2Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel2Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -971,7 +971,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class=""></li>' +
                     '</ol>' +
@@ -980,12 +980,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -994,8 +994,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -1015,7 +1015,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -1024,12 +1024,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -1038,8 +1038,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -1082,7 +1082,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -1091,12 +1091,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -1105,8 +1105,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -1125,7 +1125,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -1134,12 +1134,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -1148,8 +1148,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -1168,7 +1168,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -1177,12 +1177,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -1191,8 +1191,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -1206,7 +1206,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -1215,12 +1215,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -1229,8 +1229,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel2Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -1292,7 +1292,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class=""></li>' +
                     '</ol>' +
@@ -1301,12 +1301,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -1315,8 +1315,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -1344,7 +1344,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class=""></li>' +
                     '</ol>' +
@@ -1353,12 +1353,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -1367,8 +1367,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -1395,7 +1395,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class=""></li>' +
                     '</ol>' +
@@ -1404,12 +1404,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -1418,8 +1418,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -1442,7 +1442,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class=""></li>' +
                     '</ol>' +
@@ -1451,12 +1451,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2" class=""></li>' +
                     '</ol>' +
@@ -1465,8 +1465,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel2Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel2Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -1518,7 +1518,7 @@ describe('Carousel', function() {
                 }),
                 '<div class="carousel" id="carousel1">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                 '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -1527,12 +1527,12 @@ describe('Carousel', function() {
                 '<div class="carousel-item" id="carousel1Item2"></div>' +
                 '<div class="carousel-item" id="carousel1Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                 '</div>' +
                 '<div class="carousel" id="carousel2">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                 '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -1541,8 +1541,8 @@ describe('Carousel', function() {
                 '<div class="carousel-item" id="carousel2Item2"></div>' +
                 '<div class="carousel-item" id="carousel2Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                 '</div>'
             )
         });
@@ -1560,7 +1560,7 @@ describe('Carousel', function() {
                 }),
                 '<div class="carousel" id="carousel1">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                 '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -1569,12 +1569,12 @@ describe('Carousel', function() {
                 '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                 '<div class="carousel-item" id="carousel1Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                 '</div>' +
                 '<div class="carousel" id="carousel2">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                 '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -1583,8 +1583,8 @@ describe('Carousel', function() {
                 '<div class="carousel-item" id="carousel2Item2"></div>' +
                 '<div class="carousel-item" id="carousel2Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                 '</div>'
             )
         });
@@ -1602,7 +1602,7 @@ describe('Carousel', function() {
                 }),
                 '<div class="carousel" id="carousel1">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                 '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -1611,12 +1611,12 @@ describe('Carousel', function() {
                 '<div class="carousel-item" id="carousel1Item2"></div>' +
                 '<div class="carousel-item" id="carousel1Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                 '</div>' +
                 '<div class="carousel" id="carousel2">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                 '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -1625,8 +1625,8 @@ describe('Carousel', function() {
                 '<div class="carousel-item" id="carousel2Item2"></div>' +
                 '<div class="carousel-item" id="carousel2Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                 '</div>'
             )
         });
@@ -1644,7 +1644,7 @@ describe('Carousel', function() {
                 }),
                 '<div class="carousel" id="carousel1">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                 '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -1653,12 +1653,12 @@ describe('Carousel', function() {
                 '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                 '<div class="carousel-item" id="carousel1Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                 '</div>' +
                 '<div class="carousel" id="carousel2">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                 '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -1667,8 +1667,8 @@ describe('Carousel', function() {
                 '<div class="carousel-item" id="carousel2Item2"></div>' +
                 '<div class="carousel-item" id="carousel2Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                 '</div>'
             )
         });
@@ -1686,7 +1686,7 @@ describe('Carousel', function() {
                 }),
                 '<div class="carousel" id="carousel1">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                 '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -1695,12 +1695,12 @@ describe('Carousel', function() {
                 '<div class="carousel-item" id="carousel1Item2"></div>' +
                 '<div class="carousel-item" id="carousel1Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                 '</div>' +
                 '<div class="carousel" id="carousel2">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                 '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -1709,8 +1709,8 @@ describe('Carousel', function() {
                 '<div class="carousel-item" id="carousel2Item2"></div>' +
                 '<div class="carousel-item" id="carousel2Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                 '</div>'
             )
         });
@@ -1728,7 +1728,7 @@ describe('Carousel', function() {
                 }),
                 '<div class="carousel" id="carousel1">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                 '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -1737,12 +1737,12 @@ describe('Carousel', function() {
                 '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                 '<div class="carousel-item" id="carousel1Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                 '</div>' +
                 '<div class="carousel" id="carousel2">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                 '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -1751,8 +1751,8 @@ describe('Carousel', function() {
                 '<div class="carousel-item" id="carousel2Item2"></div>' +
                 '<div class="carousel-item" id="carousel2Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                 '</div>'
             )
         });
@@ -1770,7 +1770,7 @@ describe('Carousel', function() {
                 }),
                 '<div class="carousel" id="carousel1">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                 '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -1779,12 +1779,12 @@ describe('Carousel', function() {
                 '<div class="carousel-item" id="carousel1Item2"></div>' +
                 '<div class="carousel-item" id="carousel1Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                 '</div>' +
                 '<div class="carousel" id="carousel2">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                 '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -1793,8 +1793,8 @@ describe('Carousel', function() {
                 '<div class="carousel-item" id="carousel2Item2"></div>' +
                 '<div class="carousel-item" id="carousel2Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                 '</div>'
             )
         });
@@ -1812,7 +1812,7 @@ describe('Carousel', function() {
                 }),
                 '<div class="carousel" id="carousel1">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                 '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -1821,12 +1821,12 @@ describe('Carousel', function() {
                 '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                 '<div class="carousel-item" id="carousel1Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                 '</div>' +
                 '<div class="carousel" id="carousel2">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                 '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -1835,8 +1835,8 @@ describe('Carousel', function() {
                 '<div class="carousel-item" id="carousel2Item2"></div>' +
                 '<div class="carousel-item" id="carousel2Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                 '</div>'
             )
         });
@@ -1854,7 +1854,7 @@ describe('Carousel', function() {
                 }),
                 '<div class="carousel" id="carousel1">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                 '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -1863,12 +1863,12 @@ describe('Carousel', function() {
                 '<div class="carousel-item" id="carousel1Item2"></div>' +
                 '<div class="carousel-item" id="carousel1Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                 '</div>' +
                 '<div class="carousel" id="carousel2">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                 '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -1877,8 +1877,8 @@ describe('Carousel', function() {
                 '<div class="carousel-item" id="carousel2Item2"></div>' +
                 '<div class="carousel-item" id="carousel2Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                 '</div>'
             )
         });
@@ -1896,7 +1896,7 @@ describe('Carousel', function() {
                 }),
                 '<div class="carousel" id="carousel1">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                 '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                 '</ol>' +
@@ -1905,12 +1905,12 @@ describe('Carousel', function() {
                 '<div class="carousel-item" id="carousel1Item2"></div>' +
                 '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                 '</div>' +
-                '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                 '</div>' +
                 '<div class="carousel" id="carousel2">' +
                 '<ol class="carousel-indicators">' +
-                '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                 '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                 '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                 '</ol>' +
@@ -1919,8 +1919,8 @@ describe('Carousel', function() {
                 '<div class="carousel-item" id="carousel2Item2"></div>' +
                 '<div class="carousel-item" id="carousel2Item3"></div>' +
                 '</div>' +
-                '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                 '</div>'
             )
         });
@@ -1937,7 +1937,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -1946,12 +1946,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -1960,8 +1960,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -1979,7 +1979,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -1988,12 +1988,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2002,8 +2002,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -2027,7 +2027,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class=""></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -2036,12 +2036,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2050,8 +2050,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -2072,7 +2072,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1" data-ui-interval="300">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class=""></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -2081,12 +2081,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2095,8 +2095,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -2117,7 +2117,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class=""></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -2126,12 +2126,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2140,8 +2140,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -2211,7 +2211,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2220,12 +2220,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2234,8 +2234,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -2267,7 +2267,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class=""></li>' +
                     '</ol>' +
@@ -2276,12 +2276,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2290,8 +2290,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -2310,7 +2310,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2319,12 +2319,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2333,8 +2333,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -2353,7 +2353,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2362,12 +2362,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2376,8 +2376,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -2397,7 +2397,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1" data-ui-keyboard="false">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2406,12 +2406,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2420,8 +2420,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -2441,7 +2441,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1" data-ui-keyboard="false">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2450,12 +2450,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2464,8 +2464,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -2484,7 +2484,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2493,12 +2493,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2507,8 +2507,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -2527,7 +2527,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2536,12 +2536,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2550,8 +2550,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -2574,7 +2574,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2583,12 +2583,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2597,8 +2597,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -2626,7 +2626,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class=""></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -2635,12 +2635,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2649,8 +2649,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -2674,7 +2674,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class=""></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -2683,12 +2683,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2697,8 +2697,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -2723,7 +2723,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1" data-ui-pause="false">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class=""></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -2732,12 +2732,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2746,8 +2746,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -2772,7 +2772,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class=""></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -2781,12 +2781,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2795,8 +2795,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -2829,7 +2829,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class=""></li>' +
                     '</ol>' +
@@ -2838,12 +2838,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2852,8 +2852,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -2873,7 +2873,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -2882,12 +2882,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2896,8 +2896,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -2921,7 +2921,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -2930,12 +2930,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2944,8 +2944,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -2960,7 +2960,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2969,12 +2969,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -2983,8 +2983,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -3009,7 +3009,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1" data-ui-wrap="false">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -3018,12 +3018,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -3032,8 +3032,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -3049,7 +3049,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1" data-ui-wrap="false">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -3058,12 +3058,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -3072,8 +3072,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -3097,7 +3097,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -3106,12 +3106,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -3120,8 +3120,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -3137,7 +3137,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -3146,12 +3146,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -3160,8 +3160,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -3185,7 +3185,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1" data-ui-ride="carousel">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -3194,12 +3194,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -3208,8 +3208,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -3229,7 +3229,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class=""></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -3238,12 +3238,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -3252,8 +3252,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -3273,7 +3273,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class=""></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -3282,12 +3282,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -3296,8 +3296,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -3317,7 +3317,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class=""></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -3326,12 +3326,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -3340,8 +3340,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -3361,7 +3361,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class=""></li>' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1" class=""></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
                     '</ol>' +
@@ -3370,12 +3370,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2" style=""></div>' +
                     '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -3384,8 +3384,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });
@@ -3405,7 +3405,7 @@ describe('Carousel', function() {
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="carousel" id="carousel1">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel1Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel1Slide2" data-ui-slide-to="2" class=""></li>' +
                     '</ol>' +
@@ -3414,12 +3414,12 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item" id="carousel1Item3" style=""></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel1Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel1Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
                     '</div>' +
                     '<div class="carousel" id="carousel2">' +
                     '<ol class="carousel-indicators">' +
-                    '<li id="carousel2Slide0" data-ui-slide-to="0" class="active"></li>' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
                     '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
                     '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
                     '</ol>' +
@@ -3428,8 +3428,8 @@ describe('Carousel', function() {
                     '<div class="carousel-item" id="carousel2Item2"></div>' +
                     '<div class="carousel-item" id="carousel2Item3"></div>' +
                     '</div>' +
-                    '<a href="#" id="carousel2Prev" data-ui-slide="prev"></a>' +
-                    '<a href="#" id="carousel2Next" data-ui-slide="next"></a>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
                     '</div>'
                 )
             });

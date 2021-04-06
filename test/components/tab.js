@@ -9,16 +9,16 @@ describe('Tab', function() {
             dom.setHTML(
                 document.body,
                 '<div>' +
-                '<a href="#tab1" class="active" id="tabToggle1" data-ui-toggle="tab"></a>' +
-                '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab"></a>' +
+                '<a class="active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
+                '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                 '</div>' +
                 '<div>' +
                 '<div class="active" id="tab1"></div>' +
                 '<div id="tab2"></div>' +
                 '</div>' +
                 '<div>' +
-                '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
-                '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                 '</div>' +
                 '<div>' +
                 '<div class="active" id="tab3"></div>' +
@@ -173,16 +173,16 @@ describe('Tab', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
-                    '<a href="#tab1" class="" id="tabToggle1" data-ui-toggle="tab" aria-selected="false"></a>' +
-                    '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab"></a>' +
+                    '<a class="" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="" id="tab1" style=""></div>' +
                     '<div id="tab2"></div>' +
                     '</div>' +
                     '<div>' +
-                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
-                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="active" id="tab3"></div>' +
@@ -204,16 +204,16 @@ describe('Tab', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
-                    '<a href="#tab1" class="" id="tabToggle1" data-ui-toggle="tab" aria-selected="false"></a>' +
-                    '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab"></a>' +
+                    '<a class="" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="" id="tab1" style=""></div>' +
                     '<div id="tab2"></div>' +
                     '</div>' +
                     '<div>' +
-                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
-                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="active" id="tab3"></div>' +
@@ -230,16 +230,16 @@ describe('Tab', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
-                    '<a href="#tab1" class="" id="tabToggle1" data-ui-toggle="tab" aria-selected="false"></a>' +
-                    '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab"></a>' +
+                    '<a class="" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="" id="tab1" style=""></div>' +
                     '<div id="tab2"></div>' +
                     '</div>' +
                     '<div>' +
-                    '<a href="#tab3" class="" id="tabToggle3" data-ui-toggle="tab" aria-selected="false"></a>' +
-                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '<a class="" id="tabToggle3" href="#tab3" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="" id="tab3" style=""></div>' +
@@ -319,16 +319,16 @@ describe('Tab', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
-                    '<a href="#tab1" class="" id="tabToggle1" data-ui-toggle="tab" aria-selected="false"></a>' +
-                    '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab" class="active" aria-selected="true"></a>' +
+                    '<a class="" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab" class="active" aria-selected="true"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="" id="tab1" style=""></div>' +
                     '<div id="tab2" class="active" style=""></div>' +
                     '</div>' +
                     '<div>' +
-                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
-                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="active" id="tab3"></div>' +
@@ -355,16 +355,16 @@ describe('Tab', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
-                    '<a href="#tab1" class="" id="tabToggle1" data-ui-toggle="tab" aria-selected="false"></a>' +
-                    '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab" class="active" aria-selected="true"></a>' +
+                    '<a class="" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab" class="active" aria-selected="true"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="" id="tab1" style=""></div>' +
                     '<div id="tab2" class="active" style=""></div>' +
                     '</div>' +
                     '<div>' +
-                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
-                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="active" id="tab3"></div>' +
@@ -391,16 +391,16 @@ describe('Tab', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
-                    '<a href="#tab1" class="" id="tabToggle1" data-ui-toggle="tab" aria-selected="false"></a>' +
-                    '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab" class="active" aria-selected="true"></a>' +
+                    '<a class="" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab" class="active" aria-selected="true"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="" id="tab1" style=""></div>' +
                     '<div id="tab2" class="active" style=""></div>' +
                     '</div>' +
                     '<div>' +
-                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
-                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="active" id="tab3"></div>' +
@@ -417,16 +417,16 @@ describe('Tab', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
-                    '<a href="#tab1" class="" id="tabToggle1" data-ui-toggle="tab" aria-selected="false"></a>' +
-                    '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab" class="active" aria-selected="true"></a>' +
+                    '<a class="" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab" class="active" aria-selected="true"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="" id="tab1" style=""></div>' +
                     '<div id="tab2" class="active" style=""></div>' +
                     '</div>' +
                     '<div>' +
-                    '<a href="#tab3" class="" id="tabToggle3" data-ui-toggle="tab" aria-selected="false"></a>' +
-                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab" class="active" aria-selected="true"></a>' +
+                    '<a class="" id="tabToggle3" href="#tab3" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab" class="active" aria-selected="true"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="" id="tab3" style=""></div>' +
@@ -488,16 +488,16 @@ describe('Tab', function() {
                     });
                 }),
                 '<div>' +
-                '<a href="#tab1" class="active" id="tabToggle1" data-ui-toggle="tab"></a>' +
-                '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab"></a>' +
+                '<a class="active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
+                '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                 '</div>' +
                 '<div>' +
                 '<div class="active" id="tab1"></div>' +
                 '<div id="tab2"></div>' +
                 '</div>' +
                 '<div>' +
-                '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
-                '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                 '</div>' +
                 '<div>' +
                 '<div class="active" id="tab3"></div>' +
@@ -518,16 +518,16 @@ describe('Tab', function() {
                     });
                 }),
                 '<div>' +
-                '<a href="#tab1" class="" id="tabToggle1" data-ui-toggle="tab" aria-selected="false"></a>' +
-                '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab"></a>' +
+                '<a class="" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                 '</div>' +
                 '<div>' +
                 '<div class="" id="tab1" style=""></div>' +
                 '<div id="tab2"></div>' +
                 '</div>' +
                 '<div>' +
-                '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
-                '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                 '</div>' +
                 '<div>' +
                 '<div class="active" id="tab3"></div>' +
@@ -548,16 +548,16 @@ describe('Tab', function() {
                     });
                 }),
                 '<div>' +
-                '<a href="#tab1" class="active" id="tabToggle1" data-ui-toggle="tab"></a>' +
-                '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab"></a>' +
+                '<a class="active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
+                '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                 '</div>' +
                 '<div>' +
                 '<div class="active" id="tab1"></div>' +
                 '<div id="tab2"></div>' +
                 '</div>' +
                 '<div>' +
-                '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
-                '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                 '</div>' +
                 '<div>' +
                 '<div class="active" id="tab3"></div>' +
@@ -578,16 +578,16 @@ describe('Tab', function() {
                     });
                 }),
                 '<div>' +
-                '<a href="#tab1" class="" id="tabToggle1" data-ui-toggle="tab" aria-selected="false"></a>' +
-                '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab" class="active" aria-selected="true"></a>' +
+                '<a class="" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab" class="active" aria-selected="true"></a>' +
                 '</div>' +
                 '<div>' +
                 '<div class="" id="tab1" style=""></div>' +
                 '<div id="tab2" class="active" style=""></div>' +
                 '</div>' +
                 '<div>' +
-                '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
-                '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                 '</div>' +
                 '<div>' +
                 '<div class="active" id="tab3"></div>' +
@@ -609,16 +609,16 @@ describe('Tab', function() {
                     });
                 }),
                 '<div>' +
-                '<a href="#tab1" class="active" id="tabToggle1" data-ui-toggle="tab"></a>' +
-                '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab"></a>' +
+                '<a class="active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
+                '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                 '</div>' +
                 '<div>' +
                 '<div class="active" id="tab1"></div>' +
                 '<div id="tab2"></div>' +
                 '</div>' +
                 '<div>' +
-                '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
-                '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                 '</div>' +
                 '<div>' +
                 '<div class="active" id="tab3"></div>' +
@@ -640,16 +640,16 @@ describe('Tab', function() {
                     });
                 }),
                 '<div>' +
-                '<a href="#tab1" class="" id="tabToggle1" data-ui-toggle="tab" aria-selected="false"></a>' +
-                '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab"></a>' +
+                '<a class="" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                 '</div>' +
                 '<div>' +
                 '<div class="" id="tab1" style=""></div>' +
                 '<div id="tab2"></div>' +
                 '</div>' +
                 '<div>' +
-                '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
-                '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                 '</div>' +
                 '<div>' +
                 '<div class="active" id="tab3"></div>' +
@@ -669,16 +669,16 @@ describe('Tab', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
-                    '<a href="#tab1" class="active" id="tabToggle1" data-ui-toggle="tab"></a>' +
-                    '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab"></a>' +
+                    '<a class="active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
+                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="active" id="tab1"></div>' +
                     '<div id="tab2"></div>' +
                     '</div>' +
                     '<div>' +
-                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
-                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="active" id="tab3"></div>' +
@@ -699,16 +699,16 @@ describe('Tab', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
-                    '<a href="#tab1" class="active" id="tabToggle1" data-ui-toggle="tab"></a>' +
-                    '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab"></a>' +
+                    '<a class="active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
+                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="active" id="tab1"></div>' +
                     '<div id="tab2"></div>' +
                     '</div>' +
                     '<div>' +
-                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
-                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="active" id="tab3"></div>' +
@@ -729,16 +729,16 @@ describe('Tab', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
-                    '<a href="#tab1" class="active" id="tabToggle1" data-ui-toggle="tab"></a>' +
-                    '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab"></a>' +
+                    '<a class="active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
+                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="active" id="tab1"></div>' +
                     '<div id="tab2"></div>' +
                     '</div>' +
                     '<div>' +
-                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
-                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="active" id="tab3"></div>' +
@@ -759,16 +759,16 @@ describe('Tab', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
-                    '<a href="#tab1" class="active" id="tabToggle1" data-ui-toggle="tab"></a>' +
-                    '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab"></a>' +
+                    '<a class="active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
+                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="active" id="tab1"></div>' +
                     '<div id="tab2"></div>' +
                     '</div>' +
                     '<div>' +
-                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
-                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="active" id="tab3"></div>' +
@@ -790,16 +790,16 @@ describe('Tab', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
-                    '<a href="#tab1" class="active" id="tabToggle1" data-ui-toggle="tab"></a>' +
-                    '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab"></a>' +
+                    '<a class="active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
+                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="active" id="tab1"></div>' +
                     '<div id="tab2"></div>' +
                     '</div>' +
                     '<div>' +
-                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
-                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="active" id="tab3"></div>' +
@@ -821,16 +821,16 @@ describe('Tab', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div>' +
-                    '<a href="#tab1" class="active" id="tabToggle1" data-ui-toggle="tab"></a>' +
-                    '<a href="#tab2" id="tabToggle2" data-ui-toggle="tab"></a>' +
+                    '<a class="active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
+                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="active" id="tab1"></div>' +
                     '<div id="tab2"></div>' +
                     '</div>' +
                     '<div>' +
-                    '<a href="#tab3" class="active" id="tabToggle3" data-ui-toggle="tab"></a>' +
-                    '<a href="#tab4" id="tabToggle4" data-ui-toggle="tab"></a>' +
+                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
                     '<div>' +
                     '<div class="active" id="tab3"></div>' +

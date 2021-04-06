@@ -7,7 +7,7 @@ describe('Text Expand', function() {
         await exec(_ => {
             dom.setHTML(
                 document.body,
-                '<textarea id="input" class="input-filled text-expand"></textarea>'
+                '<textarea class="input-filled text-expand" id="input"></textarea>'
             );
         });
     });

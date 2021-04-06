@@ -9,10 +9,10 @@ describe('Alert', function() {
             dom.setHTML(
                 document.body,
                 '<div class="alert" id="alert1">' +
-                '<button id="button1" data-ui-dismiss="alert"></button>' +
+                '<button id="button1" data-ui-dismiss="alert" type="button"></button>' +
                 '</div>' +
                 '<div class="alert" id="alert2">' +
-                '<button id="button2" data-ui-dismiss="alert"></button>' +
+                '<button id="button2" data-ui-dismiss="alert" type="button"></button>' +
                 '</div>'
             );
         });
@@ -163,7 +163,7 @@ describe('Alert', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="alert" id="alert2">' +
-                    '<button id="button2" data-ui-dismiss="alert"></button>' +
+                    '<button id="button2" data-ui-dismiss="alert" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -181,7 +181,7 @@ describe('Alert', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="alert" id="alert2">' +
-                    '<button id="button2" data-ui-dismiss="alert"></button>' +
+                    '<button id="button2" data-ui-dismiss="alert" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -199,7 +199,7 @@ describe('Alert', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="alert" id="alert2">' +
-                    '<button id="button2" data-ui-dismiss="alert"></button>' +
+                    '<button id="button2" data-ui-dismiss="alert" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -273,10 +273,10 @@ describe('Alert', function() {
                     });
                 }),
                 '<div class="alert" id="alert1">' +
-                '<button id="button1" data-ui-dismiss="alert"></button>' +
+                '<button id="button1" data-ui-dismiss="alert" type="button"></button>' +
                 '</div>' +
                 '<div class="alert" id="alert2">' +
-                '<button id="button2" data-ui-dismiss="alert"></button>' +
+                '<button id="button2" data-ui-dismiss="alert" type="button"></button>' +
                 '</div>'
             );
         });
@@ -293,7 +293,7 @@ describe('Alert', function() {
                     });
                 }),
                 '<div class="alert" id="alert2">' +
-                '<button id="button2" data-ui-dismiss="alert"></button>' +
+                '<button id="button2" data-ui-dismiss="alert" type="button"></button>' +
                 '</div>'
             );
         });
@@ -309,10 +309,10 @@ describe('Alert', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="alert" id="alert1">' +
-                    '<button id="button1" data-ui-dismiss="alert"></button>' +
+                    '<button id="button1" data-ui-dismiss="alert" type="button"></button>' +
                     '</div>' +
                     '<div class="alert" id="alert2">' +
-                    '<button id="button2" data-ui-dismiss="alert"></button>' +
+                    '<button id="button2" data-ui-dismiss="alert" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -329,10 +329,10 @@ describe('Alert', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="alert" id="alert1">' +
-                    '<button id="button1" data-ui-dismiss="alert"></button>' +
+                    '<button id="button1" data-ui-dismiss="alert" type="button"></button>' +
                     '</div>' +
                     '<div class="alert" id="alert2">' +
-                    '<button id="button2" data-ui-dismiss="alert"></button>' +
+                    '<button id="button2" data-ui-dismiss="alert" type="button"></button>' +
                     '</div>'
                 );
             });
