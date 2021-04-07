@@ -7,7 +7,7 @@ Modal.defaults = {
     keyboard: true
 };
 
-Modal.stack = new Set;
+Modal._stack = new Set;
 
 UI.initComponent('modal', Modal);
 

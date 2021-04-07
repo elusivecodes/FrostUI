@@ -135,7 +135,7 @@ describe('Modal', function() {
             );
             assert.strictEqual(
                 await exec(_ => {
-                    return UI.Modal.stack.size;
+                    return UI.Modal._stack.size;
                 }),
                 0
             );
@@ -1477,8 +1477,63 @@ describe('Modal', function() {
             });
         });
 
-        it('works with show option (data-ui-show))');
-        it('works with show option (query)');
+        it('works with show option (data-ui-show))', async function() {
+            await exec(_ => {
+                const modal1 = dom.findOne('#modal1');
+                dom.setDataset(modal1, 'uiShow', true);
+                UI.Modal.init(modal1);
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#modalDialog1') && dom.hasAnimation('.modal-backdrop')),
+                    true
+                );
+            }).then(waitFor(175)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<div class="modal show" id="modal1" data-ui-show="true" aria-modal="true">' +
+                    '<div class="modal-dialog" id="modalDialog1" style="">' +
+                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="modal" id="modal2">' +
+                    '<div class="modal-dialog" id="modalDialog2">' +
+                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="modal-backdrop" style=""></div>'
+                );
+            });
+        });
+
+        it('works with show option (query)', async function() {
+            await exec(_ => {
+                dom.query('#modal1').modal({ show: true });
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#modalDialog1') && dom.hasAnimation('.modal-backdrop')),
+                    true
+                );
+            }).then(waitFor(175)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal-dialog" id="modalDialog1" style="">' +
+                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="modal" id="modal2">' +
+                    '<div class="modal-dialog" id="modalDialog2">' +
+                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="modal-backdrop" style=""></div>'
+                );
+            });
+        });
 
         it('works without show option', async function() {
             await exec(_ => {
@@ -1535,8 +1590,63 @@ describe('Modal', function() {
             });
         });
 
-        it('works with backdrop option (data-ui-backdrop))');
-        it('works with backdrop option (query)');
+        it('works with backdrop option (data-ui-backdrop))', async function() {
+            await exec(_ => {
+                const modal1 = dom.findOne('#modal1');
+                dom.setDataset(modal1, 'uiBackdrop', false);
+                UI.Modal.init(modal1).show();
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#modalDialog1')),
+                    true
+                );
+            }).then(waitFor(175)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<div class="modal show" id="modal1" data-ui-backdrop="false" aria-modal="true">' +
+                    '<div class="modal-dialog" id="modalDialog1" style="">' +
+                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="modal" id="modal2">' +
+                    '<div class="modal-dialog" id="modalDialog2">' +
+                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '</div>' +
+                    '</div>'
+                );
+            });
+        });
+
+        it('works with backdrop option (query)', async function() {
+            await exec(_ => {
+                dom.query('#modal1')
+                    .modal({ backdrop: false })
+                    .show();
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#modalDialog1')),
+                    true
+                );
+            }).then(waitFor(175)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal-dialog" id="modalDialog1" style="">' +
+                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="modal" id="modal2">' +
+                    '<div class="modal-dialog" id="modalDialog2">' +
+                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '</div>' +
+                    '</div>'
+                );
+            });
+        });
 
         it('hides the modal on document click (with backdrop)', async function() {
             await exec(_ => {

@@ -428,7 +428,7 @@ $toast-backdrop-filter: blur(10px) !default;
 $toast-header-padding-x: $toast-padding-x !default;
 $toast-header-padding-y: $spacing / 2 !default;
 $toast-header-color: map-get($color-variants, dark) !default;
-$toast-header-background-color: $toast-background-color !default;
+$toast-header-background-color: fade($white, .05) !default;
 $toast-body-padding-x: $toast-padding-x !default;
 $toast-body-padding-y: $toast-padding-y !default;
 

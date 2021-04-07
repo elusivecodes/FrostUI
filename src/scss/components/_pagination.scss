@@ -65,7 +65,7 @@
     }
 
     &:not(:first-child) .page-link {
-        margin-left: -$page-link-border-size;
+        margin-left: $page-link-border-size * -1;
     }
 }
 

@@ -101,15 +101,3 @@
     @extend .card-img;
     @include border-bottom-radius($card-inner-border-radius);
 }
-
-.card-header-tabs {
-    margin-right: -$card-header-padding-x;
-    margin-bottom: -$card-header-padding-y;
-    margin-left: -$card-header-padding-x;
-    border-bottom: 0;
-}
-
-.card-header-pills {
-    margin-right: -$card-header-padding-x;
-    margin-left: -$card-header-padding-x;
-}

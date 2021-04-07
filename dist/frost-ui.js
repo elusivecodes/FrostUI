@@ -1496,6 +1496,10 @@
             this._menuNode = null;
             this._referenceNode = null;
 
+            if (this.constructor._current === this) {
+                this.constructor._current = null;
+            }
+
             super.dispose();
         }
 
@@ -1513,6 +1517,10 @@
             }
 
             this._animating = true;
+
+            if (this.constructor._current === this) {
+                this.constructor._current = null;
+            }
 
             dom.fadeOut(this._menuNode, {
                 duration: this._settings.duration
@@ -1542,6 +1550,8 @@
 
             this._animating = true;
             dom.addClass(this._menuNode, 'show');
+
+            this.constructor._current = this;
 
             this.update();
 
@@ -1581,41 +1591,6 @@
             }
 
             return this;
-        }
-
-        /**
-         * Auto-hide all visible dropdowns.
-         * @param {HTMLElement} [target] The target node.
-         * @param {Boolean} [noHideSelf=false] Whether to force prevent hiding self.
-         */
-        static autoHide(target, noHideSelf = false) {
-            if (!noHideSelf) {
-                noHideSelf = dom.is(target, 'form');
-            }
-
-            const menus = dom.find('.dropdown-menu.show');
-
-            for (const menu of menus) {
-                if (
-                    target &&
-                    dom.hasDescendent(menu, target) &&
-                    (
-                        noHideSelf ||
-                        dom.closest(target, 'form', menu).length
-                    )
-                ) {
-                    continue;
-                }
-
-                const trigger = dom.prev(menu).shift();
-
-                if (dom.isSame(target, trigger)) {
-                    continue;
-                }
-
-                const dropdown = this.init(trigger);
-                dropdown.hide();
-            }
         }
 
     }
@@ -1672,19 +1647,48 @@
     });
 
     dom.addEvent(document, 'click.ui.dropdown', e => {
-        Dropdown.autoHide(e.target);
+        const dropdown = Dropdown._current;
+
+        if (
+            !dropdown ||
+            dropdown._node === e.target ||
+            (
+                dom.hasDescendent(dropdown._node, e.target) &&
+                (
+                    dom.is(e.target, 'form') ||
+                    dom.closest(target, 'form', menu).length
+                )
+            )
+        ) {
+            return;
+        }
+
+        dropdown.hide();
     });
 
     dom.addEvent(document, 'keyup.ui.dropdown', e => {
-        switch (e.code) {
-            case 'Tab':
-                Dropdown.autoHide(e.target, true);
-                break;
-            case 'Escape':
-                Dropdown.autoHide();
-                break;
+        const dropdown = Dropdown._current;
+
+        if (
+            !['Tab', 'Escape'].includes(e.code) ||
+            !dropdown ||
+            (e.code === 'Tab' && dropdown._node === e.target) ||
+            (
+                dom.hasDescendent(dropdown._menuNode, e.target) &&
+                (
+                    e.code === 'Tab' ||
+                    dom.is(e.target, 'form') ||
+                    dom.closest(e.target, 'form', dropdown._menuNode).length
+                )
+            )
+        ) {
+            return;
         }
-    });
+
+        e.stopPropagation();
+
+        dropdown.hide();
+    }, { capture: true });
 
 
     // Dropdown default options
@@ -1733,7 +1737,7 @@
             this._activeTarget = null;
             this._backdrop = null;
 
-            this.constructor.stack.delete(this);
+            this.constructor._stack.delete(this);
 
             super.dispose();
         }
@@ -1753,10 +1757,10 @@
 
             this._animating = true;
 
-            this.constructor.stack.delete(this);
+            this.constructor._stack.delete(this);
 
-            const stackSize = this.constructor.stack.size;
-            const offcanvas = Offcanvas.current;
+            const stackSize = this.constructor._stack.size;
+            const offcanvas = Offcanvas._current;
 
             Promise.all([
                 dom.fadeOut(this._dialog, {
@@ -1819,7 +1823,7 @@
             this._activeTarget = activeTarget;
             this._animating = true;
 
-            const stackSize = this.constructor.stack.size;
+            const stackSize = this.constructor._stack.size;
 
             if (stackSize) {
                 let zIndex = dom.css(this._node, 'zIndex');
@@ -1828,7 +1832,7 @@
 
                 dom.setStyle(this._node, 'zIndex', zIndex);
             } else {
-                if (!Offcanvas.current) {
+                if (!Offcanvas._current) {
                     UI.addScrollPadding();
                 }
 
@@ -1837,7 +1841,7 @@
 
             dom.addClass(this._node, 'show');
 
-            this.constructor.stack.add(this);
+            this.constructor._stack.add(this);
 
             if (this._settings.backdrop) {
                 this._backdrop = dom.create('div', {
@@ -1912,15 +1916,16 @@
         modal.hide();
     });
 
-    dom.addEvent(document, 'click.ui.modal', e => {
+    // Events must be attached after the Offcanvas events
+    dom.addEvent(window, 'click.ui.modal', e => {
         let modal;
-        for (modal of Modal.stack);
+        for (modal of Modal._stack);
 
         if (
-            dom.is(e.target, '[data-ui-dismiss="modal"]') ||
-            !Modal.stack.size ||
+            !Modal._stack.size ||
             !modal._settings.backdrop ||
             modal._settings.backdrop === 'static' ||
+            dom.is(e.target, '[data-ui-dismiss]') ||
             modal._node !== e.target && dom.hasDescendent(modal._node, e.target)
         ) {
             return;
@@ -1929,9 +1934,9 @@
         modal.hide();
     });
 
-    dom.addEvent(document, 'keyup.ui.modal', e => {
+    dom.addEvent(window, 'keyup.ui.modal', e => {
         let modal;
-        for (modal of Modal.stack);
+        for (modal of Modal._stack);
 
         if (
             e.code !== 'Escape' ||
@@ -1954,7 +1959,7 @@
         keyboard: true
     };
 
-    Modal.stack = new Set;
+    Modal._stack = new Set;
 
     UI.initComponent('modal', Modal);
 
@@ -1972,7 +1977,10 @@
          */
         dispose() {
             this._activeTarget = null;
-            this.constructor.current = null;
+
+            if (this.constructor._current === this) {
+                this.constructor._current = null;
+            }
 
             super.dispose();
         }
@@ -1992,7 +2000,9 @@
 
             this._animating = true;
 
-            this.constructor.current = null;
+            if (this.constructor._current === this) {
+                this.constructor._current = null;
+            }
 
             Promise.all([
                 dom.fadeOut(this._node, {
@@ -2039,7 +2049,7 @@
          */
         show(activeTarget) {
             if (
-                this.constructor.current ||
+                this.constructor._current ||
                 this._animating ||
                 dom.hasClass(this._node, 'show') ||
                 !dom.triggerOne(this._node, 'show.ui.offcanvas')
@@ -2052,7 +2062,7 @@
 
             dom.addClass(this._node, 'show');
 
-            this.constructor.current = this;
+            this.constructor._current = this;
 
             if (this._settings.backdrop) {
                 dom.addClass(document.body, 'offcanvas-backdrop');
@@ -2117,36 +2127,36 @@
     });
 
     dom.addEvent(document, 'click.ui.offcanvas', e => {
-        const offcanvas = Offcanvas.current;
+        const offcanvas = Offcanvas._current;
 
         if (
-            dom.is(e.target, '[data-ui-dismiss="offcanvas"]') ||
-            Modal.stack.size ||
             !offcanvas ||
             !offcanvas._settings.backdrop ||
             offcanvas._node === e.target ||
+            Modal._stack.size ||
+            dom.is(e.target, '[data-ui-dismiss]') ||
             dom.hasDescendent(offcanvas._node, e.target)
         ) {
             return;
         }
 
         offcanvas.hide();
-    }, { capture: true });
+    });
 
     dom.addEvent(document, 'keyup.ui.offcanvas', e => {
-        const offcanvas = Offcanvas.current;
+        const offcanvas = Offcanvas._current;
 
         if (
             e.code !== 'Escape' ||
-            Modal.stack.size ||
             !offcanvas ||
-            !offcanvas._settings.keyboard
+            !offcanvas._settings.keyboard ||
+            Modal._stack.size
         ) {
             return;
         }
 
         offcanvas.hide();
-    }, { capture: true });
+    });
 
 
     /**

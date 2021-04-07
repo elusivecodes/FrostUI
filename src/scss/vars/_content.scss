@@ -4,7 +4,7 @@ $address-margin-bottom: $spacing !default;
 // blockquote
 $blockquote-margin-bottom: $spacing !default;
 $blockquote-font-size: $font-size-lg !default;
-$blockquote-footer-margin-top: -$spacing !default;
+$blockquote-footer-margin-top: ($spacing * -1) !default;
 $blockquote-footer-font-size: 80% !default;
 $blockquote-footer-color: $gray-dark !default;
 $blockquote-footer-prefix: "\2014 \00A0" !default;

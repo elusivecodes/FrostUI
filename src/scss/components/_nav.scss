@@ -34,7 +34,7 @@
     border-bottom: $nav-tabs-border-size $border-style $nav-tabs-border-color;
 
     .nav-link {
-        margin-bottom: -$nav-tabs-border-size;
+        margin-bottom: $nav-tabs-border-size * -1;
         background-color: transparent;
         border: $nav-tabs-border-size $border-style transparent;
         @include border-bottom-radius(0);
@@ -56,7 +56,6 @@
         border-color: $nav-tabs-border-color $nav-tabs-border-color $nav-tabs-nav-link-active-background-color;
 
         &:focus {
-            background-color: $nav-link-focus-background-color;
             border-color: $nav-tabs-nav-link-active-border-color $nav-tabs-nav-link-active-border-color $nav-tabs-nav-link-active-background-color;
         }
     }
@@ -109,4 +108,16 @@
             display: block;
         }
     }
+}
+
+.card-header-tabs {
+    margin-right: $card-header-padding-x / -2;
+    margin-bottom: $card-header-padding-y * -1;
+    margin-left: $card-header-padding-x / -2;
+    border-bottom: 0;
+}
+
+.card-header-pills {
+    margin-right: $card-header-padding-x / -2;
+    margin-left: $card-header-padding-x / -2;
 }

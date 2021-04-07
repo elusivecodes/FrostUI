@@ -57,6 +57,10 @@ class Dropdown extends BaseComponent {
         this._menuNode = null;
         this._referenceNode = null;
 
+        if (this.constructor._current === this) {
+            this.constructor._current = null;
+        }
+
         super.dispose();
     }
 
@@ -74,6 +78,10 @@ class Dropdown extends BaseComponent {
         }
 
         this._animating = true;
+
+        if (this.constructor._current === this) {
+            this.constructor._current = null;
+        }
 
         dom.fadeOut(this._menuNode, {
             duration: this._settings.duration
@@ -103,6 +111,8 @@ class Dropdown extends BaseComponent {
 
         this._animating = true;
         dom.addClass(this._menuNode, 'show');
+
+        this.constructor._current = this;
 
         this.update();
 
@@ -142,41 +152,6 @@ class Dropdown extends BaseComponent {
         }
 
         return this;
-    }
-
-    /**
-     * Auto-hide all visible dropdowns.
-     * @param {HTMLElement} [target] The target node.
-     * @param {Boolean} [noHideSelf=false] Whether to force prevent hiding self.
-     */
-    static autoHide(target, noHideSelf = false) {
-        if (!noHideSelf) {
-            noHideSelf = dom.is(target, 'form');
-        }
-
-        const menus = dom.find('.dropdown-menu.show');
-
-        for (const menu of menus) {
-            if (
-                target &&
-                dom.hasDescendent(menu, target) &&
-                (
-                    noHideSelf ||
-                    dom.closest(target, 'form', menu).length
-                )
-            ) {
-                continue;
-            }
-
-            const trigger = dom.prev(menu).shift();
-
-            if (dom.isSame(target, trigger)) {
-                continue;
-            }
-
-            const dropdown = this.init(trigger);
-            dropdown.hide();
-        }
     }
 
 }

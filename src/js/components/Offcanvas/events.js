@@ -16,33 +16,33 @@ dom.addEventDelegate(document, 'click.ui.offcanvas', '[data-ui-dismiss="offcanva
 });
 
 dom.addEvent(document, 'click.ui.offcanvas', e => {
-    const offcanvas = Offcanvas.current;
+    const offcanvas = Offcanvas._current;
 
     if (
-        dom.is(e.target, '[data-ui-dismiss="offcanvas"]') ||
-        Modal.stack.size ||
         !offcanvas ||
         !offcanvas._settings.backdrop ||
         offcanvas._node === e.target ||
+        Modal._stack.size ||
+        dom.is(e.target, '[data-ui-dismiss]') ||
         dom.hasDescendent(offcanvas._node, e.target)
     ) {
         return;
     }
 
     offcanvas.hide();
-}, { capture: true });
+});
 
 dom.addEvent(document, 'keyup.ui.offcanvas', e => {
-    const offcanvas = Offcanvas.current;
+    const offcanvas = Offcanvas._current;
 
     if (
         e.code !== 'Escape' ||
-        Modal.stack.size ||
         !offcanvas ||
-        !offcanvas._settings.keyboard
+        !offcanvas._settings.keyboard ||
+        Modal._stack.size
     ) {
         return;
     }
 
     offcanvas.hide();
-}, { capture: true });
+});

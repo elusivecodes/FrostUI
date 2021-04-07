@@ -49,16 +49,45 @@ dom.addEventDelegate(document, 'keydown.ui.dropdown', '.dropdown-menu.show .drop
 });
 
 dom.addEvent(document, 'click.ui.dropdown', e => {
-    Dropdown.autoHide(e.target);
+    const dropdown = Dropdown._current;
+
+    if (
+        !dropdown ||
+        dropdown._node === e.target ||
+        (
+            dom.hasDescendent(dropdown._node, e.target) &&
+            (
+                dom.is(e.target, 'form') ||
+                dom.closest(target, 'form', menu).length
+            )
+        )
+    ) {
+        return;
+    }
+
+    dropdown.hide();
 });
 
 dom.addEvent(document, 'keyup.ui.dropdown', e => {
-    switch (e.code) {
-        case 'Tab':
-            Dropdown.autoHide(e.target, true);
-            break;
-        case 'Escape':
-            Dropdown.autoHide();
-            break;
+    const dropdown = Dropdown._current;
+
+    if (
+        !['Tab', 'Escape'].includes(e.code) ||
+        !dropdown ||
+        (e.code === 'Tab' && dropdown._node === e.target) ||
+        (
+            dom.hasDescendent(dropdown._menuNode, e.target) &&
+            (
+                e.code === 'Tab' ||
+                dom.is(e.target, 'form') ||
+                dom.closest(e.target, 'form', dropdown._menuNode).length
+            )
+        )
+    ) {
+        return;
     }
-});
+
+    e.stopPropagation();
+
+    dropdown.hide();
+}, { capture: true });

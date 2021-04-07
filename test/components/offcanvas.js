@@ -8,7 +8,7 @@ describe('Offcanvas', function() {
         await exec(_ => {
             dom.removeClass(document.body, 'offcanvas-backdrop');
             dom.removeAttribute(document.body, 'style');
-            UI.Offcanvas.current = null;
+            UI.Offcanvas._current = null;
         });
     });
 
@@ -30,7 +30,7 @@ describe('Offcanvas', function() {
 
     describe('#init', function() {
 
-        it.only('creates a offcanvas', async function() {
+        it('creates a offcanvas', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     const offcanvas1 = dom.findOne('#offcanvas1');
@@ -40,7 +40,7 @@ describe('Offcanvas', function() {
             );
         });
 
-        it.only('creates a offcanvas (data-ui-toggle)', async function() {
+        it('creates a offcanvas (data-ui-toggle)', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     dom.click('#offcanvasToggle1');
@@ -50,7 +50,7 @@ describe('Offcanvas', function() {
             );
         });
 
-        it.only('creates a offcanvas (query)', async function() {
+        it('creates a offcanvas (query)', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     dom.query('#offcanvas1').offcanvas();
@@ -60,7 +60,7 @@ describe('Offcanvas', function() {
             );
         });
 
-        it.only('returns the offcanvas (query)', async function() {
+        it('returns the offcanvas (query)', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     return dom.query('#offcanvas1').offcanvas() instanceof UI.Offcanvas;
@@ -73,7 +73,7 @@ describe('Offcanvas', function() {
 
     describe('#dispose', function() {
 
-        it.only('removes the offcanvas', async function() {
+        it('removes the offcanvas', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     const offcanvas1 = dom.findOne('#offcanvas1');
@@ -84,7 +84,7 @@ describe('Offcanvas', function() {
             );
         });
 
-        it.only('removes the offcanvas (query)', async function() {
+        it('removes the offcanvas (query)', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     dom.query('#offcanvas1').offcanvas('dispose');
@@ -94,7 +94,7 @@ describe('Offcanvas', function() {
             );
         });
 
-        it.only('clears offcanvas memory', async function() {
+        it('clears offcanvas memory', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     const offcanvas1 = dom.findOne('#offcanvas1');
@@ -113,7 +113,7 @@ describe('Offcanvas', function() {
             );
         });
 
-        it.only('clears offcanvas memory when node is removed', async function() {
+        it('clears offcanvas memory when node is removed', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     const offcanvas1 = dom.findOne('#offcanvas1');
@@ -133,7 +133,7 @@ describe('Offcanvas', function() {
             );
             assert.strictEqual(
                 await exec(_ => {
-                    return UI.Offcanvas.current;
+                    return UI.Offcanvas._current;
                 }),
                 null
             );
@@ -143,7 +143,7 @@ describe('Offcanvas', function() {
 
     describe('#show', function() {
 
-        it.only('shows the offcanvas', async function() {
+        it('shows the offcanvas', async function() {
             await exec(_ => {
                 const offcanvas1 = dom.findOne('#offcanvas1');
                 UI.Offcanvas.init(offcanvas1).show();
@@ -167,7 +167,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it.only('shows the offcanvas (data-ui-toggle)', async function() {
+        it('shows the offcanvas (data-ui-toggle)', async function() {
             await exec(_ => {
                 dom.click('#offcanvasToggle1');
             }).then(waitFor(125)).then(async _ => {
@@ -190,7 +190,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it.only('shows the offcanvas (query)', async function() {
+        it('shows the offcanvas (query)', async function() {
             await exec(_ => {
                 dom.query('#offcanvas1').offcanvas('show');
             }).then(waitFor(125)).then(async _ => {
@@ -213,7 +213,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it.only('can be called multiple times', async function() {
+        it('can be called multiple times', async function() {
             await exec(_ => {
                 const offcanvas1 = dom.findOne('#offcanvas1');
                 UI.Offcanvas.init(offcanvas1)
@@ -223,7 +223,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it.only('can be called on shown modal', async function() {
+        it('can be called on shown modal', async function() {
             await exec(async _ => {
                 const offcanvas1 = dom.findOne('#offcanvas1');
                 UI.Offcanvas.init(offcanvas1).show();
@@ -238,7 +238,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it.only('returns the offcanvas', async function() {
+        it('returns the offcanvas', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     const offcanvas1 = dom.findOne('#offcanvas1');
@@ -248,7 +248,7 @@ describe('Offcanvas', function() {
             );
         });
 
-        it.only('returns the offcanvas (query)', async function() {
+        it('returns the offcanvas (query)', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     return dom.query('#offcanvas1').offcanvas('show') instanceof UI.Offcanvas;
@@ -261,7 +261,7 @@ describe('Offcanvas', function() {
 
     describe('#hide', function() {
 
-        it.only('hides the offcanvas', async function() {
+        it('hides the offcanvas', async function() {
             await exec(_ => {
                 const offcanvas1 = dom.findOne('#offcanvas1');
                 UI.Offcanvas.init(offcanvas1).show();
@@ -294,7 +294,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it.only('hides the offcanvas (data-ui-dismiss)', async function() {
+        it('hides the offcanvas (data-ui-dismiss)', async function() {
             await exec(_ => {
                 const offcanvas1 = dom.findOne('#offcanvas1');
                 UI.Offcanvas.init(offcanvas1).show();
@@ -326,7 +326,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it.only('hides the offcanvas (query)', async function() {
+        it('hides the offcanvas (query)', async function() {
             await exec(_ => {
                 dom.query('#offcanvas1').offcanvas('show');
             }).then(waitFor(50)).then(async _ => {
@@ -357,7 +357,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it.only('does not remove the offcanvas after hiding', async function() {
+        it('does not remove the offcanvas after hiding', async function() {
             await exec(_ => {
                 const offcanvas1 = dom.findOne('#offcanvas1');
                 UI.Offcanvas.init(offcanvas1).show();
@@ -378,7 +378,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it.only('can be called multiple times', async function() {
+        it('can be called multiple times', async function() {
             await exec(_ => {
                 const offcanvas1 = dom.findOne('#offcanvas1');
                 UI.Offcanvas.init(offcanvas1).show();
@@ -397,14 +397,14 @@ describe('Offcanvas', function() {
             });
         });
 
-        it.only('can be called on hidden offcanvas', async function() {
+        it('can be called on hidden offcanvas', async function() {
             await exec(async _ => {
                 const offcanvas1 = dom.findOne('#offcanvas1');
                 UI.Offcanvas.init(offcanvas1).hide();
             });
         });
 
-        it.only('returns the offcanvas', async function() {
+        it('returns the offcanvas', async function() {
             await exec(_ => {
                 const offcanvas1 = dom.findOne('#offcanvas1');
                 UI.Offcanvas.init(offcanvas1).show();
@@ -423,7 +423,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it.only('returns the offcanvas (query)', async function() {
+        it('returns the offcanvas (query)', async function() {
             await exec(_ => {
                 dom.query('#offcanvas1').offcanvas('show');
             }).then(waitFor(50)).then(async _ => {
@@ -444,7 +444,7 @@ describe('Offcanvas', function() {
 
     describe('#toggle (show)', function() {
 
-        it.only('shows the offcanvas', async function() {
+        it('shows the offcanvas', async function() {
             await exec(_ => {
                 const offcanvas1 = dom.findOne('#offcanvas1');
                 UI.Offcanvas.init(offcanvas1).toggle();
@@ -468,7 +468,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it.only('shows the offcanvas (query)', async function() {
+        it('shows the offcanvas (query)', async function() {
             await exec(_ => {
                 dom.query('#offcanvas1').offcanvas('toggle');
             }).then(waitFor(125)).then(async _ => {
@@ -491,7 +491,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it.only('can be called multiple times', async function() {
+        it('can be called multiple times', async function() {
             await exec(_ => {
                 const offcanvas1 = dom.findOne('#offcanvas1');
                 UI.Offcanvas.init(offcanvas1)
@@ -501,7 +501,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it.only('returns the offcanvas', async function() {
+        it('returns the offcanvas', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     const offcanvas1 = dom.findOne('#offcanvas1');
@@ -511,7 +511,7 @@ describe('Offcanvas', function() {
             );
         });
 
-        it.only('returns the offcanvas (query)', async function() {
+        it('returns the offcanvas (query)', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     return dom.query('#offcanvas1').offcanvas('toggle') instanceof UI.Offcanvas;
@@ -524,7 +524,7 @@ describe('Offcanvas', function() {
 
     describe('#toggle (hide)', function() {
 
-        it.only('hides the offcanvas', async function() {
+        it('hides the offcanvas', async function() {
             await exec(_ => {
                 const offcanvas1 = dom.findOne('#offcanvas1');
                 UI.Offcanvas.init(offcanvas1).show();
@@ -557,7 +557,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it.only('hides the offcanvas (query)', async function() {
+        it('hides the offcanvas (query)', async function() {
             await exec(_ => {
                 dom.query('#offcanvas1').offcanvas('show');
             }).then(waitFor(50)).then(async _ => {
@@ -588,7 +588,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it.only('can be called multiple times', async function() {
+        it('can be called multiple times', async function() {
             await exec(_ => {
                 const offcanvas1 = dom.findOne('#offcanvas1');
                 UI.Offcanvas.init(offcanvas1).show();
@@ -607,7 +607,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it.only('returns the offcanvas', async function() {
+        it('returns the offcanvas', async function() {
             await exec(_ => {
                 const offcanvas1 = dom.findOne('#offcanvas1');
                 UI.Offcanvas.init(offcanvas1).show();
@@ -626,7 +626,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it.only('returns the offcanvas (query)', async function() {
+        it('returns the offcanvas (query)', async function() {
             await exec(_ => {
                 dom.query('#offcanvas1').offcanvas('show');
             }).then(waitFor(50)).then(async _ => {
@@ -646,6 +646,702 @@ describe('Offcanvas', function() {
     });
 
     describe('events', function() {
+
+        it('triggers show event', async function() {
+            assert.strictEqual(
+                await exec(async _ => {
+                    return await new Promise(resolve => {
+                        const offcanvas1 = dom.findOne('#offcanvas1');
+                        dom.addEvent(offcanvas1, 'show.ui.offcanvas', _ => {
+                            resolve(dom.getHTML(document.body));
+                        })
+                        UI.Offcanvas.init(offcanvas1).show();
+                    });
+                }),
+                '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                '<div class="offcanvas offcanvas-start" id="offcanvas1">' +
+                '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                '</div>' +
+                '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
+                '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                '</div>'
+            );
+        });
+
+        it('triggers shown event', async function() {
+            assert.strictEqual(
+                await exec(async _ => {
+                    return await new Promise(resolve => {
+                        const offcanvas1 = dom.findOne('#offcanvas1');
+                        dom.addEvent(offcanvas1, 'shown.ui.offcanvas', _ => {
+                            resolve(dom.getHTML(document.body));
+                        })
+                        UI.Offcanvas.init(offcanvas1).show();
+                    });
+                }),
+                '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                '</div>' +
+                '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
+                '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                '</div>'
+            );
+        });
+
+        it('triggers hide event', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                UI.Offcanvas.init(offcanvas1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#offcanvas1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(async _ => {
+                        return await new Promise(resolve => {
+                            const offcanvas1 = dom.findOne('#offcanvas1');
+                            dom.addEvent(offcanvas1, 'hide.ui.offcanvas', _ => {
+                                resolve(dom.getHTML(document.body));
+                            })
+                            UI.Offcanvas.init(offcanvas1).hide();
+                        });
+                    }),
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
+                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>'
+                );
+            });
+        });
+
+        it('triggers hidden event', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                UI.Offcanvas.init(offcanvas1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#offcanvas1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(async _ => {
+                        return await new Promise(resolve => {
+                            const offcanvas1 = dom.findOne('#offcanvas1');
+                            dom.addEvent(offcanvas1, 'hidden.ui.offcanvas', _ => {
+                                resolve(dom.getHTML(document.body));
+                            })
+                            UI.Offcanvas.init(offcanvas1).hide();
+                        });
+                    }),
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" style="">' +
+                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
+                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>'
+                );
+            });
+        });
+
+        it('triggers show event (toggle)', async function() {
+            assert.strictEqual(
+                await exec(async _ => {
+                    return await new Promise(resolve => {
+                        const offcanvas1 = dom.findOne('#offcanvas1');
+                        dom.addEvent(offcanvas1, 'show.ui.offcanvas', _ => {
+                            resolve(dom.getHTML(document.body));
+                        })
+                        UI.Offcanvas.init(offcanvas1).toggle();
+                    });
+                }),
+                '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                '<div class="offcanvas offcanvas-start" id="offcanvas1">' +
+                '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                '</div>' +
+                '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
+                '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                '</div>'
+            );
+        });
+
+        it('triggers shown event (toggle)', async function() {
+            assert.strictEqual(
+                await exec(async _ => {
+                    return await new Promise(resolve => {
+                        const offcanvas1 = dom.findOne('#offcanvas1');
+                        dom.addEvent(offcanvas1, 'shown.ui.offcanvas', _ => {
+                            resolve(dom.getHTML(document.body));
+                        })
+                        UI.Offcanvas.init(offcanvas1).toggle();
+                    });
+                }),
+                '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                '</div>' +
+                '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
+                '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                '</div>'
+            );
+        });
+
+        it('triggers hide event (toggle)', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                UI.Offcanvas.init(offcanvas1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#offcanvas1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(async _ => {
+                        return await new Promise(resolve => {
+                            const offcanvas1 = dom.findOne('#offcanvas1');
+                            dom.addEvent(offcanvas1, 'hide.ui.offcanvas', _ => {
+                                resolve(dom.getHTML(document.body));
+                            })
+                            UI.Offcanvas.init(offcanvas1).toggle();
+                        });
+                    }),
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
+                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>'
+                );
+            });
+        });
+
+        it('triggers hidden event (toggle)', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                UI.Offcanvas.init(offcanvas1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#offcanvas1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(async _ => {
+                        return await new Promise(resolve => {
+                            const offcanvas1 = dom.findOne('#offcanvas1');
+                            dom.addEvent(offcanvas1, 'hidden.ui.offcanvas', _ => {
+                                resolve(dom.getHTML(document.body));
+                            })
+                            UI.Offcanvas.init(offcanvas1).toggle();
+                        });
+                    }),
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" style="">' +
+                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
+                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>'
+                );
+            });
+        });
+
+        it('can be prevented from showing', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                dom.addEvent(offcanvas1, 'show.ui.offcanvas', _ => {
+                    return false;
+                })
+                UI.Offcanvas.init(offcanvas1).show();
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas1">' +
+                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
+                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>'
+                );
+            });
+        });
+
+        it('can be prevented from showing (prevent default)', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                dom.addEvent(offcanvas1, 'show.ui.offcanvas', e => {
+                    e.preventDefault();
+                })
+                UI.Offcanvas.init(offcanvas1).show();
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas1">' +
+                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
+                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>'
+                );
+            });
+        });
+
+        it('can be prevented from hiding', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                UI.Offcanvas.init(offcanvas1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#offcanvas1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(async _ => {
+                    const offcanvas1 = dom.findOne('#offcanvas1');
+                    dom.addEvent(offcanvas1, 'hide.ui.offcanvas', _ => {
+                        return false;
+                    })
+                    UI.Offcanvas.init(offcanvas1).hide();
+                });
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
+                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>'
+                );
+            });
+        });
+
+    });
+
+    describe('duration option', function() {
+
+        it('works with duration option on show', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                UI.Offcanvas.init(offcanvas1, { duration: 200 }).show();
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#offcanvas1')),
+                    true
+                );
+            });
+        });
+
+        it('works with duration option on show (data-ui-duration)', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                dom.setDataset(offcanvas1, 'uiDuration', 200);
+                UI.Offcanvas.init(offcanvas1).show();
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#offcanvas1')),
+                    true
+                );
+            });
+        });
+
+        it('works with duration option on show (query)', async function() {
+            await exec(_ => {
+                dom.query('#offcanvas1')
+                    .offcanvas({ duration: 200 })
+                    .show();
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#offcanvas1')),
+                    true
+                );
+            });
+        });
+
+        it('works with duration option on hide', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                UI.Offcanvas.init(offcanvas1, { duration: 200 }).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#offcanvas1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const offcanvas1 = dom.findOne('#offcanvas1');
+                    UI.Offcanvas.init(offcanvas1).hide();
+                });
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#offcanvas1')),
+                    true
+                );
+            });
+        });
+
+        it('works with duration option on hide (data-ui-duration)', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                dom.setDataset(offcanvas1, 'uiDuration', 200);
+                UI.Offcanvas.init(offcanvas1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#offcanvas1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const offcanvas1 = dom.findOne('#offcanvas1');
+                    UI.Offcanvas.init(offcanvas1).hide();
+                });
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#offcanvas1')),
+                    true
+                );
+            });
+        });
+
+        it('works with duration option on hide (query)', async function() {
+            await exec(_ => {
+                dom.query('#offcanvas1')
+                    .offcanvas({ duration: 200 })
+                    .show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#offcanvas1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.query('#offcanvas1')
+                        .offcanvas('hide');
+                });
+            }).then(waitFor(150)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#offcanvas1')),
+                    true
+                );
+            });
+        });
+
+    });
+
+    describe('keyboard option', function() {
+
+        it('hides the offcanvas on escape', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                UI.Offcanvas.init(offcanvas1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#offcanvas1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const event = new KeyboardEvent('keyup', {
+                        bubbles: true,
+                        code: 'Escape'
+                    });
+                    document.body.dispatchEvent(event);
+                });
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#offcanvas1')),
+                    true
+                );
+            }).then(waitFor(175)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" style="">' +
+                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
+                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>'
+                );
+            });
+        });
+
+        it('works with keyboard option', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                UI.Offcanvas.init(offcanvas1, { keyboard: false }).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#offcanvas1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const event = new KeyboardEvent('keyup', {
+                        bubbles: true,
+                        code: 'Escape'
+                    });
+                    document.body.dispatchEvent(event);
+                });
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
+                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>'
+                );
+            });
+        });
+
+        it('works with keyboard option (data-ui-keyboard)', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                dom.setDataset(offcanvas1, 'uiKeyboard', false);
+                UI.Offcanvas.init(offcanvas1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#offcanvas1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const event = new KeyboardEvent('keyup', {
+                        bubbles: true,
+                        code: 'Escape'
+                    });
+                    document.body.dispatchEvent(event);
+                });
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" data-ui-keyboard="false" aria-modal="true" style="">' +
+                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
+                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>'
+                );
+            });
+        });
+
+        it('works with keyboard option (query)', async function() {
+            await exec(_ => {
+                dom.query('#offcanvas1')
+                    .offcanvas({ keyboard: false })
+                    .show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#offcanvas1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const event = new KeyboardEvent('keyup', {
+                        bubbles: true,
+                        code: 'Escape'
+                    });
+                    document.body.dispatchEvent(event);
+                });
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
+                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>'
+                );
+            });
+        });
+
+    });
+
+    describe('backdrop option', function() {
+
+        it('adds backdrop to document body', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                UI.Offcanvas.init(offcanvas1).show();
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasClass(document.body, 'offcanvas-backdrop')),
+                    true
+                );
+            });
+        });
+
+        it('works with backdrop option', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                UI.Offcanvas.init(offcanvas1, { backdrop: false }).show();
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasClass(document.body, 'offcanvas-backdrop')),
+                    false
+                );
+            });
+        });
+
+        it('works with backdrop option (data-ui-backdrop)', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                dom.setDataset(offcanvas1, 'uiBackdrop', false);
+                UI.Offcanvas.init(offcanvas1).show();
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasClass(document.body, 'offcanvas-backdrop')),
+                    false
+                );
+            });
+        });
+
+        it('works with backdrop option (query)', async function() {
+            await exec(_ => {
+                dom.query('#offcanvas1')
+                    .offcanvas({ backdrop: false })
+                    .show();
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasClass(document.body, 'offcanvas-backdrop')),
+                    false
+                );
+            });
+        });
+
+        it('hides the offcanvas on document click (with backdrop)', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                UI.Offcanvas.init(offcanvas1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#offcanvas1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.click(document.body);
+                });
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#offcanvas1')),
+                    true
+                );
+            }).then(waitFor(175)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" style="">' +
+                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
+                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>'
+                );
+            });
+        });
+
+        it('does not hide the offcanvas on document click (without backdrop)', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                UI.Offcanvas.init(offcanvas1, { backdrop: false }).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#offcanvas1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.click(document.body);
+                });
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
+                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>'
+                );
+            });
+        });
+
+    });
+
+    describe('scroll option', function() {
+
+        it('prevents scroll on document body', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                UI.Offcanvas.init(offcanvas1).show();
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getStyle(document.body, 'overflow')),
+                    'hidden'
+                );
+            });
+        });
+
+        it('works with scroll option', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                UI.Offcanvas.init(offcanvas1, { scroll: true }).show();
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getStyle(document.body, 'overflow')),
+                    ''
+                );
+            });
+        });
+
+        it('works with scroll option (data-ui-scroll)', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                dom.setDataset(offcanvas1, 'uiScroll', true);
+                UI.Offcanvas.init(offcanvas1).show();
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getStyle(document.body, 'overflow')),
+                    ''
+                );
+            });
+        });
+
+        it('works with scroll option', async function() {
+            await exec(_ => {
+                dom.query('#offcanvas1')
+                    .offcanvas({ scroll: true })
+                    .show();
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getStyle(document.body, 'overflow')),
+                    ''
+                );
+            });
+        });
 
     });
 

@@ -15,15 +15,16 @@ dom.addEventDelegate(document, 'click.ui.modal', '[data-ui-dismiss="modal"]', e 
     modal.hide();
 });
 
-dom.addEvent(document, 'click.ui.modal', e => {
+// Events must be attached after the Offcanvas events
+dom.addEvent(window, 'click.ui.modal', e => {
     let modal;
-    for (modal of Modal.stack);
+    for (modal of Modal._stack);
 
     if (
-        dom.is(e.target, '[data-ui-dismiss="modal"]') ||
-        !Modal.stack.size ||
+        !Modal._stack.size ||
         !modal._settings.backdrop ||
         modal._settings.backdrop === 'static' ||
+        dom.is(e.target, '[data-ui-dismiss]') ||
         modal._node !== e.target && dom.hasDescendent(modal._node, e.target)
     ) {
         return;
@@ -32,9 +33,9 @@ dom.addEvent(document, 'click.ui.modal', e => {
     modal.hide();
 });
 
-dom.addEvent(document, 'keyup.ui.modal', e => {
+dom.addEvent(window, 'keyup.ui.modal', e => {
     let modal;
-    for (modal of Modal.stack);
+    for (modal of Modal._stack);
 
     if (
         e.code !== 'Escape' ||

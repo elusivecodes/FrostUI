@@ -79,8 +79,8 @@
     width: 100%;
 
     .navbar-nav {
-        margin-right: -$nav-link-padding-x;
-        margin-left: -$nav-link-padding-x;
+        margin-right: $nav-link-padding-x * -1;
+        margin-left: $nav-link-padding-x * -1;
     }
 }
 
@@ -94,7 +94,7 @@
 
     .navbar-toggler-icon {
         position: relative;
-        top: -$border-size;
+        top: $border-size * -1;
     }
 
     &:focus {

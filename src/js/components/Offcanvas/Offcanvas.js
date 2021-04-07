@@ -9,7 +9,10 @@ class Offcanvas extends BaseComponent {
      */
     dispose() {
         this._activeTarget = null;
-        this.constructor.current = null;
+
+        if (this.constructor._current === this) {
+            this.constructor._current = null;
+        }
 
         super.dispose();
     }
@@ -29,7 +32,9 @@ class Offcanvas extends BaseComponent {
 
         this._animating = true;
 
-        this.constructor.current = null;
+        if (this.constructor._current === this) {
+            this.constructor._current = null;
+        }
 
         Promise.all([
             dom.fadeOut(this._node, {
@@ -76,7 +81,7 @@ class Offcanvas extends BaseComponent {
      */
     show(activeTarget) {
         if (
-            this.constructor.current ||
+            this.constructor._current ||
             this._animating ||
             dom.hasClass(this._node, 'show') ||
             !dom.triggerOne(this._node, 'show.ui.offcanvas')
@@ -89,7 +94,7 @@ class Offcanvas extends BaseComponent {
 
         dom.addClass(this._node, 'show');
 
-        this.constructor.current = this;
+        this.constructor._current = this;
 
         if (this._settings.backdrop) {
             dom.addClass(document.body, 'offcanvas-backdrop');

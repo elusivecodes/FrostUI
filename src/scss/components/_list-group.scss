@@ -75,7 +75,7 @@
         border-top-width: 0;
 
         &.active {
-            margin-top: -$list-group-border-size;
+            margin-top: $list-group-border-size * -1;
             border-top-width: $list-group-border-size;
         }
     }
@@ -147,7 +147,7 @@
 
                 &.active {
                     margin-top: 0;
-                    margin-left: -$list-group-border-size;
+                    margin-left: $list-group-border-size * -1;
                     border-left-width: $list-group-border-size;
                 }
             }
