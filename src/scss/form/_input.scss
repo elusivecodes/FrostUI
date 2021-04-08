@@ -68,7 +68,7 @@
 .input-filled {
     background-color: var(--ui-input-filled-bg, #{$input-filled-background-color});
     border: 0;
-    border-bottom: $input-border-size $border-style var(--ui-input-border-color, #{input-filled-border-color});
+    border-bottom: $input-border-size $border-style var(--ui-input-border-color, #{$input-filled-border-color});
 
     &:hover {
         background-color: var(--ui-input-filled-hover-bg, #{$input-filled-hover-background-color});

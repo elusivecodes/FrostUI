@@ -123,7 +123,7 @@ class Modal extends BaseComponent {
 
             dom.setStyle(this._node, 'zIndex', zIndex);
         } else {
-            if (!Offcanvas._current) {
+            if (!Offcanvas._current || Offcanvas._current._settings.scroll) {
                 UI.addScrollPadding();
             }
 

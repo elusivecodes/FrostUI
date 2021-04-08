@@ -30,7 +30,7 @@ Object.assign(Popper, {
 
             if (offsetY + nodeBox.height > minimumBox.bottom) {
                 // bottom of offset node is below the container
-                const diff = offsetY + nodeBox.height - (minimumBox.bottom);
+                const diff = offsetY + nodeBox.height - minimumBox.bottom;
                 offset.y = Math.max(
                     refTop - nodeBox.height + minSize,
                     offset.y - diff
@@ -271,12 +271,29 @@ Object.assign(Popper, {
      * @returns {object} The computed bounding rectangle of the node.
      */
     _scrollContainer(node, scrollNode) {
-        const rect = Core.isWindow(node) ?
+        const isWindow = Core.isWindow(node);
+        const rect = isWindow ?
             this._windowContainer(node) :
             dom.rect(node, true);
 
-        rect.height -= UI.getScrollbarSize(node, scrollNode);
-        rect.width -= UI.getScrollbarSize(node, scrollNode, 'x');
+        const scrollSizeX = UI.getScrollbarSize(node, scrollNode, 'x');
+        const scrollSizeY = UI.getScrollbarSize(node, scrollNode, 'y');
+
+        if (scrollSizeX) {
+            rect.height -= scrollSizeX;
+
+            if (isWindow) {
+                rect.bottom -= scrollSizeX;
+            }
+        }
+
+        if (scrollSizeY) {
+            rect.width -= scrollSizeY;
+
+            if (isWindow) {
+                rect.right -= scrollSizeY;
+            }
+        }
 
         return rect;
     },

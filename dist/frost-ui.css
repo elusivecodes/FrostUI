@@ -11264,7 +11264,7 @@ select.input-filled[multiple] option, select.input-outline[multiple] option {
 .input-filled {
   background-color: var(--ui-input-filled-bg, #fafaff);
   border: 0;
-  border-bottom: 1px solid var(--ui-input-border-color, input-filled-border-color);
+  border-bottom: 1px solid var(--ui-input-border-color, #1f3333);
 }
 .input-filled:hover {
   background-color: var(--ui-input-filled-hover-bg, #eeeef2);

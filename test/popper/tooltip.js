@@ -143,7 +143,7 @@ describe('popper tooltip', function() {
 
         it('works with auto placement (top)', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1100);
+                dom.setScrollY(document, 1115);
                 const tooltipToggle = dom.findOne('#tooltipToggle');
                 const tooltip = UI.Tooltip.init(tooltipToggle, {
                     placement: 'auto',
@@ -206,7 +206,7 @@ describe('popper tooltip', function() {
 
         it('works with auto placement (left)', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 650);
+                dom.setScrollX(document, 665);
                 const tooltipToggle = dom.findOne('#tooltipToggle');
                 const tooltip = UI.Tooltip.init(tooltipToggle, {
                     placement: 'auto',
@@ -492,7 +492,7 @@ describe('popper tooltip', function() {
 
         it('works with right/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 580);
+                dom.setScrollX(document, 595);
                 const tooltipToggle = dom.findOne('#tooltipToggle');
                 const tooltip = UI.Tooltip.init(tooltipToggle, {
                     placement: 'right',
@@ -513,7 +513,7 @@ describe('popper tooltip', function() {
 
         it('works with bottom/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1065);
+                dom.setScrollY(document, 1080);
                 const tooltipToggle = dom.findOne('#tooltipToggle');
                 const tooltip = UI.Tooltip.init(tooltipToggle, {
                     placement: 'bottom',
@@ -560,7 +560,7 @@ describe('popper tooltip', function() {
 
         it('works with top/start and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 470);
+                dom.setScrollX(document, 485);
                 const tooltipToggle = dom.findOne('#tooltipToggle');
                 const tooltip = UI.Tooltip.init(tooltipToggle, {
                     placement: 'top',
@@ -581,7 +581,7 @@ describe('popper tooltip', function() {
 
         it('works with top/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 470);
+                dom.setScrollX(document, 485);
                 const tooltipToggle = dom.findOne('#tooltipToggle');
                 const tooltip = UI.Tooltip.init(tooltipToggle, {
                     placement: 'top',
@@ -645,7 +645,7 @@ describe('popper tooltip', function() {
 
         it('works with right/start and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1025);
+                dom.setScrollY(document, 1040);
                 const tooltipToggle = dom.findOne('#tooltipToggle');
                 const tooltip = UI.Tooltip.init(tooltipToggle, {
                     placement: 'right',
@@ -687,7 +687,7 @@ describe('popper tooltip', function() {
 
         it('works with right/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1025);
+                dom.setScrollY(document, 1040);
                 const tooltipToggle = dom.findOne('#tooltipToggle');
                 const tooltip = UI.Tooltip.init(tooltipToggle, {
                     placement: 'right',
@@ -729,7 +729,7 @@ describe('popper tooltip', function() {
 
         it('works with bottom/start and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 470);
+                dom.setScrollX(document, 485);
                 const tooltipToggle = dom.findOne('#tooltipToggle');
                 const tooltip = UI.Tooltip.init(tooltipToggle, {
                     placement: 'bottom',
@@ -750,7 +750,7 @@ describe('popper tooltip', function() {
 
         it('works with bottom/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 470);
+                dom.setScrollX(document, 485);
                 const tooltipToggle = dom.findOne('#tooltipToggle');
                 const tooltip = UI.Tooltip.init(tooltipToggle, {
                     placement: 'bottom',
@@ -813,7 +813,7 @@ describe('popper tooltip', function() {
 
         it('works with left/start and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1025);
+                dom.setScrollY(document, 1040);
                 const tooltipToggle = dom.findOne('#tooltipToggle');
                 const tooltip = UI.Tooltip.init(tooltipToggle, {
                     placement: 'left',
@@ -855,7 +855,7 @@ describe('popper tooltip', function() {
 
         it('works with left/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1025);
+                dom.setScrollY(document, 1040);
                 const tooltipToggle = dom.findOne('#tooltipToggle');
                 const tooltip = UI.Tooltip.init(tooltipToggle, {
                     placement: 'left',
@@ -972,7 +972,7 @@ describe('popper tooltip', function() {
 
         it('works with right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 580);
+                dom.setScrollX(document, 595);
                 const tooltipToggle = dom.findOne('#tooltipToggle');
                 const tooltip = UI.Tooltip.init(tooltipToggle, {
                     placement: 'right',
@@ -994,7 +994,7 @@ describe('popper tooltip', function() {
 
         it('works with bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1065);
+                dom.setScrollY(document, 1080);
                 const tooltipToggle = dom.findOne('#tooltipToggle');
                 const tooltip = UI.Tooltip.init(tooltipToggle, {
                     placement: 'bottom',
@@ -1175,7 +1175,7 @@ describe('popper tooltip', function() {
         it('works with minContact option', async function() {
             assert.strictEqual(
                 await exec(_ => {
-                    dom.setScrollX(document, 450);
+                    dom.setScrollX(document, 465);
                     const tooltipToggle = dom.findOne('#tooltipToggle');
                     const tooltip = UI.Tooltip.init(tooltipToggle, {
                         placement: 'top',
@@ -1192,7 +1192,7 @@ describe('popper tooltip', function() {
         it('works with minContact option (data-ui-min-contact)', async function() {
             assert.strictEqual(
                 await exec(_ => {
-                    dom.setScrollX(document, 450);
+                    dom.setScrollX(document, 465);
                     const tooltipToggle = dom.findOne('#tooltipToggle');
                     dom.setDataset(tooltipToggle, 'uiMinContact', 10);
                     const tooltip = UI.Tooltip.init(tooltipToggle, {
@@ -1209,7 +1209,7 @@ describe('popper tooltip', function() {
         it('works with minContact option (query)', async function() {
             assert.strictEqual(
                 await exec(_ => {
-                    dom.setScrollX(document, 450);
+                    dom.setScrollX(document, 465);
                     dom.query('#tooltipToggle').tooltip({
                         placement: 'top',
                         minContact: 10,
@@ -1245,7 +1245,7 @@ describe('popper tooltip', function() {
 
         it('works with minContact and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 450);
+                dom.setScrollX(document, 465);
                 const tooltipToggle = dom.findOne('#tooltipToggle');
                 const tooltip = UI.Tooltip.init(tooltipToggle, {
                     placement: 'top',
@@ -1267,7 +1267,7 @@ describe('popper tooltip', function() {
 
         it('works with minContact and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1015);
+                dom.setScrollY(document, 1030);
                 const tooltipToggle = dom.findOne('#tooltipToggle');
                 const tooltip = UI.Tooltip.init(tooltipToggle, {
                     placement: 'left',

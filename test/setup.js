@@ -21,6 +21,9 @@ before(async function() {
             '--no-sandbox',
             '--no-zygote',
             '--single-process'
+        ],
+        ignoreDefaultArgs: [
+            '--hide-scrollbars'
         ]
     });
 

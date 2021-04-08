@@ -547,7 +547,7 @@
 
                 if (offsetY + nodeBox.height > minimumBox.bottom) {
                     // bottom of offset node is below the container
-                    const diff = offsetY + nodeBox.height - (minimumBox.bottom);
+                    const diff = offsetY + nodeBox.height - minimumBox.bottom;
                     offset.y = Math.max(
                         refTop - nodeBox.height + minSize,
                         offset.y - diff
@@ -788,12 +788,29 @@
          * @returns {object} The computed bounding rectangle of the node.
          */
         _scrollContainer(node, scrollNode) {
-            const rect = Core.isWindow(node) ?
+            const isWindow = Core.isWindow(node);
+            const rect = isWindow ?
                 this._windowContainer(node) :
                 dom.rect(node, true);
 
-            rect.height -= UI.getScrollbarSize(node, scrollNode);
-            rect.width -= UI.getScrollbarSize(node, scrollNode, 'x');
+            const scrollSizeX = UI.getScrollbarSize(node, scrollNode, 'x');
+            const scrollSizeY = UI.getScrollbarSize(node, scrollNode, 'y');
+
+            if (scrollSizeX) {
+                rect.height -= scrollSizeX;
+
+                if (isWindow) {
+                    rect.bottom -= scrollSizeX;
+                }
+            }
+
+            if (scrollSizeY) {
+                rect.width -= scrollSizeY;
+
+                if (isWindow) {
+                    rect.right -= scrollSizeY;
+                }
+            }
 
             return rect;
         },
@@ -1832,7 +1849,7 @@
 
                 dom.setStyle(this._node, 'zIndex', zIndex);
             } else {
-                if (!Offcanvas._current) {
+                if (!Offcanvas._current || Offcanvas._current._settings.scroll) {
                     UI.addScrollPadding();
                 }
 
@@ -1916,7 +1933,7 @@
         modal.hide();
     });
 
-    // Events must be attached after the Offcanvas events
+    // Events must be attached to the window, so offcanvas events are triggered first
     dom.addEvent(window, 'click.ui.modal', e => {
         let modal;
         for (modal of Modal._stack);
@@ -3179,31 +3196,62 @@
      * Add scrollbar padding to the body.
      */
     UI.addScrollPadding = _ => {
-        const scrollSizeX = UI.getScrollbarSize(window, document, 'x');
         const scrollSizeY = UI.getScrollbarSize(window, document, 'y');
+        const scrollSizeX = UI.getScrollbarSize(window, document, 'x');
 
-        if (scrollSizeX) {
+        if (scrollSizeY) {
             const currentPaddingRight = dom.getStyle(document.body, 'paddingRight');
             const paddingRight = dom.css(document.body, 'paddingRight');
 
             dom.setDataset(document.body, 'uiPaddingRight', currentPaddingRight);
-            dom.setStyle(document.body, 'paddingRight', `${scrollSizeX + parseInt(paddingRight)}px`);
+            dom.setStyle(document.body, 'paddingRight', `${scrollSizeY + parseInt(paddingRight)}px`);
         }
 
-        if (scrollSizeY) {
+        if (scrollSizeX) {
             const currentPaddingBottom = dom.getStyle(document.body, 'paddingBottom');
             const paddingBottom = dom.css(document.body, 'paddingBottom');
 
             dom.setDataset(document.body, 'uiPaddingBottom', currentPaddingBottom);
-            dom.setStyle(document.body, 'paddingBottom', `${scrollSizeY + parseInt(paddingBottom)}px`);
+            dom.setStyle(document.body, 'paddingBottom', `${scrollSizeX + parseInt(paddingBottom)}px`);
         }
+    };
+
+    /**
+     * Get the scrollbar size for a given axis.
+     * @param {HTMLElement|Window} node The input node.
+     * @param {HTMLElement|Document} scrollNode The scroll node.
+     * @param {string} [axis] The axis to check.
+     * @returns {number} The scrollbar size.
+     */
+    UI.getScrollbarSize = (node = window, scrollNode = document, axis) => {
+        const method = axis === 'x' ? 'width' : 'height';
+        const size = dom[method](node);
+        const scrollSize = dom[method](scrollNode, DOM.SCROLL_BOX);
+
+        if (scrollSize > size) {
+            return UI._calculateScrollbarSize();
+        }
+
+        return 0;
+    };
+    /**
+     * Reset body scrollbar padding.
+     */
+    UI.resetScrollPadding = _ => {
+        const paddingRight = dom.getDataset(document.body, 'uiPaddingRight');
+        const paddingBottom = dom.getDataset(document.body, 'uiPaddingBottom');
+
+        dom.setStyle(document.body, { paddingRight, paddingBottom });
+
+        dom.removeDataset(document.body, 'uiPaddingRight');
+        dom.removeDataset(document.body, 'uiPaddingBottom');
     };
 
     /**
      * Get the size of the scrollbar.
      * @returns {number} The scrollbar size.
      */
-    UI.calculateScrollbarSize = _ => {
+    UI._calculateScrollbarSize = _ => {
         if (UI._scrollbarSize) {
             return UI._scrollbarSize;
         }
@@ -3224,37 +3272,6 @@
         dom.detach(div);
 
         return UI._scrollbarSize;
-    };
-
-    /**
-     * Get the scrollbar size for a given axis.
-     * @param {HTMLElement|Window} node The input node.
-     * @param {HTMLElement|Document} scrollNode The scroll node.
-     * @param {string} [axis] The axis to check.
-     * @returns {number} The scrollbar size.
-     */
-    UI.getScrollbarSize = (node = window, scrollNode = document, axis) => {
-        const method = axis === 'x' ? 'width' : 'height';
-        const size = dom[method](node);
-        const scrollSize = dom[method](scrollNode, DOM.SCROLL_BOX);
-
-        if (size > scrollSize) {
-            return UI.calculateScrollbarSize();
-        }
-
-        return 0;
-    };
-    /**
-     * Reset body scrollbar padding.
-     */
-    UI.resetScrollPadding = _ => {
-        const paddingRight = dom.getDataset(document.body, 'uiPaddingRight');
-        const paddingBottom = dom.getDataset(document.body, 'uiPaddingBottom');
-
-        dom.setStyle(document.body, { paddingRight, paddingBottom });
-
-        dom.removeDataset(document.body, 'uiPaddingRight');
-        dom.removeDataset(document.body, 'uiPaddingBottom');
     };
 
 

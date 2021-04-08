@@ -52,7 +52,7 @@ describe('popper dropdown (overflow/window)', function() {
 
         it('works with right/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 600);
+                dom.setScrollX(document, 615);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'right',
@@ -120,7 +120,7 @@ describe('popper dropdown (overflow/window)', function() {
 
         it('works with top/start and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 500);
+                dom.setScrollX(document, 515);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'top',
@@ -141,7 +141,7 @@ describe('popper dropdown (overflow/window)', function() {
 
         it('works with top/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 500);
+                dom.setScrollX(document, 515);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'top',
@@ -205,7 +205,7 @@ describe('popper dropdown (overflow/window)', function() {
 
         it('works with right/start and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1035);
+                dom.setScrollY(document, 1050);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'right',
@@ -247,7 +247,7 @@ describe('popper dropdown (overflow/window)', function() {
 
         it('works with right/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1035);
+                dom.setScrollY(document, 1050);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'right',
@@ -289,7 +289,7 @@ describe('popper dropdown (overflow/window)', function() {
 
         it('works with bottom/start and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 500);
+                dom.setScrollX(document, 515);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'bottom',
@@ -310,7 +310,7 @@ describe('popper dropdown (overflow/window)', function() {
 
         it('works with bottom/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 500);
+                dom.setScrollX(document, 515);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'bottom',
@@ -373,7 +373,7 @@ describe('popper dropdown (overflow/window)', function() {
 
         it('works with left/start and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1035);
+                dom.setScrollY(document, 1050);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'left',
@@ -415,7 +415,7 @@ describe('popper dropdown (overflow/window)', function() {
 
         it('works with left/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1035);
+                dom.setScrollY(document, 1050);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'left',

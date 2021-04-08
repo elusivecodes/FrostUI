@@ -7,6 +7,7 @@ describe('Modal', function() {
     afterEach(async function() {
         await exec(_ => {
             dom.removeClass(document.body, 'modal-open');
+            dom.removeAttribute(document.body, 'style');
         });
     });
 
@@ -1762,6 +1763,252 @@ describe('Modal', function() {
                     '</div>' +
                     '</div>' +
                     '<div class="modal-backdrop" style=""></div>'
+                );
+            });
+        });
+
+    });
+
+    describe('scroll padding', function() {
+
+        it('adds scroll padding to document body (vertical)', async function() {
+            await exec(_ => {
+                dom.setStyle(document.body, 'height', '2000px');
+                const modal1 = dom.findOne('#modal1');
+                UI.Modal.init(modal1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.getStyle(document.body, 'paddingRight');
+                    }),
+                    '15px'
+                );
+            });
+        });
+
+        it('adds scroll padding to document body (horizontal)', async function() {
+            await exec(_ => {
+                dom.setStyle(document.body, 'width', '2000px');
+                const modal1 = dom.findOne('#modal1');
+                UI.Modal.init(modal1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.getStyle(document.body, 'paddingBottom');
+                    }),
+                    '15px'
+                );
+            });
+        });
+
+        it('does not add padding if scrollbars are hidden (vertical)', async function() {
+            await exec(_ => {
+                const modal1 = dom.findOne('#modal1');
+                UI.Modal.init(modal1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.getStyle(document.body, 'paddingRight');
+                    }),
+                    ''
+                );
+            });
+        });
+
+        it('does not add padding if scrollbars are hidden (horizontal)', async function() {
+            await exec(_ => {
+                const modal1 = dom.findOne('#modal1');
+                UI.Modal.init(modal1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.getStyle(document.body, 'paddingBottom');
+                    }),
+                    ''
+                );
+            });
+        });
+
+        it('works with existing padding (vertical)', async function() {
+            await exec(_ => {
+                dom.setStyle(document.body, 'height', '2000px');
+                dom.setStyle(document.body, 'paddingRight', '10px');
+                const modal1 = dom.findOne('#modal1');
+                UI.Modal.init(modal1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.getStyle(document.body, 'paddingRight');
+                    }),
+                    '25px'
+                );
+            });
+        });
+
+        it('works with existing padding (horizontal)', async function() {
+            await exec(_ => {
+                dom.setStyle(document.body, 'width', '2000px');
+                dom.setStyle(document.body, 'paddingBottom', '10px');
+                const modal1 = dom.findOne('#modal1');
+                UI.Modal.init(modal1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.getStyle(document.body, 'paddingBottom');
+                    }),
+                    '25px'
+                );
+            });
+        });
+
+        it('restores scroll padding to document body (vertical)', async function() {
+            await exec(_ => {
+                dom.setStyle(document.body, 'height', '2000px');
+                const modal1 = dom.findOne('#modal1');
+                UI.Modal.init(modal1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const modal1 = dom.findOne('#modal1');
+                    UI.Modal.init(modal1).hide();
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.getStyle(document.body, 'paddingRight');
+                    }),
+                    ''
+                );
+            });
+        });
+
+        it('restores scroll padding to document body (horizontal)', async function() {
+            await exec(_ => {
+                dom.setStyle(document.body, 'width', '2000px');
+                const modal1 = dom.findOne('#modal1');
+                UI.Modal.init(modal1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const modal1 = dom.findOne('#modal1');
+                    UI.Modal.init(modal1).hide();
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.getStyle(document.body, 'paddingBottom');
+                    }),
+                    ''
+                );
+            });
+        });
+
+        it('restores existing scroll padding to document body (vertical)', async function() {
+            await exec(_ => {
+                dom.setStyle(document.body, 'height', '2000px');
+                dom.setStyle(document.body, 'paddingRight', '10px');
+                const modal1 = dom.findOne('#modal1');
+                UI.Modal.init(modal1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const modal1 = dom.findOne('#modal1');
+                    UI.Modal.init(modal1).hide();
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.getStyle(document.body, 'paddingRight');
+                    }),
+                    '10px'
+                );
+            });
+        });
+
+        it('restores existing scroll padding to document body (horizontal)', async function() {
+            await exec(_ => {
+                dom.setStyle(document.body, 'width', '2000px');
+                dom.setStyle(document.body, 'paddingBottom', '10px');
+                const modal1 = dom.findOne('#modal1');
+                UI.Modal.init(modal1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const modal1 = dom.findOne('#modal1');
+                    UI.Modal.init(modal1).hide();
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.getStyle(document.body, 'paddingBottom');
+                    }),
+                    '10px'
                 );
             });
         });

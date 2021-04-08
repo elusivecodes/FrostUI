@@ -150,7 +150,7 @@ describe('popper dropdown', function() {
 
         it('works with auto placement (top)', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1100);
+                dom.setScrollY(document, 1115);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'auto',
@@ -213,7 +213,7 @@ describe('popper dropdown', function() {
 
         it('works with auto placement (left)', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 650);
+                dom.setScrollX(document, 665);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'auto',
@@ -499,7 +499,7 @@ describe('popper dropdown', function() {
 
         it('works with right/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 600);
+                dom.setScrollX(document, 615);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'right',
@@ -520,7 +520,7 @@ describe('popper dropdown', function() {
 
         it('works with bottom/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1135);
+                dom.setScrollY(document, 1150);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'bottom',
@@ -567,7 +567,7 @@ describe('popper dropdown', function() {
 
         it('works with top/start and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 500);
+                dom.setScrollX(document, 515);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'top',
@@ -588,7 +588,7 @@ describe('popper dropdown', function() {
 
         it('works with top/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 500);
+                dom.setScrollX(document, 515);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'top',
@@ -652,7 +652,7 @@ describe('popper dropdown', function() {
 
         it('works with right/start and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1035);
+                dom.setScrollY(document, 1050);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'right',
@@ -694,7 +694,7 @@ describe('popper dropdown', function() {
 
         it('works with right/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1035);
+                dom.setScrollY(document, 1050);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'right',
@@ -736,7 +736,7 @@ describe('popper dropdown', function() {
 
         it('works with bottom/start and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 500);
+                dom.setScrollX(document, 515);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'bottom',
@@ -757,7 +757,7 @@ describe('popper dropdown', function() {
 
         it('works with bottom/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 500);
+                dom.setScrollX(document, 515);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'bottom',
@@ -820,7 +820,7 @@ describe('popper dropdown', function() {
 
         it('works with left/start and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1035);
+                dom.setScrollY(document, 1050);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'left',
@@ -862,7 +862,7 @@ describe('popper dropdown', function() {
 
         it('works with left/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1035);
+                dom.setScrollY(document, 1050);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'left',
@@ -1075,7 +1075,7 @@ describe('popper dropdown', function() {
             );
         });
 
-        it('works with spacing option', async function() {
+        it('works with spacing option (query)', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     dom.query('#dropdownToggle').dropdown({
@@ -1246,7 +1246,7 @@ describe('popper dropdown', function() {
 
         it('works with minContact and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 480);
+                dom.setScrollX(document, 495);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'top',
@@ -1268,7 +1268,7 @@ describe('popper dropdown', function() {
 
         it('works with minContact and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1015);
+                dom.setScrollY(document, 1030);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'left',

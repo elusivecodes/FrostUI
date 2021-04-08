@@ -15,7 +15,7 @@ dom.addEventDelegate(document, 'click.ui.modal', '[data-ui-dismiss="modal"]', e 
     modal.hide();
 });
 
-// Events must be attached after the Offcanvas events
+// Events must be attached to the window, so offcanvas events are triggered first
 dom.addEvent(window, 'click.ui.modal', e => {
     let modal;
     for (modal of Modal._stack);

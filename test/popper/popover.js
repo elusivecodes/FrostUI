@@ -109,7 +109,7 @@ describe('popper popover', function() {
                     popover.show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1290px, 1600px, 0px)'
+                'translate3d(980px, 1600px, 0px)'
             );
         });
 
@@ -124,7 +124,7 @@ describe('popper popover', function() {
                     popover.show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1290px, 1600px, 0px)'
+                'translate3d(980px, 1600px, 0px)'
             );
         });
 
@@ -137,13 +137,13 @@ describe('popper popover', function() {
                     }).show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1290px, 1600px, 0px)'
+                'translate3d(980px, 1600px, 0px)'
             );
         });
 
         it('works with auto placement (top)', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1100);
+                dom.setScrollY(document, 1130);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'auto',
@@ -206,7 +206,7 @@ describe('popper popover', function() {
 
         it('works with auto placement (left)', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 650);
+                dom.setScrollX(document, 665);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'auto',
@@ -492,7 +492,7 @@ describe('popper popover', function() {
 
         it('works with right/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 600);
+                dom.setScrollX(document, 615);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'right',
@@ -513,7 +513,7 @@ describe('popper popover', function() {
 
         it('works with bottom/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1115);
+                dom.setScrollY(document, 1130);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'bottom',
@@ -560,7 +560,7 @@ describe('popper popover', function() {
 
         it('works with top/start and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 480);
+                dom.setScrollX(document, 495);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'top',
@@ -581,7 +581,7 @@ describe('popper popover', function() {
 
         it('works with top/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 480);
+                dom.setScrollX(document, 495);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'top',
@@ -645,7 +645,7 @@ describe('popper popover', function() {
 
         it('works with right/start and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1035);
+                dom.setScrollY(document, 1050);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'right',
@@ -687,7 +687,7 @@ describe('popper popover', function() {
 
         it('works with right/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1035);
+                dom.setScrollY(document, 1050);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'right',
@@ -729,7 +729,7 @@ describe('popper popover', function() {
 
         it('works with bottom/start and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 480);
+                dom.setScrollX(document, 495);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'bottom',
@@ -750,7 +750,7 @@ describe('popper popover', function() {
 
         it('works with bottom/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 480);
+                dom.setScrollX(document, 495);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'bottom',
@@ -813,7 +813,7 @@ describe('popper popover', function() {
 
         it('works with left/start and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1035);
+                dom.setScrollY(document, 1050);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'left',
@@ -855,7 +855,7 @@ describe('popper popover', function() {
 
         it('works with left/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1035);
+                dom.setScrollY(document, 1050);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'left',
@@ -914,7 +914,6 @@ describe('popper popover', function() {
                 }),
                 'translate3d(1135px, 1513px, 0px)'
             );
-            await screenshot('./screens/test.jpeg');
         });
 
         it('works with fixed option (data-ui-fixed)', async function() {
@@ -932,7 +931,6 @@ describe('popper popover', function() {
                 }),
                 'translate3d(1135px, 1513px, 0px)'
             );
-            await screenshot('./screens/test.jpeg');
         });
 
         it('works with fixed option (query)', async function() {
@@ -948,7 +946,6 @@ describe('popper popover', function() {
                 }),
                 'translate3d(1135px, 1513px, 0px)'
             );
-            await screenshot('./screens/test.jpeg');
         });
 
         it('works with top edge', async function() {
@@ -975,7 +972,7 @@ describe('popper popover', function() {
 
         it('works with right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 600);
+                dom.setScrollX(document, 615);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'right',
@@ -997,7 +994,7 @@ describe('popper popover', function() {
 
         it('works with bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1115);
+                dom.setScrollY(document, 1130);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'bottom',
@@ -1055,7 +1052,7 @@ describe('popper popover', function() {
                     popover.show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1337px, 1576px, 0px)'
+                'translate3d(933px, 1576px, 0px)'
             );
         });
 
@@ -1070,11 +1067,11 @@ describe('popper popover', function() {
                     popover.show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1337px, 1576px, 0px)'
+                'translate3d(933px, 1576px, 0px)'
             );
         });
 
-        it('works with spacing option', async function() {
+        it('works with spacing option (query)', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     dom.query('#popoverToggle').popover({
@@ -1083,7 +1080,7 @@ describe('popper popover', function() {
                     }).show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1337px, 1576px, 0px)'
+                'translate3d(933px, 1576px, 0px)'
             );
         });
 
@@ -1178,7 +1175,7 @@ describe('popper popover', function() {
         it('works with minContact option', async function() {
             assert.strictEqual(
                 await exec(_ => {
-                    dom.setScrollX(document, 460);
+                    dom.setScrollX(document, 475);
                     const popoverToggle = dom.findOne('#popoverToggle');
                     const popover = UI.Popover.init(popoverToggle, {
                         placement: 'top',
@@ -1195,7 +1192,7 @@ describe('popper popover', function() {
         it('works with minContact option (data-ui-min-contact)', async function() {
             assert.strictEqual(
                 await exec(_ => {
-                    dom.setScrollX(document, 460);
+                    dom.setScrollX(document, 475);
                     const popoverToggle = dom.findOne('#popoverToggle');
                     dom.setDataset(popoverToggle, 'uiMinContact', 10);
                     const popover = UI.Popover.init(popoverToggle, {
@@ -1212,7 +1209,7 @@ describe('popper popover', function() {
         it('works with minContact option', async function() {
             assert.strictEqual(
                 await exec(_ => {
-                    dom.setScrollX(document, 460);
+                    dom.setScrollX(document, 475);
                     dom.query('#popoverToggle').popover({
                         placement: 'top',
                         minContact: 10,
@@ -1248,7 +1245,7 @@ describe('popper popover', function() {
 
         it('works with minContact and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 460);
+                dom.setScrollX(document, 475);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'top',
@@ -1270,7 +1267,7 @@ describe('popper popover', function() {
 
         it('works with minContact and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1015);
+                dom.setScrollY(document, 1030);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'left',
