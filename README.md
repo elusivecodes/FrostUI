@@ -33,7 +33,7 @@
 Alternatively, a bundle version is supplied which includes the *FrostCore* and *FrostDOM* libraries in a single JS file.
 
 ```html
-<script type="text/javascript" src="/path/to/frost-core-bundle.min.js"></script>
+<script type="text/javascript" src="/path/to/frost-ui-bundle.min.js"></script>
 ```
 
 
