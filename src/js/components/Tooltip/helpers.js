@@ -26,6 +26,12 @@ Object.assign(Tooltip.prototype, {
             dom.after(this._node, this._tooltip);
         }
 
+        if (!this.constructor.noId) {
+            const id = UI.generateId(this.constructor.DATA_KEY);
+            dom.setAttribute(this._tooltip, 'id', id);
+            dom.setAttribute(this._node, 'aria-described-by', id);
+        }
+
         this._popper = new Popper(
             this._tooltip,
             {

@@ -29,6 +29,7 @@
     &:focus {
         z-index: 2;
         background-color: $page-link-focus-background-color;
+        outline: 0;
         box-shadow: $page-link-focus-box-shadow;
     }
 

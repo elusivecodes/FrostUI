@@ -28,8 +28,6 @@ class Modal extends BaseComponent {
         this._activeTarget = null;
         this._backdrop = null;
 
-        this.constructor._stack.delete(this);
-
         super.dispose();
     }
 
@@ -46,12 +44,11 @@ class Modal extends BaseComponent {
             return this;
         }
 
+        dom.stop(this._dialog);
+
         this._animating = true;
 
-        this.constructor._stack.delete(this);
-
-        const stackSize = this.constructor._stack.size;
-        const offcanvas = Offcanvas._current;
+        const stackSize = dom.find('.modal.show').length - 1;
 
         Promise.all([
             dom.fadeOut(this._dialog, {
@@ -68,11 +65,14 @@ class Modal extends BaseComponent {
             dom.removeAttribute(this._node, 'aria-modal');
             dom.setAttribute(this._node, 'aria-hidden', true);
 
+            UI.resetScrollPadding(this._dialog);
+
             if (stackSize) {
                 dom.setStyle(this._node, 'zIndex', '');
             } else {
-                if (!offcanvas) {
+                if (this._scrollPadding) {
                     UI.resetScrollPadding();
+                    this._scrollPadding = false;
                 }
 
                 dom.removeClass(document.body, 'modal-open');
@@ -114,7 +114,11 @@ class Modal extends BaseComponent {
         this._activeTarget = activeTarget;
         this._animating = true;
 
-        const stackSize = this.constructor._stack.size;
+        const stackSize = dom.find('.modal.show').length;
+
+        dom.removeClass(document.body, 'modal-open');
+
+        UI.addScrollPadding(this._dialog);
 
         if (stackSize) {
             let zIndex = dom.css(this._node, 'zIndex');
@@ -123,16 +127,15 @@ class Modal extends BaseComponent {
 
             dom.setStyle(this._node, 'zIndex', zIndex);
         } else {
-            if (!Offcanvas._current || Offcanvas._current._settings.scroll) {
+            if (!dom.findOne('.offcanvas.show')) {
+                this._scrollPadding = true;
                 UI.addScrollPadding();
             }
-
-            dom.addClass(document.body, 'modal-open');
         }
 
-        dom.addClass(this._node, 'show');
+        dom.addClass(document.body, 'modal-open');
 
-        this.constructor._stack.add(this);
+        dom.addClass(this._node, 'show');
 
         if (this._settings.backdrop) {
             this._backdrop = dom.create('div', {
@@ -185,6 +188,55 @@ class Modal extends BaseComponent {
         return dom.hasClass(this._node, 'show') ?
             this.hide() :
             this.show();
+    }
+
+    /**
+     * Transform the modal (for static backdrop).
+     */
+    _transform() {
+        if (this._animating) {
+            return;
+        }
+
+        dom.stop(this._dialog);
+
+        dom.animate(
+            this._dialog,
+            (node, progress) => {
+                if (progress >= 1) {
+                    dom.setStyle(node, 'transform', '');
+                    return;
+                }
+
+                const zoomOffset = (progress < .5 ? progress : (1 - progress)) / 20;
+                dom.setStyle(node, 'transform', `scale(${1 + zoomOffset})`);
+            },
+            {
+                duration: 200
+            }
+        ).catch(_ => { });
+    }
+
+    /**
+     * Find the top visible modal (highest z-index).
+     * @returns {Modal} The top visible modal.
+     */
+    static _topModal() {
+        const elements = dom.find('.modal.show');
+
+        if (!elements.length) {
+            return null;
+        }
+
+        // find modal with highest zIndex
+        let element;
+        for (const temp of elements) {
+            if (!element || dom.getStyle(temp, 'zIndex') > dom.getStyle(element, 'zIndex')) {
+                element = temp;
+            }
+        }
+
+        return this.init(element);
     }
 
 }

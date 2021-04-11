@@ -7,8 +7,8 @@ describe('Button', function() {
         await exec(_ => {
             dom.setHTML(
                 document.body,
-                '<button id="button1" data-ui-toggle="button" type="button"></button>' +
-                '<button id="button2" data-ui-toggle="button" type="button"></button>'
+                '<button class="btn btn-secondary" id="button1" data-ui-toggle="button" type="button"></button>' +
+                '<button class="btn btn-secondary" id="button2" data-ui-toggle="button" type="button"></button>'
             );
         });
     });
@@ -152,8 +152,8 @@ describe('Button', function() {
                     UI.Button.init(button1).toggle();
                     return dom.getHTML(document.body);
                 }),
-                '<button id="button1" data-ui-toggle="button" type="button" class="active" aria-pressed="true"></button>' +
-                '<button id="button2" data-ui-toggle="button" type="button"></button>'
+                '<button class="btn btn-secondary active" id="button1" data-ui-toggle="button" type="button" aria-pressed="true"></button>' +
+                '<button class="btn btn-secondary" id="button2" data-ui-toggle="button" type="button"></button>'
             );
         });
 
@@ -164,8 +164,8 @@ describe('Button', function() {
                     dom.click(button1);
                     return dom.getHTML(document.body);
                 }),
-                '<button id="button1" data-ui-toggle="button" type="button" class="active" aria-pressed="true"></button>' +
-                '<button id="button2" data-ui-toggle="button" type="button"></button>'
+                '<button class="btn btn-secondary active" id="button1" data-ui-toggle="button" type="button" aria-pressed="true"></button>' +
+                '<button class="btn btn-secondary" id="button2" data-ui-toggle="button" type="button"></button>'
             );
         });
 
@@ -175,8 +175,8 @@ describe('Button', function() {
                     dom.query('#button1').button('toggle');
                     return dom.getHTML(document.body);
                 }),
-                '<button id="button1" data-ui-toggle="button" type="button" class="active" aria-pressed="true"></button>' +
-                '<button id="button2" data-ui-toggle="button" type="button"></button>'
+                '<button class="btn btn-secondary active" id="button1" data-ui-toggle="button" type="button" aria-pressed="true"></button>' +
+                '<button class="btn btn-secondary" id="button2" data-ui-toggle="button" type="button"></button>'
             );
         });
 
@@ -186,8 +186,8 @@ describe('Button', function() {
                     dom.query('button').button('toggle');
                     return dom.getHTML(document.body);
                 }),
-                '<button id="button1" data-ui-toggle="button" type="button" class="active" aria-pressed="true"></button>' +
-                '<button id="button2" data-ui-toggle="button" type="button" class="active" aria-pressed="true"></button>'
+                '<button class="btn btn-secondary active" id="button1" data-ui-toggle="button" type="button" aria-pressed="true"></button>' +
+                '<button class="btn btn-secondary active" id="button2" data-ui-toggle="button" type="button" aria-pressed="true"></button>'
             );
         });
 
@@ -200,8 +200,8 @@ describe('Button', function() {
                         .toggle();
                     return dom.getHTML(document.body);
                 }),
-                '<button id="button1" data-ui-toggle="button" type="button" class="" aria-pressed="false"></button>' +
-                '<button id="button2" data-ui-toggle="button" type="button"></button>'
+                '<button class="btn btn-secondary" id="button1" data-ui-toggle="button" type="button" aria-pressed="false"></button>' +
+                '<button class="btn btn-secondary" id="button2" data-ui-toggle="button" type="button"></button>'
             );
         });
 

@@ -1,6 +1,7 @@
 .nav {
     display: flex;
     flex-wrap: wrap;
+    padding: 0;
     margin-bottom: 0;
     margin-left: 0;
     list-style: none;
@@ -10,6 +11,7 @@
     display: block;
     padding: $nav-link-padding-y $nav-link-padding-x;
     text-decoration: none;
+    border: 0;
     @include border-radius($nav-link-border-radius);
     transition: all $transition-time $transition-type;
     transition-property: color, background-color, border-color;
@@ -21,6 +23,7 @@
     &:focus {
         text-decoration: none;
         background-color: $nav-link-focus-background-color;
+        outline: 0;
     }
 
     &.disabled {
@@ -60,7 +63,7 @@
         }
     }
 
-    .dropdown-menu {
+    [data-ui-placement="bottom"] + .dropdown-menu {
         @include border-top-radius(0);
     }
 }

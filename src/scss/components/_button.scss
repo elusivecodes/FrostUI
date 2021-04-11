@@ -23,10 +23,11 @@
         text-decoration: none;
     }
 
+    &:focus {
+        outline: 0;
+    }
+
     @at-root {
-        .btn-check:checked + #{&}:focus,
-        .btn-check:checked:focus + #{&},
-        #{&}.active:focus,
         #{&}:hover {
             background-color: var(--ui-btn-hover-bg);
         }
@@ -39,6 +40,8 @@
 
         .btn-check:checked + #{&},
         #{&}.active {
+            --ui-ripple-bg: var(--ui-active-ripple-bg);
+
             color: var(--ui-btn-active-color, var(--ui-btn-color));
             background-color: var(--ui-btn-active-bg);
         }
@@ -48,6 +51,12 @@
         #{&}:active,
         #{&}.active {
             box-shadow: $btn-active-box-shadow;
+        }
+
+        .btn-check:checked + #{&}:focus,
+        .btn-check:checked:focus + #{&},
+        #{&}.active:focus {
+            background-color: var(--ui-btn-active-focus-bg, var(--ui-btn-hover-bg));
         }
 
         #{&}:disabled,
@@ -113,16 +122,20 @@
     .btn-outline-#{$name} {
         $hover-background-color: fade($color, $btn-outline-hover-background-color-fade);
         $focus-background-color: fade($color, $btn-outline-focus-background-color-fade);
-        $active-color: shade($color, $btn-outline-active-color-shade);
-        $active-border: shade($color, $btn-outline-active-border-color-shade);
+        $active-color: text-color($color);
+        $active-focus-background-color: shade($color, $btn-hover-background-color-shade);
         $ripple-background-color: fade($color, $btn-outline-ripple-background-color-fade);
+        $active-ripple-background-color: fade($active-color, $btn-ripple-background-color-fade);
 
         --ui-btn-color: #{$color};
         --ui-btn-border: #{$color};
         --ui-btn-hover-bg: #{$hover-background-color};
         --ui-btn-focus-bg: #{$focus-background-color};
+        --ui-btn-active-bg: #{$color};
         --ui-btn-active-color: #{$active-color};
-        --ui-btn-active-border: #{$active-border};
+        --ui-btn-active-border: #{$btn-border-color};
+        --ui-btn-active-focus-bg: #{$active-focus-background-color};
         --ui-ripple-bg: #{$ripple-background-color};
+        --ui-active-ripple-bg: #{$active-ripple-background-color};
     }
 }

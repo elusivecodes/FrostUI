@@ -140,7 +140,7 @@ describe('Popper', function() {
 
                     return dom.getStyle(badge, 'transform');
                 }),
-                'translate3d(8px, 87px, 0px)'
+                'translate3d(4px, 84px, 0px)'
             );
         });
 
@@ -156,7 +156,7 @@ describe('Popper', function() {
 
                     return dom.getStyle(badge, 'transform');
                 }),
-                'translate3d(8px, 87px, 0px)'
+                'translate3d(4px, 84px, 0px)'
             );
         });
 
@@ -266,7 +266,7 @@ describe('Popper', function() {
                     });
                     return result;
                 }),
-                'translate3d(8px, 37px, 0px)'
+                'translate3d(4px, 34px, 0px)'
             );
         });
 
@@ -282,7 +282,7 @@ describe('Popper', function() {
                     });
                     return result;
                 }),
-                'translate3d(8px, 37px, 0px)'
+                'translate3d(4px, 34px, 0px)'
             );
         });
 
@@ -386,7 +386,7 @@ describe('Popper', function() {
                     });
                     return dom.getStyle('#badge', 'margin');
                 }),
-                '37px 0px 0px 8px'
+                '34px 0px 0px 4px'
             );
         });
 
@@ -399,19 +399,10 @@ describe('Popper', function() {
                     });
                     return dom.getStyle('#badge', 'margin');
                 }),
-                '37px 0px 0px 8px'
+                '34px 0px 0px 4px'
             );
         });
 
     });
 
-    describe('container option', function() {
-
-        it('constrains popper to container');
-        it('constrains popper to container (query)');
-
-    });
-
 });
-
-// container option

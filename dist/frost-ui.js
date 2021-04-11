@@ -552,7 +552,9 @@
                         refTop - nodeBox.height + minSize,
                         offset.y - diff
                     );
-                } else if (offsetY < minimumBox.top) {
+                }
+
+                if (offsetY < minimumBox.top) {
                     // top of offset node is above the container
                     const diff = offsetY - minimumBox.top;
                     offset.y = Math.min(
@@ -580,7 +582,9 @@
                         refLeft - nodeBox.width + minSize,
                         offset.x - diff
                     );
-                } else if (offsetX < minimumBox.left) {
+                }
+
+                if (offsetX < minimumBox.left) {
                     // left of offset node is to the left of the container
                     const diff = offsetX - minimumBox.left;
                     offset.x = Math.min(
@@ -1513,10 +1517,6 @@
             this._menuNode = null;
             this._referenceNode = null;
 
-            if (this.constructor._current === this) {
-                this.constructor._current = null;
-            }
-
             super.dispose();
         }
 
@@ -1534,10 +1534,6 @@
             }
 
             this._animating = true;
-
-            if (this.constructor._current === this) {
-                this.constructor._current = null;
-            }
 
             dom.fadeOut(this._menuNode, {
                 duration: this._settings.duration
@@ -1567,8 +1563,6 @@
 
             this._animating = true;
             dom.addClass(this._menuNode, 'show');
-
-            this.constructor._current = this;
 
             this.update();
 
@@ -1664,47 +1658,63 @@
     });
 
     dom.addEvent(document, 'click.ui.dropdown', e => {
-        const dropdown = Dropdown._current;
+        const target = UI.getClickTarget(e);
+        const nodes = dom.find('.dropdown-menu.show');
 
-        if (
-            !dropdown ||
-            dropdown._node === e.target ||
-            (
-                dom.hasDescendent(dropdown._node, e.target) &&
+        for (const node of nodes) {
+            const toggle = dom.siblings(node, '[data-ui-toggle="dropdown"]').shift();
+            const dropdown = Dropdown.init(toggle);
+
+            if (
+                dropdown._node === target ||
                 (
-                    dom.is(e.target, 'form') ||
-                    dom.closest(target, 'form', menu).length
+                    dom.hasDescendent(dropdown._menuNode, target) &&
+                    (
+                        dom.is(target, 'form') ||
+                        dom.closest(target, 'form', dropdown._menuNode).length
+                    )
                 )
-            )
-        ) {
-            return;
-        }
+            ) {
+                continue;
+            }
 
-        dropdown.hide();
-    });
+            dropdown.hide();
+        }
+    }, { capture: true });
 
     dom.addEvent(document, 'keyup.ui.dropdown', e => {
-        const dropdown = Dropdown._current;
-
-        if (
-            !['Tab', 'Escape'].includes(e.code) ||
-            !dropdown ||
-            (e.code === 'Tab' && dropdown._node === e.target) ||
-            (
-                dom.hasDescendent(dropdown._menuNode, e.target) &&
-                (
-                    e.code === 'Tab' ||
-                    dom.is(e.target, 'form') ||
-                    dom.closest(e.target, 'form', dropdown._menuNode).length
-                )
-            )
-        ) {
+        if (!['Tab', 'Escape'].includes(e.code)) {
             return;
         }
 
-        e.stopPropagation();
+        let stopped = false;
+        const nodes = dom.find('.dropdown-menu.show');
 
-        dropdown.hide();
+        for (const node of nodes) {
+            const toggle = dom.siblings(node, '[data-ui-toggle="dropdown"]').shift();
+            const dropdown = Dropdown.init(toggle);
+
+            if (
+                (e.code === 'Tab' && dropdown._node === e.target) ||
+                (
+                    dom.hasDescendent(dropdown._menuNode, e.target) &&
+                    (
+                        e.code === 'Tab' ||
+                        dom.is(e.target, 'form') ||
+                        dom.closest(e.target, 'form', dropdown._menuNode).length
+                    )
+                )
+            ) {
+                continue;
+            }
+
+            if (!stopped) {
+                stopped = true;
+                e.stopPropagation();
+            }
+
+            dropdown.hide();
+        }
     }, { capture: true });
 
 
@@ -1754,8 +1764,6 @@
             this._activeTarget = null;
             this._backdrop = null;
 
-            this.constructor._stack.delete(this);
-
             super.dispose();
         }
 
@@ -1772,12 +1780,11 @@
                 return this;
             }
 
+            dom.stop(this._dialog);
+
             this._animating = true;
 
-            this.constructor._stack.delete(this);
-
-            const stackSize = this.constructor._stack.size;
-            const offcanvas = Offcanvas._current;
+            const stackSize = dom.find('.modal.show').length - 1;
 
             Promise.all([
                 dom.fadeOut(this._dialog, {
@@ -1794,11 +1801,14 @@
                 dom.removeAttribute(this._node, 'aria-modal');
                 dom.setAttribute(this._node, 'aria-hidden', true);
 
+                UI.resetScrollPadding(this._dialog);
+
                 if (stackSize) {
                     dom.setStyle(this._node, 'zIndex', '');
                 } else {
-                    if (!offcanvas) {
+                    if (this._scrollPadding) {
                         UI.resetScrollPadding();
+                        this._scrollPadding = false;
                     }
 
                     dom.removeClass(document.body, 'modal-open');
@@ -1840,7 +1850,11 @@
             this._activeTarget = activeTarget;
             this._animating = true;
 
-            const stackSize = this.constructor._stack.size;
+            const stackSize = dom.find('.modal.show').length;
+
+            dom.removeClass(document.body, 'modal-open');
+
+            UI.addScrollPadding(this._dialog);
 
             if (stackSize) {
                 let zIndex = dom.css(this._node, 'zIndex');
@@ -1849,16 +1863,15 @@
 
                 dom.setStyle(this._node, 'zIndex', zIndex);
             } else {
-                if (!Offcanvas._current || Offcanvas._current._settings.scroll) {
+                if (!dom.findOne('.offcanvas.show')) {
+                    this._scrollPadding = true;
                     UI.addScrollPadding();
                 }
-
-                dom.addClass(document.body, 'modal-open');
             }
 
-            dom.addClass(this._node, 'show');
+            dom.addClass(document.body, 'modal-open');
 
-            this.constructor._stack.add(this);
+            dom.addClass(this._node, 'show');
 
             if (this._settings.backdrop) {
                 this._backdrop = dom.create('div', {
@@ -1913,6 +1926,55 @@
                 this.show();
         }
 
+        /**
+         * Transform the modal (for static backdrop).
+         */
+        _transform() {
+            if (this._animating) {
+                return;
+            }
+
+            dom.stop(this._dialog);
+
+            dom.animate(
+                this._dialog,
+                (node, progress) => {
+                    if (progress >= 1) {
+                        dom.setStyle(node, 'transform', '');
+                        return;
+                    }
+
+                    const zoomOffset = (progress < .5 ? progress : (1 - progress)) / 20;
+                    dom.setStyle(node, 'transform', `scale(${1 + zoomOffset})`);
+                },
+                {
+                    duration: 200
+                }
+            ).catch(_ => { });
+        }
+
+        /**
+         * Find the top visible modal (highest z-index).
+         * @returns {Modal} The top visible modal.
+         */
+        static _topModal() {
+            const elements = dom.find('.modal.show');
+
+            if (!elements.length) {
+                return null;
+            }
+
+            // find modal with highest zIndex
+            let element;
+            for (const temp of elements) {
+                if (!element || dom.getStyle(temp, 'zIndex') > dom.getStyle(element, 'zIndex')) {
+                    element = temp;
+                }
+            }
+
+            return this.init(element);
+        }
+
     }
 
 
@@ -1935,16 +1997,24 @@
 
     // Events must be attached to the window, so offcanvas events are triggered first
     dom.addEvent(window, 'click.ui.modal', e => {
-        let modal;
-        for (modal of Modal._stack);
+        const target = UI.getClickTarget(e);
+
+        if (dom.is(target, '[data-ui-dismiss]')) {
+            return;
+        }
+
+        const modal = Modal._topModal();
 
         if (
-            !Modal._stack.size ||
+            !modal ||
             !modal._settings.backdrop ||
-            modal._settings.backdrop === 'static' ||
-            dom.is(e.target, '[data-ui-dismiss]') ||
-            modal._node !== e.target && dom.hasDescendent(modal._node, e.target)
+            (modal._node !== target && dom.hasDescendent(modal._node, target))
         ) {
+            return;
+        }
+
+        if (modal._settings.backdrop === 'static') {
+            modal._transform();
             return;
         }
 
@@ -1952,14 +2022,18 @@
     });
 
     dom.addEvent(window, 'keyup.ui.modal', e => {
-        let modal;
-        for (modal of Modal._stack);
+        if (e.code !== 'Escape') {
+            return;
+        }
 
-        if (
-            e.code !== 'Escape' ||
-            !modal ||
-            !modal._settings.keyboard
-        ) {
+        const modal = Modal._topModal();
+
+        if (!modal || !modal._settings.keyboard) {
+            return;
+        }
+
+        if (modal._settings.backdrop === 'static') {
+            modal._transform();
             return;
         }
 
@@ -1975,8 +2049,6 @@
         show: false,
         keyboard: true
     };
-
-    Modal._stack = new Set;
 
     UI.initComponent('modal', Modal);
 
@@ -1995,10 +2067,6 @@
         dispose() {
             this._activeTarget = null;
 
-            if (this.constructor._current === this) {
-                this.constructor._current = null;
-            }
-
             super.dispose();
         }
 
@@ -2016,10 +2084,6 @@
             }
 
             this._animating = true;
-
-            if (this.constructor._current === this) {
-                this.constructor._current = null;
-            }
 
             Promise.all([
                 dom.fadeOut(this._node, {
@@ -2066,9 +2130,9 @@
          */
         show(activeTarget) {
             if (
-                this.constructor._current ||
                 this._animating ||
                 dom.hasClass(this._node, 'show') ||
+                dom.findOne('.offcanvas.show') ||
                 !dom.triggerOne(this._node, 'show.ui.offcanvas')
             ) {
                 return this;
@@ -2078,8 +2142,6 @@
             this._animating = true;
 
             dom.addClass(this._node, 'show');
-
-            this.constructor._current = this;
 
             if (this._settings.backdrop) {
                 dom.addClass(document.body, 'offcanvas-backdrop');
@@ -2144,35 +2206,53 @@
     });
 
     dom.addEvent(document, 'click.ui.offcanvas', e => {
-        const offcanvas = Offcanvas._current;
+        const target = UI.getClickTarget(e);
 
-        if (
-            !offcanvas ||
-            !offcanvas._settings.backdrop ||
-            offcanvas._node === e.target ||
-            Modal._stack.size ||
-            dom.is(e.target, '[data-ui-dismiss]') ||
-            dom.hasDescendent(offcanvas._node, e.target)
-        ) {
+        if (dom.is(target, '[data-ui-dismiss]') || dom.findOne('.modal.show')) {
             return;
         }
 
-        offcanvas.hide();
+        const nodes = dom.find('.offcanvas.show');
+
+        if (!nodes.length) {
+            return;
+        }
+
+        for (const node of nodes) {
+            const offcanvas = Offcanvas.init(node);
+
+            if (
+                !offcanvas._settings.backdrop ||
+                offcanvas._node === target ||
+                dom.hasDescendent(offcanvas._node, target)
+            ) {
+                continue;
+            }
+
+            offcanvas.hide();
+        }
     });
 
     dom.addEvent(document, 'keyup.ui.offcanvas', e => {
-        const offcanvas = Offcanvas._current;
-
-        if (
-            e.code !== 'Escape' ||
-            !offcanvas ||
-            !offcanvas._settings.keyboard ||
-            Modal._stack.size
-        ) {
+        if (e.code !== 'Escape' || dom.findOne('.modal.show')) {
             return;
         }
 
-        offcanvas.hide();
+        const nodes = dom.find('.offcanvas.show');
+
+        if (!nodes.length) {
+            return;
+        }
+
+        for (const node of nodes) {
+            const offcanvas = Offcanvas.init(node);
+
+            if (!offcanvas._settings.keyboard) {
+                return;
+            }
+
+            offcanvas.hide();
+        }
     });
 
 
@@ -2546,6 +2626,12 @@
                 dom.after(this._node, this._popover);
             }
 
+            if (!this.constructor.noId) {
+                const id = UI.generateId(this.constructor.DATA_KEY);
+                dom.setAttribute(this._popover, 'id', id);
+                dom.setAttribute(this._node, 'aria-described-by', id);
+            }
+
             this._popper = new Popper(
                 this._popover,
                 {
@@ -2744,23 +2830,6 @@
     class Toast extends BaseComponent {
 
         /**
-         * New Toast constructor.
-         * @param {HTMLElement} node The input node.
-         * @param {object} [settings] The options to create the Toast with.
-         * @returns {Toast} A new Toast object.
-         */
-        constructor(node, settings) {
-            super(node, settings);
-
-            if (this._settings.autohide) {
-                setTimeout(
-                    _ => this.hide(),
-                    this._settings.delay
-                );
-            }
-        }
-
-        /**
          * Hide the Toast.
          * @returns {Toast} The Toast.
          */
@@ -2808,6 +2877,13 @@
                 duration: this._settings.duration
             }).then(_ => {
                 dom.triggerEvent(this._node, 'shown.ui.toast');
+
+                if (this._settings.autohide) {
+                    setTimeout(
+                        _ => this.hide(),
+                        this._settings.delay
+                    );
+                }
             }).catch(_ => { }).finally(_ => {
                 this._animating = false;
             });
@@ -3146,6 +3222,12 @@
                 dom.after(this._node, this._tooltip);
             }
 
+            if (!this.constructor.noId) {
+                const id = UI.generateId(this.constructor.DATA_KEY);
+                dom.setAttribute(this._tooltip, 'id', id);
+                dom.setAttribute(this._node, 'aria-described-by', id);
+            }
+
             this._popper = new Popper(
                 this._tooltip,
                 {
@@ -3192,28 +3274,63 @@
     UI.Tooltip = Tooltip;
 
 
+    // Track the target of mousedown events
+    dom.addEvent(window, 'mousedown.ui', e => {
+        UI._clickTarget = e.target;
+    }, { capture: true });
+
+    dom.addEvent(window, 'mouseup.ui', _ => {
+        setTimeout(_ => {
+            UI._clickTarget = null;
+        }, 0);
+    }, { capture: true });
+
+
     /**
      * Add scrollbar padding to the body.
      */
-    UI.addScrollPadding = _ => {
+    UI.addScrollPadding = (node = document.body) => {
         const scrollSizeY = UI.getScrollbarSize(window, document, 'y');
         const scrollSizeX = UI.getScrollbarSize(window, document, 'x');
 
         if (scrollSizeY) {
-            const currentPaddingRight = dom.getStyle(document.body, 'paddingRight');
-            const paddingRight = dom.css(document.body, 'paddingRight');
+            const currentPaddingRight = dom.getStyle(node, 'paddingRight');
+            const paddingRight = dom.css(node, 'paddingRight');
 
-            dom.setDataset(document.body, 'uiPaddingRight', currentPaddingRight);
-            dom.setStyle(document.body, 'paddingRight', `${scrollSizeY + parseInt(paddingRight)}px`);
+            dom.setDataset(node, 'uiPaddingRight', currentPaddingRight);
+            dom.setStyle(node, 'paddingRight', `${scrollSizeY + parseInt(paddingRight)}px`);
         }
 
         if (scrollSizeX) {
-            const currentPaddingBottom = dom.getStyle(document.body, 'paddingBottom');
-            const paddingBottom = dom.css(document.body, 'paddingBottom');
+            const currentPaddingBottom = dom.getStyle(node, 'paddingBottom');
+            const paddingBottom = dom.css(node, 'paddingBottom');
 
-            dom.setDataset(document.body, 'uiPaddingBottom', currentPaddingBottom);
-            dom.setStyle(document.body, 'paddingBottom', `${scrollSizeX + parseInt(paddingBottom)}px`);
+            dom.setDataset(node, 'uiPaddingBottom', currentPaddingBottom);
+            dom.setStyle(node, 'paddingBottom', `${scrollSizeX + parseInt(paddingBottom)}px`);
         }
+    };
+
+    /**
+     * Generate a unique element ID.
+     * @returns {string} The unique ID.
+     */
+    UI.generateId = prefix => {
+        const id = `${prefix}${Core.randomInt(10000, 99999)}`;
+
+        if (dom.findOne(`#${id}`)) {
+            return UI.generateId(prefix);
+        }
+
+        return id;
+    };
+
+    /**
+     * Get a click event target.
+     * @param {Event} e The click event.
+     * @returns {HTMLElement} The click event target.
+     */
+    UI.getClickTarget = e => {
+        return UI._clickTarget || e.target;
     };
 
     /**
@@ -3237,14 +3354,14 @@
     /**
      * Reset body scrollbar padding.
      */
-    UI.resetScrollPadding = _ => {
-        const paddingRight = dom.getDataset(document.body, 'uiPaddingRight');
-        const paddingBottom = dom.getDataset(document.body, 'uiPaddingBottom');
+    UI.resetScrollPadding = (node = document.body) => {
+        const paddingRight = dom.getDataset(node, 'uiPaddingRight');
+        const paddingBottom = dom.getDataset(node, 'uiPaddingBottom');
 
-        dom.setStyle(document.body, { paddingRight, paddingBottom });
+        dom.setStyle(node, { paddingRight, paddingBottom });
 
-        dom.removeDataset(document.body, 'uiPaddingRight');
-        dom.removeDataset(document.body, 'uiPaddingBottom');
+        dom.removeDataset(node, 'uiPaddingRight');
+        dom.removeDataset(node, 'uiPaddingBottom');
     };
 
     /**
@@ -3336,20 +3453,25 @@
 
     // Ripple events
     dom.addEventDelegate(document, 'mousedown.ui.ripple', '.ripple', e => {
-        const pos = dom.position(e.currentTarget, true);
+        const target = e.currentTarget;
+        const pos = dom.position(target, true);
 
-        const width = dom.width(e.currentTarget);
-        const height = dom.height(e.currentTarget);
+        const width = dom.width(target);
+        const height = dom.height(target);
         const scaleMultiple = Math.max(width, height) * 3;
+
+        const isFixed = dom.isFixed(target);
+        const mouseX = isFixed ? e.clientX : e.pageX;
+        const mouseY = isFixed ? e.clientY : e.pageY;
 
         const ripple = dom.create('span', {
             class: 'ripple-effect',
             style: {
-                left: e.pageX - pos.x,
-                top: e.pageY - pos.y
+                left: mouseX - pos.x,
+                top: mouseY - pos.y
             }
         });
-        dom.append(e.currentTarget, ripple);
+        dom.append(target, ripple);
 
         dom.animate(
             ripple,

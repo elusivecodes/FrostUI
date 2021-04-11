@@ -38,7 +38,7 @@ describe('popper dropdown', function() {
                     dropdown.update();
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1172px, 1640px, 0px)'
+                'translate3d(1175px, 1637px, 0px)'
             );
         });
 
@@ -54,7 +54,7 @@ describe('popper dropdown', function() {
                     dom.query('#dropdownToggle').dropdown('update');
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1172px, 1640px, 0px)'
+                'translate3d(1175px, 1637px, 0px)'
             );
         });
 
@@ -73,7 +73,7 @@ describe('popper dropdown', function() {
                     dropdown.show();
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1200px, 1473px, 0px)'
+                'translate3d(1200px, 1483px, 0px)'
             );
         });
 
@@ -88,7 +88,7 @@ describe('popper dropdown', function() {
                     dropdown.show();
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1200px, 1473px, 0px)'
+                'translate3d(1200px, 1483px, 0px)'
             );
         });
 
@@ -101,7 +101,7 @@ describe('popper dropdown', function() {
                     }).show();
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1200px, 1473px, 0px)'
+                'translate3d(1200px, 1483px, 0px)'
             );
         });
 
@@ -116,7 +116,7 @@ describe('popper dropdown', function() {
                     dropdown.show();
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1172px, 1640px, 0px)'
+                'translate3d(1175px, 1637px, 0px)'
             );
         });
 
@@ -131,7 +131,7 @@ describe('popper dropdown', function() {
                     dropdown.show();
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1172px, 1640px, 0px)'
+                'translate3d(1175px, 1637px, 0px)'
             );
         });
 
@@ -144,7 +144,7 @@ describe('popper dropdown', function() {
                     }).show();
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1172px, 1640px, 0px)'
+                'translate3d(1175px, 1637px, 0px)'
             );
         });
 
@@ -165,7 +165,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1172px, 1473px, 0px)'
+                'translate3d(1175px, 1483px, 0px)'
             );
         });
 
@@ -186,7 +186,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1324px, 1556px, 0px)'
+                'translate3d(1313px, 1560px, 0px)'
             );
         });
 
@@ -207,7 +207,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1172px, 1640px, 0px)'
+                'translate3d(1175px, 1637px, 0px)'
             );
         });
 
@@ -228,7 +228,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1021px, 1556px, 0px)'
+                'translate3d(1037px, 1560px, 0px)'
             );
         });
 
@@ -248,7 +248,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1200px, 1473px, 0px)'
+                'translate3d(1200px, 1483px, 0px)'
             );
         });
 
@@ -268,7 +268,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1172px, 1473px, 0px)'
+                'translate3d(1175px, 1483px, 0px)'
             );
         });
 
@@ -288,7 +288,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1145px, 1473px, 0px)'
+                'translate3d(1150px, 1483px, 0px)'
             );
         });
 
@@ -308,7 +308,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1324px, 1600px, 0px)'
+                'translate3d(1313px, 1600px, 0px)'
             );
         });
 
@@ -328,7 +328,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1324px, 1556px, 0px)'
+                'translate3d(1313px, 1560px, 0px)'
             );
         });
 
@@ -348,7 +348,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1324px, 1513px, 0px)'
+                'translate3d(1313px, 1520px, 0px)'
             );
         });
 
@@ -368,7 +368,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1200px, 1640px, 0px)'
+                'translate3d(1200px, 1637px, 0px)'
             );
         });
 
@@ -388,7 +388,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1172px, 1640px, 0px)'
+                'translate3d(1175px, 1637px, 0px)'
             );
         });
 
@@ -408,7 +408,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1145px, 1640px, 0px)'
+                'translate3d(1150px, 1637px, 0px)'
             );
         });
 
@@ -428,7 +428,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1021px, 1600px, 0px)'
+                'translate3d(1037px, 1600px, 0px)'
             );
         });
 
@@ -448,7 +448,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1021px, 1556px, 0px)'
+                'translate3d(1037px, 1560px, 0px)'
             );
         });
 
@@ -468,7 +468,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1021px, 1513px, 0px)'
+                'translate3d(1037px, 1520px, 0px)'
             );
         });
 
@@ -493,7 +493,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1172px, 1640px, 0px)'
+                'translate3d(1175px, 1637px, 0px)'
             );
         });
 
@@ -514,7 +514,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1021px, 1556px, 0px)'
+                'translate3d(1037px, 1560px, 0px)'
             );
         });
 
@@ -535,7 +535,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1172px, 1473px, 0px)'
+                'translate3d(1175px, 1483px, 0px)'
             );
         });
 
@@ -557,7 +557,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1324px, 1556px, 0px)'
+                'translate3d(1313px, 1560px, 0px)'
             );
         });
 
@@ -567,7 +567,7 @@ describe('popper dropdown', function() {
 
         it('works with top/start and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 515);
+                dom.setScrollX(document, 520);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'top',
@@ -582,13 +582,13 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1145px, 1473px, 0px)'
+                'translate3d(1150px, 1483px, 0px)'
             );
         });
 
         it('works with top/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 515);
+                dom.setScrollX(document, 520);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'top',
@@ -603,7 +603,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1145px, 1473px, 0px)'
+                'translate3d(1150px, 1483px, 0px)'
             );
         });
 
@@ -625,7 +625,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1200px, 1473px, 0px)'
+                'translate3d(1200px, 1483px, 0px)'
             );
         });
 
@@ -646,13 +646,13 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1200px, 1473px, 0px)'
+                'translate3d(1200px, 1483px, 0px)'
             );
         });
 
         it('works with right/start and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1050);
+                dom.setScrollY(document, 1048);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'right',
@@ -667,7 +667,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1324px, 1513px, 0px)'
+                'translate3d(1313px, 1520px, 0px)'
             );
         });
 
@@ -688,13 +688,13 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1324px, 1600px, 0px)'
+                'translate3d(1313px, 1600px, 0px)'
             );
         });
 
         it('works with right/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1050);
+                dom.setScrollY(document, 1048);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'right',
@@ -709,7 +709,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1324px, 1513px, 0px)'
+                'translate3d(1313px, 1520px, 0px)'
             );
         });
 
@@ -730,13 +730,13 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1324px, 1600px, 0px)'
+                'translate3d(1313px, 1600px, 0px)'
             );
         });
 
         it('works with bottom/start and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 515);
+                dom.setScrollX(document, 520);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'bottom',
@@ -751,13 +751,13 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1145px, 1640px, 0px)'
+                'translate3d(1150px, 1637px, 0px)'
             );
         });
 
         it('works with bottom/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 515);
+                dom.setScrollX(document, 520);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'bottom',
@@ -772,7 +772,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1145px, 1640px, 0px)'
+                'translate3d(1150px, 1637px, 0px)'
             );
         });
 
@@ -793,7 +793,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1200px, 1640px, 0px)'
+                'translate3d(1200px, 1637px, 0px)'
             );
         });
 
@@ -814,13 +814,13 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1200px, 1640px, 0px)'
+                'translate3d(1200px, 1637px, 0px)'
             );
         });
 
         it('works with left/start and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1050);
+                dom.setScrollY(document, 1048);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'left',
@@ -835,7 +835,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1021px, 1513px, 0px)'
+                'translate3d(1037px, 1520px, 0px)'
             );
         });
 
@@ -856,13 +856,13 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1021px, 1600px, 0px)'
+                'translate3d(1037px, 1600px, 0px)'
             );
         });
 
         it('works with left/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1050);
+                dom.setScrollY(document, 1048);
                 const dropdownToggle = dom.findOne('#dropdownToggle');
                 const dropdown = UI.Dropdown.init(dropdownToggle, {
                     placement: 'left',
@@ -877,7 +877,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1021px, 1513px, 0px)'
+                'translate3d(1037px, 1520px, 0px)'
             );
         });
 
@@ -898,7 +898,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1021px, 1600px, 0px)'
+                'translate3d(1037px, 1600px, 0px)'
             );
         });
 
@@ -918,7 +918,7 @@ describe('popper dropdown', function() {
                     dropdown.show();
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1200px, 1640px, 0px)'
+                'translate3d(1200px, 1637px, 0px)'
             );
         });
 
@@ -934,7 +934,7 @@ describe('popper dropdown', function() {
                     dropdown.show();
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1200px, 1640px, 0px)'
+                'translate3d(1200px, 1637px, 0px)'
             );
         });
 
@@ -948,7 +948,7 @@ describe('popper dropdown', function() {
                     }).show();
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1200px, 1640px, 0px)'
+                'translate3d(1200px, 1637px, 0px)'
             );
         });
 
@@ -970,7 +970,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1172px, 1473px, 0px)'
+                'translate3d(1175px, 1483px, 0px)'
             );
         });
 
@@ -992,7 +992,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1324px, 1556px, 0px)'
+                'translate3d(1313px, 1560px, 0px)'
             );
         });
 
@@ -1014,7 +1014,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1172px, 1640px, 0px)'
+                'translate3d(1175px, 1637px, 0px)'
             );
         });
 
@@ -1037,7 +1037,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1021px, 1556px, 0px)'
+                'translate3d(1037px, 1560px, 0px)'
             );
         });
 
@@ -1056,7 +1056,7 @@ describe('popper dropdown', function() {
                     dropdown.show();
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1200px, 1687px, 0px)'
+                'translate3d(1200px, 1684px, 0px)'
             );
         });
 
@@ -1071,7 +1071,7 @@ describe('popper dropdown', function() {
                     dropdown.show();
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1200px, 1687px, 0px)'
+                'translate3d(1200px, 1684px, 0px)'
             );
         });
 
@@ -1084,7 +1084,7 @@ describe('popper dropdown', function() {
                     }).show();
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1200px, 1687px, 0px)'
+                'translate3d(1200px, 1684px, 0px)'
             );
         });
 
@@ -1105,7 +1105,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1172px, 1426px, 0px)'
+                'translate3d(1175px, 1436px, 0px)'
             );
         });
 
@@ -1126,7 +1126,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1371px, 1556px, 0px)'
+                'translate3d(1360px, 1560px, 0px)'
             );
         });
 
@@ -1147,7 +1147,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1172px, 1687px, 0px)'
+                'translate3d(1175px, 1684px, 0px)'
             );
         });
 
@@ -1168,7 +1168,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(974px, 1556px, 0px)'
+                'translate3d(990px, 1560px, 0px)'
             );
         });
 
@@ -1188,7 +1188,7 @@ describe('popper dropdown', function() {
                     dropdown.show();
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1220px, 1640px, 0px)'
+                'translate3d(1220px, 1637px, 0px)'
             );
         });
 
@@ -1204,7 +1204,7 @@ describe('popper dropdown', function() {
                     dropdown.show();
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1220px, 1640px, 0px)'
+                'translate3d(1220px, 1637px, 0px)'
             );
         });
 
@@ -1218,7 +1218,7 @@ describe('popper dropdown', function() {
                     }).show();
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1220px, 1640px, 0px)'
+                'translate3d(1220px, 1637px, 0px)'
             );
         });
 
@@ -1240,7 +1240,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1324px, 1620px, 0px)'
+                'translate3d(1313px, 1620px, 0px)'
             );
         });
 
@@ -1262,7 +1262,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1104px, 1473px, 0px)'
+                'translate3d(1120px, 1483px, 0px)'
             );
         });
 
@@ -1284,7 +1284,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1021px, 1491px, 0px)'
+                'translate3d(1037px, 1501px, 0px)'
             );
         });
 
@@ -1306,7 +1306,7 @@ describe('popper dropdown', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1220px, 1640px, 0px)'
+                'translate3d(1220px, 1637px, 0px)'
             );
         });
 

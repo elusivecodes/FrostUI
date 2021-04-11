@@ -40,7 +40,7 @@ describe('popper dropdown (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1200px, 1473px, 0px)'
+                'translate3d(1200px, 1483px, 0px)'
             );
         });
 
@@ -60,7 +60,7 @@ describe('popper dropdown (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1172px, 1473px, 0px)'
+                'translate3d(1175px, 1483px, 0px)'
             );
         });
 
@@ -80,7 +80,7 @@ describe('popper dropdown (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1145px, 1473px, 0px)'
+                'translate3d(1150px, 1483px, 0px)'
             );
         });
 
@@ -100,7 +100,7 @@ describe('popper dropdown (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1324px, 1600px, 0px)'
+                'translate3d(1313px, 1600px, 0px)'
             );
         });
 
@@ -120,7 +120,7 @@ describe('popper dropdown (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1324px, 1556px, 0px)'
+                'translate3d(1313px, 1560px, 0px)'
             );
         });
 
@@ -140,7 +140,7 @@ describe('popper dropdown (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1324px, 1513px, 0px)'
+                'translate3d(1313px, 1520px, 0px)'
             );
         });
 
@@ -160,7 +160,7 @@ describe('popper dropdown (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1200px, 1640px, 0px)'
+                'translate3d(1200px, 1637px, 0px)'
             );
         });
 
@@ -180,7 +180,7 @@ describe('popper dropdown (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1172px, 1640px, 0px)'
+                'translate3d(1175px, 1637px, 0px)'
             );
         });
 
@@ -200,7 +200,7 @@ describe('popper dropdown (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1145px, 1640px, 0px)'
+                'translate3d(1150px, 1637px, 0px)'
             );
         });
 
@@ -220,7 +220,7 @@ describe('popper dropdown (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1021px, 1600px, 0px)'
+                'translate3d(1037px, 1600px, 0px)'
             );
         });
 
@@ -240,7 +240,7 @@ describe('popper dropdown (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1021px, 1556px, 0px)'
+                'translate3d(1037px, 1560px, 0px)'
             );
         });
 
@@ -260,7 +260,7 @@ describe('popper dropdown (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1021px, 1513px, 0px)'
+                'translate3d(1037px, 1520px, 0px)'
             );
         });
 

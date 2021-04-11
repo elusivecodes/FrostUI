@@ -21,7 +21,7 @@ describe('Text Expand', function() {
                     dom.triggerEvent('#input', 'change');
                     return dom.height('#input');
                 }),
-                148
+                136
             );
         });
 
@@ -34,7 +34,7 @@ describe('Text Expand', function() {
                     dom.triggerEvent('#input', 'change');
                     return dom.height('#input');
                 }),
-                70
+                64
             );
         });
 
@@ -45,7 +45,7 @@ describe('Text Expand', function() {
                     dom.triggerEvent('#input', 'input');
                     return dom.height('#input');
                 }),
-                148
+                136
             );
         });
 
@@ -58,7 +58,7 @@ describe('Text Expand', function() {
                     dom.triggerEvent('#input', 'input');
                     return dom.height('#input');
                 }),
-                70
+                64
             );
         });
 

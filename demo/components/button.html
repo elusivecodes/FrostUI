@@ -8,70 +8,78 @@
     <title>Buttons</title>
     <link rel="stylesheet" href="../../dist/frost-ui.min.css" />
     <script src="../../dist/frost-ui-bundle.js"></script>
-    <style>
-        .container .btn {
-            margin-top: .25rem;
-            margin-bottom: .25rem;
-        }
-    </style>
 </head>
 
 <body>
     <div class="container">
         <h1>Buttons</h1>
         <div class="mb-4">
-            <button class="btn ripple btn-primary" type="button">Primary</button>
-            <button class="btn ripple btn-secondary" type="button">Secondary</button>
-            <button class="btn ripple btn-success" type="button">Success</button>
-            <button class="btn ripple btn-info" type="button">Info</button>
-            <button class="btn ripple btn-warning" type="button">Warning</button>
-            <button class="btn ripple btn-danger" type="button">Danger</button>
-            <button class="btn ripple btn-light" type="button">Light</button>
-            <button class="btn ripple btn-dark" type="button">Dark</button>
-            <button class="btn btn-link" type="button">Link</button>
+            <button class="btn btn-primary ripple mb-1" type="button">Primary</button>
+            <button class="btn btn-secondary ripple mb-1" type="button">Secondary</button>
+            <button class="btn btn-success ripple mb-1" type="button">Success</button>
+            <button class="btn btn-info ripple mb-1" type="button">Info</button>
+            <button class="btn btn-warning ripple mb-1" type="button">Warning</button>
+            <button class="btn btn-danger ripple mb-1" type="button">Danger</button>
+            <button class="btn btn-light ripple mb-1" type="button">Light</button>
+            <button class="btn btn-dark ripple mb-1" type="button">Dark</button>
+            <button class="btn btn-link mb-1" type="button">Link</button>
+        </div>
+
+        <h4>Tags</h4>
+        <div class="mb-4">
+            <a class="btn btn-primary ripple mb-1" href="#" role="button">Link</a>
+            <button class="btn btn-primary ripple mb-1" type="button">Button</button>
+            <input class="btn btn-primary mb-1" type="button" value="Input">
+            <input class="btn btn-primary mb-1" type="submit" value="Submit">
+            <input class="btn btn-primary mb-1" type="reset" value="Reset">
         </div>
 
         <h4>Outline</h4>
         <div class="mb-4">
-            <button class="btn ripple btn-outline-primary" type="button">Primary</button>
-            <button class="btn ripple btn-outline-secondary" type="button">Secondary</button>
-            <button class="btn ripple btn-outline-success" type="button">Success</button>
-            <button class="btn ripple btn-outline-info" type="button">Info</button>
-            <button class="btn ripple btn-outline-warning" type="button">Warning</button>
-            <button class="btn ripple btn-outline-danger" type="button">Danger</button>
-            <button class="btn ripple btn-outline-light" type="button">Light</button>
-            <button class="btn ripple btn-outline-dark" type="button">Dark</button>
+            <button class="btn btn-outline-primary ripple mb-1" type="button">Primary</button>
+            <button class="btn btn-outline-secondary ripple mb-1" type="button">Secondary</button>
+            <button class="btn btn-outline-success ripple mb-1" type="button">Success</button>
+            <button class="btn btn-outline-info ripple mb-1" type="button">Info</button>
+            <button class="btn btn-outline-warning ripple mb-1" type="button">Warning</button>
+            <button class="btn btn-outline-danger ripple mb-1" type="button">Danger</button>
+            <button class="btn btn-outline-light ripple mb-1" type="button">Light</button>
+            <button class="btn btn-outline-dark ripple mb-1" type="button">Dark</button>
         </div>
 
         <h4>Sizes</h4>
         <div class="mb-4">
-            <button class="btn ripple btn-primary btn-lg" type="button">Primary</button>
-            <button class="btn ripple btn-secondary btn-lg" type="button">Secondary</button>
+            <button class="btn btn-primary ripple btn-lg" type="button">Primary</button>
+            <button class="btn btn-secondary ripple btn-lg" type="button">Secondary</button>
         </div>
         <div class="mb-4">
-            <button class="btn ripple btn-primary btn-sm" type="button">Primary</button>
-            <button class="btn ripple btn-secondary btn-sm" type="button">Secondary</button>
+            <button class="btn btn-primary ripple btn-sm" type="button">Primary</button>
+            <button class="btn btn-secondary ripple btn-sm" type="button">Secondary</button>
+        </div>
+
+        <h4>Disabled</h4>
+        <div class="mb-4">
+            <button class="btn btn-primary ripple btn-lg disabled" tabindex="-1" type="button" aria-disabled="true">Primary</button>
+            <button class="btn btn-secondary ripple btn-lg disabled" tabindex="-1" type="button" aria-disabled="true">Secondary</button>
         </div>
 
         <h4>Block</h4>
         <div class="mb-4" style="max-width: 16rem;">
             <div class="d-grid gap-2">
-                <button class="btn ripple btn-primary btn-lg" type="button">Primary</button>
-                <button class="btn ripple btn-secondary btn-lg" type="button">Secondary</button>
+                <button class="btn btn-primary ripple btn-lg" type="button">Primary</button>
+                <button class="btn btn-secondary ripple btn-lg" type="button">Secondary</button>
             </div>
-        </div>
-
-        <h4>Disabled</h4>
-        <div class="mb-4">
-            <button class="btn ripple btn-primary btn-lg disabled" tabindex="-1" type="button" aria-disabled="true">Primary</button>
-            <button class="btn ripple btn-secondary btn-lg disabled" tabindex="-1" type="button" aria-disabled="true">Secondary</button>
         </div>
 
         <h4>Toggle</h4>
         <div class="mb-4">
-            <button class="btn ripple btn-primary active" data-ui-toggle="button" type="button">Toggle</button>
-            <button class="btn ripple btn-primary" data-ui-toggle="button" type="button">Toggle</button>
-            <button class="btn ripple btn-primary disabled" data-ui-toggle="button" type="button">Toggle</button>
+            <button class="btn btn-primary active" data-ui-toggle="button" type="button">Toggle</button>
+            <button class="btn btn-primary" data-ui-toggle="button" type="button">Toggle</button>
+            <button class="btn btn-primary disabled" data-ui-toggle="button" type="button">Toggle</button>
+        </div>
+        <div class="mb-4">
+            <a class="btn btn-primary active" data-ui-toggle="button" href="#" type="button">Toggle</a>
+            <a class="btn btn-primary" data-ui-toggle="button" href="#" href="#" type="button">Toggle</a>
+            <a class="btn btn-primary disabled" data-ui-toggle="button" type="button">Toggle</a>
         </div>
     </div>
 </body>

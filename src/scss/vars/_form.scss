@@ -4,7 +4,7 @@ $form-check-padding-left: $spacing * 2 !default;
 $form-check-inline-margin-right: $spacing !default;
 
 $input-check-size: 1em !default;
-$input-check-margin-top: $spacing / 8 !default;
+$input-check-margin-top: $spacing / 4 !default;
 $input-check-background-color: map-get($color-variants, light) !default;
 $input-check-border-size: $border-size !default;
 $input-check-border-color: $border-color !default;
@@ -16,10 +16,10 @@ $input-check-focus-box-shadow-color: $input-check-checked-background-color !defa
 $input-check-disabled-opacity: $disabled-opacity !default;
 
 $input-check-checkbox-border-radius: $border-radius !default;
-$input-check-checkbox-checked-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='#{svg-color($white)}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+$input-check-checkbox-checked-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='#{svg-color($white)}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e") !default;
 
 $input-check-radio-border-radius: 50% !default;
-$input-check-radio-checked-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='#{svg-color($white)}'/%3e%3c/svg%3e");
+$input-check-radio-checked-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='#{svg-color($white)}'/%3e%3c/svg%3e") !default;
 
 $form-switch-padding-left: $spacing * 2.5 !default;
 $form-switch-input-check-width: 2rem !default;

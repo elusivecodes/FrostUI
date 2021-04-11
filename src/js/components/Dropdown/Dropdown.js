@@ -57,10 +57,6 @@ class Dropdown extends BaseComponent {
         this._menuNode = null;
         this._referenceNode = null;
 
-        if (this.constructor._current === this) {
-            this.constructor._current = null;
-        }
-
         super.dispose();
     }
 
@@ -78,10 +74,6 @@ class Dropdown extends BaseComponent {
         }
 
         this._animating = true;
-
-        if (this.constructor._current === this) {
-            this.constructor._current = null;
-        }
 
         dom.fadeOut(this._menuNode, {
             duration: this._settings.duration
@@ -111,8 +103,6 @@ class Dropdown extends BaseComponent {
 
         this._animating = true;
         dom.addClass(this._menuNode, 'show');
-
-        this.constructor._current = this;
 
         this.update();
 

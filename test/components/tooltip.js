@@ -8,8 +8,8 @@ describe('Tooltip', function() {
         await exec(_ => {
             dom.setHTML(
                 document.body,
-                '<button id="tooltipToggle1" type="button"></button>' +
-                '<button id="tooltipToggle2" type="button"></button>'
+                '<button class="btn btn-secondary" id="tooltipToggle1" type="button"></button>' +
+                '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
             );
         });
     });
@@ -142,8 +142,8 @@ describe('Tooltip', function() {
 
                     return dom.getHTML(document.body);
                 }),
-                '<button id="tooltipToggle1" type="button" title="Test"></button>' +
-                '<button id="tooltipToggle2" type="button"></button>'
+                '<button class="btn btn-secondary" id="tooltipToggle1" type="button" title="Test"></button>' +
+                '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
             );
         });
 
@@ -163,9 +163,9 @@ describe('Tooltip', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -181,9 +181,9 @@ describe('Tooltip', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -194,10 +194,10 @@ describe('Tooltip', function() {
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button" data-ui-placement="bottom"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(19px, 12px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -6px; left: 2px;"></div><div class="tooltip-inner"></div></div>'
                 );
             });
         });
@@ -272,8 +272,8 @@ describe('Tooltip', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -297,8 +297,8 @@ describe('Tooltip', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -318,8 +318,8 @@ describe('Tooltip', function() {
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<button id="tooltipToggle2" type="button" data-ui-placement="right"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button" data-ui-placement="bottom"></button>'
                 );
             });
         });
@@ -423,9 +423,9 @@ describe('Tooltip', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -441,9 +441,9 @@ describe('Tooltip', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -454,10 +454,10 @@ describe('Tooltip', function() {
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button" data-ui-placement="bottom"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(19px, 12px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -6px; left: 2px;"></div><div class="tooltip-inner"></div></div>'
                 );
             });
         });
@@ -516,13 +516,13 @@ describe('Tooltip', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
 
-        it('hide the tooltip (query)', async function() {
+        it('hides the tooltip (query)', async function() {
             await exec(_ => {
                 dom.query('#tooltipToggle1').tooltip('show');
             }).then(waitFor(50)).then(async _ => {
@@ -541,8 +541,8 @@ describe('Tooltip', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -562,8 +562,8 @@ describe('Tooltip', function() {
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<button id="tooltipToggle2" type="button" data-ui-placement="right"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button" data-ui-placement="bottom"></button>'
                 );
             });
         });
@@ -636,8 +636,8 @@ describe('Tooltip', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button"></button>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -650,8 +650,8 @@ describe('Tooltip', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button"></button>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -663,8 +663,8 @@ describe('Tooltip', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button"></button>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -716,9 +716,9 @@ describe('Tooltip', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -737,9 +737,9 @@ describe('Tooltip', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -752,10 +752,10 @@ describe('Tooltip', function() {
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button" data-ui-placement="bottom"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(19px, 12px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -6px; left: 2px;"></div><div class="tooltip-inner"></div></div>'
                 );
             });
         });
@@ -807,9 +807,9 @@ describe('Tooltip', function() {
                         UI.Tooltip.init(tooltipToggle1).refresh();
                         return dom.getHTML(document.body);
                     }),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right" data-ui-title="Test"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner">Test</div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right" data-ui-title="Test"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 2px; left: -12px;"></div><div class="tooltip-inner">Test</div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -829,14 +829,14 @@ describe('Tooltip', function() {
                             .tooltip('refresh');
                         return dom.getHTML(document.body);
                     }),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right" data-ui-title="Test"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner">Test</div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right" data-ui-title="Test"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 2px; left: -12px;"></div><div class="tooltip-inner">Test</div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
 
-        it('refreshes multiple tooltip titles (query)', async function() {
+        it('refreshes multiple tooltips titles (query)', async function() {
             await exec(_ => {
                 dom.query('button').tooltip('show');
             }).then(waitFor(50)).then(async _ => {
@@ -852,10 +852,10 @@ describe('Tooltip', function() {
                             .tooltip('refresh');
                         return dom.getHTML(document.body);
                     }),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right" data-ui-title="Test"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner">Test</div></div>' +
-                    '<button id="tooltipToggle2" type="button" data-ui-placement="right" data-ui-title="Test"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner">Test</div></div>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right" data-ui-title="Test"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 2px; left: -12px;"></div><div class="tooltip-inner">Test</div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button" data-ui-placement="bottom" data-ui-title="Test"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(6px, 12px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -6px; left: 15px;"></div><div class="tooltip-inner">Test</div></div>'
                 );
             });
         });
@@ -894,8 +894,8 @@ describe('Tooltip', function() {
                         UI.Tooltip.init(tooltipToggle1).show();
                     });
                 }),
-                '<button id="tooltipToggle1" type="button"></button>' +
-                '<button id="tooltipToggle2" type="button"></button>'
+                '<button class="btn btn-secondary" id="tooltipToggle1" type="button"></button>' +
+                '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
             );
         });
 
@@ -910,9 +910,9 @@ describe('Tooltip', function() {
                         UI.Tooltip.init(tooltipToggle1).show();
                     });
                 }),
-                '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                '<button id="tooltipToggle2" type="button"></button>'
+                '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
             );
         });
 
@@ -935,9 +935,9 @@ describe('Tooltip', function() {
                             UI.Tooltip.init(tooltipToggle1).hide();
                         });
                     }),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -961,8 +961,8 @@ describe('Tooltip', function() {
                             UI.Tooltip.init(tooltipToggle1).hide();
                         });
                     }),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -977,8 +977,8 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button"></button>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -993,8 +993,8 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button"></button>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1018,9 +1018,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1044,9 +1044,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1066,9 +1066,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner">Test</div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 2px; left: -12px;"></div><div class="tooltip-inner">Test</div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1085,9 +1085,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-title="Test" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner">Test</div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-title="Test" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 2px; left: -12px;"></div><div class="tooltip-inner">Test</div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1104,9 +1104,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-original-title="Test" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner">Test</div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-original-title="Test" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 2px; left: -12px;"></div><div class="tooltip-inner">Test</div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1123,9 +1123,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner">Test</div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 2px; left: -12px;"></div><div class="tooltip-inner">Test</div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1142,9 +1142,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-title="Test" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner">Test</div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-title="Test" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 2px; left: -12px;"></div><div class="tooltip-inner">Test</div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1161,9 +1161,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-original-title="Test 2" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner">Test</div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-original-title="Test 2" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 2px; left: -12px;"></div><div class="tooltip-inner">Test</div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1185,9 +1185,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-test="Test" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-test="Test" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1204,9 +1204,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-template="<div class=&quot;tooltip&quot; role=&quot;tooltip&quot; data-test=&quot;Test&quot;><div class=&quot;tooltip-arrow&quot;></div><div class=&quot;tooltip-inner&quot;></div></div>" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-test="Test" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-template="<div class=&quot;tooltip&quot; role=&quot;tooltip&quot; data-test=&quot;Test&quot;><div class=&quot;tooltip-arrow&quot;></div><div class=&quot;tooltip-inner&quot;></div></div>" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-test="Test" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1223,9 +1223,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-test="Test" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-test="Test" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1245,9 +1245,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip test show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip test show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1264,9 +1264,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-custom-class="test" data-ui-placement="right"></button>' +
-                    '<div class="tooltip test show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-custom-class="test" data-ui-placement="right"></button>' +
+                    '<div class="tooltip test show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1283,9 +1283,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip test show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip test show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1411,9 +1411,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner">&lt;b&gt;Test&lt;/b&gt;</div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 2px; left: -12px;"></div><div class="tooltip-inner">&lt;b&gt;Test&lt;/b&gt;</div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1429,9 +1429,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"><b>Test</b></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 2px; left: -12px;"></div><div class="tooltip-inner"><b>Test</b></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1448,9 +1448,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-html="true" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"><b>Test</b></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-html="true" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 2px; left: -12px;"></div><div class="tooltip-inner"><b>Test</b></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1467,9 +1467,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"><b>Test</b></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 2px; left: -12px;"></div><div class="tooltip-inner"><b>Test</b></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1585,8 +1585,8 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button"></button>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1599,8 +1599,8 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button"></button>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1613,8 +1613,8 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button"></button>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1634,9 +1634,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1656,9 +1656,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1678,9 +1678,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1751,10 +1751,10 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<button id="tooltipToggle2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>' +
                     '<div class="test">' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
                     '</div>'
                 );
             });
@@ -1774,10 +1774,10 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-append-to=".test" data-ui-placement="right"></button>' +
-                    '<button id="tooltipToggle2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-append-to=".test" data-ui-placement="right"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>' +
                     '<div class="test">' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
                     '</div>'
                 );
             });
@@ -1797,10 +1797,10 @@ describe('Tooltip', function() {
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<button id="tooltipToggle2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>' +
                     '<div class="test">' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"></div></div>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
                     '</div>'
                 );
             });
@@ -1821,9 +1821,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"><b>Test</b></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 2px; left: -12px;"></div><div class="tooltip-inner"><b>Test</b></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1839,9 +1839,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"><b data-test="Test">Test</b></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 2px; left: -12px;"></div><div class="tooltip-inner"><b data-test="Test">Test</b></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1858,9 +1858,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-sanitize="false" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"><b data-test="Test">Test</b></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-sanitize="false" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 2px; left: -12px;"></div><div class="tooltip-inner"><b data-test="Test">Test</b></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });
@@ -1877,9 +1877,9 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(2px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -7px; left: -14px;"></div><div class="tooltip-inner"><b data-test="Test">Test</b></div></div>' +
-                    '<button id="tooltipToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 2px; left: -12px;"></div><div class="tooltip-inner"><b data-test="Test">Test</b></div></div>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>'
                 );
             });
         });

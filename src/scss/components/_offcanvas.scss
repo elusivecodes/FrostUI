@@ -8,6 +8,7 @@
     color: $offcanvas-color;
     background-color: $offcanvas-background-color;
     background-clip: padding-box;
+    outline: 0;
 
     &:not(.show) {
         display: none;

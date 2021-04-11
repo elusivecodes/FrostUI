@@ -8,11 +8,11 @@ describe('Alert', function() {
         await exec(_ => {
             dom.setHTML(
                 document.body,
-                '<div class="alert" id="alert1">' +
-                '<button id="button1" data-ui-dismiss="alert" type="button"></button>' +
+                '<div class="alert alert-success alert-dismissable" id="alert1">' +
+                '<button class="btn-close" id="button1" data-ui-dismiss="alert" type="button"></button>' +
                 '</div>' +
-                '<div class="alert" id="alert2">' +
-                '<button id="button2" data-ui-dismiss="alert" type="button"></button>' +
+                '<div class="alert alert-success alert-dismissable" id="alert2">' +
+                '<button class="btn-close" id="button2" data-ui-dismiss="alert" type="button"></button>' +
                 '</div>'
             );
         });
@@ -162,8 +162,8 @@ describe('Alert', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<div class="alert" id="alert2">' +
-                    '<button id="button2" data-ui-dismiss="alert" type="button"></button>' +
+                    '<div class="alert alert-success alert-dismissable" id="alert2">' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="alert" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -180,8 +180,8 @@ describe('Alert', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<div class="alert" id="alert2">' +
-                    '<button id="button2" data-ui-dismiss="alert" type="button"></button>' +
+                    '<div class="alert alert-success alert-dismissable" id="alert2">' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="alert" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -198,8 +198,8 @@ describe('Alert', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<div class="alert" id="alert2">' +
-                    '<button id="button2" data-ui-dismiss="alert" type="button"></button>' +
+                    '<div class="alert alert-success alert-dismissable" id="alert2">' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="alert" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -272,11 +272,11 @@ describe('Alert', function() {
                         UI.Alert.init(alert1).close();
                     });
                 }),
-                '<div class="alert" id="alert1">' +
-                '<button id="button1" data-ui-dismiss="alert" type="button"></button>' +
+                '<div class="alert alert-success alert-dismissable" id="alert1">' +
+                '<button class="btn-close" id="button1" data-ui-dismiss="alert" type="button"></button>' +
                 '</div>' +
-                '<div class="alert" id="alert2">' +
-                '<button id="button2" data-ui-dismiss="alert" type="button"></button>' +
+                '<div class="alert alert-success alert-dismissable" id="alert2">' +
+                '<button class="btn-close" id="button2" data-ui-dismiss="alert" type="button"></button>' +
                 '</div>'
             );
         });
@@ -292,8 +292,8 @@ describe('Alert', function() {
                         UI.Alert.init(alert1).close();
                     });
                 }),
-                '<div class="alert" id="alert2">' +
-                '<button id="button2" data-ui-dismiss="alert" type="button"></button>' +
+                '<div class="alert alert-success alert-dismissable" id="alert2">' +
+                '<button class="btn-close" id="button2" data-ui-dismiss="alert" type="button"></button>' +
                 '</div>'
             );
         });
@@ -308,11 +308,11 @@ describe('Alert', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<div class="alert" id="alert1">' +
-                    '<button id="button1" data-ui-dismiss="alert" type="button"></button>' +
+                    '<div class="alert alert-success alert-dismissable" id="alert1">' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="alert" type="button"></button>' +
                     '</div>' +
-                    '<div class="alert" id="alert2">' +
-                    '<button id="button2" data-ui-dismiss="alert" type="button"></button>' +
+                    '<div class="alert alert-success alert-dismissable" id="alert2">' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="alert" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -328,11 +328,11 @@ describe('Alert', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<div class="alert" id="alert1">' +
-                    '<button id="button1" data-ui-dismiss="alert" type="button"></button>' +
+                    '<div class="alert alert-success alert-dismissable" id="alert1">' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="alert" type="button"></button>' +
                     '</div>' +
-                    '<div class="alert" id="alert2">' +
-                    '<button id="button2" data-ui-dismiss="alert" type="button"></button>' +
+                    '<div class="alert alert-success alert-dismissable" id="alert2">' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="alert" type="button"></button>' +
                     '</div>'
                 );
             });

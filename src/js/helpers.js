@@ -1,25 +1,48 @@
 /**
  * Add scrollbar padding to the body.
  */
-UI.addScrollPadding = _ => {
+UI.addScrollPadding = (node = document.body) => {
     const scrollSizeY = UI.getScrollbarSize(window, document, 'y');
     const scrollSizeX = UI.getScrollbarSize(window, document, 'x');
 
     if (scrollSizeY) {
-        const currentPaddingRight = dom.getStyle(document.body, 'paddingRight');
-        const paddingRight = dom.css(document.body, 'paddingRight');
+        const currentPaddingRight = dom.getStyle(node, 'paddingRight');
+        const paddingRight = dom.css(node, 'paddingRight');
 
-        dom.setDataset(document.body, 'uiPaddingRight', currentPaddingRight);
-        dom.setStyle(document.body, 'paddingRight', `${scrollSizeY + parseInt(paddingRight)}px`);
+        dom.setDataset(node, 'uiPaddingRight', currentPaddingRight);
+        dom.setStyle(node, 'paddingRight', `${scrollSizeY + parseInt(paddingRight)}px`);
     }
 
     if (scrollSizeX) {
-        const currentPaddingBottom = dom.getStyle(document.body, 'paddingBottom');
-        const paddingBottom = dom.css(document.body, 'paddingBottom');
+        const currentPaddingBottom = dom.getStyle(node, 'paddingBottom');
+        const paddingBottom = dom.css(node, 'paddingBottom');
 
-        dom.setDataset(document.body, 'uiPaddingBottom', currentPaddingBottom);
-        dom.setStyle(document.body, 'paddingBottom', `${scrollSizeX + parseInt(paddingBottom)}px`);
+        dom.setDataset(node, 'uiPaddingBottom', currentPaddingBottom);
+        dom.setStyle(node, 'paddingBottom', `${scrollSizeX + parseInt(paddingBottom)}px`);
     }
+};
+
+/**
+ * Generate a unique element ID.
+ * @returns {string} The unique ID.
+ */
+UI.generateId = prefix => {
+    const id = `${prefix}${Core.randomInt(10000, 99999)}`;
+
+    if (dom.findOne(`#${id}`)) {
+        return UI.generateId(prefix);
+    }
+
+    return id;
+};
+
+/**
+ * Get a click event target.
+ * @param {Event} e The click event.
+ * @returns {HTMLElement} The click event target.
+ */
+UI.getClickTarget = e => {
+    return UI._clickTarget || e.target;
 };
 
 /**
@@ -43,14 +66,14 @@ UI.getScrollbarSize = (node = window, scrollNode = document, axis) => {
 /**
  * Reset body scrollbar padding.
  */
-UI.resetScrollPadding = _ => {
-    const paddingRight = dom.getDataset(document.body, 'uiPaddingRight');
-    const paddingBottom = dom.getDataset(document.body, 'uiPaddingBottom');
+UI.resetScrollPadding = (node = document.body) => {
+    const paddingRight = dom.getDataset(node, 'uiPaddingRight');
+    const paddingBottom = dom.getDataset(node, 'uiPaddingBottom');
 
-    dom.setStyle(document.body, { paddingRight, paddingBottom });
+    dom.setStyle(node, { paddingRight, paddingBottom });
 
-    dom.removeDataset(document.body, 'uiPaddingRight');
-    dom.removeDataset(document.body, 'uiPaddingBottom');
+    dom.removeDataset(node, 'uiPaddingRight');
+    dom.removeDataset(node, 'uiPaddingBottom');
 };
 
 /**

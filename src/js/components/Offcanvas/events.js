@@ -16,33 +16,51 @@ dom.addEventDelegate(document, 'click.ui.offcanvas', '[data-ui-dismiss="offcanva
 });
 
 dom.addEvent(document, 'click.ui.offcanvas', e => {
-    const offcanvas = Offcanvas._current;
+    const target = UI.getClickTarget(e);
 
-    if (
-        !offcanvas ||
-        !offcanvas._settings.backdrop ||
-        offcanvas._node === e.target ||
-        Modal._stack.size ||
-        dom.is(e.target, '[data-ui-dismiss]') ||
-        dom.hasDescendent(offcanvas._node, e.target)
-    ) {
+    if (dom.is(target, '[data-ui-dismiss]') || dom.findOne('.modal.show')) {
         return;
     }
 
-    offcanvas.hide();
+    const nodes = dom.find('.offcanvas.show');
+
+    if (!nodes.length) {
+        return;
+    }
+
+    for (const node of nodes) {
+        const offcanvas = Offcanvas.init(node);
+
+        if (
+            !offcanvas._settings.backdrop ||
+            offcanvas._node === target ||
+            dom.hasDescendent(offcanvas._node, target)
+        ) {
+            continue;
+        }
+
+        offcanvas.hide();
+    }
 });
 
 dom.addEvent(document, 'keyup.ui.offcanvas', e => {
-    const offcanvas = Offcanvas._current;
-
-    if (
-        e.code !== 'Escape' ||
-        !offcanvas ||
-        !offcanvas._settings.keyboard ||
-        Modal._stack.size
-    ) {
+    if (e.code !== 'Escape' || dom.findOne('.modal.show')) {
         return;
     }
 
-    offcanvas.hide();
+    const nodes = dom.find('.offcanvas.show');
+
+    if (!nodes.length) {
+        return;
+    }
+
+    for (const node of nodes) {
+        const offcanvas = Offcanvas.init(node);
+
+        if (!offcanvas._settings.keyboard) {
+            return;
+        }
+
+        offcanvas.hide();
+    }
 });

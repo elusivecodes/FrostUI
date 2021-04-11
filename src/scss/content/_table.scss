@@ -1,33 +1,27 @@
 .table {
-    --ui-table-border: #{$table-border-color};
     width: 100%;
     margin-bottom: $table-margin-bottom;
+    border-color: #{$table-border-color};
 
     > :not(caption) > * > * {
         padding: $table-cell-padding-y $table-cell-padding-x;
         color: var(--ui-table-color, #{$text-color});
         background-color: var(--ui-table-bg);
-        border-bottom: $table-border-size $border-style var(--ui-table-border);
+        border-bottom-width: $table-border-size;
         box-shadow: inset 0 0 0 9999px var(--ui-table-accent-bg, transparent);
     }
 
     > :not(:last-child) > :last-child > * {
         border-bottom-width: $table-border-size * 2;
     }
+}
 
-    .thead-dark th {
-        --ui-table-bg: #{$thead-dark-background-color};
-        --ui-table-color: #{$thead-dark-color};
-    }
-
-    .thead-light th {
-        --ui-table-bg: #{$thead-light-background-color};
-        --ui-table-color: #{$thead-light-color};
-    }
+.table-bordered > :not(caption) > * {
+    border-width: $table-border-size 0;
 }
 
 .table-bordered > :not(caption) > * > * {
-    border: $table-border-size $border-style var(--ui-table-border);
+    border-width: 0 $table-border-size;
 }
 
 .table-borderless > :not(caption) > * > * {
@@ -53,7 +47,16 @@
     --ui-table-striped-bg: #{$table-dark-striped-background-color};
     --ui-table-hover-bg: #{$table-dark-hover-background-color};
     --ui-table-hover-color: #{$table-dark-color};
-    --ui-table-border: #{$table-dark-border-color};
+
+    border-color: #{$table-dark-border-color};
+}
+
+.table-light {
+    --ui-table-bg: #{$table-light-background-color};
+}
+
+.caption-top {
+    caption-side: top;
 }
 
 @each $name, $color in $table-variants {
@@ -61,12 +64,12 @@
         $background-color: tint($color, $table-background-color-tint);
         $text-color: text-color-contrast($background-color, $color);
         $hover-color: shade($text-color, $table-hover-color-shade);
-        $border-color: tint($color, $table-border-color-tint);
 
         --ui-table-bg: #{$background-color};
         --ui-table-color: #{$text-color};
         --ui-table-hover-color: #{$hover-color};
-        --ui-table-border: #{$border-color};
+
+        border-color: tint($color, $table-border-color-tint);
     }
 }
 

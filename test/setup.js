@@ -71,7 +71,9 @@ before(async function() {
         UI.Carousel.defaults.interval = 200;
         UI.Carousel.defaults.transition = 100;
         UI.Collapse.defaults.duration = 100;
+        UI.Popover.noId = true;
         UI.Toast.defaults.delay = 200;
+        UI.Tooltip.noId = true;
     });
 });
 
@@ -84,6 +86,7 @@ beforeEach(async function() {
             document.head,
             '<link rel="stylesheet" href="assets/frost-ui.css">'
         );
+        UI._clickTarget = null;
     });
 
     await page.waitForFunction(_ => {

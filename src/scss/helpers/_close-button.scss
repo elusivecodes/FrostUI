@@ -22,12 +22,19 @@
     }
 
     &:focus {
+        outline: 0;
         opacity: $btn-close-focus-opacity;
     }
 
     &.disabled,
     &:disabled {
         pointer-events: none;
+        user-select: none;
         opacity: $btn-close-disabled-opacity;
     }
+}
+
+.btn-close-white {
+    color: $btn-close-white-color;
+    text-shadow: $btn-close-white-text-shadow;
 }

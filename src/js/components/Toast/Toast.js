@@ -5,23 +5,6 @@
 class Toast extends BaseComponent {
 
     /**
-     * New Toast constructor.
-     * @param {HTMLElement} node The input node.
-     * @param {object} [settings] The options to create the Toast with.
-     * @returns {Toast} A new Toast object.
-     */
-    constructor(node, settings) {
-        super(node, settings);
-
-        if (this._settings.autohide) {
-            setTimeout(
-                _ => this.hide(),
-                this._settings.delay
-            );
-        }
-    }
-
-    /**
      * Hide the Toast.
      * @returns {Toast} The Toast.
      */
@@ -69,6 +52,13 @@ class Toast extends BaseComponent {
             duration: this._settings.duration
         }).then(_ => {
             dom.triggerEvent(this._node, 'shown.ui.toast');
+
+            if (this._settings.autohide) {
+                setTimeout(
+                    _ => this.hide(),
+                    this._settings.delay
+                );
+            }
         }).catch(_ => { }).finally(_ => {
             this._animating = false;
         });

@@ -14,45 +14,237 @@
     <div class="container">
         <h1>Nav Bars</h1>
         <div class="mb-4">
-            <div class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
                     <div class="navbar-brand">
-                        Hello
+                        Navbar
                     </div>
-                    <button class="navbar-toggler" data-ui-toggle="collapse" data-ui-target="#navbar1" type="button" aria-expanded="false" aria-controls="navbar1" aria-label="Open Menu">
+                    <button class="navbar-toggler" data-ui-toggle="collapse" data-ui-target="#navbar" type="button" aria-expanded="false" aria-controls="navbar" aria-label="Open Menu">
                         <span class="navbar-toggler-icon" aria-hidden="true"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbar1">
-                        <div class="navbar-nav me-lg-auto mb-2 mb-lg-0">
-                            <a class="nav-link active" href="#">
-                                Active
-                                <span class="visually-hidden">(Current)</span>
-                            </a>
-                            <a class="nav-link" href="#">
-                                Link
-                            </a>
-                            <div class="dropdown">
-                                <a class="nav-link dropdown-toggle" id="lightDropdown" data-ui-toggle="dropdown" data-ui-reference="parent" href="#" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                                <div class="dropdown-menu shadow-sm" aria-labelledby="lightDropdown">
-                                    <a class="dropdown-item" href="#">Link</a>
-                                    <a class="dropdown-item" href="#">Link</a>
-                                    <a class="dropdown-item" href="#">Link</a>
+                    <div class="collapse navbar-collapse" id="navbar">
+                        <ul class="navbar-nav me-lg-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#" aria-current="page">
+                                    Active
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Link
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <div class="dropdown">
+                                    <a class="nav-link dropdown-toggle" id="lightDropdown" data-ui-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                                    <div class="dropdown-menu shadow-sm" aria-labelledby="lightDropdown">
+                                        <a class="dropdown-item" href="#">Link</a>
+                                        <a class="dropdown-item" href="#">Link</a>
+                                        <a class="dropdown-item" href="#">Link</a>
+                                    </div>
                                 </div>
-                            </div>
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
+                                    Disabled
+                                </a>
+                            </li>
+                        </ul>
                         <form class="d-flex">
                             <div class="form-input me-2">
                                 <input class="input-filled" type="search" placeholder="Search" aria-label="Search">
                                 <span class="ripple-line"></span>
                             </div>
                             <div class="d-flex">
-                                <button class="btn ripple btn-outline-dark" type="submit">Search</button>
+                                <button class="btn btn-outline-dark ripple" type="submit">Search</button>
                             </div>
                         </form>
                     </div>
                 </div>
-            </div>
+            </nav>
+        </div>
+
+        <h4>Brand</h4>
+        <div class="mb-4">
+            <nav class="navbar navbar-light bg-light">
+                <div class="container-fluid">
+                    <div class="navbar-brand">
+                        Navbar
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <h4>Nav</h4>
+        <div class="mb-4">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <div class="navbar-brand">
+                        Navbar
+                    </div>
+                    <button class="navbar-toggler" data-ui-toggle="collapse" data-ui-target="#navbarNav" type="button" aria-expanded="false" aria-controls="navbarNav" aria-label="Open Menu">
+                        <span class="navbar-toggler-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#" aria-current="page">
+                                    Active
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Link
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Link
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
+                                    Disabled
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="mb-4">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <div class="navbar-brand">
+                        Navbar
+                    </div>
+                    <button class="navbar-toggler" data-ui-toggle="collapse" data-ui-target="#navbarNav2" type="button" aria-expanded="false" aria-controls="navbarNav2" aria-label="Open Menu">
+                        <span class="navbar-toggler-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav2">
+                        <div class="navbar-nav mb-2 mb-lg-0">
+                            <a class="nav-link active" href="#" aria-current="page">
+                                Active
+                            </a>
+                            <a class="nav-link" href="#">
+                                Link
+                            </a>
+                            <a class="nav-link" href="#">
+                                Link
+                            </a>
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
+                                Disabled
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="mb-4">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <div class="navbar-brand">
+                        Navbar
+                    </div>
+                    <button class="navbar-toggler" data-ui-toggle="collapse" data-ui-target="#navbarDropdown" type="button" aria-expanded="false" aria-controls="navbarDropdown" aria-label="Open Menu">
+                        <span class="navbar-toggler-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarDropdown">
+                        <ul class="navbar-nav mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#" aria-current="page">
+                                    Active
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Link
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <div class="dropdown">
+                                    <a class="nav-link dropdown-toggle" id="lightDropdown" data-ui-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                                    <div class="dropdown-menu shadow-sm" aria-labelledby="lightDropdown">
+                                        <a class="dropdown-item" href="#">Link</a>
+                                        <a class="dropdown-item" href="#">Link</a>
+                                        <a class="dropdown-item" href="#">Link</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
+                                    Disabled
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <h4>Forms</h4>
+        <div class="mb-4">
+            <nav class="navbar navbar-light bg-light">
+                <div class="container-fluid">
+                    <form class="d-flex">
+                        <div class="form-input me-2">
+                            <input class="input-filled" type="search" placeholder="Search" aria-label="Search">
+                            <span class="ripple-line"></span>
+                        </div>
+                        <div class="d-flex">
+                            <button class="btn btn-outline-dark ripple" type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+        </div>
+        <div class="mb-4">
+            <nav class="navbar navbar-light bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand">Navbar</a>
+                    <form class="d-flex">
+                        <div class="form-input me-2">
+                            <input class="input-filled" type="search" placeholder="Search" aria-label="Search">
+                            <span class="ripple-line"></span>
+                        </div>
+                        <div class="d-flex">
+                            <button class="btn btn-outline-dark ripple" type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+        </div>
+        <div class="mb-4">
+            <nav class="navbar navbar-light bg-light">
+                <div class="container-fluid">
+                    <div class="input-group input-group-filled">
+                        <div class="input-group-text">@</div>
+                        <div class="form-input">
+                            <input class="input-filled" id="filledText" type="text" placeholder="Placeholder" />
+                            <div class="ripple-line"></div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="mb-4">
+            <nav class="navbar navbar-light bg-light">
+                <div class="container-fluid justify-content-start">
+                    <button class="btn btn-outline-success me-2" type="button">Button</button>
+                    <button class="btn btn-sm btn-outline-secondary" type="button">Button</button>
+                </div>
+            </nav>
+        </div>
+
+        <h4>Text</h4>
+        <div class="mb-4">
+            <nav class="navbar navbar-light bg-light">
+                <div class="container-fluid">
+                    <span class="navbar-text">
+                        This is some example text.
+                    </span>
+                </div>
+            </nav>
         </div>
 
         <h4>Styles</h4>
@@ -60,29 +252,25 @@
             <div class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container-fluid">
                     <div class="navbar-brand">
-                        Hello
+                        Navbar
                     </div>
-                    <button class="navbar-toggler" data-ui-toggle="collapse" data-ui-target="#navbar2" type="button" aria-expanded="false" aria-controls="navbar2" aria-label="Open Menu">
+                    <button class="navbar-toggler" data-ui-toggle="collapse" data-ui-target="#navbarDark" type="button" aria-expanded="false" aria-controls="navbarDark" aria-label="Open Menu">
                         <span class="navbar-toggler-icon" aria-hidden="true"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbar2">
+                    <div class="collapse navbar-collapse" id="navbarDark">
                         <div class="navbar-nav me-lg-auto mb-2 mb-lg-0">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link active" href="#" aria-current="page">
                                 Active
-                                <span class="visually-hidden">(Current)</span>
                             </a>
                             <a class="nav-link" href="#">
                                 Link
                             </a>
-                            <div class="dropdown">
-                                <a class="nav-link dropdown-toggle" id="darkDropdown" data-ui-toggle="dropdown" data-ui-reference="parent" href="#" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                                <div class="dropdown-menu dropdown-menu-dark shadow-sm" aria-labelledby="darkDropdown">
-                                    <a class="dropdown-item" href="#">Link</a>
-                                    <a class="dropdown-item" href="#">Link</a>
-                                    <a class="dropdown-item" href="#">Link</a>
-                                </div>
-                            </div>
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                            <a class="nav-link" href="#">
+                                Link
+                            </a>
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
+                                Disabled
+                            </a>
                         </div>
                         <form class="d-flex">
                             <div class="form-input me-2">
@@ -90,7 +278,7 @@
                                 <span class="ripple-line"></span>
                             </div>
                             <div class="d-flex">
-                                <button class="btn ripple btn-outline-light" type="submit">Search</button>
+                                <button class="btn btn-outline-light ripple" type="submit">Search</button>
                             </div>
                         </form>
                     </div>
@@ -101,29 +289,25 @@
             <div class="navbar navbar-expand-lg navbar-dark bg-primary">
                 <div class="container-fluid">
                     <div class="navbar-brand">
-                        Hello
+                        Navbar
                     </div>
-                    <button class="navbar-toggler" data-ui-toggle="collapse" data-ui-target="#navbar3" type="button" aria-expanded="false" aria-controls="navbar3" aria-label="Open Menu">
+                    <button class="navbar-toggler" data-ui-toggle="collapse" data-ui-target="#navbarPrimary" type="button" aria-expanded="false" aria-controls="navbarPrimary" aria-label="Open Menu">
                         <span class="navbar-toggler-icon" aria-hidden="true"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbar3">
+                    <div class="collapse navbar-collapse" id="navbarPrimary">
                         <div class="navbar-nav me-lg-auto mb-2 mb-lg-0">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link active" href="#" aria-current="page">
                                 Active
-                                <span class="visually-hidden">(Current)</span>
                             </a>
                             <a class="nav-link" href="#">
                                 Link
                             </a>
-                            <div class="dropdown">
-                                <a class="nav-link dropdown-toggle" id="primaryDropdown" data-ui-toggle="dropdown" data-ui-reference="parent" href="#" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                                <div class="dropdown-menu shadow-sm" aria-labelledby="primaryDropdown">
-                                    <a class="dropdown-item" href="#">Link</a>
-                                    <a class="dropdown-item" href="#">Link</a>
-                                    <a class="dropdown-item" href="#">Link</a>
-                                </div>
-                            </div>
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                            <a class="nav-link" href="#">
+                                Link
+                            </a>
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
+                                Disabled
+                            </a>
                         </div>
                         <form class="d-flex">
                             <div class="form-input me-2">
@@ -131,89 +315,7 @@
                                 <span class="ripple-line"></span>
                             </div>
                             <div class="d-flex">
-                                <button class="btn ripple btn-outline-light" type="submit">Search</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="mb-4">
-            <div class="navbar navbar-expand-lg navbar-dark bg-secondary">
-                <div class="container-fluid">
-                    <div class="navbar-brand">
-                        Hello
-                    </div>
-                    <button class="navbar-toggler" data-ui-toggle="collapse" data-ui-target="#navbar4" type="button" aria-expanded="false" aria-controls="navbar4" aria-label="Open Menu">
-                        <span class="navbar-toggler-icon" aria-hidden="true"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbar4">
-                        <div class="navbar-nav me-lg-auto mb-2 mb-lg-0">
-                            <a class="nav-link active" href="#">
-                                Active
-                                <span class="visually-hidden">(Current)</span>
-                            </a>
-                            <a class="nav-link" href="#">
-                                Link
-                            </a>
-                            <div class="dropdown">
-                                <a class="nav-link dropdown-toggle" id="secondaryDropdown" data-ui-toggle="dropdown" data-ui-reference="parent" href="#" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                                <div class="dropdown-menu shadow-sm" aria-labelledby="secondaryDropdown">
-                                    <a class="dropdown-item" href="#">Link</a>
-                                    <a class="dropdown-item" href="#">Link</a>
-                                    <a class="dropdown-item" href="#">Link</a>
-                                </div>
-                            </div>
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </div>
-                        <form class="d-flex">
-                            <div class="form-input me-2">
-                                <input class="input-filled" type="search" placeholder="Search" aria-label="Search">
-                                <span class="ripple-line"></span>
-                            </div>
-                            <div class="d-flex">
-                                <button class="btn ripple btn-outline-light" type="submit">Search</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="mb-4">
-            <div class="navbar navbar-expand-lg navbar-dark bg-success">
-                <div class="container-fluid">
-                    <div class="navbar-brand">
-                        Hello
-                    </div>
-                    <button class="navbar-toggler" data-ui-toggle="collapse" data-ui-target="#navbar5" type="button" aria-expanded="false" aria-controls="navbar5" aria-label="Open Menu">
-                        <span class="navbar-toggler-icon" aria-hidden="true"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbar5">
-                        <div class="navbar-nav me-lg-auto mb-2 mb-lg-0">
-                            <a class="nav-link active" href="#">
-                                Active
-                                <span class="visually-hidden">(Current)</span>
-                            </a>
-                            <a class="nav-link" href="#">
-                                Link
-                            </a>
-                            <div class="dropdown">
-                                <a class="nav-link dropdown-toggle" id="successDropdown" data-ui-toggle="dropdown" data-ui-reference="parent" href="#" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                                <div class="dropdown-menu shadow-sm" aria-labelledby="successDropdown">
-                                    <a class="dropdown-item" href="#">Link</a>
-                                    <a class="dropdown-item" href="#">Link</a>
-                                    <a class="dropdown-item" href="#">Link</a>
-                                </div>
-                            </div>
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </div>
-                        <form class="d-flex">
-                            <div class="form-input me-2">
-                                <input class="input-filled" type="search" placeholder="Search" aria-label="Search">
-                                <span class="ripple-line"></span>
-                            </div>
-                            <div class="d-flex">
-                                <button class="btn ripple btn-outline-light" type="submit">Search</button>
+                                <button class="btn btn-outline-light ripple" type="submit">Search</button>
                             </div>
                         </form>
                     </div>
@@ -224,29 +326,25 @@
             <div class="navbar navbar-expand-lg navbar-dark bg-info">
                 <div class="container-fluid">
                     <div class="navbar-brand">
-                        Hello
+                        Navbar
                     </div>
-                    <button class="navbar-toggler" data-ui-toggle="collapse" data-ui-target="#navbar6" type="button" aria-expanded="false" aria-controls="navbar6" aria-label="Open Menu">
+                    <button class="navbar-toggler" data-ui-toggle="collapse" data-ui-target="#navbarInfo" type="button" aria-expanded="false" aria-controls="navbarInfo" aria-label="Open Menu">
                         <span class="navbar-toggler-icon" aria-hidden="true"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbar6">
+                    <div class="collapse navbar-collapse" id="navbarInfo">
                         <div class="navbar-nav me-lg-auto mb-2 mb-lg-0">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link active" href="#" aria-current="page">
                                 Active
-                                <span class="visually-hidden">(Current)</span>
                             </a>
                             <a class="nav-link" href="#">
                                 Link
                             </a>
-                            <div class="dropdown">
-                                <a class="nav-link dropdown-toggle" id="infoDropdown" data-ui-toggle="dropdown" data-ui-reference="parent" href="#" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                                <div class="dropdown-menu shadow-sm" aria-labelledby="infoDropdown">
-                                    <a class="dropdown-item" href="#">Link</a>
-                                    <a class="dropdown-item" href="#">Link</a>
-                                    <a class="dropdown-item" href="#">Link</a>
-                                </div>
-                            </div>
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                            <a class="nav-link" href="#">
+                                Link
+                            </a>
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
+                                Disabled
+                            </a>
                         </div>
                         <form class="d-flex">
                             <div class="form-input me-2">
@@ -254,89 +352,7 @@
                                 <span class="ripple-line"></span>
                             </div>
                             <div class="d-flex">
-                                <button class="btn ripple btn-outline-light" type="submit">Search</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="mb-4">
-            <div class="navbar navbar-expand-lg navbar-dark bg-warning">
-                <div class="container-fluid">
-                    <div class="navbar-brand">
-                        Hello
-                    </div>
-                    <button class="navbar-toggler" data-ui-toggle="collapse" data-ui-target="#navbar7" type="button" aria-expanded="false" aria-controls="navbar7" aria-label="Open Menu">
-                        <span class="navbar-toggler-icon" aria-hidden="true"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbar7">
-                        <div class="navbar-nav me-lg-auto mb-2 mb-lg-0">
-                            <a class="nav-link active" href="#">
-                                Active
-                                <span class="visually-hidden">(Current)</span>
-                            </a>
-                            <a class="nav-link" href="#">
-                                Link
-                            </a>
-                            <div class="dropdown">
-                                <a class="nav-link dropdown-toggle" id="warningDropdown" data-ui-toggle="dropdown" data-ui-reference="parent" href="#" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                                <div class="dropdown-menu shadow-sm" aria-labelledby="warningDropdown">
-                                    <a class="dropdown-item" href="#">Link</a>
-                                    <a class="dropdown-item" href="#">Link</a>
-                                    <a class="dropdown-item" href="#">Link</a>
-                                </div>
-                            </div>
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </div>
-                        <form class="d-flex">
-                            <div class="form-input me-2">
-                                <input class="input-filled" type="search" placeholder="Search" aria-label="Search">
-                                <span class="ripple-line"></span>
-                            </div>
-                            <div class="d-flex">
-                                <button class="btn ripple btn-outline-light" type="submit">Search</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="mb-4">
-            <div class="navbar navbar-expand-lg navbar-dark bg-danger">
-                <div class="container-fluid">
-                    <div class="navbar-brand">
-                        Hello
-                    </div>
-                    <button class="navbar-toggler" data-ui-toggle="collapse" data-ui-target="#navbar8" type="button" aria-expanded="false" aria-controls="navbar8" aria-label="Open Menu">
-                        <span class="navbar-toggler-icon" aria-hidden="true"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbar8">
-                        <div class="navbar-nav me-lg-auto mb-2 mb-lg-0">
-                            <a class="nav-link active" href="#">
-                                Active
-                                <span class="visually-hidden">(Current)</span>
-                            </a>
-                            <a class="nav-link" href="#">
-                                Link
-                            </a>
-                            <div class="dropdown">
-                                <a class="nav-link dropdown-toggle" id="dangerDropdown" data-ui-toggle="dropdown" data-ui-reference="parent" href="#" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                                <div class="dropdown-menu shadow-sm" aria-labelledby="dangerDropdown">
-                                    <a class="dropdown-item" href="#">Link</a>
-                                    <a class="dropdown-item" href="#">Link</a>
-                                    <a class="dropdown-item" href="#">Link</a>
-                                </div>
-                            </div>
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </div>
-                        <form class="d-flex">
-                            <div class="form-input me-2">
-                                <input class="input-filled" type="search" placeholder="Search" aria-label="Search">
-                                <span class="ripple-line"></span>
-                            </div>
-                            <div class="d-flex">
-                                <button class="btn ripple btn-outline-light" type="submit">Search</button>
+                                <button class="btn btn-outline-light ripple" type="submit">Search</button>
                             </div>
                         </form>
                     </div>
@@ -349,29 +365,30 @@
             <div class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
                     <div class="navbar-brand">
-                        Hello
+                        Navbar
                     </div>
-                    <button class="navbar-toggler" data-ui-toggle="collapse" data-ui-target="#navbar9" type="button" aria-expanded="false" aria-controls="navbar9" aria-label="Open Menu">
+                    <button class="navbar-toggler" data-ui-toggle="collapse" data-ui-target="#navbarScrolling" type="button" aria-expanded="false" aria-controls="navbarScrolling" aria-label="Open Menu">
                         <span class="navbar-toggler-icon" aria-hidden="true"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbar9">
+                    <div class="collapse navbar-collapse" id="navbarScrolling">
                         <div class="navbar-nav navbar-nav-scroll me-lg-auto mb-2 mb-lg-0" style="max-height: 100px;">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link active" href="#" aria-current="page">
                                 Active
-                                <span class="visually-hidden">(Current)</span>
                             </a>
                             <a class="nav-link" href="#">
                                 Link
                             </a>
                             <div class="dropdown">
-                                <a class="nav-link dropdown-toggle" id="scrollingDropdown" data-ui-toggle="dropdown" data-ui-reference="parent" href="#" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                                <a class="nav-link dropdown-toggle" id="scrollingDropdown" data-ui-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Dropdown</a>
                                 <div class="dropdown-menu shadow-sm" aria-labelledby="scrollingDropdown">
                                     <a class="dropdown-item" href="#">Link</a>
                                     <a class="dropdown-item" href="#">Link</a>
                                     <a class="dropdown-item" href="#">Link</a>
                                 </div>
                             </div>
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
+                                Disabled
+                            </a>
                         </div>
                         <form class="d-flex">
                             <div class="form-input me-2">
@@ -379,12 +396,149 @@
                                 <span class="ripple-line"></span>
                             </div>
                             <div class="d-flex">
-                                <button class="btn ripple btn-outline-dark" type="submit">Search</button>
+                                <button class="btn btn-outline-dark ripple" type="submit">Search</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <h4>Toggler</h4>
+        <div class="mb-4">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" data-ui-toggle="collapse" data-ui-target="#navbarToggler1" type="button" aria-expanded="false" aria-controls="navbarToggler1" aria-label="Open Menu">
+                        <span class="navbar-toggler-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarToggler1">
+                        <div class="navbar-brand">
+                            Navbar
+                        </div>
+                        <ul class="navbar-nav me-lg-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#" aria-current="page">
+                                    Active
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Link
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Link
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
+                                    Disabled
+                                </a>
+                            </li>
+                        </ul>
+                        <form class="d-flex">
+                            <div class="form-input me-2">
+                                <input class="input-filled" type="search" placeholder="Search" aria-label="Search">
+                                <span class="ripple-line"></span>
+                            </div>
+                            <div class="d-flex">
+                                <button class="btn btn-outline-dark ripple" type="submit">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="mb-4">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <div class="navbar-brand">
+                        Navbar
+                    </div>
+                    <button class="navbar-toggler" data-ui-toggle="collapse" data-ui-target="#navbarToggler2" type="button" aria-expanded="false" aria-controls="navbarToggler2" aria-label="Open Menu">
+                        <span class="navbar-toggler-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarToggler2">
+                        <ul class="navbar-nav me-lg-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#" aria-current="page">
+                                    Active
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Link
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Link
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
+                                    Disabled
+                                </a>
+                            </li>
+                        </ul>
+                        <form class="d-flex">
+                            <div class="form-input me-2">
+                                <input class="input-filled" type="search" placeholder="Search" aria-label="Search">
+                                <span class="ripple-line"></span>
+                            </div>
+                            <div class="d-flex">
+                                <button class="btn btn-outline-dark ripple" type="submit">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="mb-4">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" data-ui-toggle="collapse" data-ui-target="#navbarToggler3" type="button" aria-expanded="false" aria-controls="navbarToggler3" aria-label="Open Menu">
+                        <span class="navbar-toggler-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="navbar-brand">
+                        Navbar
+                    </div>
+                    <div class="collapse navbar-collapse" id="navbarToggler3">
+                        <ul class="navbar-nav me-lg-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#" aria-current="page">
+                                    Active
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Link
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Link
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
+                                    Disabled
+                                </a>
+                            </li>
+                        </ul>
+                        <form class="d-flex">
+                            <div class="form-input me-2">
+                                <input class="input-filled" type="search" placeholder="Search" aria-label="Search">
+                                <span class="ripple-line"></span>
+                            </div>
+                            <div class="d-flex">
+                                <button class="btn btn-outline-dark ripple" type="submit">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </nav>
         </div>
     </div>
 </body>

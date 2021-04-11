@@ -8,21 +8,21 @@ describe('Tab', function() {
         await exec(_ => {
             dom.setHTML(
                 document.body,
-                '<div>' +
-                '<a class="active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
-                '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
+                '<div class="nav nav-tabs">' +
+                '<a class="nav-link active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
+                '<a class="nav-link" id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                 '</div>' +
-                '<div>' +
-                '<div class="active" id="tab1"></div>' +
-                '<div id="tab2"></div>' +
+                '<div class="tab-content">' +
+                '<div class="tab-pane active" id="tab1"></div>' +
+                '<div class="tab-pane" id="tab2"></div>' +
                 '</div>' +
-                '<div>' +
-                '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
-                '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
+                '<div class="nav nav-tabs">' +
+                '<a class="nav-link active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                '<a class="nav-link" id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                 '</div>' +
-                '<div>' +
-                '<div class="active" id="tab3"></div>' +
-                '<div id="tab4"></div>' +
+                '<div class="tab-content">' +
+                '<div class="tab-pane active" id="tab3"></div>' +
+                '<div class="tab-pane" id="tab4"></div>' +
                 '</div>'
             );
         });
@@ -172,21 +172,21 @@ describe('Tab', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<div>' +
-                    '<a class="" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
-                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a class="nav-link" id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="" id="tab1" style=""></div>' +
-                    '<div id="tab2"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane" id="tab1" style=""></div>' +
+                    '<div class="tab-pane" id="tab2"></div>' +
                     '</div>' +
-                    '<div>' +
-                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
-                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a class="nav-link" id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="active" id="tab3"></div>' +
-                    '<div id="tab4"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane active" id="tab3"></div>' +
+                    '<div class="tab-pane" id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -203,21 +203,21 @@ describe('Tab', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<div>' +
-                    '<a class="" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
-                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a class="nav-link" id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="" id="tab1" style=""></div>' +
-                    '<div id="tab2"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane" id="tab1" style=""></div>' +
+                    '<div class="tab-pane" id="tab2"></div>' +
                     '</div>' +
-                    '<div>' +
-                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
-                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a class="nav-link" id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="active" id="tab3"></div>' +
-                    '<div id="tab4"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane active" id="tab3"></div>' +
+                    '<div class="tab-pane" id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -229,21 +229,21 @@ describe('Tab', function() {
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<div>' +
-                    '<a class="" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
-                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a class="nav-link" id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="" id="tab1" style=""></div>' +
-                    '<div id="tab2"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane" id="tab1" style=""></div>' +
+                    '<div class="tab-pane" id="tab2"></div>' +
                     '</div>' +
-                    '<div>' +
-                    '<a class="" id="tabToggle3" href="#tab3" data-ui-toggle="tab" aria-selected="false"></a>' +
-                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link" id="tabToggle3" href="#tab3" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a class="nav-link" id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="" id="tab3" style=""></div>' +
-                    '<div id="tab4"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane" id="tab3" style=""></div>' +
+                    '<div class="tab-pane" id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -318,21 +318,21 @@ describe('Tab', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<div>' +
-                    '<a class="" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
-                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab" class="active" aria-selected="true"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a class="nav-link active" id="tabToggle2" href="#tab2" data-ui-toggle="tab" aria-selected="true"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="" id="tab1" style=""></div>' +
-                    '<div id="tab2" class="active" style=""></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane" id="tab1" style=""></div>' +
+                    '<div class="tab-pane active" id="tab2" style=""></div>' +
                     '</div>' +
-                    '<div>' +
-                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
-                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a class="nav-link" id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="active" id="tab3"></div>' +
-                    '<div id="tab4"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane active" id="tab3"></div>' +
+                    '<div class="tab-pane" id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -354,21 +354,21 @@ describe('Tab', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<div>' +
-                    '<a class="" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
-                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab" class="active" aria-selected="true"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a class="nav-link active" id="tabToggle2" href="#tab2" data-ui-toggle="tab" aria-selected="true"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="" id="tab1" style=""></div>' +
-                    '<div id="tab2" class="active" style=""></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane" id="tab1" style=""></div>' +
+                    '<div class="tab-pane active" id="tab2" style=""></div>' +
                     '</div>' +
-                    '<div>' +
-                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
-                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a class="nav-link" id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="active" id="tab3"></div>' +
-                    '<div id="tab4"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane active" id="tab3"></div>' +
+                    '<div class="tab-pane" id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -390,21 +390,21 @@ describe('Tab', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<div>' +
-                    '<a class="" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
-                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab" class="active" aria-selected="true"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a class="nav-link active" id="tabToggle2" href="#tab2" data-ui-toggle="tab" aria-selected="true"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="" id="tab1" style=""></div>' +
-                    '<div id="tab2" class="active" style=""></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane" id="tab1" style=""></div>' +
+                    '<div class="tab-pane active" id="tab2" style=""></div>' +
                     '</div>' +
-                    '<div>' +
-                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
-                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a class="nav-link" id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="active" id="tab3"></div>' +
-                    '<div id="tab4"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane active" id="tab3"></div>' +
+                    '<div class="tab-pane" id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -416,21 +416,21 @@ describe('Tab', function() {
             }).then(waitFor(250)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<div>' +
-                    '<a class="" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
-                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab" class="active" aria-selected="true"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a class="nav-link active" id="tabToggle2" href="#tab2" data-ui-toggle="tab" aria-selected="true"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="" id="tab1" style=""></div>' +
-                    '<div id="tab2" class="active" style=""></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane" id="tab1" style=""></div>' +
+                    '<div class="tab-pane active" id="tab2" style=""></div>' +
                     '</div>' +
-                    '<div>' +
-                    '<a class="" id="tabToggle3" href="#tab3" data-ui-toggle="tab" aria-selected="false"></a>' +
-                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab" class="active" aria-selected="true"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link" id="tabToggle3" href="#tab3" data-ui-toggle="tab" aria-selected="false"></a>' +
+                    '<a class="nav-link active" id="tabToggle4" href="#tab4" data-ui-toggle="tab" aria-selected="true"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="" id="tab3" style=""></div>' +
-                    '<div id="tab4" class="active" style=""></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane" id="tab3" style=""></div>' +
+                    '<div class="tab-pane active" id="tab4" style=""></div>' +
                     '</div>'
                 );
             });
@@ -487,21 +487,21 @@ describe('Tab', function() {
                         UI.Tab.init(tabToggle1).hide();
                     });
                 }),
-                '<div>' +
-                '<a class="active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
-                '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
+                '<div class="nav nav-tabs">' +
+                '<a class="nav-link active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
+                '<a class="nav-link" id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                 '</div>' +
-                '<div>' +
-                '<div class="active" id="tab1"></div>' +
-                '<div id="tab2"></div>' +
+                '<div class="tab-content">' +
+                '<div class="tab-pane active" id="tab1"></div>' +
+                '<div class="tab-pane" id="tab2"></div>' +
                 '</div>' +
-                '<div>' +
-                '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
-                '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
+                '<div class="nav nav-tabs">' +
+                '<a class="nav-link active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                '<a class="nav-link" id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                 '</div>' +
-                '<div>' +
-                '<div class="active" id="tab3"></div>' +
-                '<div id="tab4"></div>' +
+                '<div class="tab-content">' +
+                '<div class="tab-pane active" id="tab3"></div>' +
+                '<div class="tab-pane" id="tab4"></div>' +
                 '</div>'
             );
         });
@@ -517,21 +517,21 @@ describe('Tab', function() {
                         UI.Tab.init(tabToggle1).hide();
                     });
                 }),
-                '<div>' +
-                '<a class="" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
-                '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
+                '<div class="nav nav-tabs">' +
+                '<a class="nav-link" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                '<a class="nav-link" id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                 '</div>' +
-                '<div>' +
-                '<div class="" id="tab1" style=""></div>' +
-                '<div id="tab2"></div>' +
+                '<div class="tab-content">' +
+                '<div class="tab-pane" id="tab1" style=""></div>' +
+                '<div class="tab-pane" id="tab2"></div>' +
                 '</div>' +
-                '<div>' +
-                '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
-                '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
+                '<div class="nav nav-tabs">' +
+                '<a class="nav-link active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                '<a class="nav-link" id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                 '</div>' +
-                '<div>' +
-                '<div class="active" id="tab3"></div>' +
-                '<div id="tab4"></div>' +
+                '<div class="tab-content">' +
+                '<div class="tab-pane active" id="tab3"></div>' +
+                '<div class="tab-pane" id="tab4"></div>' +
                 '</div>'
             );
         });
@@ -547,21 +547,21 @@ describe('Tab', function() {
                         UI.Tab.init(tabToggle2).show();
                     });
                 }),
-                '<div>' +
-                '<a class="active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
-                '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
+                '<div class="nav nav-tabs">' +
+                '<a class="nav-link active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
+                '<a class="nav-link" id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                 '</div>' +
-                '<div>' +
-                '<div class="active" id="tab1"></div>' +
-                '<div id="tab2"></div>' +
+                '<div class="tab-content">' +
+                '<div class="tab-pane active" id="tab1"></div>' +
+                '<div class="tab-pane" id="tab2"></div>' +
                 '</div>' +
-                '<div>' +
-                '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
-                '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
+                '<div class="nav nav-tabs">' +
+                '<a class="nav-link active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                '<a class="nav-link" id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                 '</div>' +
-                '<div>' +
-                '<div class="active" id="tab3"></div>' +
-                '<div id="tab4"></div>' +
+                '<div class="tab-content">' +
+                '<div class="tab-pane active" id="tab3"></div>' +
+                '<div class="tab-pane" id="tab4"></div>' +
                 '</div>'
             );
         });
@@ -577,21 +577,21 @@ describe('Tab', function() {
                         UI.Tab.init(tabToggle2).show();
                     });
                 }),
-                '<div>' +
-                '<a class="" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
-                '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab" class="active" aria-selected="true"></a>' +
+                '<div class="nav nav-tabs">' +
+                '<a class="nav-link" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                '<a class="nav-link active" id="tabToggle2" href="#tab2" data-ui-toggle="tab" aria-selected="true"></a>' +
                 '</div>' +
-                '<div>' +
-                '<div class="" id="tab1" style=""></div>' +
-                '<div id="tab2" class="active" style=""></div>' +
+                '<div class="tab-content">' +
+                '<div class="tab-pane" id="tab1" style=""></div>' +
+                '<div class="tab-pane active" id="tab2" style=""></div>' +
                 '</div>' +
-                '<div>' +
-                '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
-                '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
+                '<div class="nav nav-tabs">' +
+                '<a class="nav-link active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                '<a class="nav-link" id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                 '</div>' +
-                '<div>' +
-                '<div class="active" id="tab3"></div>' +
-                '<div id="tab4"></div>' +
+                '<div class="tab-content">' +
+                '<div class="tab-pane active" id="tab3"></div>' +
+                '<div class="tab-pane" id="tab4"></div>' +
                 '</div>'
             );
         });
@@ -608,21 +608,21 @@ describe('Tab', function() {
                         UI.Tab.init(tabToggle2).show();
                     });
                 }),
-                '<div>' +
-                '<a class="active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
-                '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
+                '<div class="nav nav-tabs">' +
+                '<a class="nav-link active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
+                '<a class="nav-link" id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                 '</div>' +
-                '<div>' +
-                '<div class="active" id="tab1"></div>' +
-                '<div id="tab2"></div>' +
+                '<div class="tab-content">' +
+                '<div class="tab-pane active" id="tab1"></div>' +
+                '<div class="tab-pane" id="tab2"></div>' +
                 '</div>' +
-                '<div>' +
-                '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
-                '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
+                '<div class="nav nav-tabs">' +
+                '<a class="nav-link active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                '<a class="nav-link" id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                 '</div>' +
-                '<div>' +
-                '<div class="active" id="tab3"></div>' +
-                '<div id="tab4"></div>' +
+                '<div class="tab-content">' +
+                '<div class="tab-pane active" id="tab3"></div>' +
+                '<div class="tab-pane" id="tab4"></div>' +
                 '</div>'
             );
         });
@@ -639,21 +639,21 @@ describe('Tab', function() {
                         UI.Tab.init(tabToggle2).show();
                     });
                 }),
-                '<div>' +
-                '<a class="" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
-                '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
+                '<div class="nav nav-tabs">' +
+                '<a class="nav-link" id="tabToggle1" href="#tab1" data-ui-toggle="tab" aria-selected="false"></a>' +
+                '<a class="nav-link" id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                 '</div>' +
-                '<div>' +
-                '<div class="" id="tab1" style=""></div>' +
-                '<div id="tab2"></div>' +
+                '<div class="tab-content">' +
+                '<div class="tab-pane" id="tab1" style=""></div>' +
+                '<div class="tab-pane" id="tab2"></div>' +
                 '</div>' +
-                '<div>' +
-                '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
-                '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
+                '<div class="nav nav-tabs">' +
+                '<a class="nav-link active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                '<a class="nav-link" id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                 '</div>' +
-                '<div>' +
-                '<div class="active" id="tab3"></div>' +
-                '<div id="tab4"></div>' +
+                '<div class="tab-content">' +
+                '<div class="tab-pane active" id="tab3"></div>' +
+                '<div class="tab-pane" id="tab4"></div>' +
                 '</div>'
             );
         });
@@ -668,21 +668,21 @@ describe('Tab', function() {
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<div>' +
-                    '<a class="active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
-                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
+                    '<a class="nav-link" id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="active" id="tab1"></div>' +
-                    '<div id="tab2"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane active" id="tab1"></div>' +
+                    '<div class="tab-pane" id="tab2"></div>' +
                     '</div>' +
-                    '<div>' +
-                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
-                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a class="nav-link" id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="active" id="tab3"></div>' +
-                    '<div id="tab4"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane active" id="tab3"></div>' +
+                    '<div class="tab-pane" id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -698,21 +698,21 @@ describe('Tab', function() {
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<div>' +
-                    '<a class="active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
-                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
+                    '<a class="nav-link" id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="active" id="tab1"></div>' +
-                    '<div id="tab2"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane active" id="tab1"></div>' +
+                    '<div class="tab-pane" id="tab2"></div>' +
                     '</div>' +
-                    '<div>' +
-                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
-                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a class="nav-link" id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="active" id="tab3"></div>' +
-                    '<div id="tab4"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane active" id="tab3"></div>' +
+                    '<div class="tab-pane" id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -728,21 +728,21 @@ describe('Tab', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<div>' +
-                    '<a class="active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
-                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
+                    '<a class="nav-link" id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="active" id="tab1"></div>' +
-                    '<div id="tab2"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane active" id="tab1"></div>' +
+                    '<div class="tab-pane" id="tab2"></div>' +
                     '</div>' +
-                    '<div>' +
-                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
-                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a class="nav-link" id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="active" id="tab3"></div>' +
-                    '<div id="tab4"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane active" id="tab3"></div>' +
+                    '<div class="tab-pane" id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -758,21 +758,21 @@ describe('Tab', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<div>' +
-                    '<a class="active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
-                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
+                    '<a class="nav-link" id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="active" id="tab1"></div>' +
-                    '<div id="tab2"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane active" id="tab1"></div>' +
+                    '<div class="tab-pane" id="tab2"></div>' +
                     '</div>' +
-                    '<div>' +
-                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
-                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a class="nav-link" id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="active" id="tab3"></div>' +
-                    '<div id="tab4"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane active" id="tab3"></div>' +
+                    '<div class="tab-pane" id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -789,21 +789,21 @@ describe('Tab', function() {
             }).then(waitFor(250)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<div>' +
-                    '<a class="active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
-                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
+                    '<a class="nav-link" id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="active" id="tab1"></div>' +
-                    '<div id="tab2"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane active" id="tab1"></div>' +
+                    '<div class="tab-pane" id="tab2"></div>' +
                     '</div>' +
-                    '<div>' +
-                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
-                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a class="nav-link" id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="active" id="tab3"></div>' +
-                    '<div id="tab4"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane active" id="tab3"></div>' +
+                    '<div class="tab-pane" id="tab4"></div>' +
                     '</div>'
                 );
             });
@@ -820,21 +820,21 @@ describe('Tab', function() {
             }).then(waitFor(250)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<div>' +
-                    '<a class="active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
-                    '<a id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link active" id="tabToggle1" href="#tab1" data-ui-toggle="tab"></a>' +
+                    '<a class="nav-link" id="tabToggle2" href="#tab2" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="active" id="tab1"></div>' +
-                    '<div id="tab2"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane active" id="tab1"></div>' +
+                    '<div class="tab-pane" id="tab2"></div>' +
                     '</div>' +
-                    '<div>' +
-                    '<a class="active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
-                    '<a id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
+                    '<div class="nav nav-tabs">' +
+                    '<a class="nav-link active" id="tabToggle3" href="#tab3" data-ui-toggle="tab"></a>' +
+                    '<a class="nav-link" id="tabToggle4" href="#tab4" data-ui-toggle="tab"></a>' +
                     '</div>' +
-                    '<div>' +
-                    '<div class="active" id="tab3"></div>' +
-                    '<div id="tab4"></div>' +
+                    '<div class="tab-content">' +
+                    '<div class="tab-pane active" id="tab3"></div>' +
+                    '<div class="tab-pane" id="tab4"></div>' +
                     '</div>'
                 );
             });

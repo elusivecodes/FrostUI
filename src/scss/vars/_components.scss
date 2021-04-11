@@ -22,7 +22,7 @@ $accordion-body-padding-x: $accordion-padding-x !default;
 $accordion-body-padding-y: $accordion-padding-y !default;
 
 // alert
-$alert-variants: $color-variants;
+$alert-variants: $color-variants !default;
 
 $alert-padding-x: $spacing !default;
 $alert-padding-y: $spacing !default;
@@ -120,9 +120,9 @@ $carousel-control-padding-x: $spacing !default;
 $carousel-control-padding-y: $spacing !default;
 $carousel-control-font-size: 2em !default;
 $carousel-control-color: map-get($color-variants, light) !default;
-$carousel-control-opacity: .5;
-$carousel-control-hover-opacity: .75;
-$carousel-control-focus-opacity: 1;
+$carousel-control-opacity: .5 !default;
+$carousel-control-hover-opacity: .75 !default;
+$carousel-control-focus-opacity: 1 !default;
 $carousel-control-prev-arrow: $arrow-left !default;
 $carousel-control-next-arrow: $arrow-right !default;
 
@@ -214,20 +214,21 @@ $list-group-border-color: $border-color !default;
 $list-group-border-radius: $border-radius !default;
 
 $list-group-item-action-color: $text-color !default;
-$list-group-item-action-focus-background-color: tint($black, 90%) !default;
+$list-group-item-action-focus-background-color: tint($black, 95%) !default;
 $list-group-item-action-focus-box-shadow: $shadow-sm !default;
 
 $list-group-item-padding-x: $spacing !default;
 $list-group-item-padding-y: $spacing / 2 !default;
 $list-group-item-color: $text-color !default;
 $list-group-item-disabled-color: map-get($color-variants, secondary) !default;
+
 $list-group-item-active-background-color: $link-color !default;
 $list-group-item-active-color: text-color($list-group-item-active-background-color) !default;
-$list-group-item-action-active-focus-background-color: tint($list-group-item-active-background-color, 30%) !default;
+$list-group-item-action-active-focus-background-color: tint($list-group-item-active-background-color, 10%) !default;
 
-$list-group-item-background-color-tint: 70% !default;
-$list-group-item-focus-background-color-tint: 30% !default;
-$list-group-item-focus-color-shade: 35% !default;
+$list-group-item-background-color-tint: 80% !default;
+$list-group-item-focus-background-color-shade: 5% !default;
+$list-group-item-focus-color-shade: 50% !default;
 
 // modal
 $modal-sm-max-width: 300px !default;
@@ -326,20 +327,20 @@ $navbar-dark-navbar-toggler-focus-background-color: $navbar-dark-nav-link-focus-
 $offcanvas-horizontal-width: 400px !default;
 $offcanvas-vertical-height: 30vh !default;
 
-$offcanvas-padding-x: $spacing;
-$offcanvas-padding-y: $spacing;
-$offcanvas-color: $text-color;
-$offcanvas-background-color: $white;
-$offcanvas-border-size: $border-size;
-$offcanvas-border-color: $border-color;
+$offcanvas-padding-x: $spacing !default;
+$offcanvas-padding-y: $spacing !default;
+$offcanvas-color: $text-color !default;
+$offcanvas-background-color: $white !default;
+$offcanvas-border-size: $border-size !default;
+$offcanvas-border-color: $border-color !default;
 
-$offcanvas-backdrop-background-color: fade($black, .5);
+$offcanvas-backdrop-background-color: fade($black, .5) !default;
 
-$offcanvas-header-padding-x: $offcanvas-padding-x;
-$offcanvas-header-padding-y: $offcanvas-padding-y;
-$offcanvas-title-line-height: map-get($line-heights, base);
-$offcanvas-body-padding-x: $offcanvas-padding-x;
-$offcanvas-body-padding-y: $offcanvas-padding-y;
+$offcanvas-header-padding-x: $offcanvas-padding-x !default;
+$offcanvas-header-padding-y: $offcanvas-padding-y !default;
+$offcanvas-title-line-height: map-get($line-heights, base) !default;
+$offcanvas-body-padding-x: $offcanvas-padding-x !default;
+$offcanvas-body-padding-y: $offcanvas-padding-y !default;
 
 // pagination
 $pagination-border-radius: $border-radius !default;
@@ -414,8 +415,8 @@ $spinner-border-sm-width: .2em !default;
 
 // toast
 $toast-width: 350px !default;
-$toast-padding-x: $spacing * .75;
-$toast-padding-y: $spacing * .75;
+$toast-padding-x: $spacing * .75 !default;
+$toast-padding-y: $spacing * .75 !default;
 $toast-margin-bottom: $spacing !default;
 $toast-font-size: $font-size-sm !default;
 $toast-color: $text-color !default;
@@ -428,7 +429,7 @@ $toast-backdrop-filter: blur(10px) !default;
 $toast-header-padding-x: $toast-padding-x !default;
 $toast-header-padding-y: $spacing / 2 !default;
 $toast-header-color: map-get($color-variants, dark) !default;
-$toast-header-background-color: fade($white, .05) !default;
+$toast-header-background-color: fade($white, .85) !default;
 $toast-body-padding-x: $toast-padding-x !default;
 $toast-body-padding-y: $toast-padding-y !default;
 

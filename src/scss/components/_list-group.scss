@@ -1,6 +1,7 @@
 .list-group {
     display: flex;
     flex-direction: column;
+    padding: 0;
     margin-bottom: 0;
     margin-left: 0;
     @include border-radius($list-group-border-radius);
@@ -9,8 +10,6 @@
 .list-group-item-action {
     width: 100%;
     text-align: inherit;
-    transition: all $transition-time $transition-type;
-    transition-property: color, background-color, box-shadow;
 
     &,
     &:hover,
@@ -29,7 +28,7 @@
         z-index: 2;
         color: var(--ui-list-group-item-focus-color);
         background-color: var(--ui-list-group-item-focus-bg, #{$list-group-item-action-focus-background-color});
-        box-shadow: $list-group-item-action-focus-box-shadow;
+        outline: 0;
     }
 
     &:active,
@@ -107,7 +106,7 @@
     .list-group-item-#{$name} {
         $background-color: tint($color, $list-group-item-background-color-tint);
         $text-color: text-color-contrast($background-color, $color);
-        $focus-background-color: tint($background-color, $list-group-item-focus-background-color-tint);
+        $focus-background-color: shade($background-color, $list-group-item-focus-background-color-shade);
         $focus-color: shade($text-color, $list-group-item-focus-color-shade);
 
         --ui-list-group-item-bg: #{$background-color};

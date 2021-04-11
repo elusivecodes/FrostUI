@@ -8,8 +8,8 @@ describe('Collapse', function() {
         await exec(_ => {
             dom.setHTML(
                 document.body,
-                '<button class="collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button"></button>' +
-                '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                '<button class="btn btn-secondary collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button"></button>' +
+                '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                 '<div class="collapse" id="collapse1"></div>' +
                 '<div class="collapse" id="collapse2"></div>'
             );
@@ -160,8 +160,8 @@ describe('Collapse', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button class="" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
-                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                     '<div class="collapse show" id="collapse1" style=""></div>' +
                     '<div class="collapse" id="collapse2"></div>'
                 );
@@ -179,8 +179,8 @@ describe('Collapse', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button class="" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
-                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                     '<div class="collapse show" id="collapse1" style=""></div>' +
                     '<div class="collapse" id="collapse2"></div>'
                 );
@@ -193,8 +193,8 @@ describe('Collapse', function() {
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button class="" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
-                    '<button class="" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button" aria-expanded="true"></button>' +
+                    '<button class="btn btn-secondary" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
+                    '<button class="btn btn-secondary" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button" aria-expanded="true"></button>' +
                     '<div class="collapse show" id="collapse1" style=""></div>' +
                     '<div class="collapse show" id="collapse2" style=""></div>'
                 );
@@ -271,8 +271,8 @@ describe('Collapse', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button class="collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="false"></button>' +
-                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="false"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                     '<div class="collapse" id="collapse1" style=""></div>' +
                     '<div class="collapse" id="collapse2"></div>'
                 );
@@ -298,8 +298,8 @@ describe('Collapse', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button class="collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="false"></button>' +
-                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="false"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                     '<div class="collapse" id="collapse1" style=""></div>' +
                     '<div class="collapse" id="collapse2"></div>'
                 );
@@ -321,8 +321,8 @@ describe('Collapse', function() {
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button class="collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="false"></button>' +
-                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button" aria-expanded="false"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="false"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button" aria-expanded="false"></button>' +
                     '<div class="collapse" id="collapse1" style=""></div>' +
                     '<div class="collapse" id="collapse2" style=""></div>'
                 );
@@ -428,8 +428,8 @@ describe('Collapse', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button class="" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
-                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                     '<div class="collapse show" id="collapse1" style=""></div>' +
                     '<div class="collapse" id="collapse2"></div>'
                 );
@@ -447,8 +447,8 @@ describe('Collapse', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button class="" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
-                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                     '<div class="collapse show" id="collapse1" style=""></div>' +
                     '<div class="collapse" id="collapse2"></div>'
                 );
@@ -466,8 +466,8 @@ describe('Collapse', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button class="" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
-                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                     '<div class="collapse show" id="collapse1" style=""></div>' +
                     '<div class="collapse" id="collapse2"></div>'
                 );
@@ -480,8 +480,8 @@ describe('Collapse', function() {
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button class="" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
-                    '<button class="" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button" aria-expanded="true"></button>' +
+                    '<button class="btn btn-secondary" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
+                    '<button class="btn btn-secondary" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button" aria-expanded="true"></button>' +
                     '<div class="collapse show" id="collapse1" style=""></div>' +
                     '<div class="collapse show" id="collapse2" style=""></div>'
                 );
@@ -542,8 +542,8 @@ describe('Collapse', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button class="collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="false"></button>' +
-                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="false"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                     '<div class="collapse" id="collapse1" style=""></div>' +
                     '<div class="collapse" id="collapse2"></div>'
                 );
@@ -570,8 +570,8 @@ describe('Collapse', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button class="collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="false"></button>' +
-                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="false"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                     '<div class="collapse" id="collapse1" style=""></div>' +
                     '<div class="collapse" id="collapse2"></div>'
                 );
@@ -597,8 +597,8 @@ describe('Collapse', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button class="collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="false"></button>' +
-                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="false"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                     '<div class="collapse" id="collapse1" style=""></div>' +
                     '<div class="collapse" id="collapse2"></div>'
                 );
@@ -620,8 +620,8 @@ describe('Collapse', function() {
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button class="collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="false"></button>' +
-                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button" aria-expanded="false"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="false"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button" aria-expanded="false"></button>' +
                     '<div class="collapse" id="collapse1" style=""></div>' +
                     '<div class="collapse" id="collapse2" style=""></div>'
                 );
@@ -698,8 +698,8 @@ describe('Collapse', function() {
                         UI.Collapse.init(collapse1).show();
                     });
                 }),
-                '<button class="collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button"></button>' +
-                '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                '<button class="btn btn-secondary collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button"></button>' +
+                '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                 '<div class="collapse" id="collapse1"></div>' +
                 '<div class="collapse" id="collapse2"></div>'
             );
@@ -716,8 +716,8 @@ describe('Collapse', function() {
                         UI.Collapse.init(collapse1).show();
                     });
                 }),
-                '<button class="" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
-                '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                '<button class="btn btn-secondary" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
+                '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                 '<div class="collapse show" id="collapse1" style=""></div>' +
                 '<div class="collapse" id="collapse2"></div>'
             );
@@ -742,8 +742,8 @@ describe('Collapse', function() {
                             UI.Collapse.init(collapse1).hide();
                         });
                     }),
-                    '<button class="" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
-                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                     '<div class="collapse show" id="collapse1" style=""></div>' +
                     '<div class="collapse" id="collapse2"></div>'
                 );
@@ -769,8 +769,8 @@ describe('Collapse', function() {
                             UI.Collapse.init(collapse1).hide();
                         });
                     }),
-                    '<button class="collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="false"></button>' +
-                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="false"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                     '<div class="collapse" id="collapse1" style=""></div>' +
                     '<div class="collapse" id="collapse2"></div>'
                 );
@@ -788,8 +788,8 @@ describe('Collapse', function() {
                         UI.Collapse.init(collapse1).toggle();
                     });
                 }),
-                '<button class="collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button"></button>' +
-                '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                '<button class="btn btn-secondary collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button"></button>' +
+                '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                 '<div class="collapse" id="collapse1"></div>' +
                 '<div class="collapse" id="collapse2"></div>'
             );
@@ -806,8 +806,8 @@ describe('Collapse', function() {
                         UI.Collapse.init(collapse1).toggle();
                     });
                 }),
-                '<button class="" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
-                '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                '<button class="btn btn-secondary" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
+                '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                 '<div class="collapse show" id="collapse1" style=""></div>' +
                 '<div class="collapse" id="collapse2"></div>'
             );
@@ -832,8 +832,8 @@ describe('Collapse', function() {
                             UI.Collapse.init(collapse1).toggle();
                         });
                     }),
-                    '<button class="" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
-                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                     '<div class="collapse show" id="collapse1" style=""></div>' +
                     '<div class="collapse" id="collapse2"></div>'
                 );
@@ -859,8 +859,8 @@ describe('Collapse', function() {
                             UI.Collapse.init(collapse1).toggle();
                         });
                     }),
-                    '<button class="collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="false"></button>' +
-                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="false"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                     '<div class="collapse" id="collapse1" style=""></div>' +
                     '<div class="collapse" id="collapse2"></div>'
                 );
@@ -877,8 +877,8 @@ describe('Collapse', function() {
             }).then(waitFor(250)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button class="collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button"></button>' +
-                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                     '<div class="collapse" id="collapse1"></div>' +
                     '<div class="collapse" id="collapse2"></div>'
                 );
@@ -895,8 +895,8 @@ describe('Collapse', function() {
             }).then(waitFor(250)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button class="collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button"></button>' +
-                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                     '<div class="collapse" id="collapse1"></div>' +
                     '<div class="collapse" id="collapse2"></div>'
                 );
@@ -922,8 +922,8 @@ describe('Collapse', function() {
             }).then(waitFor(250)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button class="" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
-                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                     '<div class="collapse show" id="collapse1" style=""></div>' +
                     '<div class="collapse" id="collapse2"></div>'
                 );
@@ -949,8 +949,8 @@ describe('Collapse', function() {
             }).then(waitFor(250)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button class="" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
-                    '<button class="collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="collapseToggle1" data-ui-toggle="collapse" data-ui-target="#collapse1" type="button" aria-expanded="true"></button>' +
+                    '<button class="btn btn-secondary collapsed" id="collapseToggle2" data-ui-toggle="collapse" data-ui-target="#collapse2" type="button"></button>' +
                     '<div class="collapse show" id="collapse1" style=""></div>' +
                     '<div class="collapse" id="collapse2"></div>'
                 );

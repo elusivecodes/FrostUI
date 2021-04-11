@@ -39,6 +39,7 @@
     &:focus,
     &.focus {
         border-color: $input-check-focus-border-color;
+        outline: 0;
         box-shadow: 0 0 0 $input-check-border-size $input-check-focus-box-shadow-color;
     }
 

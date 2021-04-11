@@ -31,7 +31,7 @@ describe('popper popover', function() {
                     popover.update();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1135px, 1640px, 0px)'
+                'translate3d(1134px, 1637px, 0px)'
             );
         });
 
@@ -47,7 +47,7 @@ describe('popper popover', function() {
                     dom.query('#popoverToggle').popover('update');
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1135px, 1640px, 0px)'
+                'translate3d(1134px, 1637px, 0px)'
             );
         });
 
@@ -66,7 +66,7 @@ describe('popper popover', function() {
                     popover.show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1135px, 1640px, 0px)'
+                'translate3d(1134px, 1637px, 0px)'
             );
         });
 
@@ -81,7 +81,7 @@ describe('popper popover', function() {
                     popover.show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1135px, 1640px, 0px)'
+                'translate3d(1134px, 1637px, 0px)'
             );
         });
 
@@ -94,7 +94,7 @@ describe('popper popover', function() {
                     }).show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1135px, 1640px, 0px)'
+                'translate3d(1134px, 1637px, 0px)'
             );
         });
 
@@ -109,7 +109,7 @@ describe('popper popover', function() {
                     popover.show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(980px, 1600px, 0px)'
+                'translate3d(1281px, 1600px, 0px)'
             );
         });
 
@@ -124,7 +124,7 @@ describe('popper popover', function() {
                     popover.show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(980px, 1600px, 0px)'
+                'translate3d(1281px, 1600px, 0px)'
             );
         });
 
@@ -137,7 +137,7 @@ describe('popper popover', function() {
                     }).show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(980px, 1600px, 0px)'
+                'translate3d(1281px, 1600px, 0px)'
             );
         });
 
@@ -158,7 +158,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1135px, 1513px, 0px)'
+                'translate3d(1134px, 1520px, 0px)'
             );
         });
 
@@ -179,7 +179,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1290px, 1576px, 0px)'
+                'translate3d(1281px, 1578px, 0px)'
             );
         });
 
@@ -200,7 +200,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1135px, 1640px, 0px)'
+                'translate3d(1134px, 1637px, 0px)'
             );
         });
 
@@ -221,7 +221,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(980px, 1576px, 0px)'
+                'translate3d(987px, 1578px, 0px)'
             );
         });
 
@@ -241,7 +241,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1200px, 1513px, 0px)'
+                'translate3d(1200px, 1520px, 0px)'
             );
         });
 
@@ -261,7 +261,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1135px, 1513px, 0px)'
+                'translate3d(1134px, 1520px, 0px)'
             );
         });
 
@@ -281,7 +281,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1070px, 1513px, 0px)'
+                'translate3d(1068px, 1520px, 0px)'
             );
         });
 
@@ -301,7 +301,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1290px, 1600px, 0px)'
+                'translate3d(1281px, 1600px, 0px)'
             );
         });
 
@@ -321,7 +321,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1290px, 1576px, 0px)'
+                'translate3d(1281px, 1578px, 0px)'
             );
         });
 
@@ -341,7 +341,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1290px, 1553px, 0px)'
+                'translate3d(1281px, 1557px, 0px)'
             );
         });
 
@@ -361,7 +361,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1200px, 1640px, 0px)'
+                'translate3d(1200px, 1637px, 0px)'
             );
         });
 
@@ -381,7 +381,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1135px, 1640px, 0px)'
+                'translate3d(1134px, 1637px, 0px)'
             );
         });
 
@@ -401,7 +401,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1070px, 1640px, 0px)'
+                'translate3d(1068px, 1637px, 0px)'
             );
         });
 
@@ -421,7 +421,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(980px, 1600px, 0px)'
+                'translate3d(987px, 1600px, 0px)'
             );
         });
 
@@ -441,7 +441,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(980px, 1576px, 0px)'
+                'translate3d(987px, 1578px, 0px)'
             );
         });
 
@@ -461,7 +461,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(980px, 1553px, 0px)'
+                'translate3d(987px, 1557px, 0px)'
             );
         });
 
@@ -486,7 +486,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1135px, 1640px, 0px)'
+                'translate3d(1134px, 1637px, 0px)'
             );
         });
 
@@ -507,7 +507,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(980px, 1576px, 0px)'
+                'translate3d(987px, 1578px, 0px)'
             );
         });
 
@@ -528,7 +528,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1135px, 1513px, 0px)'
+                'translate3d(1134px, 1520px, 0px)'
             );
         });
 
@@ -550,7 +550,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1290px, 1576px, 0px)'
+                'translate3d(1281px, 1578px, 0px)'
             );
         });
 
@@ -560,7 +560,7 @@ describe('popper popover', function() {
 
         it('works with top/start and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 495);
+                dom.setScrollX(document, 490);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'top',
@@ -575,13 +575,13 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1069px, 1513px, 0px)'
+                'translate3d(1068px, 1520px, 0px)'
             );
         });
 
         it('works with top/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 495);
+                dom.setScrollX(document, 490);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'top',
@@ -596,7 +596,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1069px, 1513px, 0px)'
+                'translate3d(1068px, 1520px, 0px)'
             );
         });
 
@@ -618,7 +618,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1200px, 1513px, 0px)'
+                'translate3d(1200px, 1520px, 0px)'
             );
         });
 
@@ -639,13 +639,13 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1200px, 1513px, 0px)'
+                'translate3d(1200px, 1520px, 0px)'
             );
         });
 
         it('works with right/start and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1050);
+                dom.setScrollY(document, 1048);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'right',
@@ -660,7 +660,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1290px, 1553px, 0px)'
+                'translate3d(1281px, 1557px, 0px)'
             );
         });
 
@@ -681,13 +681,13 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1290px, 1600px, 0px)'
+                'translate3d(1281px, 1600px, 0px)'
             );
         });
 
         it('works with right/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1050);
+                dom.setScrollY(document, 1048);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'right',
@@ -702,7 +702,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1290px, 1553px, 0px)'
+                'translate3d(1281px, 1557px, 0px)'
             );
         });
 
@@ -723,13 +723,13 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1290px, 1600px, 0px)'
+                'translate3d(1281px, 1600px, 0px)'
             );
         });
 
         it('works with bottom/start and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 495);
+                dom.setScrollX(document, 490);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'bottom',
@@ -744,13 +744,13 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1069px, 1640px, 0px)'
+                'translate3d(1068px, 1637px, 0px)'
             );
         });
 
         it('works with bottom/center and right edge', async function() {
             await exec(_ => {
-                dom.setScrollX(document, 495);
+                dom.setScrollX(document, 490);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'bottom',
@@ -765,7 +765,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1069px, 1640px, 0px)'
+                'translate3d(1068px, 1637px, 0px)'
             );
         });
 
@@ -786,7 +786,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1200px, 1640px, 0px)'
+                'translate3d(1200px, 1637px, 0px)'
             );
         });
 
@@ -807,13 +807,13 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1200px, 1640px, 0px)'
+                'translate3d(1200px, 1637px, 0px)'
             );
         });
 
         it('works with left/start and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1050);
+                dom.setScrollY(document, 1048);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'left',
@@ -828,7 +828,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(980px, 1553px, 0px)'
+                'translate3d(987px, 1557px, 0px)'
             );
         });
 
@@ -849,13 +849,13 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(980px, 1600px, 0px)'
+                'translate3d(987px, 1600px, 0px)'
             );
         });
 
         it('works with left/center and bottom edge', async function() {
             await exec(_ => {
-                dom.setScrollY(document, 1050);
+                dom.setScrollY(document, 1048);
                 const popoverToggle = dom.findOne('#popoverToggle');
                 const popover = UI.Popover.init(popoverToggle, {
                     placement: 'left',
@@ -870,7 +870,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(980px, 1553px, 0px)'
+                'translate3d(987px, 1557px, 0px)'
             );
         });
 
@@ -891,7 +891,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(980px, 1600px, 0px)'
+                'translate3d(987px, 1600px, 0px)'
             );
         });
 
@@ -912,7 +912,7 @@ describe('popper popover', function() {
                     popover.show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1135px, 1513px, 0px)'
+                'translate3d(1134px, 1520px, 0px)'
             );
         });
 
@@ -929,7 +929,7 @@ describe('popper popover', function() {
                     popover.show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1135px, 1513px, 0px)'
+                'translate3d(1134px, 1520px, 0px)'
             );
         });
 
@@ -944,7 +944,7 @@ describe('popper popover', function() {
                     }).show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1135px, 1513px, 0px)'
+                'translate3d(1134px, 1520px, 0px)'
             );
         });
 
@@ -966,7 +966,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1135px, 1513px, 0px)'
+                'translate3d(1134px, 1520px, 0px)'
             );
         });
 
@@ -988,7 +988,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1290px, 1576px, 0px)'
+                'translate3d(1281px, 1578px, 0px)'
             );
         });
 
@@ -1010,7 +1010,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1135px, 1640px, 0px)'
+                'translate3d(1134px, 1637px, 0px)'
             );
         });
 
@@ -1033,7 +1033,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(980px, 1576px, 0px)'
+                'translate3d(987px, 1578px, 0px)'
             );
         });
 
@@ -1052,7 +1052,7 @@ describe('popper popover', function() {
                     popover.show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(933px, 1576px, 0px)'
+                'translate3d(1328px, 1578px, 0px)'
             );
         });
 
@@ -1067,7 +1067,7 @@ describe('popper popover', function() {
                     popover.show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(933px, 1576px, 0px)'
+                'translate3d(1328px, 1578px, 0px)'
             );
         });
 
@@ -1080,7 +1080,7 @@ describe('popper popover', function() {
                     }).show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(933px, 1576px, 0px)'
+                'translate3d(1328px, 1578px, 0px)'
             );
         });
 
@@ -1101,7 +1101,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1135px, 1466px, 0px)'
+                'translate3d(1134px, 1473px, 0px)'
             );
         });
 
@@ -1122,7 +1122,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1337px, 1576px, 0px)'
+                'translate3d(1328px, 1578px, 0px)'
             );
         });
 
@@ -1143,7 +1143,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1135px, 1687px, 0px)'
+                'translate3d(1134px, 1684px, 0px)'
             );
         });
 
@@ -1164,7 +1164,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(933px, 1576px, 0px)'
+                'translate3d(940px, 1578px, 0px)'
             );
         });
 
@@ -1185,7 +1185,7 @@ describe('popper popover', function() {
                     popover.show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1043px, 1513px, 0px)'
+                'translate3d(1050px, 1520px, 0px)'
             );
         });
 
@@ -1202,7 +1202,7 @@ describe('popper popover', function() {
                     popover.show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1043px, 1513px, 0px)'
+                'translate3d(1050px, 1520px, 0px)'
             );
         });
 
@@ -1217,7 +1217,7 @@ describe('popper popover', function() {
                     }).show();
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1043px, 1513px, 0px)'
+                'translate3d(1050px, 1520px, 0px)'
             );
         });
 
@@ -1239,7 +1239,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1290px, 1620px, 0px)'
+                'translate3d(1281px, 1620px, 0px)'
             );
         });
 
@@ -1261,7 +1261,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1043px, 1513px, 0px)'
+                'translate3d(1050px, 1520px, 0px)'
             );
         });
 
@@ -1283,7 +1283,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(980px, 1531px, 0px)'
+                'translate3d(987px, 1538px, 0px)'
             );
         });
 
@@ -1305,7 +1305,7 @@ describe('popper popover', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1220px, 1640px, 0px)'
+                'translate3d(1220px, 1637px, 0px)'
             );
         });
 

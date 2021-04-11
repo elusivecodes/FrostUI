@@ -15,16 +15,16 @@ describe('Modal', function() {
         await exec(_ => {
             dom.setHTML(
                 document.body,
-                '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                 '<div class="modal" id="modal1">' +
                 '<div class="modal-dialog" id="modalDialog1">' +
-                '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                 '</div>' +
                 '</div>' +
                 '<div class="modal" id="modal2">' +
                 '<div class="modal-dialog" id="modalDialog2">' +
-                '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                 '</div>' +
                 '</div>'
             );
@@ -134,12 +134,6 @@ describe('Modal', function() {
                 }),
                 true
             );
-            assert.strictEqual(
-                await exec(_ => {
-                    return UI.Modal._stack.size;
-                }),
-                0
-            );
         });
 
     });
@@ -158,16 +152,16 @@ describe('Modal', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal-backdrop" style=""></div>'
@@ -186,16 +180,16 @@ describe('Modal', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal-backdrop" style=""></div>'
@@ -214,16 +208,16 @@ describe('Modal', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal-backdrop" style=""></div>'
@@ -281,16 +275,16 @@ describe('Modal', function() {
                     await exec(_ => {
                         return dom.getHTML(document.body);
                     }),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal show" id="modal2" aria-modal="true" style="z-index: 1080;">' +
                     '<div class="modal-dialog" id="modalDialog2" style="">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal-backdrop" style=""></div>' +
@@ -344,16 +338,16 @@ describe('Modal', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal" id="modal1" aria-hidden="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>'
                 );
@@ -381,16 +375,16 @@ describe('Modal', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal" id="modal1" aria-hidden="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>'
                 );
@@ -417,16 +411,16 @@ describe('Modal', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal" id="modal1" aria-hidden="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>'
                 );
@@ -515,16 +509,16 @@ describe('Modal', function() {
                     await exec(_ => {
                         return dom.getHTML(document.body);
                     }),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2" aria-hidden="true" style="">' +
                     '<div class="modal-dialog" id="modalDialog2" style="">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal-backdrop" style=""></div>'
@@ -586,16 +580,16 @@ describe('Modal', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal-backdrop" style=""></div>'
@@ -614,16 +608,16 @@ describe('Modal', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal-backdrop" style=""></div>'
@@ -686,16 +680,16 @@ describe('Modal', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal" id="modal1" aria-hidden="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>'
                 );
@@ -722,16 +716,16 @@ describe('Modal', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal" id="modal1" aria-hidden="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>'
                 );
@@ -811,16 +805,16 @@ describe('Modal', function() {
                         UI.Modal.init(modal1).show();
                     });
                 }),
-                '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                 '<div class="modal" id="modal1">' +
                 '<div class="modal-dialog" id="modalDialog1">' +
-                '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                 '</div>' +
                 '</div>' +
                 '<div class="modal" id="modal2">' +
                 '<div class="modal-dialog" id="modalDialog2">' +
-                '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                 '</div>' +
                 '</div>'
             );
@@ -837,16 +831,16 @@ describe('Modal', function() {
                         UI.Modal.init(modal1).show();
                     });
                 }),
-                '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                 '<div class="modal show" id="modal1" aria-modal="true">' +
                 '<div class="modal-dialog" id="modalDialog1" style="">' +
-                '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                 '</div>' +
                 '</div>' +
                 '<div class="modal" id="modal2">' +
                 '<div class="modal-dialog" id="modalDialog2">' +
-                '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                 '</div>' +
                 '</div>' +
                 '<div class="modal-backdrop" style=""></div>'
@@ -873,16 +867,16 @@ describe('Modal', function() {
                             UI.Modal.init(modal1).hide();
                         });
                     }),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal-backdrop" style=""></div>'
@@ -910,16 +904,16 @@ describe('Modal', function() {
                             UI.Modal.init(modal1).hide();
                         });
                     }),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal" id="modal1" aria-hidden="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>'
                 );
@@ -937,16 +931,16 @@ describe('Modal', function() {
                         UI.Modal.init(modal1).toggle();
                     });
                 }),
-                '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                 '<div class="modal" id="modal1">' +
                 '<div class="modal-dialog" id="modalDialog1">' +
-                '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                 '</div>' +
                 '</div>' +
                 '<div class="modal" id="modal2">' +
                 '<div class="modal-dialog" id="modalDialog2">' +
-                '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                 '</div>' +
                 '</div>'
             );
@@ -963,16 +957,16 @@ describe('Modal', function() {
                         UI.Modal.init(modal1).toggle();
                     });
                 }),
-                '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                 '<div class="modal show" id="modal1" aria-modal="true">' +
                 '<div class="modal-dialog" id="modalDialog1" style="">' +
-                '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                 '</div>' +
                 '</div>' +
                 '<div class="modal" id="modal2">' +
                 '<div class="modal-dialog" id="modalDialog2">' +
-                '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                 '</div>' +
                 '</div>' +
                 '<div class="modal-backdrop" style=""></div>'
@@ -999,16 +993,16 @@ describe('Modal', function() {
                             UI.Modal.init(modal1).toggle();
                         });
                     }),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal-backdrop" style=""></div>'
@@ -1036,16 +1030,16 @@ describe('Modal', function() {
                             UI.Modal.init(modal1).toggle();
                         });
                     }),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal" id="modal1" aria-hidden="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>'
                 );
@@ -1062,16 +1056,16 @@ describe('Modal', function() {
             }).then(waitFor(125)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal" id="modal1">' +
                     '<div class="modal-dialog" id="modalDialog1">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>'
                 );
@@ -1088,16 +1082,16 @@ describe('Modal', function() {
             }).then(waitFor(125)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal" id="modal1">' +
                     '<div class="modal-dialog" id="modalDialog1">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>'
                 );
@@ -1124,16 +1118,16 @@ describe('Modal', function() {
             }).then(waitFor(125)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal-backdrop" style=""></div>'
@@ -1161,16 +1155,16 @@ describe('Modal', function() {
             }).then(waitFor(125)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal-backdrop" style=""></div>'
@@ -1316,16 +1310,16 @@ describe('Modal', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal" id="modal1" aria-hidden="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>'
                 );
@@ -1352,16 +1346,16 @@ describe('Modal', function() {
             }).then(waitFor(125)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal-backdrop" style=""></div>'
@@ -1390,16 +1384,16 @@ describe('Modal', function() {
             }).then(waitFor(125)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" data-ui-keyboard="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal-backdrop" style=""></div>'
@@ -1428,16 +1422,16 @@ describe('Modal', function() {
             }).then(waitFor(125)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal-backdrop" style=""></div>'
@@ -1461,16 +1455,16 @@ describe('Modal', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal-backdrop" style=""></div>'
@@ -1491,16 +1485,16 @@ describe('Modal', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" data-ui-show="true" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal-backdrop" style=""></div>'
@@ -1519,16 +1513,16 @@ describe('Modal', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal-backdrop" style=""></div>'
@@ -1543,16 +1537,16 @@ describe('Modal', function() {
             }).then(waitFor(125)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal" id="modal1">' +
                     '<div class="modal-dialog" id="modalDialog1">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>'
                 );
@@ -1575,16 +1569,16 @@ describe('Modal', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>'
                 );
@@ -1604,16 +1598,16 @@ describe('Modal', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" data-ui-backdrop="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>'
                 );
@@ -1633,16 +1627,16 @@ describe('Modal', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>'
                 );
@@ -1670,16 +1664,16 @@ describe('Modal', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal" id="modal1" aria-hidden="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>'
                 );
@@ -1701,16 +1695,120 @@ describe('Modal', function() {
                 });
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2">' +
                     '<div class="modal-dialog" id="modalDialog2">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '</div>' +
+                    '</div>'
+                );
+            });
+        });
+
+        it('does not hide the modal on document click (static backdrop)', async function() {
+            await exec(_ => {
+                const modal1 = dom.findOne('#modal1');
+                UI.Modal.init(modal1, { backdrop: 'static' }).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.click(document.body);
+                });
+            }).then(waitFor(250)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal-dialog" id="modalDialog1" style="">' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="modal" id="modal2">' +
+                    '<div class="modal-dialog" id="modalDialog2">' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="modal-backdrop" style=""></div>'
+                );
+            });
+        });
+
+        it('does not hide the modal on document click (mousedown on dialog)', async function() {
+            await exec(_ => {
+                const modal1 = dom.findOne('#modal1');
+                UI.Modal.init(modal1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.triggerEvent('#modalDialog1', 'mousedown');
+                    dom.click(document.body);
+                });
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal-dialog" id="modalDialog1" style="">' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="modal" id="modal2">' +
+                    '<div class="modal-dialog" id="modalDialog2">' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="modal-backdrop" style=""></div>'
+                );
+            });
+        });
+
+        it('hides the modal on dialog click (mousedown on backdrop)', async function() {
+            await exec(_ => {
+                const modal1 = dom.findOne('#modal1');
+                UI.Modal.init(modal1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#modalDialog1');
+                    dom.stop('.modal-backdrop');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.triggerEvent('.modal-backdrop', 'mousedown');
+                    dom.click('#modalDialog1');
+                });
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#modalDialog1') && dom.hasAnimation('.modal-backdrop')),
+                    true
+                );
+            }).then(waitFor(175)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<div class="modal" id="modal1" aria-hidden="true">' +
+                    '<div class="modal-dialog" id="modalDialog1" style="">' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="modal" id="modal2">' +
+                    '<div class="modal-dialog" id="modalDialog2">' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>'
                 );
@@ -1750,16 +1848,16 @@ describe('Modal', function() {
                     await exec(_ => {
                         return dom.getHTML(document.body);
                     }),
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
-                    '<button id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
                     '<div class="modal show" id="modal1" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
-                    '<button id="button1" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal" id="modal2" aria-hidden="true" style="">' +
                     '<div class="modal-dialog" id="modalDialog2" style="">' +
-                    '<button id="button2" data-ui-dismiss="modal" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
                     '<div class="modal-backdrop" style=""></div>'
@@ -1771,7 +1869,7 @@ describe('Modal', function() {
 
     describe('scroll padding', function() {
 
-        it('adds scroll padding to document body (vertical)', async function() {
+        it('adds scroll padding (vertical)', async function() {
             await exec(_ => {
                 dom.setStyle(document.body, 'height', '2000px');
                 const modal1 = dom.findOne('#modal1');
@@ -1788,10 +1886,16 @@ describe('Modal', function() {
                     }),
                     '15px'
                 );
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.getStyle('#modalDialog1', 'paddingRight');
+                    }),
+                    '15px'
+                );
             });
         });
 
-        it('adds scroll padding to document body (horizontal)', async function() {
+        it('adds scroll padding (horizontal)', async function() {
             await exec(_ => {
                 dom.setStyle(document.body, 'width', '2000px');
                 const modal1 = dom.findOne('#modal1');
@@ -1805,6 +1909,12 @@ describe('Modal', function() {
                 assert.strictEqual(
                     await exec(_ => {
                         return dom.getStyle(document.body, 'paddingBottom');
+                    }),
+                    '15px'
+                );
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.getStyle('#modalDialog1', 'paddingBottom');
                     }),
                     '15px'
                 );
@@ -1827,6 +1937,12 @@ describe('Modal', function() {
                     }),
                     ''
                 );
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.getStyle('#modalDialog1', 'paddingRight');
+                    }),
+                    ''
+                );
             });
         });
 
@@ -1843,6 +1959,12 @@ describe('Modal', function() {
                 assert.strictEqual(
                     await exec(_ => {
                         return dom.getStyle(document.body, 'paddingBottom');
+                    }),
+                    ''
+                );
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.getStyle('#modalDialog1', 'paddingBottom');
                     }),
                     ''
                 );
@@ -1891,7 +2013,7 @@ describe('Modal', function() {
             });
         });
 
-        it('restores scroll padding to document body (vertical)', async function() {
+        it('restores scroll padding (vertical)', async function() {
             await exec(_ => {
                 dom.setStyle(document.body, 'height', '2000px');
                 const modal1 = dom.findOne('#modal1');
@@ -1918,10 +2040,16 @@ describe('Modal', function() {
                     }),
                     ''
                 );
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.getStyle('#modalDialog1', 'paddingRight');
+                    }),
+                    ''
+                );
             });
         });
 
-        it('restores scroll padding to document body (horizontal)', async function() {
+        it('restores scroll padding (horizontal)', async function() {
             await exec(_ => {
                 dom.setStyle(document.body, 'width', '2000px');
                 const modal1 = dom.findOne('#modal1');
@@ -1945,6 +2073,12 @@ describe('Modal', function() {
                 assert.strictEqual(
                     await exec(_ => {
                         return dom.getStyle(document.body, 'paddingBottom');
+                    }),
+                    ''
+                );
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.getStyle('#modalDialog1', 'paddingBottom');
                     }),
                     ''
                 );

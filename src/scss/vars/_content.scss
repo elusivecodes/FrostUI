@@ -9,15 +9,15 @@ $blockquote-footer-font-size: 80% !default;
 $blockquote-footer-color: $gray-dark !default;
 $blockquote-footer-prefix: "\2014 \00A0" !default;
 
+// body
+$body-font-weight: map-get($font-weights, normal) !default;
+$body-line-height: map-get($line-heights, base) !default;
+
 // caption
-$caption-padding-y: $spacing / 2 !default;
 $caption-color: tint($text-color, 15%) !default;
 
 // dd
 $dd-margin-bottom: $spacing / 2 !default;
-
-// dl
-$dl-margin-bottom: $spacing !default;
 
 // dt
 $dt-font-weight: map-get($font-weights, bolder) !default;
@@ -29,9 +29,13 @@ $figure-caption-font-size: 90% !default;
 $figure-caption-color: map-get($color-variants, secondary) !default;
 
 // heading
-$h-margin-bottom: $spacing / 2 !default;
-$h-font-weight: map-get($font-weights, bold) !default;
-$h-line-height: 1.2 !default;
+$headings-margin-bottom: $spacing / 2 !default;
+$headings-font-family: null !default;
+$headings-font-style: null !default;
+$headings-font-weight: map-get($font-weights, bold) !default;
+$headings-line-height: 1.2 !default;
+$headings-color: null !default;
+
 $h1-font-size: 3 !default;
 $h2-font-size: 2.5 !default;
 $h3-font-size: 2 !default;
@@ -42,14 +46,16 @@ $h6-font-size: 1 !default;
 $heading-font-weight: map-get($font-weights, light) !default;
 $heading-line-height: 1.2 !default;
 $heading-1-font-size: 5 !default;
-$heading-2-font-size: 4.5 !default;
-$heading-3-font-size: 3.5 !default;
+$heading-2-font-size: 4 !default;
+$heading-3-font-size: 3 !default;
 $heading-4-font-size: 2.5 !default;
+$heading-5-font-size: 2 !default;
+$heading-6-font-size: 1.5 !default;
 
 // horizontal rule
+$hr-height: $border-size !default;
 $hr-margin-y: $spacing / 2 !default;
-$hr-border-size: $border-size !default;
-$hr-border-color: $border-color !default;
+$hr-color: $border-color !default;
 
 // image
 $img-thumbnail-padding: $spacing / 4 !default;
@@ -58,33 +64,45 @@ $img-thumbnail-border-size: $border-size !default;
 $img-thumbnail-border-color: $border-color !default;
 $img-thumbnail-border-radius: $border-radius !default;
 
+// kbd
+$kbd-padding-x: .4rem !default;
+$kbd-padding-y: .2rem !default;
+$kbd-background-color: map-get($color-variants, dark) !default;
+$kbd-kbd-font-weight: map-get($font-weights, bolder) !default;
+
 // lead
 $lead-font-size: 1.25 !default;
 
 // legend
 $legend-margin-bottom: $spacing / 2 !default;
 $legend-font-size: $font-size-lg !default;
+$legend-font-weight: map-get($font-weights, bold) !default;
 
 // link
+$link-text-decoration: none !default;
 $link-hover-color-shade: 20% !default;
+$link-hover-text-decoration: none !default;
 $link-focus-color-tint: 20% !default;
+$link-focus-text-decoration: none !default;
 
 $link-hover-color: shade($link-color, $link-hover-color-shade) !default;
 $link-focus-color: tint($link-color, $link-focus-color-tint) !default;
 
 // list
-$list-margin-bottom: $spacing !default;
-$list-margin-left: $spacing !default;
+$list-padding-left: $spacing * 2 !default;
 $list-inline-item-margin-right: $spacing / 2 !default;
+
+// mark
+$mark-padding: .2rem !default;
 
 // paragraph
 $p-margin-bottom: $spacing !default;
 
-// pre
-$pre-margin-bottom: $spacing !default;
-
 // small
 $small-font-size: 75% !default;
+
+// strong
+$strong-font-weight: map-get($font-weights, bolder) !default;
 
 // sub
 $sub-bottom: -.25em !default;
@@ -108,6 +126,7 @@ $table-border-size: $border-size !default;
 $table-border-color: $gray-light !default;
 $table-cell-padding-x: $spacing !default;
 $table-cell-padding-y: $spacing / 2 !default;
+$table-th-font-weight: map-get($font-weights, bold) !default;
 $table-hover-color: map-get($color-variants, dark) !default;
 $table-hover-background-color: fade($black, .05) !default;
 $table-striped-background-color: fade(map-get($color-variants, dark), .1) !default;
@@ -121,10 +140,7 @@ $table-dark-border-color: map-get($color-variants, secondary) !default;
 $table-dark-hover-background-color: fade($white, .05) !default;
 $table-dark-striped-background-color: fade(map-get($color-variants, light), .1) !default;
 
-$thead-dark-color: $white !default;
-$thead-dark-background-color: map-get($color-variants, dark) !default;
-$thead-light-color: map-get($color-variants, dark) !default;
-$thead-light-background-color: map-get($color-variants, light) !default;
+$table-light-background-color: map-get($color-variants, light) !default;
 
 $table-background-color-tint: 70% !default;
 $table-hover-color-shade: 40% !default;

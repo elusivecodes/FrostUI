@@ -17,16 +17,24 @@ dom.addEventDelegate(document, 'click.ui.modal', '[data-ui-dismiss="modal"]', e 
 
 // Events must be attached to the window, so offcanvas events are triggered first
 dom.addEvent(window, 'click.ui.modal', e => {
-    let modal;
-    for (modal of Modal._stack);
+    const target = UI.getClickTarget(e);
+
+    if (dom.is(target, '[data-ui-dismiss]')) {
+        return;
+    }
+
+    const modal = Modal._topModal();
 
     if (
-        !Modal._stack.size ||
+        !modal ||
         !modal._settings.backdrop ||
-        modal._settings.backdrop === 'static' ||
-        dom.is(e.target, '[data-ui-dismiss]') ||
-        modal._node !== e.target && dom.hasDescendent(modal._node, e.target)
+        (modal._node !== target && dom.hasDescendent(modal._node, target))
     ) {
+        return;
+    }
+
+    if (modal._settings.backdrop === 'static') {
+        modal._transform();
         return;
     }
 
@@ -34,14 +42,18 @@ dom.addEvent(window, 'click.ui.modal', e => {
 });
 
 dom.addEvent(window, 'keyup.ui.modal', e => {
-    let modal;
-    for (modal of Modal._stack);
+    if (e.code !== 'Escape') {
+        return;
+    }
 
-    if (
-        e.code !== 'Escape' ||
-        !modal ||
-        !modal._settings.keyboard
-    ) {
+    const modal = Modal._topModal();
+
+    if (!modal || !modal._settings.keyboard) {
+        return;
+    }
+
+    if (modal._settings.backdrop === 'static') {
+        modal._transform();
         return;
     }
 

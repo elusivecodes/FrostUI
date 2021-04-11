@@ -9,10 +9,10 @@ describe('Toast', function() {
             dom.setHTML(
                 document.body,
                 '<div class="toast show" id="toast1">' +
-                '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                 '</div>' +
                 '<div class="toast show" id="toast2">' +
-                '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                 '</div>'
             );
         });
@@ -163,10 +163,10 @@ describe('Toast', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="toast" id="toast1" style="display: none !important;">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>' +
                     '<div class="toast show" id="toast2">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -184,10 +184,10 @@ describe('Toast', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="toast" id="toast1" style="display: none !important;">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>' +
                     '<div class="toast show" id="toast2">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -205,10 +205,10 @@ describe('Toast', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="toast" id="toast1" style="display: none !important;">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>' +
                     '<div class="toast show" id="toast2">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -221,10 +221,10 @@ describe('Toast', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="toast" id="toast1" style="display: none !important;">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>' +
                     '<div class="toast" id="toast2" style="display: none !important;">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -313,10 +313,10 @@ describe('Toast', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="toast show" id="toast1" style="">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>' +
                     '<div class="toast show" id="toast2">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -342,10 +342,10 @@ describe('Toast', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="toast show" id="toast1" style="">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>' +
                     '<div class="toast show" id="toast2">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -372,10 +372,10 @@ describe('Toast', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="toast show" id="toast1" style="">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>' +
                     '<div class="toast show" id="toast2" style="">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -459,10 +459,10 @@ describe('Toast', function() {
                     });
                 }),
                 '<div class="toast show" id="toast1">' +
-                '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                 '</div>' +
                 '<div class="toast show" id="toast2">' +
-                '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                 '</div>'
             );
         });
@@ -479,10 +479,10 @@ describe('Toast', function() {
                     });
                 }),
                 '<div class="toast" id="toast1" style="display: none !important;">' +
-                '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                 '</div>' +
                 '<div class="toast show" id="toast2">' +
-                '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                 '</div>'
             );
         });
@@ -507,10 +507,10 @@ describe('Toast', function() {
                         });
                     }),
                     '<div class="toast" id="toast1" style="display: none !important;">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>' +
                     '<div class="toast show" id="toast2">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -536,10 +536,10 @@ describe('Toast', function() {
                         });
                     }),
                     '<div class="toast show" id="toast1" style="">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>' +
                     '<div class="toast show" id="toast2">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -556,10 +556,10 @@ describe('Toast', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="toast show" id="toast1">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>' +
                     '<div class="toast show" id="toast2">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -576,10 +576,10 @@ describe('Toast', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="toast show" id="toast1">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>' +
                     '<div class="toast show" id="toast2">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -605,10 +605,10 @@ describe('Toast', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="toast" id="toast1" style="display: none !important;">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>' +
                     '<div class="toast show" id="toast2">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -634,10 +634,10 @@ describe('Toast', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="toast" id="toast1" style="display: none !important;">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>' +
                     '<div class="toast show" id="toast2">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -753,7 +753,20 @@ describe('Toast', function() {
         it('autohides by default', async function() {
             await exec(_ => {
                 const toast1 = dom.findOne('#toast1');
-                UI.Toast.init(toast1);
+                UI.Toast.init(toast1).hide();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#toast1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const toast1 = dom.findOne('#toast1');
+                    UI.Toast.init(toast1).show();
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#toast1');
+                });
             }).then(waitFor(250)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.hasAnimation('#toast1')),
@@ -763,10 +776,10 @@ describe('Toast', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="toast" id="toast1" style="display: none !important;">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>' +
                     '<div class="toast show" id="toast2">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -780,10 +793,10 @@ describe('Toast', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="toast show" id="toast1">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>' +
                     '<div class="toast show" id="toast2">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -798,10 +811,10 @@ describe('Toast', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="toast show" id="toast1" data-ui-autohide="false">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>' +
                     '<div class="toast show" id="toast2">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -814,10 +827,10 @@ describe('Toast', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="toast show" id="toast1">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>' +
                     '<div class="toast show" id="toast2">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -830,7 +843,20 @@ describe('Toast', function() {
         it('works with delay option', async function() {
             await exec(_ => {
                 const toast1 = dom.findOne('#toast1');
-                UI.Toast.init(toast1, { delay: 300 });
+                UI.Toast.init(toast1, { delay: 300 }).hide();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#toast1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const toast1 = dom.findOne('#toast1');
+                    UI.Toast.init(toast1).show();
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#toast1');
+                });
             }).then(waitFor(350)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.hasAnimation('#toast1')),
@@ -840,32 +866,10 @@ describe('Toast', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="toast" id="toast1" style="display: none !important;">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>' +
                     '<div class="toast show" id="toast2">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
-                    '</div>'
-                );
-            });
-        });
-
-        it('works with delay option', async function() {
-            await exec(_ => {
-                const toast1 = dom.findOne('#toast1');
-                UI.Toast.init(toast1, { delay: 300 });
-            }).then(waitFor(350)).then(async _ => {
-                assert.strictEqual(
-                    await exec(_ => dom.hasAnimation('#toast1')),
-                    true
-                );
-            }).then(waitFor(100)).then(async _ => {
-                assert.strictEqual(
-                    await exec(_ => dom.getHTML(document.body)),
-                    '<div class="toast" id="toast1" style="display: none !important;">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
-                    '</div>' +
-                    '<div class="toast show" id="toast2">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -875,7 +879,20 @@ describe('Toast', function() {
             await exec(_ => {
                 const toast1 = dom.findOne('#toast1');
                 dom.setDataset(toast1, 'uiDelay', 300);
-                UI.Toast.init(toast1);
+                UI.Toast.init(toast1).hide();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#toast1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const toast1 = dom.findOne('#toast1');
+                    UI.Toast.init(toast1).show();
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#toast1');
+                });
             }).then(waitFor(350)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.hasAnimation('#toast1')),
@@ -885,10 +902,10 @@ describe('Toast', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="toast" id="toast1" data-ui-delay="300" style="display: none !important;">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>' +
                     '<div class="toast show" id="toast2">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -896,7 +913,21 @@ describe('Toast', function() {
 
         it('works with delay option (query)', async function() {
             await exec(_ => {
-                dom.query('#toast1').toast({ delay: 300 });
+                dom.query('#toast1')
+                    .toast({ delay: 300 })
+                    .hide();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#toast1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.query('#toast1').toast('show');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#toast1');
+                });
             }).then(waitFor(350)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.hasAnimation('#toast1')),
@@ -906,10 +937,10 @@ describe('Toast', function() {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
                     '<div class="toast" id="toast1" style="display: none !important;">' +
-                    '<button id="button1" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>' +
                     '<div class="toast show" id="toast2">' +
-                    '<button id="button2" data-ui-dismiss="toast" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="toast" type="button"></button>' +
                     '</div>'
                 );
             });

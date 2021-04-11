@@ -15,25 +15,51 @@
         <h1>List Groups</h1>
         <div class="mb-4">
             <ul class="list-group shadow-sm">
+                <li class="list-group-item">List Item</li>
+                <li class="list-group-item">List Item</li>
+                <li class="list-group-item">List Item</li>
+                <li class="list-group-item">List Item</li>
+                <li class="list-group-item">List Item</li>
+            </ul>
+        </div>
+
+        <h4>Active</h4>
+        <div class="mb-4">
+            <ul class="list-group shadow-sm">
                 <li class="list-group-item active">Active Item</li>
+                <li class="list-group-item">List Item</li>
+                <li class="list-group-item">List Item</li>
+                <li class="list-group-item">List Item</li>
+                <li class="list-group-item">List Item</li>
+            </ul>
+        </div>
+
+        <h4>Disabled</h4>
+        <div class="mb-4">
+            <ul class="list-group shadow-sm">
+                <li class="list-group-item">List Item</li>
+                <li class="list-group-item">List Item</li>
+                <li class="list-group-item">List Item</li>
                 <li class="list-group-item">List Item</li>
                 <li class="list-group-item disabled">Disabled Item</li>
             </ul>
         </div>
 
-        <h4>Links</h4>
+        <h4>Links &amp; Buttons</h4>
         <div class="mb-4">
             <div class="list-group shadow-sm">
                 <a class="list-group-item list-group-item-action active" href="#">Active Item</a>
                 <a class="list-group-item list-group-item-action" href="#">List Item</a>
+                <a class="list-group-item list-group-item-action" href="#">List Item</a>
+                <a class="list-group-item list-group-item-action" href="#">List Item</a>
                 <a class="list-group-item list-group-item-action disabled" href="#" tabindex="-1" aria-disabled="true">Disabled Item</a>
             </div>
         </div>
-
-        <h4>Buttons</h4>
         <div class="mb-4">
             <div class="list-group shadow-sm">
                 <button class="list-group-item list-group-item-action active" type="button">Active Item</button>
+                <button class="list-group-item list-group-item-action" type="button">List Item</button>
+                <button class="list-group-item list-group-item-action" type="button">List Item</button>
                 <button class="list-group-item list-group-item-action" type="button">List Item</button>
                 <button class="list-group-item list-group-item-action disabled" tabindex="-1" type="button" aria-disabled="true">Disabled Item</button>
             </div>
@@ -42,18 +68,45 @@
         <h4>Flush</h4>
         <div class="mb-4">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item active">Active Item</li>
                 <li class="list-group-item">List Item</li>
-                <li class="list-group-item disabled">Disabled Item</li>
+                <li class="list-group-item">List Item</li>
+                <li class="list-group-item">List Item</li>
+                <li class="list-group-item">List Item</li>
+                <li class="list-group-item">List Item</li>
             </ul>
         </div>
 
         <h4>Numbered</h4>
         <div class="mb-4">
             <ul class="list-group list-group-numbered">
-                <li class="list-group-item active">Active Item</li>
                 <li class="list-group-item">List Item</li>
-                <li class="list-group-item disabled">Disabled Item</li>
+                <li class="list-group-item">List Item</li>
+                <li class="list-group-item">List Item</li>
+            </ul>
+        </div>
+        <div class="mb-4">
+            <ul class="list-group list-group-numbered">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">List Item</div>
+                        This is the item contents.
+                    </div>
+                    <span class="badge bg-primary rounded-pill">33</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">List Item</div>
+                        This is the item contents.
+                    </div>
+                    <span class="badge bg-primary rounded-pill">33</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">List Item</div>
+                        This is the item contents.
+                    </div>
+                    <span class="badge bg-primary rounded-pill">33</span>
+                </li>
             </ul>
         </div>
 
@@ -103,6 +156,19 @@
 
         <h4>Styles</h4>
         <div class="mb-4">
+            <ul class="list-group shadow-sm">
+                <li class="list-group-item">Default</li>
+                <li class="list-group-item list-group-item-primary">Primary</li>
+                <li class="list-group-item list-group-item-secondary">Secondary</li>
+                <li class="list-group-item list-group-item-success">Success</li>
+                <li class="list-group-item list-group-item-info">Info</li>
+                <li class="list-group-item list-group-item-warning">Warning</li>
+                <li class="list-group-item list-group-item-danger">Danger</li>
+                <li class="list-group-item list-group-item-light">Light</li>
+                <li class="list-group-item list-group-item-dark">Dark</li>
+            </ul>
+        </div>
+        <div class="mb-4">
             <div class="list-group shadow-sm">
                 <button class="list-group-item list-group-item-action" type="button">Default</button>
                 <button class="list-group-item list-group-item-action list-group-item-primary" type="button">Primary</button>
@@ -118,39 +184,83 @@
 
         <h4>Badges</h4>
         <div class="mb-4">
-            <div class="list-group shadow-sm">
-                <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            <ul class="list-group shadow-sm">
+                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                     Primary
                     <span class="badge bg-primary">33</span>
-                </button>
-                <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                    Secondary
-                    <span class="badge bg-secondary">33</span>
-                </button>
-                <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                    Success
-                    <span class="badge bg-success">33</span>
-                </button>
-                <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                    Info
-                    <span class="badge bg-info">33</span>
-                </button>
-                <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                    Warning
-                    <span class="badge bg-warning">33</span>
-                </button>
-                <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                    Danger
-                    <span class="badge bg-danger">33</span>
-                </button>
-                <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                    Light
-                    <span class="badge bg-light text-dark">33</span>
-                </button>
-                <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                    Dark
-                    <span class="badge bg-dark">33</span>
-                </button>
+                </li>
+                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    Primary
+                    <span class="badge bg-primary">2</span>
+                </li>
+                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    Primary
+                    <span class="badge bg-primary">1</span>
+                </li>
+            </ul>
+        </div>
+
+        <h4>Custom Content</h4>
+        <div class="mb-4">
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action active" href="#" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">List Item</h5>
+                        <small>Just now</small>
+                    </div>
+                    <p class="mb-1">Some additional text.</p>
+                    <small>Some small text.</small>
+                </a>
+                <a class="list-group-item list-group-item-action" href="#">
+                    <div class=" d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">List Item</h5>
+                        <small>Just now</small>
+                    </div>
+                    <p class="mb-1">Some additional text.</p>
+                    <small class="text-muted">Some small text.</small>
+                </a>
+                <a class="list-group-item list-group-item-action" href="#">
+                    <div class=" d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">List Item</h5>
+                        <small>Just now</small>
+                    </div>
+                    <p class="mb-1">Some additional text.</p>
+                    <small class="text-muted">Some small text.</small>
+                </a>
+            </div>
+        </div>
+
+        <h4>Checkboxes &amp; Radios</h4>
+        <div class="mb-4">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <input class="input-check me-1" type="checkbox" value="1">
+                    List Item
+                </li>
+                <li class="list-group-item">
+                    <input class="input-check me-1" type="checkbox" value="1">
+                    List Item
+                </li>
+                <li class="list-group-item">
+                    <input class="input-check me-1" type="checkbox" value="1">
+                    List Item
+                </li>
+            </ul>
+        </div>
+        <div class="mb-4">
+            <div class="list-group">
+                <label class="list-group-item">
+                    <input class="input-check me-1" type="checkbox" value="1">
+                    List Item
+                </label>
+                <label class="list-group-item">
+                    <input class="input-check me-1" type="checkbox" value="1">
+                    List Item
+                </label>
+                <label class="list-group-item">
+                    <input class="input-check me-1" type="checkbox" value="1">
+                    List Item
+                </label>
             </div>
         </div>
     </div>

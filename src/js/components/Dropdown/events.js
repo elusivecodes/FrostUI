@@ -49,45 +49,61 @@ dom.addEventDelegate(document, 'keydown.ui.dropdown', '.dropdown-menu.show .drop
 });
 
 dom.addEvent(document, 'click.ui.dropdown', e => {
-    const dropdown = Dropdown._current;
+    const target = UI.getClickTarget(e);
+    const nodes = dom.find('.dropdown-menu.show');
 
-    if (
-        !dropdown ||
-        dropdown._node === e.target ||
-        (
-            dom.hasDescendent(dropdown._node, e.target) &&
+    for (const node of nodes) {
+        const toggle = dom.siblings(node, '[data-ui-toggle="dropdown"]').shift();
+        const dropdown = Dropdown.init(toggle);
+
+        if (
+            dropdown._node === target ||
             (
-                dom.is(e.target, 'form') ||
-                dom.closest(target, 'form', menu).length
+                dom.hasDescendent(dropdown._menuNode, target) &&
+                (
+                    dom.is(target, 'form') ||
+                    dom.closest(target, 'form', dropdown._menuNode).length
+                )
             )
-        )
-    ) {
-        return;
-    }
+        ) {
+            continue;
+        }
 
-    dropdown.hide();
-});
+        dropdown.hide();
+    }
+}, { capture: true });
 
 dom.addEvent(document, 'keyup.ui.dropdown', e => {
-    const dropdown = Dropdown._current;
-
-    if (
-        !['Tab', 'Escape'].includes(e.code) ||
-        !dropdown ||
-        (e.code === 'Tab' && dropdown._node === e.target) ||
-        (
-            dom.hasDescendent(dropdown._menuNode, e.target) &&
-            (
-                e.code === 'Tab' ||
-                dom.is(e.target, 'form') ||
-                dom.closest(e.target, 'form', dropdown._menuNode).length
-            )
-        )
-    ) {
+    if (!['Tab', 'Escape'].includes(e.code)) {
         return;
     }
 
-    e.stopPropagation();
+    let stopped = false;
+    const nodes = dom.find('.dropdown-menu.show');
 
-    dropdown.hide();
+    for (const node of nodes) {
+        const toggle = dom.siblings(node, '[data-ui-toggle="dropdown"]').shift();
+        const dropdown = Dropdown.init(toggle);
+
+        if (
+            (e.code === 'Tab' && dropdown._node === e.target) ||
+            (
+                dom.hasDescendent(dropdown._menuNode, e.target) &&
+                (
+                    e.code === 'Tab' ||
+                    dom.is(e.target, 'form') ||
+                    dom.closest(e.target, 'form', dropdown._menuNode).length
+                )
+            )
+        ) {
+            continue;
+        }
+
+        if (!stopped) {
+            stopped = true;
+            e.stopPropagation();
+        }
+
+        dropdown.hide();
+    }
 }, { capture: true });

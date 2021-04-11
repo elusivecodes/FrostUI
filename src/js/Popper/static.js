@@ -35,7 +35,9 @@ Object.assign(Popper, {
                     refTop - nodeBox.height + minSize,
                     offset.y - diff
                 );
-            } else if (offsetY < minimumBox.top) {
+            }
+
+            if (offsetY < minimumBox.top) {
                 // top of offset node is above the container
                 const diff = offsetY - minimumBox.top;
                 offset.y = Math.min(
@@ -63,7 +65,9 @@ Object.assign(Popper, {
                     refLeft - nodeBox.width + minSize,
                     offset.x - diff
                 );
-            } else if (offsetX < minimumBox.left) {
+            }
+
+            if (offsetX < minimumBox.left) {
                 // left of offset node is to the left of the container
                 const diff = offsetX - minimumBox.left;
                 offset.x = Math.min(

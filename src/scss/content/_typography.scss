@@ -38,28 +38,49 @@
     @extend h6;
 }
 
-.heading-1,
-.heading-2,
-.heading-3,
-.heading-4 {
+%display-heading {
+    margin-top: 0;
+    margin-bottom: $headings-margin-bottom;
+    font-family: $headings-font-family;
+    font-style: $headings-font-style;
     font-weight: $heading-font-weight;
     line-height: $heading-line-height;
+    color: $headings-color;
 }
 
 .heading-1 {
+    @extend %display-heading;
     font-size: text-size($heading-1-font-size);
 }
 
 .heading-2 {
+    @extend %display-heading;
     font-size: text-size($heading-2-font-size);
 }
 
 .heading-3 {
+    @extend %display-heading;
     font-size: text-size($heading-3-font-size);
 }
 
 .heading-4 {
+    @extend %display-heading;
     font-size: text-size($heading-4-font-size);
+}
+
+.heading-5 {
+    @extend %display-heading;
+    font-size: text-size($heading-5-font-size);
+}
+
+.heading-6 {
+    @extend %display-heading;
+    font-size: text-size($heading-6-font-size);
+}
+
+.initialism {
+    font-size: $font-size-sm;
+    text-transform: uppercase;
 }
 
 .lead {
@@ -67,7 +88,7 @@
 }
 
 .list-inline {
-    margin-left: 0;
+    padding-left: 0;
     list-style: none;
 }
 
@@ -80,6 +101,14 @@
 }
 
 .list-unstyled {
-    margin-left: 0;
+    padding-left: 0;
     list-style: none;
+}
+
+.mark {
+    @extend mark;
+}
+
+.small {
+    @extend small;
 }

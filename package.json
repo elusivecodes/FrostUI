@@ -10,6 +10,7 @@
     },
     "main": "./dist/frost-ui-bundle.js",
     "files": [
+        "/dist/frost-ui.css",
         "/dist/frost-ui.js",
         "/dist/frost-ui-bundle.js",
         "/LICENSE",

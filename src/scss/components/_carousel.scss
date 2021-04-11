@@ -47,6 +47,7 @@
     color: var(--ui-carousel-control-color);
     text-align: center;
     background: transparent;
+    border: 0;
     opacity: $carousel-control-opacity;
 
     &:hover,
@@ -59,6 +60,7 @@
     }
 
     &:focus {
+        outline: 0;
         opacity: $carousel-control-focus-opacity;
     }
 }

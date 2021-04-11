@@ -7,13 +7,14 @@
 .input-plain-text {
     display: block;
     width: 100%;
-    padding: $input-padding-y $input-padding-x;
+    padding: $input-padding-y 0;
     margin-bottom: 0;
     line-height: $input-line-height;
     color: $input-plain-text-color;
     background-color: transparent;
     border: solid transparent;
     border-width: $input-border-size 0;
+    outline: 0;
 }
 
 .input-group-text {

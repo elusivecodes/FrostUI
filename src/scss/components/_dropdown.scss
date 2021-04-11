@@ -59,6 +59,10 @@
         background-color: var(--ui-dropdown-item-focus-bg);
     }
 
+    &:focus {
+        outline: 0;
+    }
+
     &.active {
         color: $dropdown-item-active-color;
         background-color: $dropdown-item-active-background-color;

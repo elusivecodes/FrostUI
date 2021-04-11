@@ -1,19 +1,24 @@
 // Ripple events
 dom.addEventDelegate(document, 'mousedown.ui.ripple', '.ripple', e => {
-    const pos = dom.position(e.currentTarget, true);
+    const target = e.currentTarget;
+    const pos = dom.position(target, true);
 
-    const width = dom.width(e.currentTarget);
-    const height = dom.height(e.currentTarget);
+    const width = dom.width(target);
+    const height = dom.height(target);
     const scaleMultiple = Math.max(width, height) * 3;
+
+    const isFixed = dom.isFixed(target);
+    const mouseX = isFixed ? e.clientX : e.pageX;
+    const mouseY = isFixed ? e.clientY : e.pageY;
 
     const ripple = dom.create('span', {
         class: 'ripple-effect',
         style: {
-            left: e.pageX - pos.x,
-            top: e.pageY - pos.y
+            left: mouseX - pos.x,
+            top: mouseY - pos.y
         }
     });
-    dom.append(e.currentTarget, ripple);
+    dom.append(target, ripple);
 
     dom.animate(
         ripple,

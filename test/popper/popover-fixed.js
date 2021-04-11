@@ -33,7 +33,7 @@ describe('popper popover (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1200px, 1513px, 0px)'
+                'translate3d(1200px, 1520px, 0px)'
             );
         });
 
@@ -53,7 +53,7 @@ describe('popper popover (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1135px, 1513px, 0px)'
+                'translate3d(1134px, 1520px, 0px)'
             );
         });
 
@@ -73,7 +73,7 @@ describe('popper popover (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1070px, 1513px, 0px)'
+                'translate3d(1068px, 1520px, 0px)'
             );
         });
 
@@ -93,7 +93,7 @@ describe('popper popover (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1290px, 1600px, 0px)'
+                'translate3d(1281px, 1600px, 0px)'
             );
         });
 
@@ -113,7 +113,7 @@ describe('popper popover (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1290px, 1576px, 0px)'
+                'translate3d(1281px, 1578px, 0px)'
             );
         });
 
@@ -133,7 +133,7 @@ describe('popper popover (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1290px, 1553px, 0px)'
+                'translate3d(1281px, 1557px, 0px)'
             );
         });
 
@@ -153,7 +153,7 @@ describe('popper popover (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1200px, 1640px, 0px)'
+                'translate3d(1200px, 1637px, 0px)'
             );
         });
 
@@ -173,7 +173,7 @@ describe('popper popover (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1135px, 1640px, 0px)'
+                'translate3d(1134px, 1637px, 0px)'
             );
         });
 
@@ -193,7 +193,7 @@ describe('popper popover (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1070px, 1640px, 0px)'
+                'translate3d(1068px, 1637px, 0px)'
             );
         });
 
@@ -213,7 +213,7 @@ describe('popper popover (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(980px, 1600px, 0px)'
+                'translate3d(987px, 1600px, 0px)'
             );
         });
 
@@ -233,7 +233,7 @@ describe('popper popover (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(980px, 1576px, 0px)'
+                'translate3d(987px, 1578px, 0px)'
             );
         });
 
@@ -253,7 +253,7 @@ describe('popper popover (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.popover', 'transform');
                 }),
-                'translate3d(980px, 1553px, 0px)'
+                'translate3d(987px, 1557px, 0px)'
             );
         });
 

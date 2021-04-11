@@ -31,7 +31,9 @@
 @include utility(border-width, (
     1: $border-size,
     2: $border-size * 2,
-    3: $border-size * 3
+    3: $border-size * 3,
+    4: $border-size * 4,
+    5: $border-size * 5
 ), border);
 @include utility(border-radius, (
     null: $border-radius,
@@ -153,6 +155,9 @@
 // interaction
 @include utility(user-select, auto all none);
 @include utility(pointer-events, auto none, pe);
+
+// outline
+@include utility(outline, 0);
 
 // overflow
 @include utility(overflow, auto hidden visible scroll);

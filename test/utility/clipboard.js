@@ -9,7 +9,7 @@ describe('Clipboard', function() {
             await exec(_ => {
                 dom.setHTML(
                     document.body,
-                    '<button id="button" data-ui-toggle="clipboard" data-ui-text="Test 1"></button>'
+                    '<button class="btn btn-secondary" id="button" data-ui-toggle="clipboard" data-ui-text="Test 1"></button>'
                 );
             }).then(async function() {
                 assert.strictEqual(
@@ -27,7 +27,7 @@ describe('Clipboard', function() {
                 await exec(_ => {
                     dom.setHTML(
                         document.body,
-                        '<button id="button" data-ui-toggle="clipboard" data-ui-target="#test"></button>' +
+                        '<button class="btn btn-secondary" id="button" data-ui-toggle="clipboard" data-ui-target="#test"></button>' +
                         '<div id="test">Test 2</div>'
                     );
                     dom.click('#button');
@@ -42,8 +42,8 @@ describe('Clipboard', function() {
                 await exec(_ => {
                     dom.setHTML(
                         document.body,
-                        '<button id="button" data-ui-toggle="clipboard" data-ui-target="#test"></button>' +
-                        '<input id="test" value="Test 3" />'
+                        '<button class="btn btn-secondary" id="button" data-ui-toggle="clipboard" data-ui-target="#test"></button>' +
+                        '<input class="input-filled" id="test" value="Test 3" />'
                     );
                     dom.click('#button');
                     return navigator.clipboard.readText();
@@ -63,8 +63,8 @@ describe('Clipboard', function() {
                 await exec(_ => {
                     dom.setHTML(
                         document.body,
-                        '<button id="button" data-ui-toggle="clipboard" data-ui-target="#test"></button>' +
-                        '<textarea id="test">Test 4</textarea>'
+                        '<button class="btn btn-secondary" id="button" data-ui-toggle="clipboard" data-ui-target="#test"></button>' +
+                        '<textarea class="input-filled" id="test">Test 4</textarea>'
                     );
                     dom.click('#button');
                     return navigator.clipboard.readText();
@@ -88,8 +88,8 @@ describe('Clipboard', function() {
                 await exec(_ => {
                     dom.setHTML(
                         document.body,
-                        '<button id="button" data-ui-toggle="clipboard" data-ui-action="cut" data-ui-target="#test"></button>' +
-                        '<input id="test" value="Test 5" />'
+                        '<button class="btn btn-secondary" id="button" data-ui-toggle="clipboard" data-ui-action="cut" data-ui-target="#test"></button>' +
+                        '<input class="input-filled" id="test" value="Test 5" />'
                     );
                     dom.click('#button');
                     return navigator.clipboard.readText();
@@ -109,8 +109,8 @@ describe('Clipboard', function() {
                 await exec(_ => {
                     dom.setHTML(
                         document.body,
-                        '<button id="button" data-ui-toggle="clipboard" data-ui-action="cut" data-ui-target="#test"></button>' +
-                        '<textarea id="test">Test 6</textarea>'
+                        '<button class="btn btn-secondary" id="button" data-ui-toggle="clipboard" data-ui-action="cut" data-ui-target="#test"></button>' +
+                        '<textarea class="input-filled" id="test">Test 6</textarea>'
                     );
                     dom.click('#button');
                     return navigator.clipboard.readText();
@@ -130,7 +130,7 @@ describe('Clipboard', function() {
                 await exec(_ => {
                     dom.setHTML(
                         document.body,
-                        '<button id="button" data-ui-toggle="clipboard" data-ui-action="cut" data-ui-target="#test"></button>' +
+                        '<button class="btn btn-secondary" id="button" data-ui-toggle="clipboard" data-ui-action="cut" data-ui-target="#test"></button>' +
                         '<div id="test">Test 7</div>'
                     );
                     dom.click('#button');
@@ -155,7 +155,7 @@ describe('Clipboard', function() {
                 await exec(async _ => {
                     dom.setHTML(
                         document.body,
-                        '<button id="button" data-ui-toggle="clipboard" data-ui-text="Test 8"></button>'
+                        '<button class="btn btn-secondary" id="button" data-ui-toggle="clipboard" data-ui-text="Test 8"></button>'
                     );
                     return new Promise(resolve => {
                         dom.addEvent('#button', 'copied.ui.clipboard', _ => {

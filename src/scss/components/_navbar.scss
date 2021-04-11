@@ -88,6 +88,7 @@
     padding: $navbar-toggler-padding-y $navbar-toggler-padding-x;
     font-size: $navbar-toggler-font-size;
     line-height: map-get($line-heights, 1);
+    color: var(--ui-navbar-toggler-color);
     background-color: transparent;
     border: $navbar-toggler-border-size $border-style transparent;
     @include border-radius($navbar-toggler-border-radius);

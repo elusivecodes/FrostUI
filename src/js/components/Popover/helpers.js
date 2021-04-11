@@ -27,6 +27,12 @@ Object.assign(Popover.prototype, {
             dom.after(this._node, this._popover);
         }
 
+        if (!this.constructor.noId) {
+            const id = UI.generateId(this.constructor.DATA_KEY);
+            dom.setAttribute(this._popover, 'id', id);
+            dom.setAttribute(this._node, 'aria-described-by', id);
+        }
+
         this._popper = new Popper(
             this._popover,
             {

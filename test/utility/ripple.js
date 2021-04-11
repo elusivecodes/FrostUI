@@ -8,7 +8,7 @@ describe('Ripple', function() {
         await exec(_ => {
             dom.setHTML(
                 document.body,
-                '<button class="ripple" id="button"></button>'
+                '<button class="btn btn-secondary ripple" id="button"></button>'
             );
         });
     });

@@ -33,7 +33,7 @@ describe('popper tooltip (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1200px, 1566px, 0px)'
+                'translate3d(1200px, 1569px, 0px)'
             );
         });
 
@@ -53,7 +53,7 @@ describe('popper tooltip (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1176px, 1566px, 0px)'
+                'translate3d(1175px, 1569px, 0px)'
             );
         });
 
@@ -73,7 +73,7 @@ describe('popper tooltip (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1153px, 1566px, 0px)'
+                'translate3d(1150px, 1569px, 0px)'
             );
         });
 
@@ -93,7 +93,7 @@ describe('popper tooltip (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1274px, 1600px, 0px)'
+                'translate3d(1267px, 1600px, 0px)'
             );
         });
 
@@ -113,7 +113,7 @@ describe('popper tooltip (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1274px, 1602px, 0px)'
+                'translate3d(1267px, 1602px, 0px)'
             );
         });
 
@@ -133,7 +133,7 @@ describe('popper tooltip (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1274px, 1605px, 0px)'
+                'translate3d(1267px, 1605px, 0px)'
             );
         });
 
@@ -153,7 +153,7 @@ describe('popper tooltip (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1200px, 1639px, 0px)'
+                'translate3d(1200px, 1636px, 0px)'
             );
         });
 
@@ -173,7 +173,7 @@ describe('popper tooltip (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1176px, 1639px, 0px)'
+                'translate3d(1175px, 1636px, 0px)'
             );
         });
 
@@ -193,7 +193,7 @@ describe('popper tooltip (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1153px, 1639px, 0px)'
+                'translate3d(1150px, 1636px, 0px)'
             );
         });
 
@@ -213,7 +213,7 @@ describe('popper tooltip (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1079px, 1600px, 0px)'
+                'translate3d(1083px, 1600px, 0px)'
             );
         });
 
@@ -233,7 +233,7 @@ describe('popper tooltip (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1079px, 1602px, 0px)'
+                'translate3d(1083px, 1602px, 0px)'
             );
         });
 
@@ -253,7 +253,7 @@ describe('popper tooltip (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1079px, 1605px, 0px)'
+                'translate3d(1083px, 1605px, 0px)'
             );
         });
 

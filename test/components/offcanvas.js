@@ -15,13 +15,13 @@ describe('Offcanvas', function() {
         await exec(_ => {
             dom.setHTML(
                 document.body,
-                '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                 '<div class="offcanvas offcanvas-start" id="offcanvas1">' +
-                '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                 '</div>' +
                 '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                 '</div>'
             );
         });
@@ -29,7 +29,7 @@ describe('Offcanvas', function() {
 
     describe('#init', function() {
 
-        it('creates a offcanvas', async function() {
+        it('creates an offcanvas', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     const offcanvas1 = dom.findOne('#offcanvas1');
@@ -39,7 +39,7 @@ describe('Offcanvas', function() {
             );
         });
 
-        it('creates a offcanvas (data-ui-toggle)', async function() {
+        it('creates an offcanvas (data-ui-toggle)', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     dom.click('#offcanvasToggle1');
@@ -49,7 +49,7 @@ describe('Offcanvas', function() {
             );
         });
 
-        it('creates a offcanvas (query)', async function() {
+        it('creates an offcanvas (query)', async function() {
             assert.strictEqual(
                 await exec(_ => {
                     dom.query('#offcanvas1').offcanvas();
@@ -130,12 +130,6 @@ describe('Offcanvas', function() {
                 }),
                 true
             );
-            assert.strictEqual(
-                await exec(_ => {
-                    return UI.Offcanvas._current;
-                }),
-                null
-            );
         });
 
     });
@@ -154,13 +148,13 @@ describe('Offcanvas', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -177,13 +171,13 @@ describe('Offcanvas', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -200,13 +194,13 @@ describe('Offcanvas', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -281,13 +275,13 @@ describe('Offcanvas', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -313,13 +307,13 @@ describe('Offcanvas', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -344,13 +338,13 @@ describe('Offcanvas', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -455,13 +449,13 @@ describe('Offcanvas', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -478,13 +472,13 @@ describe('Offcanvas', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -544,13 +538,13 @@ describe('Offcanvas', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -575,13 +569,13 @@ describe('Offcanvas', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -657,13 +651,13 @@ describe('Offcanvas', function() {
                         UI.Offcanvas.init(offcanvas1).show();
                     });
                 }),
-                '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                 '<div class="offcanvas offcanvas-start" id="offcanvas1">' +
-                '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                 '</div>' +
                 '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                 '</div>'
             );
         });
@@ -679,13 +673,13 @@ describe('Offcanvas', function() {
                         UI.Offcanvas.init(offcanvas1).show();
                     });
                 }),
-                '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                 '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
-                '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                 '</div>' +
                 '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                 '</div>'
             );
         });
@@ -709,13 +703,13 @@ describe('Offcanvas', function() {
                             UI.Offcanvas.init(offcanvas1).hide();
                         });
                     }),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -740,13 +734,13 @@ describe('Offcanvas', function() {
                             UI.Offcanvas.init(offcanvas1).hide();
                         });
                     }),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -763,13 +757,13 @@ describe('Offcanvas', function() {
                         UI.Offcanvas.init(offcanvas1).toggle();
                     });
                 }),
-                '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                 '<div class="offcanvas offcanvas-start" id="offcanvas1">' +
-                '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                 '</div>' +
                 '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                 '</div>'
             );
         });
@@ -785,13 +779,13 @@ describe('Offcanvas', function() {
                         UI.Offcanvas.init(offcanvas1).toggle();
                     });
                 }),
-                '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                 '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
-                '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                 '</div>' +
                 '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                 '</div>'
             );
         });
@@ -815,13 +809,13 @@ describe('Offcanvas', function() {
                             UI.Offcanvas.init(offcanvas1).toggle();
                         });
                     }),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -846,13 +840,13 @@ describe('Offcanvas', function() {
                             UI.Offcanvas.init(offcanvas1).toggle();
                         });
                     }),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -868,13 +862,13 @@ describe('Offcanvas', function() {
             }).then(waitFor(125)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas1">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -890,13 +884,13 @@ describe('Offcanvas', function() {
             }).then(waitFor(125)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas1">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -921,13 +915,13 @@ describe('Offcanvas', function() {
             }).then(waitFor(125)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -1068,13 +1062,13 @@ describe('Offcanvas', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -1099,13 +1093,13 @@ describe('Offcanvas', function() {
             }).then(waitFor(125)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -1131,13 +1125,13 @@ describe('Offcanvas', function() {
             }).then(waitFor(125)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start show" id="offcanvas1" data-ui-keyboard="false" aria-modal="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -1163,13 +1157,13 @@ describe('Offcanvas', function() {
             }).then(waitFor(125)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -1249,13 +1243,13 @@ describe('Offcanvas', function() {
             }).then(waitFor(175)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });
@@ -1276,13 +1270,74 @@ describe('Offcanvas', function() {
             }).then(waitFor(125)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
-                    '<button id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
                     '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
-                    '<button id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
-                    '<button id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>'
+                );
+            });
+        });
+
+        it('does not hide the offcanvas on document click (mousedown on offcanvas)', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                UI.Offcanvas.init(offcanvas1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#offcanvas1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.triggerEvent('#offcanvas1', 'mousedown');
+                    dom.click(document.body);
+                });
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>'
+                );
+            });
+        });
+
+        it('hides the offcanvas on offcanvas click (mousedown on backdrop)', async function() {
+            await exec(_ => {
+                const offcanvas1 = dom.findOne('#offcanvas1');
+                UI.Offcanvas.init(offcanvas1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.triggerEvent(document.body, 'mousedown');
+                    dom.stop('#offcanvas1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.click('#offcanvas1');
+                });
+            }).then(waitFor(125)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#offcanvas1')),
+                    true
+                );
+            }).then(waitFor(175)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" style="">' +
+                    '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
+                    '</div>' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
+                    '<button class="btn-close" id="button2" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>'
                 );
             });

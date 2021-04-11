@@ -8,8 +8,8 @@ describe('Popover', function() {
         await exec(_ => {
             dom.setHTML(
                 document.body,
-                '<button id="popoverToggle1" type="button"></button>' +
-                '<button id="popoverToggle2" type="button"></button>'
+                '<button class="btn btn-secondary" id="popoverToggle1" type="button"></button>' +
+                '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
             );
         });
     });
@@ -142,8 +142,8 @@ describe('Popover', function() {
 
                     return dom.getHTML(document.body);
                 }),
-                '<button id="popoverToggle1" type="button" title="Test"></button>' +
-                '<button id="popoverToggle2" type="button"></button>'
+                '<button class="btn btn-secondary" id="popoverToggle1" type="button" title="Test"></button>' +
+                '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
             );
         });
 
@@ -163,9 +163,9 @@ describe('Popover', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -181,9 +181,9 @@ describe('Popover', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -194,10 +194,10 @@ describe('Popover', function() {
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button" data-ui-placement="bottom"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(10px, 13px, 0px);"><div class="popover-arrow" style="position: absolute; top: -9px; left: 6px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>'
                 );
             });
         });
@@ -272,8 +272,8 @@ describe('Popover', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -297,8 +297,8 @@ describe('Popover', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -318,8 +318,8 @@ describe('Popover', function() {
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<button id="popoverToggle2" type="button" data-ui-placement="right"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button" data-ui-placement="bottom"></button>'
                 );
             });
         });
@@ -423,9 +423,9 @@ describe('Popover', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -441,9 +441,9 @@ describe('Popover', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -454,10 +454,10 @@ describe('Popover', function() {
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button" data-ui-placement="bottom"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(10px, 13px, 0px);"><div class="popover-arrow" style="position: absolute; top: -9px; left: 6px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>'
                 );
             });
         });
@@ -516,13 +516,13 @@ describe('Popover', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
 
-        it('hide the popover (query)', async function() {
+        it('hides the popover (query)', async function() {
             await exec(_ => {
                 dom.query('#popoverToggle1').popover('show');
             }).then(waitFor(50)).then(async _ => {
@@ -541,8 +541,8 @@ describe('Popover', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -562,8 +562,8 @@ describe('Popover', function() {
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<button id="popoverToggle2" type="button" data-ui-placement="right"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button" data-ui-placement="bottom"></button>'
                 );
             });
         });
@@ -636,8 +636,8 @@ describe('Popover', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button"></button>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -650,8 +650,8 @@ describe('Popover', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button"></button>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -663,8 +663,8 @@ describe('Popover', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button"></button>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -716,9 +716,9 @@ describe('Popover', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -737,9 +737,9 @@ describe('Popover', function() {
             }).then(waitFor(100)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -752,10 +752,10 @@ describe('Popover', function() {
             }).then(waitFor(150)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button" data-ui-placement="bottom"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(10px, 13px, 0px);"><div class="popover-arrow" style="position: absolute; top: -9px; left: 6px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>'
                 );
             });
         });
@@ -807,9 +807,9 @@ describe('Popover', function() {
                         UI.Popover.init(popoverToggle1).refresh();
                         return dom.getHTML(document.body);
                     }),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right" data-ui-title="Test"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="">Test</h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right" data-ui-title="Test"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="">Test</h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -829,14 +829,14 @@ describe('Popover', function() {
                             .popover('refresh');
                         return dom.getHTML(document.body);
                     }),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right" data-ui-title="Test"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="">Test</h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right" data-ui-title="Test"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="">Test</h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
 
-        it('refreshes multiple popover titles (query)', async function() {
+        it('refreshes multiple popovers titles (query)', async function() {
             await exec(_ => {
                 dom.query('button').popover('show');
             }).then(waitFor(50)).then(async _ => {
@@ -852,10 +852,10 @@ describe('Popover', function() {
                             .popover('refresh');
                         return dom.getHTML(document.body);
                     }),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right" data-ui-title="Test"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="">Test</h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button" data-ui-placement="right" data-ui-title="Test"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="">Test</h3><div class="popover-body"></div></div>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right" data-ui-title="Test"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="">Test</h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button" data-ui-placement="bottom" data-ui-title="Test"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 13px, 0px);"><div class="popover-arrow" style="position: absolute; top: -9px; left: 16px;"></div><h3 class="popover-header" style="">Test</h3><div class="popover-body"></div></div>'
                 );
             });
         });
@@ -876,9 +876,9 @@ describe('Popover', function() {
                         UI.Popover.init(popoverToggle1).refresh();
                         return dom.getHTML(document.body);
                     }),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right" data-ui-content="Test"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body">Test</div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right" data-ui-content="Test"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body">Test</div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -898,9 +898,9 @@ describe('Popover', function() {
                             .popover('refresh');
                         return dom.getHTML(document.body);
                     }),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right" data-ui-content="Test"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body">Test</div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right" data-ui-content="Test"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body">Test</div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -921,10 +921,10 @@ describe('Popover', function() {
                             .popover('refresh');
                         return dom.getHTML(document.body);
                     }),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right" data-ui-content="Test"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body">Test</div></div>' +
-                    '<button id="popoverToggle2" type="button" data-ui-placement="right" data-ui-content="Test"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body">Test</div></div>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right" data-ui-content="Test"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body">Test</div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button" data-ui-placement="bottom" data-ui-content="Test"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(0px, 13px, 0px);"><div class="popover-arrow" style="position: absolute; top: -9px; left: 16px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body">Test</div></div>'
                 );
             });
         });
@@ -963,8 +963,8 @@ describe('Popover', function() {
                         UI.Popover.init(popoverToggle1).show();
                     });
                 }),
-                '<button id="popoverToggle1" type="button"></button>' +
-                '<button id="popoverToggle2" type="button"></button>'
+                '<button class="btn btn-secondary" id="popoverToggle1" type="button"></button>' +
+                '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
             );
         });
 
@@ -979,9 +979,9 @@ describe('Popover', function() {
                         UI.Popover.init(popoverToggle1).show();
                     });
                 }),
-                '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                '<button id="popoverToggle2" type="button"></button>'
+                '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
             );
         });
 
@@ -1004,9 +1004,9 @@ describe('Popover', function() {
                             UI.Popover.init(popoverToggle1).hide();
                         });
                     }),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1030,8 +1030,8 @@ describe('Popover', function() {
                             UI.Popover.init(popoverToggle1).hide();
                         });
                     }),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1046,8 +1046,8 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button"></button>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1062,8 +1062,8 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button"></button>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1087,9 +1087,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1113,9 +1113,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1135,9 +1135,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header">Test</h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header">Test</h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1154,9 +1154,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-title="Test" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header">Test</h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-title="Test" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header">Test</h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1173,9 +1173,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header">Test</h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header">Test</h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1192,9 +1192,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-original-title="Test" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header">Test</h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-original-title="Test" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header">Test</h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1211,9 +1211,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-title="Test" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header">Test</h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-title="Test" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header">Test</h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1230,9 +1230,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-original-title="Test 2" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header">Test</h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-original-title="Test 2" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header">Test</h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1252,9 +1252,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body">Test</div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body">Test</div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1271,9 +1271,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-content="Test" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body">Test</div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-content="Test" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body">Test</div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1290,9 +1290,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body">Test</div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body">Test</div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1309,9 +1309,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-content="Test" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body">Test</div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-content="Test" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body">Test</div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1333,9 +1333,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-test="Test" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-test="Test" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1352,9 +1352,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-template="<div class=&quot;popover&quot; role=&quot;tooltip&quot; data-test=&quot;Test&quot;><div class=&quot;popover-arrow&quot;></div><h3 class=&quot;popover-header&quot;></h3><div class=&quot;popover-body&quot;></div></div>" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-test="Test" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-template="<div class=&quot;popover&quot; role=&quot;tooltip&quot; data-test=&quot;Test&quot;><div class=&quot;popover-arrow&quot;></div><h3 class=&quot;popover-header&quot;></h3><div class=&quot;popover-body&quot;></div></div>" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-test="Test" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1371,9 +1371,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-test="Test" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-test="Test" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1393,9 +1393,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover test show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover test show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1412,9 +1412,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-custom-class="test" data-ui-placement="right"></button>' +
-                    '<div class="popover test show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-custom-class="test" data-ui-placement="right"></button>' +
+                    '<div class="popover test show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1431,9 +1431,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover test show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover test show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1559,9 +1559,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header">&lt;b&gt;Test&lt;/b&gt;</h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header">&lt;b&gt;Test&lt;/b&gt;</h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1577,9 +1577,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body">&lt;b&gt;Test&lt;/b&gt;</div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body">&lt;b&gt;Test&lt;/b&gt;</div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1595,9 +1595,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header"><b>Test</b></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header"><b>Test</b></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1614,9 +1614,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-html="true" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header"><b>Test</b></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-html="true" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header"><b>Test</b></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1633,9 +1633,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header"><b>Test</b></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header"><b>Test</b></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1651,9 +1651,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"><b>Test</b></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"><b>Test</b></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1670,9 +1670,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-html="true" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"><b>Test</b></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-html="true" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"><b>Test</b></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1689,9 +1689,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"><b>Test</b></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"><b>Test</b></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1807,8 +1807,8 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button"></button>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1821,8 +1821,8 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button"></button>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1835,8 +1835,8 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button"></button>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1856,9 +1856,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1878,9 +1878,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1900,9 +1900,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -1973,10 +1973,10 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<button id="popoverToggle2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>' +
                     '<div class="test">' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
                     '</div>'
                 );
             });
@@ -1996,10 +1996,10 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-append-to=".test" data-ui-placement="right"></button>' +
-                    '<button id="popoverToggle2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-append-to=".test" data-ui-placement="right"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>' +
                     '<div class="test">' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
                     '</div>'
                 );
             });
@@ -2019,10 +2019,10 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<button id="popoverToggle2" type="button"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>' +
                     '<div class="test">' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
                     '</div>'
                 );
             });
@@ -2043,9 +2043,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header"><b>Test</b></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header"><b>Test</b></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -2061,9 +2061,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"><b>Test</b></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"><b>Test</b></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -2079,9 +2079,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header"><b data-test="test">Test</b></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header"><b data-test="test">Test</b></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -2098,9 +2098,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-sanitize="false" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header"><b data-test="test">Test</b></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-sanitize="false" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header"><b data-test="test">Test</b></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -2117,9 +2117,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header"><b data-test="test">Test</b></h3><div class="popover-body"></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header"><b data-test="test">Test</b></h3><div class="popover-body"></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -2135,9 +2135,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"><b data-test="test">Test</b></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"><b data-test="test">Test</b></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -2154,9 +2154,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-sanitize="false" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"><b data-test="test">Test</b></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-sanitize="false" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"><b data-test="test">Test</b></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
@@ -2173,9 +2173,9 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async _ => {
                 assert.strictEqual(
                     await exec(_ => dom.getHTML(document.body)),
-                    '<button id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
-                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(3px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -12px; left: -21px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"><b data-test="test">Test</b></div></div>' +
-                    '<button id="popoverToggle2" type="button"></button>'
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-placement="right"></button>' +
+                    '<div class="popover show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -5px; left: -19px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"><b data-test="test">Test</b></div></div>' +
+                    '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>'
                 );
             });
         });
