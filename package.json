@@ -1,6 +1,6 @@
 {
     "name": "frostui",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "FrostUI is a free, open-source UI library for JavaScript.",
     "keywords": [
         "ui",
@@ -20,7 +20,7 @@
         "/dist/frost-ui.css",
         "/dist/frost-ui.js",
         "/dist/frost-ui-bundle.js",
-        "/src/scss/*.scss",
+        "/src/scss",
         "/LICENSE",
         "/README.md"
     ],
