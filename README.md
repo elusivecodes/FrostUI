@@ -47,7 +47,6 @@ In Node.js:
 ```javascript
 const { JSDOM } = require('jsdom');
 const { window } = new JSDOM('');
-const { dom } = require('frostdom')(window);
 const { UI } = require('frostui')(window);
 ```
 
