@@ -1,5 +1,5 @@
 /**
- * FrostUI v1.0.1
+ * FrostUI v1.0.2
  * https://github.com/elusivecodes/FrostUI
  */
 (function(global, factory) {
@@ -2547,33 +2547,26 @@
          * Attach events for the Popover.
          */
         _events() {
-            const stop = _ => {
-                if (this._enabled && this._animating) {
-                    dom.stop(this._popover);
-                    this._animating = false;
-                }
-            };
-
             if (this._triggers.includes('hover')) {
                 dom.addEvent(this._node, 'mouseover.ui.popover', _ => {
-                    stop();
+                    this._stop();
                     this.show();
                 });
 
                 dom.addEvent(this._node, 'mouseout.ui.popover', _ => {
-                    stop();
+                    this._stop();
                     this.hide();
                 });
             }
 
             if (this._triggers.includes('focus')) {
                 dom.addEvent(this._node, 'focus.ui.popover', _ => {
-                    stop();
+                    this._stop();
                     this.show();
                 });
 
                 dom.addEvent(this._node, 'blur.ui.popover', _ => {
-                    stop();
+                    this._stop();
                     this.hide();
                 });
             }
@@ -2582,13 +2575,14 @@
                 dom.addEvent(this._node, 'click.ui.popover', e => {
                     e.preventDefault();
 
-                    stop();
+                    this._stop();
                     this.toggle();
                 });
             }
 
             if (this._modal) {
                 dom.addEvent(this._modal, 'hide.ui.modal', _ => {
+                    this._stop();
                     this.hide();
                 });
             }
@@ -2648,7 +2642,18 @@
             window.requestAnimationFrame(_ => {
                 this.update();
             });
+        },
+
+        /**
+         * Stop the animations.
+         */
+        _stop() {
+            if (this._enabled && this._animating) {
+                dom.stop(this._popover);
+                this._animating = false;
+            }
         }
+
 
     });
 
@@ -3144,33 +3149,26 @@
          * Attach events for the Tooltip.
          */
         _events() {
-            const stop = _ => {
-                if (this._enabled && this._animating) {
-                    dom.stop(this._tooltip);
-                    this._animating = false;
-                }
-            };
-
             if (this._triggers.includes('hover')) {
                 dom.addEvent(this._node, 'mouseover.ui.tooltip', _ => {
-                    stop();
+                    this._stop();
                     this.show();
                 });
 
                 dom.addEvent(this._node, 'mouseout.ui.tooltip', _ => {
-                    stop();
+                    this._stop();
                     this.hide();
                 });
             }
 
             if (this._triggers.includes('focus')) {
                 dom.addEvent(this._node, 'focus.ui.tooltip', _ => {
-                    stop();
+                    this._stop();
                     this.show();
                 });
 
                 dom.addEvent(this._node, 'blur.ui.tooltip', _ => {
-                    stop();
+                    this._stop();
                     this.hide();
                 });
             }
@@ -3179,13 +3177,14 @@
                 dom.addEvent(this._node, 'click.ui.tooltip', e => {
                     e.preventDefault();
 
-                    stop();
+                    this._stop();
                     this.toggle();
                 });
             }
 
             if (this._modal) {
                 dom.addEvent(this._modal, 'hide.ui.modal', _ => {
+                    this._stop();
                     this.hide();
                 });
             }
@@ -3244,6 +3243,16 @@
             window.requestAnimationFrame(_ => {
                 this.update();
             });
+        },
+
+        /**
+         * Stop the animations.
+         */
+        _stop() {
+            if (this._enabled && this._animating) {
+                dom.stop(this._tooltip);
+                this._animating = false;
+            }
         }
 
     });

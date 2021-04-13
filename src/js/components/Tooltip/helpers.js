@@ -48,6 +48,16 @@ Object.assign(Tooltip.prototype, {
         window.requestAnimationFrame(_ => {
             this.update();
         });
+    },
+
+    /**
+     * Stop the animations.
+     */
+    _stop() {
+        if (this._enabled && this._animating) {
+            dom.stop(this._tooltip);
+            this._animating = false;
+        }
     }
 
 });
