@@ -145,11 +145,11 @@ a {
 }
 a:hover {
   color: #326086;
-  text-decoration: none;
+  text-decoration: underline;
 }
 a:focus {
   color: #6593b9;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 a:not([href]):not([class]), a:not([href]):not([class]):hover, a:not([href]):not([class]):focus {
@@ -9065,14 +9065,13 @@ fieldset:disabled .btn {
   --ui-btn-border: transparent;
   text-decoration: none;
 }
-.btn-link:hover, .btn-link:focus {
-  text-decoration: underline;
-}
 .btn-link:hover {
   --ui-btn-color: #326086;
+  text-decoration: underline;
 }
 .btn-link:focus {
   --ui-btn-color: #6593b9;
+  text-decoration: underline;
   box-shadow: none;
 }
 .btn-link:disabled, .btn-link.disabled {

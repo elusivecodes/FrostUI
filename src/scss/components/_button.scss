@@ -81,19 +81,16 @@
 .btn-link {
     --ui-btn-color: #{$link-color};
     --ui-btn-border: transparent;
-    text-decoration: none;
-
-    &:hover,
-    &:focus {
-        text-decoration: underline;
-    }
+    text-decoration: $link-text-decoration;
 
     &:hover {
         --ui-btn-color: #{$link-hover-color};
+        text-decoration: $link-hover-text-decoration;
     }
 
     &:focus {
         --ui-btn-color: #{$link-focus-color};
+        text-decoration: $link-focus-text-decoration;
         box-shadow: none;
     }
 

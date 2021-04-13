@@ -81,9 +81,9 @@ $legend-font-weight: map-get($font-weights, bold) !default;
 // link
 $link-text-decoration: none !default;
 $link-hover-color-shade: 20% !default;
-$link-hover-text-decoration: none !default;
+$link-hover-text-decoration: underline !default;
 $link-focus-color-tint: 20% !default;
-$link-focus-text-decoration: none !default;
+$link-focus-text-decoration: underline !default;
 
 $link-hover-color: shade($link-color, $link-hover-color-shade) !default;
 $link-focus-color: tint($link-color, $link-focus-color-tint) !default;
