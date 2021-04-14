@@ -393,7 +393,7 @@ $popover-body-color: map-get($color-variants, dark) !default;
 // progress
 $progress-height: 1rem !default;
 $progress-font-size: $font-size-xs !default;
-$progress-background-color: $gray-light !default;
+$progress-background-color: tint($gray-light, 50%) !default;
 $progress-border-radius: $border-radius !default;
 $progress-bar-color: $white !default;
 $progress-bar-background-color: map-get($color-variants, primary) !default;
