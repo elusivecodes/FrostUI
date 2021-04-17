@@ -1097,7 +1097,7 @@
     });
 
     /**
-     * FrostDOM v2.0.12
+     * FrostDOM v2.0.13
      * https://github.com/elusivecodes/FrostDOM
      */
     (function(global, factory) {
@@ -3603,12 +3603,12 @@
                 return e => {
                     const isTouch = e.type === 'touchstart';
 
-                    if (isTouch) {
-                        e.preventDefault();
+                    if (down && down(e) === false) {
+                        return;
                     }
 
-                    if (down && down(e) === false) {
-                        return false;
+                    if (isTouch) {
+                        e.preventDefault();
                     }
 
                     const moveEvent = isTouch ?
@@ -10985,7 +10985,7 @@
 
                 PopperSet.add(this);
 
-                this.update(true);
+                this.update();
             }
 
             /**
@@ -11003,7 +11003,7 @@
              * Update the Popper position.
              * @returns {Popper} The Popper.
              */
-            update(force = false) {
+            update() {
                 if (!dom.isConnected(this._node)) {
                     return this;
                 }
@@ -11019,11 +11019,6 @@
                 const nodeBox = dom.rect(this._node, true);
                 const referenceBox = dom.rect(this._settings.reference, true);
                 const windowBox = this.constructor._scrollContainer(window, document);
-
-                // check object could be seen
-                if (!force && this.constructor._isNodeHidden(nodeBox, referenceBox, windowBox, this._settings.spacing)) {
-                    return this;
-                }
 
                 const scrollParent = this.constructor._getScrollParent(this._node);
 
@@ -11542,22 +11537,6 @@
                         ),
                     document.body
                 ).shift();
-            },
-
-            /**
-             * Returns true if the node can not be visible inside the window.
-             * @param {object} offset The offset object.
-             * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
-             * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
-             * @param {object} windowContainer The computed bounding rectangle of the window.
-             * @param {number} spacing The amount of spacing to use.
-             * @returns {Boolean} TRUE if the node can not be visible inside the window, otherwise FALSE.
-             */
-            _isNodeHidden(nodeBox, referenceBox, windowContainer, spacing) {
-                return windowContainer.top > referenceBox.bottom + nodeBox.height + spacing ||
-                    windowContainer.left > referenceBox.right + nodeBox.width + spacing ||
-                    windowContainer.bottom < referenceBox.top - nodeBox.height - spacing ||
-                    windowContainer.right < referenceBox.left - nodeBox.width - spacing;
             },
 
             /**
@@ -12572,7 +12551,7 @@
              */
             update() {
                 if (this._settings.display === 'dynamic') {
-                    this._popper.update(true);
+                    this._popper.update();
                 }
 
                 return this;
@@ -13502,7 +13481,7 @@
              */
             update() {
                 if (this._popper) {
-                    this._popper.update(true);
+                    this._popper.update();
                 }
 
                 return this;
@@ -14104,7 +14083,7 @@
              */
             update() {
                 if (this._popper) {
-                    this._popper.update(true);
+                    this._popper.update();
                 }
 
                 return this;

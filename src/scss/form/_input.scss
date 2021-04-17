@@ -46,6 +46,7 @@
     }
 
     @at-root #{selector-append("select", &)} {
+        appearance: none;
 
         &:not([multiple]) {
             padding-right: calc(#{$input-padding-x * 2} + #{$input-select-arrow-size});
@@ -53,7 +54,6 @@
             background-repeat: no-repeat;
             background-position: right $input-padding-x center;
             background-size: $input-select-arrow-size #{$input-select-arrow-size * .75};
-            appearance: none;
         }
 
         &[multiple] {

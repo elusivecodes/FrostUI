@@ -228,7 +228,7 @@ class Popover extends BaseComponent {
      */
     update() {
         if (this._popper) {
-            this._popper.update(true);
+            this._popper.update();
         }
 
         return this;

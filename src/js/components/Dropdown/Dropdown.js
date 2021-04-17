@@ -138,7 +138,7 @@ class Dropdown extends BaseComponent {
      */
     update() {
         if (this._settings.display === 'dynamic') {
-            this._popper.update(true);
+            this._popper.update();
         }
 
         return this;

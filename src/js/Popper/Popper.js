@@ -32,7 +32,7 @@ class Popper extends BaseComponent {
 
         PopperSet.add(this);
 
-        this.update(true);
+        this.update();
     }
 
     /**
@@ -50,7 +50,7 @@ class Popper extends BaseComponent {
      * Update the Popper position.
      * @returns {Popper} The Popper.
      */
-    update(force = false) {
+    update() {
         if (!dom.isConnected(this._node)) {
             return this;
         }
@@ -66,11 +66,6 @@ class Popper extends BaseComponent {
         const nodeBox = dom.rect(this._node, true);
         const referenceBox = dom.rect(this._settings.reference, true);
         const windowBox = this.constructor._scrollContainer(window, document);
-
-        // check object could be seen
-        if (!force && this.constructor._isNodeHidden(nodeBox, referenceBox, windowBox, this._settings.spacing)) {
-            return this;
-        }
 
         const scrollParent = this.constructor._getScrollParent(this._node);
 

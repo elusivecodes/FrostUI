@@ -253,22 +253,6 @@ Object.assign(Popper, {
     },
 
     /**
-     * Returns true if the node can not be visible inside the window.
-     * @param {object} offset The offset object.
-     * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
-     * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
-     * @param {object} windowContainer The computed bounding rectangle of the window.
-     * @param {number} spacing The amount of spacing to use.
-     * @returns {Boolean} TRUE if the node can not be visible inside the window, otherwise FALSE.
-     */
-    _isNodeHidden(nodeBox, referenceBox, windowContainer, spacing) {
-        return windowContainer.top > referenceBox.bottom + nodeBox.height + spacing ||
-            windowContainer.left > referenceBox.right + nodeBox.width + spacing ||
-            windowContainer.bottom < referenceBox.top - nodeBox.height - spacing ||
-            windowContainer.right < referenceBox.left - nodeBox.width - spacing;
-    },
-
-    /**
      * Calculate the computed bounding rectangle of a node (minus scroll bars).
      * @param {HTMLElement|Window} node The input node.
      * @param {HTMLElement|Document} scrollNode The scroll node.
