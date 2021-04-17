@@ -3,7 +3,8 @@ const fs = require('fs');
 const filepath = require('filepath');
 const terser = require('terser');
 const sass = require('sass');
-const cssmin = require('cssmin');
+const postcss = require('postcss');
+const cssnano = require('cssnano');
 
 const srcFolder = 'src';
 const distFolder = 'dist';
@@ -114,13 +115,20 @@ sass.render({
         return;
     }
 
+    const fullPath = path.join(distFolder, name + '.css');
+    const minifiedPath = path.join(distFolder, name + '.min.css');
+
     fs.writeFileSync(
-        path.join(distFolder, name + '.css'),
+        fullPath,
         result.css.toString()
     );
 
-    fs.writeFileSync(
-        path.join(distFolder, name + '.min.css'),
-        cssmin(result.css.toString())
-    );
+    postcss([cssnano])
+        .process(result.css.toString(), { from: fullPath, to: minifiedPath })
+        .then(minified => {
+            fs.writeFileSync(
+                minifiedPath,
+                minified.toString()
+            );
+        });
 });

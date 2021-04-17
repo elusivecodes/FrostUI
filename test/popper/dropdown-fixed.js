@@ -60,7 +60,7 @@ describe('popper dropdown (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1175px, 1483px, 0px)'
+                'translate3d(1174px, 1483px, 0px)'
             );
         });
 
@@ -80,7 +80,7 @@ describe('popper dropdown (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1150px, 1483px, 0px)'
+                'translate3d(1148px, 1483px, 0px)'
             );
         });
 
@@ -100,7 +100,7 @@ describe('popper dropdown (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1313px, 1600px, 0px)'
+                'translate3d(1307px, 1600px, 0px)'
             );
         });
 
@@ -120,7 +120,7 @@ describe('popper dropdown (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1313px, 1560px, 0px)'
+                'translate3d(1307px, 1560px, 0px)'
             );
         });
 
@@ -140,7 +140,7 @@ describe('popper dropdown (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1313px, 1520px, 0px)'
+                'translate3d(1307px, 1520px, 0px)'
             );
         });
 
@@ -180,7 +180,7 @@ describe('popper dropdown (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1175px, 1637px, 0px)'
+                'translate3d(1174px, 1637px, 0px)'
             );
         });
 
@@ -200,7 +200,7 @@ describe('popper dropdown (fixed)', function() {
                 await exec(_ => {
                     return dom.getStyle('.dropdown-menu', 'transform');
                 }),
-                'translate3d(1150px, 1637px, 0px)'
+                'translate3d(1148px, 1637px, 0px)'
             );
         });
 

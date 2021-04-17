@@ -1,6 +1,5 @@
 .carousel {
     --ui-carousel-bg: #{$carousel-background-color};
-    --ui-carousel-control-color: #{$carousel-control-color};
     --ui-carousel-indicator-bg: #{$carousel-indicator-background-color};
     --ui-carousel-caption-color: #{$carousel-caption-color};
 
@@ -73,12 +72,22 @@
     right: 0;
 }
 
-.carousel-control-prev-arrow::before {
-    content: $carousel-control-prev-arrow;
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    display: inline-block;
+    width: $carousel-control-icon-size;
+    height: $carousel-control-icon-size;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 100% 100%;
 }
 
-.carousel-control-next-arrow::before {
-    content: $carousel-control-next-arrow;
+.carousel-control-prev-icon {
+    background-image: $carousel-control-prev-icon-background-image;
+}
+
+.carousel-control-next-icon {
+    background-image: $carousel-control-next-icon-background-image;
 }
 
 .carousel-indicators {
@@ -128,7 +137,14 @@
 
 .carousel-dark {
     --ui-carousel-bg: #{$carousel-dark-background-color};
-    --ui-carousel-control-color: #{$carousel-dark-control-color};
     --ui-carousel-indicator-bg: #{$carousel-dark-indicator-background-color};
     --ui-carousel-caption-color: #{$carousel-dark-caption-color};
+
+    .carousel-control-prev-icon {
+        background-image: $carousel-dark-control-prev-icon-background-image;
+    }
+
+    .carousel-control-next-icon {
+        background-image: $carousel-dark-control-next-icon-background-image;
+    }
 }

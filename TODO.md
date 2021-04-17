@@ -1,1 +1,0 @@
-[ ] Add swipe support to Carousel

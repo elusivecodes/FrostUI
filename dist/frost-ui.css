@@ -8474,19 +8474,16 @@ progress {
 }
 
 .btn-close {
-  padding: 0;
-  font-weight: 500;
-  line-height: 1.5;
-  color: #000;
-  text-shadow: 0 1px 0 #fff;
-  background-color: transparent;
+  box-sizing: content-box;
+  width: 1em;
+  height: 1em;
+  padding: 0.25rem 0.25rem;
+  background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
   border: 0;
+  border-radius: 0.2rem;
   opacity: 0.5;
 }
-.btn-close::before {
-  content: "🗙";
-}
-.btn-close:hover, .btn-close:focus {
+.btn-close, .btn-close:hover, .btn-close:focus {
   text-decoration: none;
 }
 .btn-close:hover {
@@ -8503,8 +8500,7 @@ progress {
 }
 
 .btn-close-white {
-  color: #fff;
-  text-shadow: 0 1px 0 #000;
+  filter: invert(1);
 }
 
 .link-white {
@@ -8774,6 +8770,7 @@ progress {
   background-color: #d5ddf6;
 }
 .accordion-button:not(.collapsed)::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%232b55d4'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
   transform: rotate(180deg);
 }
 .accordion-button:not(.collapsed), .accordion-button.collapsing {
@@ -8781,9 +8778,16 @@ progress {
 }
 .accordion-button::after {
   flex-shrink: 0;
+  width: 2.25rem;
+  height: 1.25rem;
+  margin-right: -1.25rem;
   margin-left: auto;
-  content: "⮟";
+  content: "";
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23121212'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-size: 1.25rem;
   transition: transform 0.25s ease-in-out;
+  transform-origin: 0.625rem 50%;
 }
 .accordion-button:hover {
   z-index: 1;
@@ -9474,7 +9478,6 @@ fieldset:disabled .btn {
 
 .carousel {
   --ui-carousel-bg: #1f3333;
-  --ui-carousel-control-color: #fafaff;
   --ui-carousel-indicator-bg: #fafaff;
   --ui-carousel-caption-color: #fafaff;
   position: relative;
@@ -9544,12 +9547,22 @@ fieldset:disabled .btn {
   right: 0;
 }
 
-.carousel-control-prev-arrow::before {
-  content: "⮜";
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: 100% 100%;
 }
 
-.carousel-control-next-arrow::before {
-  content: "⮞";
+.carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fafaff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fafaff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 }
 
 .carousel-indicators {
@@ -9597,9 +9610,14 @@ fieldset:disabled .btn {
 
 .carousel-dark {
   --ui-carousel-bg: #fafaff;
-  --ui-carousel-control-color: #1f3333;
   --ui-carousel-indicator-bg: #1f3333;
   --ui-carousel-caption-color: #1f3333;
+}
+.carousel-dark .carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%231f3333'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
+}
+.carousel-dark .carousel-control-next-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%231f3333'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 }
 
 .collapse:not(.show) {
@@ -9705,19 +9723,41 @@ fieldset:disabled .btn {
   color: var(--ui-dropdown-text-color);
 }
 
-.dropdown-toggle + .dropdown-menu {
-  top: 100%;
+.dropdown-toggle {
+  white-space: nowrap;
 }
 .dropdown-toggle::after {
+  display: inline-block;
   margin-left: 0.5rem;
-  content: "⮟";
+  vertical-align: 0.2em;
+  content: "";
+  border-top: 0.25em solid;
+  border-right: 0.25em solid transparent;
+  border-bottom: 0;
+  border-left: 0.25em solid transparent;
+}
+.dropdown-toggle:empty::after {
+  margin-left: 0;
+}
+.dropdown-toggle + .dropdown-menu {
+  top: 100%;
 }
 .dropdown-toggle[data-ui-placement=top] + .dropdown-menu {
   top: auto;
   bottom: 100%;
 }
 .dropdown-toggle[data-ui-placement=top]::after {
-  content: "⮝";
+  display: inline-block;
+  margin-left: 0.5rem;
+  vertical-align: 0.2em;
+  content: "";
+  border-top: 0;
+  border-right: 0.25em solid transparent;
+  border-bottom: 0.25em solid;
+  border-left: 0.25em solid transparent;
+}
+.dropdown-toggle[data-ui-placement=top]:empty::after {
+  margin-left: 0;
 }
 .dropdown-toggle[data-ui-placement=right] + .dropdown-menu {
   top: 0;
@@ -9725,19 +9765,45 @@ fieldset:disabled .btn {
   left: 100%;
 }
 .dropdown-toggle[data-ui-placement=right]::after {
-  content: "⮞";
+  display: inline-block;
+  margin-left: 0.5rem;
+  vertical-align: 0.075em;
+  content: "";
+  border-top: 0.25em solid transparent;
+  border-right: 0;
+  border-bottom: 0.25em solid transparent;
+  border-left: 0.25em solid;
+}
+.dropdown-toggle[data-ui-placement=right]:empty::after {
+  margin-left: 0;
 }
 .dropdown-toggle[data-ui-placement=left] + .dropdown-menu {
   top: 0;
   right: 100%;
   left: auto;
 }
+.dropdown-toggle[data-ui-placement=left]::before {
+  display: inline-block;
+  margin-right: 0.5rem;
+  vertical-align: 0.075em;
+  content: "";
+  border-top: 0.25em solid transparent;
+  border-right: 0.25em solid;
+  border-bottom: 0.25em solid transparent;
+}
+.dropdown-toggle[data-ui-placement=left]:empty::before {
+  margin-right: 0;
+}
 .dropdown-toggle[data-ui-placement=left]::after {
-  content: "⮜";
+  display: none;
 }
 
 .dropdown-toggle-split::after {
   margin-left: 0;
+}
+
+.dropdown-toggle-split::before {
+  margin-right: 0;
 }
 
 .hero {
@@ -10485,21 +10551,21 @@ fieldset:disabled .btn {
   padding: 0.25rem 0.5rem;
   font-size: 1.25rem;
   line-height: 1;
-  color: var(--ui-navbar-toggler-color);
   background-color: transparent;
   border: 1px solid transparent;
   border-radius: 0.2rem;
 }
 .navbar-toggler .navbar-toggler-icon {
-  position: relative;
-  top: -1px;
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
 }
 .navbar-toggler:focus {
   background-color: var(--ui-navbar-toggler-focus-bg);
-}
-
-.navbar-toggler-icon::before {
-  content: "☰";
 }
 
 .navbar-light {
@@ -10510,8 +10576,10 @@ fieldset:disabled .btn {
   --ui-navbar-nav-link-focus-color: #000;
   --ui-navbar-nav-link-active-color: #000;
   --ui-navbar-text-color: #1f3333;
-  --ui-navbar-toggler-color: #000;
   --ui-navbar-toggler-focus-bg: rgba(0, 0, 0, 0.1);
+}
+.navbar-light .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23000' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
 .navbar-dark {
@@ -10522,8 +10590,10 @@ fieldset:disabled .btn {
   --ui-navbar-nav-link-focus-color: #fff;
   --ui-navbar-nav-link-active-color: #fff;
   --ui-navbar-text-color: #fafaff;
-  --ui-navbar-toggler-color: #fff;
   --ui-navbar-toggler-focus-bg: rgba(255, 255, 255, 0.1);
+}
+.navbar-dark .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23fff' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
 .navbar-expand {

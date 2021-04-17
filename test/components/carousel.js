@@ -3169,6 +3169,528 @@ describe('Carousel', function() {
 
     });
 
+    describe('swipe option', function() {
+
+        it('swipes to next item', async function() {
+            await exec(_ => {
+                const carousel1 = dom.findOne('#carousel1');
+                UI.Carousel.init(carousel1);
+
+                const downEvent = new MouseEvent('mousedown', {
+                    clientX: 400
+                });
+                carousel1.dispatchEvent(downEvent);
+
+                const moveEvent = new MouseEvent('mousemove', {
+                    clientX: 300
+                });
+                window.dispatchEvent(moveEvent);
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div class="carousel" id="carousel1">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item active" id="carousel1Item1" style="transform: translateX(-25%);"></div>' +
+                    '<div class="carousel-item" id="carousel1Item2" style="display: block; transform: translateX(75%);"></div>' +
+                    '<div class="carousel-item" id="carousel1Item3"></div>' +
+                    '</div>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>' +
+                    '<div class="carousel" id="carousel2">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item active" id="carousel2Item1"></div>' +
+                    '<div class="carousel-item" id="carousel2Item2"></div>' +
+                    '<div class="carousel-item" id="carousel2Item3"></div>' +
+                    '</div>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>'
+                )
+            });
+        });
+
+        it('swipes to previous item', async function() {
+            await exec(_ => {
+                const carousel1 = dom.findOne('#carousel1');
+                UI.Carousel.init(carousel1);
+
+                const downEvent = new MouseEvent('mousedown', {
+                    clientX: 400
+                });
+                carousel1.dispatchEvent(downEvent);
+
+                const moveEvent = new MouseEvent('mousemove', {
+                    clientX: 500
+                });
+                window.dispatchEvent(moveEvent);
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div class="carousel" id="carousel1">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item active" id="carousel1Item1" style="transform: translateX(25%);"></div>' +
+                    '<div class="carousel-item" id="carousel1Item2"></div>' +
+                    '<div class="carousel-item" id="carousel1Item3" style="display: block; transform: translateX(-75%);"></div>' +
+                    '</div>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>' +
+                    '<div class="carousel" id="carousel2">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item active" id="carousel2Item1"></div>' +
+                    '<div class="carousel-item" id="carousel2Item2"></div>' +
+                    '<div class="carousel-item" id="carousel2Item3"></div>' +
+                    '</div>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>'
+                )
+            });
+        });
+
+        it('works with swipe option', async function() {
+            await exec(_ => {
+                const carousel1 = dom.findOne('#carousel1');
+                UI.Carousel.init(carousel1, { swipe: false });
+
+                const downEvent = new MouseEvent('mousedown', {
+                    clientX: 400
+                });
+                carousel1.dispatchEvent(downEvent);
+
+                const moveEvent = new MouseEvent('mousemove', {
+                    clientX: 500
+                });
+                window.dispatchEvent(moveEvent);
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div class="carousel" id="carousel1">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item active" id="carousel1Item1"></div>' +
+                    '<div class="carousel-item" id="carousel1Item2"></div>' +
+                    '<div class="carousel-item" id="carousel1Item3"></div>' +
+                    '</div>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>' +
+                    '<div class="carousel" id="carousel2">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item active" id="carousel2Item1"></div>' +
+                    '<div class="carousel-item" id="carousel2Item2"></div>' +
+                    '<div class="carousel-item" id="carousel2Item3"></div>' +
+                    '</div>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>'
+                )
+            });
+        });
+
+        it('works with swipe option (data-ui-swipe)', async function() {
+            await exec(_ => {
+                const carousel1 = dom.findOne('#carousel1');
+                dom.setDataset(carousel1, 'uiSwipe', false);
+                UI.Carousel.init(carousel1);
+
+                const downEvent = new MouseEvent('mousedown', {
+                    clientX: 400
+                });
+                carousel1.dispatchEvent(downEvent);
+
+                const moveEvent = new MouseEvent('mousemove', {
+                    clientX: 500
+                });
+                window.dispatchEvent(moveEvent);
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div class="carousel" id="carousel1" data-ui-swipe="false">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item active" id="carousel1Item1"></div>' +
+                    '<div class="carousel-item" id="carousel1Item2"></div>' +
+                    '<div class="carousel-item" id="carousel1Item3"></div>' +
+                    '</div>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>' +
+                    '<div class="carousel" id="carousel2">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item active" id="carousel2Item1"></div>' +
+                    '<div class="carousel-item" id="carousel2Item2"></div>' +
+                    '<div class="carousel-item" id="carousel2Item3"></div>' +
+                    '</div>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>'
+                )
+            });
+        });
+
+        it('works with swipe option (query)', async function() {
+            await exec(_ => {
+                dom.query('#carousel1').carousel({ swipe: false })
+
+                const downEvent = new MouseEvent('mousedown', {
+                    clientX: 400
+                });
+                carousel1.dispatchEvent(downEvent);
+
+                const moveEvent = new MouseEvent('mousemove', {
+                    clientX: 500
+                });
+                window.dispatchEvent(moveEvent);
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div class="carousel" id="carousel1">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item active" id="carousel1Item1"></div>' +
+                    '<div class="carousel-item" id="carousel1Item2"></div>' +
+                    '<div class="carousel-item" id="carousel1Item3"></div>' +
+                    '</div>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>' +
+                    '<div class="carousel" id="carousel2">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item active" id="carousel2Item1"></div>' +
+                    '<div class="carousel-item" id="carousel2Item2"></div>' +
+                    '<div class="carousel-item" id="carousel2Item3"></div>' +
+                    '</div>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>'
+                )
+            });
+        });
+
+        it('swipes with touch events', async function() {
+            await exec(_ => {
+                const carousel1 = dom.findOne('#carousel1');
+                UI.Carousel.init(carousel1);
+
+                const downEvent = new TouchEvent('touchstart', {
+                    touches: [
+                        new Touch({
+                            identifier: Date.now(),
+                            target: carousel1,
+                            clientX: 400
+                        })
+                    ]
+                });
+                carousel1.dispatchEvent(downEvent);
+
+                const moveEvent = new TouchEvent('touchmove', {
+                    touches: [
+                        new Touch({
+                            identifier: Date.now(),
+                            target: window,
+                            clientX: 300
+                        })
+                    ]
+                });
+                window.dispatchEvent(moveEvent);
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div class="carousel" id="carousel1">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item active" id="carousel1Item1" style="transform: translateX(-25%);"></div>' +
+                    '<div class="carousel-item" id="carousel1Item2" style="display: block; transform: translateX(75%);"></div>' +
+                    '<div class="carousel-item" id="carousel1Item3"></div>' +
+                    '</div>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>' +
+                    '<div class="carousel" id="carousel2">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item active" id="carousel2Item1"></div>' +
+                    '<div class="carousel-item" id="carousel2Item2"></div>' +
+                    '<div class="carousel-item" id="carousel2Item3"></div>' +
+                    '</div>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>'
+                )
+            });
+        });
+
+        it('does not swipe to next item with wrap option', async function() {
+            await exec(_ => {
+                const carousel1 = dom.findOne('#carousel1');
+                UI.Carousel.init(carousel1, { wrap: false }).show(2);
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#carousel1Item3');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const downEvent = new MouseEvent('mousedown', {
+                        clientX: 400
+                    });
+                    carousel1.dispatchEvent(downEvent);
+
+                    const moveEvent = new MouseEvent('mousemove', {
+                        clientX: 300
+                    });
+                    window.dispatchEvent(moveEvent);
+                });
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div class="carousel" id="carousel1">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item" id="carousel1Item1" style=""></div>' +
+                    '<div class="carousel-item" id="carousel1Item2"></div>' +
+                    '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
+                    '</div>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>' +
+                    '<div class="carousel" id="carousel2">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item active" id="carousel2Item1"></div>' +
+                    '<div class="carousel-item" id="carousel2Item2"></div>' +
+                    '<div class="carousel-item" id="carousel2Item3"></div>' +
+                    '</div>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>'
+                )
+            });
+        });
+
+        it('does not swipe to previous item with wrap option', async function() {
+            await exec(_ => {
+                const carousel1 = dom.findOne('#carousel1');
+                UI.Carousel.init(carousel1, { wrap: false });
+
+                const downEvent = new MouseEvent('mousedown', {
+                    clientX: 400
+                });
+                carousel1.dispatchEvent(downEvent);
+
+                const moveEvent = new MouseEvent('mousemove', {
+                    clientX: 500
+                });
+                window.dispatchEvent(moveEvent);
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div class="carousel" id="carousel1">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item active" id="carousel1Item1"></div>' +
+                    '<div class="carousel-item" id="carousel1Item2"></div>' +
+                    '<div class="carousel-item" id="carousel1Item3"></div>' +
+                    '</div>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>' +
+                    '<div class="carousel" id="carousel2">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item active" id="carousel2Item1"></div>' +
+                    '<div class="carousel-item" id="carousel2Item2"></div>' +
+                    '<div class="carousel-item" id="carousel2Item3"></div>' +
+                    '</div>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>'
+                )
+            });
+        });
+
+        it('animates to next item after swiping', async function() {
+            await exec(_ => {
+                const carousel1 = dom.findOne('#carousel1');
+                UI.Carousel.init(carousel1);
+
+                const downEvent = new MouseEvent('mousedown', {
+                    clientX: 400
+                });
+                carousel1.dispatchEvent(downEvent);
+
+                const moveEvent = new MouseEvent('mousemove', {
+                    clientX: 300
+                });
+                window.dispatchEvent(moveEvent);
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const upEvent = new MouseEvent('mouseup');
+                    window.dispatchEvent(upEvent);
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#carousel1Item2')),
+                    true
+                );
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div class="carousel" id="carousel1">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel1Slide1" data-ui-slide-to="1" class="active"></li>' +
+                    '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item" id="carousel1Item1" style=""></div>' +
+                    '<div class="carousel-item active" id="carousel1Item2" style=""></div>' +
+                    '<div class="carousel-item" id="carousel1Item3"></div>' +
+                    '</div>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>' +
+                    '<div class="carousel" id="carousel2">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item active" id="carousel2Item1"></div>' +
+                    '<div class="carousel-item" id="carousel2Item2"></div>' +
+                    '<div class="carousel-item" id="carousel2Item3"></div>' +
+                    '</div>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>'
+                )
+            });
+        });
+
+        it('pauses while swiping', async function() {
+            await exec(_ => {
+                const carousel1 = dom.findOne('#carousel1');
+                UI.Carousel.init(carousel1);
+
+                const downEvent = new MouseEvent('mousedown', {
+                    clientX: 400
+                });
+                carousel1.dispatchEvent(downEvent);
+
+                const moveEvent = new MouseEvent('mousemove', {
+                    clientX: 300
+                });
+                window.dispatchEvent(moveEvent);
+            }).then(waitFor(500)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div class="carousel" id="carousel1">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="active" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel1Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel1Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item active" id="carousel1Item1" style="transform: translateX(-25%);"></div>' +
+                    '<div class="carousel-item" id="carousel1Item2" style="display: block; transform: translateX(75%);"></div>' +
+                    '<div class="carousel-item" id="carousel1Item3"></div>' +
+                    '</div>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>' +
+                    '<div class="carousel" id="carousel2">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item active" id="carousel2Item1"></div>' +
+                    '<div class="carousel-item" id="carousel2Item2"></div>' +
+                    '<div class="carousel-item" id="carousel2Item3"></div>' +
+                    '</div>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>'
+                )
+            });
+        });
+
+    });
+
     describe('cycle', function() {
 
         it('starts cycling (data-ui-ride)', async function() {
@@ -3413,6 +3935,69 @@ describe('Carousel', function() {
                     '<div class="carousel-item active" id="carousel1Item1" style=""></div>' +
                     '<div class="carousel-item" id="carousel1Item2"></div>' +
                     '<div class="carousel-item" id="carousel1Item3" style=""></div>' +
+                    '</div>' +
+                    '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>' +
+                    '<div class="carousel" id="carousel2">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="active" id="carousel2Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel2Slide1" data-ui-slide-to="1"></li>' +
+                    '<li id="carousel2Slide2" data-ui-slide-to="2"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item active" id="carousel2Item1"></div>' +
+                    '<div class="carousel-item" id="carousel2Item2"></div>' +
+                    '<div class="carousel-item" id="carousel2Item3"></div>' +
+                    '</div>' +
+                    '<button id="carousel2Prev" data-ui-slide="prev" type="button"></button>' +
+                    '<button id="carousel2Next" data-ui-slide="next" type="button"></button>' +
+                    '</div>'
+                )
+            });
+        });
+
+        it('starts cycling (swipe)', async function() {
+            await exec(_ => {
+                const carousel1 = dom.findOne('#carousel1');
+                UI.Carousel.init(carousel1);
+
+                const downEvent = new MouseEvent('mousedown', {
+                    clientX: 400
+                });
+                carousel1.dispatchEvent(downEvent);
+
+                const moveEvent = new MouseEvent('mousemove', {
+                    clientX: 300
+                });
+                window.dispatchEvent(moveEvent);
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    const upEvent = new MouseEvent('mouseup');
+                    window.dispatchEvent(upEvent);
+
+                    const carousel1 = dom.findOne('#carousel1');
+                    const leaveEvent = new MouseEvent('mouseleave');
+                    carousel1.dispatchEvent(leaveEvent);
+                });
+            }).then(waitFor(350)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#carousel1Item3')),
+                    true
+                );
+            }).then(waitFor(100)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.getHTML(document.body)),
+                    '<div class="carousel" id="carousel1">' +
+                    '<ol class="carousel-indicators">' +
+                    '<li class="" id="carousel1Slide0" data-ui-slide-to="0"></li>' +
+                    '<li id="carousel1Slide1" data-ui-slide-to="1" class=""></li>' +
+                    '<li id="carousel1Slide2" data-ui-slide-to="2" class="active"></li>' +
+                    '</ol>' +
+                    '<div class="carousel-inner">' +
+                    '<div class="carousel-item" id="carousel1Item1" style=""></div>' +
+                    '<div class="carousel-item" id="carousel1Item2" style=""></div>' +
+                    '<div class="carousel-item active" id="carousel1Item3" style=""></div>' +
                     '</div>' +
                     '<button id="carousel1Prev" data-ui-slide="prev" type="button"></button>' +
                     '<button id="carousel1Next" data-ui-slide="next" type="button"></button>' +

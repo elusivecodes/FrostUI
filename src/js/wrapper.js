@@ -1,5 +1,5 @@
 /**
- * FrostUI v1.0.4
+ * FrostUI v1.1.0
  * https://github.com/elusivecodes/FrostUI
  */
 (function(global, factory) {

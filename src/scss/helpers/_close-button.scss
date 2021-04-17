@@ -1,17 +1,14 @@
 .btn-close {
-    padding: 0;
-    font-weight: $btn-close-font-weight;
-    line-height: $btn-close-line-height;
-    color: $btn-close-color;
-    text-shadow: $btn-close-text-shadow;
-    background-color: transparent;
+    box-sizing: content-box;
+    width: $btn-close-size;
+    height: $btn-close-size;
+    padding: $btn-close-padding-y $btn-close-padding-x;
+    background: $btn-close-background;
     border: 0;
+    border-radius: $btn-close-border-radius;
     opacity: $btn-close-opacity;
 
-    &::before {
-        content: $btn-close-icon;
-    }
-
+    &,
     &:hover,
     &:focus {
         text-decoration: none;
@@ -35,6 +32,5 @@
 }
 
 .btn-close-white {
-    color: $btn-close-white-color;
-    text-shadow: $btn-close-white-text-shadow;
+    filter: $btn-close-white-filter;
 }

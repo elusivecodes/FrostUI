@@ -16,7 +16,12 @@ $accordion-button-expanded-background-color: tint(map-get($color-variants, prima
 $accordion-button-expanded-color: text-color-contrast($accordion-button-expanded-background-color, map-get($color-variants, primary)) !default;
 $accordion-button-expanded-focus-background-color: tint(map-get($color-variants, primary), 80%) !default;
 
-$accordion-icon: $arrow-down !default;
+$accordion-icon-width: 2.25rem !default;
+$accordion-icon-height: 1.25rem !default;
+$accordion-icon-margin-right: $spacing !default;
+$accordion-icon-collapsed-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{svg-color($accordion-button-collapsed-color)}'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !default;
+$accordion-icon-expanded-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{svg-color($accordion-button-expanded-color)}'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !default;
+$accordion-icon-expanded-transform: rotate(180deg) !default;
 
 $accordion-body-padding-x: $accordion-padding-x !default;
 $accordion-body-padding-y: $accordion-padding-y !default;
@@ -119,12 +124,14 @@ $carousel-background-color: map-get($color-variants, dark) !default;
 $carousel-control-padding-x: $spacing !default;
 $carousel-control-padding-y: $spacing !default;
 $carousel-control-font-size: 2em !default;
-$carousel-control-color: map-get($color-variants, light) !default;
 $carousel-control-opacity: .5 !default;
 $carousel-control-hover-opacity: .75 !default;
 $carousel-control-focus-opacity: 1 !default;
-$carousel-control-prev-arrow: $arrow-left !default;
-$carousel-control-next-arrow: $arrow-right !default;
+
+$carousel-control-icon-size: 2rem !default;
+$carousel-control-icon-color: map-get($color-variants, light) !default;
+$carousel-control-prev-icon-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{svg-color($carousel-control-icon-color)}'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e") !default;
+$carousel-control-next-icon-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{svg-color($carousel-control-icon-color)}'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !default;
 
 $carousel-indicators-bottom: $spacing !default;
 $carousel-indicators-margin-x: $spacing * 2 !default;
@@ -144,7 +151,9 @@ $carousel-caption-padding-y: $spacing !default;
 $carousel-caption-color: map-get($color-variants, light) !default;
 
 $carousel-dark-background-color: map-get($color-variants, light) !default;
-$carousel-dark-control-color: map-get($color-variants, dark) !default;
+$carousel-dark-control-icon-color: map-get($color-variants, dark) !default;
+$carousel-dark-control-prev-icon-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{svg-color($carousel-dark-control-icon-color)}'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e") !default;
+$carousel-dark-control-next-icon-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{svg-color($carousel-dark-control-icon-color)}'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !default;
 $carousel-dark-indicator-background-color: map-get($color-variants, dark) !default;
 $carousel-dark-caption-color: map-get($color-variants, dark) !default;
 
@@ -191,12 +200,6 @@ $dropdown-menu-dark-item-color: $dropdown-menu-dark-color !default;
 $dropdown-menu-dark-item-focus-background-color: fade($white, .1) !default;
 $dropdown-menu-dark-header-color: $gray-light !default;
 $dropdown-menu-dark-item-text-color: $dropdown-menu-dark-color !default;
-
-$dropdown-toggle-margin-left: $spacing / 2 !default;
-$dropdown-toggle-arrow-up: $arrow-up !default;
-$dropdown-toggle-arrow-right: $arrow-right !default;
-$dropdown-toggle-arrow-down: $arrow-down !default;
-$dropdown-toggle-arrow-left: $arrow-left !default;
 
 // hero
 $hero-padding-x: $spacing * 1.5 !default;
@@ -299,7 +302,7 @@ $navbar-toggler-padding-y: $spacing / 4 !default;
 $navbar-toggler-font-size: $font-size-lg !default;
 $navbar-toggler-border-size: $border-size !default;
 $navbar-toggler-border-radius: $border-radius !default;
-$navbar-toggler-icon: "\2630" !default;
+$navbar-toggler-icon-size: 1.5em !default;
 
 $navbar-light-color: $black !default;
 $navbar-light-navbar-brand-color: $navbar-light-color !default;
@@ -309,8 +312,8 @@ $navbar-light-nav-link-focus-color: $navbar-light-color !default;
 $navbar-light-nav-link-focus-background-color: fade($navbar-light-color, .1) !default;
 $navbar-light-nav-link-active-color: $navbar-light-color !default;
 $navbar-light-nav-text-color: map-get($color-variants, dark) !default;
-$navbar-light-navbar-toggler-color: $navbar-light-color !default;
 $navbar-light-navbar-toggler-focus-background-color: $navbar-light-nav-link-focus-background-color !default;
+$navbar-light-navbar-toggler-icon-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='#{svg-color($navbar-light-color)}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !default;
 
 $navbar-dark-color: $white !default;
 $navbar-dark-navbar-brand-color: $navbar-dark-color !default;
@@ -320,8 +323,8 @@ $navbar-dark-nav-link-focus-color: $navbar-dark-color !default;
 $navbar-dark-nav-link-focus-background-color: fade($navbar-dark-color, .1) !default;
 $navbar-dark-nav-link-active-color: $navbar-dark-color !default;
 $navbar-dark-nav-text-color: map-get($color-variants, light) !default;
-$navbar-dark-navbar-toggler-color: $navbar-dark-color !default;
 $navbar-dark-navbar-toggler-focus-background-color: $navbar-dark-nav-link-focus-background-color !default;
+$navbar-dark-navbar-toggler-icon-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='#{svg-color($navbar-dark-color)}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !default;
 
 // offcanvas
 $offcanvas-horizontal-width: 400px !default;

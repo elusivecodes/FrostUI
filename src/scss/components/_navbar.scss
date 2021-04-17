@@ -88,23 +88,23 @@
     padding: $navbar-toggler-padding-y $navbar-toggler-padding-x;
     font-size: $navbar-toggler-font-size;
     line-height: map-get($line-heights, 1);
-    color: var(--ui-navbar-toggler-color);
     background-color: transparent;
     border: $navbar-toggler-border-size $border-style transparent;
     @include border-radius($navbar-toggler-border-radius);
 
     .navbar-toggler-icon {
-        position: relative;
-        top: $border-size * -1;
+        display: inline-block;
+        width: $navbar-toggler-icon-size;
+        height: $navbar-toggler-icon-size;
+        vertical-align: middle;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100%;
     }
 
     &:focus {
         background-color: var(--ui-navbar-toggler-focus-bg);
     }
-}
-
-.navbar-toggler-icon::before {
-    content: $navbar-toggler-icon;
 }
 
 .navbar-light {
@@ -115,8 +115,11 @@
     --ui-navbar-nav-link-focus-color: #{$navbar-light-nav-link-focus-color};
     --ui-navbar-nav-link-active-color: #{$navbar-light-nav-link-active-color};
     --ui-navbar-text-color: #{$navbar-light-nav-text-color};
-    --ui-navbar-toggler-color: #{$navbar-light-navbar-toggler-color};
     --ui-navbar-toggler-focus-bg: #{$navbar-light-navbar-toggler-focus-background-color};
+
+    .navbar-toggler-icon {
+        background-image: $navbar-light-navbar-toggler-icon-background-image;
+    }
 }
 
 .navbar-dark {
@@ -127,8 +130,11 @@
     --ui-navbar-nav-link-focus-color: #{$navbar-dark-nav-link-focus-color};
     --ui-navbar-nav-link-active-color: #{$navbar-dark-nav-link-active-color};
     --ui-navbar-text-color: #{$navbar-dark-nav-text-color};
-    --ui-navbar-toggler-color: #{$navbar-dark-navbar-toggler-color};
     --ui-navbar-toggler-focus-bg: #{$navbar-dark-navbar-toggler-focus-background-color};
+
+    .navbar-toggler-icon {
+        background-image: $navbar-dark-navbar-toggler-icon-background-image;
+    }
 }
 
 @each $breakpoint in map-keys($breakpoints) {

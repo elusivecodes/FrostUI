@@ -32,7 +32,8 @@
         }
 
         &::after {
-            transform: rotate(180deg);
+            background-image: $accordion-icon-expanded-background-image;
+            transform: $accordion-icon-expanded-transform;
         }
     }
 
@@ -43,9 +44,16 @@
 
     &::after {
         flex-shrink: 0;
+        width: $accordion-icon-width;
+        height: $accordion-icon-height;
+        margin-right: ($accordion-icon-width * - 1) + $accordion-icon-margin-right;
         margin-left: auto;
-        content: $accordion-icon;
+        content: "";
+        background-image: $accordion-icon-collapsed-background-image;
+        background-repeat: no-repeat;
+        background-size: $accordion-icon-height;
         transition: transform $transition-time $transition-type;
+        transform-origin: ($accordion-icon-height / 2) 50%;
     }
 
     &:hover {

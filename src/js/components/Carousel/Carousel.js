@@ -31,9 +31,12 @@ class Carousel extends BaseComponent {
      * @returns {Carousel} The Carousel.
      */
     cycle() {
-        dom.isHidden(document) ?
-            this._setTimer() :
-            this.slide(1);
+        if (!dom.isHidden(document)) {
+            return this.slide(1);
+        }
+
+        this._paused = false;
+        this._setTimer();
 
         return this;
     }
@@ -53,6 +56,10 @@ class Carousel extends BaseComponent {
         if (this._settings.pause) {
             dom.removeEvent(this._node, 'mouseenter.ui.carousel');
             dom.removeEvent(this._node, 'mouseleave.ui.carousel');
+        }
+
+        if (this._settings.swipe) {
+            dom.removeEvent(this._node, 'mousedown.ui.carousel');
         }
 
         this._items = null;
@@ -75,6 +82,7 @@ class Carousel extends BaseComponent {
     pause() {
         clearTimeout(this._timer);
         this._timer = null;
+        this._paused = true;
 
         return this;
     }

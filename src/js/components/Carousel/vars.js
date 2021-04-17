@@ -5,7 +5,8 @@ Carousel.defaults = {
     keyboard: true,
     ride: false,
     pause: true,
-    wrap: true
+    wrap: true,
+    swipe: true
 };
 
 UI.initComponent('carousel', Carousel);
