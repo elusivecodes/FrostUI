@@ -30,10 +30,12 @@ Object.assign(Carousel.prototype, {
 
         if (this._settings.pause) {
             dom.addEvent(this._node, 'mouseenter.ui.carousel', _ => {
+                this._mousePaused = true;
                 this.pause();
             });
 
             dom.addEvent(this._node, 'mouseleave.ui.carousel', _ => {
+                this._mousePaused = false;
                 this._paused = false;
 
                 if (!this._sliding) {
@@ -125,13 +127,10 @@ Object.assign(Carousel.prototype, {
                     } while (progress > 1);
                 },
                 _ => {
-                    if (!this._settings.pause) {
-                        this._paused = false;
-                    }
-
                     if (index === null || index === this._index) {
-                        this._setTimer();
+                        this._paused = false;
                         this._sliding = false;
+                        this._setTimer();
                         return;
                     }
 
@@ -155,6 +154,7 @@ Object.assign(Carousel.prototype, {
                     ).then(_ => {
                         this._updateIndicators();
 
+                        this._paused = false;
                         this._setTimer();
                     }).finally(_ => {
                         this._sliding = false;
@@ -238,7 +238,7 @@ Object.assign(Carousel.prototype, {
      * Set a timer for the next Carousel cycle.
      */
     _setTimer() {
-        if (this._timer || this._paused) {
+        if (this._timer || this._paused || this._mousePaused) {
             return;
         }
 
