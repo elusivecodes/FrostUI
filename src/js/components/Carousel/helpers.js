@@ -126,7 +126,7 @@ Object.assign(Carousel.prototype, {
                         }
                     } while (progress > 1);
                 },
-                _ => {
+                e => {
                     if (index === null || index === this._index) {
                         this._paused = false;
                         this._sliding = false;

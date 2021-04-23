@@ -1,5 +1,5 @@
 /**
- * FrostUI Bundle v1.1.2
+ * FrostUI Bundle v1.1.3
  * https://github.com/elusivecodes/FrostCore
  * https://github.com/elusivecodes/FrostDOM
  * https://github.com/elusivecodes/FrostUI
@@ -1097,7 +1097,7 @@
     });
 
     /**
-     * FrostDOM v2.0.13
+     * FrostDOM v2.0.14
      * https://github.com/elusivecodes/FrostDOM
      */
     (function(global, factory) {
@@ -3624,19 +3624,23 @@
                             'touchend' :
                             'mouseup';
 
-                        this.addEventOnce(window, upEvent, e => {
+                        const realUp = e => {
+                            if (up && up(e) === false) {
+                                return;
+                            }
+
                             if (isTouch) {
                                 e.preventDefault();
                             }
 
+                            this.removeEvent(window, upEvent, realUp);
+
                             if (move) {
                                 this.removeEvent(window, moveEvent, move);
                             }
+                        };
 
-                            if (up) {
-                                up(e);
-                            }
-                        });
+                        this.addEvent(window, upEvent, realUp);
                     }
                 };
             }
@@ -10774,7 +10778,7 @@
     });
 
     /**
-     * FrostUI v1.1.2
+     * FrostUI v1.1.3
      * https://github.com/elusivecodes/FrostUI
      */
     (function(global, factory) {
@@ -11998,7 +12002,7 @@
                                 }
                             } while (progress > 1);
                         },
-                        _ => {
+                        e => {
                             if (index === null || index === this._index) {
                                 this._paused = false;
                                 this._sliding = false;

@@ -1,5 +1,5 @@
 /**
- * FrostUI v1.1.2
+ * FrostUI v1.1.3
  * https://github.com/elusivecodes/FrostUI
  */
 (function(global, factory) {
@@ -1223,7 +1223,7 @@
                             }
                         } while (progress > 1);
                     },
-                    _ => {
+                    e => {
                         if (index === null || index === this._index) {
                             this._paused = false;
                             this._sliding = false;
