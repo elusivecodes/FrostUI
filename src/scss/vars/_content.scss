@@ -43,14 +43,14 @@ $h4-font-size: 1.5 !default;
 $h5-font-size: 1.25 !default;
 $h6-font-size: 1 !default;
 
-$heading-font-weight: map-get($font-weights, light) !default;
-$heading-line-height: 1.2 !default;
-$heading-1-font-size: 5 !default;
-$heading-2-font-size: 4 !default;
-$heading-3-font-size: 3 !default;
-$heading-4-font-size: 2.5 !default;
-$heading-5-font-size: 2 !default;
-$heading-6-font-size: 1.5 !default;
+$display-font-weight: map-get($font-weights, light) !default;
+$display-line-height: 1.2 !default;
+$display-1-font-size: 5 !default;
+$display-2-font-size: 4.5 !default;
+$display-3-font-size: 4 !default;
+$display-4-font-size: 3.5 !default;
+$display-5-font-size: 3 !default;
+$display-6-font-size: 2.5 !default;
 
 // horizontal rule
 $hr-height: $border-size !default;
@@ -72,6 +72,7 @@ $kbd-kbd-font-weight: map-get($font-weights, bolder) !default;
 
 // lead
 $lead-font-size: 1.25 !default;
+$lead-font-weight: map-get($font-weights, light) !default;
 
 // legend
 $legend-margin-bottom: $spacing / 2 !default;

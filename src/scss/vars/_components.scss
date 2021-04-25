@@ -136,7 +136,7 @@ $carousel-control-next-icon-background-image: url("data:image/svg+xml,%3csvg xml
 $carousel-indicators-bottom: $spacing !default;
 $carousel-indicators-margin-x: $spacing * 2 !default;
 
-$carousel-indicator-width: 1.5rem !default;
+$carousel-indicator-width: .5rem !default;
 $carousel-indicator-height: .5rem !default;
 $carousel-indicator-margin-x: $spacing / 4 !default;
 $carousel-indicator-background-color: map-get($color-variants, light) !default;
@@ -222,6 +222,7 @@ $list-group-item-action-focus-box-shadow: $shadow-sm !default;
 
 $list-group-item-padding-x: $spacing !default;
 $list-group-item-padding-y: $spacing / 2 !default;
+$list-group-item-background-color: $white !default;
 $list-group-item-color: $text-color !default;
 $list-group-item-disabled-color: map-get($color-variants, secondary) !default;
 

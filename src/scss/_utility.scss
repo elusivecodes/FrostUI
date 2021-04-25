@@ -199,10 +199,10 @@
     100: 100%
 ), mh);
 @include utility(height, (
-    100: 100vw
+    100: 100vh
 ), vh);
 @include utility(min-height, (
-    100: 100vw
+    100: 100vh
 ), min-vh);
 
 // spacing

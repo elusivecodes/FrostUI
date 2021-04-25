@@ -3592,7 +3592,7 @@ describe('Carousel', function() {
                 carousel1.dispatchEvent(downEvent);
 
                 const moveEvent = new MouseEvent('mousemove', {
-                    clientX: 300
+                    clientX: 250
                 });
                 window.dispatchEvent(moveEvent);
             }).then(waitFor(50)).then(async _ => {
@@ -3968,7 +3968,7 @@ describe('Carousel', function() {
                 carousel1.dispatchEvent(downEvent);
 
                 const moveEvent = new MouseEvent('mousemove', {
-                    clientX: 300
+                    clientX: 250
                 });
                 window.dispatchEvent(moveEvent);
             }).then(waitFor(50)).then(async _ => {

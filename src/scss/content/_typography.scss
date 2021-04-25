@@ -43,39 +43,39 @@
     margin-bottom: $headings-margin-bottom;
     font-family: $headings-font-family;
     font-style: $headings-font-style;
-    font-weight: $heading-font-weight;
-    line-height: $heading-line-height;
+    font-weight: $display-font-weight;
+    line-height: $display-line-height;
     color: $headings-color;
 }
 
-.heading-1 {
+.display-1 {
     @extend %display-heading;
-    font-size: text-size($heading-1-font-size);
+    font-size: text-size($display-1-font-size);
 }
 
-.heading-2 {
+.display-2 {
     @extend %display-heading;
-    font-size: text-size($heading-2-font-size);
+    font-size: text-size($display-2-font-size);
 }
 
-.heading-3 {
+.display-3 {
     @extend %display-heading;
-    font-size: text-size($heading-3-font-size);
+    font-size: text-size($display-3-font-size);
 }
 
-.heading-4 {
+.display-4 {
     @extend %display-heading;
-    font-size: text-size($heading-4-font-size);
+    font-size: text-size($display-4-font-size);
 }
 
-.heading-5 {
+.display-5 {
     @extend %display-heading;
-    font-size: text-size($heading-5-font-size);
+    font-size: text-size($display-5-font-size);
 }
 
-.heading-6 {
+.display-6 {
     @extend %display-heading;
-    font-size: text-size($heading-6-font-size);
+    font-size: text-size($display-6-font-size);
 }
 
 .initialism {
@@ -85,6 +85,7 @@
 
 .lead {
     font-size: text-size($lead-font-size);
+    font-weight: $lead-font-weight;
 }
 
 .list-inline {

@@ -2,6 +2,10 @@
 
 **FrostUI** is a free, open-source UI library for *JavaScript*.
 
+It takes heavy inspiration from **Bootstrap**, offering a (mostly) compatible set of features, with more opinionated default styling, additional features and components, and is highly customizable.
+
+It utilizes [FrostDOM](https://github.com/elusivecodes/FrostDOM) for DOM manipulation and animations.
+
 
 ## Table Of Contents
 - [Installation](#installation)

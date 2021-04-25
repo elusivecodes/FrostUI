@@ -1,4 +1,6 @@
 .list-group {
+    --ui-list-group-item-bg: #{$list-group-item-background-color};
+
     display: flex;
     flex-direction: column;
     padding: 0;

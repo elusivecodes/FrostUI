@@ -28,8 +28,14 @@
     padding-bottom: $navbar-brand-padding-y;
     margin-right: $navbar-brand-margin-right;
     font-size: $navbar-brand-font-size;
-    color: var(--ui-navbar-brand-color);
     white-space: nowrap;
+
+    &,
+    &:hover,
+    &:focus {
+        color: var(--ui-navbar-brand-color);
+        text-decoration: none;
+    }
 }
 
 .navbar-nav {

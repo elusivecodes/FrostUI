@@ -1,5 +1,5 @@
 /**
- * FrostUI Bundle v1.1.3
+ * FrostUI Bundle v1.2.0
  * https://github.com/elusivecodes/FrostCore
  * https://github.com/elusivecodes/FrostDOM
  * https://github.com/elusivecodes/FrostUI
@@ -10778,7 +10778,7 @@
     });
 
     /**
-     * FrostUI v1.1.3
+     * FrostUI v1.2.0
      * https://github.com/elusivecodes/FrostUI
      */
     (function(global, factory) {
@@ -11938,8 +11938,8 @@
                             if (
                                 e.button ||
                                 this._sliding ||
-                                dom.is(e.target, '[data-ui-slide-to], [data-ui-slide]') ||
-                                dom.closest(e.target, '[data-ui-slide]', this._node).length
+                                dom.is(e.target, '[data-ui-slide-to], [data-ui-slide], a, button') ||
+                                dom.closest(e.target, '[data-ui-slide], a, button', this._node).length
                             ) {
                                 return false;
                             }
@@ -12002,7 +12002,7 @@
                                 }
                             } while (progress > 1);
                         },
-                        e => {
+                        _ => {
                             if (index === null || index === this._index) {
                                 this._paused = false;
                                 this._sliding = false;
@@ -12010,9 +12010,19 @@
                                 return;
                             }
 
-                            const oldIndex = this._setIndex(index);
+                            let oldIndex;
+                            let progressRemaining;
+                            if (progress > .25) {
+                                oldIndex = this._setIndex(index);
+                                progressRemaining = 1 - progress;
+                            } else {
+                                oldIndex = index;
+                                progressRemaining = progress;
+                                direction = direction === 'right' ? 'left' : 'right';
+                            }
+
                             this._resetStyles(this._index);
-                            const progressRemaining = 1 - progress;
+
                             index = null;
 
                             dom.animate(
@@ -12022,7 +12032,11 @@
                                         return;
                                     }
 
-                                    this._update(node, this._items[oldIndex], progress + (newProgress * progressRemaining), direction);
+                                    if (progress > .25) {
+                                        this._update(node, this._items[oldIndex], progress + (newProgress * progressRemaining), direction);
+                                    } else {
+                                        this._update(node, this._items[oldIndex], (1 - progress) + (newProgress * progressRemaining), direction);
+                                    }
                                 },
                                 {
                                     duration: this._settings.transition * progressRemaining

@@ -20,6 +20,7 @@ body {
 hr {
     margin: $hr-margin-y 0;
     color: $hr-color;
+    background-color: currentColor;
     border: 0;
 }
 
