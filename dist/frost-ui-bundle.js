@@ -1,5 +1,5 @@
 /**
- * FrostUI Bundle v1.2.1
+ * FrostUI Bundle v1.2.2
  * https://github.com/elusivecodes/FrostCore
  * https://github.com/elusivecodes/FrostDOM
  * https://github.com/elusivecodes/FrostUI
@@ -10787,7 +10787,7 @@
     });
 
     /**
-     * FrostUI v1.2.1
+     * FrostUI v1.2.2
      * https://github.com/elusivecodes/FrostUI
      */
     (function(global, factory) {
