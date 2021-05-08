@@ -10,7 +10,8 @@ Popper.defaults = {
     fixed: false,
     spacing: 0,
     minContact: null,
-    useGpu: true
+    useGpu: true,
+    noAttributes: false
 };
 
 PopperSet._poppers = [];

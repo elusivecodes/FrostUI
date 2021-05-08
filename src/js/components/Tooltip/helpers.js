@@ -26,7 +26,7 @@ Object.assign(Tooltip.prototype, {
             dom.after(this._node, this._tooltip);
         }
 
-        if (!this.constructor.noId) {
+        if (!this._settings.noAttributes) {
             const id = UI.generateId(this.constructor.DATA_KEY);
             dom.setAttribute(this._tooltip, 'id', id);
             dom.setAttribute(this._node, 'aria-described-by', id);
@@ -41,7 +41,8 @@ Object.assign(Tooltip.prototype, {
                 position: this._settings.position,
                 fixed: this._settings.fixed,
                 spacing: this._settings.spacing,
-                minContact: this._settings.minContact
+                minContact: this._settings.minContact,
+                noAttributes: this._settings.noAttributes
             }
         );
 

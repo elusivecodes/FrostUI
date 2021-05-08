@@ -33,7 +33,7 @@ dom.addEvent(document, 'click.ui.offcanvas', e => {
 
         if (
             !offcanvas._settings.backdrop ||
-            offcanvas._node === target ||
+            dom.isSame(offcanvas._node, target) ||
             dom.hasDescendent(offcanvas._node, target)
         ) {
             continue;

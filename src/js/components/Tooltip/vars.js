@@ -15,7 +15,8 @@ Tooltip.defaults = {
     position: 'center',
     fixed: false,
     spacing: 2,
-    minContact: false
+    minContact: false,
+    noAttributes: false
 };
 
 UI.initComponent('tooltip', Tooltip);

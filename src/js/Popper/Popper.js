@@ -113,7 +113,10 @@ class Popper extends BaseComponent {
                 this._settings.spacing + 2
             );
 
-        dom.setDataset(this._settings.reference, 'uiPlacement', placement);
+        if (!this._settings.noAttributes) {
+            dom.setDataset(this._settings.reference, 'uiPlacement', placement);
+        }
+
         dom.setDataset(this._node, 'uiPlacement', placement);
 
         // get auto position

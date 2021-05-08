@@ -55,14 +55,26 @@ dom.addEvent(document, 'click.ui.dropdown', e => {
     for (const node of nodes) {
         const toggle = dom.siblings(node, '[data-ui-toggle="dropdown"]').shift();
         const dropdown = Dropdown.init(toggle);
+        const hasDescendent = dom.hasDescendent(dropdown._menuNode, target);
+        const autoClose = dropdown._settings.autoClose;
 
         if (
-            dropdown._node === target ||
+            dom.isSame(dropdown._node, target) ||
             (
-                dom.hasDescendent(dropdown._menuNode, target) &&
+                hasDescendent &&
                 (
                     dom.is(target, 'form') ||
-                    dom.closest(target, 'form', dropdown._menuNode).length
+                    dom.closest(target, 'form', dropdown._menuNode).length ||
+                    autoClose === 'outside' ||
+                    autoClose === false
+                )
+            ) ||
+            (
+                !hasDescendent &&
+                !dom.isSame(dropdown._menuNode, target) &&
+                (
+                    autoClose === 'inside' ||
+                    autoClose === false
                 )
             )
         ) {
@@ -86,7 +98,7 @@ dom.addEvent(document, 'keyup.ui.dropdown', e => {
         const dropdown = Dropdown.init(toggle);
 
         if (
-            (e.code === 'Tab' && dropdown._node === e.target) ||
+            (e.code === 'Tab' && dom.isSame(dropdown._node, e.target)) ||
             (
                 dom.hasDescendent(dropdown._menuNode, e.target) &&
                 (

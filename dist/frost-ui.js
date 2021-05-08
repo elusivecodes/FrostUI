@@ -1,5 +1,5 @@
 /**
- * FrostUI v1.2.0
+ * FrostUI v1.2.1
  * https://github.com/elusivecodes/FrostUI
  */
 (function(global, factory) {
@@ -291,7 +291,10 @@
                     this._settings.spacing + 2
                 );
 
-            dom.setDataset(this._settings.reference, 'uiPlacement', placement);
+            if (!this._settings.noAttributes) {
+                dom.setDataset(this._settings.reference, 'uiPlacement', placement);
+            }
+
             dom.setDataset(this._node, 'uiPlacement', placement);
 
             // get auto position
@@ -835,7 +838,8 @@
         fixed: false,
         spacing: 0,
         minContact: null,
-        useGpu: true
+        useGpu: true,
+        noAttributes: false
     };
 
     PopperSet._poppers = [];
@@ -1856,14 +1860,26 @@
         for (const node of nodes) {
             const toggle = dom.siblings(node, '[data-ui-toggle="dropdown"]').shift();
             const dropdown = Dropdown.init(toggle);
+            const hasDescendent = dom.hasDescendent(dropdown._menuNode, target);
+            const autoClose = dropdown._settings.autoClose;
 
             if (
-                dropdown._node === target ||
+                dom.isSame(dropdown._node, target) ||
                 (
-                    dom.hasDescendent(dropdown._menuNode, target) &&
+                    hasDescendent &&
                     (
                         dom.is(target, 'form') ||
-                        dom.closest(target, 'form', dropdown._menuNode).length
+                        dom.closest(target, 'form', dropdown._menuNode).length ||
+                        autoClose === 'outside' ||
+                        autoClose === false
+                    )
+                ) ||
+                (
+                    !hasDescendent &&
+                    !dom.isSame(dropdown._menuNode, target) &&
+                    (
+                        autoClose === 'inside' ||
+                        autoClose === false
                     )
                 )
             ) {
@@ -1887,7 +1903,7 @@
             const dropdown = Dropdown.init(toggle);
 
             if (
-                (e.code === 'Tab' && dropdown._node === e.target) ||
+                (e.code === 'Tab' && dom.isSame(dropdown._node, e.target)) ||
                 (
                     dom.hasDescendent(dropdown._menuNode, e.target) &&
                     (
@@ -2415,7 +2431,7 @@
 
             if (
                 !offcanvas._settings.backdrop ||
-                offcanvas._node === target ||
+                dom.isSame(offcanvas._node, target) ||
                 dom.hasDescendent(offcanvas._node, target)
             ) {
                 continue;
@@ -2812,7 +2828,7 @@
                 dom.after(this._node, this._popover);
             }
 
-            if (!this.constructor.noId) {
+            if (!this._settings.noAttributes) {
                 const id = UI.generateId(this.constructor.DATA_KEY);
                 dom.setAttribute(this._popover, 'id', id);
                 dom.setAttribute(this._node, 'aria-described-by', id);
@@ -2827,7 +2843,8 @@
                     position: this._settings.position,
                     fixed: this._settings.fixed,
                     spacing: this._settings.spacing,
-                    minContact: this._settings.minContact
+                    minContact: this._settings.minContact,
+                    noAttributes: this._settings.noAttributes
                 }
             );
 
@@ -2868,7 +2885,8 @@
         position: 'center',
         fixed: false,
         spacing: 3,
-        minContact: false
+        minContact: false,
+        noAttributes: false
     };
 
     UI.initComponent('popover', Popover);
@@ -3413,7 +3431,7 @@
                 dom.after(this._node, this._tooltip);
             }
 
-            if (!this.constructor.noId) {
+            if (!this._settings.noAttributes) {
                 const id = UI.generateId(this.constructor.DATA_KEY);
                 dom.setAttribute(this._tooltip, 'id', id);
                 dom.setAttribute(this._node, 'aria-described-by', id);
@@ -3428,7 +3446,8 @@
                     position: this._settings.position,
                     fixed: this._settings.fixed,
                     spacing: this._settings.spacing,
-                    minContact: this._settings.minContact
+                    minContact: this._settings.minContact,
+                    noAttributes: this._settings.noAttributes
                 }
             );
 
@@ -3467,7 +3486,8 @@
         position: 'center',
         fixed: false,
         spacing: 2,
-        minContact: false
+        minContact: false,
+        noAttributes: false
     };
 
     UI.initComponent('tooltip', Tooltip);

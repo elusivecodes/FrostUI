@@ -61,9 +61,23 @@ before(async function() {
 
     assert.strictEqual(
         await page.evaluate(_ => {
+            return UI.Popover.defaults.noAttributes;
+        }),
+        false
+    );
+
+    assert.strictEqual(
+        await page.evaluate(_ => {
             return UI.Toast.defaults.delay;
         }),
         5000
+    );
+
+    assert.strictEqual(
+        await page.evaluate(_ => {
+            return UI.Tooltip.defaults.noAttributes;
+        }),
+        false
     );
 
     await page.evaluate(_ => {
@@ -71,9 +85,9 @@ before(async function() {
         UI.Carousel.defaults.interval = 200;
         UI.Carousel.defaults.transition = 100;
         UI.Collapse.defaults.duration = 100;
-        UI.Popover.noId = true;
+        UI.Popover.defaults.noAttributes = true;
         UI.Toast.defaults.delay = 200;
-        UI.Tooltip.noId = true;
+        UI.Tooltip.defaults.noAttributes = true;
     });
 });
 

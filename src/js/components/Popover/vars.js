@@ -16,7 +16,8 @@ Popover.defaults = {
     position: 'center',
     fixed: false,
     spacing: 3,
-    minContact: false
+    minContact: false,
+    noAttributes: false
 };
 
 UI.initComponent('popover', Popover);

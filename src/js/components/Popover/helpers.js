@@ -27,7 +27,7 @@ Object.assign(Popover.prototype, {
             dom.after(this._node, this._popover);
         }
 
-        if (!this.constructor.noId) {
+        if (!this._settings.noAttributes) {
             const id = UI.generateId(this.constructor.DATA_KEY);
             dom.setAttribute(this._popover, 'id', id);
             dom.setAttribute(this._node, 'aria-described-by', id);
@@ -42,7 +42,8 @@ Object.assign(Popover.prototype, {
                 position: this._settings.position,
                 fixed: this._settings.fixed,
                 spacing: this._settings.spacing,
-                minContact: this._settings.minContact
+                minContact: this._settings.minContact,
+                noAttributes: this._settings.noAttributes
             }
         );
 

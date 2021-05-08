@@ -1598,6 +1598,162 @@ describe('dropdown', function() {
 
     });
 
+    describe('autoClose option', function() {
+
+        it('works with auto close option', async function() {
+            await exec(_ => {
+                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
+                UI.Dropdown.init(dropdownToggle1, {
+                    autoClose: false
+                }).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.click(document.body);
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#dropdown1')),
+                    false
+                );
+            });
+        });
+
+        it('works with auto close option (data-ui-auto-close)', async function() {
+            await exec(_ => {
+                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
+                dom.setDataset(dropdownToggle1, 'uiAutoClose', false);
+                UI.Dropdown.init(dropdownToggle1).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.click(document.body);
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#dropdown1')),
+                    false
+                );
+            });
+        });
+
+        it('works with auto close option (query)', async function() {
+            await exec(_ => {
+                dom.query('#dropdownToggle1')
+                    .dropdown({ autoClose: false })
+                    .show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.click(document.body);
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#dropdown1')),
+                    false
+                );
+            });
+        });
+
+        it('hides on document click with auto close outside', async function() {
+            await exec(_ => {
+                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
+                UI.Dropdown.init(dropdownToggle1, {
+                    autoClose: 'outside'
+                }).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.click(document.body);
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#dropdown1')),
+                    true
+                );
+            });
+        });
+
+        it('does not hide on document click with auto close inside', async function() {
+            await exec(_ => {
+                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
+                UI.Dropdown.init(dropdownToggle1, {
+                    autoClose: 'inside'
+                }).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.click(document.body);
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#dropdown1')),
+                    false
+                );
+            });
+        });
+
+        it('hides on menu click with auto close inside', async function() {
+            await exec(_ => {
+                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
+                UI.Dropdown.init(dropdownToggle1, {
+                    autoClose: 'inside'
+                }).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.click('#dropdown1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#dropdown1')),
+                    true
+                );
+            });
+        });
+
+        it('does not hide on menu click with auto close outside', async function() {
+            await exec(_ => {
+                const dropdownToggle1 = dom.findOne('#dropdownToggle1');
+                UI.Dropdown.init(dropdownToggle1, {
+                    autoClose: 'outside'
+                }).show();
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.stop('#dropdown1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                await exec(_ => {
+                    dom.click('#dropdown1');
+                });
+            }).then(waitFor(50)).then(async _ => {
+                assert.strictEqual(
+                    await exec(_ => dom.hasAnimation('#dropdown1')),
+                    false
+                );
+            });
+        });
+
+    });
+
     describe('display option', function() {
 
         it('works with static display option', async function() {
