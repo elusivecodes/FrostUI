@@ -1,5 +1,5 @@
 /**
- * FrostUI Bundle v1.2.2
+ * FrostUI Bundle v1.2.3
  * https://github.com/elusivecodes/FrostCore
  * https://github.com/elusivecodes/FrostDOM
  * https://github.com/elusivecodes/FrostUI
