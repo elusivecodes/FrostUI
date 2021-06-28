@@ -22,8 +22,8 @@
     padding: $offcanvas-header-padding-y $offcanvas-header-padding-x;
 
     .btn-close {
-        padding: ($offcanvas-header-padding-y / 2) ($offcanvas-header-padding-x / 2);
-        margin: ($offcanvas-header-padding-y / -2) ($offcanvas-header-padding-x / -2) ($offcanvas-header-padding-y / -2) auto;
+        padding: ($offcanvas-header-padding-y * .5) ($offcanvas-header-padding-x * .5);
+        margin: ($offcanvas-header-padding-y * -.5) ($offcanvas-header-padding-x * -.5) ($offcanvas-header-padding-y * -.5) auto;
     }
 }
 

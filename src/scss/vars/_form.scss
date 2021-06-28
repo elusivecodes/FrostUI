@@ -4,7 +4,7 @@ $form-check-padding-left: $spacing * 2 !default;
 $form-check-inline-margin-right: $spacing !default;
 
 $input-check-size: 1em !default;
-$input-check-margin-top: $spacing / 4 !default;
+$input-check-margin-top: $spacing * .25 !default;
 $input-check-background-color: map-get($color-variants, light) !default;
 $input-check-border-size: $border-size !default;
 $input-check-border-color: $border-color !default;
@@ -29,7 +29,7 @@ $form-switch-input-check-focus-background-image: url("data:image/svg+xml,%3csvg 
 $form-switch-input-check-checked-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='#{svg-color($white)}'/%3e%3c/svg%3e") !default;
 
 // form text
-$form-text-margin-top: $spacing / 4 !default;
+$form-text-margin-top: $spacing * .25 !default;
 $form-text-font-size: $font-size-sm !default;
 $form-text-color: map-get($color-variants, secondary) !default;
 
@@ -40,8 +40,8 @@ $input-group-text-color: map-get($color-variants, dark) !default;
 $input-group-text-background-color: map-get($color-variants, light) !default;
 
 // input
-$input-padding-x: $spacing / 2 !default;
-$input-padding-y: $spacing / 2 !default;
+$input-padding-x: $spacing * .5 !default;
+$input-padding-y: $spacing * .5 !default;
 $input-font-size: $font-size-md !default;
 $input-line-height: map-get($line-heights, base) !default;
 $input-border-size: $border-size !default;
@@ -61,8 +61,8 @@ $input-outline-border-radius: $border-radius !default;
 $input-outline-hover-border-color: map-get($color-variants, dark) !default;
 $input-outline-focus-border-color: map-get($color-variants, primary) !default;
 
-$input-sm-padding-x: $spacing / 2 !default;
-$input-sm-padding-y: $spacing / 4 !default;
+$input-sm-padding-x: $spacing * .5 !default;
+$input-sm-padding-y: $spacing * .25 !default;
 $input-sm-font-size: $font-size-sm !default;
 $input-lg-padding-x: $input-padding-x !default;
 $input-lg-padding-y: $input-padding-y !default;
@@ -76,7 +76,7 @@ $label-floating-font-size: 13px !default;
 $label-floating-color: map-get($color-variants, secondary) !default;
 
 // validation
-$form-feedback-margin-top: $spacing / 4 !default;
+$form-feedback-margin-top: $spacing * .25 !default;
 $form-feedback-font-size: 80% !default;
 $valid-feedback-color: map-get($color-variants, success) !default;
 $invalid-feedback-color: map-get($color-variants, danger) !default;

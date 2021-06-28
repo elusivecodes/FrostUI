@@ -4,7 +4,7 @@
         &::before {
             display: inline-block;
             margin-right: $caret-spacing;
-            vertical-align: $caret-vertical-align - ($caret-size / 2); 
+            vertical-align: $caret-vertical-align - ($caret-size * .5); 
             content: "";
             border-top: $caret-size solid transparent;
             border-right: $caret-size solid;
@@ -23,7 +23,7 @@
             display: inline-block;
             margin-left: $caret-spacing;
             @if $direction == end {
-                vertical-align: $caret-vertical-align - ($caret-size / 2);
+                vertical-align: $caret-vertical-align - ($caret-size * .5);
             } @else {
                 vertical-align: $caret-vertical-align;
             }

@@ -16,7 +16,7 @@
         position: absolute;
         display: block;
         width: $tooltip-arrow-size;
-        height: $tooltip-arrow-size / 2;
+        height: $tooltip-arrow-size * .5;
         pointer-events: none;
 
         &::before {
@@ -32,7 +32,7 @@
 
         &::before {
             top: 0;
-            border-width: ($tooltip-arrow-size / 2) ($tooltip-arrow-size / 2) 0;
+            border-width: ($tooltip-arrow-size * .5) ($tooltip-arrow-size * .5) 0;
             border-top-color: $tooltip-inner-background-color;
         }
     }
@@ -42,7 +42,7 @@
 
         &::before {
             right: 0;
-            border-width: ($tooltip-arrow-size / 2) ($tooltip-arrow-size / 2) ($tooltip-arrow-size / 2) 0;
+            border-width: ($tooltip-arrow-size * .5) ($tooltip-arrow-size * .5) ($tooltip-arrow-size * .5) 0;
             border-right-color: $tooltip-inner-background-color;
         }
     }
@@ -52,7 +52,7 @@
 
         &::before {
             bottom: 0;
-            border-width: 0 ($tooltip-arrow-size / 2) ($tooltip-arrow-size / 2);
+            border-width: 0 ($tooltip-arrow-size * .5) ($tooltip-arrow-size * .5);
             border-bottom-color: $tooltip-inner-background-color;
         }
     }
@@ -62,7 +62,7 @@
 
         &::before {
             left: 0;
-            border-width: ($tooltip-arrow-size / 2) 0 ($tooltip-arrow-size / 2) ($tooltip-arrow-size / 2);
+            border-width: ($tooltip-arrow-size * .5) 0 ($tooltip-arrow-size * .5) ($tooltip-arrow-size * .5);
             border-left-color: $tooltip-inner-background-color;
         }
     }

@@ -1,5 +1,5 @@
 /**
- * FrostUI v1.2.3
+ * FrostUI v1.2.4
  * https://github.com/elusivecodes/FrostUI
  */
 (function(global, factory) {
@@ -2625,7 +2625,6 @@
                 this._popper.dispose();
                 this._popper = null;
 
-                dom.removeClass(this._popover, 'show');
                 dom.detach(this._popover);
                 dom.triggerEvent(this._node, 'hidden.ui.popover');
             }).catch(_ => { }).finally(_ => {
@@ -2705,7 +2704,6 @@
             }
 
             this._animating = true;
-            dom.addClass(this._popover, 'show');
             this.refresh();
             this._show();
 

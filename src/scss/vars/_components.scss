@@ -1,3 +1,5 @@
+@use "sass:math";
+
 // accordion
 $accordion-padding-x: $spacing * 1.25 !default;
 $accordion-padding-y: $spacing !default;
@@ -61,8 +63,8 @@ $breadcrumb-divider: "\002f" !default;
 // button
 $btn-variants: $color-variants !default;
 
-$btn-padding-x: $spacing / 2 !default;
-$btn-padding-y: $spacing / 4 !default;
+$btn-padding-x: $spacing * .5 !default;
+$btn-padding-y: $spacing * .25 !default;
 $btn-font-family: $font-family !default;
 $btn-font-size: $font-size-md !default;
 $btn-font-weight: map-get($font-weights, normal) !default;
@@ -75,10 +77,10 @@ $btn-active-box-shadow: $shadow !default;
 $btn-disabled-opacity: $disabled-opacity !default;
 
 $btn-lg-padding-x: $spacing !default;
-$btn-lg-padding-y: $spacing / 3 !default;
+$btn-lg-padding-y: math.div($spacing, 3) !default;
 $btn-lg-font-size: $font-size-lg !default;
-$btn-sm-padding-x: $spacing / 2 !default;
-$btn-sm-padding-y: $spacing / 4 !default;
+$btn-sm-padding-x: $spacing * .5 !default;
+$btn-sm-padding-y: $spacing * .25 !default;
 $btn-sm-font-size: $font-size-sm !default;
 
 $btn-hover-background-color-shade: 20% !default;
@@ -94,7 +96,7 @@ $btn-outline-ripple-background-color-fade: .3 !default;
 
 // card
 $card-padding-x: $spacing !default;
-$card-padding-y: $spacing / 2 !default;
+$card-padding-y: $spacing * .5 !default;
 $card-background-color: $white !default;
 $card-border-size: $border-size !default;
 $card-border-color: $border-color !default;
@@ -110,8 +112,8 @@ $card-footer-background-color: fade($black, .05) !default;
 $card-body-padding-x: $card-padding-x !default;
 $card-body-padding-y: $spacing !default;
 
-$card-title-margin-bottom: $spacing / 4 !default;
-$card-subtitle-margin-top: $spacing / -3 !default;
+$card-title-margin-bottom: $spacing * .25 !default;
+$card-subtitle-margin-top: $spacing * -.33 !default;
 $card-link-spacing: $spacing !default;
 $card-img-overlay-padding-x: $spacing * 1.25 !default;
 $card-img-overlay-padding-y: $spacing * 1.25 !default;
@@ -138,7 +140,7 @@ $carousel-indicators-margin-x: $spacing * 2 !default;
 
 $carousel-indicator-width: .5rem !default;
 $carousel-indicator-height: .5rem !default;
-$carousel-indicator-margin-x: $spacing / 4 !default;
+$carousel-indicator-margin-x: $spacing * .25 !default;
 $carousel-indicator-background-color: map-get($color-variants, light) !default;
 $carousel-indicator-border-radius: $border-radius !default;
 $carousel-indicator-opacity: .5 !default;
@@ -159,7 +161,7 @@ $carousel-dark-caption-color: map-get($color-variants, dark) !default;
 
 // dropdown
 $dropdown-padding-x: $spacing !default;
-$dropdown-padding-y: $spacing / 2 !default;
+$dropdown-padding-y: $spacing * .5 !default;
 $dropdown-color: $text-color !default;
 
 $dropdown-menu-min-width: 10rem !default;
@@ -172,7 +174,7 @@ $dropdown-menu-border-color: $border-color !default;
 $dropdown-menu-border-radius: $border-radius !default;
 
 $dropdown-item-padding-x: $dropdown-padding-x !default;
-$dropdown-item-padding-y: $spacing / 4 !default;
+$dropdown-item-padding-y: $spacing * .25 !default;
 $dropdown-item-font-weight: map-get($font-weights, normal) !default;
 $dropdown-item-color: $dropdown-menu-color !default;
 $dropdown-item-focus-background-color: fade($black, .1) !default;
@@ -221,7 +223,7 @@ $list-group-item-action-focus-background-color: tint($black, 95%) !default;
 $list-group-item-action-focus-box-shadow: $shadow-sm !default;
 
 $list-group-item-padding-x: $spacing !default;
-$list-group-item-padding-y: $spacing / 2 !default;
+$list-group-item-padding-y: $spacing * .5 !default;
 $list-group-item-background-color: $white !default;
 $list-group-item-color: $text-color !default;
 $list-group-item-disabled-color: map-get($color-variants, secondary) !default;
@@ -245,8 +247,8 @@ $modal-md-dialog-margin-y: $spacing * 2 !default;
 $modal-padding-x: $spacing !default;
 $modal-padding-y: $spacing !default;
 
-$modal-dialog-margin-x: $spacing / 2 !default;
-$modal-dialog-margin-y: $spacing / 2 !default;
+$modal-dialog-margin-x: $spacing * .5 !default;
+$modal-dialog-margin-y: $spacing * .5 !default;
 $modal-dialog-scrollable-gap: $spacing !default;
 $modal-dialog-centered-gap: $spacing !default;
 
@@ -266,12 +268,12 @@ $modal-body-padding-x: $modal-padding-x !default;
 $modal-body-padding-y: $modal-padding-y !default;
 $modal-footer-padding-x: $modal-padding-x !default;
 $modal-footer-padding-y: $modal-padding-y !default;
-$modal-footer-child-margin-y: $spacing / 4 !default;
-$modal-footer-child-margin-x: $spacing / 4 !default;
+$modal-footer-child-margin-y: $spacing * .25 !default;
+$modal-footer-child-margin-x: $spacing * .25 !default;
 
 // nav
 $nav-link-padding-x: $spacing !default;
-$nav-link-padding-y: $spacing / 2 !default;
+$nav-link-padding-y: $spacing * .5 !default;
 $nav-link-border-radius: $border-radius !default;
 $nav-link-focus-background-color: tint($link-color, 90%) !default;
 $nav-link-disabled-opacity: $disabled-opacity !default;
@@ -288,18 +290,18 @@ $nav-pills-nav-link-active-focus-background-color: tint($nav-pills-nav-link-acti
 $navbar-nav-scroll-height: 75vh !default;
 
 // navbar
-$navbar-padding-x: $spacing / 2 !default;
-$navbar-padding-y: $spacing / 2 !default;
+$navbar-padding-x: $spacing * .5 !default;
+$navbar-padding-y: $spacing * .5 !default;
 
 $navbar-nav-link-padding-x: $navbar-padding-x !default;
 $navbar-nav-link-disabled-opacity: $disabled-opacity !default;
-$navbar-brand-padding-y: $spacing / 4 !default;
+$navbar-brand-padding-y: $spacing * .25 !default;
 $navbar-brand-margin-right: $spacing !default;
 $navbar-brand-font-size: $font-size-lg !default;
 $navbar-text-padding-y: $navbar-padding-y !default;
 
 $navbar-toggler-padding-x: $navbar-padding-x !default;
-$navbar-toggler-padding-y: $spacing / 4 !default;
+$navbar-toggler-padding-y: $spacing * .25 !default;
 $navbar-toggler-font-size: $font-size-lg !default;
 $navbar-toggler-border-size: $border-size !default;
 $navbar-toggler-border-radius: $border-radius !default;
@@ -349,8 +351,8 @@ $offcanvas-body-padding-y: $offcanvas-padding-y !default;
 // pagination
 $pagination-border-radius: $border-radius !default;
 
-$page-link-padding-x: $spacing / 2 !default;
-$page-link-padding-y: $spacing / 2 !default;
+$page-link-padding-x: $spacing * .5 !default;
+$page-link-padding-y: $spacing * .5 !default;
 $page-link-background-color: map-get($color-variants, secondary) !default;
 $page-link-color: text-color($page-link-background-color) !default;
 $page-link-border-size: $border-size !default;
@@ -364,8 +366,8 @@ $page-item-active-background-color: shade($page-link-background-color, 30%) !def
 $page-item-active-focus-background-color: shade($page-link-background-color, 20%) !default;
 $page-item-disabled-opacity: $disabled-opacity !default;
 
-$pagination-sm-padding-x: $spacing / 2 !default;
-$pagination-sm-padding-y: $spacing / 4 !default;
+$pagination-sm-padding-x: $spacing * .5 !default;
+$pagination-sm-padding-y: $spacing * .25 !default;
 $pagination-sm-font-size: $font-size-sm !default;
 $pagination-sm-line-height: map-get($line-heights, base) !default;
 
@@ -376,7 +378,7 @@ $pagination-lg-line-height: map-get($line-heights, base) !default;
 
 // popover
 $popover-max-width: 276px !default;
-$popover-padding-x: $spacing / 2 !default;
+$popover-padding-x: $spacing * .5 !default;
 $popover-padding-y: $spacing !default;
 $popover-font-size: $font-size-sm !default;
 $popover-background-color: $white !default;
@@ -431,7 +433,7 @@ $toast-border-radius: $border-radius !default;
 $toast-backdrop-filter: blur(10px) !default;
 
 $toast-header-padding-x: $toast-padding-x !default;
-$toast-header-padding-y: $spacing / 2 !default;
+$toast-header-padding-y: $spacing * .5 !default;
 $toast-header-color: map-get($color-variants, dark) !default;
 $toast-header-background-color: fade($white, .85) !default;
 $toast-body-padding-x: $toast-padding-x !default;
@@ -443,8 +445,8 @@ $tooltip-show-opacity: .9 !default;
 $tooltip-arrow-size: .8rem !default;
 
 $tooltip-inner-max-width: 200px !default;
-$tooltip-inner-padding-x: $spacing / 2 !default;
-$tooltip-inner-padding-y: $spacing / 4 !default;
+$tooltip-inner-padding-x: $spacing * .5 !default;
+$tooltip-inner-padding-y: $spacing * .25 !default;
 $tooltip-inner-color: $white !default;
 $tooltip-inner-background-color: $black !default;
 $tooltip-inner-border-radius: $border-radius !default;

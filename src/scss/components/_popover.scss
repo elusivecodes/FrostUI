@@ -17,7 +17,7 @@
         position: absolute;
         display: block;
         width: $popover-arrow-size;
-        height: $popover-arrow-size / 2;
+        height: $popover-arrow-size * .5;
         pointer-events: none;
 
         &::before,
@@ -35,13 +35,13 @@
 
         &::before {
             top: $popover-border-size;
-            border-width: ($popover-arrow-size / 2) ($popover-arrow-size / 2) 0;
+            border-width: ($popover-arrow-size * .5) ($popover-arrow-size * .5) 0;
             border-top-color: $popover-border-color;
         }
 
         &::after {
             top: 0;
-            border-width: ($popover-arrow-size / 2) ($popover-arrow-size / 2) 0;
+            border-width: ($popover-arrow-size * .5) ($popover-arrow-size * .5) 0;
             border-top-color: $popover-background-color;
         }
     }
@@ -51,13 +51,13 @@
 
         &::before {
             right: $popover-border-size;
-            border-width: ($popover-arrow-size / 2) ($popover-arrow-size / 2) ($popover-arrow-size / 2) 0;
+            border-width: ($popover-arrow-size * .5) ($popover-arrow-size * .5) ($popover-arrow-size * .5) 0;
             border-right-color: $popover-border-color;
         }
 
         &::after {
             right: 0;
-            border-width: ($popover-arrow-size / 2) ($popover-arrow-size / 2) ($popover-arrow-size / 2) 0;
+            border-width: ($popover-arrow-size * .5) ($popover-arrow-size * .5) ($popover-arrow-size * .5) 0;
             border-right-color: $popover-background-color;
         }
     }
@@ -67,13 +67,13 @@
 
         &::before {
             bottom: $popover-border-size;
-            border-width: 0 ($popover-arrow-size / 2) ($popover-arrow-size / 2);
+            border-width: 0 ($popover-arrow-size * .5) ($popover-arrow-size * .5);
             border-bottom-color: $popover-border-color;
         }
 
         &::after {
             bottom: 0;
-            border-width: 0 ($popover-arrow-size / 2) ($popover-arrow-size / 2);
+            border-width: 0 ($popover-arrow-size * .5) ($popover-arrow-size * .5);
             border-bottom-color: $popover-background-color;
         }
     }
@@ -83,13 +83,13 @@
 
         &::before {
             left: $popover-border-size;
-            border-width: ($popover-arrow-size / 2) 0 ($popover-arrow-size / 2) ($popover-arrow-size / 2);
+            border-width: ($popover-arrow-size * .5) 0 ($popover-arrow-size * .5) ($popover-arrow-size * .5);
             border-left-color: $popover-border-color;
         }
 
         &::after {
             left: 0;
-            border-width: ($popover-arrow-size / 2) 0 ($popover-arrow-size / 2) ($popover-arrow-size / 2);
+            border-width: ($popover-arrow-size * .5) 0 ($popover-arrow-size * .5) ($popover-arrow-size * .5);
             border-left-color: $popover-background-color;
         }
     }

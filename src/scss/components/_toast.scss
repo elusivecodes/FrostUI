@@ -48,7 +48,7 @@
     @include border-top-radius($toast-header-border-radius);
 
     .btn-close {
-        margin: ($toast-header-padding-y / -2) ($toast-header-padding-x / -2) 0 $toast-header-padding-x;
+        margin: ($toast-header-padding-y * -.5) ($toast-header-padding-x * -.5) 0 $toast-header-padding-x;
     }
 }
 

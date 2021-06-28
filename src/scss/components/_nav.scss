@@ -114,13 +114,13 @@
 }
 
 .card-header-tabs {
-    margin-right: ($card-header-padding-x * -1) + ($spacing / 2);
+    margin-right: ($card-header-padding-x * -1) + ($spacing * .5);
     margin-bottom: $card-header-padding-y * -1;
-    margin-left: ($card-header-padding-x * -1) + ($spacing / 2);
+    margin-left: ($card-header-padding-x * -1) + ($spacing * .5);
     border-bottom: 0;
 }
 
 .card-header-pills {
-    margin-right: ($card-header-padding-x * -1) + ($spacing / 2);
-    margin-left: ($card-header-padding-x * -1) + ($spacing / 2);
+    margin-right: ($card-header-padding-x * -1) + ($spacing * .5);
+    margin-left: ($card-header-padding-x * -1) + ($spacing * .5);
 }

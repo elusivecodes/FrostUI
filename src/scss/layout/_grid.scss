@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .row {
     --ui-gutter-y: #{$gutter-y};
     --ui-gutter-x: #{$gutter-x};
@@ -35,7 +37,7 @@
             @for $i from 1 through $row-grid-size {
                 .row-cols#{$infix}-#{$i} > * {
                     flex: 0 0 auto;
-                    width: 100% / $i;
+                    width: math.div(100%, $i);
                 }
             }
         }
@@ -44,14 +46,14 @@
             @for $i from 1 through $grid-size {
                 .col#{$infix}-#{$i} {
                     flex: 0 0 auto;
-                    width: percentage($i / $grid-size);
+                    width: percentage(math.div($i, $grid-size));
                 }
             }
 
             @for $i from 0 through ($grid-size - 1) {
                 @if $infix != "" and $i > 0 {
                     .offset#{$infix}-#{$i} {
-                        $num: $i / $grid-size;
+                        $num: math.div($i, $grid-size);
                         margin-left: if($num == 0, 0, percentage($num));
                     }
                 }

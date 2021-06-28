@@ -65,7 +65,7 @@ $containers: (
 $grid-size: 12 !default;
 $row-grid-size: 5 !default;
 
-$gutter-base: $spacing / 2 !default;
+$gutter-base: $spacing * .5 !default;
 
 $gutters: (
     0: 0,
@@ -102,7 +102,7 @@ $sizes: (
 ) !default;
 
 // spacing
-$spacing-base: $spacing / 4 !default;
+$spacing-base: $spacing * .25 !default;
 
 $paddings: (
     0: 0,

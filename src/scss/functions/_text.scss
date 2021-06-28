@@ -7,7 +7,7 @@
         @return $max-size;
     }
 
-    $ratio: ($size / .5) - 2;
+    $ratio: ($size * 2) - 2;
     $min-size: ($ratio * .1rem) + 1.25rem;
     $offset: $ratio * .33vw;
 

@@ -7,7 +7,7 @@
     $luma1: luma($background);
     $luma2: luma($foreground);
 
-    @return if($luma1 > $luma2, ($luma1 + .05) / ($luma2 + .05), ($luma2 + .05) / ($luma1 + .05));
+    @return if($luma1 > $luma2, math.div($luma1 + .05, $luma2 + .05), math.div($luma2 + .05, $luma1 + .05));
 }
 
 // Fade a color to a specified opacity (0-1).
@@ -27,8 +27,8 @@
     );
 
     @each $name, $value in $rgb {
-        $value: $value / 255;
-        $value: if($value < .03928, $value / 12.92, math.pow((($value + .055) / 1.055), 2.5));
+        $value: math.div($value, 255);
+        $value: if($value < .03928, math.div($value, 12.92), math.pow((math.div($value + .055, 1.055)), 2.5));
         $rgb: map-merge($rgb, ($name: $value));
     }
 
