@@ -2147,20 +2147,20 @@ fieldset:disabled .btn {
   --ui-btn-hover-bg: #2244aa;
   --ui-btn-focus-bg: #5577dd;
   --ui-btn-active-bg: #1a337f;
-  --ui-ripple-bg: rgba(255, 255, 255, 0.4);
+  --ui-ripple-bg: rgba(255, 255, 255, 0.2);
 }
 
 .btn-outline-primary {
   --ui-btn-color: #2b55d4;
   --ui-btn-border: #2b55d4;
-  --ui-btn-hover-bg: rgba(43, 85, 212, 0.15);
-  --ui-btn-focus-bg: rgba(43, 85, 212, 0.25);
+  --ui-btn-hover-bg: rgba(43, 85, 212, 0.1);
+  --ui-btn-focus-bg: rgba(43, 85, 212, 0.2);
   --ui-btn-active-bg: #2b55d4;
   --ui-btn-active-color: #fff;
   --ui-btn-active-border: rgba(0, 0, 0, 0.15);
   --ui-btn-active-focus-bg: #2244aa;
-  --ui-ripple-bg: rgba(43, 85, 212, 0.3);
-  --ui-active-ripple-bg: rgba(255, 255, 255, 0.4);
+  --ui-ripple-bg: rgba(43, 85, 212, 0.1);
+  --ui-active-ripple-bg: rgba(255, 255, 255, 0.1);
 }
 
 .btn-secondary {
@@ -2169,20 +2169,20 @@ fieldset:disabled .btn {
   --ui-btn-hover-bg: #4d5762;
   --ui-btn-focus-bg: #808a95;
   --ui-btn-active-bg: #3a414a;
-  --ui-ripple-bg: rgba(255, 255, 255, 0.4);
+  --ui-ripple-bg: rgba(255, 255, 255, 0.2);
 }
 
 .btn-outline-secondary {
   --ui-btn-color: #606d7b;
   --ui-btn-border: #606d7b;
-  --ui-btn-hover-bg: rgba(96, 109, 123, 0.15);
-  --ui-btn-focus-bg: rgba(96, 109, 123, 0.25);
+  --ui-btn-hover-bg: rgba(96, 109, 123, 0.1);
+  --ui-btn-focus-bg: rgba(96, 109, 123, 0.2);
   --ui-btn-active-bg: #606d7b;
   --ui-btn-active-color: #fff;
   --ui-btn-active-border: rgba(0, 0, 0, 0.15);
   --ui-btn-active-focus-bg: #4d5762;
-  --ui-ripple-bg: rgba(96, 109, 123, 0.3);
-  --ui-active-ripple-bg: rgba(255, 255, 255, 0.4);
+  --ui-ripple-bg: rgba(96, 109, 123, 0.1);
+  --ui-active-ripple-bg: rgba(255, 255, 255, 0.1);
 }
 
 .btn-success {
@@ -2191,20 +2191,20 @@ fieldset:disabled .btn {
   --ui-btn-hover-bg: #1b701b;
   --ui-btn-focus-bg: #4ea34e;
   --ui-btn-active-bg: #145414;
-  --ui-ripple-bg: rgba(255, 255, 255, 0.4);
+  --ui-ripple-bg: rgba(255, 255, 255, 0.2);
 }
 
 .btn-outline-success {
   --ui-btn-color: #228c22;
   --ui-btn-border: #228c22;
-  --ui-btn-hover-bg: rgba(34, 140, 34, 0.15);
-  --ui-btn-focus-bg: rgba(34, 140, 34, 0.25);
+  --ui-btn-hover-bg: rgba(34, 140, 34, 0.1);
+  --ui-btn-focus-bg: rgba(34, 140, 34, 0.2);
   --ui-btn-active-bg: #228c22;
   --ui-btn-active-color: #fff;
   --ui-btn-active-border: rgba(0, 0, 0, 0.15);
   --ui-btn-active-focus-bg: #1b701b;
-  --ui-ripple-bg: rgba(34, 140, 34, 0.3);
-  --ui-active-ripple-bg: rgba(255, 255, 255, 0.4);
+  --ui-ripple-bg: rgba(34, 140, 34, 0.1);
+  --ui-active-ripple-bg: rgba(255, 255, 255, 0.1);
 }
 
 .btn-info {
@@ -2213,20 +2213,20 @@ fieldset:disabled .btn {
   --ui-btn-hover-bg: #0c666a;
   --ui-btn-focus-bg: #3f999d;
   --ui-btn-active-bg: #094c50;
-  --ui-ripple-bg: rgba(255, 255, 255, 0.4);
+  --ui-ripple-bg: rgba(255, 255, 255, 0.2);
 }
 
 .btn-outline-info {
   --ui-btn-color: #0f7f85;
   --ui-btn-border: #0f7f85;
-  --ui-btn-hover-bg: rgba(15, 127, 133, 0.15);
-  --ui-btn-focus-bg: rgba(15, 127, 133, 0.25);
+  --ui-btn-hover-bg: rgba(15, 127, 133, 0.1);
+  --ui-btn-focus-bg: rgba(15, 127, 133, 0.2);
   --ui-btn-active-bg: #0f7f85;
   --ui-btn-active-color: #fff;
   --ui-btn-active-border: rgba(0, 0, 0, 0.15);
   --ui-btn-active-focus-bg: #0c666a;
-  --ui-ripple-bg: rgba(15, 127, 133, 0.3);
-  --ui-active-ripple-bg: rgba(255, 255, 255, 0.4);
+  --ui-ripple-bg: rgba(15, 127, 133, 0.1);
+  --ui-active-ripple-bg: rgba(255, 255, 255, 0.1);
 }
 
 .btn-warning {
@@ -2235,20 +2235,20 @@ fieldset:disabled .btn {
   --ui-btn-hover-bg: #c48114;
   --ui-btn-focus-bg: #f7b447;
   --ui-btn-active-bg: #93610f;
-  --ui-ripple-bg: rgba(0, 0, 0, 0.4);
+  --ui-ripple-bg: rgba(0, 0, 0, 0.2);
 }
 
 .btn-outline-warning {
   --ui-btn-color: #f5a119;
   --ui-btn-border: #f5a119;
-  --ui-btn-hover-bg: rgba(245, 161, 25, 0.15);
-  --ui-btn-focus-bg: rgba(245, 161, 25, 0.25);
+  --ui-btn-hover-bg: rgba(245, 161, 25, 0.1);
+  --ui-btn-focus-bg: rgba(245, 161, 25, 0.2);
   --ui-btn-active-bg: #f5a119;
   --ui-btn-active-color: #000;
   --ui-btn-active-border: rgba(0, 0, 0, 0.15);
   --ui-btn-active-focus-bg: #c48114;
-  --ui-ripple-bg: rgba(245, 161, 25, 0.3);
-  --ui-active-ripple-bg: rgba(0, 0, 0, 0.4);
+  --ui-ripple-bg: rgba(245, 161, 25, 0.1);
+  --ui-active-ripple-bg: rgba(0, 0, 0, 0.1);
 }
 
 .btn-danger {
@@ -2257,20 +2257,20 @@ fieldset:disabled .btn {
   --ui-btn-hover-bg: #b01030;
   --ui-btn-focus-bg: #e34363;
   --ui-btn-active-bg: #840c24;
-  --ui-ripple-bg: rgba(255, 255, 255, 0.4);
+  --ui-ripple-bg: rgba(255, 255, 255, 0.2);
 }
 
 .btn-outline-danger {
   --ui-btn-color: #dc143c;
   --ui-btn-border: #dc143c;
-  --ui-btn-hover-bg: rgba(220, 20, 60, 0.15);
-  --ui-btn-focus-bg: rgba(220, 20, 60, 0.25);
+  --ui-btn-hover-bg: rgba(220, 20, 60, 0.1);
+  --ui-btn-focus-bg: rgba(220, 20, 60, 0.2);
   --ui-btn-active-bg: #dc143c;
   --ui-btn-active-color: #fff;
   --ui-btn-active-border: rgba(0, 0, 0, 0.15);
   --ui-btn-active-focus-bg: #b01030;
-  --ui-ripple-bg: rgba(220, 20, 60, 0.3);
-  --ui-active-ripple-bg: rgba(255, 255, 255, 0.4);
+  --ui-ripple-bg: rgba(220, 20, 60, 0.1);
+  --ui-active-ripple-bg: rgba(255, 255, 255, 0.1);
 }
 
 .btn-light {
@@ -2279,20 +2279,20 @@ fieldset:disabled .btn {
   --ui-btn-hover-bg: #c8c8cc;
   --ui-btn-focus-bg: #fbfbff;
   --ui-btn-active-bg: #969699;
-  --ui-ripple-bg: rgba(0, 0, 0, 0.4);
+  --ui-ripple-bg: rgba(0, 0, 0, 0.2);
 }
 
 .btn-outline-light {
   --ui-btn-color: #fafaff;
   --ui-btn-border: #fafaff;
-  --ui-btn-hover-bg: rgba(250, 250, 255, 0.15);
-  --ui-btn-focus-bg: rgba(250, 250, 255, 0.25);
+  --ui-btn-hover-bg: rgba(250, 250, 255, 0.1);
+  --ui-btn-focus-bg: rgba(250, 250, 255, 0.2);
   --ui-btn-active-bg: #fafaff;
   --ui-btn-active-color: #000;
   --ui-btn-active-border: rgba(0, 0, 0, 0.15);
   --ui-btn-active-focus-bg: #c8c8cc;
-  --ui-ripple-bg: rgba(250, 250, 255, 0.3);
-  --ui-active-ripple-bg: rgba(0, 0, 0, 0.4);
+  --ui-ripple-bg: rgba(250, 250, 255, 0.1);
+  --ui-active-ripple-bg: rgba(0, 0, 0, 0.1);
 }
 
 .btn-dark {
@@ -2301,20 +2301,20 @@ fieldset:disabled .btn {
   --ui-btn-hover-bg: #192929;
   --ui-btn-focus-bg: #4c5c5c;
   --ui-btn-active-bg: #131f1f;
-  --ui-ripple-bg: rgba(255, 255, 255, 0.4);
+  --ui-ripple-bg: rgba(255, 255, 255, 0.2);
 }
 
 .btn-outline-dark {
   --ui-btn-color: #1f3333;
   --ui-btn-border: #1f3333;
-  --ui-btn-hover-bg: rgba(31, 51, 51, 0.15);
-  --ui-btn-focus-bg: rgba(31, 51, 51, 0.25);
+  --ui-btn-hover-bg: rgba(31, 51, 51, 0.1);
+  --ui-btn-focus-bg: rgba(31, 51, 51, 0.2);
   --ui-btn-active-bg: #1f3333;
   --ui-btn-active-color: #fff;
   --ui-btn-active-border: rgba(0, 0, 0, 0.15);
   --ui-btn-active-focus-bg: #192929;
-  --ui-ripple-bg: rgba(31, 51, 51, 0.3);
-  --ui-active-ripple-bg: rgba(255, 255, 255, 0.4);
+  --ui-ripple-bg: rgba(31, 51, 51, 0.1);
+  --ui-active-ripple-bg: rgba(255, 255, 255, 0.1);
 }
 
 .btn-group,

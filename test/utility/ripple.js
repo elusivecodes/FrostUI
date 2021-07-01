@@ -28,12 +28,26 @@ describe('Ripple', function() {
         it('removes ripple effect after animation completes', async function() {
             await exec(_ => {
                 dom.triggerEvent('#button', 'mousedown');
-            }).then(waitFor(1050)).then(async function() {
+                dom.triggerEvent('#button', 'mouseup');
+            }).then(waitFor(800)).then(async function() {
                 assert.strictEqual(
                     await exec(_ => {
                         return dom.hasDescendent('#button', '.ripple-effect');
                     }),
                     false
+                );
+            });
+        });
+
+        it('does not remove ripple effect until mouseup', async function() {
+            await exec(_ => {
+                dom.triggerEvent('#button', 'mousedown');
+            }).then(waitFor(800)).then(async function() {
+                assert.strictEqual(
+                    await exec(_ => {
+                        return dom.hasDescendent('#button', '.ripple-effect');
+                    }),
+                    true
                 );
             });
         });

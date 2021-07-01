@@ -122,7 +122,7 @@
         $active-color: text-color($color);
         $active-focus-background-color: shade($color, $btn-hover-background-color-shade);
         $ripple-background-color: fade($color, $btn-outline-ripple-background-color-fade);
-        $active-ripple-background-color: fade($active-color, $btn-ripple-background-color-fade);
+        $active-ripple-background-color: fade($active-color, $btn-outline-ripple-background-color-fade);
 
         --ui-btn-color: #{$color};
         --ui-btn-border: #{$color};

@@ -1,5 +1,5 @@
 /**
- * FrostUI v1.2.4
+ * FrostUI v1.2.5
  * https://github.com/elusivecodes/FrostUI
  */
 (function(global, factory) {
@@ -843,7 +843,6 @@
     };
 
     PopperSet._poppers = [];
-    PopperSet._popperOverflows = new Map;
 
     UI.initComponent('popper', Popper);
 
@@ -3683,6 +3682,12 @@
         const mouseX = isFixed ? e.clientX : e.pageX;
         const mouseY = isFixed ? e.clientY : e.pageY;
 
+        const prevRipple = dom.findOne(':scope > .ripple-effect', target);
+
+        if (prevRipple) {
+            dom.remove(prevRipple);
+        }
+
         const ripple = dom.create('span', {
             class: 'ripple-effect',
             style: {
@@ -3692,20 +3697,35 @@
         });
         dom.append(target, ripple);
 
-        dom.animate(
+        const animation = dom.animate(
             ripple,
             (node, progress) => {
                 dom.setStyle(node, {
-                    transform: 'scale(' + Math.floor(progress * scaleMultiple) + ')',
-                    opacity: 1 - Math.pow(progress, 2)
+                    transform: 'scale(' + Math.floor(progress * scaleMultiple) + ')'
                 });
             },
             {
-                duration: 1000
+                duration: 500
             }
-        ).finally(_ => {
-            dom.remove(ripple);
-        })
+        );
+
+        dom.addEventOnce(document, 'mouseup.ui.ripple', _ => {
+            animation.finally(_ => {
+                dom.animate(
+                    ripple,
+                    (node, progress) => {
+                        dom.setStyle(node, {
+                            opacity: 1 - Math.pow(progress, 2)
+                        });
+                    },
+                    {
+                        duration: 250
+                    }
+                ).finally(_ => {
+                    dom.remove(ripple);
+                });
+            });
+        });
     });
 
 

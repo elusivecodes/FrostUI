@@ -86,10 +86,11 @@ $btn-sm-font-size: $font-size-sm !default;
 $btn-hover-background-color-shade: 20% !default;
 $btn-focus-background-color-tint: 20% !default;
 $btn-active-background-color-shade: 40% !default;
-$btn-ripple-background-color-fade: .4 !default;
+$btn-ripple-background-color-fade: .2 !default;
+$btn-outline-ripple-background-color-fade: .1 !default;
 
-$btn-outline-hover-background-color-fade: .15 !default;
-$btn-outline-focus-background-color-fade: .25 !default;
+$btn-outline-hover-background-color-fade: .1 !default;
+$btn-outline-focus-background-color-fade: .2 !default;
 $btn-outline-active-color-shade: 15% !default;
 $btn-outline-active-border-color-shade: 15% !default;
 $btn-outline-ripple-background-color-fade: .3 !default;
