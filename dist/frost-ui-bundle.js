@@ -1,5 +1,5 @@
 /**
- * FrostUI Bundle v1.2.4
+ * FrostUI Bundle v1.2.6
  * https://github.com/elusivecodes/FrostCore
  * https://github.com/elusivecodes/FrostDOM
  * https://github.com/elusivecodes/FrostUI
@@ -1106,7 +1106,7 @@
     });
 
     /**
-     * FrostDOM v2.0.16
+     * FrostDOM v2.0.17
      * https://github.com/elusivecodes/FrostDOM
      */
     (function(global, factory) {
@@ -7498,7 +7498,7 @@
              */
             _getDelegateMatchFactory(node, selector) {
                 return target =>
-                    target.matches(selector) ?
+                    target.matches && target.matches(selector) ?
                         target :
                         this._parents(
                             target,
@@ -10787,7 +10787,7 @@
     });
 
     /**
-     * FrostUI v1.2.5
+     * FrostUI v1.2.6
      * https://github.com/elusivecodes/FrostUI
      */
     (function(global, factory) {
