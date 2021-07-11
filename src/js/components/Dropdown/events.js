@@ -83,7 +83,7 @@ dom.addEvent(document, 'click.ui.dropdown', e => {
 
         dropdown.hide();
     }
-}, { capture: true });
+}, true);
 
 dom.addEvent(document, 'keyup.ui.dropdown', e => {
     if (!['Tab', 'Escape'].includes(e.code)) {
@@ -118,4 +118,4 @@ dom.addEvent(document, 'keyup.ui.dropdown', e => {
 
         dropdown.hide();
     }
-}, { capture: true });
+}, true);

@@ -1,5 +1,5 @@
 /**
- * FrostUI Bundle v1.2.6
+ * FrostUI Bundle v1.2.7
  * https://github.com/elusivecodes/FrostCore
  * https://github.com/elusivecodes/FrostDOM
  * https://github.com/elusivecodes/FrostUI
@@ -10787,7 +10787,7 @@
     });
 
     /**
-     * FrostUI v1.2.6
+     * FrostUI v1.2.7
      * https://github.com/elusivecodes/FrostUI
      */
     (function(global, factory) {
@@ -12675,7 +12675,7 @@
 
                 dropdown.hide();
             }
-        }, { capture: true });
+        }, true);
 
         dom.addEvent(document, 'keyup.ui.dropdown', e => {
             if (!['Tab', 'Escape'].includes(e.code)) {
@@ -12710,7 +12710,7 @@
 
                 dropdown.hide();
             }
-        }, { capture: true });
+        }, true);
 
 
         // Dropdown default options
@@ -14283,13 +14283,13 @@
         // Track the target of mousedown events
         dom.addEvent(window, 'mousedown.ui', e => {
             UI._clickTarget = e.target;
-        }, { capture: true });
+        }, true);
 
         dom.addEvent(window, 'mouseup.ui', _ => {
             setTimeout(_ => {
                 UI._clickTarget = null;
             }, 0);
-        }, { capture: true });
+        }, true);
 
 
         /**
