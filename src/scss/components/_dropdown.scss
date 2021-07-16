@@ -8,6 +8,7 @@
 
     position: absolute;
     z-index: $dropdown-z-index;
+    display: none;
     min-width: $dropdown-menu-min-width;
     padding: $dropdown-menu-padding-y 0;
     margin: 0;
@@ -20,11 +21,8 @@
     @include border-radius($dropdown-menu-border-radius);
 
     &.show {
+        display: block;
         overflow: hidden;
-    }
-
-    &:not(.show) {
-        display: none;
     }
 }
 

@@ -51,7 +51,7 @@ class Popper extends BaseComponent {
      * @returns {Popper} The Popper.
      */
     update() {
-        if (!dom.isConnected(this._node)) {
+        if (!dom.isConnected(this._node) || !dom.isVisible(this._node)) {
             return this;
         }
 

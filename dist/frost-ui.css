@@ -2693,6 +2693,7 @@ fieldset:disabled .btn {
   --ui-dropdown-item-text-color: #121212;
   position: absolute;
   z-index: 1000;
+  display: none;
   min-width: 10rem;
   padding: 0.5rem 0;
   margin: 0;
@@ -2705,10 +2706,8 @@ fieldset:disabled .btn {
   border-radius: 0.2rem;
 }
 .dropdown-menu.show {
+  display: block;
   overflow: hidden;
-}
-.dropdown-menu:not(.show) {
-  display: none;
 }
 
 .dropdown-item {

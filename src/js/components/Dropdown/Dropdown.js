@@ -29,20 +29,6 @@ class Dropdown extends BaseComponent {
         if (this._settings.display !== 'static' && dom.closest(this._node, '.navbar-nav').length) {
             this._settings.display = 'static';
         }
-
-        if (this._settings.display === 'dynamic') {
-            this._popper = new Popper(
-                this._menuNode,
-                {
-                    reference: this._referenceNode,
-                    placement: this._settings.placement,
-                    position: this._settings.position,
-                    fixed: this._settings.fixed,
-                    spacing: this._settings.spacing,
-                    minContact: this._settings.minContact
-                }
-            );
-        }
     }
 
     /**
@@ -78,6 +64,11 @@ class Dropdown extends BaseComponent {
         dom.fadeOut(this._menuNode, {
             duration: this._settings.duration
         }).then(_ => {
+            if (this._popper) {
+                this._popper.dispose();
+                this._popper = null;
+            }
+
             dom.removeClass(this._menuNode, 'show');
             dom.setAttribute(this._node, 'aria-expanded', false);
             dom.triggerEvent(this._node, 'hidden.ui.dropdown');
@@ -104,7 +95,19 @@ class Dropdown extends BaseComponent {
         this._animating = true;
         dom.addClass(this._menuNode, 'show');
 
-        this.update();
+        if (this._settings.display === 'dynamic') {
+            this._popper = new Popper(
+                this._menuNode,
+                {
+                    reference: this._referenceNode,
+                    placement: this._settings.placement,
+                    position: this._settings.position,
+                    fixed: this._settings.fixed,
+                    spacing: this._settings.spacing,
+                    minContact: this._settings.minContact
+                }
+            );
+        }
 
         window.requestAnimationFrame(_ => {
             this.update();
@@ -137,7 +140,7 @@ class Dropdown extends BaseComponent {
      * @returns {Dropdown} The Dropdown.
      */
     update() {
-        if (this._settings.display === 'dynamic') {
+        if (this._popper) {
             this._popper.update();
         }
 

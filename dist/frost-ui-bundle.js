@@ -1106,7 +1106,7 @@
     });
 
     /**
-     * FrostDOM v2.0.17
+     * FrostDOM v2.1.0
      * https://github.com/elusivecodes/FrostDOM
      */
     (function(global, factory) {
@@ -3095,23 +3095,21 @@
                     return;
                 }
 
-                return this.constructor._forceShow(node, node => {
-                    const result = {
-                        x: node.offsetLeft,
-                        y: node.offsetTop
-                    };
+                const result = {
+                    x: node.offsetLeft,
+                    y: node.offsetTop
+                };
 
-                    if (offset) {
-                        let offsetParent = node;
+                if (offset) {
+                    let offsetParent = node;
 
-                        while (offsetParent = offsetParent.offsetParent) {
-                            result.x += offsetParent.offsetLeft;
-                            result.y += offsetParent.offsetTop;
-                        }
+                    while (offsetParent = offsetParent.offsetParent) {
+                        result.x += offsetParent.offsetLeft;
+                        result.y += offsetParent.offsetTop;
                     }
+                }
 
-                    return result;
-                });
+                return result;
             },
 
             /**
@@ -5617,10 +5615,13 @@
              * @returns {HTMLElement} The offset parent.
              */
             offsetParent(nodes) {
-                return this.forceShow(
-                    nodes,
-                    node => node.offsetParent
-                );
+                const node = this.parseNode(nodes);
+
+                if (!node) {
+                    return;
+                }
+
+                return node.offsetParent;
             },
 
             /**
@@ -6586,26 +6587,6 @@
             },
 
             /**
-             * Force a node to be shown, and then execute a callback.
-             * @param {string|array|Node|HTMLElement|NodeList|HTMLCollection|QuerySet} nodes The input node(s), or a query selector string.
-             * @param {DOM~nodeCallback} callback The callback to execute.
-             * @returns {*} The result of the callback.
-             */
-            forceShow(nodes, callback) {
-
-                // DocumentFragment and ShadowRoot nodes have no parent
-                const node = this.parseNode(nodes, {
-                    node: true
-                });
-
-                if (!node) {
-                    return;
-                }
-
-                return this.constructor._forceShow(node, callback);
-            },
-
-            /**
              * Get the index of the first node relative to it's parent.
              * @param {string|array|Node|HTMLElement|NodeList|HTMLCollection|QuerySet} nodes The input node(s), or a query selector string.
              * @returns {number} The index.
@@ -7258,16 +7239,14 @@
              * @returns {DOMRect} The computed bounding rectangle.
              */
             _rect(node, offset) {
-                return this._forceShow(node, node => {
-                    const result = node.getBoundingClientRect();
+                const result = node.getBoundingClientRect();
 
-                    if (offset) {
-                        result.x += window.scrollX;
-                        result.y += window.scrollY;
-                    }
+                if (offset) {
+                    result.x += window.scrollX;
+                    result.y += window.scrollY;
+                }
 
-                    return result;
-                });
+                return result;
             }
 
         });
@@ -7285,34 +7264,32 @@
              * @returns {number} The height.
              */
             _height(node, boxSize = 1) {
-                return this._forceShow(node, node => {
-                    if (Core.isDocument(node)) {
-                        node = node.documentElement;
-                    }
+                if (Core.isDocument(node)) {
+                    node = node.documentElement;
+                }
 
-                    if (boxSize === this.SCROLL_BOX) {
-                        return node.scrollHeight;
-                    }
+                if (boxSize === this.SCROLL_BOX) {
+                    return node.scrollHeight;
+                }
 
-                    let result = node.clientHeight;
+                let result = node.clientHeight;
 
-                    if (boxSize === this.CONTENT_BOX) {
-                        result -= parseInt(this._css(node, 'padding-top'))
-                            + parseInt(this._css(node, 'padding-bottom'));
-                    }
+                if (boxSize === this.CONTENT_BOX) {
+                    result -= parseInt(this._css(node, 'padding-top'))
+                        + parseInt(this._css(node, 'padding-bottom'));
+                }
 
-                    if (boxSize >= this.BORDER_BOX) {
-                        result += parseInt(this._css(node, 'border-top-width'))
-                            + parseInt(this._css(node, 'border-bottom-width'));
-                    }
+                if (boxSize >= this.BORDER_BOX) {
+                    result += parseInt(this._css(node, 'border-top-width'))
+                        + parseInt(this._css(node, 'border-bottom-width'));
+                }
 
-                    if (boxSize === this.MARGIN_BOX) {
-                        result += parseInt(this._css(node, 'margin-top'))
-                            + parseInt(this._css(node, 'margin-bottom'));
-                    }
+                if (boxSize === this.MARGIN_BOX) {
+                    result += parseInt(this._css(node, 'margin-top'))
+                        + parseInt(this._css(node, 'margin-bottom'));
+                }
 
-                    return result;
-                });
+                return result;
             },
 
             /**
@@ -7322,34 +7299,32 @@
              * @returns {number} The width.
              */
             _width(node, boxSize = 1) {
-                return this._forceShow(node, node => {
-                    if (Core.isDocument(node)) {
-                        node = node.documentElement;
-                    }
+                if (Core.isDocument(node)) {
+                    node = node.documentElement;
+                }
 
-                    if (boxSize === this.SCROLL_BOX) {
-                        return node.scrollWidth;
-                    }
+                if (boxSize === this.SCROLL_BOX) {
+                    return node.scrollWidth;
+                }
 
-                    let result = node.clientWidth;
+                let result = node.clientWidth;
 
-                    if (boxSize === this.CONTENT_BOX) {
-                        result -= parseInt(this._css(node, 'padding-left'))
-                            + parseInt(this._css(node, 'padding-right'));
-                    }
+                if (boxSize === this.CONTENT_BOX) {
+                    result -= parseInt(this._css(node, 'padding-left'))
+                        + parseInt(this._css(node, 'padding-right'));
+                }
 
-                    if (boxSize >= this.BORDER_BOX) {
-                        result += parseInt(this._css(node, 'border-left-width'))
-                            + parseInt(this._css(node, 'border-right-width'));
-                    }
+                if (boxSize >= this.BORDER_BOX) {
+                    result += parseInt(this._css(node, 'border-left-width'))
+                        + parseInt(this._css(node, 'border-right-width'));
+                }
 
-                    if (boxSize === this.MARGIN_BOX) {
-                        result += parseInt(this._css(node, 'margin-left'))
-                            + parseInt(this._css(node, 'margin-right'));
-                    }
+                if (boxSize === this.MARGIN_BOX) {
+                    result += parseInt(this._css(node, 'margin-left'))
+                        + parseInt(this._css(node, 'margin-right'));
+                }
 
-                    return result;
-                });
+                return result;
             }
 
         });
@@ -8423,55 +8398,6 @@
          */
 
         Object.assign(DOM, {
-
-            /**
-             * Force a single node to be shown, and then execute a callback.
-             * @param {Node|HTMLElement} node The input node.
-             * @param {DOM~nodeCallback} callback The callback to execute.
-             * @returns {*} The result of the callback.
-             */
-            _forceShow(node, callback) {
-                if (this._isVisible(node)) {
-                    return callback(node);
-                }
-
-                const elements = [];
-
-                if (Core.isElement(node) && this._css(node, 'display') === 'none') {
-                    elements.push(node);
-                }
-
-                Core.merge(
-                    elements,
-                    this._parents(
-                        node,
-                        parent =>
-                            Core.isElement(parent) &&
-                            this._css(parent, 'display') === 'none'
-                    )
-                );
-
-                const hidden = new Map;
-
-                for (const element of elements) {
-                    hidden.set(element, element.getAttribute('style'));
-                    element.style.setProperty('display', 'initial', 'important');
-                }
-
-                const result = callback(node);
-
-                for (const [element, style] of hidden) {
-                    if (style) {
-                        element.setAttribute('style', style);
-                    } else {
-                        // force DOM to update
-                        element.getAttribute('style');
-                        element.removeAttribute('style');
-                    }
-                }
-
-                return result;
-            },
 
             /**
              * Sanitize a single node.
@@ -10619,15 +10545,6 @@
             },
 
             /**
-             * Force a node to be shown, and then execute a callback.
-             * @param {DOM~nodeCallback} callback The callback to execute.
-             * @returns {*} The result of the callback.
-             */
-            forceShow(callback) {
-                return this._dom.forceShow(this, callback);
-            },
-
-            /**
              * Retrieve the DOM node(s) contained in the QuerySet.
              * @param {number} [index=null] The index of the node.
              * @returns {array|Node|Document|Window} The node(s).
@@ -10787,7 +10704,7 @@
     });
 
     /**
-     * FrostUI v1.2.7
+     * FrostUI v1.2.8
      * https://github.com/elusivecodes/FrostUI
      */
     (function(global, factory) {
@@ -11017,7 +10934,7 @@
              * @returns {Popper} The Popper.
              */
             update() {
-                if (!dom.isConnected(this._node)) {
+                if (!dom.isConnected(this._node) || !dom.isVisible(this._node)) {
                     return this;
                 }
 
@@ -12472,20 +12389,6 @@
                 if (this._settings.display !== 'static' && dom.closest(this._node, '.navbar-nav').length) {
                     this._settings.display = 'static';
                 }
-
-                if (this._settings.display === 'dynamic') {
-                    this._popper = new Popper(
-                        this._menuNode,
-                        {
-                            reference: this._referenceNode,
-                            placement: this._settings.placement,
-                            position: this._settings.position,
-                            fixed: this._settings.fixed,
-                            spacing: this._settings.spacing,
-                            minContact: this._settings.minContact
-                        }
-                    );
-                }
             }
 
             /**
@@ -12521,6 +12424,11 @@
                 dom.fadeOut(this._menuNode, {
                     duration: this._settings.duration
                 }).then(_ => {
+                    if (this._popper) {
+                        this._popper.dispose();
+                        this._popper = null;
+                    }
+
                     dom.removeClass(this._menuNode, 'show');
                     dom.setAttribute(this._node, 'aria-expanded', false);
                     dom.triggerEvent(this._node, 'hidden.ui.dropdown');
@@ -12547,7 +12455,19 @@
                 this._animating = true;
                 dom.addClass(this._menuNode, 'show');
 
-                this.update();
+                if (this._settings.display === 'dynamic') {
+                    this._popper = new Popper(
+                        this._menuNode,
+                        {
+                            reference: this._referenceNode,
+                            placement: this._settings.placement,
+                            position: this._settings.position,
+                            fixed: this._settings.fixed,
+                            spacing: this._settings.spacing,
+                            minContact: this._settings.minContact
+                        }
+                    );
+                }
 
                 window.requestAnimationFrame(_ => {
                     this.update();
@@ -12580,7 +12500,7 @@
              * @returns {Dropdown} The Dropdown.
              */
             update() {
-                if (this._settings.display === 'dynamic') {
+                if (this._popper) {
                     this._popper.update();
                 }
 
