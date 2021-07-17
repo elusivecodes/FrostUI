@@ -14,7 +14,9 @@ body {
   color: #121212;
   text-align: left;
   background-color: #fff;
-  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+     -moz-text-size-adjust: 100%;
+          text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
@@ -67,7 +69,8 @@ p {
 
 abbr[title],
 abbr[data-ui-original-title] {
-  text-decoration: underline dotted;
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
   cursor: help;
   border-bottom: none;
 }
@@ -282,7 +285,9 @@ button,
 [type=button],
 [type=reset],
 [type=submit] {
-  appearance: button;
+  -webkit-appearance: button;
+     -moz-appearance: button;
+          appearance: button;
 }
 button:not(:disabled),
 [type=button]:not(:disabled),
@@ -322,7 +327,9 @@ legend + * {
 
 [type=search] {
   outline-offset: -2px;
-  appearance: textfield;
+  -webkit-appearance: textfield;
+     -moz-appearance: textfield;
+          appearance: textfield;
 }
 
 ::-webkit-search-decoration {
@@ -2062,7 +2069,10 @@ progress {
   white-space: nowrap;
   vertical-align: middle;
   cursor: pointer;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   background-color: var(--ui-btn-bg);
   border: 1px solid var(--ui-btn-border, rgba(0, 0, 0, 0.15));
   border-radius: 0.2rem;
@@ -2541,7 +2551,10 @@ fieldset:disabled .btn {
   --ui-carousel-caption-color: #fafaff;
   position: relative;
   background-color: var(--ui-carousel-bg);
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .carousel-inner {
@@ -2552,7 +2565,8 @@ fieldset:disabled .btn {
 
 .carousel-item {
   display: none;
-  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
 }
 .carousel-item:not(.active) {
   position: absolute;
@@ -4067,6 +4081,15 @@ fieldset:disabled .btn {
   color: #1f3333;
 }
 
+@-webkit-keyframes progress-bar-stripes {
+  from {
+    background-position: 2rem 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
 @keyframes progress-bar-stripes {
   from {
     background-position: 2rem 0;
@@ -4102,7 +4125,8 @@ fieldset:disabled .btn {
 }
 
 .progress-bar-animated {
-  animation: progress-bar-stripes 1s linear infinite;
+  -webkit-animation: progress-bar-stripes 1s linear infinite;
+          animation: progress-bar-stripes 1s linear infinite;
 }
 
 .progress-vertical {
@@ -4121,12 +4145,26 @@ fieldset:disabled .btn {
 
 @media (prefers-reduced-motion) {
   .progress-bar-animated {
-    animation-duration: 5s;
+    -webkit-animation-duration: 5s;
+            animation-duration: 5s;
+  }
+}
+@-webkit-keyframes spinner-border {
+  to {
+    transform: rotate(360deg);
   }
 }
 @keyframes spinner-border {
   to {
     transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spinner-grow {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
   }
 }
 @keyframes spinner-grow {
@@ -4146,7 +4184,8 @@ fieldset:disabled .btn {
   border: 0.25em solid currentColor;
   border-right-color: transparent;
   border-radius: 50%;
-  animation: spinner-border 1s ease-in-out infinite;
+  -webkit-animation: spinner-border 1s ease-in-out infinite;
+          animation: spinner-border 1s ease-in-out infinite;
 }
 
 .spinner-grow {
@@ -4157,7 +4196,8 @@ fieldset:disabled .btn {
   background-color: currentColor;
   border-radius: 50%;
   opacity: 0;
-  animation: spinner-grow 1s ease-in-out infinite;
+  -webkit-animation: spinner-grow 1s ease-in-out infinite;
+          animation: spinner-grow 1s ease-in-out infinite;
 }
 
 .spinner-border-sm {
@@ -4180,7 +4220,8 @@ fieldset:disabled .btn {
 @media (prefers-reduced-motion) {
   .spinner-grow,
 .spinner-border {
-    animation-duration: 5s;
+    -webkit-animation-duration: 5s;
+            animation-duration: 5s;
   }
 }
 .toast {
@@ -4194,7 +4235,8 @@ fieldset:disabled .btn {
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0.2rem;
   opacity: 0;
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
 }
 .toast:not(:last-child) {
   margin-bottom: 1rem;
@@ -4208,6 +4250,8 @@ fieldset:disabled .btn {
 }
 
 .toast-container {
+  width: -webkit-max-content;
+  width: -moz-max-content;
   width: max-content;
   max-width: 100%;
   pointer-events: none;
@@ -4344,7 +4388,9 @@ fieldset:disabled .btn {
   border: 1px solid var(--ui-input-border-color, rgba(0, 0, 0, 0.15));
   transition: all 0.25s ease-in-out;
   transition-property: background-color, background-position, border-color, box-shadow;
-  appearance: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
 }
 .input-check[type=checkbox] {
   border-radius: 0.2rem;
@@ -4453,6 +4499,12 @@ fieldset:disabled .btn {
   font-size: 1rem;
   line-height: 1.5;
 }
+.input-filled::-moz-placeholder, .input-outline::-moz-placeholder {
+  color: #808080;
+}
+.input-filled:-ms-input-placeholder, .input-outline:-ms-input-placeholder {
+  color: #808080;
+}
 .input-filled::placeholder,
 .input-outline::placeholder {
   color: #808080;
@@ -4489,7 +4541,9 @@ fieldset:disabled .btn {
   color: #808080;
 }
 select.input-filled, select.input-outline {
-  appearance: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
 }
 select.input-filled:not([multiple]), select.input-outline:not([multiple]) {
   padding-right: calc(1rem + 16px);
@@ -4687,6 +4741,12 @@ select.input-lg[multiple] option {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
 }
+.input-floating::-moz-placeholder {
+  color: transparent;
+}
+.input-floating:-ms-input-placeholder {
+  color: transparent;
+}
 .input-floating::placeholder {
   color: transparent;
 }
@@ -4702,9 +4762,27 @@ select.input-lg[multiple] option {
 .input-floating.input-outline ~ .label-floating {
   border: 1px solid transparent;
 }
+.input-floating:not(:-moz-placeholder-shown) {
+  padding-top: 1.25rem;
+  padding-bottom: 0.25rem;
+}
+.input-floating:not(:-ms-input-placeholder) {
+  padding-top: 1.25rem;
+  padding-bottom: 0.25rem;
+}
 .input-floating:focus, .input-floating.focus, .input-floating:not(:placeholder-shown) {
   padding-top: 1.25rem;
   padding-bottom: 0.25rem;
+}
+.input-floating:not(:-moz-placeholder-shown) ~ .label-floating {
+  padding-top: 0.25rem;
+  font-size: 13px;
+  color: #606d7b;
+}
+.input-floating:not(:-ms-input-placeholder) ~ .label-floating {
+  padding-top: 0.25rem;
+  font-size: 13px;
+  color: #606d7b;
 }
 .input-floating:focus ~ .label-floating, .input-floating.focus ~ .label-floating, .input-floating:not(:placeholder-shown) ~ .label-floating {
   padding-top: 0.25rem;
@@ -4776,7 +4854,10 @@ select.input-lg[multiple] option {
 }
 .btn-close.disabled, .btn-close:disabled {
   pointer-events: none;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   opacity: 0.25;
 }
 
@@ -6817,15 +6898,24 @@ select.input-lg[multiple] option {
   }
 }
 .user-select-auto {
-  user-select: auto !important;
+  -webkit-user-select: auto !important;
+     -moz-user-select: auto !important;
+      -ms-user-select: auto !important;
+          user-select: auto !important;
 }
 
 .user-select-all {
-  user-select: all !important;
+  -webkit-user-select: all !important;
+     -moz-user-select: all !important;
+      -ms-user-select: all !important;
+          user-select: all !important;
 }
 
 .user-select-none {
-  user-select: none !important;
+  -webkit-user-select: none !important;
+     -moz-user-select: none !important;
+      -ms-user-select: none !important;
+          user-select: none !important;
 }
 
 .pe-auto {

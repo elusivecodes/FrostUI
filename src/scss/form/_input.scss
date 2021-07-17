@@ -46,6 +46,7 @@
     }
 
     @at-root #{selector-append("select", &)} {
+        border-radius: 0;
         appearance: none;
 
         &:not([multiple]) {

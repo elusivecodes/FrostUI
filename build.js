@@ -5,6 +5,7 @@ const terser = require('terser');
 const sass = require('sass');
 const postcss = require('postcss');
 const cssnano = require('cssnano');
+const autoprefixer = require('autoprefixer');
 
 const srcFolder = 'src';
 const distFolder = 'dist';
@@ -113,13 +114,17 @@ sass.render({
     const fullPath = path.join(distFolder, name + '.css');
     const minifiedPath = path.join(distFolder, name + '.min.css');
 
-    fs.writeFileSync(
-        fullPath,
-        result.css.toString()
-    );
+    postcss([autoprefixer])
+        .process(result.css.toString(), { from: fullPath })
+        .then(processed => {
+            fs.writeFileSync(
+                fullPath,
+                processed.toString()
+            );
 
-    postcss([cssnano])
-        .process(result.css.toString(), { from: fullPath, to: minifiedPath })
+            return postcss([cssnano])
+                .process(processed.toString(), { from: fullPath, to: minifiedPath });
+        })
         .then(minified => {
             fs.writeFileSync(
                 minifiedPath,
