@@ -2157,7 +2157,7 @@ fieldset:disabled .btn {
   --ui-btn-hover-bg: #2244aa;
   --ui-btn-focus-bg: #5577dd;
   --ui-btn-active-bg: #1a337f;
-  --ui-ripple-bg: rgba(255, 255, 255, 0.2);
+  --ui-ripple-bg: rgba(255, 255, 255, 0.3);
 }
 
 .btn-outline-primary {
@@ -2179,7 +2179,7 @@ fieldset:disabled .btn {
   --ui-btn-hover-bg: #4d5762;
   --ui-btn-focus-bg: #808a95;
   --ui-btn-active-bg: #3a414a;
-  --ui-ripple-bg: rgba(255, 255, 255, 0.2);
+  --ui-ripple-bg: rgba(255, 255, 255, 0.3);
 }
 
 .btn-outline-secondary {
@@ -2201,7 +2201,7 @@ fieldset:disabled .btn {
   --ui-btn-hover-bg: #1b701b;
   --ui-btn-focus-bg: #4ea34e;
   --ui-btn-active-bg: #145414;
-  --ui-ripple-bg: rgba(255, 255, 255, 0.2);
+  --ui-ripple-bg: rgba(255, 255, 255, 0.3);
 }
 
 .btn-outline-success {
@@ -2223,7 +2223,7 @@ fieldset:disabled .btn {
   --ui-btn-hover-bg: #0c666a;
   --ui-btn-focus-bg: #3f999d;
   --ui-btn-active-bg: #094c50;
-  --ui-ripple-bg: rgba(255, 255, 255, 0.2);
+  --ui-ripple-bg: rgba(255, 255, 255, 0.3);
 }
 
 .btn-outline-info {
@@ -2245,7 +2245,7 @@ fieldset:disabled .btn {
   --ui-btn-hover-bg: #c48114;
   --ui-btn-focus-bg: #f7b447;
   --ui-btn-active-bg: #93610f;
-  --ui-ripple-bg: rgba(0, 0, 0, 0.2);
+  --ui-ripple-bg: rgba(255, 255, 255, 0.3);
 }
 
 .btn-outline-warning {
@@ -2267,7 +2267,7 @@ fieldset:disabled .btn {
   --ui-btn-hover-bg: #b01030;
   --ui-btn-focus-bg: #e34363;
   --ui-btn-active-bg: #840c24;
-  --ui-ripple-bg: rgba(255, 255, 255, 0.2);
+  --ui-ripple-bg: rgba(255, 255, 255, 0.3);
 }
 
 .btn-outline-danger {
@@ -2289,7 +2289,7 @@ fieldset:disabled .btn {
   --ui-btn-hover-bg: #c8c8cc;
   --ui-btn-focus-bg: #fbfbff;
   --ui-btn-active-bg: #969699;
-  --ui-ripple-bg: rgba(0, 0, 0, 0.2);
+  --ui-ripple-bg: rgba(255, 255, 255, 0.3);
 }
 
 .btn-outline-light {
@@ -2311,7 +2311,7 @@ fieldset:disabled .btn {
   --ui-btn-hover-bg: #192929;
   --ui-btn-focus-bg: #4c5c5c;
   --ui-btn-active-bg: #131f1f;
-  --ui-ripple-bg: rgba(255, 255, 255, 0.2);
+  --ui-ripple-bg: rgba(255, 255, 255, 0.3);
 }
 
 .btn-outline-dark {
@@ -4541,6 +4541,7 @@ fieldset:disabled .btn {
   color: #808080;
 }
 select.input-filled, select.input-outline {
+  border-radius: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -5070,7 +5071,7 @@ select.input-lg[multiple] option {
   width: 2px;
   height: 2px;
   pointer-events: none;
-  background-color: var(--ui-ripple-bg, rgba(255, 255, 255, 0.4));
+  background-color: var(--ui-ripple-bg, rgba(255, 255, 255, 0.3));
   border-radius: 50%;
 }
 

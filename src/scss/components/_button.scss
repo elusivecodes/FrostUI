@@ -106,14 +106,13 @@
         $hover-background-color: shade($color, $btn-hover-background-color-shade);
         $focus-background-color: tint($color, $btn-focus-background-color-tint);
         $active-background-color: shade($color, $btn-active-background-color-shade);
-        $ripple-background-color: fade($text-color, $btn-ripple-background-color-fade);
 
         --ui-btn-bg: #{$color};
         --ui-btn-color: #{$text-color};
         --ui-btn-hover-bg: #{$hover-background-color};
         --ui-btn-focus-bg: #{$focus-background-color};
         --ui-btn-active-bg: #{$active-background-color};
-        --ui-ripple-bg: #{$ripple-background-color};
+        --ui-ripple-bg: #{$btn-ripple-background-color};
     }
 
     .btn-outline-#{$name} {
