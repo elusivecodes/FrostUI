@@ -288,8 +288,6 @@ $nav-tabs-nav-link-active-border-color: $link-color !default;
 $nav-pills-nav-link-active-background-color: $link-color !default;
 $nav-pills-nav-link-active-focus-background-color: tint($nav-pills-nav-link-active-background-color, 30%) !default;
 
-$navbar-nav-scroll-height: 75vh !default;
-
 // navbar
 $navbar-padding-x: $spacing * .5 !default;
 $navbar-padding-y: $spacing * .5 !default;
@@ -300,6 +298,7 @@ $navbar-brand-padding-y: $spacing * .25 !default;
 $navbar-brand-margin-right: $spacing !default;
 $navbar-brand-font-size: $font-size-lg !default;
 $navbar-text-padding-y: $navbar-padding-y !default;
+$navbar-nav-scroll-height: 75vh !default;
 
 $navbar-toggler-padding-x: $navbar-padding-x !default;
 $navbar-toggler-padding-y: $spacing * .25 !default;
@@ -376,6 +375,10 @@ $pagination-lg-padding-x: $spacing * 1.5 !default;
 $pagination-lg-padding-y: $spacing * .75 !default;
 $pagination-lg-font-size: $font-size-lg !default;
 $pagination-lg-line-height: map-get($line-heights, base) !default;
+
+// placeholder
+$placeholder-opacity-max: .5 !default;
+$placeholder-opacity-min: .2 !default;
 
 // popover
 $popover-max-width: 276px !default;

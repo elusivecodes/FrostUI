@@ -5,7 +5,8 @@
 // @param $responsive: false
 // @param $print = false
 // @param $important = true
-@mixin utility($properties, $values, $class: false, $responsive: false, $print: false, $important: true) {
+// @param $css-var: false
+@mixin utility($properties, $values, $class: false, $responsive: false, $print: false, $important: true, $css-var: false) {
     @if type-of($properties) == "string" {
         $properties: append((), $properties);
     }
@@ -19,14 +20,14 @@
             $infix: breakpoint-infix($breakpoint);
 
             @if $responsive or $infix == "" {
-                @include utility-class($properties, $values, $infix, $class, $important);
+                @include utility-class($properties, $values, $infix, $class, $important, $css-var);
             }
         }
     }
 
     @if $print {
         @media print {
-            @include utility-class($properties, $values, "-print", $class, $important);
+            @include utility-class($properties, $values, "-print", $class, $important, $css-var);
         }
     }
 }
@@ -37,7 +38,8 @@
 // @param $infix
 // @param $class
 // @param $important
-@mixin utility-class($properties, $values, $infix, $class, $important) {
+// @param $css-var
+@mixin utility-class($properties, $values, $infix, $class, $important, $css-var) {
     $class: if($class != false, $class, nth($properties, 1));
     $class: if($class == null, "", $class);
     $infix: if($class == "" and str-slice($infix, 1, 1) == "-", str-slice($infix, 2), $infix);
@@ -48,6 +50,7 @@
         @if $value != null {
             .#{$class + $infix + $class-modifier} {
                 @each $property in $properties {
+                    $property: if($css-var, --ui-#{$property}, $property);
                     #{$property}: $value if($important, !important, null);
                 }
             }

@@ -79,6 +79,11 @@
     color: var(--ui-navbar-text-color);
 }
 
+.navbar-nav-scroll {
+    max-height: $navbar-nav-scroll-height;
+    overflow-y: auto;
+}
+
 .navbar-collapse {
     flex-grow: 1;
     align-items: center;
@@ -153,6 +158,7 @@
 
             .navbar-collapse {
                 display: flex !important;
+                flex-basis: auto;
             }
 
             .navbar-toggler {
@@ -172,6 +178,44 @@
                     padding-right: $navbar-nav-link-padding-x;
                     padding-left: $navbar-nav-link-padding-x;
                 }
+            }
+
+            .navbar-nav-scroll {
+                overflow: visible;
+            }
+
+            .offcanvas {
+                position: inherit;
+                bottom: 0;
+                z-index: 1000;
+                flex-grow: 1;
+                visibility: visible !important;
+                background-color: transparent;
+                border-right: 0;
+                border-left: 0;
+                transform: none;
+
+                &:not(.show) {
+                    display: flex;
+                }
+            }
+
+            .offcanvas-top,
+            .offcanvas-bottom {
+                height: auto;
+                border-top: 0;
+                border-bottom: 0;
+            }
+
+            .offcanvas-header {
+                display: none;
+            }
+
+            .offcanvas-body {
+                display: flex;
+                flex-grow: 0;
+                padding: 0;
+                overflow-y: visible;
             }
         }
     }

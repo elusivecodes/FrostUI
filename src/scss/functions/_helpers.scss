@@ -1,3 +1,23 @@
+// Loop a map and call a function on each value.
+// @param $map
+// @param $func
+// @param ...$args
+@function map-loop($map, $func, $args...) {
+    $result: ();
+
+    @each $key, $value in $map {
+        // allow to pass the $key and $value of the map as an function argument
+        $temp: ();
+        @each $arg in $args {
+            $temp: append($temp, if($arg == "$key", $key, if($arg == "$value", $value, $arg)));
+        }
+
+        $result: map-merge($result, ($key: call(get-function($func), $temp...)));
+    }
+
+    @return $result;
+}
+
 // Search and replace a substring within a string.
 // @param $string
 // @param $search

@@ -35,6 +35,13 @@
     @return (map-get($rgb, "r") * .2126) + (map-get($rgb, "g") * .7152) + (map-get($rgb, "b") * .0722);
 }
 
+// Create an RGBA css value.
+// @param $rgbVar
+// @param opacityVar
+@function rgba-css-var($rgbVar, $opacityVar) {
+    @return rgba(var(--ui-#{$rgbVar}-rgb), var(--ui-#{$opacityVar}-opacity));
+}
+
 // Shade a color by a specified amount (1-100).
 // @param $color
 // @param $amount
@@ -84,3 +91,10 @@
 @function tint($color, $amount) {
     @return mix($color, #fff, 100 - $amount);
 }
+
+// Convert a color to RGB values
+// @param $color
+@function to-rgb($color) {
+    @return red($color), green($color), blue($color);
+}
+

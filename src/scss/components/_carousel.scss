@@ -4,8 +4,8 @@
     --ui-carousel-caption-color: #{$carousel-caption-color};
 
     position: relative;
-    background-color: var(--ui-carousel-bg);
     user-select: none;
+    background-color: var(--ui-carousel-bg);
 }
 
 .carousel-inner {

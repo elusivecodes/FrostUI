@@ -1,0 +1,21 @@
+:root {
+
+    @each $color, $value in $color-variants {
+        --ui-#{$color}: #{$value};
+    }
+
+    --ui-white: #{$white};
+    --ui-black: #{$black};
+    --ui-gray: #{$gray};
+
+    @each $color, $value in $color-variants {
+        --ui-#{$color}-rgb: #{to-rgb($value)};
+    }
+
+    --ui-white-rgb: #{to-rgb($white)};
+    --ui-black-rgb: #{to-rgb($black)};
+    --ui-gray-rgb: #{to-rgb($gray)};
+    --ui-bg-opacity: 1;
+    --ui-text-opacity: 1;
+
+}

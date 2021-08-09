@@ -41,6 +41,17 @@ $color-variants: (
     dark: #1f3333
 ) !default;
 
+$color-variants-rgb: map-loop($color-variants, to-rgb, "$value") !default;
+$utilities-colors: map-merge(
+    $color-variants-rgb,
+    (
+        "black": to-rgb($black),
+        "white": to-rgb($white)
+    )
+) !default;
+$utilities-text-colors: map-loop($utilities-colors, rgba-css-var, "$key", "text") !default;
+$utilities-bg-colors: map-loop($utilities-colors, rgba-css-var, "$key", "bg") !default;
+
 $text-color: #121212 !default;
 $text-muted-color: tint($text-color, 30%) !default;
 $link-color: #3e78a8 !default;

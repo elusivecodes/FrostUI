@@ -57,7 +57,7 @@ $display-6-font-size: 2.5 !default;
 // horizontal rule
 $hr-height: $border-size !default;
 $hr-margin-y: $spacing * .5 !default;
-$hr-color: $border-color !default;
+$hr-opacity: .25 !default;
 
 // image
 $img-thumbnail-padding: $spacing * .25 !default;

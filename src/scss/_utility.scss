@@ -59,16 +59,18 @@
 
 // color
 @include utility(color, map-merge(
-    $color-variants,
+    $utilities-text-colors,
     (
-        white: $white,
-        body: $text-color,
         muted: $text-muted-color,
-        black-50: fade($black, .5),
-        white-50: fade($white, .5),
         reset: inherit
     )
 ), text);
+@include utility(text-opacity, (
+    25: .25,
+    50: .5,
+    75: .75,
+    100: 1
+), $css-var: true);
 @include utility(border-color, map-merge(
     $color-variants,
     (
@@ -76,16 +78,29 @@
     )
 ), border);
 @include utility(background-color, map-merge(
-    $color-variants,
+    $utilities-bg-colors,
     (
-        body: $body-background-color,
-        white: $white,
         transparent: transparent
     )
 ), bg);
+@include utility(bg-opacity, (
+    10: .1,
+    25: .25,
+    50: .5,
+    75: .75,
+    100: 1
+), $css-var: true);
 @include utility(background-image, (
     gradient: $bg-gradient-background-image
 ), bg);
+
+// opacity
+@include utility(opacity, (
+    25: .25,
+    50: .5,
+    75: .75,
+    100: 1
+));
 
 // display
 @include utility(display, inline inline-block block table table-cell table-row flex inline-flex grid none, d, true, true);

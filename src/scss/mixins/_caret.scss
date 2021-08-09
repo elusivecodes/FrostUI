@@ -4,7 +4,7 @@
         &::before {
             display: inline-block;
             margin-right: $caret-spacing;
-            vertical-align: $caret-vertical-align - ($caret-size * .5); 
+            vertical-align: $caret-vertical-align - ($caret-size * .5);
             content: "";
             border-top: $caret-size solid transparent;
             border-right: $caret-size solid;

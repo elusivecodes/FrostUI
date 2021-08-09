@@ -36,8 +36,8 @@
                             </li>
                             <li class="nav-item">
                                 <div class="dropdown">
-                                    <a class="nav-link dropdown-toggle" id="lightDropdown" data-ui-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                                    <div class="dropdown-menu shadow-sm" aria-labelledby="lightDropdown">
+                                    <a class="nav-link dropdown-toggle" id="dropdown1" data-ui-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                                    <div class="dropdown-menu shadow-sm" aria-labelledby="dropdown1">
                                         <a class="dropdown-item" href="#">Link</a>
                                         <a class="dropdown-item" href="#">Link</a>
                                         <a class="dropdown-item" href="#">Link</a>
@@ -163,8 +163,8 @@
                             </li>
                             <li class="nav-item">
                                 <div class="dropdown">
-                                    <a class="nav-link dropdown-toggle" id="lightDropdown" data-ui-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                                    <div class="dropdown-menu shadow-sm" aria-labelledby="lightDropdown">
+                                    <a class="nav-link dropdown-toggle" id="dropdown2" data-ui-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                                    <div class="dropdown-menu shadow-sm" aria-labelledby="dropdown2">
                                         <a class="dropdown-item" href="#">Link</a>
                                         <a class="dropdown-item" href="#">Link</a>
                                         <a class="dropdown-item" href="#">Link</a>
@@ -379,8 +379,8 @@
                                 Link
                             </a>
                             <div class="dropdown">
-                                <a class="nav-link dropdown-toggle" id="scrollingDropdown" data-ui-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                                <div class="dropdown-menu shadow-sm" aria-labelledby="scrollingDropdown">
+                                <a class="nav-link dropdown-toggle" id="dropdown3" data-ui-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                                <div class="dropdown-menu shadow-sm" aria-labelledby="dropdown3">
                                     <a class="dropdown-item" href="#">Link</a>
                                     <a class="dropdown-item" href="#">Link</a>
                                     <a class="dropdown-item" href="#">Link</a>
@@ -536,6 +536,62 @@
                                 <button class="btn btn-outline-dark ripple" type="submit">Search</button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <h4>Offcanvas</h4>
+        <div class="mb-4">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">Navbar</a>
+                    <button class="navbar-toggler" data-ui-toggle="offcanvas" data-ui-target="#navbarOffcanvas" type="button" aria-expanded="false" aria-controls="navbarOffcanvas" aria-label="Open Menu">
+                        <span class="navbar-toggler-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="offcanvas offcanvas-end" id="navbarOffcanvas" tabindex="-1" aria-labelledby="navbarOffcanvastTitle">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="navbarOffcanvastTitle">Offcanvas</h5>
+                            <button class="btn-close" data-ui-dismiss="offcanvas" type="button" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav flex-grow-1 pe-3">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#" aria-current="page">
+                                        Active
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        Link
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <div class="dropdown">
+                                        <a class="nav-link dropdown-toggle" id="dropdown4" data-ui-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                                        <div class="dropdown-menu shadow-sm" aria-labelledby="dropdown4">
+                                            <a class="dropdown-item" href="#">Link</a>
+                                            <a class="dropdown-item" href="#">Link</a>
+                                            <a class="dropdown-item" href="#">Link</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
+                                        Disabled
+                                    </a>
+                                </li>
+                            </ul>
+                            <form class="d-flex">
+                                <div class="form-input me-2">
+                                    <input class="input-filled" type="search" placeholder="Search" aria-label="Search">
+                                    <span class="ripple-line"></span>
+                                </div>
+                                <div class="d-flex">
+                                    <button class="btn btn-outline-dark ripple" type="submit">Search</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </nav>
