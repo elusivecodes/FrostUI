@@ -46,6 +46,25 @@ UI.getClickTarget = e => {
 };
 
 /**
+ * Get position from a mouse/touch event.
+ * @param {Event} e The mouse/touch event.
+ * @returns {object} The position.
+ */
+UI.getPosition = e => {
+    if ('touches' in e && e.touches.length) {
+        return {
+            x: e.touches[0].pageX,
+            y: e.touches[0].pageY
+        };
+    }
+
+    return {
+        x: e.pageX,
+        y: e.pageY
+    };
+};
+
+/**
  * Get the scrollbar size for a given axis.
  * @param {HTMLElement|Window} node The input node.
  * @param {HTMLElement|Document} scrollNode The scroll node.

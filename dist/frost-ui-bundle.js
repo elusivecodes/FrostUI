@@ -10704,7 +10704,7 @@
     });
 
     /**
-     * FrostUI v1.4.0
+     * FrostUI v1.4.1
      * https://github.com/elusivecodes/FrostUI
      */
     (function(global, factory) {
@@ -14257,6 +14257,25 @@
          */
         UI.getClickTarget = e => {
             return UI._clickTarget || e.target;
+        };
+
+        /**
+         * Get position from a mouse/touch event.
+         * @param {Event} e The mouse/touch event.
+         * @returns {object} The position.
+         */
+        UI.getPosition = e => {
+            if ('touches' in e && e.touches.length) {
+                return {
+                    x: e.touches[0].pageX,
+                    y: e.touches[0].pageY
+                };
+            }
+
+            return {
+                x: e.pageX,
+                y: e.pageY
+            };
         };
 
         /**
