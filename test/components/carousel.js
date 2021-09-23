@@ -3426,7 +3426,7 @@ describe('Carousel', function() {
                         new Touch({
                             identifier: Date.now(),
                             target: carousel1,
-                            clientX: 400
+                            pageX: 400
                         })
                     ]
                 });
@@ -3437,7 +3437,7 @@ describe('Carousel', function() {
                         new Touch({
                             identifier: Date.now(),
                             target: window,
-                            clientX: 300
+                            pageX: 300
                         })
                     ]
                 });
