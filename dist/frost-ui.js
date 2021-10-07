@@ -1,5 +1,5 @@
 /**
- * FrostUI v1.4.4
+ * FrostUI v1.4.5
  * https://github.com/elusivecodes/FrostUI
  */
 (function(global, factory) {
@@ -3585,6 +3585,19 @@
 
         return 0;
     };
+
+    /**
+     * Get positions from a touch event.
+     * @param {Event} e The touch event.
+     * @returns {array} The positions.
+     */
+    UI.getTouchPositions = e => {
+        return [...e.touches].map(touch => ({
+            x: touch.pageX,
+            y: touch.pageY
+        }));
+    };
+
     /**
      * Reset body scrollbar padding.
      */

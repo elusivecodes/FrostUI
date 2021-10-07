@@ -82,6 +82,19 @@ UI.getScrollbarSize = (node = window, scrollNode = document, axis) => {
 
     return 0;
 };
+
+/**
+ * Get positions from a touch event.
+ * @param {Event} e The touch event.
+ * @returns {array} The positions.
+ */
+UI.getTouchPositions = e => {
+    return [...e.touches].map(touch => ({
+        x: touch.pageX,
+        y: touch.pageY
+    }));
+};
+
 /**
  * Reset body scrollbar padding.
  */
