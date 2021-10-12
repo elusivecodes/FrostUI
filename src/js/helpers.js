@@ -89,10 +89,8 @@ UI.getScrollbarSize = (node = window, scrollNode = document, axis) => {
  * @returns {array} The positions.
  */
 UI.getTouchPositions = e => {
-    return [...e.touches].map(touch => ({
-        x: touch.pageX,
-        y: touch.pageY
-    }));
+    return Array.from(e.touches)
+        .map(touch => ({ x: touch.pageX, y: touch.pageY }));
 };
 
 /**

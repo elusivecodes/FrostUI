@@ -1,5 +1,5 @@
 /**
- * FrostUI Bundle v1.4.5
+ * FrostUI Bundle v1.4.6
  * https://github.com/elusivecodes/FrostCore
  * https://github.com/elusivecodes/FrostDOM
  * https://github.com/elusivecodes/FrostUI
@@ -10724,7 +10724,7 @@
     });
 
     /**
-     * FrostUI v1.4.5
+     * FrostUI v1.4.6
      * https://github.com/elusivecodes/FrostUI
      */
     (function(global, factory) {
@@ -14317,10 +14317,8 @@
          * @returns {array} The positions.
          */
         UI.getTouchPositions = e => {
-            return [...e.touches].map(touch => ({
-                x: touch.pageX,
-                y: touch.pageY
-            }));
+            return Array.from(e.touches)
+                .map(touch => ({ x: touch.pageX, y: touch.pageY }));
         };
 
         /**
