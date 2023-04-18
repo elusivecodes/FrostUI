@@ -34,7 +34,7 @@ It utilizes [fQuery](https://github.com/elusivecodes/fQuery) for DOM manipulatio
 <script type="text/javascript" src="/path/to/frost-ui.min.js"></script>
 ```
 
-Alternatively, a bundle version is supplied which includes the *FrostCore* and *FrostDOM* libraries in a single JS file.
+Alternatively, a bundle version is supplied which includes the *FrostCore* and *fQuery* libraries in a single JS file.
 
 ```html
 <script type="text/javascript" src="/path/to/frost-ui-bundle.min.js"></script>
