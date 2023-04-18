@@ -4,7 +4,7 @@
 
 It takes heavy inspiration from **Bootstrap**, offering a (mostly) compatible set of features, with more opinionated default styling, additional features and components, and is highly customizable.
 
-It utilizes [FrostDOM](https://github.com/elusivecodes/FrostDOM) for DOM manipulation and animations.
+It utilizes [fQuery](https://github.com/elusivecodes/fQuery) for DOM manipulation and animations.
 
 
 ## Table Of Contents
@@ -18,7 +18,7 @@ It utilizes [FrostDOM](https://github.com/elusivecodes/FrostDOM) for DOM manipul
 **Dependencies**
 
 - [FrostCore](https://github.com/elusivecodes/FrostCore)
-- [FrostDOM](https://github.com/elusivecodes/FrostDOM)
+- [fQuery](https://github.com/elusivecodes/fQuery)
 
 **CSS**
 
@@ -30,7 +30,7 @@ It utilizes [FrostDOM](https://github.com/elusivecodes/FrostDOM) for DOM manipul
 
 ```html
 <script type="text/javascript" src="/path/to/frost-core.min.js"></script>
-<script type="text/javascript" src="/path/to/frost-dom.min.js"></script>
+<script type="text/javascript" src="/path/to/fquery.min.js"></script>
 <script type="text/javascript" src="/path/to/frost-ui.min.js"></script>
 ```
 
