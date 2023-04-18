@@ -1,13 +1,23 @@
 @each $name, $color in $color-link-variants {
-    .link-#{'' + $name} {
-        color: $color;
+    .link-#{"" + $name} {
+        color: rgba(var(--ui-#{$name}-rgb), var(--ui-link-opacity, 1));
+        text-decoration-color: rgba(var(--ui-#{$name}-rgb), var(--ui-link-underline-opacity, 1));
 
-        &:hover {
-            color: shade($color, $link-hover-color-shade);
-        }
-
+        &:hover,
         &:focus {
-            color: tint($color, $link-focus-color-tint);
+            color: rgba(var(--ui-#{$name}-emphasis-rgb), var(--ui-link-opacity, 1));
+            text-decoration-color: rgba(var(--ui-#{$name}-emphasis-rgb), var(--ui-link-underline-opacity, 1));
         }
+    }
+}
+
+.link-body-emphasis {
+    color: rgba(var(--ui-emphasis-color-rgb), var(--ui-link-opacity, 1));
+    text-decoration-color: rgba(var(--ui-emphasis-color-rgb), var(--ui-link-underline-opacity, 1));
+
+    &:hover,
+    &:focus {
+        color: rgba(var(--ui-emphasis-color-rgb), var(--ui-link-opacity, .75));
+        text-decoration-color: rgba(var(--ui-emphasis-color-rgb), var(--ui-link-underline-opacity, .75));
     }
 }

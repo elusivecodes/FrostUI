@@ -1,12 +1,9 @@
-// Generate a set of utility classes.
-// @param $properties
-// @param $values
-// @param $class: false
-// @param $responsive: false
-// @param $print = false
-// @param $important = true
-// @param $css-var: false
-@mixin utility($properties, $values, $class: false, $responsive: false, $print: false, $important: true, $css-var: false) {
+// Generate utility classes
+// @param $utility
+@mixin utility($utility) {
+    $properties: map-get($utility, property);
+    $values: map-get($utility, values);
+
     @if type-of($properties) == "string" {
         $properties: append((), $properties);
     }
@@ -15,19 +12,31 @@
         $values: zip($values, $values);
     }
 
+    $class: if(map-has-key($utility, class), map-get($utility, class), nth($properties, 1));
+    $class: if($class == null, "", $class);
+
+    $state: if(map-has-key($utility, state), map-get($utility, state), ());
+
+    $local-vars: if(map-has-key($utility, local-vars), map-get($utility, local-vars), ());
+
+    $print: map-get($utility, print);
+    $responsive: map-get($utility, responsive);
+    $css-var: map-get($utility, css-var);
+    $important: if(map-has-key($utility, important), map-get($utility, important), true);
+
     @each $breakpoint in map-keys($breakpoints) {
         @include media-breakpoint-up($breakpoint) {
             $infix: breakpoint-infix($breakpoint);
 
             @if $responsive or $infix == "" {
-                @include utility-class($properties, $values, $infix, $class, $important, $css-var);
+                @include utility-class($properties, $values, $infix, $class, $state, $local-vars, $css-var, $important);
             }
         }
     }
 
     @if $print {
         @media print {
-            @include utility-class($properties, $values, "-print", $class, $important, $css-var);
+            @include utility-class($properties, $values, "-print", $class, $state, $local-vars, $css-var, $important);
         }
     }
 }
@@ -37,11 +46,11 @@
 // @param $values
 // @param $infix
 // @param $class
-// @param $important
+// @param $state
+// @param $local-vars
 // @param $css-var
-@mixin utility-class($properties, $values, $infix, $class, $important, $css-var) {
-    $class: if($class != false, $class, nth($properties, 1));
-    $class: if($class == null, "", $class);
+// @param $important
+@mixin utility-class($properties, $values, $infix, $class, $state, $local-vars, $css-var, $important) {
     $infix: if($class == "" and str-slice($infix, 1, 1) == "-", str-slice($infix, 2), $infix);
 
     @each $key, $value in $values {
@@ -49,9 +58,26 @@
 
         @if $value != null {
             .#{$class + $infix + $class-modifier} {
+                @each $local-var, $variable in $local-vars {
+                    --ui-#{$local-var}: #{$variable};
+                }
+
                 @each $property in $properties {
                     $property: if($css-var, --ui-#{$property}, $property);
                     #{$property}: $value if($important, !important, null);
+                }
+            }
+
+            @each $pseudo in $state {
+                .#{$class + $infix + $class-modifier}-#{$pseudo}:#{$pseudo} {
+                    @each $local-var, $variable in $local-vars {
+                        --ui-#{$local-var}: #{$variable};
+                    }
+
+                    @each $property in $properties {
+                        $property: if($css-var, --ui-#{$property}, $property);
+                        #{$property}: #{$value} if($important, !important, null);
+                    }
                 }
             }
         }

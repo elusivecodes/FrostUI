@@ -7,10 +7,11 @@
 .input-outline {
     display: block;
     width: 100%;
-    min-height: calc(#{$input-font-size} + #{$input-padding-y * 2} + #{$input-border-size * 2});
+    min-height: calc(#{$input-font-size} + #{$input-padding-y * 2} + (#{$input-border-width} * 2));
     padding: $input-padding-y $input-padding-x;
     font-size: $input-font-size;
     line-height: $input-line-height;
+    color: $input-color;
 
     &::placeholder {
         color: $input-placeholder-color;
@@ -36,7 +37,7 @@
 
         &,
         &:hover {
-            background-color: $input-disabled-background-color;
+            background-color: $input-disabled-bg;
         }
     }
 
@@ -46,12 +47,22 @@
     }
 
     @at-root #{selector-append("select", &)} {
-        border-radius: 0;
         appearance: none;
 
         &:not([multiple]) {
+            @at-root {
+                #{&},
+                #{selector-nest("[data-ui-theme=\"light\"]", &)} {
+                    --ui-select-arrow-background-image: #{$input-select-arrow-background-image};
+                }
+
+                #{selector-nest("[data-ui-theme=\"dark\"]", &)} {
+                    --ui-select-arrow-background-image: #{$input-select-arrow-background-image-dark};
+                }
+            }
+
             padding-right: calc(#{$input-padding-x * 2} + #{$input-select-arrow-size});
-            background-image: $input-select-arrow-background-image;
+            background-image: var(--ui-select-arrow-background-image);
             background-repeat: no-repeat;
             background-position: right $input-padding-x center;
             background-size: $input-select-arrow-size #{$input-select-arrow-size * .75};
@@ -68,23 +79,23 @@
 }
 
 .input-filled {
-    background-color: var(--ui-input-filled-bg, #{$input-filled-background-color});
+    background-color: var(--ui-input-filled-bg, #{$input-filled-bg});
     border: 0;
-    border-bottom: $input-border-size $border-style var(--ui-input-border-color, #{$input-filled-border-color});
+    border-bottom: $input-border-width var(--ui-border-style) var(--ui-input-filled-border-color, #{$input-filled-border-color});
 
     &:hover {
-        background-color: var(--ui-input-filled-hover-bg, #{$input-filled-hover-background-color});
+        background-color: var(--ui-input-filled-hover-bg, #{$input-filled-hover-bg});
     }
 
     &:focus,
     &.focus {
-        background-color: var(--ui-input-filled-focus-bg, #{$input-filled-focus-background-color});
+        background-color: var(--ui-input-filled-focus-bg, #{$input-filled-focus-bg});
     }
 }
 
 .input-outline {
-    background-color: $input-outline-background-color;
-    border: $input-border-size $border-style var(--ui-input-border-color, #{$input-border-color});
+    background-color: $input-outline-bg;
+    border: $input-border-width var(--ui-border-style) var(--ui-input-border-color, #{$input-border-color});
     @include border-radius($input-outline-border-radius);
 
     &:hover {
@@ -94,7 +105,7 @@
     &:focus,
     &.focus {
         border-color: $input-outline-focus-border-color;
-        box-shadow: 0 0 0 $input-border-size $input-outline-focus-border-color;
+        box-shadow: 0 0 0 $input-outline-focus-shadow-width $input-outline-focus-shadow-color;
     }
 }
 
@@ -122,16 +133,17 @@
     left: 0;
     z-index: 2;
     width: 100%;
-    height: $input-border-size * 2;
-    background-color: $ripple-line-background-color;
+    height: calc($input-border-width * 2);
+    background-color: $ripple-line-bg;
     opacity: 0;
     transition: all $transition-time $transition-type;
     transition-property: transform, opacity;
     transform: scaleX(0);
 
     @at-root {
-        .input-filled:focus ~ #{&},
-        .input-filled.focus ~ #{&} {
+
+        .input-filled:focus~#{&},
+        .input-filled.focus~#{&} {
             opacity: 1;
             transform: scaleX(1);
         }

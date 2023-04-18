@@ -1,0 +1,43 @@
+.btn-close {
+    --ui-btn-close-width: #{$btn-close-width};
+    --ui-btn-close-height: #{$btn-close-height};
+    --ui-btn-close-padding-x: #{$btn-close-padding-x};
+    --ui-btn-close-padding-y: #{$btn-close-padding-y};
+    --ui-btn-close-icon: #{$btn-close-icon};
+    --ui-btn-close-opacity: #{$btn-close-opacity};
+    --ui-btn-close-hover-opacity: #{$btn-close-hover-opacity};
+    --ui-btn-close-focus-opacity: #{$btn-close-focus-opacity};
+    --ui-btn-close-disabled-opacity: #{$btn-close-disabled-opacity};
+    --ui-btn-close-border-radius: #{$btn-close-border-radius};
+
+    box-sizing: content-box;
+    width: var(--ui-btn-close-width);
+    height: var(--ui-btn-close-height);
+    padding: var(--ui-btn-close-padding-y) var(--ui-btn-close-padding-x);
+    color: inherit;
+    background-color: currentcolor;
+    mask-image: var(--ui-btn-close-icon);
+    mask-repeat: no-repeat;
+    mask-size: var(--ui-btn-close-width);
+    mask-position: center center;
+    border: 0;
+    @include border-radius(var(--ui-btn-close-border-radius));
+    opacity: var(--ui-btn-close-opacity);
+
+    &:hover {
+        text-decoration: none;
+        opacity: var(--ui-btn-close-hover-opacity);
+    }
+
+    &:focus {
+        outline: 0;
+        opacity: var(--ui-btn-close-focus-opacity);
+    }
+
+    &.disabled,
+    &:disabled {
+        pointer-events: none;
+        user-select: none;
+        opacity: var(--ui-btn-close-disabled-opacity);
+    }
+}

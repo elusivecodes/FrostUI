@@ -2,18 +2,27 @@
     from {
         background-position: $progress-bar-striped-background-size-x 0;
     }
+
     to {
         background-position: 0 0;
     }
 }
 
 .progress {
+    --ui-progress-height: #{$progress-height};
+    --ui-progress-bg: #{$progress-bg};
+    --ui-progress-border-radius: #{$progress-border-radius};
+    --ui-progress-vertical-height: #{$progress-vertical-height};
+    --ui-progress-vertical-width: #{$progress-vertical-width};
+    --ui-progress-bar-color: #{$progress-bar-color};
+    --ui-progress-bar-bg: #{$progress-bar-bg};
+
     display: flex;
-    height: $progress-height;
+    height: var(--ui-progress-height);
     overflow: hidden;
     font-size: $progress-font-size;
-    background-color: $progress-background-color;
-    @include border-radius($progress-border-radius);
+    background-color: var(--ui-progress-bg);
+    @include border-radius(var(--ui-progress-border-radius));
 }
 
 .progress-bar {
@@ -21,10 +30,10 @@
     flex-direction: column;
     justify-content: center;
     overflow: hidden;
-    color: $progress-bar-color;
+    color: var(--ui-progress-bar-color);
     text-align: center;
     white-space: nowrap;
-    background-color: $progress-bar-background-color;
+    background-color: var(--ui-progress-bar-bg);
     transition: width $transition-time $transition-type;
 }
 
@@ -40,8 +49,8 @@
 .progress-vertical {
     flex-direction: column;
     align-items: flex-end;
-    width: $progress-bar-vertical-width;
-    height: $progress-bar-vertical-height;
+    width: var(--ui-progress-vertical-width);
+    height: var(--ui-progress-vertical-height);
 
     .progress-bar {
         width: 100%;

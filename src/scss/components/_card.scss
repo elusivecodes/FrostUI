@@ -1,72 +1,88 @@
 .card {
+    --ui-card-spacer-x: #{$card-spacer-x};
+    --ui-card-spacer-y: #{$card-spacer-y};
+    --ui-card-title-spacer-y: #{$card-title-spacer-y};
+    --ui-card-border-width: #{$card-border-width};
+    --ui-card-border-color: #{$card-border-color};
+    --ui-card-border-radius: #{$card-border-radius};
+    --ui-card-inner-border-radius: calc(var(--ui-card-border-radius) - var(--ui-card-border-width));
+    --ui-card-bg: #{$card-bg};
+    --ui-card-cap-padding-x: #{$card-cap-padding-x};
+    --ui-card-cap-padding-y: #{$card-cap-padding-y};
+    --ui-card-cap-bg: #{$card-cap-bg};
+    --ui-card-img-overlay-padding: #{$card-img-overlay-padding};
+    --ui-card-group-margin: #{$card-group-margin};
+
     position: relative;
     display: flex;
     flex-direction: column;
     min-width: 0;
     word-wrap: break-word;
-    background-color: $card-background-color;
+    background-color: var(--ui-card-bg);
     background-clip: border-box;
-    border: $card-border-size $border-style $card-border-color;
-    @include border-radius($card-border-radius);
+    border: var(--ui-card-border-width) var(--ui-border-style) var(--ui-card-border-color);
+    @include border-radius(var(--ui-card-border-radius));
 
-    > hr {
+    >hr {
         margin-right: 0;
         margin-left: 0;
     }
 
-    > .list-group {
+    >.list-group {
         border-top: inherit;
         border-bottom: inherit;
 
         &:first-child {
-            @include border-top-radius($card-inner-border-radius);
+            border-top-width: 0;
+            @include border-top-radius(var(--ui-card-inner-border-radius));
         }
 
         &:last-child {
-            @include border-bottom-radius($card-inner-border-radius);
+            border-bottom-width: 0;
+            @include border-bottom-radius(var(--ui-card-inner-border-radius));
         }
     }
 
-    > .card-header + .list-group,
-    > .list-group + .card-footer {
+    >.card-header + .list-group,
+    >.list-group + .card-footer {
         border-top: 0;
     }
 }
 
 .card-header {
-    padding: $card-header-padding-y $card-header-padding-x;
+    padding: var(--ui-card-cap-padding-y) var(--ui-card-cap-padding-x);
     margin-bottom: 0;
-    background-color: $card-header-background-color;
-    border-bottom: $card-border-size $border-style $card-border-color;
+    background-color: var(--ui-card-cap-bg);
+    border-bottom: var(--ui-card-border-width) var(--ui-border-style) var(--ui-card-border-color);
 
     &:first-child {
-        $card-header-border-radius: $card-inner-border-radius $card-inner-border-radius 0 0;
+        $card-header-border-radius: var(--ui-card-inner-border-radius) var(--ui-card-inner-border-radius) 0 0;
         @include border-radius($card-header-border-radius);
     }
 }
 
 .card-footer {
-    padding: $card-footer-padding-y $card-footer-padding-x;
-    background-color: $card-footer-background-color;
-    border-top: $card-border-size $border-style $card-border-color;
+    padding: var(--ui-card-cap-padding-y) var(--ui-card-cap-padding-x);
+    background-color: var(--ui-card-cap-bg);
+    border-top: var(--ui-card-border-width) var(--ui-border-style) var(--ui-card-border-color);
 
     &:last-child {
-        $card-footer-border-radius: 0 0 $card-inner-border-radius $card-inner-border-radius;
+        $card-footer-border-radius: 0 0 var(--ui-card-inner-border-radius) var(--ui-card-inner-border-radius);
         @include border-radius($card-footer-border-radius);
     }
 }
 
 .card-body {
     flex: 1 1 auto;
-    padding: $card-body-padding-y $card-body-padding-x;
+    padding: var(--ui-card-spacer-y) var(--ui-card-spacer-x);
 }
 
 .card-title {
-    margin-bottom: $card-title-margin-bottom;
+    margin-bottom: var(--ui-card-title-spacer-y);
 }
 
 .card-subtitle {
-    margin-top: $card-subtitle-margin-top;
+    margin-top: calc(var(--ui-card-title-spacer-y) * -.5);
     margin-bottom: 0;
 }
 
@@ -75,7 +91,7 @@
 }
 
 .card-link + .card-link {
-    margin-left: $card-link-spacing;
+    margin-left: var(--ui-card-spacer-x);
 }
 
 .card-img-overlay {
@@ -84,8 +100,8 @@
     right: 0;
     bottom: 0;
     left: 0;
-    padding: $card-img-overlay-padding-y $card-img-overlay-padding-x;
-    @include border-radius($card-inner-border-radius);
+    padding: var(--ui-card-img-overlay-padding);
+    @include border-radius(var(--ui-card-inner-border-radius));
 }
 
 .card-img {
@@ -94,10 +110,10 @@
 
 .card-img-top {
     @extend .card-img;
-    @include border-top-radius($card-inner-border-radius);
+    @include border-top-radius(var(--ui-card-inner-border-radius));
 }
 
 .card-img-bottom {
     @extend .card-img;
-    @include border-bottom-radius($card-inner-border-radius);
+    @include border-bottom-radius(var(--ui-card-inner-border-radius));
 }

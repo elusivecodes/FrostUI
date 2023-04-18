@@ -1,137 +1,122 @@
 .btn {
+    --ui-btn-padding-x: #{$btn-padding-x};
+    --ui-btn-padding-y: #{$btn-padding-y};
+    --ui-btn-font-family: #{$btn-font-family};
+    --ui-btn-font-size: #{$btn-font-size};
+    --ui-btn-font-weight: #{$btn-font-weight};
+    --ui-btn-line-height: #{$btn-line-height};
+    --ui-btn-border-width: #{$btn-border-width};
+    --ui-btn-border-color: #{$btn-border-color};
+    --ui-btn-border-radius: #{$btn-border-radius};
+    --ui-btn-hover-border-color: transparent;
+    --ui-btn-active-border-color: transparent;
+    --ui-btn-disabled-opacity: #{$btn-disabled-opacity};
+    --ui-btn-focus-shadow-rgb: var(--ui-primary-rgb);
+    --ui-btn-focus-box-shadow: #{$btn-focus-box-shadow};
+
     display: inline-block;
-    padding: $btn-padding-y $btn-padding-x;
-    font-family: $btn-font-family;
-    font-size: $btn-font-size;
-    font-weight: $btn-font-weight;
-    line-height: $btn-line-height;
+    padding: var(--ui-btn-padding-y) var(--ui-btn-padding-x);
+    font-family: var(--ui-btn-font-family);
+    font-size: var(--ui-btn-font-size);
+    font-weight: var(--ui-btn-font-weight);
+    line-height: var(--ui-btn-line-height);
+    color: var(--ui-btn-color);
     text-align: center;
+    text-decoration: none;
     white-space: nowrap;
     vertical-align: middle;
     cursor: pointer;
     user-select: none;
     background-color: var(--ui-btn-bg);
-    border: $btn-border-size $border-style var(--ui-btn-border, #{$btn-border-color});
-    @include border-radius($btn-border-radius);
+    border: var(--ui-btn-border-width) var(--ui-border-style) var(--ui-btn-border-color);
     transition: all $transition-time $transition-type;
-    transition-property: color, background-color, box-shadow;
+    transition-property: color, background-color, border-color, box-shadow;
+    @include border-radius(var(--ui-btn-border-radius));
 
-    &,
-    &:hover,
-    &:focus {
-        color: var(--ui-btn-color);
-        text-decoration: none;
-    }
-
-    &:focus {
+    &:focus-visible {
         outline: 0;
+        box-shadow: var(--ui-btn-focus-box-shadow);
     }
 
     @at-root {
-        #{&}:hover {
+
+        #{&}:hover,
+        .btn-check:focus-visible+#{&},
+        #{&}:focus-visible {
             background-color: var(--ui-btn-hover-bg);
+            border-color: var(--ui-btn-hover-border-color);
         }
 
-        .btn-check:focus + #{&},
-        #{&}:focus {
-            background-color: var(--ui-btn-focus-bg);
-            box-shadow: $btn-focus-box-shadow;
-        }
-
-        .btn-check:checked + #{&},
+        .btn-check:checked+#{&},
         #{&}.active {
             --ui-ripple-bg: var(--ui-active-ripple-bg);
 
             color: var(--ui-btn-active-color, var(--ui-btn-color));
             background-color: var(--ui-btn-active-bg);
-        }
-
-        .btn-check:checked + #{&},
-        .btn-check:active + #{&},
-        #{&}:active,
-        #{&}.active {
-            box-shadow: $btn-active-box-shadow;
-        }
-
-        .btn-check:checked + #{&}:focus,
-        .btn-check:checked:focus + #{&},
-        #{&}.active:focus {
-            background-color: var(--ui-btn-active-focus-bg, var(--ui-btn-hover-bg));
+            border-color: var(--ui-btn-active-border-color);
         }
 
         #{&}:disabled,
         #{&}.disabled,
         fieldset:disabled #{&} {
             pointer-events: none;
-            opacity: $btn-disabled-opacity;
+            opacity: var(--ui-btn-disabled-opacity);
         }
     }
 }
 
 .btn-lg {
-    padding: $btn-lg-padding-y $btn-lg-padding-x;
-    font-size: $btn-lg-font-size;
+    --ui-btn-padding-x: #{$btn-lg-padding-x};
+    --ui-btn-padding-y: #{$btn-lg-padding-y};
+    --ui-btn-font-size: #{$btn-lg-font-size};
+    --ui-btn-border-radius: #{$btn-lg-border-radius};
 }
 
 .btn-sm {
-    padding: $btn-sm-padding-y $btn-sm-padding-x;
-    font-size: $btn-sm-font-size;
+    --ui-btn-padding-x: #{$btn-sm-padding-x};
+    --ui-btn-padding-y: #{$btn-sm-padding-y};
+    --ui-btn-font-size: #{$btn-sm-font-size};
+    --ui-btn-border-radius: #{$btn-sm-border-radius};
 }
 
 .btn-link {
-    --ui-btn-color: #{$link-color};
-    --ui-btn-border: transparent;
-    text-decoration: $link-text-decoration;
+    --ui-btn-color: var(--ui-link-color);
+    --ui-btn-border-color: transparent;
+    --ui-btn-hover-border-color: transparent;
+    --ui-btn-active-color: var(--ui-link-hover-color);
+    --ui-btn-focus-shadow-rgb: var(--ui-link-color-rgb);
+
+    text-decoration: var(--ui-link-decoration);
 
     &:hover {
-        --ui-btn-color: #{$link-hover-color};
-        text-decoration: $link-hover-text-decoration;
-    }
-
-    &:focus {
-        --ui-btn-color: #{$link-focus-color};
-        text-decoration: $link-focus-text-decoration;
-        box-shadow: none;
-    }
-
-    &:disabled,
-    &.disabled {
-        --ui-btn-color: #{$gray-dark};
+        --ui-btn-color: var(--ui-link-hover-color);
+        --ui-link-decoration: var(--ui-link-hover-decoration);
     }
 }
 
-@each $name, $color in $btn-variants {
+@each $name, $color in $color-variants {
     .btn-#{$name} {
-        $text-color: text-color($color);
-        $hover-background-color: shade($color, $btn-hover-background-color-shade);
-        $focus-background-color: tint($color, $btn-focus-background-color-tint);
-        $active-background-color: shade($color, $btn-active-background-color-shade);
-
-        --ui-btn-bg: #{$color};
-        --ui-btn-color: #{$text-color};
-        --ui-btn-hover-bg: #{$hover-background-color};
-        --ui-btn-focus-bg: #{$focus-background-color};
-        --ui-btn-active-bg: #{$active-background-color};
-        --ui-ripple-bg: #{$btn-ripple-background-color};
+        --ui-btn-bg: var(--ui-#{$name});
+        --ui-btn-border-color: var(--ui-#{$name});
+        --ui-btn-color: var(--ui-#{$name}-contrast);
+        --ui-btn-hover-bg: var(--ui-#{$name}-highlight);
+        --ui-btn-hover-border-color: var(--ui-#{$name}-highlight);
+        --ui-btn-active-bg: var(--ui-#{$name}-active);
+        --ui-btn-active-border-color: var(--ui-#{$name}-active);
+        --ui-ripple-bg: rgba(var(--ui-#{$name}-contrast-rgb), #{$btn-ripple-opacity});
+        --ui-btn-focus-shadow-rgb: var(--ui-#{$name}-rgb);
     }
 
     .btn-outline-#{$name} {
-        $hover-background-color: fade($color, $btn-outline-hover-background-color-fade);
-        $focus-background-color: fade($color, $btn-outline-focus-background-color-fade);
-        $active-color: text-color($color);
-        $active-focus-background-color: shade($color, $btn-hover-background-color-shade);
-        $ripple-background-color: fade($color, $btn-outline-ripple-background-color-fade);
-        $active-ripple-background-color: fade($active-color, $btn-outline-ripple-background-color-fade);
-
-        --ui-btn-color: #{$color};
-        --ui-btn-border: #{$color};
-        --ui-btn-hover-bg: #{$hover-background-color};
-        --ui-btn-focus-bg: #{$focus-background-color};
-        --ui-btn-active-bg: #{$color};
-        --ui-btn-active-color: #{$active-color};
-        --ui-btn-active-border: #{$btn-border-color};
-        --ui-btn-active-focus-bg: #{$active-focus-background-color};
-        --ui-ripple-bg: #{$ripple-background-color};
-        --ui-active-ripple-bg: #{$active-ripple-background-color};
+        --ui-btn-color: var(--ui-#{$name});
+        --ui-btn-border-color: var(--ui-#{$name});
+        --ui-btn-hover-bg: rgba(var(--ui-#{$name}-rgb), #{$btn-outline-hover-opacity});
+        --ui-btn-hover-border-color: var(--ui-#{$name});
+        --ui-btn-active-bg: var(--ui-#{$name});
+        --ui-btn-active-color: var(--ui-#{$name}-contrast);
+        --ui-btn-active-border-color: var(--ui-#{$name});
+        --ui-ripple-bg: rgba(var(--ui-#{$name}-rgb), #{$btn-ripple-opacity});
+        --ui-active-ripple-bg: rgba(var(--ui-#{$name}-contrast-rgb), #{$btn-ripple-opacity});
+        --ui-btn-focus-shadow-rgb: var(--ui-#{$name}-rgb);
     }
 }

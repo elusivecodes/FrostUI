@@ -18,31 +18,25 @@
     @return $result;
 }
 
-// Search and replace a substring within a string.
-// @param $string
-// @param $search
-// @param $replace
-@function str-replace($string, $search, $replace) {
-    $index: str-index($string, $search);
-
-    @if $index {
-        @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
-    }
-
-    @return $string;
+// Create an RGBA css value.
+// @param $rgbVar
+// @param opacityVar
+@function rgba-css-var($rgbVar, $opacityVar) {
+    @return rgba(var(--ui-#{$rgbVar}-rgb), var(--ui-#{$opacityVar}-opacity));
 }
 
-// Escape a color for use in SVG.
-// @param $color
-@function svg-color($color) {
-    $string: "" + $color;
+// Generate a responsive font size.
+// @param $size
+@function text-size($size) {
+    $max-size: $size * 1rem;
 
-    @if str-index($string, "rgb") {
-        $string: str-replace($string, "(", "%28");
-        $string: str-replace($string, ")", "%29");
-    } @else if str-index($string, "#") {
-        $string: str-replace($string, "#", "%23");
+    @if ($size < 1.5) {
+        @return $max-size;
     }
 
-    @return $string;
+    $ratio: ($size * 2) - 2;
+    $min-size: ($ratio * .1rem) + 1.25rem;
+    $offset: $ratio * .33vw;
+
+    @return clamp(#{$min-size}, calc(#{$min-size} + #{$offset}), #{$max-size});
 }

@@ -1,19 +1,18 @@
-const assert = require('assert');
-const { exec } = require('../setup');
-const { waitFor } = require('../helpers');
+import assert from 'node:assert/strict';
+import { exec } from './../setup.js';
+import { waitFor } from './../helpers.js';
 
 describe('Modal/Dropdown', function() {
-
     afterEach(async function() {
-        await exec(_ => {
-            dom.removeClass(document.body, 'modal-open');
-            dom.removeAttribute(document.body, 'style');
+        await exec((_) => {
+            $.removeClass(document.body, 'modal-open');
+            $.removeAttribute(document.body, 'style');
         });
     });
 
     beforeEach(async function() {
-        await exec(_ => {
-            dom.setHTML(
+        await exec((_) => {
+            $.setHTML(
                 document.body,
                 '<button class="btn btn-secondary" id="modalToggle" data-ui-toggle="modal" data-ui-target="#modal" type="button"></button>' +
                 '<div class="modal" id="modal">' +
@@ -28,81 +27,78 @@ describe('Modal/Dropdown', function() {
                 '</div>' +
                 '</div>' +
                 '</div>' +
-                '</div>'
+                '</div>',
             );
         });
     });
 
     describe('user events', function() {
-
         it('hides the modal and dropdown on document click when dropdown is open', async function() {
-            await exec(_ => {
-                const modal = dom.findOne('#modal');
+            await exec((_) => {
+                const modal = $.findOne('#modal');
                 UI.Modal.init(modal).show();
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    dom.stop('#modalDialog');
-                    dom.stop('.modal-backdrop');
+            }).then(waitFor(50)).then(async (_) => {
+                await exec((_) => {
+                    $.stop('#modalDialog');
+                    $.stop('.modal-backdrop');
                 });
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    const dropdownToggle = dom.findOne('#dropdownToggle');
+            }).then(waitFor(50)).then(async (_) => {
+                await exec((_) => {
+                    const dropdownToggle = $.findOne('#dropdownToggle');
                     UI.Dropdown.init(dropdownToggle).show();
                 });
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    dom.stop('#dropdown');
+            }).then(waitFor(50)).then(async (_) => {
+                await exec((_) => {
+                    $.stop('#dropdown');
                 });
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    dom.click(document.body);
+            }).then(waitFor(50)).then(async (_) => {
+                await exec((_) => {
+                    $.click(document.body);
                 });
-            }).then(waitFor(50)).then(async _ => {
+            }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
-                    await exec(_ => dom.hasAnimation('#dropdown') && dom.hasAnimation('#modalDialog') && dom.hasAnimation('.modal-backdrop')),
-                    true
+                    await exec((_) => $.hasAnimation('#dropdown') && $.hasAnimation('#modalDialog') && $.hasAnimation('.modal-backdrop')),
+                    true,
                 );
             });
         });
 
         it('does not hide the modal on escape when dropdown is open', async function() {
-            await exec(_ => {
-                const modal = dom.findOne('#modal');
+            await exec((_) => {
+                const modal = $.findOne('#modal');
                 UI.Modal.init(modal).show();
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    dom.stop('#modalDialog');
-                    dom.stop('.modal-backdrop');
+            }).then(waitFor(50)).then(async (_) => {
+                await exec((_) => {
+                    $.stop('#modalDialog');
+                    $.stop('.modal-backdrop');
                 });
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    const dropdownToggle = dom.findOne('#dropdownToggle');
+            }).then(waitFor(50)).then(async (_) => {
+                await exec((_) => {
+                    const dropdownToggle = $.findOne('#dropdownToggle');
                     UI.Dropdown.init(dropdownToggle).show();
                 });
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    dom.stop('#dropdown');
+            }).then(waitFor(50)).then(async (_) => {
+                await exec((_) => {
+                    $.stop('#dropdown');
                 });
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
+            }).then(waitFor(50)).then(async (_) => {
+                await exec((_) => {
                     const event = new KeyboardEvent('keyup', {
                         bubbles: true,
-                        code: 'Escape'
+                        code: 'Escape',
                     });
                     document.body.dispatchEvent(event);
                 });
-            }).then(waitFor(50)).then(async _ => {
+            }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
-                    await exec(_ => dom.hasAnimation('#dropdown')),
-                    true
+                    await exec((_) => $.hasAnimation('#dropdown')),
+                    true,
                 );
                 assert.strictEqual(
-                    await exec(_ => dom.hasAnimation('#modalDialog')),
-                    false
+                    await exec((_) => $.hasAnimation('#modalDialog')),
+                    false,
                 );
             });
         });
-
     });
-
 });

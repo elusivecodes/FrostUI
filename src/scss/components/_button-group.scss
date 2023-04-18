@@ -4,24 +4,18 @@
     display: inline-flex;
     vertical-align: middle;
 
-    > .btn {
+    >.btn {
         position: relative;
         flex: 1 1 auto;
     }
 
-    > .btn:hover {
+    >.btn-check:checked + .btn,
+    >.btn-check:focus + .btn,
+    >.btn:hover,
+    >.btn:focus,
+    >.btn:active,
+    >.btn.active {
         z-index: 1;
-    }
-
-    > .btn-check:focus + .btn,
-    > .btn:focus {
-        z-index: 2;
-    }
-
-    > .btn-check:checked + .btn,
-    > .btn:active,
-    > .btn.active {
-        z-index: 3;
     }
 }
 
@@ -36,19 +30,20 @@
 }
 
 .btn-group {
-    > .btn:not(:first-child),
-    > .btn-group:not(:first-child) {
-        margin-left: $btn-border-size * -1;
+
+    >:not(.btn-check:first-child) + .btn,
+    >.btn-group:not(:first-child) > .btn:first-child {
+        margin-left: calc(var(--ui-btn-border-width) * -1);
     }
 
-    > .btn:not(:last-child):not(.dropdown-toggle),
-    > .btn-group:not(:last-child) > .btn {
+    >.btn:not(:last-child):not(.dropdown-toggle),
+    >.btn-group:not(:last-child) > .btn {
         @include border-right-radius(0);
     }
 
-    > .btn:nth-child(n + 3),
+    >.btn:nth-child(n + 3),
     > :not(.btn-check) + .btn,
-    > .btn-group:not(:first-child) > .btn {
+    >.btn-group:not(:first-child) > .btn {
         @include border-left-radius(0);
     }
 }
@@ -58,23 +53,23 @@
     align-items: flex-start;
     justify-content: center;
 
-    > .btn,
-    > .btn-group {
+    >.btn,
+    >.btn-group {
         width: 100%;
     }
 
-    > .btn:not(:first-child),
-    > .btn-group:not(:first-child) {
-        margin-top: $btn-border-size * -1;
+    >.btn:not(:first-child),
+    >.btn-group:not(:first-child) > .btn:first-child {
+        margin-top: calc(var(--ui-btn-border-width) * -1);
     }
 
-    > .btn:not(:last-child):not(.dropdown-toggle),
-    > .btn-group:not(:last-child) > .btn {
+    >.btn:not(:last-child):not(.dropdown-toggle),
+    >.btn-group:not(:last-child) > .btn {
         @include border-bottom-radius(0);
     }
 
-    > .btn:not(:first-child),
-    > .btn-group:not(:first-child) > .btn {
+    > .btn ~ .btn,
+    >.btn-group:not(:first-child) > .btn {
         @include border-top-radius(0);
     }
 }

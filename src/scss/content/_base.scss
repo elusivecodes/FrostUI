@@ -6,20 +6,20 @@
 
 body {
     margin: 0;
-    font-family: $font-family;
-    font-size: $font-size;
-    font-weight: $body-font-weight;
-    line-height: $body-line-height;
-    color: $text-color;
+    font-family: var(--ui-body-font-family);
+    font-size: var(--ui-body-font-size);
+    font-weight: var(--ui-body-font-weight);
+    line-height: var(--ui-body-line-height);
+    color: var(--ui-body-color);
     text-align: left;
-    background-color: $body-background-color;
+    background-color: var(--ui-body-bg);
     text-size-adjust: 100%;
-    -webkit-tap-highlight-color: rgba($black, 0);
+    -webkit-tap-highlight-color: transparent;
 }
 
 hr {
     margin: $hr-margin-y 0;
-    background-color: currentColor;
+    background-color: currentcolor;
     border: 0;
     opacity: $hr-opacity;
 }
@@ -88,7 +88,7 @@ abbr[data-ui-original-title] {
 // address
 
 address {
-    margin-bottom: $spacing;
+    margin-bottom: $address-margin-bottom;
     font-style: normal;
     line-height: inherit;
 }
@@ -139,14 +139,14 @@ strong {
 // small
 
 small {
-    font-size: $small-font-size;
+    font-size: $font-size-sm;
 }
 
 // mark
 
 mark {
     padding: $mark-padding;
-    background-color: $mark-background-color;
+    background-color: var(--ui-mark-bg);
 }
 
 // sub and sup
@@ -170,24 +170,19 @@ sup {
 // links
 
 a {
-    color: $link-color;
-    text-decoration: $link-text-decoration;
+    color: rgba(var(--ui-link-color-rgb), var(--ui-link-opacity, 1));
+    text-decoration: var(--ui-link-decoration);
 
     &:hover {
-        color: $link-hover-color;
-        text-decoration: $link-hover-text-decoration;
-    }
-
-    &:focus {
-        color: $link-focus-color;
-        text-decoration: $link-focus-text-decoration;
+        --ui-link-color-rgb: var(--ui-link-hover-color-rgb);
+        --ui-link-decoration: var(--ui-link-hover-decoration);
     }
 }
 
 a:not([href]):not([class]) {
+
     &,
-    &:hover,
-    &:focus {
+    &:hover {
         color: inherit;
         text-decoration: none;
     }
@@ -200,17 +195,16 @@ kbd,
 pre,
 samp,
 xmp {
-    font-family: $font-mono;
+    font-family: var(--ui-font-monospace);
     font-size: 1em;
 }
 
 pre {
     display: block;
     margin-top: 0;
-    margin-bottom: $spacing;
+    margin-bottom: $blockquote-margin-bottom;
     overflow: auto;
     font-size: $font-size-sm;
-    color: $pre-color;
 
     code {
         font-size: inherit;
@@ -221,10 +215,10 @@ pre {
 
 code {
     font-size: $font-size-sm;
-    color: $code-color;
+    color: var(--ui-code-color);
     word-wrap: break-word;
 
-    @at-root a > #{&} {
+    @at-root a>#{&} {
         color: inherit;
     }
 }
@@ -232,9 +226,9 @@ code {
 kbd {
     padding: $kbd-padding-y $kbd-padding-x;
     font-size: $font-size-sm;
-    color: $white;
-    background-color: $kbd-background-color;
-    border-radius: $border-radius;
+    color: $kbd-color;
+    background-color: $kbd-bg;
+    border-radius: $kbd-border-radius;
 
     kbd {
         padding: 0;
@@ -266,7 +260,7 @@ table {
 caption {
     padding-top: $table-cell-padding-y;
     padding-bottom: $table-cell-padding-y;
-    color: $caption-color;
+    color: var(--ui-secondary-color);
     text-align: left;
 }
 
@@ -282,7 +276,7 @@ th,
 thead,
 tr {
     border-color: inherit;
-    border-style: $border-style;
+    border-style: var(--ui-border-style);
     border-width: 0;
 }
 
@@ -314,6 +308,11 @@ textarea {
 button,
 select {
     text-transform: none;
+}
+
+select:not([multiple]) > * {
+    background-color: var(--ui-tertiary-bg);
+    color: var(--ui-body-color);
 }
 
 [role="button"] {
@@ -365,7 +364,7 @@ legend {
     font-weight: $legend-font-weight;
     line-height: inherit;
 
-    + * {
+    +* {
         clear: left;
     }
 }

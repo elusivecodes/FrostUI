@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .form-check {
     display: block;
     min-height: $form-check-min-height;
@@ -15,17 +17,16 @@
 }
 
 .input-check {
+    position: relative;
     width: $input-check-size;
     height: $input-check-size;
     margin-top: $input-check-margin-top;
+    color: $input-check-color;
     vertical-align: top;
-    background-color: $input-check-background-color;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    border: $input-check-border-size $border-style var(--ui-input-border-color, #{$input-check-border-color});
+    background-color: $input-check-bg;
+    border: $input-check-border-width var(--ui-border-style) var(--ui-input-border-color, #{$input-check-border-color});
     transition: all $transition-time $transition-type;
-    transition-property: background-color, background-position, border-color, box-shadow;
+    transition-property: background-color, border-color, box-shadow;
     appearance: none;
 
     &[type="checkbox"] {
@@ -38,40 +39,48 @@
 
     &:focus,
     &.focus {
-        border-color: $input-check-focus-border-color;
         outline: 0;
-        box-shadow: 0 0 0 $input-check-border-size $input-check-focus-box-shadow-color;
+        box-shadow: 0 0 0 $input-check-focus-shadow-width $input-check-focus-shadow-color;
+    }
+
+    &::before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: inline-block;
+        content: "";
+        background-color: currentcolor;
+        translate: -50% -50%;
     }
 
     &:checked {
-        background-color: var(--ui-input-check-checked-bg, #{$input-check-checked-background-color});
+        background-color: var(--ui-input-check-checked-bg, #{$input-check-checked-bg});
         border-color: var(--ui-input-border-color, #{$input-check-checked-border-color});
 
-        &:focus,
-        &.focus {
-            background-color: var(--ui-input-check-checked-focus-bg, #{$input-check-checked-focus-background-color});
+        &[type="checkbox"]::before {
+            width: $input-check-size;
+            height: $input-check-size;
+            mask-image: $input-check-checkbox-checked-background-image;
+            mask-size: $input-check-size;
         }
 
-        &[type="checkbox"] {
-            background-image: $input-check-checkbox-checked-background-image;
-        }
-
-        &[type="radio"] {
-            background-image: $input-check-radio-checked-background-image;
+        &[type="radio"]::before {
+            width: math.div($input-check-size, 2);
+            height: math.div($input-check-size, 2);
+            @include border-radius(50%);
         }
     }
 
     &:disabled {
         pointer-events: none;
-        filter: none;
         opacity: $input-check-disabled-opacity;
 
-        ~ .form-check-label {
+        ~.form-check-label {
             opacity: $input-check-disabled-opacity;
         }
     }
 
-    ~ .form-check-label {
+    ~.form-check-label {
         color: var(--ui-input-check-label-color);
     }
 }
@@ -82,18 +91,39 @@
     .input-check {
         width: $form-switch-input-check-width;
         margin-left: $form-switch-padding-left * -1;
-        background-image: $form-switch-input-check-background-image;
-        background-position: left center;
+        color: $form-switch-input-check-color;
         @include border-radius($form-switch-input-check-border-radius);
 
         &:focus,
         &.focus {
-            background-image: $form-switch-input-check-focus-background-image;
+            color: var(--ui-input-check-focus-color, #{$form-switch-input-check-focus-color});
+        }
+
+        &::before {
+            content: none;
+        }
+
+        &::after {
+            position: absolute;
+            top: 50%;
+            left: 25%;
+            display: inline-block;
+            width: math.div($input-check-size, 2);
+            height: math.div($input-check-size, 2);
+            content: "";
+            background-color: currentcolor;
+            translate: -50% -50%;
+            transition: all $transition-time $transition-type;
+            transition-property: left;
+            @include border-radius(50%);
         }
 
         &:checked {
-            background-image: $form-switch-input-check-checked-background-image;
-            background-position: right center;
+            color: $form-switch-input-check-checked-color;
+
+            &::after {
+                left: 75%;
+            }
         }
     }
 }

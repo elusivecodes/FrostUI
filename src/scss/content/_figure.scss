@@ -1,4 +1,6 @@
 .figure {
+    --ui-figure-caption-color: #{$figure-caption-color};
+
     display: inline-block;
 }
 
@@ -9,5 +11,5 @@
 
 .figure-caption {
     font-size: $figure-caption-font-size;
-    color: $figure-caption-color;
+    color: var(--ui-figure-caption-color);
 }

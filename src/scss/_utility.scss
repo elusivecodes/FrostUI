@@ -1,264 +1,685 @@
-// alignment
-@include utility(vertical-align, baseline top middle bottom text-top text-bottom, align);
-@include utility(text-align, (
-    start: left,
-    center: center,
-    end: right,
-    justify: justify
-), text, true);
+// background
+@include utility((
+    property: background-color,
+    class: bg,
+    values: map-merge($utilities-bg-colors, (
+        body-secondary: var(--ui-secondary-bg),
+        body-tertiary: var(--ui-tertiary-bg),
+        transparent: transparent
+    )),
+    local-vars: (
+        bg-opacity: 1
+    )
+));
+@include utility((
+    property: bg-opacity,
+    values: $opacities,
+    css-var: true
+));
+@include utility((
+    property: background-image,
+    class: bg,
+    values: (gradient: $gradient)
+));
 
 // border
-@include utility(border, (
-    null: $border-size $border-style $border-color,
-    0: 0
+@include utility((
+    property: border,
+    values: (
+        null: var(--ui-border-width) var(--ui-border-style) var(--ui-border-color),
+        0: 0
+    )
 ));
-@include utility(border-top, (
-    null: $border-size $border-style $border-color,
-    0: 0
+@include utility((
+    property: border-top,
+    values: (
+        null: var(--ui-border-width) var(--ui-border-style) var(--ui-border-color),
+        0: 0
+    )
 ));
-@include utility(border-right, (
-    null: $border-size $border-style $border-color,
-    0: 0
-), border-end);
-@include utility(border-bottom, (
-    null: $border-size $border-style $border-color,
-    0: 0
+@include utility((
+    property: border-right,
+    class: border-start,
+    values: (
+        null: var(--ui-border-width) var(--ui-border-style) var(--ui-border-color),
+        0: 0
+    )
 ));
-@include utility(border-left, (
-    null: $border-size $border-style $border-color,
-    0: 0
-), border-start);
-@include utility(border-width, (
-    1: $border-size,
-    2: $border-size * 2,
-    3: $border-size * 3,
-    4: $border-size * 4,
-    5: $border-size * 5
-), border);
-@include utility(border-radius, (
-    null: $border-radius,
-    0: 0,
-    1: $border-radius-base,
-    2: $border-radius-base * 2,
-    3: $border-radius-base * 3,
-    circle: $rounded-circle-border-radius,
-    pill: $rounded-pill-border-radius
-), rounded);
-@include utility(border-top-left-radius border-top-right-radius, (
-    null: $border-radius
-), rounded-top);
-@include utility(border-top-right-radius border-bottom-right-radius, (
-    null: $border-radius
-), rounded-end);
-@include utility(border-bottom-left-radius border-bottom-right-radius, (
-    null: $border-radius
-), rounded-bottom);
-@include utility(border-top-left-radius border-bottom-left-radius, (
-    null: $border-radius
-), rounded-start);
+@include utility((
+    property: border-bottom,
+    values: (
+        null: var(--ui-border-width) var(--ui-border-style) var(--ui-border-color),
+        0: 0
+    )
+));
+@include utility((
+    property: border-left,
+    class: border-end,
+    values: (
+        null: var(--ui-border-width) var(--ui-border-style) var(--ui-border-color),
+        0: 0
+    )
+));
+@include utility((
+    property: border-color,
+    class: border,
+    values: $utilities-border-colors,
+    local-vars: (
+        border-opacity: 1
+    )
+));
+@include utility((
+    property: border-opacity,
+    values: $opacities,
+    css-var: true
+));
+@include utility((
+    property: border-width,
+    class: border,
+    values: (
+        1: 1px,
+        2: 2px,
+        3: 3px,
+        4: 4px,
+        5: 5px
+    )
+));
+@include utility((
+    property: border-radius,
+    class: rounded,
+    values: (
+        null: var(--ui-border-radius),
+        0: 0,
+        1: var(--ui-border-radius-sm),
+        2: var(--ui-border-radius),
+        3: var(--ui-border-radius-lg),
+        4: var(--ui-border-radius-xl),
+        5: var(--ui-border-radius-xxl),
+        circle: 50%,
+        pill: var(--ui-border-radius-pill)
+    )
+));
+@include utility((
+    property: border-top-left-radius border-top-right-radius,
+    class: rounded-top,
+    values: (
+        null: var(--ui-border-radius),
+        0: 0,
+        1: var(--ui-border-radius-sm),
+        2: var(--ui-border-radius),
+        3: var(--ui-border-radius-lg),
+        4: var(--ui-border-radius-xl),
+        5: var(--ui-border-radius-xxl),
+        circle: 50%,
+        pill: var(--ui-border-radius-pill)
+    )
+));
+@include utility((
+    property: border-top-right-radius border-bottom-right-radius,
+    class: rounded-end,
+    values: (
+        null: var(--ui-border-radius),
+        0: 0,
+        1: var(--ui-border-radius-sm),
+        2: var(--ui-border-radius),
+        3: var(--ui-border-radius-lg),
+        4: var(--ui-border-radius-xl),
+        5: var(--ui-border-radius-xxl),
+        circle: 50%,
+        pill: var(--ui-border-radius-pill)
+    )
+));
+@include utility((
+    property: border-bottom-left-radius border-bottom-right-radius,
+    class: rounded-bottom,
+    values: (
+        null: var(--ui-border-radius),
+        0: 0,
+        1: var(--ui-border-radius-sm),
+        2: var(--ui-border-radius),
+        3: var(--ui-border-radius-lg),
+        4: var(--ui-border-radius-xl),
+        5: var(--ui-border-radius-xxl),
+        circle: 50%,
+        pill: var(--ui-border-radius-pill)
+    )
+));
+@include utility((
+    property: border-top-left-radius border-bottom-left-radius,
+    class: rounded-start,
+    values: (
+        null: var(--ui-border-radius),
+        0: 0,
+        1: var(--ui-border-radius-sm),
+        2: var(--ui-border-radius),
+        3: var(--ui-border-radius-lg),
+        4: var(--ui-border-radius-xl),
+        5: var(--ui-border-radius-xxl),
+        circle: 50%,
+        pill: var(--ui-border-radius-pill)
+    )
+));
 
-// color
-@include utility(color, map-merge(
-    $utilities-text-colors,
-    (
-        muted: $text-muted-color,
+// colors
+@include utility((
+    property: color,
+    class: text,
+    values: map-merge($utilities-text-colors, (
+        body-secondary: var(--ui-secondary-color),
+        body-tertiary: var(--ui-tertiary-color),
+        body-emphasis: var(--ui-emphasis-color),
         reset: inherit
+    )),
+    local-vars: (
+        text-opacity: 1
     )
-), text);
-@include utility(text-opacity, (
-    25: .25,
-    50: .5,
-    75: .75,
-    100: 1
-), $css-var: true);
-@include utility(border-color, map-merge(
-    $color-variants,
-    (
-        white: $white
-    )
-), border);
-@include utility(background-color, map-merge(
-    $utilities-bg-colors,
-    (
-        transparent: transparent
-    )
-), bg);
-@include utility(bg-opacity, (
-    10: .1,
-    25: .25,
-    50: .5,
-    75: .75,
-    100: 1
-), $css-var: true);
-@include utility(background-image, (
-    gradient: $bg-gradient-background-image
-), bg);
-
-// opacity
-@include utility(opacity, (
-    25: .25,
-    50: .5,
-    75: .75,
-    100: 1
+));
+@include utility((
+    property: text-opacity,
+    values: $opacities,
+    css-var: true
 ));
 
 // display
-@include utility(display, inline inline-block block table table-cell table-row flex inline-flex grid none, d, true, true);
+@include utility((
+    property: display,
+    class: d,
+    values: inline inline-block block table table-cell table-row flex inline-flex grid inline-grid none,
+    responsive: true,
+    print: true
+));
 
 // flex
-@include utility(flex-direction, row column row-reverse column-reverse, flex, true);
-@include utility(flex-wrap, wrap no-wrap wrap-reverse, flex, true);
-@include utility(justify-content, (
-    start: flex-start,
-    end: flex-end,
-    center: center,
-    between: space-between,
-    around: space-around,
-    evenly: space-evenly
-), $responsive: true);
-@include utility(align-items, (
-    start: flex-start,
-    end: flex-end,
-    center: center,
-    baseline: baseline,
-    stretch: stretch
-), $responsive: true);
-@include utility(align-content, (
-    start: flex-start,
-    end: flex-end,
-    center: center,
-    between: space-between,
-    around: space-around,
-    stretch: stretch
-), $responsive: true);
-@include utility(align-self, (
-    start: flex-start,
-    end: flex-end,
-    center: center,
-    baseline: baseline,
-    stretch: stretch
-), $responsive: true);
-@include utility(flex, (
-    fill: 1 1 auto
-), $responsive: true);
-@include utility(flex-grow, (
-    grow-0: 0,
-    grow-1: 1
-), flex, true);
-@include utility(flex-shrink, (
-    shrink-0: 0,
-    shrink-1: 1
-), flex, true);
-@include utility(order, (
-    first: -1,
-    0: 0,
-    1: 1,
-    2: 2,
-    3: 3,
-    4: 4,
-    5: 5,
-    last: 6
-), $responsive: true);
+@include utility((
+    property: flex-direction,
+    class: flex,
+    values: row column row-reverse column-reverse,
+    responsive: true
+));
+@include utility((
+    property: justify-content,
+    values: (
+        start: flex-start,
+        end: flex-end,
+        center: center,
+        between: space-between,
+        around: space-around,
+        evenly: space-evenly
+    ),
+    responsive: true
+));
+@include utility((
+    property: align-items,
+    values: (
+        start: flex-start,
+        end: flex-end,
+        center: center,
+        baseline: baseline,
+        stretch: stretch
+    ),
+    responsive: true
+));
+@include utility((
+    property: align-self,
+    values: (
+        start: flex-start,
+        end: flex-end,
+        center: center,
+        baseline: baseline,
+        stretch: stretch
+    ),
+    responsive: true
+));
+@include utility((
+    property: flex,
+    values: (
+        fill: 1 1 auto
+    ),
+    responsive: true
+));
+@include utility((
+    property: flex-grow,
+    class: flex,
+    values: (
+        grow-0: 0,
+        grow-1: 1
+    ),
+    responsive: true
+));
+@include utility((
+    property: flex-shrink,
+    class: flex,
+    values: (
+        shrink-0: 0,
+        shrink-1: 1
+    ),
+    responsive: true
+));
+@include utility((
+    property: flex-wrap,
+    class: flex,
+    values: wrap no-wrap wrap-reverse,
+    responsive: true
+));
+@include utility((
+    property: order,
+    values: (
+        first: -1,
+        0: 0,
+        1: 1,
+        2: 2,
+        3: 3,
+        4: 4,
+        5: 5,
+        last: 6
+    ),
+    responsive: true
+));
+@include utility((
+    property: align-content,
+    values: (
+        start: flex-start,
+        end: flex-end,
+        center: center,
+        between: space-between,
+        around: space-around,
+        stretch: stretch
+    ),
+    responsive: true
+));
 
 // float
-@include utility(float, (
-    start: left,
-    end: right,
-    none: none
-), $responsive: true);
+@include utility((
+    property: float,
+    values: (
+        start: left,
+        end: right,
+        none: none
+    ),
+    responsive: true
+));
 
 // interaction
-@include utility(user-select, auto all none);
-@include utility(pointer-events, auto none, pe);
+@include utility((
+    property: user-select,
+    values: auto all none
+));
+@include utility((
+    property: pointer-events,
+    class: pe,
+    values: auto none,
+));
+
+// link
+@include utility((
+    property: link-opacity,
+    values: $opacities,
+    state: hover,
+    css-var: true
+));
+@include utility((
+    property: link-opacity,
+    class: link-hover-opacity,
+    values: $opacities,
+    state: hover,
+    css-var: true
+));
+@include utility((
+    property: text-underline-offset,
+    class: link-offset,
+    values: (
+        1: .125em,
+        2: .25em,
+        3: .375em,
+    ),
+    state: hover
+));
+@include utility((
+    property: text-decoration-color,
+    class: link-underline,
+    values: map-merge(
+        $utilities-link-underline-colors,
+        (
+            null: rgba(var(--ui-link-color-rgb), var(--ui-link-underline-opacity))
+        )
+    ),
+    local-vars: (
+        link-underline-opacity: 1
+    )
+));
+@include utility((
+    property: link-underline-opacity,
+    values: $opacities,
+    state: hover,
+    css-var: true
+));
+
+// object fit
+@include utility((
+    property: object-fit,
+    values: (
+        contain: contain,
+        cover: cover,
+        fill: fill,
+        scale: scale-down,
+        none: none,
+    ),
+    responsive: true
+));
+
+// opacity
+@include utility((
+    property: opacity,
+    values: $opacities
+));
 
 // outline
-@include utility(outline, 0);
+@include utility((
+    property: outline,
+    values: 0
+));
 
 // overflow
-@include utility(overflow, auto hidden visible scroll);
+@include utility((
+    property: overflow,
+    values: auto hidden visible scroll
+));
+@include utility((
+    property: overflow-x,
+    values: auto hidden visible scroll
+));
+@include utility((
+    property: overflow-y,
+    values: auto hidden visible scroll
+));
 
 // position
-@include utility(position, static relative absolute fixed sticky);
-@include utility(top, $positions);
-@include utility(right, $positions, end);
-@include utility(bottom, $positions);
-@include utility(left, $positions, start);
-@include utility(transform, (
-    null: translate(-50%, -50%),
-    x: translateX(-50%),
-    y: translateY(-50%)
-), translate-middle);
+@include utility((
+    property: position,
+    values: static relative absolute fixed sticky
+));
+@include utility((
+    property: top,
+    values: $positions
+));
+@include utility((
+    property: right,
+    class: end,
+    values: $positions
+));
+@include utility((
+    property: bottom,
+    values: $positions
+));
+@include utility((
+    property: left,
+    class: start,
+    values: $positions
+));
+@include utility((
+    property: transform,
+    class: translate-middle,
+    values: (
+        null: translate(-50%, -50%),
+        x: translateX(-50%),
+        y: translateY(-50%)
+    )
+));
 
 // shadow
-@include utility(box-shadow, (
-    null: $shadow,
-    xs: $shadow-xs,
-    sm: $shadow-sm,
-    lg: $shadow-lg,
-    none: none
-), shadow);
+@include utility((
+    property: box-shadow,
+    class: shadow,
+    values: (
+        null: var(--ui-shadow),
+        sm: var(--ui-shadow-sm),
+        lg: var(--ui-shadow-lg),
+        none: none
+    )
+));
+@include utility((
+    property: focus-ring-color,
+    class: focus-ring,
+    values: $utilities-focus-ring-colors,
+    css-var: true
+));
 
 // sizing
-@include utility(width, $sizes, w);
-@include utility(max-width, (
-    100: 100%
-), mw);
-@include utility(width, (
-    100: 100vw
-), vw);
-@include utility(min-width, (
-    100: 100vw
-), min-vw);
-@include utility(height, $sizes, h);
-@include utility(max-height, (
-    100: 100%
-), mh);
-@include utility(height, (
-    100: 100vh
-), vh);
-@include utility(min-height, (
-    100: 100vh
-), min-vh);
+@include utility((
+    property: width,
+    class: w,
+    values: $sizes
+));
+@include utility((
+    property: height,
+    class: h,
+    values: $sizes
+));
+@include utility((
+    property: max-width,
+    class: mw,
+    values: (100: 100%)
+));
+@include utility((
+    property: max-height,
+    class: mh,
+    values: (100: 100%)
+));
+@include utility((
+    property: width,
+    class: vw,
+    values: (100: 100vw)
+));
+@include utility((
+    property: height,
+    class: vh,
+    values: (100: 100vh)
+));
+@include utility((
+    property: min-width,
+    class: min-vw,
+    values: (100: 100vw)
+));
+@include utility((
+    property: min-height,
+    class: min-vh,
+    values: (100: 100vh)
+));
 
 // spacing
-@include utility(padding, $paddings, p, true, true);
-@include utility(padding-top padding-bottom, $paddings, py, true, true);
-@include utility(padding-left padding-right, $paddings, px, true, true);
-@include utility(padding, $paddings, p, true, true);
-@include utility(padding-top, $paddings, pt, true, true);
-@include utility(padding-right, $paddings, pe, true, true);
-@include utility(padding-bottom, $paddings, pb, true, true);
-@include utility(padding-left, $paddings, ps, true, true);
-@include utility(margin, $margins, m, true, true);
-@include utility(margin-top margin-bottom, $margins, my, true, true);
-@include utility(margin-left margin-right, $margins, mx, true, true);
-@include utility(margin, $margins, m, true, true);
-@include utility(margin-top, $margins, mt, true, true);
-@include utility(margin-right, $margins, me, true, true);
-@include utility(margin-bottom, $margins, mb, true, true);
-@include utility(margin-left, $margins, ms, true, true);
-@include utility(gap, $gaps, gap, true, true);
+@include utility((
+    property: padding,
+    class: p,
+    values: $paddings,
+    responsive: true,
+    print: true
+));
+@include utility((
+    property: padding-top padding-bottom,
+    class: py,
+    values: $paddings,
+    responsive: true,
+    print: true
+));
+@include utility((
+    property: padding-left padding-right,
+    class: px,
+    values: $paddings,
+    responsive: true,
+    print: true
+));
+@include utility((
+    property: padding-top,
+    class: pt,
+    values: $paddings,
+    responsive: true,
+    print: true
+));
+@include utility((
+    property: padding-right,
+    class: pe,
+    values: $paddings,
+    responsive: true,
+    print: true
+));
+@include utility((
+    property: padding-bottom,
+    class: pb,
+    values: $paddings,
+    responsive: true,
+    print: true
+));
+@include utility((
+    property: padding-left,
+    class: ps,
+    values: $paddings,
+    responsive: true,
+    print: true
+));
+
+@include utility((
+    property: margin,
+    class: m,
+    values: $margins,
+    responsive: true,
+    print: true
+));
+@include utility((
+    property: margin-top margin-bottom,
+    class: my,
+    values: $margins,
+    responsive: true,
+    print: true
+));
+@include utility((
+    property: margin-left margin-right,
+    class: mx,
+    values: $margins,
+    responsive: true,
+    print: true
+));
+@include utility((
+    property: margin-top,
+    class: mt,
+    values: $margins,
+    responsive: true,
+    print: true
+));
+@include utility((
+    property: margin-right,
+    class: me,
+    values: $margins,
+    responsive: true,
+    print: true
+));
+@include utility((
+    property: margin-bottom,
+    class: mb,
+    values: $margins,
+    responsive: true,
+    print: true
+));
+@include utility((
+    property: margin-left,
+    class: ms,
+    values: $margins,
+    responsive: true,
+    print: true
+));
+
+@include utility((
+    property: gap,
+    values: $gaps,
+    responsive: true,
+    print: true
+));
 
 // text
-@include utility(white-space, (
-    wrap: normal,
-    nowrap: nowrap
-), text);
-@include utility(word-break overflow-wrap, (
-    break: break-word
-), text);
-@include utility(text-transform, lowercase uppercase capitalize, text);
-@include utility(font-weight, $font-weights, fw);
-@include utility(font-style, italic normal, fst);
-@include utility(font-size, $font-sizes, fs);
-@include utility(line-height, $line-heights, lh);
-@include utility(font-family, (
-    monospace: $font-family-mono
-), font);
-@include utility(text-decoration, underline line-through none);
+@include utility((
+    property: text-align,
+    class: text,
+    values: (
+        start: left,
+        center: center,
+        end: right,
+        justify: justify
+    ),
+    responsive: true
+));
+@include utility((
+    property: white-space,
+    class: text,
+    values: (
+        wrap: normal,
+        nowrap: nowrap
+    )
+));
+@include utility((
+    property: word-break overflow-wrap,
+    class: text,
+    values: (break: break-word)
+));
+@include utility((
+    property: text-transform,
+    class: text,
+    values: lowercase uppercase capitalize
+));
+@include utility((
+    property: font-size,
+    class: fs,
+    values: $font-sizes
+));
+@include utility((
+    property: font-weight,
+    class: fw,
+    values: $font-weights
+));
+@include utility((
+    property: font-style,
+    class: fst,
+    values: italic normal
+));
+@include utility((
+    property: line-height,
+    class: lh,
+    values: $line-heights
+));
+@include utility((
+    property: font-family,
+    class: font,
+    values: (monospace: $font-monospace)
+));
+@include utility((
+    property: text-decoration,
+    values: underline line-through none
+));
+
+// vertical alignment
+@include utility((
+    property: vertical-align,
+    class: align,
+    values: baseline top middle bottom text-top text-bottom
+));
 
 // visibility
-@include utility(visibility, (
-    visible: visible,
-    invisible: hidden
-), null);
+@include utility((
+    property: visibility,
+    class: null,
+    values: (
+        visible: visible,
+        invisible: hidden
+    )
+));
+
+// z-index
+@include utility((
+    property: z-index,
+    class: z,
+    values: (
+        0: 0,
+        1: 1,
+        2: 2,
+        3: 3,
+        n1: -1
+    )
+));

@@ -1,21 +1,286 @@
-:root {
-
-    @each $color, $value in $color-variants {
-        --ui-#{$color}: #{$value};
-    }
-
+:root,
+[data-ui-theme="light"] {
     --ui-white: #{$white};
-    --ui-black: #{$black};
-    --ui-gray: #{$gray};
-
-    @each $color, $value in $color-variants {
-        --ui-#{$color}-rgb: #{to-rgb($value)};
-    }
-
     --ui-white-rgb: #{to-rgb($white)};
-    --ui-black-rgb: #{to-rgb($black)};
-    --ui-gray-rgb: #{to-rgb($gray)};
-    --ui-bg-opacity: 1;
-    --ui-text-opacity: 1;
 
+    --ui-black: #{$black};
+    --ui-black-rgb: #{to-rgb($black)};
+
+    --ui-gray: #{$gray};
+    --ui-gray-rgb: #{to-rgb($gray)};
+
+    --ui-primary: #{$primary};
+    --ui-primary-emphasis: #{$primary-emphasis};
+    --ui-primary-highlight: #{$primary-highlight};
+    --ui-primary-active: #{$primary-active};
+    --ui-primary-subtle: #{$primary-subtle};
+    --ui-primary-subtle-emphasis: #{$primary-subtle-emphasis};
+    --ui-primary-subtle-text: #{$primary-subtle-text};
+    --ui-primary-contrast: #{$primary-contrast};
+    --ui-primary-rgb: #{to-rgb($primary)};
+    --ui-primary-emphasis-rgb: #{to-rgb($primary-emphasis)};
+    --ui-primary-subtle-rgb: #{to-rgb($primary-subtle)};
+    --ui-primary-contrast-rgb: #{to-rgb($primary-contrast)};
+
+    --ui-secondary: #{$secondary};
+    --ui-secondary-emphasis: #{$secondary-emphasis};
+    --ui-secondary-highlight: #{$secondary-highlight};
+    --ui-secondary-active: #{$secondary-active};
+    --ui-secondary-subtle: #{$secondary-subtle};
+    --ui-secondary-subtle-emphasis: #{$secondary-subtle-emphasis};
+    --ui-secondary-subtle-text: #{$secondary-subtle-text};
+    --ui-secondary-contrast: #{$secondary-contrast};
+    --ui-secondary-rgb: #{to-rgb($secondary)};
+    --ui-secondary-emphasis-rgb: #{to-rgb($secondary-emphasis)};
+    --ui-secondary-subtle-rgb: #{to-rgb($secondary-subtle)};
+    --ui-secondary-contrast-rgb: #{to-rgb($secondary-contrast)};
+
+    --ui-success: #{$success};
+    --ui-success-emphasis: #{$success-emphasis};
+    --ui-success-highlight: #{$success-highlight};
+    --ui-success-active: #{$success-active};
+    --ui-success-subtle: #{$success-subtle};
+    --ui-success-subtle-emphasis: #{$success-subtle-emphasis};
+    --ui-success-subtle-text: #{$success-subtle-text};
+    --ui-success-contrast: #{$success-contrast};
+    --ui-success-rgb: #{to-rgb($success)};
+    --ui-success-emphasis-rgb: #{to-rgb($success-emphasis)};
+    --ui-success-subtle-rgb: #{to-rgb($success-subtle)};
+    --ui-success-contrast-rgb: #{to-rgb($success-contrast)};
+
+    --ui-info: #{$info};
+    --ui-info-emphasis: #{$info-emphasis};
+    --ui-info-highlight: #{$info-highlight};
+    --ui-info-active: #{$info-active};
+    --ui-info-subtle: #{$info-subtle};
+    --ui-info-subtle-emphasis: #{$info-subtle-emphasis};
+    --ui-info-subtle-text: #{$info-subtle-text};
+    --ui-info-contrast: #{$info-contrast};
+    --ui-info-rgb: #{to-rgb($info)};
+    --ui-info-emphasis-rgb: #{to-rgb($info-emphasis)};
+    --ui-info-subtle-rgb: #{to-rgb($info-subtle)};
+    --ui-info-contrast-rgb: #{to-rgb($info-contrast)};
+
+    --ui-warning: #{$warning};
+    --ui-warning-emphasis: #{$warning-emphasis};
+    --ui-warning-highlight: #{$warning-highlight};
+    --ui-warning-active: #{$warning-active};
+    --ui-warning-subtle: #{$warning-subtle};
+    --ui-warning-subtle-emphasis: #{$warning-subtle-emphasis};
+    --ui-warning-subtle-text: #{$warning-subtle-text};
+    --ui-warning-contrast: #{$warning-contrast};
+    --ui-warning-rgb: #{to-rgb($warning)};
+    --ui-warning-emphasis-rgb: #{to-rgb($warning-emphasis)};
+    --ui-warning-subtle-rgb: #{to-rgb($warning-subtle)};
+    --ui-warning-contrast-rgb: #{to-rgb($warning-contrast)};
+
+    --ui-danger: #{$danger};
+    --ui-danger-emphasis: #{$danger-emphasis};
+    --ui-danger-highlight: #{$danger-highlight};
+    --ui-danger-active: #{$danger-active};
+    --ui-danger-subtle: #{$danger-subtle};
+    --ui-danger-subtle-emphasis: #{$danger-subtle-emphasis};
+    --ui-danger-subtle-text: #{$danger-subtle-text};
+    --ui-danger-contrast: #{$danger-contrast};
+    --ui-danger-rgb: #{to-rgb($danger)};
+    --ui-danger-emphasis-rgb: #{to-rgb($danger-emphasis)};
+    --ui-danger-subtle-rgb: #{to-rgb($danger-subtle)};
+    --ui-danger-contrast-rgb: #{to-rgb($danger-contrast)};
+
+    --ui-light: #{$light};
+    --ui-light-emphasis: #{$light-emphasis};
+    --ui-light-highlight: #{$light-highlight};
+    --ui-light-active: #{$light-active};
+    --ui-light-subtle: #{$light-subtle};
+    --ui-light-subtle-emphasis: #{$light-subtle-emphasis};
+    --ui-light-subtle-text: #{$light-subtle-text};
+    --ui-light-contrast: #{$light-contrast};
+    --ui-light-rgb: #{to-rgb($light)};
+    --ui-light-emphasis-rgb: #{to-rgb($light-emphasis)};
+    --ui-light-subtle-rgb: #{to-rgb($light-subtle)};
+    --ui-light-contrast-rgb: #{to-rgb($light-contrast)};
+
+    --ui-dark: #{$dark};
+    --ui-dark-emphasis: #{$dark-emphasis};
+    --ui-dark-highlight: #{$dark-highlight};
+    --ui-dark-active: #{$dark-active};
+    --ui-dark-subtle: #{$dark-subtle};
+    --ui-dark-subtle-emphasis: #{$dark-subtle-emphasis};
+    --ui-dark-subtle-text: #{$dark-subtle-text};
+    --ui-dark-contrast: #{$dark-contrast};
+    --ui-dark-rgb: #{to-rgb($dark)};
+    --ui-dark-emphasis-rgb: #{to-rgb($dark-emphasis)};
+    --ui-dark-subtle-rgb: #{to-rgb($dark-subtle)};
+    --ui-dark-contrast-rgb: #{to-rgb($dark-contrast)};
+
+    --ui-font-sans-serif: #{$font-sans-serif};
+    --ui-font-monospace: #{$font-monospace};
+    --ui-gradient: #{$gradient};
+
+    --ui-body-font-family: var(--ui-font-sans-serif);
+    --ui-body-font-size: #{$font-size};
+    --ui-body-font-weight: #{$body-font-weight};
+    --ui-body-line-height: #{$body-line-height};
+
+    --ui-body-bg: #{$body-bg};
+    --ui-body-bg-rgb: #{to-rgb($body-bg)};
+
+    --ui-body-color: #{$body-color};
+    --ui-body-color-rgb: #{to-rgb($body-color)};
+
+    --ui-secondary-bg: #{$body-secondary-bg};
+    --ui-secondary-bg-rgb: #{to-rgb($body-secondary-bg)};
+    --ui-secondary-color: #{$body-secondary-color};
+    --ui-secondary-color-rgb: #{to-rgb($body-secondary-color)};
+
+    --ui-tertiary-bg: #{$body-tertiary-bg};
+    --ui-tertiary-bg-rgb: #{to-rgb($body-tertiary-bg)};
+    --ui-tertiary-color: #{$body-tertiary-color};
+    --ui-tertiary-color-rgb: #{to-rgb($body-tertiary-color)};
+
+    --ui-emphasis-color: #{$emphasis-color};
+    --ui-emphasis-color-rgb: #{to-rgb($emphasis-color)};
+
+    --ui-link-color: #{$link-color};
+    --ui-link-color-rgb: #{to-rgb($link-color)};
+    --ui-link-decoration: underline;
+    --ui-link-hover-color: #{$link-color-hover};
+    --ui-link-hover-color-rgb: #{to-rgb($link-color-hover)};
+    --ui-link-hover-decoration: underline;
+
+    --ui-code-color: #{$code-color};
+    --ui-mark-bg: #{$mark-bg};
+
+    --ui-border-color: #{$border-color};
+    --ui-border-color-translucent: #{$border-color-translucent};
+    --ui-border-width: #{$border-width};
+    --ui-border-style: #{$border-style};
+
+    --ui-border-radius: #{$border-radius};
+
+    --ui-border-radius-sm: #{$border-radius-sm};
+    --ui-border-radius-lg: #{$border-radius-lg};
+    --ui-border-radius-xl: #{$border-radius-xl};
+    --ui-border-radius-xxl: #{$border-radius-xxl};
+    --ui-border-radius-pill: #{$border-radius-pill};
+
+    --ui-shadow: #{$shadow};
+    --ui-shadow-sm: #{$shadow-sm};
+    --ui-shadow-lg: #{$shadow-lg};
+
+    --ui-focus-ring-width: #{$focus-ring-width};
+    --ui-focus-ring-opacity: #{$focus-ring-opacity};
+    --ui-focus-ring-color: #{$focus-ring-color};
+
+    --ui-ripple-opacity: #{$ripple-opacity};
+    --ui-ripple-bg: #{$ripple-bg};
+
+    --ui-breakpoint-xs: #{map-get($breakpoints, xs)};
+    --ui-breakpoint-sm: #{map-get($breakpoints, sm)};
+    --ui-breakpoint-md: #{map-get($breakpoints, md)};
+    --ui-breakpoint-lg: #{map-get($breakpoints, lg)};
+    --ui-breakpoint-xl: #{map-get($breakpoints, xl)};
+    --ui-breakpoint-xxl: #{map-get($breakpoints, xxl)};
+
+    --ui-text-opacity: 1;
+    --ui-bg-opacity: 1;
+    --ui-border-opacity: 1;
+    --ui-disabled-opacity: #{$disabled-opacity};
+}
+
+[data-ui-theme="light"] {
+    color-scheme: light;
+}
+
+[data-ui-theme="dark"] {
+    color-scheme: dark;
+
+    --ui-primary-emphasis: #{$primary-emphasis-dark};
+    --ui-primary-subtle: #{$primary-subtle-dark};
+    --ui-primary-subtle-emphasis: #{$primary-subtle-emphasis-dark};
+    --ui-primary-subtle-text: #{$primary-subtle-text-dark};
+    --ui-primary-emphasis-rgb: #{to-rgb($primary-emphasis-dark)};
+    --ui-primary-subtle-rgb: #{to-rgb($primary-subtle-dark)};
+
+    --ui-secondary-emphasis: #{$secondary-emphasis-dark};
+    --ui-secondary-subtle: #{$secondary-subtle-dark};
+    --ui-secondary-subtle-emphasis: #{$secondary-subtle-emphasis-dark};
+    --ui-secondary-subtle-text: #{$secondary-subtle-text-dark};
+    --ui-secondary-emphasis-rgb: #{to-rgb($secondary-emphasis-dark)};
+    --ui-secondary-subtle-rgb: #{to-rgb($secondary-subtle-dark)};
+
+    --ui-success-emphasis: #{$success-emphasis-dark};
+    --ui-success-subtle: #{$success-subtle-dark};
+    --ui-success-subtle-emphasis: #{$success-subtle-emphasis-dark};
+    --ui-success-subtle-text: #{$success-subtle-text-dark};
+    --ui-success-emphasis-rgb: #{to-rgb($success-emphasis-dark)};
+    --ui-success-subtle-rgb: #{to-rgb($success-subtle-dark)};
+
+    --ui-info-emphasis: #{$info-emphasis-dark};
+    --ui-info-subtle: #{$info-subtle-dark};
+    --ui-info-subtle-emphasis: #{$info-subtle-emphasis-dark};
+    --ui-info-subtle-text: #{$info-subtle-text-dark};
+    --ui-info-emphasis-rgb: #{to-rgb($info-emphasis-dark)};
+    --ui-info-subtle-rgb: #{to-rgb($info-subtle-dark)};
+
+    --ui-warning-emphasis: #{$warning-emphasis-dark};
+    --ui-warning-subtle: #{$warning-subtle-dark};
+    --ui-warning-subtle-emphasis: #{$warning-subtle-emphasis-dark};
+    --ui-warning-subtle-text: #{$warning-subtle-text-dark};
+    --ui-warning-emphasis-rgb: #{to-rgb($warning-emphasis-dark)};
+    --ui-warning-subtle-rgb: #{to-rgb($warning-subtle-dark)};
+
+    --ui-danger-emphasis: #{$danger-emphasis-dark};
+    --ui-danger-subtle: #{$danger-subtle-dark};
+    --ui-danger-subtle-emphasis: #{$danger-subtle-emphasis-dark};
+    --ui-danger-subtle-text: #{$danger-subtle-text-dark};
+    --ui-danger-emphasis-rgb: #{to-rgb($danger-emphasis-dark)};
+    --ui-danger-subtle-rgb: #{to-rgb($danger-subtle-dark)};
+
+    --ui-light-emphasis: #{$light-emphasis-dark};
+    --ui-light-subtle: #{$light-subtle-dark};
+    --ui-light-subtle-emphasis: #{$light-subtle-emphasis-dark};
+    --ui-light-subtle-text: #{$light-subtle-text-dark};
+    --ui-light-emphasis-rgb: #{to-rgb($light-emphasis-dark)};
+    --ui-light-subtle-rgb: #{to-rgb($light-subtle-dark)};
+
+    --ui-dark-emphasis: #{$dark-emphasis-dark};
+    --ui-dark-subtle: #{$dark-subtle-dark};
+    --ui-dark-subtle-emphasis: #{$dark-subtle-emphasis-dark};
+    --ui-dark-subtle-text: #{$dark-subtle-text-dark};
+    --ui-dark-emphasis-rgb: #{to-rgb($dark-emphasis-dark)};
+    --ui-dark-subtle-rgb: #{to-rgb($dark-subtle-dark)};
+
+    --ui-body-bg: #{$body-bg-dark};
+    --ui-body-bg-rgb: #{to-rgb($body-bg-dark)};
+
+    --ui-body-color: #{$body-color-dark};
+    --ui-body-color-rgb: #{to-rgb($body-color-dark)};
+
+    --ui-secondary-bg: #{$body-secondary-bg-dark};
+    --ui-secondary-bg-rgb: #{to-rgb($body-secondary-bg-dark)};
+    --ui-secondary-color: #{$body-secondary-color-dark};
+    --ui-secondary-color-rgb: #{to-rgb($body-secondary-color-dark)};
+
+    --ui-tertiary-bg: #{$body-tertiary-bg-dark};
+    --ui-tertiary-bg-rgb: #{to-rgb($body-tertiary-bg-dark)};
+    --ui-tertiary-color: #{$body-tertiary-color-dark};
+    --ui-tertiary-color-rgb: #{to-rgb($body-tertiary-color-dark)};
+
+    --ui-emphasis-color: #{$emphasis-color-dark};
+    --ui-emphasis-color-rgb: #{to-rgb($emphasis-color-dark)};
+
+    --ui-link-color: #{$link-color-dark};
+    --ui-link-color-rgb: #{to-rgb($link-color-dark)};
+    --ui-link-hover-color: #{$link-color-hover-dark};
+    --ui-link-hover-color-rgb: #{to-rgb($link-color-hover-dark)};
+
+    --ui-border-color: #{$border-color-dark};
+    --ui-border-color-translucent: #{$border-color-translucent-dark};
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    :root{
+        scroll-behavior: smooth
+    }
 }

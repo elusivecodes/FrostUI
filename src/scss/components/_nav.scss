@@ -1,4 +1,11 @@
 .nav {
+    --ui-nav-link-padding-x: #{$nav-link-padding-x};
+    --ui-nav-link-padding-y: #{$nav-link-padding-y};
+    --ui-nav-link-color: #{$nav-link-color};
+    --ui-nav-link-hover-color: #{$nav-link-hover-color};
+    --ui-nav-link-focus-box-shadow: #{$nav-link-focus-box-shadow};
+    --ui-nav-link-disabled-color: #{$nav-link-disabled-color};
+
     display: flex;
     flex-wrap: wrap;
     padding: 0;
@@ -9,58 +16,65 @@
 
 .nav-link {
     display: block;
-    padding: $nav-link-padding-y $nav-link-padding-x;
+    padding: var(--ui-nav-link-padding-y) var(--ui-nav-link-padding-x);
+    color: var(--ui-nav-link-color);
     text-decoration: none;
-    border: 0;
-    @include border-radius($nav-link-border-radius);
     transition: all $transition-time $transition-type;
     transition-property: color, background-color, border-color;
 
-    &:hover {
+    &:hover,
+    &:focus {
+        color: var(--ui-nav-link-hover-color);
         text-decoration: none;
     }
 
-    &:focus {
-        text-decoration: none;
-        background-color: $nav-link-focus-background-color;
+    &:focus-visible {
         outline: 0;
+        box-shadow: $nav-link-focus-box-shadow;
     }
 
     &.disabled {
+        color: var(--ui-nav-link-disabled-color);
         pointer-events: none;
         cursor: default;
-        opacity: $nav-link-disabled-opacity;
     }
 }
 
 .nav-tabs {
-    border-bottom: $nav-tabs-border-size $border-style $nav-tabs-border-color;
+    --ui-nav-tabs-border-width: #{$nav-tabs-border-width};
+    --ui-nav-tabs-border-color: #{$nav-tabs-border-color};
+    --ui-nav-tabs-border-radius: #{$nav-tabs-border-radius};
+    --ui-nav-tabs-link-hover-border-color: #{$nav-tabs-link-hover-border-color};
+    --ui-nav-tabs-link-active-color: #{$nav-tabs-link-active-color};
+    --ui-nav-tabs-link-active-bg: #{$nav-tabs-link-active-bg};
+    --ui-nav-tabs-link-active-border-color: #{$nav-tabs-link-active-border-color};
+
+    border-bottom: var(--ui-nav-tabs-border-width) var(--ui-border-style) var(--ui-nav-tabs-border-color);
 
     .nav-link {
-        margin-bottom: $nav-tabs-border-size * -1;
+        margin-bottom: calc(var(--ui-nav-tabs-border-width) * -1);
         background-color: transparent;
-        border: $nav-tabs-border-size $border-style transparent;
-        @include border-bottom-radius(0);
+        border: var(--ui-nav-tabs-border-width) var(--ui-border-style) transparent;
+        @include border-top-radius(var(--ui-nav-tabs-border-radius));
 
         &:hover,
         &:focus {
-            border-color: $nav-tabs-border-color;
+            isolation: isolate;
+            border-color: var(--ui-nav-tabs-link-hover-border-color) transparent;
         }
 
         &.disabled {
+            color: var(--ui-nav-link-disabled-color);
+            background-color: transparent;
             border-color: transparent;
         }
     }
 
     .nav-link.active,
     .nav-item.show .nav-link {
-        color: $nav-tabs-nav-link-active-color;
-        background-color: $nav-tabs-nav-link-active-background-color;
-        border-color: $nav-tabs-border-color $nav-tabs-border-color $nav-tabs-nav-link-active-background-color;
-
-        &:focus {
-            border-color: $nav-tabs-nav-link-active-border-color $nav-tabs-nav-link-active-border-color $nav-tabs-nav-link-active-background-color;
-        }
+        color: var(--ui-nav-tabs-link-active-color);
+        background-color: var(--ui-nav-tabs-link-active-bg);
+        border-color: var(--ui-nav-tabs-link-active-border-color) transparent;
     }
 
     [data-ui-placement="bottom"] + .dropdown-menu {
@@ -69,20 +83,58 @@
 }
 
 .nav-pills {
+    --ui-nav-pills-border-radius: #{$nav-pills-border-radius};
+    --ui-nav-pills-link-active-color: #{$nav-pills-link-active-color};
+    --ui-nav-pills-link-active-bg: #{$nav-pills-link-active-bg};
+
+    .nav-link {
+        background: none;
+        border: 0;
+        @include border-radius(var(--ui-nav-pills-border-radius));
+
+        &:disabled {
+            color: var(--ui-nav-link-disabled-color);
+            background-color: transparent;
+            border-color: transparent;
+        }
+    }
 
     .nav-link.active,
     .nav-item.show .nav-link {
-        color: text-color($nav-pills-nav-link-active-background-color);
-        background-color: $nav-pills-nav-link-active-background-color;
+        color: var(--ui-nav-pills-link-active-color);
+        background-color: var(--ui-nav-pills-link-active-bg);
+    }
+}
 
-        &:focus {
-            background-color: $nav-pills-nav-link-active-focus-background-color;
+.nav-underline {
+    --ui-nav-underline-gap: #{$nav-underline-gap};
+    --ui-nav-underline-border-width: #{$nav-underline-border-width};
+    --ui-nav-underline-link-active-color: #{$nav-underline-link-active-color};
+
+    gap: var(--ui-nav-underline-gap);
+
+    .nav-link {
+        padding-right: 0;
+        padding-left: 0;
+        border-bottom: var(--ui-nav-underline-border-width) solid transparent;
+
+        &:focus,
+        &:hover {
+            border-bottom-color: currentcolor;
         }
+    }
+
+    .nav-link.active,
+    .show>.nav-link {
+        font-weight: map-get($font-weights, bold);
+        color: var(--ui-nav-underline-link-active-color);
+        border-bottom-color: currentcolor;
     }
 }
 
 .nav-fill {
-    > .nav-link,
+
+    >.nav-link,
     .nav-item {
         flex: 1 1 auto;
         text-align: center;
@@ -90,7 +142,8 @@
 }
 
 .nav-justified {
-    > .nav-link,
+
+    >.nav-link,
     .nav-item {
         flex-basis: 0;
         flex-grow: 1;
@@ -99,7 +152,7 @@
 }
 
 .tab-content {
-    > .tab-pane {
+    >.tab-pane {
         display: none;
 
         &.active {
@@ -109,13 +162,13 @@
 }
 
 .card-header-tabs {
-    margin-right: ($card-header-padding-x * -1) + ($spacing * .5);
-    margin-bottom: $card-header-padding-y * -1;
-    margin-left: ($card-header-padding-x * -1) + ($spacing * .5);
+    margin-right: calc(var(--ui-card-cap-padding-x) * -.5);
+    margin-bottom: calc(var(--ui-card-cap-padding-y) * -1);
+    margin-left: calc(var(--ui-card-cap-padding-x) * -.5);
     border-bottom: 0;
 }
 
 .card-header-pills {
-    margin-right: ($card-header-padding-x * -1) + ($spacing * .5);
-    margin-left: ($card-header-padding-x * -1) + ($spacing * .5);
+    margin-right: calc(var(--ui-card-cap-padding-x) * -.5);
+    margin-left: calc(var(--ui-card-cap-padding-x) * -.5);
 }

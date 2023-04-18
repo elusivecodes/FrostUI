@@ -43,15 +43,13 @@ Alternatively, a bundle version is supplied which includes the *FrostCore* and *
 **Using NPM**
 
 ```
-npm i frostui
+npm i @fr0st/ui
 ```
 
 In Node.js:
 
 ```javascript
-const { JSDOM } = require('jsdom');
-const { window } = new JSDOM('');
-const { UI } = require('frostui')(window);
+import * as UI from '@fr0st/ui';
 ```
 
 

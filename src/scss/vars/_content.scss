@@ -8,15 +8,12 @@ $blockquote-margin-bottom: $spacing !default;
 $blockquote-font-size: $font-size-lg !default;
 $blockquote-footer-margin-top: ($spacing * -1) !default;
 $blockquote-footer-font-size: 80% !default;
-$blockquote-footer-color: $gray-dark !default;
+$blockquote-footer-color: var(--ui-secondary-color) !default;
 $blockquote-footer-prefix: "\2014 \00A0" !default;
 
 // body
 $body-font-weight: map-get($font-weights, normal) !default;
 $body-line-height: map-get($line-heights, base) !default;
-
-// caption
-$caption-color: tint($text-color, 15%) !default;
 
 // dd
 $dd-margin-bottom: $spacing * .5 !default;
@@ -28,7 +25,7 @@ $dt-font-weight: map-get($font-weights, bolder) !default;
 $figure-margin-bottom: $spacing !default;
 $figure-img-margin-bottom: $spacing * .5 !default;
 $figure-caption-font-size: 90% !default;
-$figure-caption-color: map-get($color-variants, secondary) !default;
+$figure-caption-color: var(--ui-secondary-color) !default;
 
 // heading
 $headings-margin-bottom: $spacing * .5 !default;
@@ -55,22 +52,24 @@ $display-5-font-size: 3 !default;
 $display-6-font-size: 2.5 !default;
 
 // horizontal rule
-$hr-height: $border-size !default;
+$hr-height: $border-width !default;
 $hr-margin-y: $spacing * .5 !default;
 $hr-opacity: .25 !default;
 
 // image
 $img-thumbnail-padding: $spacing * .25 !default;
-$img-thumbnail-background-color: $white !default;
-$img-thumbnail-border-size: $border-size !default;
-$img-thumbnail-border-color: $border-color !default;
-$img-thumbnail-border-radius: $border-radius !default;
+$img-thumbnail-bg: var(--ui-body-bg) !default;
+$img-thumbnail-border-color: var(--ui-border-color) !default;
+$img-thumbnail-border-width: var(--ui-border-width) !default;
+$img-thumbnail-border-radius: var(--ui-border-radius) !default;
 
 // kbd
 $kbd-padding-x: .4rem !default;
 $kbd-padding-y: .2rem !default;
-$kbd-background-color: map-get($color-variants, dark) !default;
 $kbd-kbd-font-weight: map-get($font-weights, bolder) !default;
+$kbd-bg: var(--ui-body-color) !default;
+$kbd-color: var(--ui-body-bg) !default;
+$kbd-border-radius: var(--ui-border-radius) !default;
 
 // lead
 $lead-font-size: 1.25 !default;
@@ -80,16 +79,6 @@ $lead-font-weight: map-get($font-weights, light) !default;
 $legend-margin-bottom: $spacing * .5 !default;
 $legend-font-size: $font-size-lg !default;
 $legend-font-weight: map-get($font-weights, bold) !default;
-
-// link
-$link-text-decoration: none !default;
-$link-hover-color-shade: 20% !default;
-$link-hover-text-decoration: underline !default;
-$link-focus-color-tint: 20% !default;
-$link-focus-text-decoration: underline !default;
-
-$link-hover-color: shade($link-color, $link-hover-color-shade) !default;
-$link-focus-color: tint($link-color, $link-focus-color-tint) !default;
 
 // list
 $list-padding-left: $spacing * 2 !default;
@@ -101,13 +90,11 @@ $mark-padding: .2rem !default;
 // paragraph
 $p-margin-bottom: $spacing !default;
 
-// small
-$small-font-size: 75% !default;
-
 // strong
 $strong-font-weight: map-get($font-weights, bolder) !default;
 
 // sub
+$small-font-size: 75% !default;
 $sub-bottom: -.25em !default;
 
 // sup
@@ -115,36 +102,25 @@ $sup-top: -.25em !default;
 
 // table
 $table-variants: (
-    active: $link-color,
-    primary: map-get($color-variants, primary),
-    secondary: map-get($color-variants, secondary),
-    success: map-get($color-variants, success),
-    info: map-get($color-variants, info),
-    warning: map-get($color-variants, warning),
-    danger: map-get($color-variants, danger)
+    primary: $primary,
+    secondary: $secondary,
+    success: $success,
+    info: $info,
+    warning: $warning,
+    danger: $danger
 ) !default;
 
 $table-margin-bottom: $spacing !default;
-$table-border-size: $border-size !default;
-$table-border-color: $gray-light !default;
 $table-cell-padding-x: $spacing !default;
 $table-cell-padding-y: $spacing * .5 !default;
 $table-th-font-weight: map-get($font-weights, bold) !default;
-$table-hover-color: map-get($color-variants, dark) !default;
-$table-hover-background-color: fade($black, .05) !default;
-$table-striped-background-color: fade(map-get($color-variants, dark), .1) !default;
+
+$table-bg: var(--ui-body-bg) !default;
+$table-color: var(--ui-body-color) !default;
+$table-border-color: var(--ui-border-color) !default;
+$table-border-width: var(--ui-border-width) !default;
+$table-hover-bg: rgba(var(--ui-body-color-rgb), .1) !default;
+$table-striped-bg: rgba(var(--ui-body-color-rgb), .05) !default;
 
 $table-sm-cell-padding-x: math.div($spacing, 3) !default;
 $table-sm-cell-padding-y: $spacing * .25 !default;
-
-$table-dark-color: $white !default;
-$table-dark-background-color: map-get($color-variants, dark) !default;
-$table-dark-border-color: map-get($color-variants, secondary) !default;
-$table-dark-hover-background-color: fade($white, .05) !default;
-$table-dark-striped-background-color: fade(map-get($color-variants, light), .1) !default;
-
-$table-light-background-color: map-get($color-variants, light) !default;
-
-$table-background-color-tint: 70% !default;
-$table-hover-color-shade: 40% !default;
-$table-border-color-tint: 35% !default;

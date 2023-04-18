@@ -1,229 +1,202 @@
-const assert = require('assert');
-const { exec } = require('../setup');
+import assert from 'node:assert/strict';
+import { exec } from './../setup.js';
 
 describe('Button', function() {
-
     beforeEach(async function() {
-        await exec(_ => {
-            dom.setHTML(
+        await exec((_) => {
+            $.setHTML(
                 document.body,
                 '<button class="btn btn-secondary" id="button1" data-ui-toggle="button" type="button"></button>' +
-                '<button class="btn btn-secondary" id="button2" data-ui-toggle="button" type="button"></button>'
+                '<button class="btn btn-secondary" id="button2" data-ui-toggle="button" type="button"></button>',
             );
         });
     });
 
     describe('#init', function() {
-
         it('creates a button', async function() {
             assert.strictEqual(
-                await exec(_ => {
-                    const button1 = dom.findOne('#button1');
+                await exec((_) => {
+                    const button1 = $.findOne('#button1');
                     return UI.Button.init(button1) instanceof UI.Button;
                 }),
-                true
+                true,
             );
         });
 
         it('creates a button (data-toggle)', async function() {
             assert.strictEqual(
-                await exec(_ => {
-                    dom.click('#button1');
-                    return dom.getData('#button1', 'button') instanceof UI.Button;
+                await exec((_) => {
+                    $.click('#button1');
+                    return $.getData('#button1', 'button') instanceof UI.Button;
                 }),
-                true
+                true,
             );
         });
 
         it('creates a button (query)', async function() {
             assert.strictEqual(
-                await exec(_ => {
-                    dom.query('#button1').button();
-                    return dom.getData('#button1', 'button') instanceof UI.Button;
+                await exec((_) => {
+                    $('#button1').button();
+                    return $.getData('#button1', 'button') instanceof UI.Button;
                 }),
-                true
+                true,
             );
         });
 
         it('creates multiple buttons (query)', async function() {
             assert.strictEqual(
-                await exec(_ => {
-                    dom.query('button').button();
-                    return dom.find('button').every(node =>
-                        dom.getData(node, 'button') instanceof UI.Button
+                await exec((_) => {
+                    $('button').button();
+                    return $.find('button').every((node) =>
+                        $.getData(node, 'button') instanceof UI.Button,
                     );
                 }),
-                true
+                true,
             );
         });
 
         it('returns the button (query)', async function() {
             assert.strictEqual(
-                await exec(_ => {
-                    return dom.query('#button1').button() instanceof UI.Button;
+                await exec((_) => {
+                    return $('#button1').button() instanceof UI.Button;
                 }),
-                true
+                true,
             );
         });
-
     });
 
     describe('#dispose', function() {
-
         it('removes the button', async function() {
             assert.strictEqual(
-                await exec(_ => {
-                    const button1 = dom.findOne('#button1');
+                await exec((_) => {
+                    const button1 = $.findOne('#button1');
                     UI.Button.init(button1).dispose();
-                    return dom.hasData(button1, 'button');
+                    return $.hasData(button1, 'button');
                 }),
-                false
+                false,
             );
         });
 
         it('removes the button (query)', async function() {
             assert.strictEqual(
-                await exec(_ => {
-                    dom.query('#button1').button('dispose');
-                    return dom.hasData('#button1', 'button');
+                await exec((_) => {
+                    $('#button1').button('dispose');
+                    return $.hasData('#button1', 'button');
                 }),
-                false
+                false,
             );
         });
 
         it('removes multiple buttons (query)', async function() {
             assert.strictEqual(
-                await exec(_ => {
-                    dom.query('button').button('dispose');
-                    return dom.find('button').some(node =>
-                        dom.hasData(node, 'button')
+                await exec((_) => {
+                    $('button').button('dispose');
+                    return $.find('button').some((node) =>
+                        $.hasData(node, 'button'),
                     );
                 }),
-                false
+                false,
             );
         });
 
         it('clears button memory', async function() {
             assert.strictEqual(
-                await exec(_ => {
-                    const button1 = dom.findOne('#button1');
+                await exec((_) => {
+                    const button1 = $.findOne('#button1');
                     const button = UI.Button.init(button1);
                     button.dispose();
 
                     for (const key in button) {
-                        if (Core.isObject(button[key]) && !Core.isFunction(button[key])) {
+                        if ($.isObject(button[key]) && !$.isFunction(button[key])) {
                             return false;
                         }
                     }
 
                     return true;
                 }),
-                true
+                true,
             );
         });
 
         it('clears button memory when node is removed', async function() {
             assert.strictEqual(
-                await exec(_ => {
-                    const button1 = dom.findOne('#button1');
+                await exec((_) => {
+                    const button1 = $.findOne('#button1');
                     const button = UI.Button.init(button1);
-                    dom.remove(button1);
+                    $.remove(button1);
 
                     for (const key in button) {
-                        if (Core.isObject(button[key]) && !Core.isFunction(button[key])) {
+                        if ($.isObject(button[key]) && !$.isFunction(button[key])) {
                             return false;
                         }
                     }
 
                     return true;
                 }),
-                true
+                true,
             );
         });
-
     });
 
     describe('#toggle', function() {
-
         it('toggles the button', async function() {
             assert.strictEqual(
-                await exec(_ => {
-                    const button1 = dom.findOne('#button1');
+                await exec((_) => {
+                    const button1 = $.findOne('#button1');
                     UI.Button.init(button1).toggle();
-                    return dom.getHTML(document.body);
+                    return $.getHTML(document.body);
                 }),
                 '<button class="btn btn-secondary active" id="button1" data-ui-toggle="button" type="button" aria-pressed="true"></button>' +
-                '<button class="btn btn-secondary" id="button2" data-ui-toggle="button" type="button"></button>'
+                '<button class="btn btn-secondary" id="button2" data-ui-toggle="button" type="button"></button>',
             );
         });
 
         it('toggles the button (data-ui-toggle)', async function() {
             assert.strictEqual(
-                await exec(_ => {
-                    const button1 = dom.findOne('#button1');
-                    dom.click(button1);
-                    return dom.getHTML(document.body);
+                await exec((_) => {
+                    const button1 = $.findOne('#button1');
+                    $.click(button1);
+                    return $.getHTML(document.body);
                 }),
                 '<button class="btn btn-secondary active" id="button1" data-ui-toggle="button" type="button" aria-pressed="true"></button>' +
-                '<button class="btn btn-secondary" id="button2" data-ui-toggle="button" type="button"></button>'
+                '<button class="btn btn-secondary" id="button2" data-ui-toggle="button" type="button"></button>',
             );
         });
 
         it('toggles the button (query)', async function() {
             assert.strictEqual(
-                await exec(_ => {
-                    dom.query('#button1').button('toggle');
-                    return dom.getHTML(document.body);
+                await exec((_) => {
+                    $('#button1').button('toggle');
+                    return $.getHTML(document.body);
                 }),
                 '<button class="btn btn-secondary active" id="button1" data-ui-toggle="button" type="button" aria-pressed="true"></button>' +
-                '<button class="btn btn-secondary" id="button2" data-ui-toggle="button" type="button"></button>'
+                '<button class="btn btn-secondary" id="button2" data-ui-toggle="button" type="button"></button>',
             );
         });
 
         it('toggles multiple buttons (query)', async function() {
             assert.strictEqual(
-                await exec(_ => {
-                    dom.query('button').button('toggle');
-                    return dom.getHTML(document.body);
+                await exec((_) => {
+                    $('button').button('toggle');
+                    return $.getHTML(document.body);
                 }),
                 '<button class="btn btn-secondary active" id="button1" data-ui-toggle="button" type="button" aria-pressed="true"></button>' +
-                '<button class="btn btn-secondary active" id="button2" data-ui-toggle="button" type="button" aria-pressed="true"></button>'
+                '<button class="btn btn-secondary active" id="button2" data-ui-toggle="button" type="button" aria-pressed="true"></button>',
             );
         });
 
         it('toggles the button off', async function() {
             assert.strictEqual(
-                await exec(_ => {
-                    const button1 = dom.findOne('#button1');
-                    UI.Button.init(button1)
-                        .toggle()
-                        .toggle();
-                    return dom.getHTML(document.body);
+                await exec((_) => {
+                    const button1 = $.findOne('#button1');
+                    const button = UI.Button.init(button1);
+                    button.toggle();
+                    button.toggle();
+                    return $.getHTML(document.body);
                 }),
                 '<button class="btn btn-secondary" id="button1" data-ui-toggle="button" type="button" aria-pressed="false"></button>' +
-                '<button class="btn btn-secondary" id="button2" data-ui-toggle="button" type="button"></button>'
+                '<button class="btn btn-secondary" id="button2" data-ui-toggle="button" type="button"></button>',
             );
         });
-
-        it('returns the button', async function() {
-            assert.strictEqual(
-                await exec(_ => {
-                    const button1 = dom.findOne('#button1');
-                    return UI.Button.init(button1).toggle() instanceof UI.Button;
-                }),
-                true
-            );
-        });
-
-        it('returns the buttons (query)', async function() {
-            assert.strictEqual(
-                await exec(_ => {
-                    return dom.query('#button1').button('toggle') instanceof UI.Button;
-                }),
-                true
-            );
-        });
-
     });
-
 });

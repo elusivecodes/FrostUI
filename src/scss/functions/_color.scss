@@ -1,4 +1,53 @@
+@use "sass:color";
 @use "sass:math";
+
+// Generate a color shade
+// @param $color
+// @param $amount: 500
+// @param $invert: false
+@function color-shade($color, $amount: 500, $invert: false) {
+    @if ($invert) {
+        $amount: 1000 - $amount;
+    }
+
+    @if ($amount < 500) {
+        $amount: 100 - math.div($amount, 5);
+        @return tint($color, $amount * 1%);
+    } @else if ($amount > 500) {
+        $amount: math.div($amount - 500, 5);
+        @return shade($color, $amount * 1%);
+    } @else {
+        @return $color;
+    }
+}
+
+// Find a text color that meets a minimum contrast ratio.
+// @param $background
+// @param $foreground: null
+// @param $threshold: 4.5
+// @param $base: 500
+// @param $min: 100
+// @param $max: 900
+// @param $step-size: 100
+@function text-color-contrast($background, $foreground: null, $threshold: 4.5, $base: 500, $min: 100, $max: 900, $step-size: 100) {
+    $min-diff: $max - $min;
+    $i: $min;
+    $result: null;
+
+    @while $i <= $max {
+        $temp: color-shade($foreground, $i);
+        $diff: math.abs($base - $i);
+
+        @if contrast-ratio($background, $temp) >= $threshold and $diff < $min-diff {
+            $result: $temp;
+            $min-diff: $diff;
+        }
+
+        $i: $i + $step-size;
+    }
+
+    @return if($result == null, text-color($background), $result);
+}
 
 // Calculate the contrast ratio between two colors.
 // @param $background
@@ -20,26 +69,18 @@
 // Calculate the relative luminance of a color.
 // @param color
 @function luma($color) {
-    $rgb: (
-        r: red($color),
-        g: green($color),
-        b: blue($color)
-    );
+    $rgb: (r: color.red($color),
+    g: color.green($color),
+    b: color.blue($color));
 
-    @each $name, $value in $rgb {
+    @each $name,
+        $value in $rgb {
         $value: math.div($value, 255);
-        $value: if($value < .03928, math.div($value, 12.92), math.pow((math.div($value + .055, 1.055)), 2.5));
+        $value: if($value < .04045, math.div($value, 12.92), math.pow((math.div($value + .055, 1.055)), 2.4));
         $rgb: map-merge($rgb, ($name: $value));
     }
 
     @return (map-get($rgb, "r") * .2126) + (map-get($rgb, "g") * .7152) + (map-get($rgb, "b") * .0722);
-}
-
-// Create an RGBA css value.
-// @param $rgbVar
-// @param opacityVar
-@function rgba-css-var($rgbVar, $opacityVar) {
-    @return rgba(var(--ui-#{$rgbVar}-rgb), var(--ui-#{$opacityVar}-opacity));
 }
 
 // Shade a color by a specified amount (1-100).
@@ -58,33 +99,6 @@
     @return if(contrast-ratio($background, $foreground1) > $threshold, $foreground1, $foreground2);
 }
 
-// Find a text color that meets a minimum contrast ratio.
-// @param $background
-// @param $foreground: null
-// @param $threshold: 4.5
-// @param $step-size: .1
-@function text-color-contrast($background, $foreground: null, $threshold: 4.5, $step-size: .1) {
-    $foreground: if($foreground == null, $background, $foreground);
-
-    $temp: $foreground;
-    $i: $step-size;
-    @while $i < 100 {
-        $temp: tint($foreground, $i);
-        @if contrast-ratio($background, $temp) >= $threshold {
-            @return $temp;
-        }
-
-        $temp: shade($foreground, $i);
-        @if contrast-ratio($background, $temp) >= $threshold {
-            @return $temp;
-        }
-
-        $i: $i + $step-size;
-    }
-
-    @return $temp;
-}
-
 // Tint a color by a specified amount (1-100).
 // @param $color
 // @param $amount
@@ -95,6 +109,7 @@
 // Convert a color to RGB values
 // @param $color
 @function to-rgb($color) {
-    @return red($color), green($color), blue($color);
+    @return color.red($color),
+        color.green($color),
+        color.blue($color);
 }
-

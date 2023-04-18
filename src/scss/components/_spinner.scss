@@ -8,54 +8,70 @@
     0% {
         transform: scale(0);
     }
+
     50% {
         opacity: 1;
     }
 }
 
 .spinner-border {
+    --ui-spinner-width: #{$spinner-width};
+    --ui-spinner-height: #{$spinner-height};
+    --ui-spinner-vertical-align: #{$spinner-vertical-align};
+    --ui-spinner-border-width: #{$spinner-border-width};
+    --ui-spinner-animation-speed: #{$spinner-animation-speed};
+    --ui-spinner-animation-name: spinner-border;
+
     display: inline-flex;
-    width: $spinner-size;
-    height: $spinner-size;
-    line-height: $spinner-border-line-height;
-    vertical-align: text-bottom;
-    border: $spinner-border-width solid currentColor;
+    width: var(--ui-spinner-width);
+    height: var(--ui-spinner-height);
+    // line-height: $spinner-border-line-height;
+    vertical-align: var(--ui-spinner-vertical-align);
+    border: var(--ui-spinner-border-width) solid currentcolor;
     border-right-color: transparent;
     @include border-radius(50%);
-    animation: spinner-border $animation-time $transition-type infinite;
+    animation: spinner-border var(--ui-spinner-animation-speed) $transition-type infinite;
 }
 
 .spinner-grow {
+    --ui-spinner-width: #{$spinner-width};
+    --ui-spinner-height: #{$spinner-height};
+    --ui-spinner-vertical-align: #{$spinner-vertical-align};
+    --ui-spinner-animation-speed: #{$spinner-animation-speed};
+    --ui-spinner-animation-name: spinner-border;
+
     display: inline-block;
-    width: $spinner-size;
-    height: $spinner-size;
-    vertical-align: text-bottom;
-    background-color: currentColor;
+    width: var(--ui-spinner-width);
+    height: var(--ui-spinner-height);
+    vertical-align: var(--ui-spinner-vertical-align);
+    background-color: currentcolor;
     @include border-radius(50%);
     opacity: 0;
-    animation: spinner-grow $animation-time $transition-type infinite;
+    animation: spinner-grow var(--ui-spinner-animation-speed) $transition-type infinite;
 }
 
 .spinner-border-sm {
-    width: $spinner-sm-size;
-    height: $spinner-sm-size;
-    border-width: $spinner-border-sm-width;
+    --ui-spinner-width: #{$spinner-width-sm};
+    --ui-spinner-height: #{$spinner-height-sm};
+    --ui-spinner-border-width: #{$spinner-border-width-sm};
 }
 
 .spinner-grow-sm {
-    width: $spinner-sm-size;
-    height: $spinner-sm-size;
+    --ui-spinner-width: #{$spinner-width-sm};
+    --ui-spinner-height: #{$spinner-height-sm};
 }
 
 .btn {
+
     .spinner-border,
     .spinner-grow {
         position: relative;
-        top: $btn-border-size * -1;
+        top: calc(var(--ui-btn-border-width) * -1);
     }
 }
 
 @media (prefers-reduced-motion) {
+
     .spinner-grow,
     .spinner-border {
         animation-duration: $animation-time-reduced-motion;

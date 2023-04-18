@@ -1,27 +1,37 @@
 .table {
+    --ui-table-margin-bottom: #{$table-margin-bottom};
+    --ui-table-bg: #{$table-bg};
+    --ui-table-color: #{$table-color};
+    --ui-table-border-color: #{$table-border-color};
+    --ui-table-border-width: #{$table-border-width};
+    --ui-table-striped-bg: #{$table-striped-bg};
+    --ui-table-hover-bg: #{$table-hover-bg};
+    --ui-table-cell-padding-y: #{$table-cell-padding-y};
+    --ui-table-cell-padding-x: #{$table-cell-padding-x};
+
     width: 100%;
-    margin-bottom: $table-margin-bottom;
-    border-color: #{$table-border-color};
+    margin-bottom: var(--ui-table-margin-bottom);
+    border-color: var(--ui-table-border-color);
 
     > :not(caption) > * > * {
-        padding: $table-cell-padding-y $table-cell-padding-x;
-        color: var(--ui-table-color, #{$text-color});
+        padding: var(--ui-table-cell-padding-y) var(--ui-table-cell-padding-x);
+        color: var(--ui-table-color);
         background-color: var(--ui-table-bg);
-        border-bottom-width: $table-border-size;
+        border-bottom-width: var(--ui-table-border-width);
         box-shadow: inset 0 0 0 9999px var(--ui-table-accent-bg, transparent);
     }
+}
 
-    > :not(:last-child) > :last-child > * {
-        border-bottom-width: $table-border-size * 2;
-    }
+.table-group-divider {
+    border-top: calc(var(--ui-border-width) * 2) solid currentcolor;
 }
 
 .table-bordered > :not(caption) > * {
-    border-width: $table-border-size 0;
+    border-width: var(--ui-table-border-width) 0;
 }
 
 .table-bordered > :not(caption) > * > * {
-    border-width: 0 $table-border-size;
+    border-width: 0 var(--ui-table-border-width);
 }
 
 .table-borderless > :not(caption) > * > * {
@@ -29,48 +39,53 @@
 }
 
 .table-striped > tbody > tr:nth-child(odd) {
-    --ui-table-accent-bg: var(--ui-table-striped-bg, #{$table-striped-background-color});
+    --ui-table-accent-bg: var(--ui-table-striped-bg);
 }
 
-.table-hover > tbody > tr:hover {
-    --ui-table-color: var(--ui-table-hover-color, #{$table-hover-color});
-    --ui-table-accent-bg: var(--ui-table-hover-bg, #{$table-hover-background-color});
+.table-striped-columns > tbody > tr > :nth-child(odd) {
+    --ui-table-accent-bg: var(--ui-table-striped-bg);
+}
+
+.table-hover > tbody > tr:hover > * {
+    --ui-table-accent-bg: var(--ui-table-hover-bg);
 }
 
 .table-sm > :not(caption) > * > * {
-    padding: $table-sm-cell-padding-y $table-sm-cell-padding-x;
-}
-
-.table-dark {
-    --ui-table-bg: #{$table-dark-background-color};
-    --ui-table-color: #{$table-dark-color};
-    --ui-table-striped-bg: #{$table-dark-striped-background-color};
-    --ui-table-hover-bg: #{$table-dark-hover-background-color};
-    --ui-table-hover-color: #{$table-dark-color};
-
-    border-color: #{$table-dark-border-color};
-}
-
-.table-light {
-    --ui-table-bg: #{$table-light-background-color};
+    --ui-table-cell-padding-y: #{$table-sm-cell-padding-y};
+    --ui-table-cell-padding-x: #{$table-sm-cell-padding-x};
 }
 
 .caption-top {
     caption-side: top;
 }
 
-@each $name, $color in $table-variants {
+@each $name,
+    $color in $table-variants {
     .table-#{$name} {
-        $background-color: tint($color, $table-background-color-tint);
-        $text-color: text-color-contrast($background-color, $color);
-        $hover-color: shade($text-color, $table-hover-color-shade);
-
-        --ui-table-bg: #{$background-color};
-        --ui-table-color: #{$text-color};
-        --ui-table-hover-color: #{$hover-color};
-
-        border-color: tint($color, $table-border-color-tint);
+        --ui-table-color: var(--ui-#{$name}-subtle-text);
+        --ui-table-bg: var(--ui-#{$name}-subtle);
+        --ui-table-border-color: var(--ui-#{$name}-subtle-emphasis);
     }
+}
+
+.table-active {
+    --ui-table-color: var(--ui-body-color);
+    --ui-table-bg: rgba(var(--ui-body-color-rgb), .1);
+    --ui-table-border-color: var(--ui-border-color);
+}
+
+.table-light {
+    --ui-table-color: var(--ui-light-contrast);
+    --ui-table-bg: var(--ui-light);
+    --ui-table-border-color: var(--ui-light-emphasis);
+}
+
+.table-dark {
+    --ui-table-color: var(--ui-dark-contrast);
+    --ui-table-bg: var(--ui-dark);
+    --ui-table-border-color: var(--ui-dark-emphasis);
+    --ui-table-striped-bg: rgba(var(--ui-body-bg-rgb), .1);
+    --ui-table-hover-bg: rgba(var(--ui-body-bg-rgb), .05);
 }
 
 @each $breakpoint in map-keys($breakpoints) {

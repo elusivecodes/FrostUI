@@ -1,20 +1,20 @@
 .col-label {
-    padding-top: calc(#{$input-padding-y} + #{$input-border-size});
-    padding-bottom: calc(#{$input-padding-y} + #{$input-border-size});
+    padding-top: calc(#{$input-padding-y} + #{$input-border-width});
+    padding-bottom: calc(#{$input-padding-y} + #{$input-border-width});
     margin-bottom: 0;
     font-size: inherit;
     line-height: $input-line-height;
 }
 
 .col-label-sm {
-    padding-top: calc(#{$input-sm-padding-y} + #{$input-border-size});
-    padding-bottom: calc(#{$input-sm-padding-y} + #{$input-border-size});
+    padding-top: calc(#{$input-sm-padding-y} + #{$input-border-width});
+    padding-bottom: calc(#{$input-sm-padding-y} + #{$input-border-width});
     font-size: $input-sm-font-size;
 }
 
 .col-label-lg {
-    padding-top: calc(#{$input-padding-y} + #{$input-border-size});
-    padding-bottom: calc(#{$input-padding-y} + #{$input-border-size});
+    padding-top: calc(#{$input-padding-y} + #{$input-border-width});
+    padding-bottom: calc(#{$input-padding-y} + #{$input-border-width});
     font-size: $input-lg-font-size;
 }
 
@@ -50,7 +50,7 @@
     &.input-sm,
     .input-group-sm & {
 
-        ~ .label-floating {
+        ~.label-floating {
             font-size: $input-sm-font-size;
         }
 
@@ -59,17 +59,17 @@
     &.input-lg,
     .input-group-lg & {
 
-        ~ .label-floating {
+        ~.label-floating {
             font-size: $input-lg-font-size;
         }
     }
 
     &.input-filled ~ .label-floating {
-        border-bottom: $input-border-size $border-style transparent;
+        border-bottom: $input-border-width var(--ui-border-style) transparent;
     }
 
     &.input-outline ~ .label-floating {
-        border: $input-border-size $border-style transparent;
+        border: $input-border-width var(--ui-border-style) transparent;
     }
 
     &:focus,
@@ -78,7 +78,7 @@
         padding-top: $input-padding-y + $label-floating-padding-y;
         padding-bottom: $input-padding-y * .5;
 
-        ~ .label-floating {
+        ~.label-floating {
             padding-top: $input-padding-y * .5;
             font-size: $label-floating-font-size;
             color: $label-floating-color;

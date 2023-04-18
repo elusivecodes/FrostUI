@@ -5,61 +5,64 @@ $form-check-inline-margin-right: $spacing !default;
 
 $input-check-size: 1em !default;
 $input-check-margin-top: $spacing * .25 !default;
-$input-check-background-color: map-get($color-variants, light) !default;
-$input-check-border-size: $border-size !default;
-$input-check-border-color: $border-color !default;
-$input-check-checked-background-color: map-get($color-variants, primary) !default;
-$input-check-checked-border-color: $input-check-checked-background-color !default;
-$input-check-checked-focus-background-color: tint($input-check-checked-background-color, 20%) !default;
-$input-check-focus-border-color: tint($input-check-checked-background-color, 20%) !default;
-$input-check-focus-box-shadow-color: $input-check-checked-background-color !default;
-$input-check-disabled-opacity: $disabled-opacity !default;
+$input-check-bg: var(--ui-tertiary-bg) !default;
+$input-check-color: var(--ui-primary-contrast) !default;
+$input-check-border-width: var(--ui-border-width) !default;
+$input-check-border-color: var(--ui-border-color) !default;
+$input-check-checked-bg: var(--ui-primary) !default;
+$input-check-checked-border-color: $input-check-checked-bg !default;
+$input-check-focus-shadow-width: var(--ui-focus-ring-width) !default;
+$input-check-focus-shadow-color: var(--ui-focus-ring-color) !default;
+$input-check-disabled-opacity: var(--ui-disabled-opacity) !default;
 
-$input-check-checkbox-border-radius: $border-radius !default;
-$input-check-checkbox-checked-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='#{svg-color($white)}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e") !default;
+$input-check-checkbox-border-radius: var(--ui-border-radius) !default;
+$input-check-checkbox-checked-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e") !default;
 
 $input-check-radio-border-radius: 50% !default;
-$input-check-radio-checked-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='#{svg-color($white)}'/%3e%3c/svg%3e") !default;
 
 $form-switch-padding-left: $spacing * 2.5 !default;
 $form-switch-input-check-width: 2rem !default;
+$form-switch-input-check-color: var(--ui-secondary-color) !default;
 $form-switch-input-check-border-radius: 2rem !default;
-$form-switch-input-check-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='#{svg-color(fade($black, .25))}'/%3e%3c/svg%3e") !default;
-$form-switch-input-check-focus-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='#{svg-color($input-check-checked-background-color)}'/%3e%3c/svg%3e") !default;
-$form-switch-input-check-checked-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='#{svg-color($white)}'/%3e%3c/svg%3e") !default;
+$form-switch-input-check-focus-color: var(--ui-primary) !default;
+$form-switch-input-check-checked-color: var(--ui-primary-contrast) !default;
 
 // form text
 $form-text-margin-top: $spacing * .25 !default;
 $form-text-font-size: $font-size-sm !default;
-$form-text-color: map-get($color-variants, secondary) !default;
+$form-text-color: var(--ui-body-color) !default;
 
-$input-plain-text-color: $text-color !default;
+$input-plain-text-color: var(--ui-body-color) !default;
 
 $input-group-text-font-weight: map-get($font-weights, normal) !default;
-$input-group-text-color: map-get($color-variants, dark) !default;
-$input-group-text-background-color: map-get($color-variants, light) !default;
+$input-group-text-color: var(--ui-secondary-color) !default;
+$input-group-text-bg: var(--ui-tertiary-bg) !default;
 
 // input
 $input-padding-x: $spacing * .5 !default;
 $input-padding-y: $spacing * .5 !default;
 $input-font-size: $font-size-md !default;
 $input-line-height: map-get($line-heights, base) !default;
-$input-border-size: $border-size !default;
-$input-border-color: $border-color !default;
-$input-placeholder-color: $gray !default;
-$input-disabled-background-color: $gray-light !default;
+$input-color: var(--ui-body-color) !default;
+$input-border-width: var(--ui-border-width) !default;
+$input-border-color: var(--ui-border-color) !default;
+$input-placeholder-color: var(--ui-tertiary-color) !default;
+$input-disabled-bg: var(--ui-secondary-bg) !default;
 
 $input-select-arrow-size: 16px !default;
-$input-select-arrow-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='#{svg-color($text-color)}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") !default;
+$input-select-arrow-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%230008' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") !default;
+$input-select-arrow-background-image-dark: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23FFF8' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") !default;
 
-$input-filled-background-color: map-get($color-variants, light) !default;
-$input-filled-border-color: map-get($color-variants, dark) !default;
-$input-filled-hover-background-color: shade($input-filled-background-color, 5%) !default;
-$input-filled-focus-background-color: shade($input-filled-background-color, 10%) !default;
-$input-outline-background-color: $white !default;
-$input-outline-border-radius: $border-radius !default;
-$input-outline-hover-border-color: map-get($color-variants, dark) !default;
-$input-outline-focus-border-color: map-get($color-variants, primary) !default;
+$input-filled-bg: rgba(var(--ui-body-color-rgb), .05) !default;
+$input-filled-border-color: var(--ui-body-color) !default;
+$input-filled-hover-bg: rgba(var(--ui-body-color-rgb), .1) !default;
+$input-filled-focus-bg: rgba(var(--ui-body-color-rgb), .2) !default;
+$input-outline-bg: var(--ui-body-bg) !default;
+$input-outline-border-radius: var(--ui-border-radius) !default;
+$input-outline-hover-border-color: var(--ui-tertiary-color) !default;
+$input-outline-focus-border-color: var(--ui-primary) !default;
+$input-outline-focus-shadow-width: var(--ui-focus-ring-width) !default;
+$input-outline-focus-shadow-color: var(--ui-focus-ring-color) !default;
 
 $input-sm-padding-x: $spacing * .5 !default;
 $input-sm-padding-y: $spacing * .25 !default;
@@ -68,25 +71,23 @@ $input-lg-padding-x: $input-padding-x !default;
 $input-lg-padding-y: $input-padding-y !default;
 $input-lg-font-size: $font-size-lg !default;
 
-$ripple-line-background-color: map-get($color-variants, primary) !default;
+$ripple-line-bg: var(--ui-primary) !default;
 
 // label
 $label-floating-padding-y: $spacing * .75 !default;
-$label-floating-font-size: 13px !default;
-$label-floating-color: map-get($color-variants, secondary) !default;
+$label-floating-font-size: 11px !default;
+$label-floating-color: $input-placeholder-color !default;
 
 // validation
 $form-feedback-margin-top: $spacing * .25 !default;
 $form-feedback-font-size: 80% !default;
-$valid-feedback-color: map-get($color-variants, success) !default;
-$invalid-feedback-color: map-get($color-variants, danger) !default;
+$valid-feedback-color: var(--ui-success) !default;
+$invalid-feedback-color: var(--ui-danger) !default;
 
-$input-filled-success-background-color: tint($valid-feedback-color, 90%) !default;
-$input-filled-success-hover-background-color: tint($valid-feedback-color, 85%) !default;
-$input-filled-success-focus-background-color: tint($valid-feedback-color, 80%) !default;
-$input-check-success-focus-background-color: tint($valid-feedback-color, 20%) !default;
+$input-filled-success-bg: rgba(var(--ui-success-rgb), .05) !default;
+$input-filled-success-hover-bg: rgba(var(--ui-success-rgb), .1) !default;
+$input-filled-success-focus-bg: rgba(var(--ui-success-rgb), .2) !default;
 
-$input-filled-error-background-color: tint($invalid-feedback-color, 90%) !default;
-$input-filled-error-hover-background-color: tint($invalid-feedback-color, 85%) !default;
-$input-filled-error-focus-background-color: tint($invalid-feedback-color, 80%) !default;
-$input-check-error-focus-background-color: tint($invalid-feedback-color, 20%) !default;
+$input-filled-error-bg: rgba(var(--ui-danger-rgb), .05) !default;
+$input-filled-error-hover-bg: rgba(var(--ui-danger-rgb), .1) !default;
+$input-filled-error-focus-bg: rgba(var(--ui-danger-rgb), .2) !default;

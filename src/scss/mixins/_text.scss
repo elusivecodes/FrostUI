@@ -1,6 +1,6 @@
 // Reset the text styles.
 @mixin reset-text() {
-    font-family: $font-family;
+    font-family: $font-sans-serif;
     font-size: $font-size-sm;
     font-style: normal;
     font-weight: 400;
@@ -11,7 +11,7 @@
     text-transform: none;
     letter-spacing: normal;
     word-break: normal;
-    word-spacing: normal;
     white-space: normal;
+    word-spacing: normal;
     line-break: auto;
 }

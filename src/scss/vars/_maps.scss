@@ -1,0 +1,46 @@
+$color-variants: (
+    primary: $primary,
+    secondary: $secondary,
+    success: $success,
+    info: $info,
+    warning: $warning,
+    danger: $danger,
+    light: $light,
+    dark: $dark
+) !default;
+
+$subtle-colors: (
+    primary-subtle: $primary-subtle,
+    secondary-subtle: $secondary-subtle,
+    success-subtle: $success-subtle,
+    info-subtle: $info-subtle,
+    warning-subtle: $warning-subtle,
+    danger-subtle: $danger-subtle,
+    light-subtle: $light-subtle,
+    dark-subtle: $dark-subtle
+) !default;
+
+$emphasis-colors: (
+    primary-emphasis: $primary-emphasis,
+    secondary-emphasis: $secondary-emphasis,
+    success-emphasis: $success-emphasis,
+    info-emphasis: $info-emphasis,
+    warning-emphasis: $warning-emphasis,
+    danger-emphasis: $danger-emphasis,
+    light-emphasis: $light-emphasis,
+    dark-emphasis: $dark-emphasis
+) !default;
+
+$utilities-colors: map-merge(
+    $color-variants,
+    (
+        black: $black,
+        white: $white
+    )
+) !default;
+
+$utilities-text-colors: map-loop(map-merge($utilities-colors, $emphasis-colors), rgba-css-var, "$key", "text") !default;
+$utilities-border-colors: map-loop(map-merge($utilities-colors, $subtle-colors), rgba-css-var, "$key", "border") !default;
+$utilities-bg-colors: map-loop(map-merge($utilities-colors, $subtle-colors), rgba-css-var, "$key", "bg") !default;
+$utilities-link-underline-colors: map-loop(map-merge($utilities-colors, $subtle-colors), rgba-css-var, "$key", "link-underline") !default;
+$utilities-focus-ring-colors: map-loop($utilities-colors, rgba-css-var, "$key", "focus-ring") !default;

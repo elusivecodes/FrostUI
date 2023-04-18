@@ -1,36 +1,31 @@
+import { addPopper, getPopperPlacement, removePopper } from './helpers.js';
+import BaseComponent from './../base-component.js';
+import { $, document, window } from './../globals.js';
+import { getScrollContainer } from './../helpers.js';
+
 /**
  * Popper Class
  * @class
  */
-class Popper extends BaseComponent {
-
+export default class Popper extends BaseComponent {
     /**
      * New Popper constructor.
      * @param {HTMLElement} node The input node.
-     * @param {object} settings The options to create the Popper with.
-     * @returns {Popper} A new Popper object.
+     * @param {object} options The options to create the Popper with.
      */
-    constructor(node, settings) {
-        super(node, settings);
+    constructor(node, options) {
+        super(node, options);
 
-        dom.setStyle(this._node, {
+        $.setStyle(this._node, {
             margin: 0,
             position: 'absolute',
             top: 0,
             right: 'initial',
             bottom: 'initial',
-            left: 0
+            left: 0,
         });
 
-        this._resetStyle = {};
-        if (this._settings.useGpu) {
-            this._resetStyle.transform = ''
-        } else {
-            this._resetStyle.marginLeft = 0;
-            this._resetStyle.marginTop = 0;
-        }
-
-        PopperSet.add(this);
+        addPopper(this);
 
         this.update();
     }
@@ -39,46 +34,62 @@ class Popper extends BaseComponent {
      * Dispose the Popper.
      */
     dispose() {
-        PopperSet.remove(this);
-
-        this._resetStyle = null;
+        removePopper(this);
 
         super.dispose();
     }
 
     /**
      * Update the Popper position.
-     * @returns {Popper} The Popper.
      */
     update() {
-        if (!dom.isConnected(this._node) || !dom.isVisible(this._node)) {
-            return this;
+        if (!$.isConnected(this._node) || !$.isVisible(this._node)) {
+            return;
         }
 
         // reset position
-        dom.setStyle(this._node, this._resetStyle);
+        const resetStyle = {};
 
-        if (this._settings.beforeUpdate) {
-            this._settings.beforeUpdate(this._node, this._settings.reference);
+        if (this._options.useGpu) {
+            resetStyle.transform = '';
+        } else {
+            resetStyle.marginLeft = 0;
+            resetStyle.marginTop = 0;
+        }
+
+        $.setStyle(this._node, resetStyle);
+
+        if (this._options.beforeUpdate) {
+            this._options.beforeUpdate(this._node, this._options.reference);
         }
 
         // calculate boxes
-        const nodeBox = dom.rect(this._node, true);
-        const referenceBox = dom.rect(this._settings.reference, true);
-        const windowBox = this.constructor._scrollContainer(window, document);
+        const nodeBox = $.rect(this._node, { offset: true });
+        const referenceBox = $.rect(this._options.reference, { offset: true });
+        const windowBox = getScrollContainer(window, document);
 
-        const scrollParent = this.constructor._getScrollParent(this._node);
+        const scrollParent = $.closest(
+            this._node,
+            (parent) =>
+                $.css(parent, 'position') === 'relative' &&
+                ['overflow', 'overflowX', 'overflowY'].some((overflow) =>
+                    ['auto', 'scroll'].includes(
+                        $.css(parent, overflow),
+                    ),
+                ),
+            document.body,
+        ).shift();
 
         const scrollBox = scrollParent ?
-            this.constructor._scrollContainer(scrollParent, scrollParent) :
+            getScrollContainer(scrollParent, scrollParent) :
             null;
 
-        const containerBox = this._settings.container ?
-            dom.rect(this._settings.container, true) :
+        const containerBox = this._options.container ?
+            $.rect(this._options.container, { offset: true }) :
             null;
 
         const minimumBox = {
-            ...windowBox
+            ...windowBox,
         };
 
         if (scrollBox) {
@@ -103,35 +114,40 @@ class Popper extends BaseComponent {
         }
 
         // get optimal placement
-        const placement = this._settings.fixed && this._settings.placement !== 'auto' ?
-            this._settings.placement :
-            this.constructor._getPopperPlacement(
+        const placement = this._options.fixed && this._options.placement !== 'auto' ?
+            this._options.placement :
+            getPopperPlacement(
                 nodeBox,
                 referenceBox,
                 minimumBox,
-                this._settings.placement,
-                this._settings.spacing + 2
+                this._options.placement,
+                this._options.spacing + 2,
             );
 
-        if (!this._settings.noAttributes) {
-            dom.setDataset(this._settings.reference, 'uiPlacement', placement);
+        if (!this._options.noAttributes) {
+            $.setDataset(this._options.reference, 'ui-placement', placement);
         }
 
-        dom.setDataset(this._node, 'uiPlacement', placement);
+        $.setDataset(this._node, 'ui-placement', placement);
 
         // get auto position
-        const position = this._settings.position;
+        const position = this._options.position;
 
         // calculate actual offset
         const offset = {
             x: Math.round(referenceBox.x),
-            y: Math.round(referenceBox.y)
+            y: Math.round(referenceBox.y),
         };
 
         // offset for relative parent
-        const relativeParent = this.constructor._getRelativeParent(this._node);
+        const relativeParent = $.closest(
+            this._node,
+            (parent) =>
+                $.css(parent, 'position') === 'relative',
+            document.body,
+        ).shift();
         const relativeBox = relativeParent ?
-            dom.rect(relativeParent, true) :
+            $.rect(relativeParent, { offset: true }) :
             null;
 
         if (relativeBox) {
@@ -140,49 +156,205 @@ class Popper extends BaseComponent {
         }
 
         // offset for placement
-        this.constructor._adjustPlacement(offset, nodeBox, referenceBox, placement, this._settings.spacing);
+        if (placement === 'top') {
+            offset.y -= Math.round(nodeBox.height) + this._options.spacing;
+        } else if (placement === 'right') {
+            offset.x += Math.round(referenceBox.width) + this._options.spacing;
+        } else if (placement === 'bottom') {
+            offset.y += Math.round(referenceBox.height) + this._options.spacing;
+        } else if (placement === 'left') {
+            offset.x -= Math.round(nodeBox.width) + this._options.spacing;
+        }
 
         // offset for position
-        this.constructor._adjustPosition(offset, nodeBox, referenceBox, placement, position);
+        if (['top', 'bottom'].includes(placement)) {
+            const deltaX = Math.round(nodeBox.width) - Math.round(referenceBox.width);
+
+            if (position === 'center') {
+                offset.x -= Math.round(deltaX / 2);
+            } else if (position === 'end') {
+                offset.x -= deltaX;
+            }
+        } else {
+            const deltaY = Math.round(nodeBox.height) - Math.round(referenceBox.height);
+
+            if (position === 'center') {
+                offset.y -= Math.round(deltaY / 2);
+            } else if (position === 'end') {
+                offset.y -= deltaY;
+            }
+        }
 
         // compensate for margins
-        offset.x -= parseInt(dom.css(this._node, 'margin-left'));
-        offset.y -= parseInt(dom.css(this._node, 'margin-top'));
+        offset.x -= parseInt($.css(this._node, 'margin-left'));
+        offset.y -= parseInt($.css(this._node, 'margin-top'));
 
         // corrective positioning
-        this.constructor._adjustConstrain(offset, nodeBox, referenceBox, minimumBox, relativeBox, placement, this._settings.minContact);
+        if (['left', 'right'].includes(placement)) {
+            let offsetY = offset.y;
+            let refTop = referenceBox.top;
+
+            if (relativeBox) {
+                offsetY += relativeBox.top;
+                refTop -= relativeBox.top;
+            }
+
+            const minSize = this._options.minContact !== null ?
+                this._options.minContact :
+                Math.min(referenceBox.height, nodeBox.height);
+
+            if (offsetY + nodeBox.height > minimumBox.bottom) {
+                // bottom of offset node is below the container
+                const diff = offsetY + nodeBox.height - minimumBox.bottom;
+                offset.y = Math.max(
+                    refTop - nodeBox.height + minSize,
+                    offset.y - diff,
+                );
+            }
+
+            if (offsetY < minimumBox.top) {
+                // top of offset node is above the container
+                const diff = offsetY - minimumBox.top;
+                offset.y = Math.min(
+                    refTop + referenceBox.height - minSize,
+                    offset.y - diff,
+                );
+            }
+        } else {
+            let offsetX = offset.x;
+            let refLeft = referenceBox.left;
+
+            if (relativeBox) {
+                offsetX += relativeBox.left;
+                refLeft -= relativeBox.left;
+            }
+
+            const minSize = this._options.minContact !== null ?
+                this._options.minContact :
+                Math.min(referenceBox.width, nodeBox.width);
+
+            if (offsetX + nodeBox.width > minimumBox.right) {
+                // right of offset node is to the right of the container
+                const diff = offsetX + nodeBox.width - minimumBox.right;
+                offset.x = Math.max(
+                    refLeft - nodeBox.width + minSize,
+                    offset.x - diff,
+                );
+            }
+
+            if (offsetX < minimumBox.left) {
+                // left of offset node is to the left of the container
+                const diff = offsetX - minimumBox.left;
+                offset.x = Math.min(
+                    refLeft + referenceBox.width - minSize,
+                    offset.x - diff,
+                );
+            }
+        }
 
         offset.x = Math.round(offset.x);
         offset.y = Math.round(offset.y);
 
         // compensate for scroll parent
         if (scrollParent) {
-            offset.x += dom.getScrollX(scrollParent);
-            offset.y += dom.getScrollY(scrollParent);
+            offset.x += $.getScrollX(scrollParent);
+            offset.y += $.getScrollY(scrollParent);
         }
 
         // update position
         const style = {};
-        if (this._settings.useGpu) {
+        if (this._options.useGpu) {
             style.transform = `translate3d(${offset.x}px , ${offset.y}px , 0)`;
         } else {
             style.marginLeft = `${offset.x}px`;
             style.marginTop = `${offset.y}px`;
         }
 
-        dom.setStyle(this._node, style);
+        $.setStyle(this._node, style);
 
         // update arrow
-        if (this._settings.arrow) {
-            const newNodeBox = dom.rect(this._node, true);
-            this._updateArrow(newNodeBox, referenceBox, placement, position);
+        if (this._options.arrow) {
+            this._updateArrow(placement, position);
         }
 
-        if (this._settings.afterUpdate) {
-            this._settings.afterUpdate(this._node, this._settings.reference, placement, position);
+        if (this._options.afterUpdate) {
+            this._options.afterUpdate(this._node, this._options.reference, placement, position);
         }
-
-        return this;
     }
 
+    /**
+     * Update the arrow.
+     * @param {string} placement The placement of the Popper.
+     * @param {string} position The position of the Popper.
+     */
+    _updateArrow(placement, position) {
+        const nodeBox = $.rect(this._node, { offset: true });
+        const referenceBox = $.rect(this._options.reference, { offset: true });
+
+        const arrowStyles = {
+            position: 'absolute',
+            top: '',
+            right: '',
+            bottom: '',
+            left: '',
+        };
+        $.setStyle(this._options.arrow, arrowStyles);
+
+        const arrowBox = $.rect(this._options.arrow, { offset: true });
+
+        if (['top', 'bottom'].includes(placement)) {
+            arrowStyles[placement === 'top' ? 'bottom' : 'top'] = -Math.floor(arrowBox.height);
+            const diff = (referenceBox.width - nodeBox.width) / 2;
+
+            let offset = (nodeBox.width / 2) - (arrowBox.width / 2);
+            if (position === 'start') {
+                offset += diff;
+            } else if (position === 'end') {
+                offset -= diff;
+            }
+
+            let min = Math.max(referenceBox.left, nodeBox.left) - arrowBox.left;
+            let max = Math.min(referenceBox.right, nodeBox.right) - arrowBox.left - arrowBox.width;
+
+            if (referenceBox.width < arrowBox.width) {
+                min -= arrowBox.width / 2 - referenceBox.width / 2;
+                max -= arrowBox.width / 2 - referenceBox.width / 2;
+            }
+
+            offset = Math.round(offset);
+            min = Math.round(min);
+            max = Math.round(max);
+
+            arrowStyles.left = $.clamp(offset, min, max);
+        } else {
+            arrowStyles[placement === 'right' ? 'left' : 'right'] = -Math.floor(arrowBox.width);
+
+            const diff = (referenceBox.height - nodeBox.height) / 2;
+
+            let offset = (nodeBox.height / 2) - arrowBox.height;
+            if (position === 'start') {
+                offset += diff;
+            } else if (position === 'end') {
+                offset -= diff;
+            }
+
+            let min = Math.max(referenceBox.top, nodeBox.top) - arrowBox.top;
+            let max = Math.min(referenceBox.bottom, nodeBox.bottom) - arrowBox.top - arrowBox.height;
+
+            if (referenceBox.height < arrowBox.height * 2) {
+                min -= arrowBox.height - referenceBox.height / 2;
+                max -= arrowBox.height - referenceBox.height / 2;
+            } else {
+                max -= arrowBox.height;
+            }
+
+            offset = Math.round(offset);
+            min = Math.round(min);
+            max = Math.round(max);
+
+            arrowStyles.top = $.clamp(offset, min, max);
+        }
+
+        $.setStyle(this._options.arrow, arrowStyles);
+    }
 }

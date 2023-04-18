@@ -1,4 +1,5 @@
 // Attach a caret to a component
+// @param $direction: down
 @mixin caret($direction: down) {
     @if $direction == start {
         &::before {

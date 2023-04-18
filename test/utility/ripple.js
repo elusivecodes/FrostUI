@@ -1,57 +1,53 @@
-const assert = require('assert');
-const { exec } = require('../setup');
-const { waitFor } = require('../helpers');
+import assert from 'node:assert/strict';
+import { exec } from './../setup.js';
+import { waitFor } from './../helpers.js';
 
 describe('Ripple', function() {
-
     beforeEach(async function() {
-        await exec(_ => {
-            dom.setHTML(
+        await exec((_) => {
+            $.setHTML(
                 document.body,
-                '<button class="btn btn-secondary ripple" id="button"></button>'
+                '<button class="btn btn-secondary ripple" id="button"></button>',
             );
         });
     });
 
     describe('user events', function() {
-
         it('shows ripple effect on mousedown', async function() {
             assert.strictEqual(
-                await exec(_ => {
-                    dom.triggerEvent('#button', 'mousedown');
-                    return dom.hasAnimation('#button .ripple-effect');
+                await exec((_) => {
+                    $.triggerEvent('#button', 'mousedown');
+                    return $.hasAnimation('#button .ripple-effect');
                 }),
-                true
+                true,
             );
         });
 
         it('removes ripple effect after animation completes', async function() {
-            await exec(_ => {
-                dom.triggerEvent('#button', 'mousedown');
-                dom.triggerEvent('#button', 'mouseup');
+            await exec((_) => {
+                $.triggerEvent('#button', 'mousedown');
+                $.triggerEvent('#button', 'mouseup');
             }).then(waitFor(800)).then(async function() {
                 assert.strictEqual(
-                    await exec(_ => {
-                        return dom.hasDescendent('#button', '.ripple-effect');
+                    await exec((_) => {
+                        return $.hasDescendent('#button', '.ripple-effect');
                     }),
-                    false
+                    false,
                 );
             });
         });
 
         it('does not remove ripple effect until mouseup', async function() {
-            await exec(_ => {
-                dom.triggerEvent('#button', 'mousedown');
+            await exec((_) => {
+                $.triggerEvent('#button', 'mousedown');
             }).then(waitFor(800)).then(async function() {
                 assert.strictEqual(
-                    await exec(_ => {
-                        return dom.hasDescendent('#button', '.ripple-effect');
+                    await exec((_) => {
+                        return $.hasDescendent('#button', '.ripple-effect');
                     }),
-                    true
+                    true,
                 );
             });
         });
-
     });
-
 });

@@ -8,6 +8,6 @@
     width: 2px;
     height: 2px;
     pointer-events: none;
-    background-color: var(--ui-ripple-bg, #{$ripple-effect-background-color});
+    background-color: var(--ui-ripple-bg);
     border-radius: 50%;
 }

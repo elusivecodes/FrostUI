@@ -1,11 +1,21 @@
 .alert {
+    --ui-alert-padding-x: #{$alert-padding-x};
+    --ui-alert-padding-y: #{$alert-padding-y};
+    --ui-alert-margin-bottom: #{$alert-margin-bottom};
+    --ui-alert-bg: transparent;
+    --ui-alert-color: inherit;
+    --ui-alert-link-color: inherit;
+    --ui-alert-border-width: #{$alert-border-width};
+    --ui-alert-border-color: transparent;
+    --ui-alert-border-radius: #{$alert-border-radius};
+
     position: relative;
-    padding: $alert-padding-y $alert-padding-x;
-    margin-bottom: $alert-margin-bottom;
+    padding: var(--ui-alert-padding-y) var(--ui-alert-padding-x);
+    margin-bottom: var(--ui-alert-margin-bottom);
     color: var(--ui-alert-color);
     background-color: var(--ui-alert-bg);
-    border: $alert-border-size $border-style $alert-border-color;
-    @include border-radius($alert-border-radius);
+    border: var(--ui-alert-border-width) var(--ui-border-style) var(--ui-alert-border-color);
+    @include border-radius(var(--ui-alert-border-radius));
 }
 
 .alert-heading {
@@ -15,40 +25,25 @@
 .alert-link {
     font-weight: $alert-link-font-weight;
     color: var(--ui-alert-link-color);
-
-    &:hover {
-        color: var(--ui-alert-link-hover-color);
-    }
-
-    &:focus {
-        color: var(--ui-alert-link-focus-color);
-    }
 }
 
 .alert-dismissable {
-    padding-right: $alert-dismissable-padding-right;
+    padding-right: calc((var(--ui-alert-padding-x) * 2) + #{$btn-close-width});
 
     .btn-close {
         position: absolute;
         top: 0;
         right: 0;
-        padding: $alert-padding-y $alert-padding-x;
+        padding: var(--ui-alert-padding-y) var(--ui-alert-padding-x);
         color: inherit;
     }
 }
 
-@each $name, $color in $alert-variants {
+@each $name, $color in $color-variants {
     .alert-#{$name} {
-        $background-color: tint($color, $alert-background-color-tint);
-        $text-color: text-color-contrast($background-color, $color);
-        $link-color: shade($text-color, $alert-link-color-shade);
-        $link-hover-color: shade($link-color, $link-hover-color-shade);
-        $link-focus-color: tint($link-color, $link-focus-color-tint);
-
-        --ui-alert-color: #{$text-color};
-        --ui-alert-bg: #{$background-color};
-        --ui-alert-link-color: #{$link-color};
-        --ui-alert-link-hover-color: #{$link-hover-color};
-        --ui-alert-link-focus-color: #{$link-focus-color};
+        --ui-alert-bg: var(--ui-#{$name}-subtle);
+        --ui-alert-border-color: var(--ui-#{$name}-subtle-emphasis);
+        --ui-alert-color: var(--ui-#{$name}-subtle-text);
+        --ui-alert-link-color: var(--ui-#{$name}-subtle-text);
     }
 }

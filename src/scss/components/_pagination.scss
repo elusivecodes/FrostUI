@@ -1,83 +1,98 @@
 .pagination {
+    --ui-pagination-padding-x: #{$pagination-padding-x};
+    --ui-pagination-padding-y: #{$pagination-padding-y};
+    --ui-pagination-font-size: #{$pagination-font-size};
+    --ui-pagination-color: #{$pagination-color};
+    --ui-pagination-bg: #{$pagination-bg};
+    --ui-pagination-border-width: #{$pagination-border-width};
+    --ui-pagination-border-color: #{$pagination-border-color};
+    --ui-pagination-border-radius: #{$pagination-border-radius};
+    --ui-pagination-hover-color: #{$pagination-hover-color};
+    --ui-pagination-hover-bg: #{$pagination-hover-bg};
+    --ui-pagination-focus-color: #{$pagination-focus-color};
+    --ui-pagination-focus-bg: #{$pagination-focus-bg};
+    --ui-pagination-focus-box-shadow: #{$pagination-focus-box-shadow};
+    --ui-pagination-active-color: #{$pagination-active-color};
+    --ui-pagination-active-bg: #{$pagination-active-bg};
+    --ui-pagination-active-border-color: #{$pagination-active-border-color};
+    --ui-pagination-disabled-color: #{$pagination-disabled-color};
+    --ui-pagination-disabled-bg: #{$pagination-disabled-bg};
+    --ui-pagination-disabled-border-color: #{$pagination-disabled-border-color};
+
     display: flex;
     padding-left: 0;
     list-style: none;
-    @include border-radius($pagination-border-radius);
 }
 
 .page-link {
     position: relative;
     display: block;
-    padding: $page-link-padding-y $page-link-padding-x;
-    background-color: $page-link-background-color;
-    border: $page-link-border-size $border-style $page-link-border-color;
+    padding: var(--ui-pagination-padding-y) var(--ui-pagination-padding-x);
+    font-size: var(--ui-pagination-font-size);
+    color: var(--ui-pagination-color);
+    text-decoration: none;
+    background-color: var(--ui-pagination-bg);
+    border: var(--ui-pagination-border-width) var(--ui-border-style) var(--ui-pagination-border-color);
     transition: all $transition-time $transition-type;
     transition-property: color, background-color, box-shadow;
 
-    &,
-    &:hover,
-    &:focus {
-        color: $page-link-color;
-        text-decoration: none;
-    }
-
     &:hover {
-        z-index: 1;
-        background-color: $page-link-hover-background-color;
+        --ui-pagination-color: var(--ui-pagination-hover-color);
+        --ui-pagination-bg: var(--ui-pagination-hover-bg);
+
+        z-index: 2;
     }
 
     &:focus {
-        z-index: 2;
-        background-color: $page-link-focus-background-color;
+        --ui-pagination-color: var(--ui-pagination-focus-color);
+        --ui-pagination-bg: var(--ui-pagination-focus-bg);
+
+        z-index: 3;
         outline: 0;
-        box-shadow: $page-link-focus-box-shadow;
+        box-shadow: var(--ui-pagination-focus-box-shadow);
     }
 
-    &:active,
-    &.active {
+    &.active,
+    .active > & {
+        --ui-pagination-color: var(--ui-pagination-active-color);
+        --ui-pagination-bg: var(--ui-pagination-active-bg);
+        --ui-pagination-border-color: var(--ui-pagination-active-border-color);
+
         z-index: 3;
     }
 
-    &:active {
-        box-shadow: $page-link-active-box-shadow;
+    &.disabled,
+    .disabled > & {
+        --ui-pagination-color: var(--ui-pagination-disabled-color);
+        --ui-pagination-bg: var(--ui-pagination-disabled-bg);
+        --ui-pagination-border-color: var(--ui-pagination-disabled-border-color);
+
+        pointer-events: none;
     }
 }
 
 .page-item {
-    &.active .page-link {
-        background-color: $page-item-active-background-color;
-
-        &:focus {
-            background-color: $page-item-active-focus-background-color;
-        }
-    }
-
-    &.disabled .page-link {
-        pointer-events: none;
-        opacity: $page-item-disabled-opacity;
-    }
-
     &:first-child .page-link {
-        @include border-left-radius($pagination-border-radius);
+        @include border-left-radius(var(--ui-pagination-border-radius));
     }
 
     &:last-child .page-link {
-        @include border-right-radius($pagination-border-radius);
+        @include border-right-radius(var(--ui-pagination-border-radius));
     }
 
     &:not(:first-child) .page-link {
-        margin-left: $page-link-border-size * -1;
+        margin-left: calc(var(--ui-pagination-border-width) * -1);
     }
 }
 
 .pagination-sm .page-link {
-    padding: $pagination-sm-padding-y $pagination-sm-padding-x;
-    font-size: $pagination-sm-font-size;
-    line-height: $pagination-sm-line-height;
+    --ui-pagination-padding-x: #{$pagination-sm-padding-x};
+    --ui-pagination-padding-y: #{$pagination-sm-padding-y};
+    --ui-pagination-font-size: #{$pagination-sm-font-size};
 }
 
 .pagination-lg .page-link {
-    padding: $pagination-lg-padding-y $pagination-lg-padding-x;
-    font-size: $pagination-lg-font-size;
-    line-height: $pagination-lg-line-height;
+    --ui-pagination-padding-x: #{$pagination-lg-padding-x};
+    --ui-pagination-padding-y: #{$pagination-lg-padding-y};
+    --ui-pagination-font-size: #{$pagination-lg-font-size};
 }

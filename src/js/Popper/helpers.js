@@ -1,82 +1,155 @@
+import { $, document, window } from './../globals.js';
+import { debounce } from './../helpers.js';
+
 /**
  * Popper Helpers
  */
 
-Object.assign(Popper.prototype, {
+const poppers = new Set();
 
-    /**
-     * Update the position of the arrow for the actual placement and position.
-     * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
-     * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
-     * @param {string} placement The actual placement of the Popper.
-     * @param {string} position The actual position of the Popper.
-     */
-    _updateArrow(nodeBox, referenceBox, placement, position) {
-        const arrowStyles = {
-            position: 'absolute',
-            top: '',
-            right: '',
-            bottom: '',
-            left: ''
-        };
-        dom.setStyle(this._settings.arrow, arrowStyles);
+let running = false;
 
-        const arrowBox = dom.rect(this._settings.arrow, true);
+/**
+ * Add a Popper to the set, and attach the Popper events.
+ * @param {Popper} popper The Popper.
+ */
+export function addPopper(popper) {
+    poppers.add(popper);
 
-        if (['top', 'bottom'].includes(placement)) {
-            arrowStyles[placement === 'top' ? 'bottom' : 'top'] = -Math.floor(arrowBox.height);
-            const diff = (referenceBox.width - nodeBox.width) / 2;
-
-            let offset = (nodeBox.width / 2) - (arrowBox.width / 2);
-            if (position === 'start') {
-                offset += diff;
-            } else if (position === 'end') {
-                offset -= diff;
-            }
-
-            let min = Math.max(referenceBox.left, nodeBox.left) - arrowBox.left;
-            let max = Math.min(referenceBox.right, nodeBox.right) - arrowBox.left - arrowBox.width;
-
-            if (referenceBox.width < arrowBox.width) {
-                min -= arrowBox.width / 2 - referenceBox.width / 2;
-                max -= arrowBox.width / 2 - referenceBox.width / 2;
-            }
-
-            offset = Math.round(offset);
-            min = Math.round(min);
-            max = Math.round(max);
-
-            arrowStyles.left = Core.clamp(offset, min, max);
-        } else {
-            arrowStyles[placement === 'right' ? 'left' : 'right'] = -Math.floor(arrowBox.width);
-
-            const diff = (referenceBox.height - nodeBox.height) / 2;
-
-            let offset = (nodeBox.height / 2) - arrowBox.height;
-            if (position === 'start') {
-                offset += diff;
-            } else if (position === 'end') {
-                offset -= diff;
-            }
-
-            let min = Math.max(referenceBox.top, nodeBox.top) - arrowBox.top;
-            let max = Math.min(referenceBox.bottom, nodeBox.bottom) - arrowBox.top - arrowBox.height;
-
-            if (referenceBox.height < arrowBox.height * 2) {
-                min -= arrowBox.height - referenceBox.height / 2;
-                max -= arrowBox.height - referenceBox.height / 2;
-            } else {
-                max -= arrowBox.height;
-            }
-
-            offset = Math.round(offset);
-            min = Math.round(min);
-            max = Math.round(max);
-
-            arrowStyles.top = Core.clamp(offset, min, max);
-        }
-
-        dom.setStyle(this._settings.arrow, arrowStyles);
+    if (running) {
+        return;
     }
 
-});
+    $.addEvent(
+        window,
+        'resize.ui.popper',
+        debounce((_) => {
+            for (const popper of poppers) {
+                popper.update();
+            }
+        }),
+    );
+
+    $.addEvent(
+        document,
+        'scroll.ui.popper',
+        debounce((e) => {
+            for (const popper of poppers) {
+                if (!$.isDocument(e.target) && !$.hasDescendent(e.target, popper.node)) {
+                    continue;
+                }
+
+                popper.update();
+            }
+        }),
+        true,
+    );
+
+    running = true;
+};
+
+/**
+ * Get the actual placement of the Popper.
+ * @param {DOMRect} nodeBox The computed bounding rectangle of the node.
+ * @param {DOMRect} referenceBox The computed bounding rectangle of the reference.
+ * @param {object} minimumBox The computed minimum bounding rectangle of the container.
+ * @param {string} placement The initial placement of the Popper.
+ * @param {number} spacing The amount of spacing to use.
+ * @return {string} The new placement of the Popper.
+ */
+export function getPopperPlacement(nodeBox, referenceBox, minimumBox, placement, spacing) {
+    const spaceTop = referenceBox.top - minimumBox.top;
+    const spaceRight = minimumBox.right - referenceBox.right;
+    const spaceBottom = minimumBox.bottom - referenceBox.bottom;
+    const spaceLeft = referenceBox.left - minimumBox.left;
+
+    if (placement === 'top') {
+        // if node is bigger than space top and there is more room on bottom
+        if (spaceTop < nodeBox.height + spacing &&
+            spaceBottom > spaceTop) {
+            return 'bottom';
+        }
+    } else if (placement === 'right') {
+        // if node is bigger than space right and there is more room on left
+        if (spaceRight < nodeBox.width + spacing &&
+            spaceLeft > spaceRight) {
+            return 'left';
+        }
+    } else if (placement === 'bottom') {
+        // if node is bigger than space bottom and there is more room on top
+        if (spaceBottom < nodeBox.height + spacing &&
+            spaceTop > spaceBottom) {
+            return 'top';
+        }
+    } else if (placement === 'left') {
+        // if node is bigger than space left and there is more room on right
+        if (spaceLeft < nodeBox.width + spacing &&
+            spaceRight > spaceLeft) {
+            return 'right';
+        }
+    } else if (placement === 'auto') {
+        const maxVSpace = Math.max(spaceTop, spaceBottom);
+        const maxHSpace = Math.max(spaceRight, spaceLeft);
+        const minVSpace = Math.min(spaceTop, spaceBottom);
+
+        if (
+            maxHSpace > maxVSpace &&
+            maxHSpace >= nodeBox.width + spacing &&
+            minVSpace + referenceBox.height >= nodeBox.height + spacing - Math.max(0, nodeBox.height - referenceBox.height)
+        ) {
+            return spaceLeft > spaceRight ?
+                'left' :
+                'right';
+        }
+
+        const minHSpace = Math.min(spaceRight, spaceLeft);
+
+        if (
+            maxVSpace >= nodeBox.height + spacing &&
+            minHSpace + referenceBox.width >= nodeBox.width + spacing - Math.max(0, nodeBox.width - referenceBox.width)
+        ) {
+            return spaceBottom > spaceTop ?
+                'bottom' :
+                'top';
+        }
+
+        const maxSpace = Math.max(maxVSpace, maxHSpace);
+
+        if (spaceBottom === maxSpace && spaceBottom >= nodeBox.height + spacing) {
+            return 'bottom';
+        }
+
+        if (spaceTop === maxSpace && spaceTop >= nodeBox.height + spacing) {
+            return 'top';
+        }
+
+        if (spaceRight === maxSpace && spaceRight >= nodeBox.width + spacing) {
+            return 'right';
+        }
+
+        if (spaceLeft === maxSpace && spaceLeft >= nodeBox.width + spacing) {
+            return 'left';
+        }
+
+        return 'bottom';
+    }
+
+    return placement;
+};
+
+/**
+ * Remove a Popper from the set, and detach the Popper events.
+ * @param {Popper} popper The Popper.
+ */
+export function removePopper(popper) {
+    poppers.delete(popper);
+
+    if (poppers.size) {
+        return;
+    }
+
+    $.removeEvent(window, 'resize.ui.popper');
+    $.removeEvent(document, 'scroll.ui.popper');
+
+    running = false;
+};

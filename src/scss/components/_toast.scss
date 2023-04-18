@@ -1,19 +1,27 @@
 .toast {
-    width: $toast-width;
+    --ui-toast-max-width: #{$toast-max-width};
+    --ui-toast-padding-x: #{$toast-padding-x};
+    --ui-toast-padding-y: #{$toast-padding-y};
+    --ui-toast-margin-bottom: #{$toast-margin-bottom};
+    --ui-toast-font-size: #{$toast-font-size};
+    --ui-toast-bg: #{$toast-bg};
+    --ui-toast-border-width: #{$toast-border-width};
+    --ui-toast-border-color: #{$toast-border-color};
+    --ui-toast-border-radius: #{$toast-border-radius};
+    --ui-toast-header-color: #{$toast-header-color};
+    --ui-toast-header-bg: #{$toast-header-bg};
+    --ui-toast-header-border-color: #{$toast-header-border-color};
+
+    width: var(--ui-toast-max-width);
     max-width: 100%;
-    font-size: $toast-font-size;
-    color: $toast-color;
+    font-size: var(--ui-toast-font-size);
     pointer-events: auto;
-    background-color: $toast-background-color;
+    background-color: var(--ui-toast-bg);
     background-clip: padding-box;
-    border: $toast-border-size $border-style $toast-border-color;
-    @include border-radius($toast-border-radius);
+    border: var(--ui-toast-border-width) var(--ui-border-style) var(--ui-toast-border-color);
+    @include border-radius(var(--ui-toast-border-radius));
     opacity: 0;
     backdrop-filter: $toast-backdrop-filter;
-
-    &:not(:last-child) {
-        margin-bottom: $toast-margin-bottom;
-    }
 
     &.show {
         display: block;
@@ -31,28 +39,27 @@
     pointer-events: none;
 
     > :not(:last-child) {
-        margin-bottom: $toast-margin-bottom;
+        margin-bottom: var(--ui-toast-margin-bottom);
     }
 }
 
 .toast-header {
-    $toast-header-border-radius: calc(#{$toast-border-radius} - #{$toast-border-size});
-
     display: flex;
     align-items: center;
-    padding: $toast-header-padding-y $toast-header-padding-x;
-    color: $toast-header-color;
-    background-color: $toast-header-background-color;
+    padding: var(--ui-toast-padding-y) var(--ui-toast-padding-x);
+    color: var(--ui-toast-header-color);
+    background-color: var(--ui-toast-header-bg);
     background-clip: padding-box;
-    border-bottom: $toast-border-size $border-style $toast-border-color;
-    @include border-top-radius($toast-header-border-radius);
+    border-bottom: var(--ui-toast-border-width) var(--ui-border-style) var(--ui-toast-border-color);
+    @include border-top-radius(calc(var(--ui-toast-border-radius) - var(--ui-toast-border-width)));
 
     .btn-close {
-        margin: ($toast-header-padding-y * -.5) ($toast-header-padding-x * -.5) 0 $toast-header-padding-x;
+        margin-right: calc(var(--ui-toast-padding-x) * -.5);
+        margin-left: var(--ui-toast-padding-x);
     }
 }
 
 .toast-body {
-    padding: $toast-body-padding-y $toast-body-padding-x;
+    padding: var(--ui-toast-padding-x);
     word-wrap: break-word;
 }

@@ -6,33 +6,33 @@
     width: 100%;
     @include border-radius($input-outline-border-radius);
 
-    > .form-input,
-    > .input-filled,
-    > .input-outline {
+    >.form-input,
+    >.input-filled,
+    >.input-outline {
         position: relative;
         flex: 1 1 auto;
         width: 1%;
         min-width: 0;
     }
 
-    > .btn {
+    >.btn {
         position: relative;
         z-index: 2;
     }
 
-    > .form-input > .input-outline:focus,
-    > .input-outline:focus,
-    > .btn:focus {
+    >.form-input > .input-outline:focus,
+    >.input-outline:focus,
+    >.btn:focus {
         z-index: 3;
     }
 
-    > .btn,
-    > .form-input,
-    > .input-filled,
-    > .input-outline,
-    > .input-group-text,
-    > .form-input > .input-filled,
-    > .form-input > .input-outline {
+    >.btn,
+    >.form-input,
+    >.input-filled,
+    >.input-outline,
+    >.input-group-text,
+    >.form-input > .input-filled,
+    >.form-input > .input-outline {
         @include border-radius(inherit);
 
         &:not(:last-child) {
@@ -40,7 +40,7 @@
         }
 
         &:not(:first-child) {
-            margin-left: $input-border-size * -1;
+            margin-left: calc($input-border-width * -1);
             @include border-left-radius(0);
         }
     }
@@ -49,10 +49,10 @@
 .input-group-filled {
     @include border-radius(0);
 
-    > .input-group-text {
-        background-color: var(--ui-input-filled-bg);
+    >.input-group-text {
+        background-color: var(--ui-input-filled-bg, #{$input-filled-bg});
         border: 0;
-        border-bottom: $input-border-size $border-style var(--ui-input-border-color, #{$input-filled-border-color});
+        border-bottom: $input-border-width var(--ui-border-style) var(--ui-input-filled-border-color, #{$input-filled-border-color});
     }
 }
 
@@ -61,7 +61,7 @@
     .btn,
     .input-filled,
     .input-outline,
-    .input-group-text  {
+    .input-group-text {
         padding: $input-sm-padding-y $input-sm-padding-x;
         font-size: $input-sm-font-size;
     }

@@ -1,18 +1,21 @@
 .badge {
+    --ui-badge-padding-x: #{$badge-padding-x};
+    --ui-badge-padding-y: #{$badge-padding-y};
+    --ui-badge-font-size: #{$badge-font-size};
+    --ui-badge-font-weight: #{$badge-font-weight};
+    --ui-badge-color: #{$badge-color};
+    --ui-badge-border-radius: #{$badge-border-radius};
+
     display: inline-block;
-    padding: $badge-padding-y $badge-padding-x;
-    font-size: $badge-font-size;
-    font-weight: $badge-font-weight;
-    line-height: $badge-line-height;
-    color: $badge-color;
+    padding: var(--ui-badge-padding-y) var(--ui-badge-padding-x);
+    font-size: var(--ui-badge-font-size);
+    font-weight: var(--ui-badge-font-weight);
+    line-height: 1;
+    color: var(--ui-badge-color);
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
-    @include border-radius($badge-border-radius);
-
-    &.rounded-pill {
-        vertical-align: top;
-    }
+    @include border-radius(var(--ui-badge-border-radius));
 }
 
 .badge:empty {
@@ -21,5 +24,5 @@
 
 .btn .badge {
     position: relative;
-    top: $btn-border-size * -1;
+    top: calc(var(--ui-btn-border-width) * -1);
 }

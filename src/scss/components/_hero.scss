@@ -1,6 +1,0 @@
-.hero {
-    padding: $hero-padding-y $hero-padding-x;
-    margin-bottom: $hero-margin-bottom;
-    border: $hero-border-size $border-style $hero-border-color;
-    @include border-radius($hero-border-radius);
-}

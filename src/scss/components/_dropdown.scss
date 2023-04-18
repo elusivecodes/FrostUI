@@ -1,24 +1,42 @@
 .dropdown-menu {
-    --ui-dropdown-color: #{$dropdown-menu-color};
-    --ui-dropdown-bg: #{$dropdown-menu-background-color};
-    --ui-dropdown-item-color: #{$dropdown-item-color};
-    --ui-dropdown-item-focus-bg: #{$dropdown-item-focus-background-color};
+    --ui-dropdown-z-index: #{$dropdown-z-index};
+    --ui-dropdown-min-width: #{$dropdown-min-width};
+    --ui-dropdown-padding-x: #{$dropdown-padding-x};
+    --ui-dropdown-padding-y: #{$dropdown-padding-y};
+    --ui-dropdown-color: #{$dropdown-color};
+    --ui-dropdown-bg: #{$dropdown-bg};
+    --ui-dropdown-border-width: #{$dropdown-border-width};
+    --ui-dropdown-border-color: #{$dropdown-border-color};
+    --ui-dropdown-border-radius: #{$dropdown-border-radius};
+    --ui-dropdown-inner-border-radius: calc(var(--ui-border-radius) - var(--ui-border-width));
+    --ui-dropdown-divider-margin-y: #{$dropdown-divider-margin-y};
+    --ui-dropdown-divider-border-width: #{$dropdown-divider-border-width};
+    --ui-dropdown-divider-border-color: #{$dropdown-divider-border-color};
+    --ui-dropdown-link-color: #{$dropdown-link-color};
+    --ui-dropdown-link-hover-color: #{$dropdown-link-hover-color};
+    --ui-dropdown-link-hover-bg: #{$dropdown-link-hover-bg};
+    --ui-dropdown-link-active-color: #{$dropdown-link-active-color};
+    --ui-dropdown-link-active-bg: #{$dropdown-link-active-bg};
+    --ui-dropdown-link-disabled-color: #{$dropdown-link-disabled-color};
+    --ui-dropdown-item-padding-x: #{$dropdown-item-padding-x};
+    --ui-dropdown-item-padding-y: #{$dropdown-item-padding-y};
+    --ui-dropdown-header-padding-x: #{$dropdown-header-padding-x};
+    --ui-dropdown-header-padding-y: #{$dropdown-header-padding-y};
     --ui-dropdown-header-color: #{$dropdown-header-color};
-    --ui-dropdown-item-text-color: #{$dropdown-item-text-color};
 
     position: absolute;
-    z-index: $dropdown-z-index;
+    z-index: var(--ui-dropdown-z-index);
     display: none;
-    min-width: $dropdown-menu-min-width;
-    padding: $dropdown-menu-padding-y 0;
+    min-width: var(--ui-dropdown-min-width);
+    padding: var(--ui-dropdown-padding-y) var(--ui-dropdown-padding-x);
     margin: 0;
-    font-size: $dropdown-menu-font-size;
+    font-size: $dropdown-font-size;
     color: var(--ui-dropdown-color);
     text-align: left;
     list-style: none;
     background-color: var(--ui-dropdown-bg);
-    border: $dropdown-menu-border-size $border-style $dropdown-menu-border-color;
-    @include border-radius($dropdown-menu-border-radius);
+    border: var(--ui-dropdown-border-width) var(--ui-border-style) var(--ui-dropdown-border-color);
+    @include border-radius(var(--ui-dropdown-border-radius));
 
     &.show {
         display: block;
@@ -29,32 +47,20 @@
 .dropdown-item {
     display: block;
     width: 100%;
-    padding: $dropdown-item-padding-y $dropdown-item-padding-x;
+    padding: var(--ui-dropdown-item-padding-y) var(--ui-dropdown-item-padding-x);
     clear: both;
     font-weight: $dropdown-item-font-weight;
+    color: var(--ui-dropdown-link-color);
     text-align: inherit;
+    text-decoration: none;
     white-space: nowrap;
     background-color: transparent;
     border: 0;
 
-    &,
     &:hover,
     &:focus {
-        color: var(--ui-dropdown-item-color);
-        text-decoration: none;
-    }
-
-    &:first-child {
-        @include border-top-radius(inherit);
-    }
-
-    &:last-child {
-        @include border-bottom-radius(inherit);
-    }
-
-    &:hover,
-    &:focus {
-        background-color: var(--ui-dropdown-item-focus-bg);
+        color: var(--ui-dropdown-link-hover-color);
+        background-color: var(--ui-dropdown-link-hover-bg);
     }
 
     &:focus {
@@ -62,33 +68,21 @@
     }
 
     &.active {
-        color: $dropdown-item-active-color;
-        background-color: $dropdown-item-active-background-color;
-
-        &:focus {
-            background-color: $dropdown-item-active-focus-background-color;
-        }
+        color: var(--ui-dropdown-link-active-color);
+        background-color: var(--ui-dropdown-link-active-bg);
     }
 
     &:disabled,
     &.disabled {
+        color: var(--ui-dropdown-link-disabled-color);
         pointer-events: none;
-        opacity: $dropdown-item-disabled-opacity;
+        background-color: transparent;
     }
-}
-
-.dropdown-menu-dark {
-    --ui-dropdown-color: #{$dropdown-menu-dark-color};
-    --ui-dropdown-bg: #{$dropdown-menu-dark-background-color};
-    --ui-dropdown-item-color: #{$dropdown-menu-dark-item-color};
-    --ui-dropdown-item-focus-bg: #{$dropdown-menu-dark-item-focus-background-color};
-    --ui-dropdown-header-color: #{$dropdown-menu-dark-header-color};
-    --ui-dropdown-item-text-color: #{$dropdown-menu-dark-item-text-color};
 }
 
 .dropdown-header {
     display: block;
-    padding: $dropdown-header-padding-y $dropdown-header-padding-x;
+    padding: var(--ui-dropdown-header-padding-y) var(--ui-dropdown-header-padding-x);
     margin-bottom: 0;
     font-size: $dropdown-header-font-size;
     color: var(--ui-dropdown-header-color);
@@ -97,27 +91,21 @@
 
 .dropdown-divider {
     height: 0;
-    margin: $dropdown-divider-margin-y 0;
+    margin: var(--ui-dropdown-divider-margin-y) 0;
     overflow: hidden;
-    border-top: $dropdown-divider-border-size $border-style $dropdown-divider-border-color;
-}
-
-.dropdown-item-text {
-    display: block;
-    padding: $dropdown-item-text-padding-y $dropdown-item-text-padding-x;
-    color: var(--ui-dropdown-text-color);
+    border-top: var(--ui-dropdown-divider-border-width) var(--ui-border-style) var(--ui-dropdown-divider-border-color);
 }
 
 .dropdown-toggle {
     white-space: nowrap;
     @include caret();
 
-    + .dropdown-menu {
+    +.dropdown-menu {
         top: 100%;
     }
 
     &[data-ui-placement="top"] {
-        + .dropdown-menu {
+        +.dropdown-menu {
             top: auto;
             bottom: 100%;
         }
@@ -126,7 +114,7 @@
     }
 
     &[data-ui-placement="right"] {
-        + .dropdown-menu {
+        +.dropdown-menu {
             top: 0;
             right: auto;
             left: 100%;
@@ -136,7 +124,7 @@
     }
 
     &[data-ui-placement="left"] {
-        + .dropdown-menu {
+        +.dropdown-menu {
             top: 0;
             right: 100%;
             left: auto;

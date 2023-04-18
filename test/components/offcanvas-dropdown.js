@@ -1,19 +1,18 @@
-const assert = require('assert');
-const { exec } = require('../setup');
-const { waitFor } = require('../helpers');
+import assert from 'node:assert/strict';
+import { exec } from './../setup.js';
+import { waitFor } from './../helpers.js';
 
 describe('Offcanvas/Dropdown', function() {
-
     afterEach(async function() {
-        await exec(_ => {
-            dom.removeClass(document.body, 'offcanvas-backdrop');
-            dom.removeAttribute(document.body, 'style');
+        await exec((_) => {
+            $.removeClass(document.body, 'offcanvas-backdrop');
+            $.removeAttribute(document.body, 'style');
         });
     });
 
     beforeEach(async function() {
-        await exec(_ => {
-            dom.setHTML(
+        await exec((_) => {
+            $.setHTML(
                 document.body,
                 '<button class="btn btn-secondary" id="offcanvasToggle" data-ui-toggle="offcanvas" data-ui-target="#offcanvas" type="button"></button>' +
                 '<div class="offcanvas offcanvas-start" id="offcanvas">' +
@@ -26,79 +25,76 @@ describe('Offcanvas/Dropdown', function() {
                 '<button class="dropdown-item" id="dropdownItem3"></button>' +
                 '</div>' +
                 '</div>' +
-                '</div>'
+                '</div>',
             );
         });
     });
 
     describe('user events', function() {
-
         it('hides the offcanvas and dropdown on document click when dropdown is open', async function() {
-            await exec(_ => {
-                const offcanvas = dom.findOne('#offcanvas');
+            await exec((_) => {
+                const offcanvas = $.findOne('#offcanvas');
                 UI.Offcanvas.init(offcanvas).show();
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    dom.stop('#offcanvas');
+            }).then(waitFor(50)).then(async (_) => {
+                await exec((_) => {
+                    $.stop('#offcanvas');
                 });
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    const dropdownToggle = dom.findOne('#dropdownToggle');
+            }).then(waitFor(50)).then(async (_) => {
+                await exec((_) => {
+                    const dropdownToggle = $.findOne('#dropdownToggle');
                     UI.Dropdown.init(dropdownToggle).show();
                 });
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    dom.stop('#dropdown');
+            }).then(waitFor(50)).then(async (_) => {
+                await exec((_) => {
+                    $.stop('#dropdown');
                 });
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    dom.click(document.body);
+            }).then(waitFor(50)).then(async (_) => {
+                await exec((_) => {
+                    $.click(document.body);
                 });
-            }).then(waitFor(50)).then(async _ => {
+            }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
-                    await exec(_ => dom.hasAnimation('#dropdown') && dom.hasAnimation('#offcanvas')),
-                    true
+                    await exec((_) => $.hasAnimation('#dropdown') && $.hasAnimation('#offcanvas')),
+                    true,
                 );
             });
         });
 
         it('does not hide the offcanvas on escape when dropdown is open', async function() {
-            await exec(_ => {
-                const offcanvas = dom.findOne('#offcanvas');
+            await exec((_) => {
+                const offcanvas = $.findOne('#offcanvas');
                 UI.Offcanvas.init(offcanvas).show();
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    dom.stop('#offcanvas');
+            }).then(waitFor(50)).then(async (_) => {
+                await exec((_) => {
+                    $.stop('#offcanvas');
                 });
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    const dropdownToggle = dom.findOne('#dropdownToggle');
+            }).then(waitFor(50)).then(async (_) => {
+                await exec((_) => {
+                    const dropdownToggle = $.findOne('#dropdownToggle');
                     UI.Dropdown.init(dropdownToggle).show();
                 });
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
-                    dom.stop('#dropdown');
+            }).then(waitFor(50)).then(async (_) => {
+                await exec((_) => {
+                    $.stop('#dropdown');
                 });
-            }).then(waitFor(50)).then(async _ => {
-                await exec(_ => {
+            }).then(waitFor(50)).then(async (_) => {
+                await exec((_) => {
                     const event = new KeyboardEvent('keyup', {
                         bubbles: true,
-                        code: 'Escape'
+                        code: 'Escape',
                     });
                     document.body.dispatchEvent(event);
                 });
-            }).then(waitFor(50)).then(async _ => {
+            }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
-                    await exec(_ => dom.hasAnimation('#dropdown')),
-                    true
+                    await exec((_) => $.hasAnimation('#dropdown')),
+                    true,
                 );
                 assert.strictEqual(
-                    await exec(_ => dom.hasAnimation('#offcanvas')),
-                    false
+                    await exec((_) => $.hasAnimation('#offcanvas')),
+                    false,
                 );
             });
         });
-
     });
-
 });

@@ -1,53 +1,55 @@
 .list-group {
-    --ui-list-group-item-bg: #{$list-group-item-background-color};
+    --ui-list-group-color: #{$list-group-color};
+    --ui-list-group-bg: #{$list-group-bg};
+    --ui-list-group-border-color: #{$list-group-border-color};
+    --ui-list-group-border-width: #{$list-group-border-width};
+    --ui-list-group-border-radius: #{$list-group-border-radius};
+    --ui-list-group-item-padding-x: #{$list-group-item-padding-x};
+    --ui-list-group-item-padding-y: #{$list-group-item-padding-y};
+    --ui-list-group-item-disabled-color: #{$list-group-item-disabled-color};
+    --ui-list-group-item-disabled-bg: #{$list-group-item-disabled-bg};
+    --ui-list-group-action-color: #{$list-group-action-color};
+    --ui-list-group-action-hover-color: #{$list-group-action-hover-color};
+    --ui-list-group-action-hover-bg: #{$list-group-action-hover-bg};
+    --ui-list-group-active-color: #{$list-group-active-color};
+    --ui-list-group-active-bg: #{$list-group-active-bg};
+    --ui-list-group-active-border-color: #{$list-group-active-border-color};
 
     display: flex;
     flex-direction: column;
     padding: 0;
     margin-bottom: 0;
     margin-left: 0;
-    @include border-radius($list-group-border-radius);
+    @include border-radius(var(--ui-list-group-border-radius));
 }
 
 .list-group-item-action {
     width: 100%;
+    color: var(--ui-list-group-action-color);
     text-align: inherit;
 
-    &,
     &:hover,
     &:focus {
-        color: var(--ui-list-group-item-color, #{$list-group-item-action-color});
-        text-decoration: none;
-    }
-
-    &:hover {
         z-index: 1;
-        color: var(--ui-list-group-item-focus-color);
-        background-color: var(--ui-list-group-item-hover-bg, #{$list-group-item-action-focus-background-color});
+        color: var(--ui-list-group-action-hover-color);
+        text-decoration: none;
+        background-color: var(--ui-list-group-action-hover-bg);
     }
 
     &:focus {
-        z-index: 2;
-        color: var(--ui-list-group-item-focus-color);
-        background-color: var(--ui-list-group-item-focus-bg, #{$list-group-item-action-focus-background-color});
         outline: 0;
-    }
-
-    &:active,
-    &.active {
-        z-index: 3;
+        box-shadow: #{$list-group-action-focus-box-shadow};
     }
 }
 
 .list-group-item {
-    --ui-list-group-item-color: #{$list-group-item-color};
     position: relative;
     display: block;
-    padding: $list-group-item-padding-y $list-group-item-padding-x;
-    color: var(--ui-list-group-item-color);
+    padding: var(--ui-list-group-item-padding-y) var(--ui-list-group-item-padding-x);
+    color: var(--ui-list-group-color);
     text-decoration: none;
-    background-color: var(--ui-list-group-item-bg);
-    border: $list-group-border-size $border-style $list-group-border-color;
+    background-color: var(--ui-list-group-bg);
+    border: var(--ui-list-group-border-width) var(--ui-border-style) var(--ui-list-group-border-color);
 
     &:first-child {
         @include border-top-radius(inherit);
@@ -59,25 +61,24 @@
 
     &:disabled,
     &.disabled {
-        --ui-list-group-item-color: #{$list-group-item-disabled-color};
+        color: var(--ui-list-group-item-disabled-color);
         pointer-events: none;
+        background-color: var(--ui-list-group-item-disabled-bg);
     }
 
     &.active {
-        --ui-list-group-item-color: #{$list-group-item-active-color};
-        --ui-list-group-item-bg: #{$list-group-item-active-background-color};
-        --ui-list-group-item-hover-bg: #{$list-group-item-active-background-color};
-        --ui-list-group-item-focus-bg: #{$list-group-item-action-active-focus-background-color};
-        --ui-list-group-item-focus-color: #{$list-group-item-active-color};
         z-index: 2;
+        color: var(--ui-list-group-active-color);
+        background-color: var(--ui-list-group-active-bg);
+        border-color: var(--ui-list-group-active-border-color);
     }
 
     & + & {
         border-top-width: 0;
 
         &.active {
-            margin-top: $list-group-border-size * -1;
-            border-top-width: $list-group-border-size;
+            margin-top: calc(var(--ui-list-group-border-width) * -1);
+            border-top-width: var(--ui-list-group-border-width);
         }
     }
 }
@@ -85,8 +86,8 @@
 .list-group-flush {
     @include border-radius(0);
 
-    > .list-group-item {
-        border-width: 0 0 $list-group-border-size;
+    >.list-group-item {
+        border-width: 0 0 var(--ui-list-group-border-width);
 
         &:last-child {
             border-bottom-width: 0;
@@ -98,24 +99,23 @@
     list-style-type: none;
     counter-reset: section;
 
-    > li::before {
+    >li::before {
         content: counters(section, ".") ". ";
         counter-increment: section;
     }
 }
 
-@each $name, $color in $list-group-variants {
+@each $name, $color in $color-variants {
     .list-group-item-#{$name} {
-        $background-color: tint($color, $list-group-item-background-color-tint);
-        $text-color: text-color-contrast($background-color, $color);
-        $focus-background-color: shade($background-color, $list-group-item-focus-background-color-shade);
-        $focus-color: shade($text-color, $list-group-item-focus-color-shade);
-
-        --ui-list-group-item-bg: #{$background-color};
-        --ui-list-group-item-color: #{$text-color};
-        --ui-list-group-item-hover-bg: #{$focus-background-color};
-        --ui-list-group-item-focus-bg: #{$focus-background-color};
-        --ui-list-group-item-focus-color: #{$focus-color};
+        --ui-list-group-color: var(--ui-#{$name}-subtle-text);
+        --ui-list-group-bg: var(--ui-#{$name}-subtle);
+        --ui-list-group-border-color: var(--ui-#{$name}-subtle-emphasis);
+        --ui-list-group-action-hover-color: var(--ui-#{$name}-subtle-text);
+        --ui-list-group-action-hover-bg: var(--ui-#{$name}-subtle-emphasis);
+        --ui-list-group-focus-shadow-rgb: var(--ui-#{$name}-rgb);
+        --ui-list-group-active-color: var(--ui-#{$name}-contrast);
+        --ui-list-group-active-bg: var(--ui-#{$name});
+        --ui-list-group-active-border-color: var(--ui-#{$name});
     }
 }
 
@@ -133,23 +133,23 @@
             .list-group-item {
 
                 &:first-child {
-                    @include border-radius($list-group-border-radius 0 0 $list-group-border-radius);
+                    @include border-radius(var(--ui-list-group-border-radius) 0 0 var(--ui-list-group-border-radius));
                 }
 
                 &:last-child {
-                    @include border-radius(0 $list-group-border-radius $list-group-border-radius 0);
+                    @include border-radius(0 var(--ui-list-group-border-radius) $list-group-border-radius 0);
                 }
 
 
-                + .list-group-item {
-                    border-top-width: $list-group-border-size;
+                +.list-group-item {
+                    border-top-width: var(--ui-list-group-border-width);
                     border-left-width: 0;
                 }
 
                 &.active {
                     margin-top: 0;
-                    margin-left: $list-group-border-size * -1;
-                    border-left-width: $list-group-border-size;
+                    margin-left: calc(var(--ui-list-group-border-width) * -1);
+                    border-left-width: var(--ui-list-group-border-width);
                 }
             }
         }

@@ -1,14 +1,36 @@
 .navbar {
+    --ui-navbar-padding-x: #{$navbar-padding-x};
+    --ui-navbar-padding-y: #{$navbar-padding-y};
+    --ui-navbar-color: #{$navbar-color};
+    --ui-navbar-hover-color: #{$navbar-hover-color};
+    --ui-navbar-active-color: #{$navbar-active-color};
+    --ui-navbar-disabled-color: #{$navbar-disabled-color};
+    --ui-navbar-brand-padding-y: #{$navbar-brand-padding-y};
+    --ui-navbar-brand-margin-end: #{$navbar-brand-margin-end};
+    --ui-navbar-brand-font-size: #{$navbar-brand-font-size};
+    --ui-navbar-brand-color: #{$navbar-brand-color};
+    --ui-navbar-brand-hover-color: #{$navbar-brand-hover-color};
+    --ui-navbar-text-color: #{$navbar-text-color};
+    --ui-navbar-nav-link-padding-x: #{$navbar-nav-link-padding-x};
+    --ui-navbar-toggler-padding-x: #{$navbar-toggler-padding-x};
+    --ui-navbar-toggler-padding-y: #{$navbar-toggler-padding-y};
+    --ui-navbar-toggler-font-size: #{$navbar-toggler-font-size};
+    --ui-navbar-toggler-icon-width: #{$navbar-toggler-icon-width};
+    --ui-navbar-toggler-icon: #{$navbar-toggler-icon};
+    --ui-navbar-toggler-border-color: #{$navbar-toggler-border-color};
+    --ui-navbar-toggler-border-width: #{$navbar-toggler-border-width};
+    --ui-navbar-toggler-border-radius: #{$navbar-toggler-border-radius};
+    --ui-navbar-toggler-focus-box-shadow: #{$navbar-toggler-focus-box-shadow};
+
     position: relative;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    padding-top: $navbar-padding-y;
-    padding-bottom: $navbar-padding-y;
+    padding: var(--ui-navbar-padding-y) var(--ui-navbar-padding-x);
 
-    > .container,
-    > .container-fluid,
+    >.container,
+    >.container-fluid,
     %responsive-navbar-container {
         display: flex;
         flex-wrap: inherit;
@@ -17,55 +39,45 @@
     }
 
     @each $breakpoint, $max-width in $containers {
-        > .container-#{$breakpoint} {
+        >.container-#{$breakpoint} {
             @extend %responsive-navbar-container;
         }
     }
 }
 
 .navbar-brand {
-    padding-top: $navbar-brand-padding-y;
-    padding-bottom: $navbar-brand-padding-y;
-    margin-right: $navbar-brand-margin-right;
-    font-size: $navbar-brand-font-size;
+    padding-top: var(--ui-navbar-brand-padding-y);
+    padding-bottom: var(--ui-navbar-brand-padding-y);
+    margin-right: var(--ui-navbar-brand-margin-right);
+    font-size: var(--ui-navbar-brand-font-size);
+    color: var(--ui-navbar-brand-color);
     white-space: nowrap;
+    text-decoration: none;
 
-    &,
     &:hover,
     &:focus {
-        color: var(--ui-navbar-brand-color);
-        text-decoration: none;
+        color: var(--ui-navbar-brand-hover-color);
     }
 }
 
 .navbar-nav {
+    --ui-nav-link-padding-x: #{$nav-link-padding-x};
+    --ui-nav-link-padding-y: #{$nav-link-padding-y};
+    --ui-nav-link-font-size: var(--ui-nav-link-font-size);
+    --ui-nav-link-font-weight: var(--ui-nav-link-font-weight);
+    --ui-nav-link-color: var(--ui-navbar-color);
+    --ui-nav-link-hover-color: var(--ui-navbar-hover-color);
+    --ui-nav-link-disabled-color: var(--ui-navbar-disabled-color);
+
     display: flex;
     flex-direction: column;
     padding-left: 0;
     margin-bottom: 0;
     list-style: none;
 
-    .nav-link {
-        color: var(--ui-navbar-nav-link-color);
-
-        &:hover {
-            color: var(--ui-navbar-nav-link-hover-color);
-        }
-
-        &:focus {
-            color: var(--ui-navbar-nav-link-focus-color);
-            background-color: var(--ui-navbar-nav-link-focus-bg);
-        }
-
-        &.disabled {
-            pointer-events: none;
-            opacity: $navbar-nav-link-disabled-opacity;
-        }
-    }
-
     .nav-link.active,
     .show > .nav-link {
-        color: var(--ui-navbar-nav-link-active-color);
+        color: var(--ui-navbar-active-color);
     }
 
     .dropdown-menu {
@@ -74,8 +86,8 @@
 }
 
 .navbar-text {
-    padding-top: $navbar-text-padding-y;
-    padding-bottom: $navbar-text-padding-y;
+    padding-top: $nav-link-padding-y;
+    padding-bottom: $nav-link-padding-y;
     color: var(--ui-navbar-text-color);
 }
 
@@ -88,64 +100,37 @@
     flex-grow: 1;
     align-items: center;
     width: 100%;
-
-    .navbar-nav {
-        margin-right: $nav-link-padding-x * -1;
-        margin-left: $nav-link-padding-x * -1;
-    }
 }
 
 .navbar-toggler {
-    padding: $navbar-toggler-padding-y $navbar-toggler-padding-x;
-    font-size: $navbar-toggler-font-size;
+    padding: var(--ui-navbar-toggler-padding-y) var(--ui-navbar-toggler-padding-x);
+    font-size: var(--ui-navbar-toggler-font-size);
     line-height: map-get($line-heights, 1);
+    color: var(--ui-navbar-color);
     background-color: transparent;
-    border: $navbar-toggler-border-size $border-style transparent;
-    @include border-radius($navbar-toggler-border-radius);
+    border: var(--ui-navbar-toggler-border-width) var(--ui-border-style) var(--ui-navbar-toggler-border-color);
+    @include border-radius(var(--ui-navbar-toggler-border-radius));
 
-    .navbar-toggler-icon {
-        display: inline-block;
-        width: $navbar-toggler-icon-size;
-        height: $navbar-toggler-icon-size;
-        vertical-align: middle;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 100%;
+    &:hover {
+        text-decoration: none;
     }
 
     &:focus {
-        background-color: var(--ui-navbar-toggler-focus-bg);
+        text-decoration: none;
+        outline: 0;
+        box-shadow: var(--ui-navbar-toggler-focus-box-shadow);
     }
 }
 
-.navbar-light {
-    --ui-navbar-brand-color: #{$navbar-light-navbar-brand-color};
-    --ui-navbar-nav-link-color: #{$navbar-light-nav-link-color};
-    --ui-navbar-nav-link-hover-color: #{$navbar-light-nav-link-hover-color};
-    --ui-navbar-nav-link-focus-bg: #{$navbar-light-nav-link-focus-background-color};
-    --ui-navbar-nav-link-focus-color: #{$navbar-light-nav-link-focus-color};
-    --ui-navbar-nav-link-active-color: #{$navbar-light-nav-link-active-color};
-    --ui-navbar-text-color: #{$navbar-light-nav-text-color};
-    --ui-navbar-toggler-focus-bg: #{$navbar-light-navbar-toggler-focus-background-color};
-
-    .navbar-toggler-icon {
-        background-image: $navbar-light-navbar-toggler-icon-background-image;
-    }
-}
-
-.navbar-dark {
-    --ui-navbar-brand-color: #{$navbar-dark-navbar-brand-color};
-    --ui-navbar-nav-link-color: #{$navbar-dark-nav-link-color};
-    --ui-navbar-nav-link-hover-color: #{$navbar-dark-nav-link-hover-color};
-    --ui-navbar-nav-link-focus-bg: #{$navbar-dark-nav-link-focus-background-color};
-    --ui-navbar-nav-link-focus-color: #{$navbar-dark-nav-link-focus-color};
-    --ui-navbar-nav-link-active-color: #{$navbar-dark-nav-link-active-color};
-    --ui-navbar-text-color: #{$navbar-dark-nav-text-color};
-    --ui-navbar-toggler-focus-bg: #{$navbar-dark-navbar-toggler-focus-background-color};
-
-    .navbar-toggler-icon {
-        background-image: $navbar-dark-navbar-toggler-icon-background-image;
-    }
+.navbar-toggler-icon {
+    display: inline-block;
+    width: var(--ui-navbar-toggler-icon-width);
+    height: var(--ui-navbar-toggler-icon-width);
+    vertical-align: middle;
+    background-color: currentcolor;
+    mask-image: var(--ui-navbar-toggler-icon);
+    mask-repeat: no-repeat;
+    mask-size: var(--ui-navbar-toggler-icon-width);
 }
 
 @each $breakpoint in map-keys($breakpoints) {
@@ -175,8 +160,8 @@
                 }
 
                 .nav-link {
-                    padding-right: $navbar-nav-link-padding-x;
-                    padding-left: $navbar-nav-link-padding-x;
+                    padding-right: var(--ui-navbar-nav-link-padding-x);
+                    padding-left: var(--ui-navbar-nav-link-padding-x);
                 }
             }
 

@@ -4,10 +4,16 @@
 }
 
 .img-thumbnail {
+    --ui-img-thumbnail-padding: #{$img-thumbnail-padding};
+    --ui-img-thumbnail-bg: #{$img-thumbnail-bg};
+    --ui-img-thumbnail-border-color: #{$img-thumbnail-border-color};
+    --ui-img-thumbnail-border-width: #{$img-thumbnail-border-width};
+    --ui-img-thumbnail-border-radius: #{$img-thumbnail-border-radius};
+
     max-width: 100%;
     height: auto;
-    padding: $img-thumbnail-padding;
-    background-color: $img-thumbnail-background-color;
-    border: $img-thumbnail-border-size $border-style $img-thumbnail-border-color;
-    @include border-radius($img-thumbnail-border-radius);
+    padding: var(--ui-img-thumbnail-padding);
+    background-color: var(--ui-img-thumbnail-bg);
+    border: var(--ui-img-thumbnail-border-width) var(--ui-border-style) var(--ui-img-thumbnail-border-color);
+    @include border-radius(var(--ui-img-thumbnail-border-radius));
 }

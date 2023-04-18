@@ -1,8 +1,14 @@
 .breadcrumb {
+    --ui-breadcrumb-item-padding-x: #{$breadcrumb-item-padding-x};
+    --ui-breadcrumb-margin-bottom: #{$breadcrumb-margin-bottom};
+    --ui-breadcrumb-active-color: #{$breadcrumb-active-color};
+    --ui-breadcrumb-divider-color: #{$breadcrumb-divider-color};
+    --ui-breadcrumb-divider: "#{$breadcrumb-divider}";
+
     display: flex;
     flex-wrap: wrap;
     padding: 0;
-    margin: 0 0 $breadcrumb-margin-bottom;
+    margin: 0 0 var(--ui-breadcrumb-margin-bottom);
     list-style: none;
 }
 
@@ -10,17 +16,17 @@
     display: flex;
 
     &.active {
-        color: $breadcrumb-item-active-color;
+        color: var(--ui-breadcrumb-active-color);
     }
 
-    + .breadcrumb-item {
-        padding-left: $breadcrumb-spacing * .5;
+    +.breadcrumb-item {
+        padding-left: var(--ui-breadcrumb-item-padding-x);
 
         &::before {
             display: inline-block;
-            padding-right: $breadcrumb-spacing * .5;
-            color: $breadcrumb-divider-color;
-            content: var(--ui-breadcrumb-divider, "#{$breadcrumb-divider}");
+            padding-right: var(--ui-breadcrumb-item-padding-x);
+            color: var(--ui-breadcrumb-divider-color);
+            content: var(--ui-breadcrumb-divider);
         }
     }
 }

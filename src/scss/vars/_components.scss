@@ -3,239 +3,181 @@
 // accordion
 $accordion-padding-x: $spacing * 1.25 !default;
 $accordion-padding-y: $spacing !default;
-$accordion-border-size: $border-size !default;
-$accordion-border-color: $border-color !default;
-$accordion-border-radius: $border-radius !default;
+$accordion-bg: var(--ui-body-bg) !default;
+$accordion-color: var(--ui-body-color) !default;
+$accordion-border-width: var(--ui-border-width) !default;
+$accordion-border-color: var(--ui-border-color) !default;
+$accordion-border-radius: var(--ui-border-radius) !default;
 
 $accordion-button-padding-x: $accordion-padding-x !default;
 $accordion-button-padding-y: $accordion-padding-y !default;
-$accordion-button-font-size: $font-size !default;
+$accordion-button-bg: var(--ui-accordion-bg) !default;
+$accordion-button-color: var(--ui-body-color) !default;
+$accordion-active-bg: var(--ui-primary-subtle) !default;
+$accordion-active-color: var(--ui-primary-text) !default;
+$accordion-focus-box-shadow: 0 0 0 var(--ui-focus-ring-width) var(--ui-focus-ring-color) !default;
 
-$accordion-button-collapsed-color: $text-color !default;
-$accordion-button-collapsed-focus-background-color: tint($black, 95%) !default;
-
-$accordion-button-expanded-background-color: tint(map-get($color-variants, primary), 90%) !default;
-$accordion-button-expanded-color: text-color-contrast($accordion-button-expanded-background-color, map-get($color-variants, primary)) !default;
-$accordion-button-expanded-focus-background-color: tint(map-get($color-variants, primary), 80%) !default;
-
-$accordion-icon-width: 2.25rem !default;
-$accordion-icon-height: 1.25rem !default;
-$accordion-icon-margin-right: $spacing !default;
-$accordion-icon-collapsed-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{svg-color($accordion-button-collapsed-color)}'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !default;
-$accordion-icon-expanded-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{svg-color($accordion-button-expanded-color)}'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !default;
-$accordion-icon-expanded-transform: rotate(180deg) !default;
+$accordion-icon-width: 1.25rem !default;
+$accordion-icon-transform: rotate(180deg) !default;
+$accordion-icon-transition: transform $transition-time $transition-type !default;
+$accordion-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !default;
 
 $accordion-body-padding-x: $accordion-padding-x !default;
 $accordion-body-padding-y: $accordion-padding-y !default;
 
 // alert
-$alert-variants: $color-variants !default;
-
 $alert-padding-x: $spacing !default;
 $alert-padding-y: $spacing !default;
 $alert-margin-bottom: $spacing !default;
-$alert-border-size: $border-size !default;
-$alert-border-color: $border-color !default;
-$alert-border-radius: $border-radius !default;
-
-$alert-dismissable-padding-right: ($alert-padding-x * 2) + $font-size !default;
+$alert-border-width: var(--ui-border-width) !default;
+$alert-border-radius: var(--ui-border-radius) !default;
 $alert-link-font-weight: map-get($font-weights, bold) !default;
-
-$alert-background-color-tint: 75% !default;
-$alert-link-color-shade: 20% !default;
 
 // badge
 $badge-padding-x: .65em !default;
 $badge-padding-y: .35em !default;
 $badge-font-size: .75em !default;
 $badge-font-weight: map-get($font-weights, bolder) !default;
-$badge-line-height: map-get($line-heights, 1) !default;
-$badge-color: $white !default;
-$badge-border-radius: $border-radius !default;
+$badge-color: var(--ui-white) !default;
+$badge-border-radius: var(--ui-border-radius) !default;
 
 // breadcrumb
 $breadcrumb-margin-bottom: $spacing !default;
-$breadcrumb-spacing: $spacing !default;
-$breadcrumb-item-active-color: map-get($color-variants, secondary) !default;
-$breadcrumb-divider-color: fade($black, .5) !default;
-$breadcrumb-divider: "\002f" !default;
+$breadcrumb-item-padding-x: $spacing * .5 !default;
+$breadcrumb-active-color: var(--ui-gray) !default;
+$breadcrumb-divider: quote("/") !default;
+$breadcrumb-divider-color: rgba(var(--ui-body-color-rgb), .5) !default;
 
 // button
-$btn-variants: $color-variants !default;
-
 $btn-padding-x: $spacing * .5 !default;
 $btn-padding-y: $spacing * .25 !default;
-$btn-font-family: $font-family !default;
+$btn-font-family: $font-sans-serif !default;
 $btn-font-size: $font-size-md !default;
 $btn-font-weight: map-get($font-weights, normal) !default;
 $btn-line-height: map-get($line-heights, base) !default;
-$btn-border-size: $border-size !default;
-$btn-border-color: $border-color !default;
-$btn-border-radius: $border-radius !default;
-$btn-focus-box-shadow: $shadow-sm !default;
-$btn-active-box-shadow: $shadow !default;
-$btn-disabled-opacity: $disabled-opacity !default;
+$btn-border-width: var(--ui-border-width) !default;
+$btn-border-color: var(--ui-border-color) !default;
+$btn-border-radius: var(--ui-border-radius) !default;
+$btn-disabled-opacity: var(--ui-disabled-opacity) !default;
+$btn-focus-box-shadow: 0 0 0 var(--ui-focus-ring-width) rgba(var(--ui-btn-focus-shadow-rgb), var(--ui-focus-ring-opacity)) !default;
 
 $btn-lg-padding-x: $spacing !default;
 $btn-lg-padding-y: math.div($spacing, 3) !default;
 $btn-lg-font-size: $font-size-lg !default;
+$btn-lg-border-radius: var(--ui-border-radius-lg) !default;
+
 $btn-sm-padding-x: $spacing * .5 !default;
 $btn-sm-padding-y: $spacing * .25 !default;
 $btn-sm-font-size: $font-size-sm !default;
+$btn-sm-border-radius: var(--ui-border-radius-sm) !default;
 
-$btn-hover-background-color-shade: 20% !default;
-$btn-focus-background-color-tint: 20% !default;
-$btn-active-background-color-shade: 40% !default;
-$btn-ripple-background-color: fade($white, .3) !default;
-$btn-outline-ripple-background-color-fade: .1 !default;
-
-$btn-outline-hover-background-color-fade: .1 !default;
-$btn-outline-focus-background-color-fade: .2 !default;
-$btn-outline-active-color-shade: 15% !default;
-$btn-outline-active-border-color-shade: 15% !default;
-$btn-outline-ripple-background-color-fade: .3 !default;
+$btn-ripple-opacity: var(--ui-ripple-opacity) !default;
+$btn-outline-hover-opacity: .2 !default;
 
 // card
-$card-padding-x: $spacing !default;
-$card-padding-y: $spacing * .5 !default;
-$card-background-color: $white !default;
-$card-border-size: $border-size !default;
-$card-border-color: $border-color !default;
-$card-border-radius: $border-radius !default;
-$card-inner-border-radius: calc(#{$card-border-radius} - #{$card-border-size}) !default;
-
-$card-header-padding-x: $card-padding-x !default;
-$card-header-padding-y: $card-padding-y !default;
-$card-header-background-color: fade($black, .1) !default;
-$card-footer-padding-x: $card-padding-x !default;
-$card-footer-padding-y: $card-padding-y !default;
-$card-footer-background-color: fade($black, .05) !default;
-$card-body-padding-x: $card-padding-x !default;
-$card-body-padding-y: $spacing !default;
-
-$card-title-margin-bottom: $spacing * .25 !default;
-$card-subtitle-margin-top: $spacing * -.33 !default;
-$card-link-spacing: $spacing !default;
-$card-img-overlay-padding-x: $spacing * 1.25 !default;
-$card-img-overlay-padding-y: $spacing * 1.25 !default;
-
-$card-group-card-margin-bottom: $spacing !default;
+$card-spacer-x: $spacing !default;
+$card-spacer-y: $spacing !default;
+$card-title-spacer-y: $spacing * .5 !default;
+$card-border-width: var(--ui-border-width) !default;
+$card-border-color: var(--ui-border-color-translucent) !default;
+$card-border-radius: var(--ui-border-radius) !default;
+$card-bg: var(--ui-body-bg) !default;
+$card-cap-padding-x: $card-spacer-x !default;
+$card-cap-padding-y: $card-spacer-y * .5 !default;
+$card-cap-bg: rgba(var(--ui-body-color-rgb), .1) !default;
+$card-img-overlay-padding: $spacing !default;
+$card-group-margin: $spacing !default;
 
 // carousel
-$carousel-background-color: map-get($color-variants, dark) !default;
+$carousel-bg: var(--ui-body-color) !default;
 
 $carousel-control-padding-x: $spacing !default;
 $carousel-control-padding-y: $spacing !default;
 $carousel-control-font-size: 2em !default;
+$carousel-control-color-rgb: var(--ui-body-bg-rgb) !default;
 $carousel-control-opacity: .5 !default;
 $carousel-control-hover-opacity: .75 !default;
-$carousel-control-focus-opacity: 1 !default;
-
-$carousel-control-icon-size: 2rem !default;
-$carousel-control-icon-color: map-get($color-variants, light) !default;
-$carousel-control-prev-icon-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{svg-color($carousel-control-icon-color)}'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e") !default;
-$carousel-control-next-icon-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{svg-color($carousel-control-icon-color)}'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !default;
-
-$carousel-indicators-bottom: $spacing !default;
-$carousel-indicators-margin-x: $spacing * 2 !default;
+$carousel-control-icon-width: 2rem !default;
+$carousel-control-prev-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e") !default;
+$carousel-control-next-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !default;
 
 $carousel-indicator-width: .5rem !default;
 $carousel-indicator-height: .5rem !default;
-$carousel-indicator-margin-x: $spacing * .25 !default;
-$carousel-indicator-background-color: map-get($color-variants, light) !default;
-$carousel-indicator-border-radius: $border-radius !default;
+$carousel-indicator-spacer: $spacing !default;
+$carousel-indicator-bg: var(--ui-body-bg) !default;
 $carousel-indicator-opacity: .5 !default;
 $carousel-indicator-active-opacity: 1 !default;
+$carousel-indicator-border-radius: var(--ui-border-radius) !default;
 
-$carousel-caption-right: 15% !default;
-$carousel-caption-bottom: $spacing * 2 !default;
-$carousel-caption-left: 15% !default;
+$carousel-caption-width: 70% !default;
 $carousel-caption-padding-y: $spacing !default;
-$carousel-caption-color: map-get($color-variants, light) !default;
+$carousel-caption-spacer: $spacing * 2 !default;
+$carousel-caption-color: var(--ui-body-bg) !default;
 
-$carousel-dark-background-color: map-get($color-variants, light) !default;
-$carousel-dark-control-icon-color: map-get($color-variants, dark) !default;
-$carousel-dark-control-prev-icon-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{svg-color($carousel-dark-control-icon-color)}'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e") !default;
-$carousel-dark-control-next-icon-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{svg-color($carousel-dark-control-icon-color)}'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !default;
-$carousel-dark-indicator-background-color: map-get($color-variants, dark) !default;
-$carousel-dark-caption-color: map-get($color-variants, dark) !default;
+// close icon
+$btn-close-width: 1em !default;
+$btn-close-height: 1em !default;
+$btn-close-padding-x: $spacing * .25 !default;
+$btn-close-padding-y: $spacing * .25 !default;
+$btn-close-border-radius: var(--ui-border-radius) !default;
+$btn-close-opacity: .5 !default;
+$btn-close-hover-opacity: .75 !default;
+$btn-close-focus-opacity: 1 !default;
+$btn-close-disabled-opacity: .25 !default;
+
+$btn-close-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") !default;
 
 // dropdown
-$dropdown-padding-x: $spacing !default;
+$dropdown-min-width: 10rem !default;
+$dropdown-padding-x: 0 !default;
 $dropdown-padding-y: $spacing * .5 !default;
-$dropdown-color: $text-color !default;
-
-$dropdown-menu-min-width: 10rem !default;
-$dropdown-menu-padding-y: $dropdown-padding-y !default;
-$dropdown-menu-font-size: $font-size-md !default;
-$dropdown-menu-color: $text-color !default;
-$dropdown-menu-background-color: $white !default;
-$dropdown-menu-border-size: $border-size !default;
-$dropdown-menu-border-color: $border-color !default;
-$dropdown-menu-border-radius: $border-radius !default;
-
-$dropdown-item-padding-x: $dropdown-padding-x !default;
-$dropdown-item-padding-y: $spacing * .25 !default;
-$dropdown-item-font-weight: map-get($font-weights, normal) !default;
-$dropdown-item-color: $dropdown-menu-color !default;
-$dropdown-item-focus-background-color: fade($black, .1) !default;
-$dropdown-item-active-background-color: $link-color !default;
-$dropdown-item-active-color: text-color($dropdown-item-active-background-color) !default;
-$dropdown-item-active-focus-background-color: tint($dropdown-item-active-background-color, 20%) !default;
-$dropdown-item-disabled-opacity: $disabled-opacity !default;
-
-$dropdown-header-padding-x: $dropdown-padding-x !default;
-$dropdown-header-padding-y: $dropdown-padding-y !default;
-$dropdown-header-font-size: $font-size-sm !default;
-$dropdown-header-color: map-get($color-variants, dark) !default;
+$dropdown-font-size: $font-size-md !default;
+$dropdown-color: var(--ui-body-color) !default;
+$dropdown-bg: var(--ui-body-bg) !default;
+$dropdown-border-width: var(--ui-border-width) !default;
+$dropdown-border-color: var(--ui-border-color-translucent) !default;
+$dropdown-border-radius: var(--ui-border-radius) !default;
 
 $dropdown-divider-margin-y: $dropdown-padding-y !default;
-$dropdown-divider-border-size: $border-size !default;
-$dropdown-divider-border-color: $border-color !default;
+$dropdown-divider-border-width: var(--ui-border-width) !default;
+$dropdown-divider-border-color: var(--ui-border-color-translucent) !default;
 
-$dropdown-item-text-padding-x: $dropdown-padding-x !default;
-$dropdown-item-text-padding-y: $dropdown-item-padding-y !default;
-$dropdown-item-text-color: $dropdown-menu-color !default;
+$dropdown-link-color: var(--ui-body-color) !default;
+$dropdown-link-hover-color: var(--ui-body-color) !default;
+$dropdown-link-hover-bg: var(--ui-tertiary-bg) !default;
+$dropdown-link-active-color: var(--ui-primary-contrast) !default;
+$dropdown-link-active-bg: var(--ui-primary) !default;
+$dropdown-link-disabled-color: var(--ui-secondary-color) !default;
 
-$dropdown-menu-dark-color: map-get($color-variants, light) !default;
-$dropdown-menu-dark-background-color: map-get($color-variants, dark) !default;
-$dropdown-menu-dark-item-color: $dropdown-menu-dark-color !default;
-$dropdown-menu-dark-item-focus-background-color: fade($white, .1) !default;
-$dropdown-menu-dark-header-color: $gray-light !default;
-$dropdown-menu-dark-item-text-color: $dropdown-menu-dark-color !default;
+$dropdown-item-padding-x: $spacing !default;
+$dropdown-item-padding-y: $spacing * .25 !default;
+$dropdown-item-font-weight: map-get($font-weights, normal) !default;
 
-// hero
-$hero-padding-x: $spacing * 1.5 !default;
-$hero-padding-y: $spacing * 2.5 !default;
-$hero-margin-bottom: $spacing !default;
-$hero-border-size: $border-size !default;
-$hero-border-color: $border-color !default;
-$hero-border-radius: 2rem !default;
+$dropdown-header-padding-x: $spacing !default;
+$dropdown-header-padding-y: $dropdown-padding-y !default;
+$dropdown-header-font-size: $font-size-sm !default;
+$dropdown-header-color: var(--ui-secondary-color) !default;
 
 // list group
-$list-group-variants: $color-variants !default;
-
-$list-group-border-size: $border-size !default;
-$list-group-border-color: $border-color !default;
-$list-group-border-radius: $border-radius !default;
-
-$list-group-item-action-color: $text-color !default;
-$list-group-item-action-focus-background-color: tint($black, 95%) !default;
-$list-group-item-action-focus-box-shadow: $shadow-sm !default;
+$list-group-color: var(--ui-body-color) !default;
+$list-group-bg: var(--ui-body-bg) !default;
+$list-group-border-width: var(--ui-border-width) !default;
+$list-group-border-color: var(--ui-border-color) !default;
+$list-group-border-radius: var(--ui-border-radius) !default;
 
 $list-group-item-padding-x: $spacing !default;
 $list-group-item-padding-y: $spacing * .5 !default;
-$list-group-item-background-color: $white !default;
-$list-group-item-color: $text-color !default;
-$list-group-item-disabled-color: map-get($color-variants, secondary) !default;
+$list-group-item-disabled-color: var(--ui-secondary-color) !default;
+$list-group-item-disabled-bg: var(--ui-body-bg) !default;
 
-$list-group-item-active-background-color: $link-color !default;
-$list-group-item-active-color: text-color($list-group-item-active-background-color) !default;
-$list-group-item-action-active-focus-background-color: tint($list-group-item-active-background-color, 10%) !default;
+$list-group-action-color: var(--ui-secondary-color) !default;
+$list-group-action-hover-color: var(--ui-emphasis-color) !default;
+$list-group-action-hover-bg: var(--ui-tertiary-bg) !default;
+$list-group-action-focus-box-shadow: 0 0 0 var(--ui-focus-ring-width) rgba(var(--ui-list-group-focus-shadow-rgb, var(--ui-primary-rgb)), var(--ui-focus-ring-opacity)) !default;
 
-$list-group-item-background-color-tint: 80% !default;
-$list-group-item-focus-background-color-shade: 5% !default;
-$list-group-item-focus-color-shade: 50% !default;
+$list-group-active-color: var(--ui-primary-contrast) !default;
+$list-group-active-bg: var(--ui-primary) !default;
+$list-group-active-border-color: var(--ui-primary) !default;
 
 // modal
 $modal-sm-max-width: 300px !default;
@@ -247,87 +189,83 @@ $modal-md-dialog-margin-y: $spacing * 2 !default;
 
 $modal-padding-x: $spacing !default;
 $modal-padding-y: $spacing !default;
+$modal-margin: $spacing * .5 !default;
+$modal-bg: var(--ui-body-bg) !default;
+$modal-content-color: var(--ui-body-color) !default;
+$modal-border-width: var(--ui-border-width) !default;
+$modal-border-color: var(--ui-border-color) !default;
+$modal-border-radius: var(--ui-border-radius) !default;
 
-$modal-dialog-margin-x: $spacing * .5 !default;
-$modal-dialog-margin-y: $spacing * .5 !default;
+$modal-header-padding-x: var(--ui-modal-padding-x) !default;
+$modal-header-padding-y: var(--ui-modal-padding-y) !default;
+$modal-header-border-width: var(--ui-modal-border-width) !default;
+$modal-header-border-color: var(--ui-modal-border-color) !default;
+$modal-title-line-height: map-get($line-heights, base) !default;
+
+$model-footer-gap: $spacing * .5 !default;
+$modal-footer-border-width: var(--ui-modal-border-width) !default;
+$modal-footer-border-color: var(--ui-modal-border-color) !default;
+
 $modal-dialog-scrollable-gap: $spacing !default;
 $modal-dialog-centered-gap: $spacing !default;
 
-$modal-content-color: $text-color !default;
-$modal-content-background-color: $white !default;
-$modal-content-border-size: $border-size !default;
-$modal-content-border-color: $border-color !default;
-$modal-content-border-radius: $border-radius !default;
-$modal-content-box-shadow: $shadow-lg !default;
-
-$modal-backdrop-background-color: fade($black, .5) !default;
-
-$modal-header-padding-x: $modal-padding-x !default;
-$modal-header-padding-y: $modal-padding-y !default;
-$modal-title-line-height: map-get($line-heights, base) !default;
-$modal-body-padding-x: $modal-padding-x !default;
-$modal-body-padding-y: $modal-padding-y !default;
-$modal-footer-padding-x: $modal-padding-x !default;
-$modal-footer-padding-y: $modal-padding-y !default;
-$modal-footer-child-margin-y: $spacing * .25 !default;
-$modal-footer-child-margin-x: $spacing * .25 !default;
+$modal-content-box-shadow: var(--ui-shadow-lg) !default;
+$modal-backdrop-bg: rgba(0, 0, 0, .5) !default;
 
 // nav
 $nav-link-padding-x: $spacing !default;
 $nav-link-padding-y: $spacing * .5 !default;
-$nav-link-border-radius: $border-radius !default;
-$nav-link-focus-background-color: tint($link-color, 90%) !default;
-$nav-link-disabled-opacity: $disabled-opacity !default;
+$nav-link-color: var(--ui-link-color) !default;
+$nav-link-hover-color: var(--ui-link-hover-color) !default;
+$nav-link-focus-box-shadow: 0 0 0 var(--ui-focus-ring-width) var(--ui-focus-ring-color) !default;
+$nav-link-disabled-color: var(--ui-secondary-color) !default;
 
-$nav-tabs-border-size: $border-size !default;
-$nav-tabs-border-color: $border-color !default;
-$nav-tabs-nav-link-active-color: $text-color !default;
-$nav-tabs-nav-link-active-background-color: $white !default;
-$nav-tabs-nav-link-active-border-color: $link-color !default;
+$nav-tabs-border-color: var(--ui-border-color) !default;
+$nav-tabs-border-width: var(--ui-border-width) !default;
+$nav-tabs-border-radius: var(--ui-border-radius) !default;
+$nav-tabs-link-hover-border-color: var(--ui-border-color-translucent) var(--ui-border-color-translucent) !default;
+$nav-tabs-link-active-color: var(--ui-emphasis-color) !default;
+$nav-tabs-link-active-bg: var(--ui-body-bg) !default;
+$nav-tabs-link-active-border-color: var(--ui-border-color) var(--ui-border-color) !default;
 
-$nav-pills-nav-link-active-background-color: $link-color !default;
-$nav-pills-nav-link-active-focus-background-color: tint($nav-pills-nav-link-active-background-color, 30%) !default;
+$nav-pills-border-radius: var(--ui-border-radius) !default;
+$nav-pills-link-active-color: var(--ui-primary-contrast) !default;
+$nav-pills-link-active-bg: var(--ui-primary) !default;
+
+$nav-underline-gap: $spacing !default;
+$nav-underline-border-width: .125rem !default;
+$nav-underline-link-active-color: var(--ui-emphasis-color) !default;
 
 // navbar
-$navbar-padding-x: $spacing * .5 !default;
+$navbar-padding-x: 0 !default;
 $navbar-padding-y: $spacing * .5 !default;
+$navbar-color: rgba(var(--ui-emphasis-color-rgb), .6) !default;
+$navbar-hover-color: rgba(var(--ui-emphasis-color-rgb), .9) !default;
+$navbar-active-color: var(--ui-emphasis-color) !default;
+$navbar-disabled-color: rgba(var(--ui-emphasis-color-rgb), .3) !default;
+$navbar-brand-color: #{$navbar-active-color} !default;
+$navbar-brand-hover-color: #{$navbar-active-color} !default;
+$navbar-text-color: var(--ui-secondary-color) !default;
 
-$navbar-nav-link-padding-x: $navbar-padding-x !default;
-$navbar-nav-link-disabled-opacity: $disabled-opacity !default;
-$navbar-brand-padding-y: $spacing * .25 !default;
-$navbar-brand-margin-right: $spacing !default;
+$navbar-nav-link-padding-x: $spacing * .5 !default;
+
 $navbar-brand-font-size: $font-size-lg !default;
-$navbar-text-padding-y: $navbar-padding-y !default;
+$nav-link-height: ($font-size * map-get($line-heights, base)) + ($nav-link-padding-y * 2) !default;
+$navbar-brand-height: $navbar-brand-font-size * map-get($line-heights, base) !default;
+$navbar-brand-padding-y: ($nav-link-height - $navbar-brand-height) * .5 !default;
+$navbar-brand-margin-end: $spacing !default;
+
 $navbar-nav-scroll-height: 75vh !default;
 
-$navbar-toggler-padding-x: $navbar-padding-x !default;
+$navbar-toggler-padding-x: $spacing * .75 !default;
 $navbar-toggler-padding-y: $spacing * .25 !default;
 $navbar-toggler-font-size: $font-size-lg !default;
-$navbar-toggler-border-size: $border-size !default;
-$navbar-toggler-border-radius: $border-radius !default;
-$navbar-toggler-icon-size: 1.5em !default;
-
-$navbar-light-color: $black !default;
-$navbar-light-navbar-brand-color: $navbar-light-color !default;
-$navbar-light-nav-link-color: fade($navbar-light-color, .7) !default;
-$navbar-light-nav-link-hover-color: fade($navbar-light-color, .9) !default;
-$navbar-light-nav-link-focus-color: $navbar-light-color !default;
-$navbar-light-nav-link-focus-background-color: fade($navbar-light-color, .1) !default;
-$navbar-light-nav-link-active-color: $navbar-light-color !default;
-$navbar-light-nav-text-color: map-get($color-variants, dark) !default;
-$navbar-light-navbar-toggler-focus-background-color: $navbar-light-nav-link-focus-background-color !default;
-$navbar-light-navbar-toggler-icon-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='#{svg-color($navbar-light-color)}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !default;
-
-$navbar-dark-color: $white !default;
-$navbar-dark-navbar-brand-color: $navbar-dark-color !default;
-$navbar-dark-nav-link-color: fade($navbar-dark-color, .7) !default;
-$navbar-dark-nav-link-hover-color: fade($navbar-dark-color, .9) !default;
-$navbar-dark-nav-link-focus-color: $navbar-dark-color !default;
-$navbar-dark-nav-link-focus-background-color: fade($navbar-dark-color, .1) !default;
-$navbar-dark-nav-link-active-color: $navbar-dark-color !default;
-$navbar-dark-nav-text-color: map-get($color-variants, light) !default;
-$navbar-dark-navbar-toggler-focus-background-color: $navbar-dark-nav-link-focus-background-color !default;
-$navbar-dark-navbar-toggler-icon-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='#{svg-color($navbar-dark-color)}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !default;
+$navbar-toggler-border-color: rgba(var(--ui-emphasis-color-rgb), .15) !default;
+$navbar-toggler-border-width: var(--ui-border-width) !default;
+$navbar-toggler-border-radius: var(--ui-border-radius) !default;
+$navbar-toggler-focus-box-shadow: 0 0 0 var(--ui-focus-ring-width) !default;
+$navbar-toggler-icon-width: 1.5em !default;
+$navbar-toggler-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23000' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !default;
 
 // offcanvas
 $offcanvas-horizontal-width: 400px !default;
@@ -335,46 +273,45 @@ $offcanvas-vertical-height: 30vh !default;
 
 $offcanvas-padding-x: $spacing !default;
 $offcanvas-padding-y: $spacing !default;
-$offcanvas-color: $text-color !default;
-$offcanvas-background-color: $white !default;
-$offcanvas-border-size: $border-size !default;
-$offcanvas-border-color: $border-color !default;
-
-$offcanvas-backdrop-background-color: fade($black, .5) !default;
-
-$offcanvas-header-padding-x: $offcanvas-padding-x !default;
-$offcanvas-header-padding-y: $offcanvas-padding-y !default;
+$offcanvas-color: var(--ui-body-color) !default;
+$offcanvas-bg: var(--ui-body-bg) !default;
+$offcanvas-border-width: var(--ui-border-width) !default;
+$offcanvas-border-color: var(--ui-border-color) !default;
 $offcanvas-title-line-height: map-get($line-heights, base) !default;
-$offcanvas-body-padding-x: $offcanvas-padding-x !default;
-$offcanvas-body-padding-y: $offcanvas-padding-y !default;
+$offcanvas-backdrop-bg: rgba(0, 0, 0, .5) !default;
 
 // pagination
-$pagination-border-radius: $border-radius !default;
+$pagination-padding-x: $spacing * .75 !default;
+$pagination-padding-y: $spacing * .25 !default;
+$pagination-font-size: $font-size !default;
+$pagination-bg: var(--ui-body-bg) !default;
+$pagination-color: var(--ui-link-color) !default;
+$pagination-border-width: var(--ui-border-width) !default;
+$pagination-border-color: var(--ui-border-color) !default;
+$pagination-border-radius: var(--ui-border-radius) !default;
 
-$page-link-padding-x: $spacing * .5 !default;
-$page-link-padding-y: $spacing * .5 !default;
-$page-link-background-color: map-get($color-variants, secondary) !default;
-$page-link-color: text-color($page-link-background-color) !default;
-$page-link-border-size: $border-size !default;
-$page-link-border-color: $border-color !default;
-$page-link-hover-background-color: shade($page-link-background-color, 20%) !default;
-$page-link-focus-background-color: tint($page-link-background-color, 20%) !default;
-$page-link-focus-box-shadow: $shadow-sm !default;
-$page-link-active-box-shadow: $shadow !default;
+$pagination-hover-color: var(--ui-link-hover-color) !default;
+$pagination-hover-bg: var(--ui-tertiary-bg) !default;
 
-$page-item-active-background-color: shade($page-link-background-color, 30%) !default;
-$page-item-active-focus-background-color: shade($page-link-background-color, 20%) !default;
-$page-item-disabled-opacity: $disabled-opacity !default;
+$pagination-focus-color: var(--ui-link-hover-color) !default;
+$pagination-focus-bg: var(--ui-secondary-bg) !default;
+$pagination-focus-box-shadow: 0 0 0 var(--ui-focus-ring-width) var(--ui-focus-ring-color) !default;
+
+$pagination-active-color: var(--ui-primary-contrast) !default;
+$pagination-active-bg: var(--ui-primary) !default;
+$pagination-active-border-color: var(--ui-primary) !default;
+
+$pagination-disabled-color: var(--ui-secondary-color) !default;
+$pagination-disabled-bg: var(--ui-secondary-bg) !default;
+$pagination-disabled-border-color: var(--ui-border-color) !default;
 
 $pagination-sm-padding-x: $spacing * .5 !default;
 $pagination-sm-padding-y: $spacing * .25 !default;
 $pagination-sm-font-size: $font-size-sm !default;
-$pagination-sm-line-height: map-get($line-heights, base) !default;
 
 $pagination-lg-padding-x: $spacing * 1.5 !default;
 $pagination-lg-padding-y: $spacing * .75 !default;
 $pagination-lg-font-size: $font-size-lg !default;
-$pagination-lg-line-height: map-get($line-heights, base) !default;
 
 // placeholder
 $placeholder-opacity-max: .5 !default;
@@ -385,72 +322,73 @@ $popover-max-width: 276px !default;
 $popover-padding-x: $spacing * .5 !default;
 $popover-padding-y: $spacing !default;
 $popover-font-size: $font-size-sm !default;
-$popover-background-color: $white !default;
-$popover-border-size: $border-size !default;
-$popover-border-color: $border-color !default;
-$popover-border-radius: $border-radius !default;
-$popover-arrow-size: 1.2rem !default;
+$popover-bg: var(--ui-body-bg) !default;
+$popover-border-width: var(--ui-border-width) !default;
+$popover-border-color: var(--ui-border-color) !default;
+$popover-border-radius: var(--ui-border-radius) !default;
 
 $popover-header-padding-x: $popover-padding-y !default;
 $popover-header-padding-y: $popover-padding-x !default;
-$popover-header-font-size: $font-size !default;
-$popover-header-background-color: fade($black, .05) !default;
+$popover-header-font-size: var(--ui-body-font-size) !default;
+$popover-header-bg: var(--ui-secondary-bg) !default;
 
 $popover-body-padding-x: $popover-padding-y !default;
 $popover-body-padding-y: $popover-padding-x !default;
-$popover-body-color: map-get($color-variants, dark) !default;
+$popover-body-color: var(--ui-body-color) !default;
+
+$popover-arrow-width: 1rem !default;
+$popover-arrow-height: .5rem !default;
 
 // progress
 $progress-height: 1rem !default;
 $progress-font-size: $font-size-xs !default;
-$progress-background-color: tint($gray-light, 50%) !default;
-$progress-border-radius: $border-radius !default;
-$progress-bar-color: $white !default;
-$progress-bar-background-color: map-get($color-variants, primary) !default;
+$progress-bg: var(--ui-secondary-bg) !default;
+$progress-border-radius: var(--ui-border-radius) !default;
+$progress-bar-color: var(--ui-white) !default;
+$progress-bar-bg: var(--ui-primary) !default;
 
 $progress-bar-striped-background-image: linear-gradient(-45deg, transparent 50%, fade($white, .15) 50%, fade($white, .15) 70%, transparent 70%) !default;
 $progress-bar-striped-background-size-x: 2rem !default;
 $progress-bar-striped-background-size-y: 1rem !default;
 
-$progress-bar-vertical-width: 1rem !default;
-$progress-bar-vertical-height: 200px !default;
+$progress-vertical-width: 1rem !default;
+$progress-vertical-height: 200px !default;
 
 // spinner
-$spinner-size: 2em !default;
-$spinner-sm-size: 1em !default;
-
-$spinner-border-line-height: map-get($line-heights, base) !default;
+$spinner-width: 2em !default;
+$spinner-height: $spinner-width !default;
+$spinner-vertical-align: text-bottom !default;
 $spinner-border-width: .25em !default;
-$spinner-border-sm-width: .2em !default;
+$spinner-animation-speed: $animation-time !default;
+
+$spinner-width-sm: 1em !default;
+$spinner-height-sm: $spinner-width-sm !default;
+$spinner-border-width-sm: .2em !default;
 
 // toast
-$toast-width: 350px !default;
+$toast-max-width: 350px !default;
 $toast-padding-x: $spacing * .75 !default;
 $toast-padding-y: $spacing * .75 !default;
 $toast-margin-bottom: $spacing !default;
 $toast-font-size: $font-size-sm !default;
-$toast-color: $text-color !default;
-$toast-background-color: fade($white, .85) !default;
-$toast-border-size: $border-size !default;
-$toast-border-color: $border-color !default;
-$toast-border-radius: $border-radius !default;
+$toast-bg: rgba(var(--ui-body-bg-rgb), .85) !default;
+$toast-border-width: var(--ui-border-width) !default;
+$toast-border-color: var(--ui-border-color-translucent) !default;
+$toast-border-radius: var(--ui-border-radius) !default;
 $toast-backdrop-filter: blur(10px) !default;
 
-$toast-header-padding-x: $toast-padding-x !default;
-$toast-header-padding-y: $spacing * .5 !default;
-$toast-header-color: map-get($color-variants, dark) !default;
-$toast-header-background-color: fade($white, .85) !default;
-$toast-body-padding-x: $toast-padding-x !default;
-$toast-body-padding-y: $toast-padding-y !default;
+$toast-header-color: var(--ui-secondary-color) !default;
+$toast-header-bg: rgba(var(--ui-body-bg-rgb), .85) !default;
+$toast-header-border-color: $toast-border-color !default;
 
 // tooltip
+$tooltip-max-width: 200px !default;
+$tooltip-padding-x: $spacing * .5 !default;
+$tooltip-padding-y: $spacing * .25 !default;
 $tooltip-font-size: $font-size-sm !default;
-$tooltip-show-opacity: .9 !default;
-$tooltip-arrow-size: .8rem !default;
-
-$tooltip-inner-max-width: 200px !default;
-$tooltip-inner-padding-x: $spacing * .5 !default;
-$tooltip-inner-padding-y: $spacing * .25 !default;
-$tooltip-inner-color: $white !default;
-$tooltip-inner-background-color: $black !default;
-$tooltip-inner-border-radius: $border-radius !default;
+$tooltip-color: var(--ui-body-bg) !default;
+$tooltip-bg: var(--ui-emphasis-color) !default;
+$tooltip-border-radius: var(--ui-border-radius) !default;
+$tooltip-opacity: .9 !default;
+$tooltip-arrow-width: .8rem !default;
+$tooltip-arrow-height: .4rem !default;
