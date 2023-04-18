@@ -17,7 +17,6 @@ It utilizes [fQuery](https://github.com/elusivecodes/fQuery) for DOM manipulatio
 
 **Dependencies**
 
-- [FrostCore](https://github.com/elusivecodes/FrostCore)
 - [fQuery](https://github.com/elusivecodes/fQuery)
 
 **CSS**
@@ -29,12 +28,11 @@ It utilizes [fQuery](https://github.com/elusivecodes/fQuery) for DOM manipulatio
 **JS**
 
 ```html
-<script type="text/javascript" src="/path/to/frost-core.min.js"></script>
 <script type="text/javascript" src="/path/to/fquery.min.js"></script>
 <script type="text/javascript" src="/path/to/frost-ui.min.js"></script>
 ```
 
-Alternatively, a bundle version is supplied which includes the *FrostCore* and *fQuery* libraries in a single JS file.
+Alternatively, a bundle version is supplied which includes the *fQuery* library in a single JS file.
 
 ```html
 <script type="text/javascript" src="/path/to/frost-ui-bundle.min.js"></script>

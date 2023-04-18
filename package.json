@@ -65,6 +65,6 @@
         "terser": "^5.16.9"
     },
     "dependencies": {
-        "@fr0st/query": "^3.0.1"
+        "@fr0st/query": "^3.0.2"
     }
 }
