@@ -9809,9 +9809,13 @@
     let $;
 
     if (fQuery !== fQuery.query) {
-        globalThis.fQuery = fQuery(globalThis);
+        $ = fQuery(globalThis);
     } else {
         $ = fQuery;
+    }
+
+    if (!('fQuery' in globalThis)) {
+        globalThis.fQuery = $;
     }
 
     const document$1 = $.getContext();

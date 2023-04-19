@@ -3,9 +3,13 @@ import fQuery from '@fr0st/query';
 let $;
 
 if (fQuery !== fQuery.query) {
-    globalThis.fQuery = fQuery(globalThis);
+    $ = fQuery(globalThis);
 } else {
     $ = fQuery;
+}
+
+if (!('fQuery' in globalThis)) {
+    globalThis.fQuery = $;
 }
 
 const document = $.getContext();
