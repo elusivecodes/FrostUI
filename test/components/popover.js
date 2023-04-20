@@ -98,7 +98,7 @@ describe('Popover', function() {
                     popover.dispose();
 
                     for (const key in popover) {
-                        if ($.isObject(popover[key]) && !$.isFunction(popover[key])) {
+                        if ($._isObject(popover[key]) && !$._isFunction(popover[key])) {
                             return false;
                         }
                     }
@@ -117,7 +117,7 @@ describe('Popover', function() {
                     $.remove(popoverToggle1);
 
                     for (const key in popover) {
-                        if ($.isObject(popover[key]) && !$.isFunction(popover[key])) {
+                        if ($._isObject(popover[key]) && !$._isFunction(popover[key])) {
                             return false;
                         }
                     }

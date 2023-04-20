@@ -55,34 +55,12 @@ function calculateScrollbarSize() {
 };
 
 /**
- * Create a wrapped version of a function that executes once per tick.
- * @param {function} callback Callback function to debounce.
- * @return {function} The wrapped function.
- */
-export function debounce(callback) {
-    let running;
-
-    return (...args) => {
-        if (running) {
-            return;
-        }
-
-        running = true;
-
-        Promise.resolve().then((_) => {
-            callback(...args);
-            running = false;
-        });
-    };
-};
-
-/**
  * Generate a unique element ID.
  * @param {string} [prefix] The ID prefix.
  * @return {string} The unique ID.
  */
 export function generateId(prefix) {
-    const id = `${prefix}${$.randomInt(10000, 99999)}`;
+    const id = `${prefix}${$._randomInt(10000, 99999)}`;
 
     if ($.findOne(`#${id}`)) {
         return generateId(prefix);
@@ -150,7 +128,7 @@ export function getScrollbarSize(node = window, scrollNode = document, axis) {
  * @return {object} The computed bounding rectangle of the node.
  */
 export function getScrollContainer(node, scrollNode) {
-    const isWindow = $.isWindow(node);
+    const isWindow = $._isWindow(node);
     const rect = isWindow ?
         getWindowContainer(node) :
         $.rect(node, { offset: true });
@@ -255,14 +233,14 @@ export function initComponent(key, component) {
     $.QuerySet.prototype[key] = function(a, ...args) {
         let settings; let method; let firstResult;
 
-        if ($.isObject(a)) {
+        if ($._isObject(a)) {
             settings = a;
-        } else if ($.isString(a)) {
+        } else if ($._isString(a)) {
             method = a;
         }
 
         for (const [index, node] of this.get().entries()) {
-            if (!$.isElement(node)) {
+            if (!$._isElement(node)) {
                 continue;
             }
 

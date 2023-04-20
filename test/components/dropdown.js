@@ -122,7 +122,7 @@ describe('dropdown', function() {
                     dropdown.dispose();
 
                     for (const key in dropdown) {
-                        if ($.isObject(dropdown[key]) && !$.isFunction(dropdown[key])) {
+                        if ($._isObject(dropdown[key]) && !$._isFunction(dropdown[key])) {
                             return false;
                         }
                     }
@@ -141,7 +141,7 @@ describe('dropdown', function() {
                     $.remove(dropdownToggle1);
 
                     for (const key in dropdown) {
-                        if ($.isObject(dropdown[key]) && !$.isFunction(dropdown[key])) {
+                        if ($._isObject(dropdown[key]) && !$._isFunction(dropdown[key])) {
                             return false;
                         }
                     }

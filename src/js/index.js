@@ -12,7 +12,7 @@ import Tab from './tab/index.js';
 import Toast from './toast/index.js';
 import Tooltip from './tooltip/index.js';
 
-import { addScrollPadding, debounce, generateId, getDataset, getPosition, getScrollbarSize, getScrollContainer, getTarget, getTargetSelector, getTouchPositions, initComponent, resetScrollPadding } from './helpers.js';
+import { addScrollPadding, generateId, getDataset, getPosition, getScrollbarSize, getScrollContainer, getTarget, getTargetSelector, getTouchPositions, initComponent, resetScrollPadding } from './helpers.js';
 import { getClickTarget } from './click-target/index.js';
 
 import './clipboard/index.js';
@@ -34,7 +34,6 @@ export {
     Toast,
     Tooltip,
     addScrollPadding,
-    debounce,
     generateId,
     getClickTarget,
     getDataset,

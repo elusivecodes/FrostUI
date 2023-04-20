@@ -98,7 +98,7 @@ describe('Tooltip', function() {
                     tooltip.dispose();
 
                     for (const key in tooltip) {
-                        if ($.isObject(tooltip[key]) && !$.isFunction(tooltip[key])) {
+                        if ($._isObject(tooltip[key]) && !$._isFunction(tooltip[key])) {
                             return false;
                         }
                     }
@@ -117,7 +117,7 @@ describe('Tooltip', function() {
                     $.remove(tooltipToggle1);
 
                     for (const key in tooltip) {
-                        if ($.isObject(tooltip[key]) && !$.isFunction(tooltip[key])) {
+                        if ($._isObject(tooltip[key]) && !$._isFunction(tooltip[key])) {
                             return false;
                         }
                     }

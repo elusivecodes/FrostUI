@@ -14,7 +14,7 @@ export default class BaseComponent {
     constructor(node, options) {
         this._node = node;
 
-        this._options = $.extend(
+        this._options = $._extend(
             {},
             this.constructor.defaults,
             getDataset(this._node),

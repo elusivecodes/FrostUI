@@ -124,7 +124,7 @@ describe('Carousel', function() {
                     carousel.dispose();
 
                     for (const key in carousel) {
-                        if ($.isObject(carousel[key]) && !$.isFunction(carousel[key])) {
+                        if ($._isObject(carousel[key]) && !$._isFunction(carousel[key])) {
                             return false;
                         }
                     }
@@ -143,7 +143,7 @@ describe('Carousel', function() {
                     $.remove(carousel1);
 
                     for (const key in carousel) {
-                        if ($.isObject(carousel[key]) && !$.isFunction(carousel[key])) {
+                        if ($._isObject(carousel[key]) && !$._isFunction(carousel[key])) {
                             return false;
                         }
                     }

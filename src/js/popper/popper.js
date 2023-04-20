@@ -325,7 +325,7 @@ export default class Popper extends BaseComponent {
             min = Math.round(min);
             max = Math.round(max);
 
-            arrowStyles.left = $.clamp(offset, min, max);
+            arrowStyles.left = $._clamp(offset, min, max);
         } else {
             arrowStyles[placement === 'right' ? 'left' : 'right'] = -Math.floor(arrowBox.width);
 
@@ -352,7 +352,7 @@ export default class Popper extends BaseComponent {
             min = Math.round(min);
             max = Math.round(max);
 
-            arrowStyles.top = $.clamp(offset, min, max);
+            arrowStyles.top = $._clamp(offset, min, max);
         }
 
         $.setStyle(this._options.arrow, arrowStyles);

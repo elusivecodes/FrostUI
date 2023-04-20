@@ -112,7 +112,7 @@ describe('Alert', function() {
                     alert.dispose();
 
                     for (const key in alert) {
-                        if ($.isObject(alert[key]) && !$.isFunction(alert[key])) {
+                        if ($._isObject(alert[key]) && !$._isFunction(alert[key])) {
                             return false;
                         }
                     }
@@ -131,7 +131,7 @@ describe('Alert', function() {
                     $.remove(alert1);
 
                     for (const key in alert) {
-                        if ($.isObject(alert[key]) && !$.isFunction(alert[key])) {
+                        if ($._isObject(alert[key]) && !$._isFunction(alert[key])) {
                             return false;
                         }
                     }

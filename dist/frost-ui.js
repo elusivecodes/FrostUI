@@ -72,33 +72,12 @@
         return scrollbarSize;
     }
     /**
-     * Create a wrapped version of a function that executes once per tick.
-     * @param {function} callback Callback function to debounce.
-     * @return {function} The wrapped function.
-     */
-    function debounce(callback) {
-        let running;
-
-        return (...args) => {
-            if (running) {
-                return;
-            }
-
-            running = true;
-
-            Promise.resolve().then((_) => {
-                callback(...args);
-                running = false;
-            });
-        };
-    }
-    /**
      * Generate a unique element ID.
      * @param {string} [prefix] The ID prefix.
      * @return {string} The unique ID.
      */
     function generateId(prefix) {
-        const id = `${prefix}${$.randomInt(10000, 99999)}`;
+        const id = `${prefix}${$._randomInt(10000, 99999)}`;
 
         if ($.findOne(`#${id}`)) {
             return generateId(prefix);
@@ -162,7 +141,7 @@
      * @return {object} The computed bounding rectangle of the node.
      */
     function getScrollContainer(node, scrollNode) {
-        const isWindow = $.isWindow(node);
+        const isWindow = $._isWindow(node);
         const rect = isWindow ?
             getWindowContainer(node) :
             $.rect(node, { offset: true });
@@ -262,14 +241,14 @@
         $.QuerySet.prototype[key] = function(a, ...args) {
             let settings; let method; let firstResult;
 
-            if ($.isObject(a)) {
+            if ($._isObject(a)) {
                 settings = a;
-            } else if ($.isString(a)) {
+            } else if ($._isString(a)) {
                 method = a;
             }
 
             for (const [index, node] of this.get().entries()) {
-                if (!$.isElement(node)) {
+                if (!$._isElement(node)) {
                     continue;
                 }
 
@@ -314,7 +293,7 @@
         constructor(node, options) {
             this._node = node;
 
-            this._options = $.extend(
+            this._options = $._extend(
                 {},
                 this.constructor.defaults,
                 getDataset(this._node),
@@ -643,14 +622,14 @@
 
                         let mouseDiffX = currentX - startX;
                         if (!this._options.wrap) {
-                            mouseDiffX = $.clamp(
+                            mouseDiffX = $._clamp(
                                 mouseDiffX,
                                 -(this._items.length - 1 - this._index) * scrollX,
                                 this._index * scrollX,
                             );
                         }
 
-                        progress = $.map(Math.abs(mouseDiffX), 0, scrollX, 0, 1);
+                        progress = $._map(Math.abs(mouseDiffX), 0, scrollX, 0, 1);
 
                         do {
                             const lastIndex = index;
@@ -1119,7 +1098,7 @@
         $.addEvent(
             window$1,
             'resize.ui.popper',
-            debounce((_) => {
+            $.debounce((_) => {
                 for (const popper of poppers) {
                     popper.update();
                 }
@@ -1129,9 +1108,9 @@
         $.addEvent(
             document,
             'scroll.ui.popper',
-            debounce((e) => {
+            $.debounce((e) => {
                 for (const popper of poppers) {
-                    if (!$.isDocument(e.target) && !$.hasDescendent(e.target, popper.node)) {
+                    if (!$._isDocument(e.target) && !$.hasDescendent(e.target, popper.node)) {
                         continue;
                     }
 
@@ -1570,7 +1549,7 @@
                 min = Math.round(min);
                 max = Math.round(max);
 
-                arrowStyles.left = $.clamp(offset, min, max);
+                arrowStyles.left = $._clamp(offset, min, max);
             } else {
                 arrowStyles[placement === 'right' ? 'left' : 'right'] = -Math.floor(arrowBox.width);
 
@@ -1597,7 +1576,7 @@
                 min = Math.round(min);
                 max = Math.round(max);
 
-                arrowStyles.top = $.clamp(offset, min, max);
+                arrowStyles.top = $._clamp(offset, min, max);
             }
 
             $.setStyle(this._options.arrow, arrowStyles);
@@ -3475,7 +3454,6 @@
     exports.Toast = Toast;
     exports.Tooltip = Tooltip;
     exports.addScrollPadding = addScrollPadding;
-    exports.debounce = debounce;
     exports.generateId = generateId;
     exports.getClickTarget = getClickTarget;
     exports.getDataset = getDataset;

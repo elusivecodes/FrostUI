@@ -122,7 +122,7 @@ describe('Tab', function() {
                     tab.dispose();
 
                     for (const key in tab) {
-                        if ($.isObject(tab[key]) && !$.isFunction(tab[key])) {
+                        if ($._isObject(tab[key]) && !$._isFunction(tab[key])) {
                             return false;
                         }
                     }
@@ -141,7 +141,7 @@ describe('Tab', function() {
                     $.remove(tabToggle1);
 
                     for (const key in tab) {
-                        if ($.isObject(tab[key]) && !$.isFunction(tab[key])) {
+                        if ($._isObject(tab[key]) && !$._isFunction(tab[key])) {
                             return false;
                         }
                     }

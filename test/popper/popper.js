@@ -86,7 +86,7 @@ describe('Popper', function() {
                     popper.dispose();
 
                     for (const key in popper) {
-                        if ($.isObject(popper[key]) && !$.isFunction(popper[key])) {
+                        if ($._isObject(popper[key]) && !$._isFunction(popper[key])) {
                             return false;
                         }
                     }
@@ -107,7 +107,7 @@ describe('Popper', function() {
                     $.remove(badge);
 
                     for (const key in popper) {
-                        if ($.isObject(popper[key]) && !$.isFunction(popper[key])) {
+                        if ($._isObject(popper[key]) && !$._isFunction(popper[key])) {
                             return false;
                         }
                     }

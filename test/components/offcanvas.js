@@ -97,7 +97,7 @@ describe('Offcanvas', function() {
                     offcanvas.dispose();
 
                     for (const key in offcanvas) {
-                        if ($.isObject(offcanvas[key]) && !$.isFunction(offcanvas[key])) {
+                        if ($._isObject(offcanvas[key]) && !$._isFunction(offcanvas[key])) {
                             return false;
                         }
                     }
@@ -117,7 +117,7 @@ describe('Offcanvas', function() {
                     // $.remove(offcanvas1);
 
                     for (const key in offcanvas) {
-                        if ($.isObject(offcanvas[key]) && !$.isFunction(offcanvas[key])) {
+                        if ($._isObject(offcanvas[key]) && !$._isFunction(offcanvas[key])) {
                             return false;
                         }
                     }

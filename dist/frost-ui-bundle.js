@@ -558,7 +558,7 @@
      * @param {Boolean} [trailing=true] Whether to execute on the trailing edge of the wait period.
      * @return {function} The wrapped function.
      */
-    const debounce$2 = (callback, wait = 0, leading = false, trailing = true) => {
+    const debounce$1 = (callback, wait = 0, leading = false, trailing = true) => {
         let debounceReference;
         let lastRan;
         let newArgs;
@@ -1073,7 +1073,7 @@
         clampPercent: clampPercent,
         compose: compose,
         curry: curry,
-        debounce: debounce$2,
+        debounce: debounce$1,
         diff: diff,
         dist: dist,
         escape: escape,
@@ -1236,6 +1236,127 @@
      */
     function useTimeout(enable = true) {
         config.useTimeout = enable;
+    }
+
+    /**
+     * DOM Helpers
+     */
+
+    /**
+     * Create a wrapped version of a function that executes once per tick.
+     * @param {function} callback Callback function to debounce.
+     * @return {function} The wrapped function.
+     */
+    function debounce(callback) {
+        let running;
+
+        return (...args) => {
+            if (running) {
+                return;
+            }
+
+            running = true;
+
+            Promise.resolve().then((_) => {
+                callback(...args);
+                running = false;
+            });
+        };
+    }
+    /**
+     * Return a RegExp for testing a namespaced event.
+     * @param {string} event The namespaced event.
+     * @return {RegExp} The namespaced event RegExp.
+     */
+    function eventNamespacedRegExp(event) {
+        return new RegExp(`^${escapeRegExp(event)}(?:\\.|$)`, 'i');
+    }
+    /**
+     * Return a single dimensional array of classes (from a multi-dimensional array or space-separated strings).
+     * @param {array} classList The classes to parse.
+     * @return {string[]} The parsed classes.
+     */
+    function parseClasses(classList) {
+        return classList
+            .flat()
+            .flatMap((val) => val.split(' '))
+            .filter((val) => !!val);
+    }
+    /**
+     * Return a data object from a key and value, or a data object.
+     * @param {string|object} key The data key, or an object containing data.
+     * @param {*} [value] The data value.
+     * @param {object} [options] The options for parsing data.
+     * @param {Boolean} [options.json=false] Whether to JSON encode the values.
+     * @return {object} The data object.
+     */
+    function parseData(key, value, { json = false } = {}) {
+        const result = isString(key) ?
+            { [key]: value } :
+            key;
+
+        if (!json) {
+            return result;
+        }
+
+        return Object.fromEntries(
+            Object.entries(result)
+                .map(([key, value]) => [key, isObject(value) || isArray(value) ? JSON.stringify(value) : value]),
+        );
+    }
+    /**
+     * Return a JS primitive from a dataset string.
+     * @param {string} value The input value.
+     * @return {*} The parsed value.
+     */
+    function parseDataset(value) {
+        if (isUndefined(value)) {
+            return value;
+        }
+
+        const lower = value.toLowerCase().trim();
+
+        if (['true', 'on'].includes(lower)) {
+            return true;
+        }
+
+        if (['false', 'off'].includes(lower)) {
+            return false;
+        }
+
+        if (lower === 'null') {
+            return null;
+        }
+
+        if (isNumeric(lower)) {
+            return parseFloat(lower);
+        }
+
+        if (['{', '['].includes(lower.charAt(0))) {
+            try {
+                const result = JSON.parse(value);
+                return result;
+            } catch (e) { }
+        }
+
+        return value;
+    }
+    /**
+     * Return a "real" event from a namespaced event.
+     * @param {string} event The namespaced event.
+     * @return {string} The real event.
+     */
+    function parseEvent(event) {
+        return event.split('.')
+            .shift();
+    }
+    /**
+     * Return an array of events from a space-separated string.
+     * @param {string} events The events.
+     * @return {array} The parsed events.
+     */
+    function parseEvents(events) {
+        return events.split(' ');
     }
 
     /**
@@ -2128,127 +2249,6 @@
     }
 
     Object.setPrototypeOf(AnimationSet.prototype, Promise.prototype);
-
-    /**
-     * DOM Helpers
-     */
-
-    /**
-     * Create a wrapped version of a function that executes once per tick.
-     * @param {function} callback Callback function to debounce.
-     * @return {function} The wrapped function.
-     */
-    function debounce$1(callback) {
-        let running;
-
-        return (...args) => {
-            if (running) {
-                return;
-            }
-
-            running = true;
-
-            Promise.resolve().then((_) => {
-                callback(...args);
-                running = false;
-            });
-        };
-    }
-    /**
-     * Return a RegExp for testing a namespaced event.
-     * @param {string} event The namespaced event.
-     * @return {RegExp} The namespaced event RegExp.
-     */
-    function eventNamespacedRegExp(event) {
-        return new RegExp(`^${escapeRegExp(event)}(?:\\.|$)`, 'i');
-    }
-    /**
-     * Return a single dimensional array of classes (from a multi-dimensional array or space-separated strings).
-     * @param {array} classList The classes to parse.
-     * @return {string[]} The parsed classes.
-     */
-    function parseClasses(classList) {
-        return classList
-            .flat()
-            .flatMap((val) => val.split(' '))
-            .filter((val) => !!val);
-    }
-    /**
-     * Return a data object from a key and value, or a data object.
-     * @param {string|object} key The data key, or an object containing data.
-     * @param {*} [value] The data value.
-     * @param {object} [options] The options for parsing data.
-     * @param {Boolean} [options.json=false] Whether to JSON encode the values.
-     * @return {object} The data object.
-     */
-    function parseData(key, value, { json = false } = {}) {
-        const result = isString(key) ?
-            { [key]: value } :
-            key;
-
-        if (!json) {
-            return result;
-        }
-
-        return Object.fromEntries(
-            Object.entries(result)
-                .map(([key, value]) => [key, isObject(value) || isArray(value) ? JSON.stringify(value) : value]),
-        );
-    }
-    /**
-     * Return a JS primitive from a dataset string.
-     * @param {string} value The input value.
-     * @return {*} The parsed value.
-     */
-    function parseDataset(value) {
-        if (isUndefined(value)) {
-            return value;
-        }
-
-        const lower = value.toLowerCase().trim();
-
-        if (['true', 'on'].includes(lower)) {
-            return true;
-        }
-
-        if (['false', 'off'].includes(lower)) {
-            return false;
-        }
-
-        if (lower === 'null') {
-            return null;
-        }
-
-        if (isNumeric(lower)) {
-            return parseFloat(lower);
-        }
-
-        if (['{', '['].includes(lower.charAt(0))) {
-            try {
-                const result = JSON.parse(value);
-                return result;
-            } catch (e) { }
-        }
-
-        return value;
-    }
-    /**
-     * Return a "real" event from a namespaced event.
-     * @param {string} event The namespaced event.
-     * @return {string} The real event.
-     */
-    function parseEvent(event) {
-        return event.split('.')
-            .shift();
-    }
-    /**
-     * Return an array of events from a space-separated string.
-     * @param {string} events The events.
-     * @return {array} The parsed events.
-     */
-    function parseEvents(events) {
-        return events.split(' ');
-    }
 
     /**
      * DOM Create
@@ -4240,11 +4240,11 @@
 
             Object.defineProperty(event, 'currentTarget', {
                 value: delegate,
-                configurable: true
+                configurable: true,
             });
             Object.defineProperty(event, 'delegateTarget', {
                 value: node,
-                configurable: true
+                configurable: true,
             });
 
             return callback(event);
@@ -4260,13 +4260,13 @@
      * @param {Boolean} [options.passive] Whether to use passive event listeners.
      * @return {DOM~eventCallback} The mouse drag event callback.
      */
-    function mouseDragFactory(down, move, up, { debounce = true, passive = true, touches = 1 } = {}) {
-        if (move && debounce) {
-            move = debounce$1(move);
+    function mouseDragFactory(down, move, up, { debounce: debounce$1 = true, passive = true, touches = 1 } = {}) {
+        if (move && debounce$1) {
+            move = debounce(move);
 
             // needed to make sure up callback executes after final move callback
             if (up) {
-                up = debounce$1(up);
+                up = debounce(up);
             }
         }
 
@@ -9562,7 +9562,6 @@
     }
 
     Object.assign(query, {
-        ..._,
         BORDER_BOX,
         CONTENT_BOX,
         MARGIN_BOX,
@@ -9605,6 +9604,7 @@
         createRange,
         createText,
         css: css$1,
+        debounce,
         delete: _delete,
         detach: detach$1,
         distTo: distTo$1,
@@ -9776,6 +9776,10 @@
         wrapSelection: wrapSelection$1,
     });
 
+    for (const [key, value] of Object.entries(_)) {
+        query[`_${key}`] = value;
+    }
+
     let _$;
 
     /**
@@ -9874,33 +9878,12 @@
         return scrollbarSize;
     }
     /**
-     * Create a wrapped version of a function that executes once per tick.
-     * @param {function} callback Callback function to debounce.
-     * @return {function} The wrapped function.
-     */
-    function debounce(callback) {
-        let running;
-
-        return (...args) => {
-            if (running) {
-                return;
-            }
-
-            running = true;
-
-            Promise.resolve().then((_) => {
-                callback(...args);
-                running = false;
-            });
-        };
-    }
-    /**
      * Generate a unique element ID.
      * @param {string} [prefix] The ID prefix.
      * @return {string} The unique ID.
      */
     function generateId(prefix) {
-        const id = `${prefix}${$.randomInt(10000, 99999)}`;
+        const id = `${prefix}${$._randomInt(10000, 99999)}`;
 
         if ($.findOne(`#${id}`)) {
             return generateId(prefix);
@@ -9964,7 +9947,7 @@
      * @return {object} The computed bounding rectangle of the node.
      */
     function getScrollContainer(node, scrollNode) {
-        const isWindow = $.isWindow(node);
+        const isWindow = $._isWindow(node);
         const rect = isWindow ?
             getWindowContainer(node) :
             $.rect(node, { offset: true });
@@ -10064,14 +10047,14 @@
         $.QuerySet.prototype[key] = function(a, ...args) {
             let settings; let method; let firstResult;
 
-            if ($.isObject(a)) {
+            if ($._isObject(a)) {
                 settings = a;
-            } else if ($.isString(a)) {
+            } else if ($._isString(a)) {
                 method = a;
             }
 
             for (const [index, node] of this.get().entries()) {
-                if (!$.isElement(node)) {
+                if (!$._isElement(node)) {
                     continue;
                 }
 
@@ -10116,7 +10099,7 @@
         constructor(node, options) {
             this._node = node;
 
-            this._options = $.extend(
+            this._options = $._extend(
                 {},
                 this.constructor.defaults,
                 getDataset(this._node),
@@ -10445,14 +10428,14 @@
 
                         let mouseDiffX = currentX - startX;
                         if (!this._options.wrap) {
-                            mouseDiffX = $.clamp(
+                            mouseDiffX = $._clamp(
                                 mouseDiffX,
                                 -(this._items.length - 1 - this._index) * scrollX,
                                 this._index * scrollX,
                             );
                         }
 
-                        progress = $.map(Math.abs(mouseDiffX), 0, scrollX, 0, 1);
+                        progress = $._map(Math.abs(mouseDiffX), 0, scrollX, 0, 1);
 
                         do {
                             const lastIndex = index;
@@ -10921,7 +10904,7 @@
         $.addEvent(
             window$1,
             'resize.ui.popper',
-            debounce((_) => {
+            $.debounce((_) => {
                 for (const popper of poppers) {
                     popper.update();
                 }
@@ -10931,9 +10914,9 @@
         $.addEvent(
             document$1,
             'scroll.ui.popper',
-            debounce((e) => {
+            $.debounce((e) => {
                 for (const popper of poppers) {
-                    if (!$.isDocument(e.target) && !$.hasDescendent(e.target, popper.node)) {
+                    if (!$._isDocument(e.target) && !$.hasDescendent(e.target, popper.node)) {
                         continue;
                     }
 
@@ -11372,7 +11355,7 @@
                 min = Math.round(min);
                 max = Math.round(max);
 
-                arrowStyles.left = $.clamp(offset, min, max);
+                arrowStyles.left = $._clamp(offset, min, max);
             } else {
                 arrowStyles[placement === 'right' ? 'left' : 'right'] = -Math.floor(arrowBox.width);
 
@@ -11399,7 +11382,7 @@
                 min = Math.round(min);
                 max = Math.round(max);
 
-                arrowStyles.top = $.clamp(offset, min, max);
+                arrowStyles.top = $._clamp(offset, min, max);
             }
 
             $.setStyle(this._options.arrow, arrowStyles);
@@ -13277,7 +13260,6 @@
     exports.Toast = Toast;
     exports.Tooltip = Tooltip;
     exports.addScrollPadding = addScrollPadding;
-    exports.debounce = debounce;
     exports.generateId = generateId;
     exports.getClickTarget = getClickTarget;
     exports.getDataset = getDataset;

@@ -311,8 +311,8 @@ select {
 }
 
 select:not([multiple]) > * {
-    background-color: var(--ui-tertiary-bg);
     color: var(--ui-body-color);
+    background-color: var(--ui-tertiary-bg);
 }
 
 [role="button"] {

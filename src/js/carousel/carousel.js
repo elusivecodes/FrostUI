@@ -176,14 +176,14 @@ export default class Carousel extends BaseComponent {
 
                     let mouseDiffX = currentX - startX;
                     if (!this._options.wrap) {
-                        mouseDiffX = $.clamp(
+                        mouseDiffX = $._clamp(
                             mouseDiffX,
                             -(this._items.length - 1 - this._index) * scrollX,
                             this._index * scrollX,
                         );
                     }
 
-                    progress = $.map(Math.abs(mouseDiffX), 0, scrollX, 0, 1);
+                    progress = $._map(Math.abs(mouseDiffX), 0, scrollX, 0, 1);
 
                     do {
                         const lastIndex = index;

@@ -110,7 +110,7 @@ describe('Collapse', function() {
                     collapse.dispose();
 
                     for (const key in collapse) {
-                        if ($.isObject(collapse[key]) && !$.isFunction(collapse[key])) {
+                        if ($._isObject(collapse[key]) && !$._isFunction(collapse[key])) {
                             return false;
                         }
                     }
@@ -129,7 +129,7 @@ describe('Collapse', function() {
                     $.remove(collapse1);
 
                     for (const key in collapse) {
-                        if ($.isObject(collapse[key]) && !$.isFunction(collapse[key])) {
+                        if ($._isObject(collapse[key]) && !$._isFunction(collapse[key])) {
                             return false;
                         }
                     }

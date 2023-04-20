@@ -101,7 +101,7 @@ describe('Modal', function() {
                     modal.dispose();
 
                     for (const key in modal) {
-                        if ($.isObject(modal[key]) && !$.isFunction(modal[key])) {
+                        if ($._isObject(modal[key]) && !$._isFunction(modal[key])) {
                             return false;
                         }
                     }
@@ -121,7 +121,7 @@ describe('Modal', function() {
                     // $.remove(modal1);
 
                     for (const key in modal) {
-                        if ($.isObject(modal[key]) && !$.isFunction(modal[key])) {
+                        if ($._isObject(modal[key]) && !$._isFunction(modal[key])) {
                             return false;
                         }
                     }

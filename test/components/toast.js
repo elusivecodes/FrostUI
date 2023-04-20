@@ -112,7 +112,7 @@ describe('Toast', function() {
                     toast.dispose();
 
                     for (const key in toast) {
-                        if ($.isObject(toast[key]) && !$.isFunction(toast[key])) {
+                        if ($._isObject(toast[key]) && !$._isFunction(toast[key])) {
                             return false;
                         }
                     }
@@ -131,7 +131,7 @@ describe('Toast', function() {
                     $.remove(toast1);
 
                     for (const key in toast) {
-                        if ($.isObject(toast[key]) && !$.isFunction(toast[key])) {
+                        if ($._isObject(toast[key]) && !$._isFunction(toast[key])) {
                             return false;
                         }
                     }

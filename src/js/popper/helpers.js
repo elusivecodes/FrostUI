@@ -1,5 +1,4 @@
 import { $, document, window } from './../globals.js';
-import { debounce } from './../helpers.js';
 
 /**
  * Popper Helpers
@@ -23,7 +22,7 @@ export function addPopper(popper) {
     $.addEvent(
         window,
         'resize.ui.popper',
-        debounce((_) => {
+        $.debounce((_) => {
             for (const popper of poppers) {
                 popper.update();
             }
@@ -33,9 +32,9 @@ export function addPopper(popper) {
     $.addEvent(
         document,
         'scroll.ui.popper',
-        debounce((e) => {
+        $.debounce((e) => {
             for (const popper of poppers) {
-                if (!$.isDocument(e.target) && !$.hasDescendent(e.target, popper.node)) {
+                if (!$._isDocument(e.target) && !$.hasDescendent(e.target, popper.node)) {
                     continue;
                 }
 

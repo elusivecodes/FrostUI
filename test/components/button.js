@@ -107,7 +107,7 @@ describe('Button', function() {
                     button.dispose();
 
                     for (const key in button) {
-                        if ($.isObject(button[key]) && !$.isFunction(button[key])) {
+                        if ($._isObject(button[key]) && !$._isFunction(button[key])) {
                             return false;
                         }
                     }
@@ -126,7 +126,7 @@ describe('Button', function() {
                     $.remove(button1);
 
                     for (const key in button) {
-                        if ($.isObject(button[key]) && !$.isFunction(button[key])) {
+                        if ($._isObject(button[key]) && !$._isFunction(button[key])) {
                             return false;
                         }
                     }
