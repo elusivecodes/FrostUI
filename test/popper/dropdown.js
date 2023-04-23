@@ -77,7 +77,7 @@ describe('popper dropdown', function() {
             assert.strictEqual(
                 await exec((_) => {
                     const dropdownToggle = $.findOne('#dropdownToggle');
-                    $.setDataset(dropdownToggle, 'ui-placement', 'top');
+                    $.setDataset(dropdownToggle, { uiPlacement: 'top' });
                     const dropdown = UI.Dropdown.init(dropdownToggle, {
                         duration: 0,
                     });
@@ -120,7 +120,7 @@ describe('popper dropdown', function() {
             assert.strictEqual(
                 await exec((_) => {
                     const dropdownToggle = $.findOne('#dropdownToggle');
-                    $.setDataset(dropdownToggle, 'ui-position', 'center');
+                    $.setDataset(dropdownToggle, { uiPosition: 'center' });
                     const dropdown = UI.Dropdown.init(dropdownToggle, {
                         duration: 0,
                     });
@@ -917,7 +917,7 @@ describe('popper dropdown', function() {
                 await exec((_) => {
                     $.setScrollY(document, 1135);
                     const dropdownToggle = $.findOne('#dropdownToggle');
-                    $.setDataset(dropdownToggle, 'ui-fixed', true);
+                    $.setDataset(dropdownToggle, { uiFixed: true });
                     const dropdown = UI.Dropdown.init(dropdownToggle, {
                         duration: 0,
                     });
@@ -1052,7 +1052,7 @@ describe('popper dropdown', function() {
             assert.strictEqual(
                 await exec((_) => {
                     const dropdownToggle = $.findOne('#dropdownToggle');
-                    $.setDataset(dropdownToggle, 'ui-spacing', 50);
+                    $.setDataset(dropdownToggle, { uiSpacing: 50 });
                     const dropdown = UI.Dropdown.init(dropdownToggle, {
                         duration: 0,
                     });
@@ -1183,7 +1183,7 @@ describe('popper dropdown', function() {
                 await exec((_) => {
                     $.setScrollX(document, 1220);
                     const dropdownToggle = $.findOne('#dropdownToggle');
-                    $.setDataset(dropdownToggle, 'ui-min-contact', 10);
+                    $.setDataset(dropdownToggle, { uiMinContact: 10 });
                     const dropdown = UI.Dropdown.init(dropdownToggle, {
                         duration: 0,
                     });

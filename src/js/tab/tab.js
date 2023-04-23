@@ -35,7 +35,7 @@ export default class Tab extends BaseComponent {
      */
     hide() {
         if (
-            $.getDataset(this._target, 'ui-animating') ||
+            $.getDataset(this._target, 'uiAnimating') ||
             !$.hasClass(this._target, 'active') ||
             !$.triggerOne(this._node, 'hide.ui.tab')
         ) {
@@ -50,7 +50,7 @@ export default class Tab extends BaseComponent {
      */
     show() {
         if (
-            $.getDataset(this._target, 'ui-animating') ||
+            $.getDataset(this._target, 'uiAnimating') ||
             $.hasClass(this._target, 'active') ||
             !$.triggerOne(this._node, 'show.ui.tab')
         ) {
@@ -86,18 +86,18 @@ export default class Tab extends BaseComponent {
      * Hide the current Tab (forcefully).
      */
     _hide() {
-        $.setDataset(this._target, 'ui-animating', true);
+        $.setDataset(this._target, { uiAnimating: true });
 
         $.fadeOut(this._target, {
             duration: this._options.duration,
         }).then((_) => {
             $.removeClass(this._target, 'active');
             $.removeClass(this._node, 'active');
-            $.removeDataset(this._target, 'ui-animating');
-            $.setAttribute(this._node, 'aria-selected', false);
+            $.removeDataset(this._target, 'uiAnimating');
+            $.setAttribute(this._node, { 'aria-selected': false });
             $.triggerEvent(this._node, 'hidden.ui.tab');
         }).catch((_) => {
-            $.removeDataset(this._target, 'ui-animating');
+            $.removeDataset(this._target, 'uiAnimating');
         });
     }
 
@@ -105,7 +105,7 @@ export default class Tab extends BaseComponent {
      * Show the current Tab (forcefully).
      */
     _show() {
-        $.setDataset(this._target, 'ui-animating', true);
+        $.setDataset(this._target, { uiAnimating: true });
 
         $.addClass(this._target, 'active');
         $.addClass(this._node, 'active');
@@ -113,11 +113,11 @@ export default class Tab extends BaseComponent {
         $.fadeIn(this._target, {
             duration: this._options.duration,
         }).then((_) => {
-            $.setAttribute(this._node, 'aria-selected', true);
-            $.removeDataset(this._target, 'ui-animating');
+            $.setAttribute(this._node, { 'aria-selected': true });
+            $.removeDataset(this._target, 'uiAnimating');
             $.triggerEvent(this._node, 'shown.ui.tab');
         }).catch((_) => {
-            $.removeDataset(this._target, 'ui-animating');
+            $.removeDataset(this._target, 'uiAnimating');
         });
     }
 }

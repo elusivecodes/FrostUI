@@ -132,7 +132,7 @@ describe('Tooltip', function() {
             assert.strictEqual(
                 await exec((_) => {
                     const tooltipToggle1 = $.findOne('#tooltipToggle1');
-                    $.setAttribute(tooltipToggle1, 'title', 'Test');
+                    $.setAttribute(tooltipToggle1, { title: 'Test' });
                     const tooltip = UI.Tooltip.init(tooltipToggle1);
                     tooltip.dispose();
 
@@ -634,7 +634,7 @@ describe('Tooltip', function() {
                 assert.strictEqual(
                     await exec((_) => {
                         const tooltipToggle1 = $.findOne('#tooltipToggle1');
-                        $.setDataset(tooltipToggle1, 'ui-title', 'Test');
+                        $.setDataset(tooltipToggle1, { uiTitle: 'Test' });
                         UI.Tooltip.init(tooltipToggle1).refresh();
                         return $.getHTML(document.body);
                     }),
@@ -656,7 +656,7 @@ describe('Tooltip', function() {
                 assert.strictEqual(
                     await exec((_) => {
                         $('#tooltipToggle1')
-                            .setDataset('ui-title', 'Test')
+                            .setDataset({ uiTitle: 'Test' })
                             .tooltip('refresh');
                         return $.getHTML(document.body);
                     }),
@@ -679,7 +679,7 @@ describe('Tooltip', function() {
                 assert.strictEqual(
                     await exec((_) => {
                         $('button')
-                            .setDataset('ui-title', 'Test')
+                            .setDataset({ uiTitle: 'Test' })
                             .tooltip('refresh');
                         return $.getHTML(document.body);
                     }),
@@ -884,7 +884,7 @@ describe('Tooltip', function() {
         it('works with title option (data-ui-title)', async function() {
             await exec((_) => {
                 const tooltipToggle1 = $.findOne('#tooltipToggle1');
-                $.setDataset(tooltipToggle1, 'ui-title', 'Test');
+                $.setDataset(tooltipToggle1, { uiTitle: 'Test' });
                 UI.Tooltip.init(tooltipToggle1).show();
             }).then(waitFor(50)).then(async (_) => {
                 await exec((_) => {
@@ -903,7 +903,7 @@ describe('Tooltip', function() {
         it('works with title option (title)', async function() {
             await exec((_) => {
                 const tooltipToggle1 = $.findOne('#tooltipToggle1');
-                $.setAttribute(tooltipToggle1, 'title', 'Test');
+                $.setAttribute(tooltipToggle1, { title: 'Test' });
                 UI.Tooltip.init(tooltipToggle1).show();
             }).then(waitFor(50)).then(async (_) => {
                 await exec((_) => {
@@ -941,7 +941,7 @@ describe('Tooltip', function() {
         it('prioritizes dataset over setting', async function() {
             await exec((_) => {
                 const tooltipToggle1 = $.findOne('#tooltipToggle1');
-                $.setDataset(tooltipToggle1, 'ui-title', 'Test');
+                $.setDataset(tooltipToggle1, { uiTitle: 'Test' });
                 UI.Tooltip.init(tooltipToggle1, { title: 'Test 2' }).show();
             }).then(waitFor(50)).then(async (_) => {
                 await exec((_) => {
@@ -960,7 +960,7 @@ describe('Tooltip', function() {
         it('prioritizes setting over attribute', async function() {
             await exec((_) => {
                 const tooltipToggle1 = $.findOne('#tooltipToggle1');
-                $.setAttribute(tooltipToggle1, 'title', 'Test 2');
+                $.setAttribute(tooltipToggle1, { title: 'Test 2' });
                 UI.Tooltip.init(tooltipToggle1, { title: 'Test' }).show();
             }).then(waitFor(50)).then(async (_) => {
                 await exec((_) => {
@@ -1001,7 +1001,7 @@ describe('Tooltip', function() {
         it('works with template option (data-ui-template)', async function() {
             await exec((_) => {
                 const tooltipToggle1 = $.findOne('#tooltipToggle1');
-                $.setDataset(tooltipToggle1, 'ui-template', '<div class="tooltip" role="tooltip" data-test="Test"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>');
+                $.setDataset(tooltipToggle1, { uiTemplate: '<div class="tooltip" role="tooltip" data-test="Test"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>' });
                 UI.Tooltip.init(tooltipToggle1).show();
             }).then(waitFor(50)).then(async (_) => {
                 await exec((_) => {
@@ -1059,7 +1059,7 @@ describe('Tooltip', function() {
         it('works with customClass option (data-ui-custom-class)', async function() {
             await exec((_) => {
                 const tooltipToggle1 = $.findOne('#tooltipToggle1');
-                $.setDataset(tooltipToggle1, 'ui-custom-class', 'test');
+                $.setDataset(tooltipToggle1, { uiCustomClass: 'test' });
                 UI.Tooltip.init(tooltipToggle1).show();
             }).then(waitFor(50)).then(async (_) => {
                 await exec((_) => {
@@ -1111,7 +1111,7 @@ describe('Tooltip', function() {
         it('works with duration option on show (data-ui-duration)', async function() {
             await exec((_) => {
                 const tooltipToggle1 = $.findOne('#tooltipToggle1');
-                $.setDataset(tooltipToggle1, 'ui-duration', 200);
+                $.setDataset(tooltipToggle1, { uiDuration: 200 });
                 UI.Tooltip.init(tooltipToggle1).show();
             }).then(waitFor(150)).then(async (_) => {
                 assert.strictEqual(
@@ -1158,7 +1158,7 @@ describe('Tooltip', function() {
         it('works with duration option on hide (data-ui-duration)', async function() {
             await exec((_) => {
                 const tooltipToggle1 = $.findOne('#tooltipToggle1');
-                $.setDataset(tooltipToggle1, 'ui-duration', 200);
+                $.setDataset(tooltipToggle1, { uiDuration: 200 });
                 UI.Tooltip.init(tooltipToggle1).show();
             }).then(waitFor(50)).then(async (_) => {
                 await exec((_) => {
@@ -1239,7 +1239,7 @@ describe('Tooltip', function() {
         it('works with html option (data-ui-html)', async function() {
             await exec((_) => {
                 const tooltipToggle1 = $.findOne('#tooltipToggle1');
-                $.setDataset(tooltipToggle1, 'ui-html', true);
+                $.setDataset(tooltipToggle1, { uiHtml: true });
                 UI.Tooltip.init(tooltipToggle1, { title: '<b>Test</b>' }).show();
             }).then(waitFor(50)).then(async (_) => {
                 await exec((_) => {
@@ -1486,7 +1486,7 @@ describe('Tooltip', function() {
         it('works with trigger option (data-ui-trigger)', async function() {
             await exec((_) => {
                 const tooltipToggle1 = $.findOne('#tooltipToggle1');
-                $.setDataset(tooltipToggle1, 'ui-trigger', 'click');
+                $.setDataset(tooltipToggle1, { uiTrigger: 'click' });
                 UI.Tooltip.init(tooltipToggle1);
                 $.triggerEvent(tooltipToggle1, 'click');
             }).then(waitFor(50)).then(async (_) => {
@@ -1561,7 +1561,7 @@ describe('Tooltip', function() {
                 const test = $.create('div', { class: 'test' });
                 $.append(document.body, test);
                 const tooltipToggle1 = $.findOne('#tooltipToggle1');
-                $.setDataset(tooltipToggle1, 'ui-append-to', '.test');
+                $.setDataset(tooltipToggle1, { uiAppendTo: '.test' });
                 UI.Tooltip.init(tooltipToggle1).show();
             }).then(waitFor(50)).then(async (_) => {
                 await exec((_) => {
@@ -1643,7 +1643,7 @@ describe('Tooltip', function() {
         it('works with sanitize option (data-ui-sanitize)', async function() {
             await exec((_) => {
                 const tooltipToggle1 = $.findOne('#tooltipToggle1');
-                $.setDataset(tooltipToggle1, 'ui-sanitize', false);
+                $.setDataset(tooltipToggle1, { uiSanitize: false });
                 UI.Tooltip.init(tooltipToggle1, { title: '<b data-test="Test">Test</b>', html: true }).show();
             }).then(waitFor(50)).then(async (_) => {
                 await exec((_) => {

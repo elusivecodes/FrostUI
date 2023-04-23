@@ -39,14 +39,14 @@ export default class Collapse extends BaseComponent {
      */
     hide() {
         if (
-            $.getDataset(this._node, 'ui-animating') ||
+            $.getDataset(this._node, 'uiAnimating') ||
             !$.hasClass(this._node, 'show') ||
             !$.triggerOne(this._node, 'hide.ui.collapse')
         ) {
             return;
         }
 
-        $.setDataset(this._node, 'ui-animating', true);
+        $.setDataset(this._node, { uiAnimating: true });
         $.addClass(this._triggers, 'collapsed');
         $.addClass(this._triggers, 'collapsing');
 
@@ -56,11 +56,11 @@ export default class Collapse extends BaseComponent {
         }).then((_) => {
             $.removeClass(this._node, 'show');
             $.removeClass(this._triggers, 'collapsing');
-            $.setAttribute(this._triggers, 'aria-expanded', false);
-            $.removeDataset(this._node, 'ui-animating');
+            $.setAttribute(this._triggers, { 'aria-expanded': false });
+            $.removeDataset(this._node, 'uiAnimating');
             $.triggerEvent(this._node, 'hidden.ui.collapse');
         }).catch((_) => {
-            $.removeDataset(this._node, 'ui-animating');
+            $.removeDataset(this._node, 'uiAnimating');
         });
     }
 
@@ -69,7 +69,7 @@ export default class Collapse extends BaseComponent {
      */
     show() {
         if (
-            $.getDataset(this._node, 'ui-animating') ||
+            $.getDataset(this._node, 'uiAnimating') ||
             $.hasClass(this._node, 'show')
         ) {
             return;
@@ -98,7 +98,7 @@ export default class Collapse extends BaseComponent {
             collapse.hide();
         }
 
-        $.setDataset(this._node, 'ui-animating', true);
+        $.setDataset(this._node, { uiAnimating: true });
         $.addClass(this._node, 'show');
         $.removeClass(this._triggers, 'collapsed');
         $.addClass(this._triggers, 'collapsing');
@@ -108,11 +108,11 @@ export default class Collapse extends BaseComponent {
             duration: this._options.duration,
         }).then((_) => {
             $.removeClass(this._triggers, 'collapsing');
-            $.setAttribute(this._triggers, 'aria-expanded', true);
-            $.removeDataset(this._node, 'ui-animating');
+            $.setAttribute(this._triggers, { 'aria-expanded': true });
+            $.removeDataset(this._node, 'uiAnimating');
             $.triggerEvent(this._node, 'shown.ui.collapse');
         }).catch((_) => {
-            $.removeDataset(this._node, 'ui-animating');
+            $.removeDataset(this._node, 'uiAnimating');
         });
     }
 

@@ -328,7 +328,7 @@ describe('Alert', function() {
         it('works with duration option (data-ui-duration)', async function() {
             await exec((_) => {
                 const alert1 = $.findOne('#alert1');
-                $.setDataset(alert1, 'ui-duration', 200);
+                $.setDataset(alert1, { uiDuration: 200 });
                 UI.Alert.init(alert1).close();
             }).then(waitFor(150)).then(async (_) => {
                 assert.strictEqual(

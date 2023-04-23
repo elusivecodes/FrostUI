@@ -70,7 +70,7 @@ describe('popper tooltip', function() {
             assert.strictEqual(
                 await exec((_) => {
                     const tooltipToggle = $.findOne('#tooltipToggle');
-                    $.setDataset(tooltipToggle, 'ui-placement', 'bottom');
+                    $.setDataset(tooltipToggle, { uiPlacement: 'bottom' });
                     const tooltip = UI.Tooltip.init(tooltipToggle, {
                         duration: 0,
                     });
@@ -113,7 +113,7 @@ describe('popper tooltip', function() {
             assert.strictEqual(
                 await exec((_) => {
                     const tooltipToggle = $.findOne('#tooltipToggle');
-                    $.setDataset(tooltipToggle, 'ui-position', 'start');
+                    $.setDataset(tooltipToggle, { uiPosition: 'start' });
                     const tooltip = UI.Tooltip.init(tooltipToggle, {
                         duration: 0,
                     });
@@ -911,7 +911,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     $.setScrollY(document, 1570);
                     const tooltipToggle = $.findOne('#tooltipToggle');
-                    $.setDataset(tooltipToggle, 'ui-fixed', true);
+                    $.setDataset(tooltipToggle, { uiFixed: true });
                     const tooltip = UI.Tooltip.init(tooltipToggle, {
                         placement: 'top',
                         duration: 0,
@@ -1048,7 +1048,7 @@ describe('popper tooltip', function() {
             assert.strictEqual(
                 await exec((_) => {
                     const tooltipToggle = $.findOne('#tooltipToggle');
-                    $.setDataset(tooltipToggle, 'ui-spacing', 50);
+                    $.setDataset(tooltipToggle, { uiSpacing: 50 });
                     const tooltip = UI.Tooltip.init(tooltipToggle, {
                         duration: 0,
                     });
@@ -1180,7 +1180,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     $.setScrollX(document, 465);
                     const tooltipToggle = $.findOne('#tooltipToggle');
-                    $.setDataset(tooltipToggle, 'ui-min-contact', 10);
+                    $.setDataset(tooltipToggle, { uiMinContact: 10 });
                     const tooltip = UI.Tooltip.init(tooltipToggle, {
                         placement: 'top',
                         duration: 0,

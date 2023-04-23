@@ -34,10 +34,10 @@ export default class Popover extends BaseComponent {
      * Dispose the Popover.
      */
     dispose() {
-        if ($.hasDataset(this._node, 'ui-original-title')) {
-            const title = $.getDataset(this._node, 'ui-original-title');
-            $.setAttribute(this._node, 'title', title);
-            $.removeDataset(this._node, 'ui-original-title');
+        if ($.hasDataset(this._node, 'uiOriginalTitle')) {
+            const title = $.getDataset(this._node, 'uiOriginalTitle');
+            $.setAttribute(this._node, { title });
+            $.removeDataset(this._node, 'uiOriginalTitle');
         }
 
         if (this._popper) {
@@ -95,14 +95,14 @@ export default class Popover extends BaseComponent {
     hide() {
         if (
             !this._enabled ||
-            $.getDataset(this._popover, 'ui-animating') ||
+            $.getDataset(this._popover, 'uiAnimating') ||
             !$.isConnected(this._popover) ||
             !$.triggerOne(this._node, 'hide.ui.popover')
         ) {
             return;
         }
 
-        $.setDataset(this._popover, 'ui-animating', true);
+        $.setDataset(this._popover, { uiAnimating: true });
 
         $.fadeOut(this._popover, {
             duration: this._options.duration,
@@ -111,10 +111,10 @@ export default class Popover extends BaseComponent {
             this._popper = null;
 
             $.detach(this._popover);
-            $.removeDataset(this._popover, 'ui-animating');
+            $.removeDataset(this._popover, 'uiAnimating');
             $.triggerEvent(this._node, 'hidden.ui.popover');
         }).catch((_) => {
-            $.removeDataset(this._popover, 'ui-animating');
+            $.removeDataset(this._popover, 'uiAnimating');
         });
     }
 
@@ -124,7 +124,7 @@ export default class Popover extends BaseComponent {
     refresh() {
         if ($.hasAttribute(this._node, 'title')) {
             const originalTitle = $.getAttribute(this._node, 'title');
-            $.setDataset(this._node, 'ui-original-title', originalTitle);
+            $.setDataset(this._node, { uiOriginalTitle: originalTitle });
             $.removeAttribute(this._node, 'title');
         }
 
@@ -133,13 +133,13 @@ export default class Popover extends BaseComponent {
             title = $.getDataset(this._node, 'uiTitle');
         } else if (this._options.title) {
             title = this._options.title;
-        } else if ($.hasDataset(this._node, 'ui-original-title')) {
-            title = $.getDataset(this._node, 'ui-original-title', title);
+        } else if ($.hasDataset(this._node, 'uiOriginalTitle')) {
+            title = $.getDataset(this._node, 'uiOriginalTitle', title);
         }
 
         let content = '';
-        if ($.hasDataset(this._node, 'ui-content')) {
-            content = $.getDataset(this._node, 'ui-content');
+        if ($.hasDataset(this._node, 'uiContent')) {
+            content = $.getDataset(this._node, 'uiContent');
         } else if (this._options.content) {
             content = this._options.content;
         }
@@ -173,24 +173,24 @@ export default class Popover extends BaseComponent {
     show() {
         if (
             !this._enabled ||
-            $.getDataset(this._popover, 'ui-animating') ||
+            $.getDataset(this._popover, 'uiAnimating') ||
             $.isConnected(this._popover) ||
             !$.triggerOne(this._node, 'show.ui.popover')
         ) {
             return;
         }
 
-        $.setDataset(this._popover, 'ui-animating', true);
+        $.setDataset(this._popover, { uiAnimating: true });
         this.refresh();
         this._show();
 
         $.fadeIn(this._popover, {
             duration: this._options.duration,
         }).then((_) => {
-            $.removeDataset(this._popover, 'ui-animating');
+            $.removeDataset(this._popover, 'uiAnimating');
             $.triggerEvent(this._node, 'shown.ui.popover');
         }).catch((_) => {
-            $.removeDataset(this._popover, 'ui-animating');
+            $.removeDataset(this._popover, 'uiAnimating');
         });
     }
 
@@ -284,8 +284,8 @@ export default class Popover extends BaseComponent {
 
         if (!this._options.noAttributes) {
             const id = generateId(this.constructor.DATA_KEY);
-            $.setAttribute(this._popover, 'id', id);
-            $.setAttribute(this._node, 'aria-described-by', id);
+            $.setAttribute(this._popover, { id });
+            $.setAttribute(this._node, { 'aria-described-by': id });
         }
 
         this._popper = new Popper(
@@ -311,9 +311,9 @@ export default class Popover extends BaseComponent {
      * Stop the animations.
      */
     _stop() {
-        if (this._enabled && $.getDataset(this._popover, 'ui-animating')) {
+        if (this._enabled && $.getDataset(this._popover, 'uiAnimating')) {
             $.stop(this._popover);
-            $.removeDataset(this._popover, 'ui-animating');
+            $.removeDataset(this._popover, 'uiAnimating');
         }
     }
 }

@@ -125,10 +125,10 @@ export default class Popper extends BaseComponent {
             );
 
         if (!this._options.noAttributes) {
-            $.setDataset(this._options.reference, 'ui-placement', placement);
+            $.setDataset(this._options.reference, { uiPlacement: placement });
         }
 
-        $.setDataset(this._node, 'ui-placement', placement);
+        $.setDataset(this._node, { uiPlacement: placement });
 
         // get auto position
         const position = this._options.position;
@@ -186,8 +186,8 @@ export default class Popper extends BaseComponent {
         }
 
         // compensate for margins
-        offset.x -= parseInt($.css(this._node, 'margin-left'));
-        offset.y -= parseInt($.css(this._node, 'margin-top'));
+        offset.x -= parseInt($.css(this._node, 'marginLeft'));
+        offset.y -= parseInt($.css(this._node, 'marginTop'));
 
         // corrective positioning
         if (['left', 'right'].includes(placement)) {

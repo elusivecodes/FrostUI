@@ -1947,7 +1947,7 @@ describe('Carousel', function() {
         it('works with interval option (data-ui-interval)', async function() {
             await exec((_) => {
                 const carousel1 = $.findOne('#carousel1');
-                $.setDataset(carousel1, 'ui-interval', 300);
+                $.setDataset(carousel1, { uiInterval: 300 });
                 UI.Carousel.init(carousel1).cycle();
             }).then(waitFor(450)).then(async (_) => {
                 assert.strictEqual(
@@ -2051,7 +2051,7 @@ describe('Carousel', function() {
         it('works with transition option (data-ui-transition)', async function() {
             await exec((_) => {
                 const carousel1 = $.findOne('#carousel1');
-                $.setDataset(carousel1, 'ui-transition', 200);
+                $.setDataset(carousel1, { uiTransition: 200 });
                 UI.Carousel.init(carousel1).cycle();
             }).then(waitFor(150)).then(async (_) => {
                 assert.strictEqual(
@@ -2269,7 +2269,7 @@ describe('Carousel', function() {
         it('works with keyboard option and next (data-ui-keyboard)', async function() {
             await exec((_) => {
                 const carousel1 = $.findOne('#carousel1');
-                $.setDataset(carousel1, 'ui-keyboard', false);
+                $.setDataset(carousel1, { uiKeyboard: false });
                 UI.Carousel.init(carousel1);
                 const event = new KeyboardEvent('keydown', {
                     code: 'ArrowRight',
@@ -2313,7 +2313,7 @@ describe('Carousel', function() {
         it('works with keyboard option and prev (data-ui-keyboard)', async function() {
             await exec((_) => {
                 const carousel1 = $.findOne('#carousel1');
-                $.setDataset(carousel1, 'ui-keyboard', false);
+                $.setDataset(carousel1, { uiKeyboard: false });
                 UI.Carousel.init(carousel1);
                 const event = new KeyboardEvent('keydown', {
                     code: 'ArrowLeft',
@@ -2588,7 +2588,7 @@ describe('Carousel', function() {
         it('works with pause option (data-ui-pause)', async function() {
             await exec((_) => {
                 const carousel1 = $.findOne('#carousel1');
-                $.setDataset(carousel1, 'ui-pause', false);
+                $.setDataset(carousel1, { uiPause: false });
                 UI.Carousel.init(carousel1).cycle();
             }).then(waitFor(200)).then(async (_) => {
                 await exec((_) => {
@@ -2872,7 +2872,7 @@ describe('Carousel', function() {
         it('works with wrap option and next (data-ui-wrap)', async function() {
             await exec((_) => {
                 const carousel1 = $.findOne('#carousel1');
-                $.setDataset(carousel1, 'ui-wrap', false);
+                $.setDataset(carousel1, { uiWrap: false });
                 UI.Carousel.init(carousel1).show(2);
             }).then(waitFor(50)).then(async (_) => {
                 await exec((_) => {
@@ -2921,7 +2921,7 @@ describe('Carousel', function() {
         it('works with wrap option and prev (data-ui-wrap)', async function() {
             await exec((_) => {
                 const carousel1 = $.findOne('#carousel1');
-                $.setDataset(carousel1, 'ui-wrap', false);
+                $.setDataset(carousel1, { uiWrap: false });
                 UI.Carousel.init(carousel1).prev();
             }).then(waitFor(100)).then(async (_) => {
                 assert.strictEqual(
@@ -3198,7 +3198,7 @@ describe('Carousel', function() {
         it('works with swipe option (data-ui-swipe)', async function() {
             await exec((_) => {
                 const carousel1 = $.findOne('#carousel1');
-                $.setDataset(carousel1, 'ui-swipe', false);
+                $.setDataset(carousel1, { uiSwipe: false });
                 UI.Carousel.init(carousel1);
 
                 const downEvent = new MouseEvent('mousedown', {

@@ -13,6 +13,6 @@ export default class Button extends BaseComponent {
         $.toggleClass(this._node, 'active');
 
         const active = $.hasClass(this._node, 'active');
-        $.setAttribute(this._node, 'aria-pressed', active);
+        $.setAttribute(this._node, { 'aria-pressed': active });
     }
 }

@@ -1497,7 +1497,7 @@ describe('dropdown', function() {
         it('works with auto close option (data-ui-auto-close)', async function() {
             await exec((_) => {
                 const dropdownToggle1 = $.findOne('#dropdownToggle1');
-                $.setDataset(dropdownToggle1, 'ui-auto-close', false);
+                $.setDataset(dropdownToggle1, { uiAutoClose: false });
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async (_) => {
                 await exec((_) => {
@@ -1663,7 +1663,7 @@ describe('dropdown', function() {
         it('works with static display option (data-ui-display)', async function() {
             await exec((_) => {
                 const dropdownToggle1 = $.findOne('#dropdownToggle1');
-                $.setDataset(dropdownToggle1, 'ui-display', 'static');
+                $.setDataset(dropdownToggle1, { uiDisplay: 'static' });
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
@@ -1743,7 +1743,7 @@ describe('dropdown', function() {
         it('works with duration option on show (data-ui-duration)', async function() {
             await exec((_) => {
                 const dropdownToggle1 = $.findOne('#dropdownToggle1');
-                $.setDataset(dropdownToggle1, 'ui-duration', 200);
+                $.setDataset(dropdownToggle1, { uiDuration: 200 });
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(150)).then(async (_) => {
                 assert.strictEqual(
@@ -1790,7 +1790,7 @@ describe('dropdown', function() {
         it('works with duration option on hide (data-ui-duration)', async function() {
             await exec((_) => {
                 const dropdownToggle1 = $.findOne('#dropdownToggle1');
-                $.setDataset(dropdownToggle1, 'ui-duration', 200);
+                $.setDataset(dropdownToggle1, { uiDuration: 200 });
                 UI.Dropdown.init(dropdownToggle1).show();
             }).then(waitFor(50)).then(async (_) => {
                 await exec((_) => {

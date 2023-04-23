@@ -29,7 +29,7 @@ $.addEventDelegate(document, 'click.ui.carousel', '[data-ui-slide]', (e) => {
 
     const target = getTarget(e.currentTarget, '.carousel');
     const carousel = Carousel.init(target);
-    const slide = $.getDataset(e.currentTarget, 'ui-slide');
+    const slide = $.getDataset(e.currentTarget, 'uiSlide');
 
     if (slide === 'prev') {
         carousel.prev();
@@ -43,7 +43,7 @@ $.addEventDelegate(document, 'click.ui.carousel', '[data-ui-slide-to]', (e) => {
 
     const target = getTarget(e.currentTarget, '.carousel');
     const carousel = Carousel.init(target);
-    const slideTo = $.getDataset(e.currentTarget, 'ui-slide-to');
+    const slideTo = $.getDataset(e.currentTarget, 'uiSlideTo');
 
     carousel.show(slideTo);
 });

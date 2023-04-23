@@ -1061,7 +1061,7 @@ describe('Modal', function() {
         it('works with duration option on show (data-ui-duration)', async function() {
             await exec((_) => {
                 const modal1 = $.findOne('#modal1');
-                $.setDataset(modal1, 'ui-duration', 200);
+                $.setDataset(modal1, { uiDuration: 200 });
                 UI.Modal.init(modal1).show();
             }).then(waitFor(150)).then(async (_) => {
                 assert.strictEqual(
@@ -1109,7 +1109,7 @@ describe('Modal', function() {
         it('works with duration option on hide (data-ui-duration)', async function() {
             await exec((_) => {
                 const modal1 = $.findOne('#modal1');
-                $.setDataset(modal1, 'ui-duration', 200);
+                $.setDataset(modal1, { uiDuration: 200 });
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async (_) => {
                 await exec((_) => {
@@ -1234,7 +1234,7 @@ describe('Modal', function() {
         it('works with keyboard option (data-ui-keyboard)', async function() {
             await exec((_) => {
                 const modal1 = $.findOne('#modal1');
-                $.setDataset(modal1, 'ui-keyboard', false);
+                $.setDataset(modal1, { uiKeyboard: false });
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async (_) => {
                 await exec((_) => {
@@ -1341,7 +1341,7 @@ describe('Modal', function() {
         it('works with show option (data-ui-show))', async function() {
             await exec((_) => {
                 const modal1 = $.findOne('#modal1');
-                $.setDataset(modal1, 'ui-show', true);
+                $.setDataset(modal1, { uiShow: true });
                 UI.Modal.init(modal1);
             }).then(waitFor(125)).then(async (_) => {
                 assert.strictEqual(
@@ -1452,7 +1452,7 @@ describe('Modal', function() {
         it('works with backdrop option (data-ui-backdrop))', async function() {
             await exec((_) => {
                 const modal1 = $.findOne('#modal1');
-                $.setDataset(modal1, 'ui-backdrop', false);
+                $.setDataset(modal1, { uiBackdrop: false });
                 UI.Modal.init(modal1).show();
             }).then(waitFor(125)).then(async (_) => {
                 assert.strictEqual(
@@ -1733,7 +1733,7 @@ describe('Modal', function() {
     describe('scroll padding', function() {
         it('adds scroll padding (vertical)', async function() {
             await exec((_) => {
-                $.setStyle(document.body, 'height', '2000px');
+                $.setStyle(document.body, { height: '2000px' });
                 const modal1 = $.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async (_) => {
@@ -1744,13 +1744,13 @@ describe('Modal', function() {
             }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
                     await exec((_) => {
-                        return $.getStyle(document.body, 'paddingRight');
+                        return $.getStyle(document.body, 'padding-right');
                     }),
                     '15px',
                 );
                 assert.strictEqual(
                     await exec((_) => {
-                        return $.getStyle('#modalDialog1', 'paddingRight');
+                        return $.getStyle('#modalDialog1', 'padding-right');
                     }),
                     '15px',
                 );
@@ -1759,7 +1759,7 @@ describe('Modal', function() {
 
         it('adds scroll padding (horizontal)', async function() {
             await exec((_) => {
-                $.setStyle(document.body, 'width', '2000px');
+                $.setStyle(document.body, { width: '2000px' });
                 const modal1 = $.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async (_) => {
@@ -1770,13 +1770,13 @@ describe('Modal', function() {
             }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
                     await exec((_) => {
-                        return $.getStyle(document.body, 'paddingBottom');
+                        return $.getStyle(document.body, 'padding-bottom');
                     }),
                     '15px',
                 );
                 assert.strictEqual(
                     await exec((_) => {
-                        return $.getStyle('#modalDialog1', 'paddingBottom');
+                        return $.getStyle('#modalDialog1', 'padding-bottom');
                     }),
                     '15px',
                 );
@@ -1795,13 +1795,13 @@ describe('Modal', function() {
             }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
                     await exec((_) => {
-                        return $.getStyle(document.body, 'paddingRight');
+                        return $.getStyle(document.body, 'padding-right');
                     }),
                     '',
                 );
                 assert.strictEqual(
                     await exec((_) => {
-                        return $.getStyle('#modalDialog1', 'paddingRight');
+                        return $.getStyle('#modalDialog1', 'padding-right');
                     }),
                     '',
                 );
@@ -1820,13 +1820,13 @@ describe('Modal', function() {
             }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
                     await exec((_) => {
-                        return $.getStyle(document.body, 'paddingBottom');
+                        return $.getStyle(document.body, 'padding-bottom');
                     }),
                     '',
                 );
                 assert.strictEqual(
                     await exec((_) => {
-                        return $.getStyle('#modalDialog1', 'paddingBottom');
+                        return $.getStyle('#modalDialog1', 'padding-bottom');
                     }),
                     '',
                 );
@@ -1835,8 +1835,10 @@ describe('Modal', function() {
 
         it('works with existing padding (vertical)', async function() {
             await exec((_) => {
-                $.setStyle(document.body, 'height', '2000px');
-                $.setStyle(document.body, 'paddingRight', '10px');
+                $.setStyle(document.body, {
+                    height: '2000px',
+                    paddingRight: '10px',
+                });
                 const modal1 = $.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async (_) => {
@@ -1847,7 +1849,7 @@ describe('Modal', function() {
             }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
                     await exec((_) => {
-                        return $.getStyle(document.body, 'paddingRight');
+                        return $.getStyle(document.body, 'padding-right');
                     }),
                     '25px',
                 );
@@ -1856,8 +1858,10 @@ describe('Modal', function() {
 
         it('works with existing padding (horizontal)', async function() {
             await exec((_) => {
-                $.setStyle(document.body, 'width', '2000px');
-                $.setStyle(document.body, 'paddingBottom', '10px');
+                $.setStyle(document.body, {
+                    width: '2000px',
+                    paddingBottom: '10px',
+                });
                 const modal1 = $.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async (_) => {
@@ -1868,7 +1872,7 @@ describe('Modal', function() {
             }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
                     await exec((_) => {
-                        return $.getStyle(document.body, 'paddingBottom');
+                        return $.getStyle(document.body, 'padding-bottom');
                     }),
                     '25px',
                 );
@@ -1877,7 +1881,7 @@ describe('Modal', function() {
 
         it('restores scroll padding (vertical)', async function() {
             await exec((_) => {
-                $.setStyle(document.body, 'height', '2000px');
+                $.setStyle(document.body, { height: '2000px' });
                 const modal1 = $.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async (_) => {
@@ -1898,13 +1902,13 @@ describe('Modal', function() {
             }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
                     await exec((_) => {
-                        return $.getStyle(document.body, 'paddingRight');
+                        return $.getStyle(document.body, 'padding-right');
                     }),
                     '',
                 );
                 assert.strictEqual(
                     await exec((_) => {
-                        return $.getStyle('#modalDialog1', 'paddingRight');
+                        return $.getStyle('#modalDialog1', 'padding-right');
                     }),
                     '',
                 );
@@ -1913,7 +1917,7 @@ describe('Modal', function() {
 
         it('restores scroll padding (horizontal)', async function() {
             await exec((_) => {
-                $.setStyle(document.body, 'width', '2000px');
+                $.setStyle(document.body, { width: '2000px' });
                 const modal1 = $.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async (_) => {
@@ -1934,13 +1938,13 @@ describe('Modal', function() {
             }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
                     await exec((_) => {
-                        return $.getStyle(document.body, 'paddingBottom');
+                        return $.getStyle(document.body, 'padding-bottom');
                     }),
                     '',
                 );
                 assert.strictEqual(
                     await exec((_) => {
-                        return $.getStyle('#modalDialog1', 'paddingBottom');
+                        return $.getStyle('#modalDialog1', 'padding-bottom');
                     }),
                     '',
                 );
@@ -1949,8 +1953,10 @@ describe('Modal', function() {
 
         it('restores existing scroll padding to document body (vertical)', async function() {
             await exec((_) => {
-                $.setStyle(document.body, 'height', '2000px');
-                $.setStyle(document.body, 'paddingRight', '10px');
+                $.setStyle(document.body, {
+                    height: '2000px',
+                    paddingRight: '10px',
+                });
                 const modal1 = $.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async (_) => {
@@ -1971,7 +1977,7 @@ describe('Modal', function() {
             }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
                     await exec((_) => {
-                        return $.getStyle(document.body, 'paddingRight');
+                        return $.getStyle(document.body, 'padding-right');
                     }),
                     '10px',
                 );
@@ -1980,8 +1986,10 @@ describe('Modal', function() {
 
         it('restores existing scroll padding to document body (horizontal)', async function() {
             await exec((_) => {
-                $.setStyle(document.body, 'width', '2000px');
-                $.setStyle(document.body, 'paddingBottom', '10px');
+                $.setStyle(document.body, {
+                    width: '2000px',
+                    paddingBottom: '10px',
+                });
                 const modal1 = $.findOne('#modal1');
                 UI.Modal.init(modal1).show();
             }).then(waitFor(50)).then(async (_) => {
@@ -2002,7 +2010,7 @@ describe('Modal', function() {
             }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
                     await exec((_) => {
-                        return $.getStyle(document.body, 'paddingBottom');
+                        return $.getStyle(document.body, 'padding-bottom');
                     }),
                     '10px',
                 );

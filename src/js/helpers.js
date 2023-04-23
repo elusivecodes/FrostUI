@@ -10,21 +10,31 @@ export function addScrollPadding(node = document.body) {
     const scrollSizeY = getScrollbarSize(window, document, 'y');
     const scrollSizeX = getScrollbarSize(window, document, 'x');
 
+    if (!scrollSizeY && !scrollSizeX) {
+        return;
+    }
+
+    const data = {};
+    const style = {};
+
     if (scrollSizeY) {
         const currentPaddingRight = $.getStyle(node, 'paddingRight');
         const paddingRight = $.css(node, 'paddingRight');
 
-        $.setDataset(node, 'ui-padding-right', currentPaddingRight);
-        $.setStyle(node, 'paddingRight', `${scrollSizeY + parseInt(paddingRight)}px`);
+        data.uiPaddingRight = currentPaddingRight;
+        style.paddingRight = `${scrollSizeY + parseInt(paddingRight)}px`;
     }
 
     if (scrollSizeX) {
         const currentPaddingBottom = $.getStyle(node, 'paddingBottom');
         const paddingBottom = $.css(node, 'paddingBottom');
 
-        $.setDataset(node, 'ui-padding-bottom', currentPaddingBottom);
-        $.setStyle(node, 'paddingBottom', `${scrollSizeX + parseInt(paddingBottom)}px`);
+        data.uiPaddingBottom = currentPaddingBottom;
+        style.paddingBottom = `${scrollSizeX + parseInt(paddingBottom)}px`;
     }
+
+    $.setDataset(node, data);
+    $.setStyle(node, style);
 };
 
 /**
@@ -185,7 +195,7 @@ export function getTarget(node, closestSelector) {
  * @return {string} The target selector.
  */
 export function getTargetSelector(node) {
-    return $.getDataset(node, 'ui-target') || $.getAttribute(node, 'href');
+    return $.getDataset(node, 'uiTarget') || $.getAttribute(node, 'href');
 };
 
 /**
@@ -264,11 +274,11 @@ export function initComponent(key, component) {
  * @param {HTMLElement} [node=document.body] The node.
  */
 export function resetScrollPadding(node = document.body) {
-    const paddingRight = $.getDataset(node, 'ui-padding-right');
-    const paddingBottom = $.getDataset(node, 'ui-padding-bottom');
+    const paddingRight = $.getDataset(node, 'uiPaddingRight');
+    const paddingBottom = $.getDataset(node, 'uiPaddingBottom');
 
     $.setStyle(node, { paddingRight, paddingBottom });
 
-    $.removeDataset(node, 'ui-padding-right');
-    $.removeDataset(node, 'ui-padding-bottom');
+    $.removeDataset(node, 'uiPaddingRight');
+    $.removeDataset(node, 'uiPaddingBottom');
 };

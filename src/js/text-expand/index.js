@@ -4,11 +4,11 @@ import { $, document } from './../globals.js';
 $.addEventDelegate(document, 'change.ui.expand input.ui.expand', '.text-expand', (e) => {
     const textArea = e.currentTarget;
 
-    $.setStyle(textArea, 'height', 'inherit');
+    $.setStyle(textArea, { height: 'inherit' });
 
     let newHeight = $.height(textArea, { boxSize: $.SCROLL_BOX });
-    newHeight += parseInt($.css(textArea, 'border-top'));
-    newHeight += parseInt($.css(textArea, 'border-bottom'));
+    newHeight += parseInt($.css(textArea, 'borderTop'));
+    newHeight += parseInt($.css(textArea, 'borderBottom'));
 
-    $.setStyle(textArea, 'height', `${newHeight}px`);
+    $.setStyle(textArea, { height: `${newHeight}px` });
 });

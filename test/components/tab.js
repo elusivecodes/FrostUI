@@ -809,7 +809,7 @@ describe('Tab', function() {
         it('works with duration option on hide (data-ui-duration)', async function() {
             await exec((_) => {
                 const tabToggle1 = $.findOne('#tabToggle1');
-                $.setDataset(tabToggle1, 'ui-duration', 200);
+                $.setDataset(tabToggle1, { uiDuration: 200 });
                 UI.Tab.init(tabToggle1).hide();
             }).then(waitFor(150)).then(async (_) => {
                 assert.strictEqual(
@@ -852,7 +852,7 @@ describe('Tab', function() {
         it('works with duration option on show (data-ui-duration)', async function() {
             await exec((_) => {
                 const tabToggle2 = $.findOne('#tabToggle2');
-                $.setDataset(tabToggle2, 'ui-duration', 200);
+                $.setDataset(tabToggle2, { uiDuration: 200 });
                 UI.Tab.init(tabToggle2).show();
             }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(

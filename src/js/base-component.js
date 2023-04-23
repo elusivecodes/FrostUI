@@ -25,7 +25,7 @@ export default class BaseComponent {
             this.dispose();
         });
 
-        $.setData(this._node, this.constructor.DATA_KEY, this);
+        $.setData(this._node, { [this.constructor.DATA_KEY]: this });
     }
 
     /**

@@ -11,23 +11,23 @@ export default class Alert extends BaseComponent {
      */
     close() {
         if (
-            $.getDataset(this._node, 'ui-animating') ||
+            $.getDataset(this._node, 'uiAnimating') ||
             !$.triggerOne(this._node, 'close.ui.alert')
         ) {
             return;
         }
 
-        $.setDataset(this._node, 'ui-animating', true);
+        $.setDataset(this._node, { uiAnimating: true });
 
         $.fadeOut(this._node, {
             duration: this._options.duration,
         }).then((_) => {
             $.detach(this._node);
-            $.removeDataset(this._node, 'ui-animating');
+            $.removeDataset(this._node, 'uiAnimating');
             $.triggerEvent(this._node, 'closed.ui.alert');
             $.remove(this._node);
         }).catch((_) => {
-            $.removeDataset(this._node, 'ui-animating');
+            $.removeDataset(this._node, 'uiAnimating');
         });
     }
 }

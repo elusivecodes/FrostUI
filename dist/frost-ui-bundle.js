@@ -9835,21 +9835,31 @@
         const scrollSizeY = getScrollbarSize(window$1, document$1, 'y');
         const scrollSizeX = getScrollbarSize(window$1, document$1, 'x');
 
+        if (!scrollSizeY && !scrollSizeX) {
+            return;
+        }
+
+        const data = {};
+        const style = {};
+
         if (scrollSizeY) {
             const currentPaddingRight = $.getStyle(node, 'paddingRight');
             const paddingRight = $.css(node, 'paddingRight');
 
-            $.setDataset(node, 'ui-padding-right', currentPaddingRight);
-            $.setStyle(node, 'paddingRight', `${scrollSizeY + parseInt(paddingRight)}px`);
+            data.uiPaddingRight = currentPaddingRight;
+            style.paddingRight = `${scrollSizeY + parseInt(paddingRight)}px`;
         }
 
         if (scrollSizeX) {
             const currentPaddingBottom = $.getStyle(node, 'paddingBottom');
             const paddingBottom = $.css(node, 'paddingBottom');
 
-            $.setDataset(node, 'ui-padding-bottom', currentPaddingBottom);
-            $.setStyle(node, 'paddingBottom', `${scrollSizeX + parseInt(paddingBottom)}px`);
+            data.uiPaddingBottom = currentPaddingBottom;
+            style.paddingBottom = `${scrollSizeX + parseInt(paddingBottom)}px`;
         }
+
+        $.setDataset(node, data);
+        $.setStyle(node, style);
     }
     /**
      * Get the size of the scrollbar.
@@ -10002,7 +10012,7 @@
      * @return {string} The target selector.
      */
     function getTargetSelector(node) {
-        return $.getDataset(node, 'ui-target') || $.getAttribute(node, 'href');
+        return $.getDataset(node, 'uiTarget') || $.getAttribute(node, 'href');
     }
     /**
      * Get positions from a touch event.
@@ -10077,13 +10087,13 @@
      * @param {HTMLElement} [node=document.body] The node.
      */
     function resetScrollPadding(node = document$1.body) {
-        const paddingRight = $.getDataset(node, 'ui-padding-right');
-        const paddingBottom = $.getDataset(node, 'ui-padding-bottom');
+        const paddingRight = $.getDataset(node, 'uiPaddingRight');
+        const paddingBottom = $.getDataset(node, 'uiPaddingBottom');
 
         $.setStyle(node, { paddingRight, paddingBottom });
 
-        $.removeDataset(node, 'ui-padding-right');
-        $.removeDataset(node, 'ui-padding-bottom');
+        $.removeDataset(node, 'uiPaddingRight');
+        $.removeDataset(node, 'uiPaddingBottom');
     }
 
     /**
@@ -10110,7 +10120,7 @@
                 this.dispose();
             });
 
-            $.setData(this._node, this.constructor.DATA_KEY, this);
+            $.setData(this._node, { [this.constructor.DATA_KEY]: this });
         }
 
         /**
@@ -10145,23 +10155,23 @@
          */
         close() {
             if (
-                $.getDataset(this._node, 'ui-animating') ||
+                $.getDataset(this._node, 'uiAnimating') ||
                 !$.triggerOne(this._node, 'close.ui.alert')
             ) {
                 return;
             }
 
-            $.setDataset(this._node, 'ui-animating', true);
+            $.setDataset(this._node, { uiAnimating: true });
 
             $.fadeOut(this._node, {
                 duration: this._options.duration,
             }).then((_) => {
                 $.detach(this._node);
-                $.removeDataset(this._node, 'ui-animating');
+                $.removeDataset(this._node, 'uiAnimating');
                 $.triggerEvent(this._node, 'closed.ui.alert');
                 $.remove(this._node);
             }).catch((_) => {
-                $.removeDataset(this._node, 'ui-animating');
+                $.removeDataset(this._node, 'uiAnimating');
             });
         }
     }
@@ -10194,7 +10204,7 @@
             $.toggleClass(this._node, 'active');
 
             const active = $.hasClass(this._node, 'active');
-            $.setAttribute(this._node, 'aria-pressed', active);
+            $.setAttribute(this._node, { 'aria-pressed': active });
         }
     }
 
@@ -10392,7 +10402,7 @@
                     this._mousePaused = false;
                     this._paused = false;
 
-                    if (!$.getDataset(this._node, 'ui-sliding')) {
+                    if (!$.getDataset(this._node, 'uiSliding')) {
                         this._setTimer();
                     }
                 });
@@ -10407,7 +10417,7 @@
                     (e) => {
                         if (
                             e.button ||
-                            $.getDataset(this._node, 'ui-sliding') ||
+                            $.getDataset(this._node, 'uiSliding') ||
                             $.is(e.target, '[data-ui-slide-to], [data-ui-slide], a, button') ||
                             $.closest(e.target, '[data-ui-slide], a, button', this._node).length
                         ) {
@@ -10415,7 +10425,7 @@
                         }
 
                         this.pause();
-                        $.setDataset(this._node, 'ui-sliding', true);
+                        $.setDataset(this._node, { uiSliding: true });
 
                         const pos = getPosition(e);
                         startX = pos.x;
@@ -10477,7 +10487,7 @@
                     (_) => {
                         if (index === null || index === this._index) {
                             this._paused = false;
-                            $.removeDataset(this._node, 'ui-sliding');
+                            $.removeDataset(this._node, 'uiSliding');
                             this._setTimer();
                             return;
                         }
@@ -10515,12 +10525,12 @@
                             },
                         ).then((_) => {
                             this._updateIndicators();
-                            $.removeDataset(this._node, 'ui-sliding');
+                            $.removeDataset(this._node, 'uiSliding');
 
                             this._paused = false;
                             this._setTimer();
                         }).catch((_) => {
-                            $.removeDataset(this._node, 'ui-sliding');
+                            $.removeDataset(this._node, 'uiSliding');
                         });
                     },
                 ), { passive: true });
@@ -10561,7 +10571,7 @@
                 return;
             }
 
-            const interval = $.getDataset(this._items[this._index], 'ui-interval');
+            const interval = $.getDataset(this._items[this._index], 'uiInterval');
 
             this._timer = setTimeout(
                 (_) => this.cycle(),
@@ -10574,7 +10584,7 @@
          * @param {number} index The item index to cycle to.
          */
         _show(index) {
-            if ($.getDataset(this._node, 'ui-sliding')) {
+            if ($.getDataset(this._node, 'uiSliding')) {
                 return;
             }
 
@@ -10609,7 +10619,7 @@
                 return;
             }
 
-            $.setDataset(this._node, 'ui-sliding', true);
+            $.setDataset(this._node, { uiSliding: true });
             this.pause();
 
             const oldIndex = this._setIndex(index);
@@ -10628,13 +10638,13 @@
                 },
             ).then((_) => {
                 this._updateIndicators();
-                $.removeDataset(this._node, 'ui-sliding');
+                $.removeDataset(this._node, 'uiSliding');
                 $.triggerEvent(this._node, 'slid.ui.carousel', eventData);
 
                 this._paused = false;
                 this._setTimer();
             }).catch((_) => {
-                $.removeDataset(this._node, 'ui-sliding');
+                $.removeDataset(this._node, 'uiSliding');
             });
         }
 
@@ -10715,7 +10725,7 @@
 
         const target = getTarget(e.currentTarget, '.carousel');
         const carousel = Carousel.init(target);
-        const slide = $.getDataset(e.currentTarget, 'ui-slide');
+        const slide = $.getDataset(e.currentTarget, 'uiSlide');
 
         if (slide === 'prev') {
             carousel.prev();
@@ -10729,7 +10739,7 @@
 
         const target = getTarget(e.currentTarget, '.carousel');
         const carousel = Carousel.init(target);
-        const slideTo = $.getDataset(e.currentTarget, 'ui-slide-to');
+        const slideTo = $.getDataset(e.currentTarget, 'uiSlideTo');
 
         carousel.show(slideTo);
     });
@@ -10772,14 +10782,14 @@
          */
         hide() {
             if (
-                $.getDataset(this._node, 'ui-animating') ||
+                $.getDataset(this._node, 'uiAnimating') ||
                 !$.hasClass(this._node, 'show') ||
                 !$.triggerOne(this._node, 'hide.ui.collapse')
             ) {
                 return;
             }
 
-            $.setDataset(this._node, 'ui-animating', true);
+            $.setDataset(this._node, { uiAnimating: true });
             $.addClass(this._triggers, 'collapsed');
             $.addClass(this._triggers, 'collapsing');
 
@@ -10789,11 +10799,11 @@
             }).then((_) => {
                 $.removeClass(this._node, 'show');
                 $.removeClass(this._triggers, 'collapsing');
-                $.setAttribute(this._triggers, 'aria-expanded', false);
-                $.removeDataset(this._node, 'ui-animating');
+                $.setAttribute(this._triggers, { 'aria-expanded': false });
+                $.removeDataset(this._node, 'uiAnimating');
                 $.triggerEvent(this._node, 'hidden.ui.collapse');
             }).catch((_) => {
-                $.removeDataset(this._node, 'ui-animating');
+                $.removeDataset(this._node, 'uiAnimating');
             });
         }
 
@@ -10802,7 +10812,7 @@
          */
         show() {
             if (
-                $.getDataset(this._node, 'ui-animating') ||
+                $.getDataset(this._node, 'uiAnimating') ||
                 $.hasClass(this._node, 'show')
             ) {
                 return;
@@ -10831,7 +10841,7 @@
                 collapse.hide();
             }
 
-            $.setDataset(this._node, 'ui-animating', true);
+            $.setDataset(this._node, { uiAnimating: true });
             $.addClass(this._node, 'show');
             $.removeClass(this._triggers, 'collapsed');
             $.addClass(this._triggers, 'collapsing');
@@ -10841,11 +10851,11 @@
                 duration: this._options.duration,
             }).then((_) => {
                 $.removeClass(this._triggers, 'collapsing');
-                $.setAttribute(this._triggers, 'aria-expanded', true);
-                $.removeDataset(this._node, 'ui-animating');
+                $.setAttribute(this._triggers, { 'aria-expanded': true });
+                $.removeDataset(this._node, 'uiAnimating');
                 $.triggerEvent(this._node, 'shown.ui.collapse');
             }).catch((_) => {
-                $.removeDataset(this._node, 'ui-animating');
+                $.removeDataset(this._node, 'uiAnimating');
             });
         }
 
@@ -11102,7 +11112,7 @@
                 this._node,
                 (parent) =>
                     $.css(parent, 'position') === 'relative' &&
-                    ['overflow', 'overflowX', 'overflowY'].some((overflow) =>
+                    ['overflow', 'overflow-x', 'overflow-y'].some((overflow) =>
                         ['auto', 'scroll'].includes(
                             $.css(parent, overflow),
                         ),
@@ -11155,10 +11165,10 @@
                 );
 
             if (!this._options.noAttributes) {
-                $.setDataset(this._options.reference, 'ui-placement', placement);
+                $.setDataset(this._options.reference, { uiPlacement: placement });
             }
 
-            $.setDataset(this._node, 'ui-placement', placement);
+            $.setDataset(this._node, { uiPlacement: placement });
 
             // get auto position
             const position = this._options.position;
@@ -11216,8 +11226,8 @@
             }
 
             // compensate for margins
-            offset.x -= parseInt($.css(this._node, 'margin-left'));
-            offset.y -= parseInt($.css(this._node, 'margin-top'));
+            offset.x -= parseInt($.css(this._node, 'marginLeft'));
+            offset.y -= parseInt($.css(this._node, 'marginTop'));
 
             // corrective positioning
             if (['left', 'right'].includes(placement)) {
@@ -11440,14 +11450,14 @@
          */
         hide() {
             if (
-                $.getDataset(this._menuNode, 'ui-animating') ||
+                $.getDataset(this._menuNode, 'uiAnimating') ||
                 !$.hasClass(this._menuNode, 'show') ||
                 !$.triggerOne(this._node, 'hide.ui.dropdown')
             ) {
                 return;
             }
 
-            $.setDataset(this._menuNode, 'ui-animating', true);
+            $.setDataset(this._menuNode, { uiAnimating: true });
 
             $.fadeOut(this._menuNode, {
                 duration: this._options.duration,
@@ -11458,11 +11468,11 @@
                 }
 
                 $.removeClass(this._menuNode, 'show');
-                $.setAttribute(this._node, 'aria-expanded', false);
-                $.removeDataset(this._menuNode, 'ui-animating');
+                $.setAttribute(this._node, { 'aria-expanded': false });
+                $.removeDataset(this._menuNode, 'uiAnimating');
                 $.triggerEvent(this._node, 'hidden.ui.dropdown');
             }).catch((_) => {
-                $.removeDataset(this._menuNode, 'ui-animating');
+                $.removeDataset(this._menuNode, 'uiAnimating');
             });
         }
 
@@ -11471,14 +11481,14 @@
          */
         show() {
             if (
-                $.getDataset(this._menuNode, 'ui-animating') ||
+                $.getDataset(this._menuNode, 'uiAnimating') ||
                 $.hasClass(this._menuNode, 'show') ||
                 !$.triggerOne(this._node, 'show.ui.dropdown')
             ) {
                 return;
             }
 
-            $.setDataset(this._menuNode, 'ui-animating', true);
+            $.setDataset(this._menuNode, { uiAnimating: true });
             $.addClass(this._menuNode, 'show');
 
             if (this._options.display === 'dynamic') {
@@ -11499,11 +11509,11 @@
             $.fadeIn(this._menuNode, {
                 duration: this._options.duration,
             }).then((_) => {
-                $.setAttribute(this._node, 'aria-expanded', true);
-                $.removeDataset(this._menuNode, 'ui-animating');
+                $.setAttribute(this._node, { 'aria-expanded': true });
+                $.removeDataset(this._menuNode, 'uiAnimating');
                 $.triggerEvent(this._node, 'shown.ui.dropdown');
             }).catch((_) => {
-                $.removeDataset(this._menuNode, 'ui-animating');
+                $.removeDataset(this._menuNode, 'uiAnimating');
             });
         }
 
@@ -11721,7 +11731,7 @@
          */
         hide() {
             if (
-                $.getDataset(this._dialog, 'ui-animating') ||
+                $.getDataset(this._dialog, 'uiAnimating') ||
                 !$.hasClass(this._node, 'show') ||
                 !$.triggerOne(this._node, 'hide.ui.modal')
             ) {
@@ -11729,7 +11739,7 @@
             }
 
             $.stop(this._dialog);
-            $.setDataset(this._dialog, 'ui-animating', true);
+            $.setDataset(this._dialog, { uiAnimating: true });
 
             const stackSize = $.find('.modal.show').length - 1;
 
@@ -11746,12 +11756,12 @@
                 }),
             ]).then((_) => {
                 $.removeAttribute(this._node, 'aria-modal');
-                $.setAttribute(this._node, 'aria-hidden', true);
+                $.setAttribute(this._node, { 'aria-hidden': true });
 
                 resetScrollPadding(this._dialog);
 
                 if (stackSize) {
-                    $.setStyle(this._node, 'zIndex', '');
+                    $.setStyle(this._node, { zIndex: '' });
                 } else {
                     if (this._scrollPadding) {
                         resetScrollPadding();
@@ -11773,10 +11783,10 @@
                     this._activeTarget = null;
                 }
 
-                $.removeDataset(this._dialog, 'ui-animating');
+                $.removeDataset(this._dialog, 'uiAnimating');
                 $.triggerEvent(this._node, 'hidden.ui.modal');
             }).catch((_) => {
-                $.removeDataset(this._dialog, 'ui-animating');
+                $.removeDataset(this._dialog, 'uiAnimating');
             });
         }
 
@@ -11785,14 +11795,14 @@
          */
         show() {
             if (
-                $.getDataset(this._dialog, 'ui-animating') ||
+                $.getDataset(this._dialog, 'uiAnimating') ||
                 $.hasClass(this._node, 'show') ||
                 !$.triggerOne(this._node, 'show.ui.modal')
             ) {
                 return;
             }
 
-            $.setDataset(this._dialog, 'ui-animating', true);
+            $.setDataset(this._dialog, { uiAnimating: true });
 
             const stackSize = $.find('.modal.show').length;
 
@@ -11805,12 +11815,10 @@
                 zIndex = parseInt(zIndex);
                 zIndex += stackSize * 20;
 
-                $.setStyle(this._node, 'zIndex', zIndex);
-            } else {
-                if (!$.findOne('.offcanvas.show')) {
-                    this._scrollPadding = true;
-                    addScrollPadding();
-                }
+                $.setStyle(this._node, { zIndex });
+            } else if (!$.findOne('.offcanvas.show')) {
+                this._scrollPadding = true;
+                addScrollPadding();
             }
 
             $.addClass(document$1.body, 'modal-open');
@@ -11829,7 +11837,7 @@
                     zIndex = parseInt(zIndex);
                     zIndex += stackSize * 20;
 
-                    $.setStyle(this._backdrop, 'zIndex', zIndex);
+                    $.setStyle(this._backdrop, { zIndex });
                 }
             }
 
@@ -11846,16 +11854,16 @@
                 }),
             ]).then((_) => {
                 $.removeAttribute(this._node, 'aria-hidden');
-                $.setAttribute(this._node, 'aria-modal', true);
+                $.setAttribute(this._node, { 'aria-modal': true });
 
                 if (this._options.focus) {
                     $.focus(this._node);
                 }
 
-                $.removeDataset(this._dialog, 'ui-animating');
+                $.removeDataset(this._dialog, 'uiAnimating');
                 $.triggerEvent(this._node, 'shown.ui.modal');
             }).catch((_) => {
-                $.removeDataset(this._dialog, 'ui-animating');
+                $.removeDataset(this._dialog, 'uiAnimating');
             });
         }
 
@@ -11874,7 +11882,7 @@
          * Start a zoom in/out animation.
          */
         _zoom() {
-            if ($.getDataset(this._dialog, 'ui-animating')) {
+            if ($.getDataset(this._dialog, 'uiAnimating')) {
                 return;
             }
 
@@ -11884,12 +11892,12 @@
                 this._dialog,
                 (node, progress) => {
                     if (progress >= 1) {
-                        $.setStyle(node, 'transform', '');
+                        $.setStyle(node, { transform: '' });
                         return;
                     }
 
                     const zoomOffset = (progress < .5 ? progress : (1 - progress)) / 20;
-                    $.setStyle(node, 'transform', `scale(${1 + zoomOffset})`);
+                    $.setStyle(node, { transform: `scale(${1 + zoomOffset})` });
                 },
                 {
                     duration: 200,
@@ -12051,14 +12059,14 @@
          */
         hide() {
             if (
-                $.getDataset(this._node, 'ui-animating') ||
+                $.getDataset(this._node, 'uiAnimating') ||
                 !$.hasClass(this._node, 'show') ||
                 !$.triggerOne(this._node, 'hide.ui.offcanvas')
             ) {
                 return;
             }
 
-            $.setDataset(this._node, 'ui-animating', true);
+            $.setDataset(this._node, { uiAnimating: true });
 
             Promise.all([
                 $.fadeOut(this._node, {
@@ -12070,7 +12078,7 @@
                 }),
             ]).then((_) => {
                 $.removeAttribute(this._node, 'aria-modal');
-                $.setAttribute(this._node, 'aria-hidden', true);
+                $.setAttribute(this._node, { 'aria-hidden': true });
 
                 $.removeClass(this._node, 'show');
 
@@ -12080,7 +12088,7 @@
 
                 if (!this._options.scroll) {
                     resetScrollPadding();
-                    $.setStyle(document$1.body, 'overflow', '');
+                    $.setStyle(document$1.body, { overflow: '' });
                 }
 
                 if (this._activeTarget) {
@@ -12088,10 +12096,10 @@
                     this._activeTarget = null;
                 }
 
-                $.removeDataset(this._node, 'ui-animating');
+                $.removeDataset(this._node, 'uiAnimating');
                 $.triggerEvent(this._node, 'hidden.ui.offcanvas');
             }).catch((_) => {
-                $.removeDataset(this._node, 'ui-animating');
+                $.removeDataset(this._node, 'uiAnimating');
             });
         }
 
@@ -12100,7 +12108,7 @@
          */
         show() {
             if (
-                $.getDataset(this._node, 'ui-animating') ||
+                $.getDataset(this._node, 'uiAnimating') ||
                 $.hasClass(this._node, 'show') ||
                 $.findOne('.offcanvas.show') ||
                 !$.triggerOne(this._node, 'show.ui.offcanvas')
@@ -12108,7 +12116,7 @@
                 return;
             }
 
-            $.setDataset(this._node, 'ui-animating', true);
+            $.setDataset(this._node, { uiAnimating: true });
             $.addClass(this._node, 'show');
 
             if (this._options.backdrop) {
@@ -12117,7 +12125,7 @@
 
             if (!this._options.scroll) {
                 addScrollPadding();
-                $.setStyle(document$1.body, 'overflow', 'hidden');
+                $.setStyle(document$1.body, { overflow: 'hidden' });
             }
 
             Promise.all([
@@ -12130,11 +12138,11 @@
                 }),
             ]).then((_) => {
                 $.removeAttribute(this._node, 'aria-hidden');
-                $.setAttribute(this._node, 'aria-modal', true);
-                $.removeDataset(this._node, 'ui-animating');
+                $.setAttribute(this._node, { 'aria-modal': true });
+                $.removeDataset(this._node, 'uiAnimating');
                 $.triggerEvent(this._node, 'shown.ui.offcanvas');
             }).catch((_) => {
-                $.removeDataset(this._node, 'ui-animating');
+                $.removeDataset(this._node, 'uiAnimating');
             });
         }
 
@@ -12260,10 +12268,10 @@
          * Dispose the Popover.
          */
         dispose() {
-            if ($.hasDataset(this._node, 'ui-original-title')) {
-                const title = $.getDataset(this._node, 'ui-original-title');
-                $.setAttribute(this._node, 'title', title);
-                $.removeDataset(this._node, 'ui-original-title');
+            if ($.hasDataset(this._node, 'uiOriginalTitle')) {
+                const title = $.getDataset(this._node, 'uiOriginalTitle');
+                $.setAttribute(this._node, { title });
+                $.removeDataset(this._node, 'uiOriginalTitle');
             }
 
             if (this._popper) {
@@ -12321,14 +12329,14 @@
         hide() {
             if (
                 !this._enabled ||
-                $.getDataset(this._popover, 'ui-animating') ||
+                $.getDataset(this._popover, 'uiAnimating') ||
                 !$.isConnected(this._popover) ||
                 !$.triggerOne(this._node, 'hide.ui.popover')
             ) {
                 return;
             }
 
-            $.setDataset(this._popover, 'ui-animating', true);
+            $.setDataset(this._popover, { uiAnimating: true });
 
             $.fadeOut(this._popover, {
                 duration: this._options.duration,
@@ -12337,10 +12345,10 @@
                 this._popper = null;
 
                 $.detach(this._popover);
-                $.removeDataset(this._popover, 'ui-animating');
+                $.removeDataset(this._popover, 'uiAnimating');
                 $.triggerEvent(this._node, 'hidden.ui.popover');
             }).catch((_) => {
-                $.removeDataset(this._popover, 'ui-animating');
+                $.removeDataset(this._popover, 'uiAnimating');
             });
         }
 
@@ -12350,7 +12358,7 @@
         refresh() {
             if ($.hasAttribute(this._node, 'title')) {
                 const originalTitle = $.getAttribute(this._node, 'title');
-                $.setDataset(this._node, 'ui-original-title', originalTitle);
+                $.setDataset(this._node, { uiOriginalTitle: originalTitle });
                 $.removeAttribute(this._node, 'title');
             }
 
@@ -12359,13 +12367,13 @@
                 title = $.getDataset(this._node, 'uiTitle');
             } else if (this._options.title) {
                 title = this._options.title;
-            } else if ($.hasDataset(this._node, 'ui-original-title')) {
-                title = $.getDataset(this._node, 'ui-original-title', title);
+            } else if ($.hasDataset(this._node, 'uiOriginalTitle')) {
+                title = $.getDataset(this._node, 'uiOriginalTitle', title);
             }
 
             let content = '';
-            if ($.hasDataset(this._node, 'ui-content')) {
-                content = $.getDataset(this._node, 'ui-content');
+            if ($.hasDataset(this._node, 'uiContent')) {
+                content = $.getDataset(this._node, 'uiContent');
             } else if (this._options.content) {
                 content = this._options.content;
             }
@@ -12399,24 +12407,24 @@
         show() {
             if (
                 !this._enabled ||
-                $.getDataset(this._popover, 'ui-animating') ||
+                $.getDataset(this._popover, 'uiAnimating') ||
                 $.isConnected(this._popover) ||
                 !$.triggerOne(this._node, 'show.ui.popover')
             ) {
                 return;
             }
 
-            $.setDataset(this._popover, 'ui-animating', true);
+            $.setDataset(this._popover, { uiAnimating: true });
             this.refresh();
             this._show();
 
             $.fadeIn(this._popover, {
                 duration: this._options.duration,
             }).then((_) => {
-                $.removeDataset(this._popover, 'ui-animating');
+                $.removeDataset(this._popover, 'uiAnimating');
                 $.triggerEvent(this._node, 'shown.ui.popover');
             }).catch((_) => {
-                $.removeDataset(this._popover, 'ui-animating');
+                $.removeDataset(this._popover, 'uiAnimating');
             });
         }
 
@@ -12510,8 +12518,8 @@
 
             if (!this._options.noAttributes) {
                 const id = generateId(this.constructor.DATA_KEY);
-                $.setAttribute(this._popover, 'id', id);
-                $.setAttribute(this._node, 'aria-described-by', id);
+                $.setAttribute(this._popover, { id });
+                $.setAttribute(this._node, { 'aria-described-by': id });
             }
 
             this._popper = new Popper(
@@ -12537,9 +12545,9 @@
          * Stop the animations.
          */
         _stop() {
-            if (this._enabled && $.getDataset(this._popover, 'ui-animating')) {
+            if (this._enabled && $.getDataset(this._popover, 'uiAnimating')) {
                 $.stop(this._popover);
-                $.removeDataset(this._popover, 'ui-animating');
+                $.removeDataset(this._popover, 'uiAnimating');
             }
         }
     }
@@ -12619,7 +12627,7 @@
          */
         hide() {
             if (
-                $.getDataset(this._target, 'ui-animating') ||
+                $.getDataset(this._target, 'uiAnimating') ||
                 !$.hasClass(this._target, 'active') ||
                 !$.triggerOne(this._node, 'hide.ui.tab')
             ) {
@@ -12634,7 +12642,7 @@
          */
         show() {
             if (
-                $.getDataset(this._target, 'ui-animating') ||
+                $.getDataset(this._target, 'uiAnimating') ||
                 $.hasClass(this._target, 'active') ||
                 !$.triggerOne(this._node, 'show.ui.tab')
             ) {
@@ -12670,18 +12678,18 @@
          * Hide the current Tab (forcefully).
          */
         _hide() {
-            $.setDataset(this._target, 'ui-animating', true);
+            $.setDataset(this._target, { uiAnimating: true });
 
             $.fadeOut(this._target, {
                 duration: this._options.duration,
             }).then((_) => {
                 $.removeClass(this._target, 'active');
                 $.removeClass(this._node, 'active');
-                $.removeDataset(this._target, 'ui-animating');
-                $.setAttribute(this._node, 'aria-selected', false);
+                $.removeDataset(this._target, 'uiAnimating');
+                $.setAttribute(this._node, { 'aria-selected': false });
                 $.triggerEvent(this._node, 'hidden.ui.tab');
             }).catch((_) => {
-                $.removeDataset(this._target, 'ui-animating');
+                $.removeDataset(this._target, 'uiAnimating');
             });
         }
 
@@ -12689,7 +12697,7 @@
          * Show the current Tab (forcefully).
          */
         _show() {
-            $.setDataset(this._target, 'ui-animating', true);
+            $.setDataset(this._target, { uiAnimating: true });
 
             $.addClass(this._target, 'active');
             $.addClass(this._node, 'active');
@@ -12697,11 +12705,11 @@
             $.fadeIn(this._target, {
                 duration: this._options.duration,
             }).then((_) => {
-                $.setAttribute(this._node, 'aria-selected', true);
-                $.removeDataset(this._target, 'ui-animating');
+                $.setAttribute(this._node, { 'aria-selected': true });
+                $.removeDataset(this._target, 'uiAnimating');
                 $.triggerEvent(this._node, 'shown.ui.tab');
             }).catch((_) => {
-                $.removeDataset(this._target, 'ui-animating');
+                $.removeDataset(this._target, 'uiAnimating');
             });
         }
     }
@@ -12731,24 +12739,24 @@
          */
         hide() {
             if (
-                $.getDataset(this._node, 'ui-animating') ||
+                $.getDataset(this._node, 'uiAnimating') ||
                 !$.isVisible(this._node) ||
                 !$.triggerOne(this._node, 'hide.ui.toast')
             ) {
                 return;
             }
 
-            $.setDataset(this._node, 'ui-animating', true);
+            $.setDataset(this._node, { uiAnimating: true });
 
             $.fadeOut(this._node, {
                 duration: this._options.duration,
             }).then((_) => {
-                $.setStyle(this._node, 'display', 'none', { important: true });
+                $.setStyle(this._node, { display: 'none' }, null, { important: true });
                 $.removeClass(this._node, 'show');
-                $.removeDataset(this._node, 'ui-animating');
+                $.removeDataset(this._node, 'uiAnimating');
                 $.triggerEvent(this._node, 'hidden.ui.toast');
             }).catch((_) => {
-                $.removeDataset(this._node, 'ui-animating');
+                $.removeDataset(this._node, 'uiAnimating');
             });
         }
 
@@ -12757,21 +12765,21 @@
          */
         show() {
             if (
-                $.getDataset(this._node, 'ui-animating') ||
+                $.getDataset(this._node, 'uiAnimating') ||
                 $.isVisible(this._node) ||
                 !$.triggerOne(this._node, 'show.ui.toast')
             ) {
                 return;
             }
 
-            $.setDataset(this._node, 'ui-animating', true);
-            $.setStyle(this._node, 'display', '');
+            $.setDataset(this._node, { uiAnimating: true });
+            $.setStyle(this._node, { display: '' });
             $.addClass(this._node, 'show');
 
             $.fadeIn(this._node, {
                 duration: this._options.duration,
             }).then((_) => {
-                $.removeDataset(this._node, 'ui-animating');
+                $.removeDataset(this._node, 'uiAnimating');
                 $.triggerEvent(this._node, 'shown.ui.toast');
 
                 if (this._options.autohide) {
@@ -12781,7 +12789,7 @@
                     );
                 }
             }).catch((_) => {
-                $.removeDataset(this._node, 'ui-animating');
+                $.removeDataset(this._node, 'uiAnimating');
             });
         }
     }
@@ -12835,10 +12843,10 @@
          * Dispose the Tooltip.
          */
         dispose() {
-            if ($.hasDataset(this._node, 'ui-original-title')) {
-                const title = $.getDataset(this._node, 'ui-original-title');
-                $.setAttribute(this._node, 'title', title);
-                $.removeDataset(this._node, 'ui-original-title');
+            if ($.hasDataset(this._node, 'uiOriginalTitle')) {
+                const title = $.getDataset(this._node, 'uiOriginalTitle');
+                $.setAttribute(this._node, { title });
+                $.removeDataset(this._node, 'uiOriginalTitle');
             }
 
             if (this._popper) {
@@ -12895,14 +12903,14 @@
         hide() {
             if (
                 !this._enabled ||
-                $.getDataset(this._tooltip, 'ui-animating') ||
+                $.getDataset(this._tooltip, 'uiAnimating') ||
                 !$.isConnected(this._tooltip) ||
                 !$.triggerOne(this._node, 'hide.ui.tooltip')
             ) {
                 return;
             }
 
-            $.setDataset(this._tooltip, 'ui-animating', true);
+            $.setDataset(this._tooltip, { uiAnimating: true });
 
             $.fadeOut(this._tooltip, {
                 duration: this._options.duration,
@@ -12912,10 +12920,10 @@
 
                 $.removeClass(this._tooltip, 'show');
                 $.detach(this._tooltip);
-                $.removeDataset(this._tooltip, 'ui-animating');
+                $.removeDataset(this._tooltip, 'uiAnimating');
                 $.triggerEvent(this._node, 'hidden.ui.tooltip');
             }).catch((_) => {
-                $.removeDataset(this._tooltip, 'ui-animating');
+                $.removeDataset(this._tooltip, 'uiAnimating');
             });
         }
 
@@ -12925,7 +12933,7 @@
         refresh() {
             if ($.hasAttribute(this._node, 'title')) {
                 const originalTitle = $.getAttribute(this._node, 'title');
-                $.setDataset(this._node, 'ui-original-title', originalTitle);
+                $.setDataset(this._node, { uiOriginalTitle: originalTitle });
                 $.removeAttribute(this._node, 'title');
             }
 
@@ -12934,8 +12942,8 @@
                 title = $.getDataset(this._node, 'uiTitle');
             } else if (this._options.title) {
                 title = this._options.title;
-            } else if ($.hasDataset(this._node, 'ui-original-title')) {
-                title = $.getDataset(this._node, 'ui-original-title', title);
+            } else if ($.hasDataset(this._node, 'uiOriginalTitle')) {
+                title = $.getDataset(this._node, 'uiOriginalTitle', title);
             }
 
             const method = this._options.html ? 'setHTML' : 'setText';
@@ -12956,14 +12964,14 @@
         show() {
             if (
                 !this._enabled ||
-                $.getDataset(this._tooltip, 'ui-animating') ||
+                $.getDataset(this._tooltip, 'uiAnimating') ||
                 $.isConnected(this._tooltip) ||
                 !$.triggerOne(this._node, 'show.ui.tooltip')
             ) {
                 return;
             }
 
-            $.setDataset(this._tooltip, 'ui-animating', true);
+            $.setDataset(this._tooltip, { uiAnimating: true });
             $.addClass(this._tooltip, 'show');
             this.refresh();
             this._show();
@@ -12971,10 +12979,10 @@
             $.fadeIn(this._tooltip, {
                 duration: this._options.duration,
             }).then((_) => {
-                $.removeDataset(this._tooltip, 'ui-animating');
+                $.removeDataset(this._tooltip, 'uiAnimating');
                 $.triggerEvent(this._node, 'shown.ui.tooltip');
             }).catch((_) => {
-                $.removeDataset(this._tooltip, 'ui-animating');
+                $.removeDataset(this._tooltip, 'uiAnimating');
             });
         }
 
@@ -13067,8 +13075,8 @@
 
             if (!this._options.noAttributes) {
                 const id = generateId(this.constructor.DATA_KEY);
-                $.setAttribute(this._tooltip, 'id', id);
-                $.setAttribute(this._node, 'aria-described-by', id);
+                $.setAttribute(this._tooltip, { id });
+                $.setAttribute(this._node, { 'aria-described-by': id });
             }
 
             this._popper = new Popper(
@@ -13094,9 +13102,9 @@
          * Stop the animations.
          */
         _stop() {
-            if (this._enabled && $.getDataset(this._tooltip, 'ui-animating')) {
+            if (this._enabled && $.getDataset(this._tooltip, 'uiAnimating')) {
                 $.stop(this._tooltip);
-                $.removeDataset(this._tooltip, 'ui-animating');
+                $.removeDataset(this._tooltip, 'uiAnimating');
             }
         }
     }
@@ -13237,13 +13245,13 @@
     $.addEventDelegate(document$1, 'change.ui.expand input.ui.expand', '.text-expand', (e) => {
         const textArea = e.currentTarget;
 
-        $.setStyle(textArea, 'height', 'inherit');
+        $.setStyle(textArea, { height: 'inherit' });
 
         let newHeight = $.height(textArea, { boxSize: $.SCROLL_BOX });
-        newHeight += parseInt($.css(textArea, 'border-top'));
-        newHeight += parseInt($.css(textArea, 'border-bottom'));
+        newHeight += parseInt($.css(textArea, 'borderTop'));
+        newHeight += parseInt($.css(textArea, 'borderBottom'));
 
-        $.setStyle(textArea, 'height', `${newHeight}px`);
+        $.setStyle(textArea, { height: `${newHeight}px` });
     });
 
     exports.Alert = Alert;

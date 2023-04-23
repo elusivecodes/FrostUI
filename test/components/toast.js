@@ -595,7 +595,7 @@ describe('Toast', function() {
         it('works with duration option on hide (data-ui-duration)', async function() {
             await exec((_) => {
                 const toast1 = $.findOne('#toast1');
-                $.setDataset(toast1, 'ui-duration', 200);
+                $.setDataset(toast1, { uiDuration: 200 });
                 UI.Toast.init(toast1).hide();
             }).then(waitFor(150)).then(async (_) => {
                 assert.strictEqual(
@@ -642,7 +642,7 @@ describe('Toast', function() {
         it('works with duration option on show (data-ui-duration)', async function() {
             await exec((_) => {
                 const toast1 = $.findOne('#toast1');
-                $.setDataset(toast1, 'ui-duration', 200);
+                $.setDataset(toast1, { uiDuration: 200 });
                 UI.Toast.init(toast1).hide();
             }).then(waitFor(50)).then(async (_) => {
                 await exec((_) => {
@@ -736,7 +736,7 @@ describe('Toast', function() {
         it('works with autohide option (data-ui-autohide)', async function() {
             await exec((_) => {
                 const toast1 = $.findOne('#toast1');
-                $.setDataset(toast1, 'ui-autohide', false);
+                $.setDataset(toast1, { uiAutohide: false });
                 UI.Toast.init(toast1);
             }).then(waitFor(350)).then(async (_) => {
                 assert.strictEqual(
@@ -807,7 +807,7 @@ describe('Toast', function() {
         it('works with delay option (data-ui-delay)', async function() {
             await exec((_) => {
                 const toast1 = $.findOne('#toast1');
-                $.setDataset(toast1, 'ui-delay', 300);
+                $.setDataset(toast1, { uiDelay: 300 });
                 UI.Toast.init(toast1).hide();
             }).then(waitFor(50)).then(async (_) => {
                 await exec((_) => {

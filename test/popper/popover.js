@@ -70,7 +70,7 @@ describe('popper popover', function() {
             assert.strictEqual(
                 await exec((_) => {
                     const popoverToggle = $.findOne('#popoverToggle');
-                    $.setDataset(popoverToggle, 'ui-placement', 'bottom');
+                    $.setDataset(popoverToggle, { uiPlacement: 'bottom' });
                     const popover = UI.Popover.init(popoverToggle, {
                         duration: 0,
                     });
@@ -113,7 +113,7 @@ describe('popper popover', function() {
             assert.strictEqual(
                 await exec((_) => {
                     const popoverToggle = $.findOne('#popoverToggle');
-                    $.setDataset(popoverToggle, 'ui-position', 'start');
+                    $.setDataset(popoverToggle, { uiPosition: 'start' });
                     const popover = UI.Popover.init(popoverToggle, {
                         duration: 0,
                     });
@@ -911,7 +911,7 @@ describe('popper popover', function() {
                 await exec((_) => {
                     $.setScrollY(document, 1520);
                     const popoverToggle = $.findOne('#popoverToggle');
-                    $.setDataset(popoverToggle, 'ui-fixed', true);
+                    $.setDataset(popoverToggle, { uiFixed: true });
                     const popover = UI.Popover.init(popoverToggle, {
                         placement: 'top',
                         duration: 0,
@@ -1048,7 +1048,7 @@ describe('popper popover', function() {
             assert.strictEqual(
                 await exec((_) => {
                     const popoverToggle = $.findOne('#popoverToggle');
-                    $.setDataset(popoverToggle, 'ui-spacing', 50);
+                    $.setDataset(popoverToggle, { uiSpacing: 50 });
                     const popover = UI.Popover.init(popoverToggle, {
                         duration: 0,
                     });
@@ -1180,7 +1180,7 @@ describe('popper popover', function() {
                 await exec((_) => {
                     $.setScrollX(document, 475);
                     const popoverToggle = $.findOne('#popoverToggle');
-                    $.setDataset(popoverToggle, 'ui-min-contact', 10);
+                    $.setDataset(popoverToggle, { uiMinContact: 10 });
                     const popover = UI.Popover.init(popoverToggle, {
                         placement: 'top',
                         duration: 0,

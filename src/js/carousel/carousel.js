@@ -140,7 +140,7 @@ export default class Carousel extends BaseComponent {
                 this._mousePaused = false;
                 this._paused = false;
 
-                if (!$.getDataset(this._node, 'ui-sliding')) {
+                if (!$.getDataset(this._node, 'uiSliding')) {
                     this._setTimer();
                 }
             });
@@ -155,7 +155,7 @@ export default class Carousel extends BaseComponent {
                 (e) => {
                     if (
                         e.button ||
-                        $.getDataset(this._node, 'ui-sliding') ||
+                        $.getDataset(this._node, 'uiSliding') ||
                         $.is(e.target, '[data-ui-slide-to], [data-ui-slide], a, button') ||
                         $.closest(e.target, '[data-ui-slide], a, button', this._node).length
                     ) {
@@ -163,7 +163,7 @@ export default class Carousel extends BaseComponent {
                     }
 
                     this.pause();
-                    $.setDataset(this._node, 'ui-sliding', true);
+                    $.setDataset(this._node, { uiSliding: true });
 
                     const pos = getPosition(e);
                     startX = pos.x;
@@ -225,7 +225,7 @@ export default class Carousel extends BaseComponent {
                 (_) => {
                     if (index === null || index === this._index) {
                         this._paused = false;
-                        $.removeDataset(this._node, 'ui-sliding');
+                        $.removeDataset(this._node, 'uiSliding');
                         this._setTimer();
                         return;
                     }
@@ -263,12 +263,12 @@ export default class Carousel extends BaseComponent {
                         },
                     ).then((_) => {
                         this._updateIndicators();
-                        $.removeDataset(this._node, 'ui-sliding');
+                        $.removeDataset(this._node, 'uiSliding');
 
                         this._paused = false;
                         this._setTimer();
                     }).catch((_) => {
-                        $.removeDataset(this._node, 'ui-sliding');
+                        $.removeDataset(this._node, 'uiSliding');
                     });
                 },
             ), { passive: true });
@@ -309,7 +309,7 @@ export default class Carousel extends BaseComponent {
             return;
         }
 
-        const interval = $.getDataset(this._items[this._index], 'ui-interval');
+        const interval = $.getDataset(this._items[this._index], 'uiInterval');
 
         this._timer = setTimeout(
             (_) => this.cycle(),
@@ -322,7 +322,7 @@ export default class Carousel extends BaseComponent {
      * @param {number} index The item index to cycle to.
      */
     _show(index) {
-        if ($.getDataset(this._node, 'ui-sliding')) {
+        if ($.getDataset(this._node, 'uiSliding')) {
             return;
         }
 
@@ -357,7 +357,7 @@ export default class Carousel extends BaseComponent {
             return;
         }
 
-        $.setDataset(this._node, 'ui-sliding', true);
+        $.setDataset(this._node, { uiSliding: true });
         this.pause();
 
         const oldIndex = this._setIndex(index);
@@ -376,13 +376,13 @@ export default class Carousel extends BaseComponent {
             },
         ).then((_) => {
             this._updateIndicators();
-            $.removeDataset(this._node, 'ui-sliding');
+            $.removeDataset(this._node, 'uiSliding');
             $.triggerEvent(this._node, 'slid.ui.carousel', eventData);
 
             this._paused = false;
             this._setTimer();
         }).catch((_) => {
-            $.removeDataset(this._node, 'ui-sliding');
+            $.removeDataset(this._node, 'uiSliding');
         });
     }
 

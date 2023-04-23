@@ -53,14 +53,14 @@ export default class Dropdown extends BaseComponent {
      */
     hide() {
         if (
-            $.getDataset(this._menuNode, 'ui-animating') ||
+            $.getDataset(this._menuNode, 'uiAnimating') ||
             !$.hasClass(this._menuNode, 'show') ||
             !$.triggerOne(this._node, 'hide.ui.dropdown')
         ) {
             return;
         }
 
-        $.setDataset(this._menuNode, 'ui-animating', true);
+        $.setDataset(this._menuNode, { uiAnimating: true });
 
         $.fadeOut(this._menuNode, {
             duration: this._options.duration,
@@ -71,11 +71,11 @@ export default class Dropdown extends BaseComponent {
             }
 
             $.removeClass(this._menuNode, 'show');
-            $.setAttribute(this._node, 'aria-expanded', false);
-            $.removeDataset(this._menuNode, 'ui-animating');
+            $.setAttribute(this._node, { 'aria-expanded': false });
+            $.removeDataset(this._menuNode, 'uiAnimating');
             $.triggerEvent(this._node, 'hidden.ui.dropdown');
         }).catch((_) => {
-            $.removeDataset(this._menuNode, 'ui-animating');
+            $.removeDataset(this._menuNode, 'uiAnimating');
         });
     }
 
@@ -84,14 +84,14 @@ export default class Dropdown extends BaseComponent {
      */
     show() {
         if (
-            $.getDataset(this._menuNode, 'ui-animating') ||
+            $.getDataset(this._menuNode, 'uiAnimating') ||
             $.hasClass(this._menuNode, 'show') ||
             !$.triggerOne(this._node, 'show.ui.dropdown')
         ) {
             return;
         }
 
-        $.setDataset(this._menuNode, 'ui-animating', true);
+        $.setDataset(this._menuNode, { uiAnimating: true });
         $.addClass(this._menuNode, 'show');
 
         if (this._options.display === 'dynamic') {
@@ -112,11 +112,11 @@ export default class Dropdown extends BaseComponent {
         $.fadeIn(this._menuNode, {
             duration: this._options.duration,
         }).then((_) => {
-            $.setAttribute(this._node, 'aria-expanded', true);
-            $.removeDataset(this._menuNode, 'ui-animating');
+            $.setAttribute(this._node, { 'aria-expanded': true });
+            $.removeDataset(this._menuNode, 'uiAnimating');
             $.triggerEvent(this._node, 'shown.ui.dropdown');
         }).catch((_) => {
-            $.removeDataset(this._menuNode, 'ui-animating');
+            $.removeDataset(this._menuNode, 'uiAnimating');
         });
     }
 

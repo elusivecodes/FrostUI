@@ -34,10 +34,10 @@ export default class Tooltip extends BaseComponent {
      * Dispose the Tooltip.
      */
     dispose() {
-        if ($.hasDataset(this._node, 'ui-original-title')) {
-            const title = $.getDataset(this._node, 'ui-original-title');
-            $.setAttribute(this._node, 'title', title);
-            $.removeDataset(this._node, 'ui-original-title');
+        if ($.hasDataset(this._node, 'uiOriginalTitle')) {
+            const title = $.getDataset(this._node, 'uiOriginalTitle');
+            $.setAttribute(this._node, { title });
+            $.removeDataset(this._node, 'uiOriginalTitle');
         }
 
         if (this._popper) {
@@ -94,14 +94,14 @@ export default class Tooltip extends BaseComponent {
     hide() {
         if (
             !this._enabled ||
-            $.getDataset(this._tooltip, 'ui-animating') ||
+            $.getDataset(this._tooltip, 'uiAnimating') ||
             !$.isConnected(this._tooltip) ||
             !$.triggerOne(this._node, 'hide.ui.tooltip')
         ) {
             return;
         }
 
-        $.setDataset(this._tooltip, 'ui-animating', true);
+        $.setDataset(this._tooltip, { uiAnimating: true });
 
         $.fadeOut(this._tooltip, {
             duration: this._options.duration,
@@ -111,10 +111,10 @@ export default class Tooltip extends BaseComponent {
 
             $.removeClass(this._tooltip, 'show');
             $.detach(this._tooltip);
-            $.removeDataset(this._tooltip, 'ui-animating');
+            $.removeDataset(this._tooltip, 'uiAnimating');
             $.triggerEvent(this._node, 'hidden.ui.tooltip');
         }).catch((_) => {
-            $.removeDataset(this._tooltip, 'ui-animating');
+            $.removeDataset(this._tooltip, 'uiAnimating');
         });
     }
 
@@ -124,7 +124,7 @@ export default class Tooltip extends BaseComponent {
     refresh() {
         if ($.hasAttribute(this._node, 'title')) {
             const originalTitle = $.getAttribute(this._node, 'title');
-            $.setDataset(this._node, 'ui-original-title', originalTitle);
+            $.setDataset(this._node, { uiOriginalTitle: originalTitle });
             $.removeAttribute(this._node, 'title');
         }
 
@@ -133,8 +133,8 @@ export default class Tooltip extends BaseComponent {
             title = $.getDataset(this._node, 'uiTitle');
         } else if (this._options.title) {
             title = this._options.title;
-        } else if ($.hasDataset(this._node, 'ui-original-title')) {
-            title = $.getDataset(this._node, 'ui-original-title', title);
+        } else if ($.hasDataset(this._node, 'uiOriginalTitle')) {
+            title = $.getDataset(this._node, 'uiOriginalTitle', title);
         }
 
         const method = this._options.html ? 'setHTML' : 'setText';
@@ -155,14 +155,14 @@ export default class Tooltip extends BaseComponent {
     show() {
         if (
             !this._enabled ||
-            $.getDataset(this._tooltip, 'ui-animating') ||
+            $.getDataset(this._tooltip, 'uiAnimating') ||
             $.isConnected(this._tooltip) ||
             !$.triggerOne(this._node, 'show.ui.tooltip')
         ) {
             return;
         }
 
-        $.setDataset(this._tooltip, 'ui-animating', true);
+        $.setDataset(this._tooltip, { uiAnimating: true });
         $.addClass(this._tooltip, 'show');
         this.refresh();
         this._show();
@@ -170,10 +170,10 @@ export default class Tooltip extends BaseComponent {
         $.fadeIn(this._tooltip, {
             duration: this._options.duration,
         }).then((_) => {
-            $.removeDataset(this._tooltip, 'ui-animating');
+            $.removeDataset(this._tooltip, 'uiAnimating');
             $.triggerEvent(this._node, 'shown.ui.tooltip');
         }).catch((_) => {
-            $.removeDataset(this._tooltip, 'ui-animating');
+            $.removeDataset(this._tooltip, 'uiAnimating');
         });
     }
 
@@ -266,8 +266,8 @@ export default class Tooltip extends BaseComponent {
 
         if (!this._options.noAttributes) {
             const id = generateId(this.constructor.DATA_KEY);
-            $.setAttribute(this._tooltip, 'id', id);
-            $.setAttribute(this._node, 'aria-described-by', id);
+            $.setAttribute(this._tooltip, { id });
+            $.setAttribute(this._node, { 'aria-described-by': id });
         }
 
         this._popper = new Popper(
@@ -293,9 +293,9 @@ export default class Tooltip extends BaseComponent {
      * Stop the animations.
      */
     _stop() {
-        if (this._enabled && $.getDataset(this._tooltip, 'ui-animating')) {
+        if (this._enabled && $.getDataset(this._tooltip, 'uiAnimating')) {
             $.stop(this._tooltip);
-            $.removeDataset(this._tooltip, 'ui-animating');
+            $.removeDataset(this._tooltip, 'uiAnimating');
         }
     }
 }

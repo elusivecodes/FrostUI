@@ -11,24 +11,24 @@ export default class Toast extends BaseComponent {
      */
     hide() {
         if (
-            $.getDataset(this._node, 'ui-animating') ||
+            $.getDataset(this._node, 'uiAnimating') ||
             !$.isVisible(this._node) ||
             !$.triggerOne(this._node, 'hide.ui.toast')
         ) {
             return;
         }
 
-        $.setDataset(this._node, 'ui-animating', true);
+        $.setDataset(this._node, { uiAnimating: true });
 
         $.fadeOut(this._node, {
             duration: this._options.duration,
         }).then((_) => {
-            $.setStyle(this._node, 'display', 'none', { important: true });
+            $.setStyle(this._node, { display: 'none' }, null, { important: true });
             $.removeClass(this._node, 'show');
-            $.removeDataset(this._node, 'ui-animating');
+            $.removeDataset(this._node, 'uiAnimating');
             $.triggerEvent(this._node, 'hidden.ui.toast');
         }).catch((_) => {
-            $.removeDataset(this._node, 'ui-animating');
+            $.removeDataset(this._node, 'uiAnimating');
         });
     }
 
@@ -37,21 +37,21 @@ export default class Toast extends BaseComponent {
      */
     show() {
         if (
-            $.getDataset(this._node, 'ui-animating') ||
+            $.getDataset(this._node, 'uiAnimating') ||
             $.isVisible(this._node) ||
             !$.triggerOne(this._node, 'show.ui.toast')
         ) {
             return;
         }
 
-        $.setDataset(this._node, 'ui-animating', true);
-        $.setStyle(this._node, 'display', '');
+        $.setDataset(this._node, { uiAnimating: true });
+        $.setStyle(this._node, { display: '' });
         $.addClass(this._node, 'show');
 
         $.fadeIn(this._node, {
             duration: this._options.duration,
         }).then((_) => {
-            $.removeDataset(this._node, 'ui-animating');
+            $.removeDataset(this._node, 'uiAnimating');
             $.triggerEvent(this._node, 'shown.ui.toast');
 
             if (this._options.autohide) {
@@ -61,7 +61,7 @@ export default class Toast extends BaseComponent {
                 );
             }
         }).catch((_) => {
-            $.removeDataset(this._node, 'ui-animating');
+            $.removeDataset(this._node, 'uiAnimating');
         });
     }
 }

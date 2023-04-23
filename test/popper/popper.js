@@ -129,7 +129,7 @@ describe('Popper', function() {
                         reference: button,
                     });
 
-                    $.setStyle(button, 'marginTop', '50px');
+                    $.setStyle(button, { marginTop: '50px' });
                     popper.update();
 
                     return $.getStyle(badge, 'transform');
@@ -145,7 +145,7 @@ describe('Popper', function() {
                     $('#badge').popper({
                         reference: button,
                     });
-                    $.setStyle(button, 'marginTop', '50px');
+                    $.setStyle(button, { marginTop: '50px' });
                     $('#badge').popper('update');
 
                     return $.getStyle(badge, 'transform');
