@@ -1,7 +1,5 @@
 import BaseComponent from './../base-component.js';
 import { $ } from './../globals.js';
-import { generateId } from './../helpers.js';
-import Popper from './../popper/popper.js';
 
 /**
  * Tooltip Class
@@ -194,108 +192,6 @@ export default class Tooltip extends BaseComponent {
     update() {
         if (this._popper) {
             this._popper.update();
-        }
-    }
-
-    /**
-     * Attach events for the Tooltip.
-     */
-    _events() {
-        if (this._triggers.includes('hover')) {
-            $.addEvent(this._node, 'mouseover.ui.tooltip', (_) => {
-                this._stop();
-                this.show();
-            });
-
-            $.addEvent(this._node, 'mouseout.ui.tooltip', (_) => {
-                this._stop();
-                this.hide();
-            });
-        }
-
-        if (this._triggers.includes('focus')) {
-            $.addEvent(this._node, 'focus.ui.tooltip', (_) => {
-                this._stop();
-                this.show();
-            });
-
-            $.addEvent(this._node, 'blur.ui.tooltip', (_) => {
-                this._stop();
-                this.hide();
-            });
-        }
-
-        if (this._triggers.includes('click')) {
-            $.addEvent(this._node, 'click.ui.tooltip', (e) => {
-                e.preventDefault();
-
-                this._stop();
-                this.toggle();
-            });
-        }
-
-        if (this._modal) {
-            $.addEvent(this._modal, 'hide.ui.modal', (_) => {
-                this._stop();
-                this.hide();
-            });
-        }
-    }
-
-    /**
-     * Render the Tooltip element.
-     */
-    _render() {
-        this._tooltip = $.parseHTML(this._options.template).shift();
-        if (this._options.customClass) {
-            $.addClass(this._tooltip, this._options.customClass);
-        }
-        this._arrow = $.findOne('.tooltip-arrow', this._tooltip);
-        this._tooltipInner = $.findOne('.tooltip-inner', this._tooltip);
-    }
-
-    /**
-     * Update the Tooltip and append to the DOM.
-     */
-    _show() {
-        if (this._options.appendTo) {
-            $.append(this._options.appendTo, this._tooltip);
-        } else {
-            $.after(this._node, this._tooltip);
-        }
-
-        if (!this._options.noAttributes) {
-            const id = generateId(this.constructor.DATA_KEY);
-            $.setAttribute(this._tooltip, { id });
-            $.setAttribute(this._node, { 'aria-described-by': id });
-        }
-
-        this._popper = new Popper(
-            this._tooltip,
-            {
-                reference: this._node,
-                arrow: this._arrow,
-                placement: this._options.placement,
-                position: this._options.position,
-                fixed: this._options.fixed,
-                spacing: this._options.spacing,
-                minContact: this._options.minContact,
-                noAttributes: this._options.noAttributes,
-            },
-        );
-
-        window.requestAnimationFrame((_) => {
-            this.update();
-        });
-    }
-
-    /**
-     * Stop the animations.
-     */
-    _stop() {
-        if (this._enabled && $.getDataset(this._tooltip, 'uiAnimating')) {
-            $.stop(this._tooltip);
-            $.removeDataset(this._tooltip, 'uiAnimating');
         }
     }
 }

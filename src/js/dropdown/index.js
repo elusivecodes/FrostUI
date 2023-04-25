@@ -3,8 +3,6 @@ import { $, document } from './../globals.js';
 import { initComponent } from './../helpers.js';
 import { getClickTarget } from './../click-target/index.js';
 
-initComponent('dropdown', Dropdown);
-
 // Dropdown default options
 Dropdown.defaults = {
     display: 'dynamic',
@@ -15,6 +13,9 @@ Dropdown.defaults = {
     spacing: 3,
     minContact: false,
 };
+
+// Dropdown init
+initComponent('dropdown', Dropdown);
 
 // Dropdown events
 $.addEventDelegate(document, 'click.ui.dropdown keyup.ui.dropdown', '[data-ui-toggle="dropdown"]', (e) => {

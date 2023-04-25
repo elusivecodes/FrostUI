@@ -1,10 +1,9 @@
 import { getTopModal } from './helpers.js';
 import Modal from './modal.js';
+import { _zoom } from './prototype/helpers.js';
 import { $, document, window } from './../globals.js';
 import { getTarget, initComponent } from './../helpers.js';
 import { getClickTarget } from './../click-target/index.js';
-
-initComponent('modal', Modal);
 
 // Modal default options
 Modal.defaults = {
@@ -14,6 +13,14 @@ Modal.defaults = {
     show: false,
     keyboard: true,
 };
+
+// Modal prototype
+const proto = Modal.prototype;
+
+proto._zoom = _zoom;
+
+// Modal init
+initComponent('modal', Modal);
 
 // Modal events
 $.addEventDelegate(document, 'click.ui.modal', '[data-ui-toggle="modal"]', (e) => {

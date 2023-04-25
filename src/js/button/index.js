@@ -2,6 +2,7 @@ import Button from './button.js';
 import { $, document } from './../globals.js';
 import { initComponent } from './../helpers.js';
 
+// Button init
 initComponent('button', Button);
 
 // Button events

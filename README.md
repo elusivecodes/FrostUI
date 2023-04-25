@@ -47,7 +47,22 @@ npm i @fr0st/ui
 In Node.js:
 
 ```javascript
-import * as UI from '@fr0st/ui';
+import Alert from './node_modules/@fr0st/ui/src/js/alert/index.js';
+import Button from './node_modules/@fr0st/ui/src/js/button/index.js';
+import Carousel from './node_modules/@fr0st/ui/src/js/carousel/index.js';
+import Collapse from './node_modules/@fr0st/ui/src/js/collapse/index.js';
+import Dropdown from './node_modules/@fr0st/ui/src/js/dropdown/index.js';
+import Modal from './node_modules/@fr0st/ui/src/js/modal/index.js';
+import Offcanvas from './node_modules/@fr0st/ui/src/js/offcanvas/index.js';
+import Popover from './node_modules/@fr0st/ui/src/js/popover/index.js';
+import Popper from './node_modules/@fr0st/ui/src/js/popper/index.js';
+import Tab from './node_modules/@fr0st/ui/src/js/tab/index.js';
+import Toast from './node_modules/@fr0st/ui/src/js/toast/index.js';
+import Tooltip from './node_modules/@fr0st/ui/src/js/tooltip/index.js';
+
+import './node_modules/@fr0st/ui/src/js/clipboard/index.js';
+import './node_modules/@fr0st/ui/src/js/ripple/index.js';
+import './node_modules/@fr0st/ui/src/js/text-expand/index.js';
 ```
 
 

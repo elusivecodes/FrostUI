@@ -1,6 +1,6 @@
 {
     "name": "@fr0st/ui",
-    "version": "2.1.1",
+    "version": "2.1.2",
     "description": "FrostUI is a free, open-source UI library for JavaScript.",
     "keywords": [
         "ui",
@@ -65,6 +65,6 @@
         "terser": "^5.16.9"
     },
     "dependencies": {
-        "@fr0st/query": "^3.1.1"
+        "@fr0st/query": "^3.1.2"
     }
 }

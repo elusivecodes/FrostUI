@@ -2,14 +2,15 @@ import Toast from './toast.js';
 import { $, document } from './../globals.js';
 import { getTarget, initComponent } from './../helpers.js';
 
-initComponent('toast', Toast);
-
 // Toast default options
 Toast.defaults = {
     autohide: true,
     delay: 5000,
     duration: 100,
 };
+
+// Toast init
+initComponent('toast', Toast);
 
 // Toast events
 $.addEventDelegate(document, 'click.ui.toast', '[data-ui-dismiss="toast"]', (e) => {

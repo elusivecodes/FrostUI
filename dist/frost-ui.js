@@ -370,12 +370,13 @@
         }
     }
 
-    initComponent('alert', Alert);
-
     // Alert default options
     Alert.defaults = {
         duration: 100,
     };
+
+    // Alert init
+    initComponent('alert', Alert);
 
     // Alert events
     $.addEventDelegate(document, 'click.ui.alert', '[data-ui-dismiss="alert"]', (e) => {
@@ -402,6 +403,7 @@
         }
     }
 
+    // Button init
     initComponent('button', Button);
 
     // Button events
@@ -411,53 +413,6 @@
         const button = Button.init(e.currentTarget);
         button.toggle();
     });
-
-    /**
-     * Get the direction offset from an index.
-     * @param {number} index The index.
-     * @param {number} totalItems The total number of items.
-     * @return {number} The direction.
-     */
-    function getDirOffset(index, totalItems) {
-        if (index < 0) {
-            return -1;
-        }
-
-        if (index > totalItems - 1) {
-            return 1;
-        }
-
-        return 0;
-    }
-    /**
-     * Get the direction from an offset and index.
-     * @param {number} offset The direction offset.
-     * @param {number} oldIndex The old item index.
-     * @param {number} newIndex The new item index.
-     * @return {string} The direction.
-     */
-    function getDirection$1(offset, oldIndex, newIndex) {
-        if (offset == -1 || (offset == 0 && newIndex < oldIndex)) {
-            return 'left';
-        }
-
-        return 'right';
-    }
-    /**
-     * Get the real index from an index.
-     * @param {number} index The item index.
-     * @param {number} totalItems The total number of items.
-     * @return {number} The real item index.
-     */
-    function getIndex(index, totalItems) {
-        index %= totalItems;
-
-        if (index < 0) {
-            return totalItems + index;
-        }
-
-        return index;
-    }
 
     /**
      * Carousel Class
@@ -561,338 +516,383 @@
         slide(direction = 1) {
             this.show(this._index + direction);
         }
+    }
 
-        /**
-         * Attach events for the Carousel.
-         */
-        _events() {
-            if (this._options.keyboard) {
-                $.addEvent(this._node, 'keydown.ui.carousel', (e) => {
-                    const target = e.target;
-                    if ($.is(target, 'input, select')) {
+    /**
+     * Get the direction offset from an index.
+     * @param {number} index The index.
+     * @param {number} totalItems The total number of items.
+     * @return {number} The direction.
+     */
+    function getDirOffset(index, totalItems) {
+        if (index < 0) {
+            return -1;
+        }
+
+        if (index > totalItems - 1) {
+            return 1;
+        }
+
+        return 0;
+    }
+    /**
+     * Get the direction from an offset and index.
+     * @param {number} offset The direction offset.
+     * @param {number} oldIndex The old item index.
+     * @param {number} newIndex The new item index.
+     * @return {string} The direction.
+     */
+    function getDirection$1(offset, oldIndex, newIndex) {
+        if (offset == -1 || (offset == 0 && newIndex < oldIndex)) {
+            return 'left';
+        }
+
+        return 'right';
+    }
+    /**
+     * Get the real index from an index.
+     * @param {number} index The item index.
+     * @param {number} totalItems The total number of items.
+     * @return {number} The real item index.
+     */
+    function getIndex(index, totalItems) {
+        index %= totalItems;
+
+        if (index < 0) {
+            return totalItems + index;
+        }
+
+        return index;
+    }
+
+    /**
+     * Attach events for the Carousel.
+     */
+    function _events$2() {
+        if (this._options.keyboard) {
+            $.addEvent(this._node, 'keydown.ui.carousel', (e) => {
+                const target = e.target;
+                if ($.is(target, 'input, select')) {
+                    return;
+                }
+
+                switch (e.code) {
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        this.prev();
+                        break;
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        this.next();
+                        break;
+                }
+            });
+        }
+
+        if (this._options.pause) {
+            $.addEvent(this._node, 'mouseenter.ui.carousel', (_) => {
+                this._mousePaused = true;
+                this.pause();
+            });
+
+            $.addEvent(this._node, 'mouseleave.ui.carousel', (_) => {
+                this._mousePaused = false;
+                this._paused = false;
+
+                if (!$.getDataset(this._node, 'uiSliding')) {
+                    this._setTimer();
+                }
+            });
+        }
+
+        if (this._options.swipe) {
+            let startX;
+            let index = null;
+            let progress;
+            let direction;
+
+            const downEvent = (e) => {
+                if (
+                    e.button ||
+                    $.getDataset(this._node, 'uiSliding') ||
+                    $.is(e.target, '[data-ui-slide-to], [data-ui-slide], a, button') ||
+                    $.closest(e.target, '[data-ui-slide], a, button', this._node).length
+                ) {
+                    return false;
+                }
+
+                this.pause();
+                $.setDataset(this._node, { uiSliding: true });
+
+                const pos = getPosition(e);
+                startX = pos.x;
+            };
+
+            const moveEvent = (e) => {
+                const pos = getPosition(e);
+                const currentX = pos.x;
+                const width = $.width(this._node);
+                const scrollX = width / 2;
+
+                let mouseDiffX = currentX - startX;
+                if (!this._options.wrap) {
+                    mouseDiffX = $._clamp(
+                        mouseDiffX,
+                        -(this._items.length - 1 - this._index) * scrollX,
+                        this._index * scrollX,
+                    );
+                }
+
+                progress = $._map(Math.abs(mouseDiffX), 0, scrollX, 0, 1);
+
+                do {
+                    const lastIndex = index;
+
+                    if (mouseDiffX < 0) {
+                        index = this._index + 1;
+                    } else if (mouseDiffX > 0) {
+                        index = this._index - 1;
+                    } else {
+                        index = this._index;
                         return;
                     }
 
-                    switch (e.code) {
-                        case 'ArrowLeft':
-                            e.preventDefault();
-                            this.prev();
-                            break;
-                        case 'ArrowRight':
-                            e.preventDefault();
-                            this.next();
-                            break;
+                    const offset = getDirOffset(index, this._items.length);
+                    index = getIndex(index, this._items.length);
+                    direction = getDirection$1(offset, this._index, index);
+
+                    if (progress >= 1) {
+                        startX = currentX;
+
+                        const oldIndex = this._setIndex(index);
+                        this._update(this._items[this._index], this._items[oldIndex], progress, { direction });
+                        this._updateIndicators();
+
+                        if (lastIndex !== this._index) {
+                            this._resetStyles(lastIndex);
+                        }
+
+                        progress--;
+                    } else {
+                        this._update(this._items[index], this._items[this._index], progress, { direction, dragging: true });
+
+                        if (lastIndex !== index) {
+                            this._resetStyles(lastIndex);
+                        }
                     }
-                });
-            }
+                } while (progress > 1);
+            };
 
-            if (this._options.pause) {
-                $.addEvent(this._node, 'mouseenter.ui.carousel', (_) => {
-                    this._mousePaused = true;
-                    this.pause();
-                });
-
-                $.addEvent(this._node, 'mouseleave.ui.carousel', (_) => {
-                    this._mousePaused = false;
+            const upEvent = (_) => {
+                if (index === null || index === this._index) {
                     this._paused = false;
+                    $.removeDataset(this._node, 'uiSliding');
+                    this._setTimer();
+                    return;
+                }
 
-                    if (!$.getDataset(this._node, 'uiSliding')) {
-                        this._setTimer();
-                    }
-                });
-            }
+                let oldIndex;
+                let progressRemaining;
+                if (progress > .25) {
+                    oldIndex = this._setIndex(index);
+                    progressRemaining = 1 - progress;
+                } else {
+                    oldIndex = index;
+                    progressRemaining = progress;
+                    direction = direction === 'right' ? 'left' : 'right';
+                }
 
-            if (this._options.swipe) {
-                let startX;
-                let index = null;
-                let progress;
-                let direction;
-                $.addEvent(this._node, 'mousedown.ui.carousel touchstart.ui.carousel', $.mouseDragFactory(
-                    (e) => {
-                        if (
-                            e.button ||
-                            $.getDataset(this._node, 'uiSliding') ||
-                            $.is(e.target, '[data-ui-slide-to], [data-ui-slide], a, button') ||
-                            $.closest(e.target, '[data-ui-slide], a, button', this._node).length
-                        ) {
-                            return false;
-                        }
+                this._resetStyles(this._index);
 
-                        this.pause();
-                        $.setDataset(this._node, { uiSliding: true });
+                index = null;
 
-                        const pos = getPosition(e);
-                        startX = pos.x;
-                    },
-                    (e) => {
-                        const pos = getPosition(e);
-                        const currentX = pos.x;
-                        const width = $.width(this._node);
-                        const scrollX = width / 2;
-
-                        let mouseDiffX = currentX - startX;
-                        if (!this._options.wrap) {
-                            mouseDiffX = $._clamp(
-                                mouseDiffX,
-                                -(this._items.length - 1 - this._index) * scrollX,
-                                this._index * scrollX,
-                            );
-                        }
-
-                        progress = $._map(Math.abs(mouseDiffX), 0, scrollX, 0, 1);
-
-                        do {
-                            const lastIndex = index;
-
-                            if (mouseDiffX < 0) {
-                                index = this._index + 1;
-                            } else if (mouseDiffX > 0) {
-                                index = this._index - 1;
-                            } else {
-                                index = this._index;
-                                return;
-                            }
-
-                            const offset = getDirOffset(index, this._items.length);
-                            index = getIndex(index, this._items.length);
-                            direction = getDirection$1(offset, this._index, index);
-
-                            if (progress >= 1) {
-                                startX = currentX;
-
-                                const oldIndex = this._setIndex(index);
-                                this._update(this._items[this._index], this._items[oldIndex], progress, { direction });
-                                this._updateIndicators();
-
-                                if (lastIndex !== this._index) {
-                                    this._resetStyles(lastIndex);
-                                }
-
-                                progress--;
-                            } else {
-                                this._update(this._items[index], this._items[this._index], progress, { direction, dragging: true });
-
-                                if (lastIndex !== index) {
-                                    this._resetStyles(lastIndex);
-                                }
-                            }
-                        } while (progress > 1);
-                    },
-                    (_) => {
-                        if (index === null || index === this._index) {
-                            this._paused = false;
-                            $.removeDataset(this._node, 'uiSliding');
-                            this._setTimer();
+                $.animate(
+                    this._items[this._index],
+                    (node, newProgress) => {
+                        if (!this._items) {
                             return;
                         }
 
-                        let oldIndex;
-                        let progressRemaining;
                         if (progress > .25) {
-                            oldIndex = this._setIndex(index);
-                            progressRemaining = 1 - progress;
+                            this._update(node, this._items[oldIndex], progress + (newProgress * progressRemaining), { direction });
                         } else {
-                            oldIndex = index;
-                            progressRemaining = progress;
-                            direction = direction === 'right' ? 'left' : 'right';
+                            this._update(node, this._items[oldIndex], (1 - progress) + (newProgress * progressRemaining), { direction });
                         }
-
-                        this._resetStyles(this._index);
-
-                        index = null;
-
-                        $.animate(
-                            this._items[this._index],
-                            (node, newProgress) => {
-                                if (!this._items) {
-                                    return;
-                                }
-
-                                if (progress > .25) {
-                                    this._update(node, this._items[oldIndex], progress + (newProgress * progressRemaining), { direction });
-                                } else {
-                                    this._update(node, this._items[oldIndex], (1 - progress) + (newProgress * progressRemaining), { direction });
-                                }
-                            },
-                            {
-                                duration: this._options.transition * progressRemaining,
-                            },
-                        ).then((_) => {
-                            this._updateIndicators();
-                            $.removeDataset(this._node, 'uiSliding');
-
-                            this._paused = false;
-                            this._setTimer();
-                        }).catch((_) => {
-                            $.removeDataset(this._node, 'uiSliding');
-                        });
                     },
-                ), { passive: true });
-            }
-        }
+                    {
+                        duration: this._options.transition * progressRemaining,
+                    },
+                ).then((_) => {
+                    this._updateIndicators();
+                    $.removeDataset(this._node, 'uiSliding');
 
-        /**
-         * Reset styles of an item.
-         * @param {number} index The item index.
-         */
-        _resetStyles(index) {
-            $.setStyle(this._items[index], {
-                display: '',
-                transform: '',
-            });
-        }
-
-        /**
-         * Set a new item index and update the items.
-         * @param {number} index The new item index.
-         * @return {number} The old item index.
-         */
-        _setIndex(index) {
-            const oldIndex = this._index;
-            this._index = index;
-
-            $.addClass(this._items[this._index], 'active');
-            $.removeClass(this._items[oldIndex], 'active');
-
-            return oldIndex;
-        }
-
-        /**
-         * Set a timer for the next Carousel cycle.
-         */
-        _setTimer() {
-            if (this._timer || this._paused || this._mousePaused) {
-                return;
-            }
-
-            const interval = $.getDataset(this._items[this._index], 'uiInterval');
-
-            this._timer = setTimeout(
-                (_) => this.cycle(),
-                interval || this._options.interval,
-            );
-        }
-
-        /**
-         * Cycle to a specific Carousel item.
-         * @param {number} index The item index to cycle to.
-         */
-        _show(index) {
-            if ($.getDataset(this._node, 'uiSliding')) {
-                return;
-            }
-
-            index = parseInt(index);
-
-            if (!this._options.wrap &&
-                (
-                    index < 0 ||
-                    index > this._items.length - 1
-                )
-            ) {
-                return;
-            }
-
-            const offset = getDirOffset(index, this._items.length);
-            index = getIndex(index, this._items.length);
-
-            if (index === this._index) {
-                return;
-            }
-
-            const direction = getDirection$1(offset, this._index, index);
-
-            const eventData = {
-                direction,
-                relatedTarget: this._items[index],
-                from: this._index,
-                to: index,
+                    this._paused = false;
+                    this._setTimer();
+                }).catch((_) => {
+                    $.removeDataset(this._node, 'uiSliding');
+                });
             };
 
-            if (!$.triggerOne(this._node, 'slide.ui.carousel', eventData)) {
-                return;
-            }
+            const dragEvent = $.mouseDragFactory(downEvent, moveEvent, upEvent);
 
-            $.setDataset(this._node, { uiSliding: true });
-            this.pause();
-
-            const oldIndex = this._setIndex(index);
-
-            $.animate(
-                this._items[this._index],
-                (node, progress) => {
-                    if (!this._items) {
-                        return;
-                    }
-
-                    this._update(node, this._items[oldIndex], progress, { direction });
-                },
-                {
-                    duration: this._options.transition,
-                },
-            ).then((_) => {
-                this._updateIndicators();
-                $.removeDataset(this._node, 'uiSliding');
-                $.triggerEvent(this._node, 'slid.ui.carousel', eventData);
-
-                this._paused = false;
-                this._setTimer();
-            }).catch((_) => {
-                $.removeDataset(this._node, 'uiSliding');
-            });
-        }
-
-        /**
-         * Update the position of the Carousel items.
-         * @param {Node} nodeIn The new node.
-         * @param {Node} nodeOut The old node.
-         * @param {number} progress The progress of the cycle.
-         * @param {object} options The options for updating the item positions.
-         * @param {string} [options.direction] The direction to cycle to.
-         * @param {Boolean} [options.dragging] Whether the item is being dragged.
-         */
-        _update(nodeIn, nodeOut, progress, { direction, dragging = false } = {}) {
-            const inStyles = {};
-            const outStyles = {};
-
-            if (progress >= 1) {
-                if (dragging) {
-                    inStyles.display = '';
-                } else {
-                    outStyles.display = '';
-                }
-
-                inStyles.transform = '';
-                outStyles.transform = '';
-            } else {
-                const inverse = direction === 'right';
-
-                if (dragging) {
-                    inStyles.display = 'block';
-                } else {
-                    outStyles.display = 'block';
-                }
-
-                inStyles.transform = `translateX(${Math.round((1 - progress) * 100) * (inverse ? 1 : -1)}%)`;
-                outStyles.transform = `translateX(${Math.round(progress * 100) * (inverse ? -1 : 1)}%)`;
-            }
-
-            $.setStyle(nodeIn, inStyles);
-            $.setStyle(nodeOut, outStyles);
-        }
-
-        /**
-         * Update the carousel indicators.
-         */
-        _updateIndicators() {
-            const oldIndicator = $.find('.active[data-ui-slide-to]', this._node);
-            const newIndicator = $.find('[data-ui-slide-to="' + this._index + '"]', this._node);
-            $.removeClass(oldIndicator, 'active');
-            $.addClass(newIndicator, 'active');
+            $.addEvent(this._node, 'mousedown.ui.carousel touchstart.ui.carousel', dragEvent, { passive: true });
         }
     }
 
-    initComponent('carousel', Carousel);
+    /**
+     * Reset styles of an item.
+     * @param {number} index The item index.
+     */
+    function _resetStyles(index) {
+        $.setStyle(this._items[index], {
+            display: '',
+            transform: '',
+        });
+    }
+    /**
+     * Set a new item index and update the items.
+     * @param {number} index The new item index.
+     * @return {number} The old item index.
+     */
+    function _setIndex(index) {
+        const oldIndex = this._index;
+        this._index = index;
+
+        $.addClass(this._items[this._index], 'active');
+        $.removeClass(this._items[oldIndex], 'active');
+
+        return oldIndex;
+    }
+    /**
+     * Set a timer for the next Carousel cycle.
+     */
+    function _setTimer() {
+        if (this._timer || this._paused || this._mousePaused) {
+            return;
+        }
+
+        const interval = $.getDataset(this._items[this._index], 'uiInterval');
+
+        this._timer = setTimeout(
+            (_) => this.cycle(),
+            interval || this._options.interval,
+        );
+    }
+    /**
+     * Cycle to a specific Carousel item.
+     * @param {number} index The item index to cycle to.
+     */
+    function _show$2(index) {
+        if ($.getDataset(this._node, 'uiSliding')) {
+            return;
+        }
+
+        index = parseInt(index);
+
+        if (!this._options.wrap &&
+            (
+                index < 0 ||
+                index > this._items.length - 1
+            )
+        ) {
+            return;
+        }
+
+        const offset = getDirOffset(index, this._items.length);
+        index = getIndex(index, this._items.length);
+
+        if (index === this._index) {
+            return;
+        }
+
+        const direction = getDirection$1(offset, this._index, index);
+
+        const eventData = {
+            direction,
+            relatedTarget: this._items[index],
+            from: this._index,
+            to: index,
+        };
+
+        if (!$.triggerOne(this._node, 'slide.ui.carousel', eventData)) {
+            return;
+        }
+
+        $.setDataset(this._node, { uiSliding: true });
+        this.pause();
+
+        const oldIndex = this._setIndex(index);
+
+        $.animate(
+            this._items[this._index],
+            (node, progress) => {
+                if (!this._items) {
+                    return;
+                }
+
+                this._update(node, this._items[oldIndex], progress, { direction });
+            },
+            {
+                duration: this._options.transition,
+            },
+        ).then((_) => {
+            this._updateIndicators();
+            $.removeDataset(this._node, 'uiSliding');
+            $.triggerEvent(this._node, 'slid.ui.carousel', eventData);
+
+            this._paused = false;
+            this._setTimer();
+        }).catch((_) => {
+            $.removeDataset(this._node, 'uiSliding');
+        });
+    }
+    /**
+     * Update the position of the Carousel items.
+     * @param {Node} nodeIn The new node.
+     * @param {Node} nodeOut The old node.
+     * @param {number} progress The progress of the cycle.
+     * @param {object} options The options for updating the item positions.
+     * @param {string} [options.direction] The direction to cycle to.
+     * @param {Boolean} [options.dragging] Whether the item is being dragged.
+     */
+    function _update(nodeIn, nodeOut, progress, { direction, dragging = false } = {}) {
+        const inStyles = {};
+        const outStyles = {};
+
+        if (progress >= 1) {
+            if (dragging) {
+                inStyles.display = '';
+            } else {
+                outStyles.display = '';
+            }
+
+            inStyles.transform = '';
+            outStyles.transform = '';
+        } else {
+            const inverse = direction === 'right';
+
+            if (dragging) {
+                inStyles.display = 'block';
+            } else {
+                outStyles.display = 'block';
+            }
+
+            inStyles.transform = `translateX(${Math.round((1 - progress) * 100) * (inverse ? 1 : -1)}%)`;
+            outStyles.transform = `translateX(${Math.round(progress * 100) * (inverse ? -1 : 1)}%)`;
+        }
+
+        $.setStyle(nodeIn, inStyles);
+        $.setStyle(nodeOut, outStyles);
+    }
+    /**
+     * Update the carousel indicators.
+     */
+    function _updateIndicators() {
+        const oldIndicator = $.find('.active[data-ui-slide-to]', this._node);
+        const newIndicator = $.find('[data-ui-slide-to="' + this._index + '"]', this._node);
+        $.removeClass(oldIndicator, 'active');
+        $.addClass(newIndicator, 'active');
+    }
 
     // Carousel default options
     Carousel.defaults = {
@@ -904,6 +904,20 @@
         wrap: true,
         swipe: true,
     };
+
+    // Carousel prototype
+    const proto$4 = Carousel.prototype;
+
+    proto$4._events = _events$2;
+    proto$4._resetStyles = _resetStyles;
+    proto$4._setIndex = _setIndex;
+    proto$4._setTimer = _setTimer;
+    proto$4._show = _show$2;
+    proto$4._update = _update;
+    proto$4._updateIndicators = _updateIndicators;
+
+    // Carousel init
+    initComponent('carousel', Carousel);
 
     // Carousel events
     $((_) => {
@@ -1065,13 +1079,14 @@
         }
     }
 
-    initComponent('collapse', Collapse);
-
     // Collapse default options
     Collapse.defaults = {
         direction: 'bottom',
         duration: 250,
     };
+
+    // Collapse init
+    initComponent('collapse', Collapse);
 
     // Collapse events
     $.addEventDelegate(document, 'click.ui.collapse', '[data-ui-toggle="collapse"]', (e) => {
@@ -1306,7 +1321,7 @@
                 this._node,
                 (parent) =>
                     $.css(parent, 'position') === 'relative' &&
-                    ['overflow', 'overflow-x', 'overflow-y'].some((overflow) =>
+                    ['overflow', 'overflowX', 'overflowY'].some((overflow) =>
                         ['auto', 'scroll'].includes(
                             $.css(parent, overflow),
                         ),
@@ -1515,82 +1530,6 @@
                 this._options.afterUpdate(this._node, this._options.reference, placement, position);
             }
         }
-
-        /**
-         * Update the arrow.
-         * @param {string} placement The placement of the Popper.
-         * @param {string} position The position of the Popper.
-         */
-        _updateArrow(placement, position) {
-            const nodeBox = $.rect(this._node, { offset: true });
-            const referenceBox = $.rect(this._options.reference, { offset: true });
-
-            const arrowStyles = {
-                position: 'absolute',
-                top: '',
-                right: '',
-                bottom: '',
-                left: '',
-            };
-            $.setStyle(this._options.arrow, arrowStyles);
-
-            const arrowBox = $.rect(this._options.arrow, { offset: true });
-
-            if (['top', 'bottom'].includes(placement)) {
-                arrowStyles[placement === 'top' ? 'bottom' : 'top'] = -Math.floor(arrowBox.height);
-                const diff = (referenceBox.width - nodeBox.width) / 2;
-
-                let offset = (nodeBox.width / 2) - (arrowBox.width / 2);
-                if (position === 'start') {
-                    offset += diff;
-                } else if (position === 'end') {
-                    offset -= diff;
-                }
-
-                let min = Math.max(referenceBox.left, nodeBox.left) - arrowBox.left;
-                let max = Math.min(referenceBox.right, nodeBox.right) - arrowBox.left - arrowBox.width;
-
-                if (referenceBox.width < arrowBox.width) {
-                    min -= arrowBox.width / 2 - referenceBox.width / 2;
-                    max -= arrowBox.width / 2 - referenceBox.width / 2;
-                }
-
-                offset = Math.round(offset);
-                min = Math.round(min);
-                max = Math.round(max);
-
-                arrowStyles.left = $._clamp(offset, min, max);
-            } else {
-                arrowStyles[placement === 'right' ? 'left' : 'right'] = -Math.floor(arrowBox.width);
-
-                const diff = (referenceBox.height - nodeBox.height) / 2;
-
-                let offset = (nodeBox.height / 2) - arrowBox.height;
-                if (position === 'start') {
-                    offset += diff;
-                } else if (position === 'end') {
-                    offset -= diff;
-                }
-
-                let min = Math.max(referenceBox.top, nodeBox.top) - arrowBox.top;
-                let max = Math.min(referenceBox.bottom, nodeBox.bottom) - arrowBox.top - arrowBox.height;
-
-                if (referenceBox.height < arrowBox.height * 2) {
-                    min -= arrowBox.height - referenceBox.height / 2;
-                    max -= arrowBox.height - referenceBox.height / 2;
-                } else {
-                    max -= arrowBox.height;
-                }
-
-                offset = Math.round(offset);
-                min = Math.round(min);
-                max = Math.round(max);
-
-                arrowStyles.top = $._clamp(offset, min, max);
-            }
-
-            $.setStyle(this._options.arrow, arrowStyles);
-        }
     }
 
     /**
@@ -1754,8 +1693,6 @@
         return clickTarget || e.target;
     }
 
-    initComponent('dropdown', Dropdown);
-
     // Dropdown default options
     Dropdown.defaults = {
         display: 'dynamic',
@@ -1766,6 +1703,9 @@
         spacing: 3,
         minContact: false,
     };
+
+    // Dropdown init
+    initComponent('dropdown', Dropdown);
 
     // Dropdown events
     $.addEventDelegate(document, 'click.ui.dropdown keyup.ui.dropdown', '[data-ui-toggle="dropdown"]', (e) => {
@@ -2071,35 +2011,6 @@
                 this.show();
             }
         }
-
-        /**
-         * Start a zoom in/out animation.
-         */
-        _zoom() {
-            if ($.getDataset(this._dialog, 'uiAnimating')) {
-                return;
-            }
-
-            $.stop(this._dialog);
-
-            $.animate(
-                this._dialog,
-                (node, progress) => {
-                    if (progress >= 1) {
-                        $.setStyle(node, { transform: '' });
-                        return;
-                    }
-
-                    const zoomOffset = (progress < .5 ? progress : (1 - progress)) / 20;
-                    $.setStyle(node, { transform: `scale(${1 + zoomOffset})` });
-                },
-                {
-                    duration: 200,
-                },
-            ).catch((_) => {
-                //
-            });
-        }
     }
 
     /**
@@ -2135,7 +2046,34 @@
         return Modal.init(node);
     }
 
-    initComponent('modal', Modal);
+    /**
+     * Start a zoom in/out animation.
+     */
+    function _zoom() {
+        if ($.getDataset(this._dialog, 'uiAnimating')) {
+            return;
+        }
+
+        $.stop(this._dialog);
+
+        $.animate(
+            this._dialog,
+            (node, progress) => {
+                if (progress >= 1) {
+                    $.setStyle(node, { transform: '' });
+                    return;
+                }
+
+                const zoomOffset = (progress < .5 ? progress : (1 - progress)) / 20;
+                $.setStyle(node, { transform: `scale(${1 + zoomOffset})` });
+            },
+            {
+                duration: 200,
+            },
+        ).catch((_) => {
+            //
+        });
+    }
 
     // Modal default options
     Modal.defaults = {
@@ -2145,6 +2083,14 @@
         show: false,
         keyboard: true,
     };
+
+    // Modal prototype
+    const proto$3 = Modal.prototype;
+
+    proto$3._zoom = _zoom;
+
+    // Modal init
+    initComponent('modal', Modal);
 
     // Modal events
     $.addEventDelegate(document, 'click.ui.modal', '[data-ui-toggle="modal"]', (e) => {
@@ -2352,8 +2298,6 @@
         }
     }
 
-    initComponent('offcanvas', Offcanvas);
-
     // Offcanvas default options
     Offcanvas.defaults = {
         duration: 250,
@@ -2361,6 +2305,9 @@
         keyboard: true,
         scroll: false,
     };
+
+    // Offcanvas init
+    initComponent('offcanvas', Offcanvas);
 
     // Offcanvas events
     $.addEventDelegate(document, 'click.ui.offcanvas', '[data-ui-toggle="offcanvas"]', (e) => {
@@ -2641,112 +2588,109 @@
                 this._popper.update();
             }
         }
+    }
 
-        /**
-         * Attach events for the Popover.
-         */
-        _events() {
-            if (this._triggers.includes('hover')) {
-                $.addEvent(this._node, 'mouseover.ui.popover', (_) => {
-                    this._stop();
-                    this.show();
-                });
+    /**
+     * Attach events for the Popover.
+     */
+    function _events$1() {
+        if (this._triggers.includes('hover')) {
+            $.addEvent(this._node, 'mouseover.ui.popover', (_) => {
+                this._stop();
+                this.show();
+            });
 
-                $.addEvent(this._node, 'mouseout.ui.popover', (_) => {
-                    this._stop();
-                    this.hide();
-                });
-            }
-
-            if (this._triggers.includes('focus')) {
-                $.addEvent(this._node, 'focus.ui.popover', (_) => {
-                    this._stop();
-                    this.show();
-                });
-
-                $.addEvent(this._node, 'blur.ui.popover', (_) => {
-                    this._stop();
-                    this.hide();
-                });
-            }
-
-            if (this._triggers.includes('click')) {
-                $.addEvent(this._node, 'click.ui.popover', (e) => {
-                    e.preventDefault();
-
-                    this._stop();
-                    this.toggle();
-                });
-            }
-
-            if (this._modal) {
-                $.addEvent(this._modal, 'hide.ui.modal', (_) => {
-                    this._stop();
-                    this.hide();
-                });
-            }
-        }
-
-        /**
-         * Render the Popover element.
-         */
-        _render() {
-            this._popover = $.parseHTML(this._options.template).shift();
-            if (this._options.customClass) {
-                $.addClass(this._popover, this._options.customClass);
-            }
-            this._arrow = $.findOne('.popover-arrow', this._popover);
-            this._popoverHeader = $.findOne('.popover-header', this._popover);
-            this._popoverBody = $.findOne('.popover-body', this._popover);
-        }
-
-        /**
-         * Update the Popover and append to the DOM.
-         */
-        _show() {
-            if (this._options.appendTo) {
-                $.append(this._options.appendTo, this._popover);
-            } else {
-                $.after(this._node, this._popover);
-            }
-
-            if (!this._options.noAttributes) {
-                const id = generateId(this.constructor.DATA_KEY);
-                $.setAttribute(this._popover, { id });
-                $.setAttribute(this._node, { 'aria-described-by': id });
-            }
-
-            this._popper = new Popper(
-                this._popover,
-                {
-                    reference: this._node,
-                    arrow: this._arrow,
-                    placement: this._options.placement,
-                    position: this._options.position,
-                    fixed: this._options.fixed,
-                    spacing: this._options.spacing,
-                    minContact: this._options.minContact,
-                    noAttributes: this._options.noAttributes,
-                },
-            );
-
-            window.requestAnimationFrame((_) => {
-                this.update();
+            $.addEvent(this._node, 'mouseout.ui.popover', (_) => {
+                this._stop();
+                this.hide();
             });
         }
 
-        /**
-         * Stop the animations.
-         */
-        _stop() {
-            if (this._enabled && $.getDataset(this._popover, 'uiAnimating')) {
-                $.stop(this._popover);
-                $.removeDataset(this._popover, 'uiAnimating');
-            }
+        if (this._triggers.includes('focus')) {
+            $.addEvent(this._node, 'focus.ui.popover', (_) => {
+                this._stop();
+                this.show();
+            });
+
+            $.addEvent(this._node, 'blur.ui.popover', (_) => {
+                this._stop();
+                this.hide();
+            });
+        }
+
+        if (this._triggers.includes('click')) {
+            $.addEvent(this._node, 'click.ui.popover', (e) => {
+                e.preventDefault();
+
+                this._stop();
+                this.toggle();
+            });
+        }
+
+        if (this._modal) {
+            $.addEvent(this._modal, 'hide.ui.modal', (_) => {
+                this._stop();
+                this.hide();
+            });
         }
     }
 
-    initComponent('popover', Popover);
+    /**
+     * Update the Popover and append to the DOM.
+     */
+    function _show$1() {
+        if (this._options.appendTo) {
+            $.append(this._options.appendTo, this._popover);
+        } else {
+            $.after(this._node, this._popover);
+        }
+
+        if (!this._options.noAttributes) {
+            const id = generateId(this.constructor.DATA_KEY);
+            $.setAttribute(this._popover, { id });
+            $.setAttribute(this._node, { 'aria-described-by': id });
+        }
+
+        this._popper = new Popper(
+            this._popover,
+            {
+                reference: this._node,
+                arrow: this._arrow,
+                placement: this._options.placement,
+                position: this._options.position,
+                fixed: this._options.fixed,
+                spacing: this._options.spacing,
+                minContact: this._options.minContact,
+                noAttributes: this._options.noAttributes,
+            },
+        );
+
+        window.requestAnimationFrame((_) => {
+            this.update();
+        });
+    }
+    /**
+     * Stop the animations.
+     */
+    function _stop$1() {
+        if (this._enabled && $.getDataset(this._popover, 'uiAnimating')) {
+            $.stop(this._popover);
+            $.removeDataset(this._popover, 'uiAnimating');
+        }
+    }
+
+    /**
+     * Render the Popover element.
+     */
+    function _render$1() {
+        this._popover = $.parseHTML(this._options.template).shift();
+        if (this._options.customClass) {
+            $.addClass(this._popover, this._options.customClass);
+        }
+        this._arrow = $.findOne('.popover-arrow', this._popover);
+        this._popoverHeader = $.findOne('.popover-header', this._popover);
+        this._popoverBody = $.findOne('.popover-body', this._popover);
+    }
 
     // Popover default options
     Popover.defaults = {
@@ -2770,7 +2714,92 @@
         noAttributes: false,
     };
 
-    initComponent('popper', Popper);
+    // Popover prototype
+    const proto$2 = Popover.prototype;
+
+    proto$2._events = _events$1;
+    proto$2._render = _render$1;
+    proto$2._show = _show$1;
+    proto$2._stop = _stop$1;
+
+    // Popover init
+    initComponent('popover', Popover);
+
+    /**
+     * Update the arrow.
+     * @param {string} placement The placement of the Popper.
+     * @param {string} position The position of the Popper.
+     */
+    function _updateArrow(placement, position) {
+        const nodeBox = $.rect(this._node, { offset: true });
+        const referenceBox = $.rect(this._options.reference, { offset: true });
+
+        const arrowStyles = {
+            position: 'absolute',
+            top: '',
+            right: '',
+            bottom: '',
+            left: '',
+        };
+        $.setStyle(this._options.arrow, arrowStyles);
+
+        const arrowBox = $.rect(this._options.arrow, { offset: true });
+
+        if (['top', 'bottom'].includes(placement)) {
+            arrowStyles[placement === 'top' ? 'bottom' : 'top'] = -Math.floor(arrowBox.height);
+            const diff = (referenceBox.width - nodeBox.width) / 2;
+
+            let offset = (nodeBox.width / 2) - (arrowBox.width / 2);
+            if (position === 'start') {
+                offset += diff;
+            } else if (position === 'end') {
+                offset -= diff;
+            }
+
+            let min = Math.max(referenceBox.left, nodeBox.left) - arrowBox.left;
+            let max = Math.min(referenceBox.right, nodeBox.right) - arrowBox.left - arrowBox.width;
+
+            if (referenceBox.width < arrowBox.width) {
+                min -= arrowBox.width / 2 - referenceBox.width / 2;
+                max -= arrowBox.width / 2 - referenceBox.width / 2;
+            }
+
+            offset = Math.round(offset);
+            min = Math.round(min);
+            max = Math.round(max);
+
+            arrowStyles.left = $._clamp(offset, min, max);
+        } else {
+            arrowStyles[placement === 'right' ? 'left' : 'right'] = -Math.floor(arrowBox.width);
+
+            const diff = (referenceBox.height - nodeBox.height) / 2;
+
+            let offset = (nodeBox.height / 2) - arrowBox.height;
+            if (position === 'start') {
+                offset += diff;
+            } else if (position === 'end') {
+                offset -= diff;
+            }
+
+            let min = Math.max(referenceBox.top, nodeBox.top) - arrowBox.top;
+            let max = Math.min(referenceBox.bottom, nodeBox.bottom) - arrowBox.top - arrowBox.height;
+
+            if (referenceBox.height < arrowBox.height * 2) {
+                min -= arrowBox.height - referenceBox.height / 2;
+                max -= arrowBox.height - referenceBox.height / 2;
+            } else {
+                max -= arrowBox.height;
+            }
+
+            offset = Math.round(offset);
+            min = Math.round(min);
+            max = Math.round(max);
+
+            arrowStyles.top = $._clamp(offset, min, max);
+        }
+
+        $.setStyle(this._options.arrow, arrowStyles);
+    }
 
     // Popper default options
     Popper.defaults = {
@@ -2787,6 +2816,14 @@
         useGpu: true,
         noAttributes: false,
     };
+
+    // Popper prototype
+    const proto$1 = Popper.prototype;
+
+    proto$1._updateArrow = _updateArrow;
+
+    // Popper init
+    initComponent('popper', Popper);
 
     /**
      * Tab Class
@@ -2908,12 +2945,13 @@
         }
     }
 
-    initComponent('tab', Tab);
-
     // Tab default options
     Tab.defaults = {
         duration: 100,
     };
+
+    // Tab init
+    initComponent('tab', Tab);
 
     // Tab events
     $.addEventDelegate(document, 'click.ui.tab', '[data-ui-toggle="tab"]', (e) => {
@@ -2988,14 +3026,15 @@
         }
     }
 
-    initComponent('toast', Toast);
-
     // Toast default options
     Toast.defaults = {
         autohide: true,
         delay: 5000,
         duration: 100,
     };
+
+    // Toast init
+    initComponent('toast', Toast);
 
     // Toast events
     $.addEventDelegate(document, 'click.ui.toast', '[data-ui-dismiss="toast"]', (e) => {
@@ -3199,111 +3238,108 @@
                 this._popper.update();
             }
         }
+    }
 
-        /**
-         * Attach events for the Tooltip.
-         */
-        _events() {
-            if (this._triggers.includes('hover')) {
-                $.addEvent(this._node, 'mouseover.ui.tooltip', (_) => {
-                    this._stop();
-                    this.show();
-                });
+    /**
+     * Attach events for the Tooltip.
+     */
+    function _events() {
+        if (this._triggers.includes('hover')) {
+            $.addEvent(this._node, 'mouseover.ui.tooltip', (_) => {
+                this._stop();
+                this.show();
+            });
 
-                $.addEvent(this._node, 'mouseout.ui.tooltip', (_) => {
-                    this._stop();
-                    this.hide();
-                });
-            }
-
-            if (this._triggers.includes('focus')) {
-                $.addEvent(this._node, 'focus.ui.tooltip', (_) => {
-                    this._stop();
-                    this.show();
-                });
-
-                $.addEvent(this._node, 'blur.ui.tooltip', (_) => {
-                    this._stop();
-                    this.hide();
-                });
-            }
-
-            if (this._triggers.includes('click')) {
-                $.addEvent(this._node, 'click.ui.tooltip', (e) => {
-                    e.preventDefault();
-
-                    this._stop();
-                    this.toggle();
-                });
-            }
-
-            if (this._modal) {
-                $.addEvent(this._modal, 'hide.ui.modal', (_) => {
-                    this._stop();
-                    this.hide();
-                });
-            }
-        }
-
-        /**
-         * Render the Tooltip element.
-         */
-        _render() {
-            this._tooltip = $.parseHTML(this._options.template).shift();
-            if (this._options.customClass) {
-                $.addClass(this._tooltip, this._options.customClass);
-            }
-            this._arrow = $.findOne('.tooltip-arrow', this._tooltip);
-            this._tooltipInner = $.findOne('.tooltip-inner', this._tooltip);
-        }
-
-        /**
-         * Update the Tooltip and append to the DOM.
-         */
-        _show() {
-            if (this._options.appendTo) {
-                $.append(this._options.appendTo, this._tooltip);
-            } else {
-                $.after(this._node, this._tooltip);
-            }
-
-            if (!this._options.noAttributes) {
-                const id = generateId(this.constructor.DATA_KEY);
-                $.setAttribute(this._tooltip, { id });
-                $.setAttribute(this._node, { 'aria-described-by': id });
-            }
-
-            this._popper = new Popper(
-                this._tooltip,
-                {
-                    reference: this._node,
-                    arrow: this._arrow,
-                    placement: this._options.placement,
-                    position: this._options.position,
-                    fixed: this._options.fixed,
-                    spacing: this._options.spacing,
-                    minContact: this._options.minContact,
-                    noAttributes: this._options.noAttributes,
-                },
-            );
-
-            window.requestAnimationFrame((_) => {
-                this.update();
+            $.addEvent(this._node, 'mouseout.ui.tooltip', (_) => {
+                this._stop();
+                this.hide();
             });
         }
 
-        /**
-         * Stop the animations.
-         */
-        _stop() {
-            if (this._enabled && $.getDataset(this._tooltip, 'uiAnimating')) {
-                $.stop(this._tooltip);
-                $.removeDataset(this._tooltip, 'uiAnimating');
-            }
+        if (this._triggers.includes('focus')) {
+            $.addEvent(this._node, 'focus.ui.tooltip', (_) => {
+                this._stop();
+                this.show();
+            });
+
+            $.addEvent(this._node, 'blur.ui.tooltip', (_) => {
+                this._stop();
+                this.hide();
+            });
+        }
+
+        if (this._triggers.includes('click')) {
+            $.addEvent(this._node, 'click.ui.tooltip', (e) => {
+                e.preventDefault();
+
+                this._stop();
+                this.toggle();
+            });
+        }
+
+        if (this._modal) {
+            $.addEvent(this._modal, 'hide.ui.modal', (_) => {
+                this._stop();
+                this.hide();
+            });
         }
     }
 
-    initComponent('tooltip', Tooltip);
+    /**
+     * Update the Tooltip and append to the DOM.
+     */
+    function _show() {
+        if (this._options.appendTo) {
+            $.append(this._options.appendTo, this._tooltip);
+        } else {
+            $.after(this._node, this._tooltip);
+        }
+
+        if (!this._options.noAttributes) {
+            const id = generateId(this.constructor.DATA_KEY);
+            $.setAttribute(this._tooltip, { id });
+            $.setAttribute(this._node, { 'aria-described-by': id });
+        }
+
+        this._popper = new Popper(
+            this._tooltip,
+            {
+                reference: this._node,
+                arrow: this._arrow,
+                placement: this._options.placement,
+                position: this._options.position,
+                fixed: this._options.fixed,
+                spacing: this._options.spacing,
+                minContact: this._options.minContact,
+                noAttributes: this._options.noAttributes,
+            },
+        );
+
+        window.requestAnimationFrame((_) => {
+            this.update();
+        });
+    }
+    /**
+     * Stop the animations.
+     */
+    function _stop() {
+        if (this._enabled && $.getDataset(this._tooltip, 'uiAnimating')) {
+            $.stop(this._tooltip);
+            $.removeDataset(this._tooltip, 'uiAnimating');
+        }
+    }
+
+    /**
+     * Render the Tooltip element.
+     */
+    function _render() {
+        this._tooltip = $.parseHTML(this._options.template).shift();
+        if (this._options.customClass) {
+            $.addClass(this._tooltip, this._options.customClass);
+        }
+        this._arrow = $.findOne('.tooltip-arrow', this._tooltip);
+        this._tooltipInner = $.findOne('.tooltip-inner', this._tooltip);
+    }
 
     // Tooltip default options
     Tooltip.defaults = {
@@ -3325,6 +3361,17 @@
         minContact: false,
         noAttributes: false,
     };
+
+    // Tooltip prototype
+    const proto = Tooltip.prototype;
+
+    proto._events = _events;
+    proto._render = _render;
+    proto._show = _show;
+    proto._stop = _stop;
+
+    // Tooltip init
+    initComponent('tooltip', Tooltip);
 
     // Clipboard events
     $.addEventDelegate(document, 'click', '[data-ui-toggle="clipboard"]', (e) => {

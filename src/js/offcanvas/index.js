@@ -3,8 +3,6 @@ import { $, document } from './../globals.js';
 import { getTarget, initComponent } from './../helpers.js';
 import { getClickTarget } from './../click-target/index.js';
 
-initComponent('offcanvas', Offcanvas);
-
 // Offcanvas default options
 Offcanvas.defaults = {
     duration: 250,
@@ -12,6 +10,9 @@ Offcanvas.defaults = {
     keyboard: true,
     scroll: false,
 };
+
+// Offcanvas init
+initComponent('offcanvas', Offcanvas);
 
 // Offcanvas events
 $.addEventDelegate(document, 'click.ui.offcanvas', '[data-ui-toggle="offcanvas"]', (e) => {
