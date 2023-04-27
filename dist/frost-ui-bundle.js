@@ -10621,7 +10621,7 @@
             to: index,
         };
 
-        if (!$.triggerOne(this._node, 'slide.ui.carousel', eventData)) {
+        if (!$.triggerOne(this._node, 'slide.ui.carousel', { detail: eventData })) {
             return;
         }
 
@@ -10645,7 +10645,7 @@
         ).then((_) => {
             this._updateIndicators();
             $.removeDataset(this._node, 'uiSliding');
-            $.triggerEvent(this._node, 'slid.ui.carousel', eventData);
+            $.triggerEvent(this._node, 'slid.ui.carousel', { detail: eventData });
 
             this._paused = false;
             this._setTimer();
@@ -11735,10 +11735,14 @@
          * Show the Modal.
          */
         show() {
+            const eventData = {
+                relatedTarget: this._activeTarget,
+            };
+
             if (
                 $.getDataset(this._dialog, 'uiAnimating') ||
                 $.hasClass(this._node, 'show') ||
-                !$.triggerOne(this._node, 'show.ui.modal')
+                !$.triggerOne(this._node, 'show.ui.modal', { detail: eventData })
             ) {
                 return;
             }

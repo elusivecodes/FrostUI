@@ -79,7 +79,7 @@ export function _show(index) {
         to: index,
     };
 
-    if (!$.triggerOne(this._node, 'slide.ui.carousel', eventData)) {
+    if (!$.triggerOne(this._node, 'slide.ui.carousel', { detail: eventData })) {
         return;
     }
 
@@ -103,7 +103,7 @@ export function _show(index) {
     ).then((_) => {
         this._updateIndicators();
         $.removeDataset(this._node, 'uiSliding');
-        $.triggerEvent(this._node, 'slid.ui.carousel', eventData);
+        $.triggerEvent(this._node, 'slid.ui.carousel', { detail: eventData });
 
         this._paused = false;
         this._setTimer();

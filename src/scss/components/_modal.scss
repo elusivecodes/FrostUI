@@ -129,7 +129,7 @@
     align-items: center;
     justify-content: flex-end;
     padding: var(--ui-modal-padding-y) var(--ui-modal-padding-x);
-    border-bottom: var(--ui-modal-footer-border-width) var(--ui-border-style) var(--ui-modal-footer-border-color);
+    border-top: var(--ui-modal-footer-border-width) var(--ui-border-style) var(--ui-modal-footer-border-color);
     @include border-bottom-radius(var(--ui-modal-inner-border-radius));
 
     >* {
