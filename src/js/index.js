@@ -4,6 +4,7 @@ import Button from './button/index.js';
 import Carousel from './carousel/index.js';
 import Collapse from './collapse/index.js';
 import Dropdown from './dropdown/index.js';
+import FocusTrap from './focus-trap/index.js';
 import Modal from './modal/index.js';
 import Offcanvas from './offcanvas/index.js';
 import Popover from './popover/index.js';
@@ -26,6 +27,7 @@ export {
     Carousel,
     Collapse,
     Dropdown,
+    FocusTrap,
     Modal,
     Offcanvas,
     Popover,

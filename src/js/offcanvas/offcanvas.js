@@ -1,5 +1,6 @@
 import { getDirection } from './helpers.js';
 import BaseComponent from './../base-component.js';
+import FocusTrap from './../focus-trap/index.js';
 import { $, document } from './../globals.js';
 import { addScrollPadding, resetScrollPadding } from './../helpers.js';
 
@@ -9,9 +10,27 @@ import { addScrollPadding, resetScrollPadding } from './../helpers.js';
  */
 export default class Offcanvas extends BaseComponent {
     /**
+     * New Offcanvas constructor.
+     * @param {HTMLElement} node The input node.
+     * @param {object} [options] The options to create the Offcanvas with.
+     */
+    constructor(node, options) {
+        super(node, options);
+
+        if (this._options.scroll || this._options.backdrop) {
+            this._focusTrap = FocusTrap.init(this._node);
+        }
+    }
+
+    /**
      * Dispose the Offcanvas.
      */
     dispose() {
+        if (this._focusTrap) {
+            this._focusTrap.dispose();
+            this._focusTrap = null;
+        }
+
         this._activeTarget = null;
 
         super.dispose();
@@ -30,6 +49,10 @@ export default class Offcanvas extends BaseComponent {
         }
 
         $.setDataset(this._node, { uiAnimating: true });
+
+        if (this._focusTrap) {
+            this._focusTrap.deactivate();
+        }
 
         Promise.all([
             $.fadeOut(this._node, {
@@ -102,6 +125,11 @@ export default class Offcanvas extends BaseComponent {
         ]).then((_) => {
             $.removeAttribute(this._node, 'aria-hidden');
             $.setAttribute(this._node, { 'aria-modal': true });
+
+            if (this._focusTrap) {
+                this._focusTrap.activate();
+            }
+
             $.removeDataset(this._node, 'uiAnimating');
             $.triggerEvent(this._node, 'shown.ui.offcanvas');
         }).catch((_) => {

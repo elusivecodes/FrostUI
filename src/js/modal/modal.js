@@ -1,4 +1,5 @@
 import BaseComponent from './../base-component.js';
+import FocusTrap from './../focus-trap/index.js';
 import { $, document } from './../globals.js';
 import { addScrollPadding, resetScrollPadding } from './../helpers.js';
 
@@ -20,12 +21,21 @@ export default class Modal extends BaseComponent {
         if (this._options.show) {
             this.show();
         }
+
+        if (this._options.focus) {
+            this._focusTrap = FocusTrap.init(this._node);
+        }
     }
 
     /**
      * Dispose the Modal.
      */
     dispose() {
+        if (this._focusTrap) {
+            this._focusTrap.dispose();
+            this._focusTrap = null;
+        }
+
         this._dialog = null;
         this._activeTarget = null;
         this._backdrop = null;
@@ -47,6 +57,10 @@ export default class Modal extends BaseComponent {
 
         $.stop(this._dialog);
         $.setDataset(this._dialog, { uiAnimating: true });
+
+        if (this._focusTrap) {
+            this._focusTrap.deactivate();
+        }
 
         const stackSize = $.find('.modal.show').length - 1;
 
@@ -167,8 +181,8 @@ export default class Modal extends BaseComponent {
             $.removeAttribute(this._node, 'aria-hidden');
             $.setAttribute(this._node, { 'aria-modal': true });
 
-            if (this._options.focus) {
-                $.focus(this._node);
+            if (this._focusTrap) {
+                this._focusTrap.activate();
             }
 
             $.removeDataset(this._dialog, 'uiAnimating');

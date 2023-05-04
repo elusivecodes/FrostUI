@@ -52,6 +52,7 @@ import Button from './node_modules/@fr0st/ui/src/js/button/index.js';
 import Carousel from './node_modules/@fr0st/ui/src/js/carousel/index.js';
 import Collapse from './node_modules/@fr0st/ui/src/js/collapse/index.js';
 import Dropdown from './node_modules/@fr0st/ui/src/js/dropdown/index.js';
+import FocusTrap from './node_modules/@fr0st/ui/src/js/focus-trap/index.js';
 import Modal from './node_modules/@fr0st/ui/src/js/modal/index.js';
 import Offcanvas from './node_modules/@fr0st/ui/src/js/offcanvas/index.js';
 import Popover from './node_modules/@fr0st/ui/src/js/popover/index.js';

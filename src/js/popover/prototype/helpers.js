@@ -1,6 +1,6 @@
 import { $ } from './../../globals.js';
 import { generateId } from './../../helpers.js';
-import Popper from './../../popper/popper.js';
+import Popper from './../../popper/index.js';
 
 /**
  * Update the Popover and append to the DOM.
