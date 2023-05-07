@@ -39,6 +39,8 @@ export function addFocusTrap(focusTrap) {
             focusable.shift();
 
         $.focus(focusTarget || activeTarget);
+    }, {
+        capture: true
     });
 
     $.addEvent(document, 'keydown.ui.focustrap', (e) => {
@@ -47,9 +49,12 @@ export function addFocusTrap(focusTrap) {
         }
 
         reverse = e.shiftKey;
+    }, {
+        capture: true
     });
 
     running = true;
+    reverse = false;
 };
 
 /**

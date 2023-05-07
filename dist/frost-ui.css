@@ -363,7 +363,7 @@ strong {
 }
 
 small, .small {
-  font-size: 0.875rem;
+  font-size: 0.875em;
 }
 
 mark, .mark {
@@ -374,7 +374,7 @@ mark, .mark {
 sub,
 sup {
   position: relative;
-  font-size: 75%;
+  font-size: 0.75em;
   line-height: 0;
   vertical-align: baseline;
 }
@@ -416,7 +416,7 @@ pre {
   margin-top: 0;
   margin-bottom: 1rem;
   overflow: auto;
-  font-size: 0.875rem;
+  font-size: 0.875em;
 }
 pre code {
   font-size: inherit;
@@ -425,7 +425,7 @@ pre code {
 }
 
 code {
-  font-size: 0.875rem;
+  font-size: 0.875em;
   color: var(--ui-code-color);
   word-wrap: break-word;
 }
@@ -435,7 +435,7 @@ a > code {
 
 kbd {
   padding: 0.2rem 0.4rem;
-  font-size: 0.875rem;
+  font-size: 0.875em;
   color: var(--ui-body-bg);
   background-color: var(--ui-body-color);
   border-radius: var(--ui-border-radius);
@@ -827,7 +827,7 @@ progress {
 }
 
 .initialism {
-  font-size: 0.875rem;
+  font-size: 0.875em;
   text-transform: uppercase;
 }
 
@@ -2212,7 +2212,7 @@ fieldset:disabled .btn {
 .btn-sm, .btn-group-sm > .btn {
   --ui-btn-padding-x: 0.5rem;
   --ui-btn-padding-y: 0.25rem;
-  --ui-btn-font-size: 0.875rem;
+  --ui-btn-font-size: 0.875em;
   --ui-btn-border-radius: var(--ui-border-radius-sm);
 }
 
@@ -2524,6 +2524,7 @@ fieldset:disabled .btn {
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
+  color: var(--ui-body-color);
   background-color: var(--ui-card-bg);
   background-clip: border-box;
   border: var(--ui-card-border-width) var(--ui-border-style) var(--ui-card-border-color);
@@ -2931,7 +2932,7 @@ fieldset:disabled .btn {
   display: block;
   padding: var(--ui-dropdown-header-padding-y) var(--ui-dropdown-header-padding-x);
   margin-bottom: 0;
-  font-size: 0.875rem;
+  font-size: 0.875em;
   color: var(--ui-dropdown-header-color);
   white-space: nowrap;
 }
@@ -4416,7 +4417,7 @@ fieldset:disabled .btn {
 .pagination-sm .page-link {
   --ui-pagination-padding-x: 0.5rem;
   --ui-pagination-padding-y: 0.25rem;
-  --ui-pagination-font-size: 0.875rem;
+  --ui-pagination-font-size: 0.875em;
 }
 
 .pagination-lg .page-link {
@@ -4498,7 +4499,7 @@ fieldset:disabled .btn {
   display: block;
   max-width: var(--ui-popover-max-width);
   font-family: -apple-system, blinkmacsystemfont, "Segoe UI", tahoma, geneva, verdana, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 0.875rem;
+  font-size: 0.875em;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -4511,7 +4512,7 @@ fieldset:disabled .btn {
   white-space: normal;
   word-spacing: normal;
   line-break: auto;
-  font-size: 0.875rem;
+  font-size: 0.875em;
   word-wrap: break-word;
   background-color: var(--ui-popover-bg);
   background-clip: padding-box;
@@ -4742,7 +4743,7 @@ fieldset:disabled .btn {
   --ui-toast-padding-x: 0.75rem;
   --ui-toast-padding-y: 0.75rem;
   --ui-toast-margin-bottom: 1rem;
-  --ui-toast-font-size: 0.875rem;
+  --ui-toast-font-size: 0.875em;
   --ui-toast-bg: rgba(var(--ui-body-bg-rgb), 0.85);
   --ui-toast-border-width: var(--ui-border-width);
   --ui-toast-border-color: var(--ui-border-color-translucent);
@@ -4806,7 +4807,7 @@ fieldset:disabled .btn {
   --ui-tooltip-max-width: 200px;
   --ui-tooltip-padding-x: 0.5rem;
   --ui-tooltip-padding-y: 0.25rem;
-  --ui-tooltip-font-size: 0.875rem;
+  --ui-tooltip-font-size: 0.875em;
   --ui-tooltip-color: var(--ui-body-bg);
   --ui-tooltip-bg: var(--ui-emphasis-color);
   --ui-tooltip-border-radius: var(--ui-border-radius);
@@ -4821,7 +4822,7 @@ fieldset:disabled .btn {
   word-wrap: break-word;
   opacity: 0;
   font-family: -apple-system, blinkmacsystemfont, "Segoe UI", tahoma, geneva, verdana, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 0.875rem;
+  font-size: 0.875em;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -5014,7 +5015,7 @@ fieldset:disabled .btn {
 
 .form-text {
   margin-top: 0.25rem;
-  font-size: 0.875rem;
+  font-size: 0.875em;
   color: var(--ui-body-color);
 }
 
@@ -5153,7 +5154,7 @@ select.input-filled[multiple] option, select.input-outline[multiple] option {
 
 .input-sm {
   padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
+  font-size: 0.875em;
 }
 select.input-sm[multiple] option {
   padding: 0.25rem 0.5rem;
@@ -5256,7 +5257,7 @@ select.input-lg[multiple] option {
 .input-group-sm .input-outline,
 .input-group-sm .input-group-text {
   padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
+  font-size: 0.875em;
 }
 
 .input-group-lg .btn,
@@ -5278,7 +5279,7 @@ select.input-lg[multiple] option {
 .col-label-sm {
   padding-top: calc(0.25rem + var(--ui-border-width));
   padding-bottom: calc(0.25rem + var(--ui-border-width));
-  font-size: 0.875rem;
+  font-size: 0.875em;
 }
 
 .col-label-lg {
@@ -5315,7 +5316,7 @@ select.input-lg[multiple] option {
   color: transparent;
 }
 .input-floating.input-sm ~ .label-floating, .input-group-sm .input-floating ~ .label-floating {
-  font-size: 0.875rem;
+  font-size: 0.875em;
 }
 .input-floating.input-lg ~ .label-floating, .input-group-lg .input-floating ~ .label-floating {
   font-size: 1.25rem;

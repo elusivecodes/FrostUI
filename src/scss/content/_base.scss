@@ -139,7 +139,7 @@ strong {
 // small
 
 small {
-    font-size: $font-size-sm;
+    font-size: $small-font-size;
 }
 
 // mark
@@ -154,7 +154,7 @@ mark {
 sub,
 sup {
     position: relative;
-    font-size: $small-font-size;
+    font-size: $sub-sup-font-size;
     line-height: 0;
     vertical-align: baseline;
 }
@@ -204,7 +204,7 @@ pre {
     margin-top: 0;
     margin-bottom: $blockquote-margin-bottom;
     overflow: auto;
-    font-size: $font-size-sm;
+    font-size: $small-font-size;
 
     code {
         font-size: inherit;
@@ -214,7 +214,7 @@ pre {
 }
 
 code {
-    font-size: $font-size-sm;
+    font-size: $small-font-size;
     color: var(--ui-code-color);
     word-wrap: break-word;
 
@@ -225,7 +225,7 @@ code {
 
 kbd {
     padding: $kbd-padding-y $kbd-padding-x;
-    font-size: $font-size-sm;
+    font-size: $small-font-size;
     color: $kbd-color;
     background-color: $kbd-bg;
     border-radius: $kbd-border-radius;

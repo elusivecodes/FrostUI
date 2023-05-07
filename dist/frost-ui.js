@@ -1868,6 +1868,8 @@
                 focusable.shift();
 
             $$1.focus(focusTarget || activeTarget);
+        }, {
+            capture: true
         });
 
         $$1.addEvent(document, 'keydown.ui.focustrap', (e) => {
@@ -1876,9 +1878,12 @@
             }
 
             reverse = e.shiftKey;
+        }, {
+            capture: true
         });
 
         running = true;
+        reverse = false;
     }
     /**
      * Remove a FocusTrap from the set, and detach the FocusTrap events.
@@ -2338,7 +2343,7 @@
         constructor(node, options) {
             super(node, options);
 
-            if (this._options.scroll || this._options.backdrop) {
+            if (!this._options.scroll || this._options.backdrop) {
                 this._focusTrap = FocusTrap.init(this._node);
             }
         }

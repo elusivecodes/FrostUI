@@ -5,7 +5,7 @@ $address-margin-bottom: $spacing !default;
 
 // blockquote
 $blockquote-margin-bottom: $spacing !default;
-$blockquote-font-size: $font-size-lg !default;
+$blockquote-font-size: map-get($font-sizes, 5) !default;
 $blockquote-footer-margin-top: ($spacing * -1) !default;
 $blockquote-footer-font-size: 80% !default;
 $blockquote-footer-color: var(--ui-secondary-color) !default;
@@ -77,7 +77,7 @@ $lead-font-weight: map-get($font-weights, light) !default;
 
 // legend
 $legend-margin-bottom: $spacing * .5 !default;
-$legend-font-size: $font-size-lg !default;
+$legend-font-size: map-get($font-sizes, 5) !default;
 $legend-font-weight: map-get($font-weights, bold) !default;
 
 // list
@@ -93,11 +93,9 @@ $p-margin-bottom: $spacing !default;
 // strong
 $strong-font-weight: map-get($font-weights, bolder) !default;
 
-// sub
-$small-font-size: 75% !default;
+// sub/sup
+$sub-sup-font-size: .75em !default;
 $sub-bottom: -.25em !default;
-
-// sup
 $sup-top: -.25em !default;
 
 // table

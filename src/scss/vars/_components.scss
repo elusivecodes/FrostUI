@@ -52,7 +52,7 @@ $breadcrumb-divider-color: rgba(var(--ui-body-color-rgb), .5) !default;
 $btn-padding-x: $spacing * .5 !default;
 $btn-padding-y: $spacing * .25 !default;
 $btn-font-family: $font-sans-serif !default;
-$btn-font-size: $font-size-md !default;
+$btn-font-size: 1rem !default;
 $btn-font-weight: map-get($font-weights, normal) !default;
 $btn-line-height: map-get($line-heights, base) !default;
 $btn-border-width: var(--ui-border-width) !default;
@@ -63,12 +63,12 @@ $btn-focus-box-shadow: 0 0 0 var(--ui-focus-ring-width) rgba(var(--ui-btn-focus-
 
 $btn-lg-padding-x: $spacing !default;
 $btn-lg-padding-y: math.div($spacing, 3) !default;
-$btn-lg-font-size: $font-size-lg !default;
+$btn-lg-font-size: map-get($font-sizes, 5) !default;
 $btn-lg-border-radius: var(--ui-border-radius-lg) !default;
 
 $btn-sm-padding-x: $spacing * .5 !default;
 $btn-sm-padding-y: $spacing * .25 !default;
-$btn-sm-font-size: $font-size-sm !default;
+$btn-sm-font-size: $small-font-size !default;
 $btn-sm-border-radius: var(--ui-border-radius-sm) !default;
 
 $btn-ripple-opacity: var(--ui-ripple-opacity) !default;
@@ -131,7 +131,7 @@ $btn-close-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/sv
 $dropdown-min-width: 10rem !default;
 $dropdown-padding-x: 0 !default;
 $dropdown-padding-y: $spacing * .5 !default;
-$dropdown-font-size: $font-size-md !default;
+$dropdown-font-size: 1rem !default;
 $dropdown-color: var(--ui-body-color) !default;
 $dropdown-bg: var(--ui-body-bg) !default;
 $dropdown-border-width: var(--ui-border-width) !default;
@@ -155,7 +155,7 @@ $dropdown-item-font-weight: map-get($font-weights, normal) !default;
 
 $dropdown-header-padding-x: $spacing !default;
 $dropdown-header-padding-y: $dropdown-padding-y !default;
-$dropdown-header-font-size: $font-size-sm !default;
+$dropdown-header-font-size: $small-font-size !default;
 $dropdown-header-color: var(--ui-secondary-color) !default;
 
 // list group
@@ -249,7 +249,7 @@ $navbar-text-color: var(--ui-secondary-color) !default;
 
 $navbar-nav-link-padding-x: $spacing * .5 !default;
 
-$navbar-brand-font-size: $font-size-lg !default;
+$navbar-brand-font-size: map-get($font-sizes, 5) !default;
 $nav-link-height: ($font-size * map-get($line-heights, base)) + ($nav-link-padding-y * 2) !default;
 $navbar-brand-height: $navbar-brand-font-size * map-get($line-heights, base) !default;
 $navbar-brand-padding-y: ($nav-link-height - $navbar-brand-height) * .5 !default;
@@ -259,7 +259,7 @@ $navbar-nav-scroll-height: 75vh !default;
 
 $navbar-toggler-padding-x: $spacing * .75 !default;
 $navbar-toggler-padding-y: $spacing * .25 !default;
-$navbar-toggler-font-size: $font-size-lg !default;
+$navbar-toggler-font-size: map-get($font-sizes, 5) !default;
 $navbar-toggler-border-color: rgba(var(--ui-emphasis-color-rgb), .15) !default;
 $navbar-toggler-border-width: var(--ui-border-width) !default;
 $navbar-toggler-border-radius: var(--ui-border-radius) !default;
@@ -307,11 +307,11 @@ $pagination-disabled-border-color: var(--ui-border-color) !default;
 
 $pagination-sm-padding-x: $spacing * .5 !default;
 $pagination-sm-padding-y: $spacing * .25 !default;
-$pagination-sm-font-size: $font-size-sm !default;
+$pagination-sm-font-size: $small-font-size !default;
 
 $pagination-lg-padding-x: $spacing * 1.5 !default;
 $pagination-lg-padding-y: $spacing * .75 !default;
-$pagination-lg-font-size: $font-size-lg !default;
+$pagination-lg-font-size: map-get($font-sizes, 5) !default;
 
 // placeholder
 $placeholder-opacity-max: .5 !default;
@@ -321,7 +321,7 @@ $placeholder-opacity-min: .2 !default;
 $popover-max-width: 276px !default;
 $popover-padding-x: $spacing * .5 !default;
 $popover-padding-y: $spacing !default;
-$popover-font-size: $font-size-sm !default;
+$popover-font-size: $small-font-size !default;
 $popover-bg: var(--ui-body-bg) !default;
 $popover-border-width: var(--ui-border-width) !default;
 $popover-border-color: var(--ui-border-color) !default;
@@ -341,7 +341,7 @@ $popover-arrow-height: .5rem !default;
 
 // progress
 $progress-height: 1rem !default;
-$progress-font-size: $font-size-xs !default;
+$progress-font-size: .65rem !default;
 $progress-bg: var(--ui-secondary-bg) !default;
 $progress-border-radius: var(--ui-border-radius) !default;
 $progress-bar-color: var(--ui-white) !default;
@@ -370,7 +370,7 @@ $toast-max-width: 350px !default;
 $toast-padding-x: $spacing * .75 !default;
 $toast-padding-y: $spacing * .75 !default;
 $toast-margin-bottom: $spacing !default;
-$toast-font-size: $font-size-sm !default;
+$toast-font-size: $small-font-size !default;
 $toast-bg: rgba(var(--ui-body-bg-rgb), .85) !default;
 $toast-border-width: var(--ui-border-width) !default;
 $toast-border-color: var(--ui-border-color-translucent) !default;
@@ -385,7 +385,7 @@ $toast-header-border-color: $toast-border-color !default;
 $tooltip-max-width: 200px !default;
 $tooltip-padding-x: $spacing * .5 !default;
 $tooltip-padding-y: $spacing * .25 !default;
-$tooltip-font-size: $font-size-sm !default;
+$tooltip-font-size: $small-font-size !default;
 $tooltip-color: var(--ui-body-bg) !default;
 $tooltip-bg: var(--ui-emphasis-color) !default;
 $tooltip-border-radius: var(--ui-border-radius) !default;

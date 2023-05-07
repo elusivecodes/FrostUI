@@ -17,7 +17,7 @@ export default class Offcanvas extends BaseComponent {
     constructor(node, options) {
         super(node, options);
 
-        if (this._options.scroll || this._options.backdrop) {
+        if (!this._options.scroll || this._options.backdrop) {
             this._focusTrap = FocusTrap.init(this._node);
         }
     }

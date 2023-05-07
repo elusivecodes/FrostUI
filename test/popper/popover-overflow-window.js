@@ -37,7 +37,7 @@ describe('popper popover (overflow/window)', function() {
                 await exec((_) => {
                     return $.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1134px, 1637px, 0px)',
+                'translate3d(1132px, 1637px, 0px)',
             );
         });
 
@@ -58,7 +58,7 @@ describe('popper popover (overflow/window)', function() {
                 await exec((_) => {
                     return $.getStyle('.popover', 'transform');
                 }),
-                'translate3d(987px, 1578px, 0px)',
+                'translate3d(983px, 1577px, 0px)',
             );
         });
 
@@ -79,7 +79,7 @@ describe('popper popover (overflow/window)', function() {
                 await exec((_) => {
                     return $.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1134px, 1520px, 0px)',
+                'translate3d(1132px, 1518px, 0px)',
             );
         });
 
@@ -101,7 +101,7 @@ describe('popper popover (overflow/window)', function() {
                 await exec((_) => {
                     return $.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1281px, 1578px, 0px)',
+                'translate3d(1281px, 1577px, 0px)',
             );
         });
     });
@@ -124,7 +124,7 @@ describe('popper popover (overflow/window)', function() {
                 await exec((_) => {
                     return $.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1065px, 1520px, 0px)',
+                'translate3d(1061px, 1518px, 0px)',
             );
         });
 
@@ -145,7 +145,7 @@ describe('popper popover (overflow/window)', function() {
                 await exec((_) => {
                     return $.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1065px, 1520px, 0px)',
+                'translate3d(1061px, 1518px, 0px)',
             );
         });
 
@@ -167,7 +167,7 @@ describe('popper popover (overflow/window)', function() {
                 await exec((_) => {
                     return $.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1200px, 1520px, 0px)',
+                'translate3d(1200px, 1518px, 0px)',
             );
         });
 
@@ -188,7 +188,7 @@ describe('popper popover (overflow/window)', function() {
                 await exec((_) => {
                     return $.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1200px, 1520px, 0px)',
+                'translate3d(1200px, 1518px, 0px)',
             );
         });
 
@@ -209,7 +209,7 @@ describe('popper popover (overflow/window)', function() {
                 await exec((_) => {
                     return $.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1281px, 1556px, 0px)',
+                'translate3d(1281px, 1554px, 0px)',
             );
         });
 
@@ -251,7 +251,7 @@ describe('popper popover (overflow/window)', function() {
                 await exec((_) => {
                     return $.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1281px, 1556px, 0px)',
+                'translate3d(1281px, 1554px, 0px)',
             );
         });
 
@@ -293,7 +293,7 @@ describe('popper popover (overflow/window)', function() {
                 await exec((_) => {
                     return $.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1065px, 1637px, 0px)',
+                'translate3d(1061px, 1637px, 0px)',
             );
         });
 
@@ -314,7 +314,7 @@ describe('popper popover (overflow/window)', function() {
                 await exec((_) => {
                     return $.getStyle('.popover', 'transform');
                 }),
-                'translate3d(1065px, 1637px, 0px)',
+                'translate3d(1061px, 1637px, 0px)',
             );
         });
 
@@ -377,7 +377,7 @@ describe('popper popover (overflow/window)', function() {
                 await exec((_) => {
                     return $.getStyle('.popover', 'transform');
                 }),
-                'translate3d(987px, 1556px, 0px)',
+                'translate3d(983px, 1554px, 0px)',
             );
         });
 
@@ -398,7 +398,7 @@ describe('popper popover (overflow/window)', function() {
                 await exec((_) => {
                     return $.getStyle('.popover', 'transform');
                 }),
-                'translate3d(987px, 1600px, 0px)',
+                'translate3d(983px, 1600px, 0px)',
             );
         });
 
@@ -419,7 +419,7 @@ describe('popper popover (overflow/window)', function() {
                 await exec((_) => {
                     return $.getStyle('.popover', 'transform');
                 }),
-                'translate3d(987px, 1556px, 0px)',
+                'translate3d(983px, 1554px, 0px)',
             );
         });
 
@@ -440,7 +440,7 @@ describe('popper popover (overflow/window)', function() {
                 await exec((_) => {
                     return $.getStyle('.popover', 'transform');
                 }),
-                'translate3d(987px, 1600px, 0px)',
+                'translate3d(983px, 1600px, 0px)',
             );
         });
     });
