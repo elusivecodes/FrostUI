@@ -172,6 +172,6 @@ export function _events() {
 
         const dragEvent = $.mouseDragFactory(downEvent, moveEvent, upEvent);
 
-        $.addEvent(this._node, 'mousedown.ui.carousel touchstart.ui.carousel', dragEvent, { passive: true });
+        $.addEvent(this._node, 'mousedown.ui.carousel touchstart.ui.carousel', dragEvent);
     }
 };
