@@ -17,8 +17,8 @@
     display: flex;
     flex-direction: column;
     min-width: 0;
-    word-wrap: break-word;
     color: var(--ui-body-color);
+    word-wrap: break-word;
     background-color: var(--ui-card-bg);
     background-clip: border-box;
     border: var(--ui-card-border-width) var(--ui-border-style) var(--ui-card-border-color);

@@ -115,14 +115,10 @@ export default class Modal extends BaseComponent {
      * Show the Modal.
      */
     show() {
-        const eventData = {
-            relatedTarget: this._activeTarget,
-        };
-
         if (
             $.getDataset(this._dialog, 'uiAnimating') ||
             $.hasClass(this._node, 'show') ||
-            !$.triggerOne(this._node, 'show.ui.modal', { detail: eventData })
+            !$.triggerOne(this._node, 'show.ui.modal', { data: { relatedTarget: this._activeTarget } })
         ) {
             return;
         }

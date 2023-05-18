@@ -1402,16 +1402,6 @@
         'ul': [],
     };
 
-    const cssNumberProperties = [
-        'font-weight',
-        'line-height',
-        'opacity',
-        'orphans',
-        'scale',
-        'widows',
-        'z-index',
-    ];
-
     const animations = new Map();
 
     const data = new WeakMap();
@@ -2285,8 +2275,8 @@
             for (let [style, value] of Object.entries(options.style)) {
                 style = kebabCase(style);
 
-                // if value is numeric and not a number property, add px
-                if (value && isNumeric(value) && !cssNumberProperties.includes(style)) {
+                // if value is numeric and property doesn't support number values, add px
+                if (value && isNumeric(value) && !CSS.supports(style, value)) {
                     value += 'px';
                 }
 
@@ -4363,9 +4353,10 @@
      * @param {object} [options] The options for the event.
      * @param {Boolean} [options.capture] Whether to use a capture event.
      * @param {string} [options.delegate] The delegate selector.
+     * @param {Boolean} [options.passive] Whether to use a passive event.
      * @param {Boolean} [options.selfDestruct] Whether to use a self-destructing event.
      */
-    function addEvent$1(selector, eventNames, callback, { capture = false, delegate = null, selfDestruct = false } = {}) {
+    function addEvent$1(selector, eventNames, callback, { capture = false, delegate = null, passive = false, selfDestruct = false } = {}) {
         const nodes = parseNodes(selector, {
             shadow: true,
             document: true,
@@ -4382,6 +4373,7 @@
                 delegate,
                 selfDestruct,
                 capture,
+                passive,
             };
 
             for (const node of nodes) {
@@ -4415,7 +4407,7 @@
 
                 nodeEvents[realEventName].push({ ...eventData });
 
-                node.addEventListener(realEventName, realCallback, { capture });
+                node.addEventListener(realEventName, realCallback, { capture, passive });
             }
         }
     }
@@ -4427,9 +4419,10 @@
      * @param {DOM~eventCallback} callback The callback to execute.
      * @param {object} [options] The options for the event.
      * @param {Boolean} [options.capture] Whether to use a capture event.
+     * @param {Boolean} [options.passive] Whether to use a passive event.
      */
-    function addEventDelegate$1(selector, events, delegate, callback, { capture = false } = {}) {
-        addEvent$1(selector, events, callback, { capture, delegate });
+    function addEventDelegate$1(selector, events, delegate, callback, { capture = false, passive = false } = {}) {
+        addEvent$1(selector, events, callback, { capture, delegate, passive });
     }
     /**
      * Add self-destructing delegated events to each node.
@@ -4439,9 +4432,10 @@
      * @param {DOM~eventCallback} callback The callback to execute.
      * @param {object} [options] The options for the event.
      * @param {Boolean} [options.capture] Whether to use a capture event.
+     * @param {Boolean} [options.passive] Whether to use a passive event.
      */
-    function addEventDelegateOnce$1(selector, events, delegate, callback, { capture = false } = {}) {
-        addEvent$1(selector, events, callback, { capture, delegate, selfDestruct: true });
+    function addEventDelegateOnce$1(selector, events, delegate, callback, { capture = false, passive = false } = {}) {
+        addEvent$1(selector, events, callback, { capture, delegate, passive, selfDestruct: true });
     }
     /**
      * Add self-destructing events to each node.
@@ -4450,9 +4444,10 @@
      * @param {DOM~eventCallback} callback The callback to execute.
      * @param {object} [options] The options for the event.
      * @param {Boolean} [options.capture] Whether to use a capture event.
+     * @param {Boolean} [options.passive] Whether to use a passive event.
      */
-    function addEventOnce$1(selector, events, callback, { capture = false } = {}) {
-        addEvent$1(selector, events, callback, { capture, selfDestruct: true });
+    function addEventOnce$1(selector, events, callback, { capture = false, passive = false } = {}) {
+        addEvent$1(selector, events, callback, { capture, passive, selfDestruct: true });
     }
     /**
      * Clone all events from each node to other nodes.
@@ -4478,6 +4473,7 @@
                         {
                             capture: eventData.capture,
                             delegate: eventData.delegate,
+                            passive: eventData.passive,
                             selfDestruct: eventData.selfDestruct,
                         },
                     );
@@ -4587,11 +4583,12 @@
      * @param {string|array|HTMLElement|ShadowRoot|Document|Window|NodeList|HTMLCollection|QuerySet} selector The input node(s), or a query selector string.
      * @param {string} events The event names.
      * @param {object} [options] The options to use for the Event.
-     * @param {*} [options.detail] Additional data to attach to the event.
+     * @param {object} [options.data] Additional data to attach to the event.
+     * @param {*} [options.detail] Additional details to attach to the event.
      * @param {Boolean} [options.bubbles=true] Whether the event will bubble.
      * @param {Boolean} [options.cancelable=true] Whether the event is cancelable.
      */
-    function triggerEvent$1(selector, events, { detail = null, bubbles = true, cancelable = true } = {}) {
+    function triggerEvent$1(selector, events, { data = null, detail = null, bubbles = true, cancelable = true } = {}) {
         const nodes = parseNodes(selector, {
             shadow: true,
             document: true,
@@ -4609,6 +4606,10 @@
                 cancelable,
             });
 
+            if (data) {
+                Object.assign(eventData, data);
+            }
+
             if (realEvent !== event) {
                 eventData.namespace = event.substring(realEvent.length + 1);
                 eventData.namespaceRegExp = eventNamespacedRegExp(event);
@@ -4624,12 +4625,13 @@
      * @param {string|array|HTMLElement|ShadowRoot|Document|Window|NodeList|HTMLCollection|QuerySet} selector The input node(s), or a query selector string.
      * @param {string} event The event name.
      * @param {object} [options] The options to use for the Event.
-     * @param {*} [options.detail] Additional data to attach to the event.
+     * @param {object} [options.data] Additional data to attach to the event.
+     * @param {*} [options.detail] Additional details to attach to the event.
      * @param {Boolean} [options.bubbles=true] Whether the event will bubble.
      * @param {Boolean} [options.cancelable=true] Whether the event is cancelable.
      * @return {Boolean} FALSE if the event was cancelled, otherwise TRUE.
      */
-    function triggerOne$1(selector, event, { detail = null, bubbles = true, cancelable = true } = {}) {
+    function triggerOne$1(selector, event, { data = null, detail = null, bubbles = true, cancelable = true } = {}) {
         const node = parseNode(selector, {
             shadow: true,
             document: true,
@@ -4643,6 +4645,10 @@
             bubbles,
             cancelable,
         });
+
+        if (data) {
+            Object.assign(eventData, data);
+        }
 
         if (realEvent !== event) {
             eventData.namespace = event.substring(realEvent.length + 1);
@@ -5422,8 +5428,8 @@
         for (let [style, value] of Object.entries(styles)) {
             style = kebabCase(style);
 
-            // if value is numeric and not a number property, add px
-            if (value && isNumeric(value) && !cssNumberProperties.includes(style)) {
+            // if value is numeric and property doesn't support number values, add px
+            if (value && isNumeric(value) && !CSS.supports(style, value)) {
                 value += 'px';
             }
 
@@ -7196,11 +7202,13 @@
      * Add an event to each node.
      * @param {string} events The event names.
      * @param {DOM~eventCallback} callback The callback to execute.
-     * @param {Boolean} [capture] Whether to use a capture event.
+     * @param {object} [options] The options for the event.
+     * @param {Boolean} [options.capture] Whether to use a capture event.
+     * @param {Boolean} [options.passive] Whether to use a passive event.
      * @return {QuerySet} The QuerySet object.
      */
-    function addEvent(events, callback, { capture = false } = {}) {
-        addEvent$1(this, events, callback, { capture });
+    function addEvent(events, callback, { capture = false, passive = false } = {}) {
+        addEvent$1(this, events, callback, { capture, passive });
 
         return this;
     }
@@ -7209,11 +7217,13 @@
      * @param {string} events The event names.
      * @param {string} delegate The delegate selector.
      * @param {DOM~eventCallback} callback The callback to execute.
-     * @param {Boolean} [capture] Whether to use a capture event.
+     * @param {object} [options] The options for the event.
+     * @param {Boolean} [options.capture] Whether to use a capture event.
+     * @param {Boolean} [options.passive] Whether to use a passive event.
      * @return {QuerySet} The QuerySet object.
      */
-    function addEventDelegate(events, delegate, callback, { capture = false } = {}) {
-        addEventDelegate$1(this, events, delegate, callback, { capture });
+    function addEventDelegate(events, delegate, callback, { capture = false, passive = false } = {}) {
+        addEventDelegate$1(this, events, delegate, callback, { capture, passive });
 
         return this;
     }
@@ -7222,11 +7232,13 @@
      * @param {string} events The event names.
      * @param {string} delegate The delegate selector.
      * @param {DOM~eventCallback} callback The callback to execute.
-     * @param {Boolean} [capture] Whether to use a capture event.
+     * @param {object} [options] The options for the event.
+     * @param {Boolean} [options.capture] Whether to use a capture event.
+     * @param {Boolean} [options.passive] Whether to use a passive event.
      * @return {QuerySet} The QuerySet object.
      */
-    function addEventDelegateOnce(events, delegate, callback, { capture = false } = {}) {
-        addEventDelegateOnce$1(this, events, delegate, callback, { capture });
+    function addEventDelegateOnce(events, delegate, callback, { capture = false, passive = false } = {}) {
+        addEventDelegateOnce$1(this, events, delegate, callback, { capture, passive });
 
         return this;
     }
@@ -7234,11 +7246,13 @@
      * Add a self-destructing event to each node.
      * @param {string} events The event names.
      * @param {DOM~eventCallback} callback The callback to execute.
-     * @param {Boolean} [capture] Whether to use a capture event.
+     * @param {object} [options] The options for the event.
+     * @param {Boolean} [options.capture] Whether to use a capture event.
+     * @param {Boolean} [options.passive] Whether to use a passive event.
      * @return {QuerySet} The QuerySet object.
      */
-    function addEventOnce(events, callback, { capture = false } = {}) {
-        addEventOnce$1(this, events, callback, { capture });
+    function addEventOnce(events, callback, { capture = false, passive = false } = {}) {
+        addEventOnce$1(this, events, callback, { capture, passive });
 
         return this;
     }
@@ -7256,10 +7270,11 @@
      * Remove events from each node.
      * @param {string} [events] The event names.
      * @param {DOM~eventCallback} [callback] The callback to remove.
-     * @param {Boolean} [capture] Whether to use a capture event.
+     * @param {object} [options] The options for the event.
+     * @param {Boolean} [options.capture] Whether to use a capture event.
      * @return {QuerySet} The QuerySet object.
      */
-    function removeEvent(events, callback, { capture = false } = {}) {
+    function removeEvent(events, callback, { capture = null } = {}) {
         removeEvent$1(this, events, callback, { capture });
 
         return this;
@@ -7269,10 +7284,11 @@
      * @param {string} [events] The event names.
      * @param {string} [delegate] The delegate selector.
      * @param {DOM~eventCallback} [callback] The callback to remove.
-     * @param {Boolean} [capture] Whether to use a capture event.
+     * @param {object} [options] The options for the event.
+     * @param {Boolean} [options.capture] Whether to use a capture event.
      * @return {QuerySet} The QuerySet object.
      */
-    function removeEventDelegate(events, delegate, callback, { capture = false } = {}) {
+    function removeEventDelegate(events, delegate, callback, { capture = null } = {}) {
         removeEventDelegate$1(this, events, delegate, callback, { capture });
 
         return this;
@@ -7281,13 +7297,14 @@
      * Trigger events on each node.
      * @param {string} events The event names.
      * @param {object} [options] The options to use for the Event.
-     * @param {*} [options.detail] Additional data to attach to the event.
+     * @param {object} [options.data] Additional data to attach to the event.
+     * @param {*} [options.detail] Additional details to attach to the event.
      * @param {Boolean} [options.bubbles=true] Whether the event will bubble.
      * @param {Boolean} [options.cancelable=true] Whether the event is cancelable.
      * @return {QuerySet} The QuerySet object.
      */
-    function triggerEvent(events, { detail = null, bubbles = true, cancelable = true } = {}) {
-        triggerEvent$1(this, events, { detail, bubbles, cancelable });
+    function triggerEvent(events, { data = null, detail = null, bubbles = true, cancelable = true } = {}) {
+        triggerEvent$1(this, events, { data, detail, bubbles, cancelable });
 
         return this;
     }
@@ -7295,13 +7312,14 @@
      * Trigger an event for the first node.
      * @param {string} event The event name.
      * @param {object} [options] The options to use for the Event.
-     * @param {*} [options.detail] Additional data to attach to the event.
+     * @param {object} [options.data] Additional data to attach to the event.
+     * @param {*} [options.detail] Additional details to attach to the event.
      * @param {Boolean} [options.bubbles=true] Whether the event will bubble.
      * @param {Boolean} [options.cancelable=true] Whether the event is cancelable.
      * @return {Boolean} FALSE if the event was cancelled, otherwise TRUE.
      */
-    function triggerOne(event, { detail = null, bubbles = true, cancelable = true } = {}) {
-        return triggerOne$1(this, event, { detail, bubbles, cancelable });
+    function triggerOne(event, { data = null, detail = null, bubbles = true, cancelable = true } = {}) {
+        return triggerOne$1(this, event, { data, detail, bubbles, cancelable });
     }
 
     /**
@@ -10597,7 +10615,7 @@
             to: index,
         };
 
-        if (!$$1.triggerOne(this._node, 'slide.ui.carousel', { detail: eventData })) {
+        if (!$$1.triggerOne(this._node, 'slide.ui.carousel', { data: eventData })) {
             return;
         }
 
@@ -10621,7 +10639,7 @@
         ).then((_) => {
             this._updateIndicators();
             $$1.removeDataset(this._node, 'uiSliding');
-            $$1.triggerEvent(this._node, 'slid.ui.carousel', { detail: eventData });
+            $$1.triggerEvent(this._node, 'slid.ui.carousel', { data: eventData });
 
             this._paused = false;
             this._setTimer();
@@ -11652,7 +11670,7 @@
 
             $$1.focus(focusTarget || activeTarget);
         }, {
-            capture: true
+            capture: true,
         });
 
         $$1.addEvent(document$1, 'keydown.ui.focustrap', (e) => {
@@ -11662,7 +11680,7 @@
 
             reverse = e.shiftKey;
         }, {
-            capture: true
+            capture: true,
         });
 
         running = true;
@@ -11857,14 +11875,10 @@
          * Show the Modal.
          */
         show() {
-            const eventData = {
-                relatedTarget: this._activeTarget,
-            };
-
             if (
                 $$1.getDataset(this._dialog, 'uiAnimating') ||
                 $$1.hasClass(this._node, 'show') ||
-                !$$1.triggerOne(this._node, 'show.ui.modal', { detail: eventData })
+                !$$1.triggerOne(this._node, 'show.ui.modal', { data: { relatedTarget: this._activeTarget } })
             ) {
                 return;
             }
@@ -13349,6 +13363,7 @@
             const target = getTarget(node);
             if ($$1.is(target, 'input, textarea')) {
                 input = target;
+                text = $$1.getValue(input);
             } else {
                 text = $$1.getText(target);
             }
@@ -13371,9 +13386,9 @@
 
         if ($$1.exec(action)) {
             $$1.triggerEvent(node, 'copied.ui.clipboard', {
-                detail: {
+                data: {
                     action: action,
-                    text: $$1.getValue(input),
+                    text,
                 },
             });
         }

@@ -61,17 +61,17 @@
                 placement: 'top'
             });
             $.addEvent(copyTextBtn, 'copied.ui.clipboard', e => {
-                copyTextTooltip._settings.title = 'Copied to clipboard.';
+                copyTextTooltip._options.title = 'Copied to clipboard.';
                 copyTextTooltip.show();
                 setTimeout(_ => copyTextTooltip.hide(), 5000);
             });
             $.addEvent(copyInputBtn, 'copied.ui.clipboard', _ => {
-                copyInputTooltip._settings.title = 'Copied to clipboard.';
+                copyInputTooltip._options.title = 'Copied to clipboard.';
                 copyInputTooltip.show();
                 setTimeout(_ => copyInputTooltip.hide(), 5000);
             });
             $.addEvent(cutInputBtn, 'copied.ui.clipboard', _ => {
-                cutInputTooltip._settings.title = 'Cut to clipboard.';
+                cutInputTooltip._options.title = 'Cut to clipboard.';
                 cutInputTooltip.show();
                 setTimeout(_ => cutInputTooltip.hide(), 5000);
             });

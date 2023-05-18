@@ -40,7 +40,7 @@ export function addFocusTrap(focusTrap) {
 
         $.focus(focusTarget || activeTarget);
     }, {
-        capture: true
+        capture: true,
     });
 
     $.addEvent(document, 'keydown.ui.focustrap', (e) => {
@@ -50,7 +50,7 @@ export function addFocusTrap(focusTrap) {
 
         reverse = e.shiftKey;
     }, {
-        capture: true
+        capture: true,
     });
 
     running = true;

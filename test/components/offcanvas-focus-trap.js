@@ -18,7 +18,7 @@ describe('Offcanvas FocusTrap', function() {
                 '<div class="offcanvas offcanvas-start" id="offcanvas">' +
                 '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                 '<button id="button2" type="button"></button>' +
-                '</div>'
+                '</div>',
             );
         });
     });
@@ -36,7 +36,7 @@ describe('Offcanvas FocusTrap', function() {
             }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
                     await exec((_) => $.getAttribute(document.activeElement, 'id')),
-                    'button1'
+                    'button1',
                 );
             });
         });
@@ -59,7 +59,7 @@ describe('Offcanvas FocusTrap', function() {
             }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
                     await exec((_) => $.getAttribute(document.activeElement, 'id')),
-                    'button2'
+                    'button2',
                 );
             }).then(waitFor(50)).then(async (_) => {
                 await exec((_) => {
@@ -83,7 +83,7 @@ describe('Offcanvas FocusTrap', function() {
             }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
                     await exec((_) => $.getAttribute(document.activeElement, 'id')),
-                    'offcanvasToggle'
+                    'offcanvasToggle',
                 );
             });
         });

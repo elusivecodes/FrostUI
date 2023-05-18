@@ -814,7 +814,7 @@
             to: index,
         };
 
-        if (!$$1.triggerOne(this._node, 'slide.ui.carousel', { detail: eventData })) {
+        if (!$$1.triggerOne(this._node, 'slide.ui.carousel', { data: eventData })) {
             return;
         }
 
@@ -838,7 +838,7 @@
         ).then((_) => {
             this._updateIndicators();
             $$1.removeDataset(this._node, 'uiSliding');
-            $$1.triggerEvent(this._node, 'slid.ui.carousel', { detail: eventData });
+            $$1.triggerEvent(this._node, 'slid.ui.carousel', { data: eventData });
 
             this._paused = false;
             this._setTimer();
@@ -1869,7 +1869,7 @@
 
             $$1.focus(focusTarget || activeTarget);
         }, {
-            capture: true
+            capture: true,
         });
 
         $$1.addEvent(document, 'keydown.ui.focustrap', (e) => {
@@ -1879,7 +1879,7 @@
 
             reverse = e.shiftKey;
         }, {
-            capture: true
+            capture: true,
         });
 
         running = true;
@@ -2074,14 +2074,10 @@
          * Show the Modal.
          */
         show() {
-            const eventData = {
-                relatedTarget: this._activeTarget,
-            };
-
             if (
                 $$1.getDataset(this._dialog, 'uiAnimating') ||
                 $$1.hasClass(this._node, 'show') ||
-                !$$1.triggerOne(this._node, 'show.ui.modal', { detail: eventData })
+                !$$1.triggerOne(this._node, 'show.ui.modal', { data: { relatedTarget: this._activeTarget } })
             ) {
                 return;
             }
@@ -3566,6 +3562,7 @@
             const target = getTarget(node);
             if ($$1.is(target, 'input, textarea')) {
                 input = target;
+                text = $$1.getValue(input);
             } else {
                 text = $$1.getText(target);
             }
@@ -3588,9 +3585,9 @@
 
         if ($$1.exec(action)) {
             $$1.triggerEvent(node, 'copied.ui.clipboard', {
-                detail: {
+                data: {
                     action: action,
-                    text: $$1.getValue(input),
+                    text,
                 },
             });
         }

@@ -17,6 +17,7 @@ $.addEventDelegate(document, 'click', '[data-ui-toggle="clipboard"]', (e) => {
         const target = getTarget(node);
         if ($.is(target, 'input, textarea')) {
             input = target;
+            text = $.getValue(input);
         } else {
             text = $.getText(target);
         }
@@ -39,9 +40,9 @@ $.addEventDelegate(document, 'click', '[data-ui-toggle="clipboard"]', (e) => {
 
     if ($.exec(action)) {
         $.triggerEvent(node, 'copied.ui.clipboard', {
-            detail: {
+            data: {
                 action: action,
-                text: $.getValue(input),
+                text,
             },
         });
     }

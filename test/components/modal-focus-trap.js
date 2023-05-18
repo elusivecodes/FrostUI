@@ -38,7 +38,7 @@ describe('Modal FocusTrap', function() {
             }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
                     await exec((_) => $.getAttribute(document.activeElement, 'id')),
-                    'button1'
+                    'button1',
                 );
             });
         });
@@ -61,7 +61,7 @@ describe('Modal FocusTrap', function() {
             }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
                     await exec((_) => $.getAttribute(document.activeElement, 'id')),
-                    'button2'
+                    'button2',
                 );
             }).then(waitFor(50)).then(async (_) => {
                 await exec((_) => {
@@ -85,7 +85,7 @@ describe('Modal FocusTrap', function() {
             }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
                     await exec((_) => $.getAttribute(document.activeElement, 'id')),
-                    'modalToggle'
+                    'modalToggle',
                 );
             });
         });
