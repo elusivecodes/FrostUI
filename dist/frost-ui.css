@@ -220,12 +220,12 @@
   --ui-body-bg-rgb: 26, 26, 26;
   --ui-body-color: #cccccc;
   --ui-body-color-rgb: 204, 204, 204;
-  --ui-secondary-bg: #4d4d4d;
-  --ui-secondary-bg-rgb: 77, 77, 77;
+  --ui-secondary-bg: #333333;
+  --ui-secondary-bg-rgb: 51, 51, 51;
   --ui-secondary-color: rgba(204, 204, 204, 0.7);
   --ui-secondary-color-rgb: 204, 204, 204;
-  --ui-tertiary-bg: #333333;
-  --ui-tertiary-bg-rgb: 51, 51, 51;
+  --ui-tertiary-bg: #262626;
+  --ui-tertiary-bg-rgb: 38, 38, 38;
   --ui-tertiary-color: rgba(204, 204, 204, 0.5);
   --ui-tertiary-color-rgb: 204, 204, 204;
   --ui-emphasis-color: #fff;
