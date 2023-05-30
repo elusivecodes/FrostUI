@@ -32,7 +32,7 @@ export function addFocusTrap(focusTrap) {
         }
 
         const focusable = $.find('a, button, input, textarea, select, details, [tabindex], [contenteditable="true"]', activeTarget)
-            .filter((node) => $.is(node, ':not(:disabled)') && $.getAttribute(node, 'tabindex') >= 0 && $.isVisible(node));
+            .filter((node) => $.is(node, ':not(:disabled, .disabled)') && $.getAttribute(node, 'tabindex') >= 0 && $.isVisible(node));
 
         const focusTarget = reverse ?
             focusable.pop() :

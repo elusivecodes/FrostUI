@@ -615,8 +615,13 @@
                 if (
                     e.button ||
                     $$1.getDataset(this._node, 'uiSliding') ||
-                    $$1.is(e.target, '[data-ui-slide-to], [data-ui-slide], a, button') ||
-                    $$1.closest(e.target, '[data-ui-slide], a, button', this._node).length
+                    (
+                        !$$1.is(e.target, ':disabled, .disabled') &&
+                        (
+                            $$1.is(e.target, '[data-ui-slide-to], [data-ui-slide], a, button, input, textarea, select') ||
+                            $$1.closest(e.target, '[data-ui-slide], a, button', (parent) => $$1.isSame(parent, this._node) || $$1.is(parent, ':disabled, .disabled')).length
+                        )
+                    )
                 ) {
                     return false;
                 }
@@ -1861,7 +1866,7 @@
             }
 
             const focusable = $$1.find('a, button, input, textarea, select, details, [tabindex], [contenteditable="true"]', activeTarget)
-                .filter((node) => $$1.is(node, ':not(:disabled)') && $$1.getAttribute(node, 'tabindex') >= 0 && $$1.isVisible(node));
+                .filter((node) => $$1.is(node, ':not(:disabled, .disabled)') && $$1.getAttribute(node, 'tabindex') >= 0 && $$1.isVisible(node));
 
             const focusTarget = reverse ?
                 focusable.pop() :

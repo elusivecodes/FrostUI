@@ -52,8 +52,13 @@ export function _events() {
             if (
                 e.button ||
                 $.getDataset(this._node, 'uiSliding') ||
-                $.is(e.target, '[data-ui-slide-to], [data-ui-slide], a, button') ||
-                $.closest(e.target, '[data-ui-slide], a, button', this._node).length
+                (
+                    !$.is(e.target, ':disabled, .disabled') &&
+                    (
+                        $.is(e.target, '[data-ui-slide-to], [data-ui-slide], a, button, input, textarea, select') ||
+                        $.closest(e.target, '[data-ui-slide], a, button', (parent) => $.isSame(parent, this._node) || $.is(parent, ':disabled, .disabled')).length
+                    )
+                )
             ) {
                 return false;
             }
