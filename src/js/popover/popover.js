@@ -100,7 +100,7 @@ export default class Popover extends BaseComponent {
             return;
         }
 
-        $.setDataset(this._popover, { uiAnimating: true });
+        $.setDataset(this._popover, { uiAnimating: 'out' });
 
         $.fadeOut(this._popover, {
             duration: this._options.duration,
@@ -112,7 +112,9 @@ export default class Popover extends BaseComponent {
             $.removeDataset(this._popover, 'uiAnimating');
             $.triggerEvent(this._node, 'hidden.ui.popover');
         }).catch((_) => {
-            $.removeDataset(this._popover, 'uiAnimating');
+            if ($.getDataset(this._popover, 'uiAnimating') === 'out') {
+                $.removeDataset(this._popover, 'uiAnimating');
+            }
         });
     }
 
@@ -178,7 +180,7 @@ export default class Popover extends BaseComponent {
             return;
         }
 
-        $.setDataset(this._popover, { uiAnimating: true });
+        $.setDataset(this._popover, { uiAnimating: 'in' });
         this.refresh();
         this._show();
 
@@ -188,7 +190,9 @@ export default class Popover extends BaseComponent {
             $.removeDataset(this._popover, 'uiAnimating');
             $.triggerEvent(this._node, 'shown.ui.popover');
         }).catch((_) => {
-            $.removeDataset(this._popover, 'uiAnimating');
+            if ($.getDataset(this._popover, 'uiAnimating') === 'in') {
+                $.removeDataset(this._popover, 'uiAnimating');
+            }
         });
     }
 

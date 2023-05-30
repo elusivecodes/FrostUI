@@ -46,7 +46,7 @@ export default class Collapse extends BaseComponent {
             return;
         }
 
-        $.setDataset(this._node, { uiAnimating: true });
+        $.setDataset(this._node, { uiAnimating: 'out' });
         $.addClass(this._triggers, 'collapsed');
         $.addClass(this._triggers, 'collapsing');
 
@@ -60,7 +60,9 @@ export default class Collapse extends BaseComponent {
             $.removeDataset(this._node, 'uiAnimating');
             $.triggerEvent(this._node, 'hidden.ui.collapse');
         }).catch((_) => {
-            $.removeDataset(this._node, 'uiAnimating');
+            if ($.getDataset(this._node, 'uiAnimating') === 'out') {
+                $.removeDataset(this._node, 'uiAnimating');
+            }
         });
     }
 
@@ -98,7 +100,7 @@ export default class Collapse extends BaseComponent {
             collapse.hide();
         }
 
-        $.setDataset(this._node, { uiAnimating: true });
+        $.setDataset(this._node, { uiAnimating: 'in' });
         $.addClass(this._node, 'show');
         $.removeClass(this._triggers, 'collapsed');
         $.addClass(this._triggers, 'collapsing');
@@ -112,7 +114,9 @@ export default class Collapse extends BaseComponent {
             $.removeDataset(this._node, 'uiAnimating');
             $.triggerEvent(this._node, 'shown.ui.collapse');
         }).catch((_) => {
-            $.removeDataset(this._node, 'uiAnimating');
+            if ($.getDataset(this._node, 'uiAnimating') === 'in') {
+                $.removeDataset(this._node, 'uiAnimating');
+            }
         });
     }
 

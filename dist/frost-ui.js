@@ -355,7 +355,7 @@
                 return;
             }
 
-            $$1.setDataset(this._node, { uiAnimating: true });
+            $$1.setDataset(this._node, { uiAnimating: 'out' });
 
             $$1.fadeOut(this._node, {
                 duration: this._options.duration,
@@ -365,7 +365,9 @@
                 $$1.triggerEvent(this._node, 'closed.ui.alert');
                 $$1.remove(this._node);
             }).catch((_) => {
-                $$1.removeDataset(this._node, 'uiAnimating');
+                if ($$1.getDataset(this._node, 'uiAnimating') === 'out') {
+                    $$1.removeDataset(this._node, 'uiAnimating');
+                }
             });
         }
     }
@@ -1002,7 +1004,7 @@
                 return;
             }
 
-            $$1.setDataset(this._node, { uiAnimating: true });
+            $$1.setDataset(this._node, { uiAnimating: 'out' });
             $$1.addClass(this._triggers, 'collapsed');
             $$1.addClass(this._triggers, 'collapsing');
 
@@ -1016,7 +1018,9 @@
                 $$1.removeDataset(this._node, 'uiAnimating');
                 $$1.triggerEvent(this._node, 'hidden.ui.collapse');
             }).catch((_) => {
-                $$1.removeDataset(this._node, 'uiAnimating');
+                if ($$1.getDataset(this._node, 'uiAnimating') === 'out') {
+                    $$1.removeDataset(this._node, 'uiAnimating');
+                }
             });
         }
 
@@ -1054,7 +1058,7 @@
                 collapse.hide();
             }
 
-            $$1.setDataset(this._node, { uiAnimating: true });
+            $$1.setDataset(this._node, { uiAnimating: 'in' });
             $$1.addClass(this._node, 'show');
             $$1.removeClass(this._triggers, 'collapsed');
             $$1.addClass(this._triggers, 'collapsing');
@@ -1068,7 +1072,9 @@
                 $$1.removeDataset(this._node, 'uiAnimating');
                 $$1.triggerEvent(this._node, 'shown.ui.collapse');
             }).catch((_) => {
-                $$1.removeDataset(this._node, 'uiAnimating');
+                if ($$1.getDataset(this._node, 'uiAnimating') === 'in') {
+                    $$1.removeDataset(this._node, 'uiAnimating');
+                }
             });
         }
 
@@ -1595,7 +1601,7 @@
                 return;
             }
 
-            $$1.setDataset(this._menuNode, { uiAnimating: true });
+            $$1.setDataset(this._menuNode, { uiAnimating: 'out' });
 
             $$1.fadeOut(this._menuNode, {
                 duration: this._options.duration,
@@ -1610,7 +1616,9 @@
                 $$1.removeDataset(this._menuNode, 'uiAnimating');
                 $$1.triggerEvent(this._node, 'hidden.ui.dropdown');
             }).catch((_) => {
-                $$1.removeDataset(this._menuNode, 'uiAnimating');
+                if ($$1.getDataset(this._menuNode, 'uiAnimating') === 'out') {
+                    $$1.removeDataset(this._menuNode, 'uiAnimating');
+                }
             });
         }
 
@@ -1626,7 +1634,7 @@
                 return;
             }
 
-            $$1.setDataset(this._menuNode, { uiAnimating: true });
+            $$1.setDataset(this._menuNode, { uiAnimating: 'in' });
             $$1.addClass(this._menuNode, 'show');
 
             if (this._options.display === 'dynamic') {
@@ -1651,7 +1659,9 @@
                 $$1.removeDataset(this._menuNode, 'uiAnimating');
                 $$1.triggerEvent(this._node, 'shown.ui.dropdown');
             }).catch((_) => {
-                $$1.removeDataset(this._menuNode, 'uiAnimating');
+                if ($$1.getDataset(this._menuNode, 'uiAnimating') === 'in') {
+                    $$1.removeDataset(this._menuNode, 'uiAnimating');
+                }
             });
         }
 
@@ -2020,7 +2030,7 @@
             }
 
             $$1.stop(this._dialog);
-            $$1.setDataset(this._dialog, { uiAnimating: true });
+            $$1.setDataset(this._dialog, { uiAnimating: 'out' });
 
             if (this._focusTrap) {
                 this._focusTrap.deactivate();
@@ -2071,7 +2081,9 @@
                 $$1.removeDataset(this._dialog, 'uiAnimating');
                 $$1.triggerEvent(this._node, 'hidden.ui.modal');
             }).catch((_) => {
-                $$1.removeDataset(this._dialog, 'uiAnimating');
+                if ($$1.getDataset(this._dialog, 'uiAnimating') === 'out') {
+                    $$1.removeDataset(this._dialog, 'uiAnimating');
+                }
             });
         }
 
@@ -2148,7 +2160,9 @@
                 $$1.removeDataset(this._dialog, 'uiAnimating');
                 $$1.triggerEvent(this._node, 'shown.ui.modal');
             }).catch((_) => {
-                $$1.removeDataset(this._dialog, 'uiAnimating');
+                if ($$1.getDataset(this._dialog, 'uiAnimating') === 'in') {
+                    $$1.removeDataset(this._dialog, 'uiAnimating');
+                }
             });
         }
 
@@ -2375,7 +2389,7 @@
                 return;
             }
 
-            $$1.setDataset(this._node, { uiAnimating: true });
+            $$1.setDataset(this._node, { uiAnimating: 'out' });
 
             if (this._focusTrap) {
                 this._focusTrap.deactivate();
@@ -2412,7 +2426,9 @@
                 $$1.removeDataset(this._node, 'uiAnimating');
                 $$1.triggerEvent(this._node, 'hidden.ui.offcanvas');
             }).catch((_) => {
-                $$1.removeDataset(this._node, 'uiAnimating');
+                if ($$1.getDataset(this._node, 'uiAnimating') === 'out') {
+                    $$1.removeDataset(this._node, 'uiAnimating');
+                }
             });
         }
 
@@ -2429,7 +2445,7 @@
                 return;
             }
 
-            $$1.setDataset(this._node, { uiAnimating: true });
+            $$1.setDataset(this._node, { uiAnimating: 'in' });
             $$1.addClass(this._node, 'show');
 
             if (this._options.backdrop) {
@@ -2460,7 +2476,9 @@
                 $$1.removeDataset(this._node, 'uiAnimating');
                 $$1.triggerEvent(this._node, 'shown.ui.offcanvas');
             }).catch((_) => {
-                $$1.removeDataset(this._node, 'uiAnimating');
+                if ($$1.getDataset(this._node, 'uiAnimating') === 'in') {
+                    $$1.removeDataset(this._node, 'uiAnimating');
+                }
             });
         }
 
@@ -2655,7 +2673,7 @@
                 return;
             }
 
-            $$1.setDataset(this._popover, { uiAnimating: true });
+            $$1.setDataset(this._popover, { uiAnimating: 'out' });
 
             $$1.fadeOut(this._popover, {
                 duration: this._options.duration,
@@ -2667,7 +2685,9 @@
                 $$1.removeDataset(this._popover, 'uiAnimating');
                 $$1.triggerEvent(this._node, 'hidden.ui.popover');
             }).catch((_) => {
-                $$1.removeDataset(this._popover, 'uiAnimating');
+                if ($$1.getDataset(this._popover, 'uiAnimating') === 'out') {
+                    $$1.removeDataset(this._popover, 'uiAnimating');
+                }
             });
         }
 
@@ -2733,7 +2753,7 @@
                 return;
             }
 
-            $$1.setDataset(this._popover, { uiAnimating: true });
+            $$1.setDataset(this._popover, { uiAnimating: 'in' });
             this.refresh();
             this._show();
 
@@ -2743,7 +2763,9 @@
                 $$1.removeDataset(this._popover, 'uiAnimating');
                 $$1.triggerEvent(this._node, 'shown.ui.popover');
             }).catch((_) => {
-                $$1.removeDataset(this._popover, 'uiAnimating');
+                if ($$1.getDataset(this._popover, 'uiAnimating') === 'in') {
+                    $$1.removeDataset(this._popover, 'uiAnimating');
+                }
             });
         }
 
@@ -2951,9 +2973,24 @@
      * Stop the animations.
      */
     function _stop$1() {
-        if (this._enabled && $$1.getDataset(this._popover, 'uiAnimating')) {
-            $$1.stop(this._popover);
-            $$1.removeDataset(this._popover, 'uiAnimating');
+        if (!this._enabled) {
+            return;
+        }
+
+        const animating = $$1.getDataset(this._popover, 'uiAnimating');
+
+        if (!animating) {
+            return;
+        }
+
+        $$1.stop(this._popover, { finish: false });
+        $$1.removeDataset(this._popover, 'uiAnimating');
+
+        if (animating === 'out') {
+            this._popper.dispose();
+            this._popper = null;
+
+            $$1.detach(this._popover);
         }
     }
 
@@ -3087,7 +3124,7 @@
          * Hide the current Tab (forcefully).
          */
         _hide() {
-            $$1.setDataset(this._target, { uiAnimating: true });
+            $$1.setDataset(this._target, { uiAnimating: 'out' });
 
             $$1.fadeOut(this._target, {
                 duration: this._options.duration,
@@ -3098,7 +3135,9 @@
                 $$1.setAttribute(this._node, { 'aria-selected': false });
                 $$1.triggerEvent(this._node, 'hidden.ui.tab');
             }).catch((_) => {
-                $$1.removeDataset(this._target, 'uiAnimating');
+                if ($$1.getDataset(this._target, 'uiAnimating') === 'out') {
+                    $$1.removeDataset(this._target, 'uiAnimating');
+                }
             });
         }
 
@@ -3106,7 +3145,7 @@
          * Show the current Tab (forcefully).
          */
         _show() {
-            $$1.setDataset(this._target, { uiAnimating: true });
+            $$1.setDataset(this._target, { uiAnimating: 'in' });
 
             $$1.addClass(this._target, 'active');
             $$1.addClass(this._node, 'active');
@@ -3118,7 +3157,9 @@
                 $$1.removeDataset(this._target, 'uiAnimating');
                 $$1.triggerEvent(this._node, 'shown.ui.tab');
             }).catch((_) => {
-                $$1.removeDataset(this._target, 'uiAnimating');
+                if ($$1.getDataset(this._target, 'uiAnimating') === 'in') {
+                    $$1.removeDataset(this._target, 'uiAnimating');
+                }
             });
         }
     }
@@ -3156,7 +3197,7 @@
                 return;
             }
 
-            $$1.setDataset(this._node, { uiAnimating: true });
+            $$1.setDataset(this._node, { uiAnimating: 'out' });
 
             $$1.fadeOut(this._node, {
                 duration: this._options.duration,
@@ -3166,7 +3207,9 @@
                 $$1.removeDataset(this._node, 'uiAnimating');
                 $$1.triggerEvent(this._node, 'hidden.ui.toast');
             }).catch((_) => {
-                $$1.removeDataset(this._node, 'uiAnimating');
+                if ($$1.getDataset(this._node, 'uiAnimating') === 'out') {
+                    $$1.removeDataset(this._node, 'uiAnimating');
+                }
             });
         }
 
@@ -3182,7 +3225,7 @@
                 return;
             }
 
-            $$1.setDataset(this._node, { uiAnimating: true });
+            $$1.setDataset(this._node, { uiAnimating: 'in' });
             $$1.setStyle(this._node, { display: '' });
             $$1.addClass(this._node, 'show');
 
@@ -3199,7 +3242,9 @@
                     );
                 }
             }).catch((_) => {
-                $$1.removeDataset(this._node, 'uiAnimating');
+                if ($$1.getDataset(this._node, 'uiAnimating') === 'in') {
+                    $$1.removeDataset(this._node, 'uiAnimating');
+                }
             });
         }
     }
@@ -3321,7 +3366,7 @@
                 return;
             }
 
-            $$1.setDataset(this._tooltip, { uiAnimating: true });
+            $$1.setDataset(this._tooltip, { uiAnimating: 'out' });
 
             $$1.fadeOut(this._tooltip, {
                 duration: this._options.duration,
@@ -3334,7 +3379,9 @@
                 $$1.removeDataset(this._tooltip, 'uiAnimating');
                 $$1.triggerEvent(this._node, 'hidden.ui.tooltip');
             }).catch((_) => {
-                $$1.removeDataset(this._tooltip, 'uiAnimating');
+                if ($$1.getDataset(this._tooltip, 'uiAnimating') === 'out') {
+                    $$1.removeDataset(this._tooltip, 'uiAnimating');
+                }
             });
         }
 
@@ -3382,7 +3429,7 @@
                 return;
             }
 
-            $$1.setDataset(this._tooltip, { uiAnimating: true });
+            $$1.setDataset(this._tooltip, { uiAnimating: 'in' });
             $$1.addClass(this._tooltip, 'show');
             this.refresh();
             this._show();
@@ -3393,7 +3440,9 @@
                 $$1.removeDataset(this._tooltip, 'uiAnimating');
                 $$1.triggerEvent(this._node, 'shown.ui.tooltip');
             }).catch((_) => {
-                $$1.removeDataset(this._tooltip, 'uiAnimating');
+                if ($$1.getDataset(this._tooltip, 'uiAnimating') === 'in') {
+                    $$1.removeDataset(this._tooltip, 'uiAnimating');
+                }
             });
         }
 
@@ -3501,9 +3550,25 @@
      * Stop the animations.
      */
     function _stop() {
-        if (this._enabled && $$1.getDataset(this._tooltip, 'uiAnimating')) {
-            $$1.stop(this._tooltip);
-            $$1.removeDataset(this._tooltip, 'uiAnimating');
+        if (!this._enabled) {
+            return;
+        }
+
+        const animating = $$1.getDataset(this._tooltip, 'uiAnimating');
+
+        if (!animating) {
+            return;
+        }
+
+        $$1.stop(this._tooltip, { finish: false });
+        $$1.removeDataset(this._tooltip, 'uiAnimating');
+
+        if (animating === 'out') {
+            this._popper.dispose();
+            this._popper = null;
+
+            $$1.removeClass(this._tooltip, 'show');
+            $$1.detach(this._tooltip);
         }
     }
 

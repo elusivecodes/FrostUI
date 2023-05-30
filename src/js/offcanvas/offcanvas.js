@@ -48,7 +48,7 @@ export default class Offcanvas extends BaseComponent {
             return;
         }
 
-        $.setDataset(this._node, { uiAnimating: true });
+        $.setDataset(this._node, { uiAnimating: 'out' });
 
         if (this._focusTrap) {
             this._focusTrap.deactivate();
@@ -85,7 +85,9 @@ export default class Offcanvas extends BaseComponent {
             $.removeDataset(this._node, 'uiAnimating');
             $.triggerEvent(this._node, 'hidden.ui.offcanvas');
         }).catch((_) => {
-            $.removeDataset(this._node, 'uiAnimating');
+            if ($.getDataset(this._node, 'uiAnimating') === 'out') {
+                $.removeDataset(this._node, 'uiAnimating');
+            }
         });
     }
 
@@ -102,7 +104,7 @@ export default class Offcanvas extends BaseComponent {
             return;
         }
 
-        $.setDataset(this._node, { uiAnimating: true });
+        $.setDataset(this._node, { uiAnimating: 'in' });
         $.addClass(this._node, 'show');
 
         if (this._options.backdrop) {
@@ -133,7 +135,9 @@ export default class Offcanvas extends BaseComponent {
             $.removeDataset(this._node, 'uiAnimating');
             $.triggerEvent(this._node, 'shown.ui.offcanvas');
         }).catch((_) => {
-            $.removeDataset(this._node, 'uiAnimating');
+            if ($.getDataset(this._node, 'uiAnimating') === 'in') {
+                $.removeDataset(this._node, 'uiAnimating');
+            }
         });
     }
 

@@ -18,7 +18,7 @@ export default class Toast extends BaseComponent {
             return;
         }
 
-        $.setDataset(this._node, { uiAnimating: true });
+        $.setDataset(this._node, { uiAnimating: 'out' });
 
         $.fadeOut(this._node, {
             duration: this._options.duration,
@@ -28,7 +28,9 @@ export default class Toast extends BaseComponent {
             $.removeDataset(this._node, 'uiAnimating');
             $.triggerEvent(this._node, 'hidden.ui.toast');
         }).catch((_) => {
-            $.removeDataset(this._node, 'uiAnimating');
+            if ($.getDataset(this._node, 'uiAnimating') === 'out') {
+                $.removeDataset(this._node, 'uiAnimating');
+            }
         });
     }
 
@@ -44,7 +46,7 @@ export default class Toast extends BaseComponent {
             return;
         }
 
-        $.setDataset(this._node, { uiAnimating: true });
+        $.setDataset(this._node, { uiAnimating: 'in' });
         $.setStyle(this._node, { display: '' });
         $.addClass(this._node, 'show');
 
@@ -61,7 +63,9 @@ export default class Toast extends BaseComponent {
                 );
             }
         }).catch((_) => {
-            $.removeDataset(this._node, 'uiAnimating');
+            if ($.getDataset(this._node, 'uiAnimating') === 'in') {
+                $.removeDataset(this._node, 'uiAnimating');
+            }
         });
     }
 }

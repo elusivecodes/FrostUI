@@ -99,7 +99,7 @@ export default class Tooltip extends BaseComponent {
             return;
         }
 
-        $.setDataset(this._tooltip, { uiAnimating: true });
+        $.setDataset(this._tooltip, { uiAnimating: 'out' });
 
         $.fadeOut(this._tooltip, {
             duration: this._options.duration,
@@ -112,7 +112,9 @@ export default class Tooltip extends BaseComponent {
             $.removeDataset(this._tooltip, 'uiAnimating');
             $.triggerEvent(this._node, 'hidden.ui.tooltip');
         }).catch((_) => {
-            $.removeDataset(this._tooltip, 'uiAnimating');
+            if ($.getDataset(this._tooltip, 'uiAnimating') === 'out') {
+                $.removeDataset(this._tooltip, 'uiAnimating');
+            }
         });
     }
 
@@ -160,7 +162,7 @@ export default class Tooltip extends BaseComponent {
             return;
         }
 
-        $.setDataset(this._tooltip, { uiAnimating: true });
+        $.setDataset(this._tooltip, { uiAnimating: 'in' });
         $.addClass(this._tooltip, 'show');
         this.refresh();
         this._show();
@@ -171,7 +173,9 @@ export default class Tooltip extends BaseComponent {
             $.removeDataset(this._tooltip, 'uiAnimating');
             $.triggerEvent(this._node, 'shown.ui.tooltip');
         }).catch((_) => {
-            $.removeDataset(this._tooltip, 'uiAnimating');
+            if ($.getDataset(this._tooltip, 'uiAnimating') === 'in') {
+                $.removeDataset(this._tooltip, 'uiAnimating');
+            }
         });
     }
 

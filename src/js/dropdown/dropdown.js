@@ -60,7 +60,7 @@ export default class Dropdown extends BaseComponent {
             return;
         }
 
-        $.setDataset(this._menuNode, { uiAnimating: true });
+        $.setDataset(this._menuNode, { uiAnimating: 'out' });
 
         $.fadeOut(this._menuNode, {
             duration: this._options.duration,
@@ -75,7 +75,9 @@ export default class Dropdown extends BaseComponent {
             $.removeDataset(this._menuNode, 'uiAnimating');
             $.triggerEvent(this._node, 'hidden.ui.dropdown');
         }).catch((_) => {
-            $.removeDataset(this._menuNode, 'uiAnimating');
+            if ($.getDataset(this._menuNode, 'uiAnimating') === 'out') {
+                $.removeDataset(this._menuNode, 'uiAnimating');
+            }
         });
     }
 
@@ -91,7 +93,7 @@ export default class Dropdown extends BaseComponent {
             return;
         }
 
-        $.setDataset(this._menuNode, { uiAnimating: true });
+        $.setDataset(this._menuNode, { uiAnimating: 'in' });
         $.addClass(this._menuNode, 'show');
 
         if (this._options.display === 'dynamic') {
@@ -116,7 +118,9 @@ export default class Dropdown extends BaseComponent {
             $.removeDataset(this._menuNode, 'uiAnimating');
             $.triggerEvent(this._node, 'shown.ui.dropdown');
         }).catch((_) => {
-            $.removeDataset(this._menuNode, 'uiAnimating');
+            if ($.getDataset(this._menuNode, 'uiAnimating') === 'in') {
+                $.removeDataset(this._menuNode, 'uiAnimating');
+            }
         });
     }
 

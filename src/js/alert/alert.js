@@ -17,7 +17,7 @@ export default class Alert extends BaseComponent {
             return;
         }
 
-        $.setDataset(this._node, { uiAnimating: true });
+        $.setDataset(this._node, { uiAnimating: 'out' });
 
         $.fadeOut(this._node, {
             duration: this._options.duration,
@@ -27,7 +27,9 @@ export default class Alert extends BaseComponent {
             $.triggerEvent(this._node, 'closed.ui.alert');
             $.remove(this._node);
         }).catch((_) => {
-            $.removeDataset(this._node, 'uiAnimating');
+            if ($.getDataset(this._node, 'uiAnimating') === 'out') {
+                $.removeDataset(this._node, 'uiAnimating');
+            }
         });
     }
 }

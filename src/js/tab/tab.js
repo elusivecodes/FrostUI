@@ -86,7 +86,7 @@ export default class Tab extends BaseComponent {
      * Hide the current Tab (forcefully).
      */
     _hide() {
-        $.setDataset(this._target, { uiAnimating: true });
+        $.setDataset(this._target, { uiAnimating: 'out' });
 
         $.fadeOut(this._target, {
             duration: this._options.duration,
@@ -97,7 +97,9 @@ export default class Tab extends BaseComponent {
             $.setAttribute(this._node, { 'aria-selected': false });
             $.triggerEvent(this._node, 'hidden.ui.tab');
         }).catch((_) => {
-            $.removeDataset(this._target, 'uiAnimating');
+            if ($.getDataset(this._target, 'uiAnimating') === 'out') {
+                $.removeDataset(this._target, 'uiAnimating');
+            }
         });
     }
 
@@ -105,7 +107,7 @@ export default class Tab extends BaseComponent {
      * Show the current Tab (forcefully).
      */
     _show() {
-        $.setDataset(this._target, { uiAnimating: true });
+        $.setDataset(this._target, { uiAnimating: 'in' });
 
         $.addClass(this._target, 'active');
         $.addClass(this._node, 'active');
@@ -117,7 +119,9 @@ export default class Tab extends BaseComponent {
             $.removeDataset(this._target, 'uiAnimating');
             $.triggerEvent(this._node, 'shown.ui.tab');
         }).catch((_) => {
-            $.removeDataset(this._target, 'uiAnimating');
+            if ($.getDataset(this._target, 'uiAnimating') === 'in') {
+                $.removeDataset(this._target, 'uiAnimating');
+            }
         });
     }
 }

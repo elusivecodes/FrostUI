@@ -41,8 +41,23 @@ export function _show() {
  * Stop the animations.
  */
 export function _stop() {
-    if (this._enabled && $.getDataset(this._popover, 'uiAnimating')) {
-        $.stop(this._popover);
-        $.removeDataset(this._popover, 'uiAnimating');
+    if (!this._enabled) {
+        return;
+    }
+
+    const animating = $.getDataset(this._popover, 'uiAnimating');
+
+    if (!animating) {
+        return;
+    }
+
+    $.stop(this._popover, { finish: false });
+    $.removeDataset(this._popover, 'uiAnimating');
+
+    if (animating === 'out') {
+        this._popper.dispose();
+        this._popper = null;
+
+        $.detach(this._popover);
     }
 };

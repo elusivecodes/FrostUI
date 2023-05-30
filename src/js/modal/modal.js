@@ -56,7 +56,7 @@ export default class Modal extends BaseComponent {
         }
 
         $.stop(this._dialog);
-        $.setDataset(this._dialog, { uiAnimating: true });
+        $.setDataset(this._dialog, { uiAnimating: 'out' });
 
         if (this._focusTrap) {
             this._focusTrap.deactivate();
@@ -107,7 +107,9 @@ export default class Modal extends BaseComponent {
             $.removeDataset(this._dialog, 'uiAnimating');
             $.triggerEvent(this._node, 'hidden.ui.modal');
         }).catch((_) => {
-            $.removeDataset(this._dialog, 'uiAnimating');
+            if ($.getDataset(this._dialog, 'uiAnimating') === 'out') {
+                $.removeDataset(this._dialog, 'uiAnimating');
+            }
         });
     }
 
@@ -184,7 +186,9 @@ export default class Modal extends BaseComponent {
             $.removeDataset(this._dialog, 'uiAnimating');
             $.triggerEvent(this._node, 'shown.ui.modal');
         }).catch((_) => {
-            $.removeDataset(this._dialog, 'uiAnimating');
+            if ($.getDataset(this._dialog, 'uiAnimating') === 'in') {
+                $.removeDataset(this._dialog, 'uiAnimating');
+            }
         });
     }
 
