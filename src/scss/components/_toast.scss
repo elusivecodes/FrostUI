@@ -18,10 +18,10 @@
     pointer-events: auto;
     background-color: var(--ui-toast-bg);
     background-clip: padding-box;
-    border: var(--ui-toast-border-width) var(--ui-border-style) var(--ui-toast-border-color);
-    @include border-radius(var(--ui-toast-border-radius));
-    opacity: 0;
     backdrop-filter: $toast-backdrop-filter;
+    border: var(--ui-toast-border-width) var(--ui-border-style) var(--ui-toast-border-color);
+    opacity: 0;
+    @include border-radius(var(--ui-toast-border-radius));
 
     &.show {
         display: block;

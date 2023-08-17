@@ -23,11 +23,11 @@
     margin-top: $input-check-margin-top;
     color: $input-check-color;
     vertical-align: top;
+    appearance: none;
     background-color: $input-check-bg;
     border: $input-check-border-width var(--ui-border-style) var(--ui-input-border-color, #{$input-check-border-color});
     transition: all $transition-time $transition-type;
     transition-property: background-color, border-color, box-shadow;
-    appearance: none;
 
     &[type="checkbox"] {
         @include border-radius($input-check-checkbox-border-radius);
@@ -112,9 +112,9 @@
             height: math.div($input-check-size, 2);
             content: "";
             background-color: currentcolor;
-            translate: -50% -50%;
             transition: all $transition-time $transition-type;
             transition-property: left;
+            translate: -50% -50%;
             @include border-radius(50%);
         }
 

@@ -571,10 +571,10 @@ legend + * {
 }
 
 [type=search] {
-  outline-offset: -2px;
   -webkit-appearance: textfield;
   -moz-appearance: textfield;
   appearance: textfield;
+  outline-offset: -2px;
 }
 
 ::-webkit-search-decoration {
@@ -4757,11 +4757,11 @@ fieldset:disabled .btn {
   pointer-events: auto;
   background-color: var(--ui-toast-bg);
   background-clip: padding-box;
-  border: var(--ui-toast-border-width) var(--ui-border-style) var(--ui-toast-border-color);
-  border-radius: var(--ui-toast-border-radius);
-  opacity: 0;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
+  border: var(--ui-toast-border-width) var(--ui-border-style) var(--ui-toast-border-color);
+  opacity: 0;
+  border-radius: var(--ui-toast-border-radius);
 }
 .toast.show {
   display: block;
@@ -4916,13 +4916,13 @@ fieldset:disabled .btn {
   margin-top: 0.25rem;
   color: var(--ui-primary-contrast);
   vertical-align: top;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   background-color: var(--ui-tertiary-bg);
   border: var(--ui-border-width) var(--ui-border-style) var(--ui-input-border-color, var(--ui-border-color));
   transition: all 0.25s ease-in-out;
   transition-property: background-color, border-color, box-shadow;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
 }
 .input-check[type=checkbox] {
   border-radius: var(--ui-border-radius);
@@ -4995,9 +4995,9 @@ fieldset:disabled .btn {
   height: 0.5em;
   content: "";
   background-color: currentcolor;
-  translate: -50% -50%;
   transition: all 0.25s ease-in-out;
   transition-property: left;
+  translate: -50% -50%;
   border-radius: 50%;
 }
 .form-switch .input-check:checked {
