@@ -885,4 +885,108 @@ describe('Tab', function() {
             });
         });
     });
+
+    describe('keyboard navigation', function() {
+        it('focuses the next item on right arrow', async function() {
+            await exec((_) => {
+                const tabToggle1 = $.findOne('#tabToggle1');
+                const event = new KeyboardEvent('keydown', {
+                    bubbles: true,
+                    code: 'ArrowRight',
+                });
+                $.focus(tabToggle1);
+                tabToggle1.dispatchEvent(event);
+            }).then(waitFor(50)).then(async (_) => {
+                assert.strictEqual(
+                    await exec((_) => $.getAttribute(document.activeElement, 'id')),
+                    'tabToggle2',
+                );
+            });
+        });
+
+        it('focuses the next item on down arrow', async function() {
+            await exec((_) => {
+                const tabToggle1 = $.findOne('#tabToggle1');
+                const event = new KeyboardEvent('keydown', {
+                    bubbles: true,
+                    code: 'ArrowDown',
+                });
+                $.focus(tabToggle1);
+                tabToggle1.dispatchEvent(event);
+            }).then(waitFor(50)).then(async (_) => {
+                assert.strictEqual(
+                    await exec((_) => $.getAttribute(document.activeElement, 'id')),
+                    'tabToggle2',
+                );
+            });
+        });
+
+        it('focuses the previous item on left arrow', async function() {
+            await exec((_) => {
+                const tabToggle2 = $.findOne('#tabToggle2');
+                const event = new KeyboardEvent('keydown', {
+                    bubbles: true,
+                    code: 'ArrowLeft',
+                });
+                $.focus(tabToggle2);
+                tabToggle2.dispatchEvent(event);
+            }).then(waitFor(50)).then(async (_) => {
+                assert.strictEqual(
+                    await exec((_) => $.getAttribute(document.activeElement, 'id')),
+                    'tabToggle1',
+                );
+            });
+        });
+
+        it('focuses the previous item on up arrow', async function() {
+            await exec((_) => {
+                const tabToggle2 = $.findOne('#tabToggle2');
+                const event = new KeyboardEvent('keydown', {
+                    bubbles: true,
+                    code: 'ArrowUp',
+                });
+                $.focus(tabToggle2);
+                tabToggle2.dispatchEvent(event);
+            }).then(waitFor(50)).then(async (_) => {
+                assert.strictEqual(
+                    await exec((_) => $.getAttribute(document.activeElement, 'id')),
+                    'tabToggle1',
+                );
+            });
+        });
+
+        it('focuses the first item on home key', async function() {
+            await exec((_) => {
+                const tabToggle2 = $.findOne('#tabToggle2');
+                const event = new KeyboardEvent('keydown', {
+                    bubbles: true,
+                    code: 'Home',
+                });
+                $.focus(tabToggle2);
+                tabToggle2.dispatchEvent(event);
+            }).then(waitFor(50)).then(async (_) => {
+                assert.strictEqual(
+                    await exec((_) => $.getAttribute(document.activeElement, 'id')),
+                    'tabToggle1',
+                );
+            });
+        });
+
+        it('focuses the last item on end key', async function() {
+            await exec((_) => {
+                const tabToggle1 = $.findOne('#tabToggle1');
+                const event = new KeyboardEvent('keydown', {
+                    bubbles: true,
+                    code: 'End',
+                });
+                $.focus(tabToggle1);
+                tabToggle1.dispatchEvent(event);
+            }).then(waitFor(50)).then(async (_) => {
+                assert.strictEqual(
+                    await exec((_) => $.getAttribute(document.activeElement, 'id')),
+                    'tabToggle2',
+                );
+            });
+        });
+    });
 });

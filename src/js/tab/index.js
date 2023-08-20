@@ -18,4 +18,35 @@ $.addEventDelegate(document, 'click.ui.tab', '[data-ui-toggle="tab"]', (e) => {
     tab.show();
 });
 
+$.addEventDelegate(document, 'keydown.ui.tab', '[data-ui-toggle="tab"]', (e) => {
+    let newTarget;
+
+    switch (e.code) {
+        case 'ArrowDown':
+        case 'ArrowRight':
+            newTarget = $.nextAll(e.currentTarget, '[data-ui-toggle="tab"]:not(.disabled)').shift();
+            break;
+        case 'ArrowLeft':
+        case 'ArrowUp':
+            newTarget = $.prevAll(e.currentTarget, '[data-ui-toggle="tab"]:not(.disabled)').pop();
+            break;
+        case 'Home':
+            newTarget = $.prevAll(e.currentTarget, '[data-ui-toggle="tab"]:not(.disabled)').shift();
+            break;
+        case 'End':
+            newTarget = $.nextAll(e.currentTarget, '[data-ui-toggle="tab"]:not(.disabled)').pop();
+            break;
+        default:
+            return;
+    }
+
+    if (!newTarget) {
+        return;
+    }
+
+    e.preventDefault();
+
+    $.focus(newTarget);
+});
+
 export default Tab;

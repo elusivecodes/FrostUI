@@ -3180,6 +3180,37 @@
         tab.show();
     });
 
+    $$1.addEventDelegate(document, 'keydown.ui.tab', '[data-ui-toggle="tab"]', (e) => {
+        let newTarget;
+
+        switch (e.code) {
+            case 'ArrowDown':
+            case 'ArrowRight':
+                newTarget = $$1.nextAll(e.currentTarget, '[data-ui-toggle="tab"]:not(.disabled)').shift();
+                break;
+            case 'ArrowLeft':
+            case 'ArrowUp':
+                newTarget = $$1.prevAll(e.currentTarget, '[data-ui-toggle="tab"]:not(.disabled)').pop();
+                break;
+            case 'Home':
+                newTarget = $$1.prevAll(e.currentTarget, '[data-ui-toggle="tab"]:not(.disabled)').shift();
+                break;
+            case 'End':
+                newTarget = $$1.nextAll(e.currentTarget, '[data-ui-toggle="tab"]:not(.disabled)').pop();
+                break;
+            default:
+                return;
+        }
+
+        if (!newTarget) {
+            return;
+        }
+
+        e.preventDefault();
+
+        $$1.focus(newTarget);
+    });
+
     /**
      * Toast Class
      * @class
