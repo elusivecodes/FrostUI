@@ -1276,6 +1276,8 @@
         constructor(node, options) {
             super(node, options);
 
+            this._placement = $$1.getDataset(this._node, 'uiPlacement');
+
             $$1.setStyle(this._node, {
                 margin: 0,
                 position: 'absolute',
@@ -1294,6 +1296,16 @@
          * Dispose the Popper.
          */
         dispose() {
+            if (this._placement) {
+                $$1.setDataset(this._node, { uiPlacement: this._placement });
+            } else {
+                $$1.removeDataset(this._node, 'uiPlacement');
+            }
+
+            if (!this._options.noAttributes) {
+                $$1.removeDataset(this._options.reference, 'uiPlacement');
+            }
+
             removePopper(this);
 
             super.dispose();
@@ -2050,8 +2062,10 @@
                     duration: this._options.duration,
                 }),
             ]).then((_) => {
-                $$1.removeAttribute(this._node, 'aria-modal');
-                $$1.setAttribute(this._node, { 'aria-hidden': true });
+                $$1.setAttribute(this._node, {
+                    'aria-hidden': true,
+                    'aria-modal': false
+                });
 
                 resetScrollPadding(this._dialog);
 
@@ -2150,8 +2164,10 @@
                     duration: this._options.duration,
                 }),
             ]).then((_) => {
-                $$1.removeAttribute(this._node, 'aria-hidden');
-                $$1.setAttribute(this._node, { 'aria-modal': true });
+                $$1.setAttribute(this._node, {
+                    'aria-hidden': false,
+                    'aria-modal': true
+                });
 
                 if (this._focusTrap) {
                     this._focusTrap.activate();
@@ -2404,8 +2420,10 @@
                     direction: getDirection(this._node),
                 }),
             ]).then((_) => {
-                $$1.removeAttribute(this._node, 'aria-modal');
-                $$1.setAttribute(this._node, { 'aria-hidden': true });
+                $$1.setAttribute(this._node, {
+                    'aria-hidden': true,
+                    'aria-modal': false
+                });
 
                 $$1.removeClass(this._node, 'show');
 
@@ -2466,8 +2484,10 @@
                     direction: getDirection(this._node),
                 }),
             ]).then((_) => {
-                $$1.removeAttribute(this._node, 'aria-hidden');
-                $$1.setAttribute(this._node, { 'aria-modal': true });
+                $$1.setAttribute(this._node, {
+                    'aria-hidden': false,
+                    'aria-modal': true
+                });
 
                 if (this._focusTrap) {
                     this._focusTrap.activate();

@@ -144,7 +144,7 @@ describe('Offcanvas', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-hidden="false" aria-modal="true" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -167,7 +167,7 @@ describe('Offcanvas', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" style="" aria-modal="true">' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" style="" aria-hidden="false" aria-modal="true">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -190,7 +190,7 @@ describe('Offcanvas', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-hidden="false" aria-modal="true" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -250,7 +250,7 @@ describe('Offcanvas', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start" id="offcanvas1" style="" aria-hidden="true">' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" aria-modal="false" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -282,7 +282,7 @@ describe('Offcanvas', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start" id="offcanvas1" style="" aria-hidden="true">' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" aria-modal="false" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -313,7 +313,7 @@ describe('Offcanvas', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start" id="offcanvas1" style="" aria-hidden="true">' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" aria-modal="false" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -386,7 +386,7 @@ describe('Offcanvas', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-hidden="false" aria-modal="true" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -409,7 +409,7 @@ describe('Offcanvas', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-hidden="false" aria-modal="true" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -454,7 +454,7 @@ describe('Offcanvas', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start" id="offcanvas1" style="" aria-hidden="true">' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" aria-modal="false" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -485,7 +485,7 @@ describe('Offcanvas', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start" id="offcanvas1" style="" aria-hidden="true">' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" aria-modal="false" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -551,7 +551,7 @@ describe('Offcanvas', function() {
                 }),
                 '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                 '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-hidden="false" aria-modal="true" style="">' +
                 '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                 '</div>' +
                 '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -581,7 +581,7 @@ describe('Offcanvas', function() {
                     }),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-hidden="false" aria-modal="true" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -612,7 +612,7 @@ describe('Offcanvas', function() {
                     }),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start" id="offcanvas1" style="" aria-hidden="true">' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" aria-modal="false" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -657,7 +657,7 @@ describe('Offcanvas', function() {
                 }),
                 '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                 '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-hidden="false" aria-modal="true" style="">' +
                 '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                 '</div>' +
                 '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -687,7 +687,7 @@ describe('Offcanvas', function() {
                     }),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-hidden="false" aria-modal="true" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -718,7 +718,7 @@ describe('Offcanvas', function() {
                     }),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start" id="offcanvas1" style="" aria-hidden="true">' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" aria-modal="false" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -793,7 +793,7 @@ describe('Offcanvas', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-hidden="false" aria-modal="true" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -936,7 +936,7 @@ describe('Offcanvas', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start" id="offcanvas1" style="" aria-hidden="true">' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" aria-modal="false" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -967,7 +967,7 @@ describe('Offcanvas', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-hidden="false" aria-modal="true" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -999,7 +999,7 @@ describe('Offcanvas', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" data-ui-keyboard="false" aria-modal="true" style="">' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" data-ui-keyboard="false" aria-hidden="false" aria-modal="true" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -1031,7 +1031,7 @@ describe('Offcanvas', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-hidden="false" aria-modal="true" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -1115,7 +1115,7 @@ describe('Offcanvas', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start" id="offcanvas1" style="" aria-hidden="true">' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" aria-modal="false" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -1142,7 +1142,7 @@ describe('Offcanvas', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-hidden="false" aria-modal="true" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -1170,7 +1170,7 @@ describe('Offcanvas', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-modal="true" style="">' +
+                    '<div class="offcanvas offcanvas-start show" id="offcanvas1" aria-hidden="false" aria-modal="true" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +
@@ -1203,7 +1203,7 @@ describe('Offcanvas', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="offcanvasToggle1" data-ui-toggle="offcanvas" data-ui-target="#offcanvas2" type="button"></button>' +
-                    '<div class="offcanvas offcanvas-start" id="offcanvas1" style="" aria-hidden="true">' +
+                    '<div class="offcanvas offcanvas-start" id="offcanvas1" aria-hidden="true" aria-modal="false" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="offcanvas" type="button"></button>' +
                     '</div>' +
                     '<div class="offcanvas offcanvas-start" id="offcanvas2">' +

@@ -148,7 +148,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -176,7 +176,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -204,7 +204,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -271,12 +271,12 @@ describe('Modal', function() {
                     }),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
-                    '<div class="modal show" id="modal2" aria-modal="true" style="z-index: 1080;">' +
+                    '<div class="modal show" id="modal2" aria-hidden="false" aria-modal="true" style="z-index: 1080;">' +
                     '<div class="modal-dialog" id="modalDialog2" style="">' +
                     '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -313,7 +313,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal" id="modal1" aria-hidden="true">' +
+                    '<div class="modal" id="modal1" aria-hidden="true" aria-modal="false">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -350,7 +350,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal" id="modal1" aria-hidden="true">' +
+                    '<div class="modal" id="modal1" aria-hidden="true" aria-modal="false">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -386,7 +386,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal" id="modal1" aria-hidden="true">' +
+                    '<div class="modal" id="modal1" aria-hidden="true" aria-modal="false">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -484,12 +484,12 @@ describe('Modal', function() {
                     }),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
-                    '<div class="modal" id="modal2" aria-hidden="true" style="">' +
+                    '<div class="modal" id="modal2" aria-hidden="true" aria-modal="false" style="">' +
                     '<div class="modal-dialog" id="modalDialog2" style="">' +
                     '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -515,7 +515,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -543,7 +543,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -594,7 +594,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal" id="modal1" aria-hidden="true">' +
+                    '<div class="modal" id="modal1" aria-hidden="true" aria-modal="false">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -630,7 +630,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal" id="modal1" aria-hidden="true">' +
+                    '<div class="modal" id="modal1" aria-hidden="true" aria-modal="false">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -705,7 +705,7 @@ describe('Modal', function() {
                 }),
                 '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                 '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                '<div class="modal show" id="modal1" aria-modal="true">' +
+                '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                 '<div class="modal-dialog" id="modalDialog1" style="">' +
                 '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                 '</div>' +
@@ -741,7 +741,7 @@ describe('Modal', function() {
                     }),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -778,7 +778,7 @@ describe('Modal', function() {
                     }),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal" id="modal1" aria-hidden="true">' +
+                    '<div class="modal" id="modal1" aria-hidden="true" aria-modal="false">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -831,7 +831,7 @@ describe('Modal', function() {
                 }),
                 '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                 '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                '<div class="modal show" id="modal1" aria-modal="true">' +
+                '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                 '<div class="modal-dialog" id="modalDialog1" style="">' +
                 '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                 '</div>' +
@@ -867,7 +867,7 @@ describe('Modal', function() {
                     }),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -904,7 +904,7 @@ describe('Modal', function() {
                     }),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal" id="modal1" aria-hidden="true">' +
+                    '<div class="modal" id="modal1" aria-hidden="true" aria-modal="false">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -992,7 +992,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -1029,7 +1029,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -1180,7 +1180,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal" id="modal1" aria-hidden="true">' +
+                    '<div class="modal" id="modal1" aria-hidden="true" aria-modal="false">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -1216,7 +1216,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -1254,7 +1254,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" data-ui-keyboard="false" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" data-ui-keyboard="false" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -1292,7 +1292,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -1323,7 +1323,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -1353,7 +1353,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" data-ui-show="true" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" data-ui-show="true" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -1381,7 +1381,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -1435,7 +1435,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -1464,7 +1464,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" data-ui-backdrop="false" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" data-ui-backdrop="false" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -1493,7 +1493,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -1530,7 +1530,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal" id="modal1" aria-hidden="true">' +
+                    '<div class="modal" id="modal1" aria-hidden="true" aria-modal="false">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -1561,7 +1561,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -1593,7 +1593,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -1626,7 +1626,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -1665,7 +1665,7 @@ describe('Modal', function() {
                     await exec((_) => $.getHTML(document.body)),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal" id="modal1" aria-hidden="true">' +
+                    '<div class="modal" id="modal1" aria-hidden="true" aria-modal="false">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
@@ -1714,12 +1714,12 @@ describe('Modal', function() {
                     }),
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal1" type="button"></button>' +
                     '<button class="btn btn-secondary" id="modalToggle1" data-ui-toggle="modal" data-ui-target="#modal2" type="button"></button>' +
-                    '<div class="modal show" id="modal1" aria-modal="true">' +
+                    '<div class="modal show" id="modal1" aria-hidden="false" aria-modal="true">' +
                     '<div class="modal-dialog" id="modalDialog1" style="">' +
                     '<button class="btn-close" id="button1" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
                     '</div>' +
-                    '<div class="modal" id="modal2" aria-hidden="true" style="">' +
+                    '<div class="modal" id="modal2" aria-hidden="true" aria-modal="false" style="">' +
                     '<div class="modal-dialog" id="modalDialog2" style="">' +
                     '<button class="btn-close" id="button2" data-ui-dismiss="modal" type="button"></button>' +
                     '</div>' +
