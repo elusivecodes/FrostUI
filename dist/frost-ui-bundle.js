@@ -11875,7 +11875,7 @@
             ]).then((_) => {
                 $$1.setAttribute(this._node, {
                     'aria-hidden': true,
-                    'aria-modal': false
+                    'aria-modal': false,
                 });
 
                 resetScrollPadding(this._dialog);
@@ -11977,7 +11977,7 @@
             ]).then((_) => {
                 $$1.setAttribute(this._node, {
                     'aria-hidden': false,
-                    'aria-modal': true
+                    'aria-modal': true,
                 });
 
                 if (this._focusTrap) {
@@ -12233,7 +12233,7 @@
             ]).then((_) => {
                 $$1.setAttribute(this._node, {
                     'aria-hidden': true,
-                    'aria-modal': false
+                    'aria-modal': false,
                 });
 
                 $$1.removeClass(this._node, 'show');
@@ -12297,7 +12297,7 @@
             ]).then((_) => {
                 $$1.setAttribute(this._node, {
                     'aria-hidden': false,
-                    'aria-modal': true
+                    'aria-modal': true,
                 });
 
                 if (this._focusTrap) {

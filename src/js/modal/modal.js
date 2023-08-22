@@ -78,7 +78,7 @@ export default class Modal extends BaseComponent {
         ]).then((_) => {
             $.setAttribute(this._node, {
                 'aria-hidden': true,
-                'aria-modal': false
+                'aria-modal': false,
             });
 
             resetScrollPadding(this._dialog);
@@ -180,7 +180,7 @@ export default class Modal extends BaseComponent {
         ]).then((_) => {
             $.setAttribute(this._node, {
                 'aria-hidden': false,
-                'aria-modal': true
+                'aria-modal': true,
             });
 
             if (this._focusTrap) {

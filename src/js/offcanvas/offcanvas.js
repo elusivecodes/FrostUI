@@ -65,7 +65,7 @@ export default class Offcanvas extends BaseComponent {
         ]).then((_) => {
             $.setAttribute(this._node, {
                 'aria-hidden': true,
-                'aria-modal': false
+                'aria-modal': false,
             });
 
             $.removeClass(this._node, 'show');
@@ -129,7 +129,7 @@ export default class Offcanvas extends BaseComponent {
         ]).then((_) => {
             $.setAttribute(this._node, {
                 'aria-hidden': false,
-                'aria-modal': true
+                'aria-modal': true,
             });
 
             if (this._focusTrap) {
