@@ -1770,10 +1770,10 @@
 
         switch (e.code) {
             case 'ArrowDown':
-                focusNode = $$1.nextAll(e.currentTarget, '.dropdown-item:not([tabindex="-1"])').shift();
+                focusNode = $$1.next(e.currentTarget, '.dropdown-item:not([tabindex="-1"])').shift();
                 break;
             case 'ArrowUp':
-                focusNode = $$1.prevAll(e.currentTarget, '.dropdown-item:not([tabindex="-1"])').pop();
+                focusNode = $$1.prev(e.currentTarget, '.dropdown-item:not([tabindex="-1"])').pop();
                 break;
             default:
                 return;
@@ -3206,11 +3206,11 @@
         switch (e.code) {
             case 'ArrowDown':
             case 'ArrowRight':
-                newTarget = $$1.nextAll(e.currentTarget, '[data-ui-toggle="tab"]:not(.disabled)').shift();
+                newTarget = $$1.next(e.currentTarget, '[data-ui-toggle="tab"]:not(.disabled)').shift();
                 break;
             case 'ArrowLeft':
             case 'ArrowUp':
-                newTarget = $$1.prevAll(e.currentTarget, '[data-ui-toggle="tab"]:not(.disabled)').pop();
+                newTarget = $$1.prev(e.currentTarget, '[data-ui-toggle="tab"]:not(.disabled)').pop();
                 break;
             case 'Home':
                 newTarget = $$1.prevAll(e.currentTarget, '[data-ui-toggle="tab"]:not(.disabled)').shift();

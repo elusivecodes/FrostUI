@@ -53,10 +53,10 @@ $.addEventDelegate(document, 'keydown.ui.dropdown', '.dropdown-menu.show .dropdo
 
     switch (e.code) {
         case 'ArrowDown':
-            focusNode = $.nextAll(e.currentTarget, '.dropdown-item:not([tabindex="-1"])').shift();
+            focusNode = $.next(e.currentTarget, '.dropdown-item:not([tabindex="-1"])').shift();
             break;
         case 'ArrowUp':
-            focusNode = $.prevAll(e.currentTarget, '.dropdown-item:not([tabindex="-1"])').pop();
+            focusNode = $.prev(e.currentTarget, '.dropdown-item:not([tabindex="-1"])').pop();
             break;
         default:
             return;

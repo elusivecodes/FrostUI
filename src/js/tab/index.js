@@ -24,11 +24,11 @@ $.addEventDelegate(document, 'keydown.ui.tab', '[data-ui-toggle="tab"]', (e) => 
     switch (e.code) {
         case 'ArrowDown':
         case 'ArrowRight':
-            newTarget = $.nextAll(e.currentTarget, '[data-ui-toggle="tab"]:not(.disabled)').shift();
+            newTarget = $.next(e.currentTarget, '[data-ui-toggle="tab"]:not(.disabled)').shift();
             break;
         case 'ArrowLeft':
         case 'ArrowUp':
-            newTarget = $.prevAll(e.currentTarget, '[data-ui-toggle="tab"]:not(.disabled)').pop();
+            newTarget = $.prev(e.currentTarget, '[data-ui-toggle="tab"]:not(.disabled)').pop();
             break;
         case 'Home':
             newTarget = $.prevAll(e.currentTarget, '[data-ui-toggle="tab"]:not(.disabled)').shift();
