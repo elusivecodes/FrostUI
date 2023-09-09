@@ -103,9 +103,12 @@
   --ui-dark-emphasis-rgb: 46, 46, 46;
   --ui-dark-subtle-rgb: 214, 214, 214;
   --ui-dark-contrast-rgb: 255, 255, 255;
+  --ui-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0));
   --ui-font-sans-serif: -apple-system, blinkmacsystemfont, Segoe UI, tahoma, geneva, verdana, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   --ui-font-monospace: sfmono-regular, menlo, monaco, consolas, Liberation Mono, Courier New, monospace;
-  --ui-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0));
+  --ui-font-size: 1rem;
+  --ui-font-size-sm: 0.875rem;
+  --ui-font-size-lg: 1.25rem;
   --ui-body-font-family: var(--ui-font-sans-serif);
   --ui-body-font-size: 1.1rem;
   --ui-body-font-weight: 400;
@@ -562,7 +565,7 @@ legend {
   width: 100%;
   padding: 0;
   margin-bottom: 0.5rem;
-  font-size: 1.25rem;
+  font-size: var(--ui-font-size-lg);
   font-weight: 500;
   line-height: inherit;
 }
@@ -782,7 +785,7 @@ progress {
 }
 .blockquote {
   margin-bottom: 1rem;
-  font-size: 1.25rem;
+  font-size: var(--ui-font-size-lg);
 }
 
 .blockquote-footer {
@@ -1889,7 +1892,7 @@ progress {
   align-items: center;
   width: 100%;
   padding: var(--ui-accordion-btn-padding-y) var(--ui-accordion-btn-padding-x);
-  font-size: 1.1rem;
+  font-size: var(--ui-body-font-size);
   color: var(--ui-accordion-btn-color);
   background-color: var(--ui-accordion-btn-bg);
   border: 0;
@@ -2144,7 +2147,7 @@ progress {
   --ui-btn-padding-x: 0.5rem;
   --ui-btn-padding-y: 0.25rem;
   --ui-btn-font-family: -apple-system, blinkmacsystemfont, Segoe UI, tahoma, geneva, verdana, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
-  --ui-btn-font-size: 1rem;
+  --ui-btn-font-size: var(--ui-font-size);
   --ui-btn-font-weight: 400;
   --ui-btn-line-height: 1.5;
   --ui-btn-border-width: var(--ui-border-width);
@@ -2205,14 +2208,14 @@ fieldset:disabled .btn {
 .btn-lg, .btn-group-lg > .btn {
   --ui-btn-padding-x: 1rem;
   --ui-btn-padding-y: 0.3333333333rem;
-  --ui-btn-font-size: 1.25rem;
+  --ui-btn-font-size: var(--ui-font-size-lg);
   --ui-btn-border-radius: var(--ui-border-radius-lg);
 }
 
 .btn-sm, .btn-group-sm > .btn {
   --ui-btn-padding-x: 0.5rem;
   --ui-btn-padding-y: 0.25rem;
-  --ui-btn-font-size: 0.875em;
+  --ui-btn-font-size: var(--ui-font-size-sm);
   --ui-btn-border-radius: var(--ui-border-radius-sm);
 }
 
@@ -2885,7 +2888,7 @@ fieldset:disabled .btn {
   min-width: var(--ui-dropdown-min-width);
   padding: var(--ui-dropdown-padding-y) var(--ui-dropdown-padding-x);
   margin: 0;
-  font-size: 1rem;
+  font-size: var(--ui-font-size);
   color: var(--ui-dropdown-color);
   text-align: left;
   list-style: none;
@@ -2932,7 +2935,7 @@ fieldset:disabled .btn {
   display: block;
   padding: var(--ui-dropdown-header-padding-y) var(--ui-dropdown-header-padding-x);
   margin-bottom: 0;
-  font-size: 0.875em;
+  font-size: var(--ui-font-size-sm);
   color: var(--ui-dropdown-header-color);
   white-space: nowrap;
 }
@@ -3788,7 +3791,7 @@ fieldset:disabled .btn {
   --ui-navbar-hover-color: rgba(var(--ui-emphasis-color-rgb), 0.9);
   --ui-navbar-active-color: var(--ui-emphasis-color);
   --ui-navbar-disabled-color: rgba(var(--ui-emphasis-color-rgb), 0.3);
-  --ui-navbar-brand-padding-y: 0.3875rem;
+  --ui-navbar-brand-padding-y: 0.3125rem;
   --ui-navbar-brand-margin-end: 1rem;
   --ui-navbar-brand-font-size: 1.25rem;
   --ui-navbar-brand-color: var(--ui-emphasis-color);
@@ -3797,7 +3800,7 @@ fieldset:disabled .btn {
   --ui-navbar-nav-link-padding-x: 0.5rem;
   --ui-navbar-toggler-padding-x: 0.75rem;
   --ui-navbar-toggler-padding-y: 0.25rem;
-  --ui-navbar-toggler-font-size: 1.25rem;
+  --ui-navbar-toggler-font-size: var(--ui-font-size-lg);
   --ui-navbar-toggler-icon-width: 1.5em;
   --ui-navbar-toggler-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23000' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
   --ui-navbar-toggler-border-color: rgba(var(--ui-emphasis-color-rgb), 0.15);
@@ -4343,7 +4346,7 @@ fieldset:disabled .btn {
 .pagination {
   --ui-pagination-padding-x: 0.75rem;
   --ui-pagination-padding-y: 0.25rem;
-  --ui-pagination-font-size: 1.1rem;
+  --ui-pagination-font-size: var(--ui-body-font-size);
   --ui-pagination-color: var(--ui-link-color);
   --ui-pagination-bg: var(--ui-body-bg);
   --ui-pagination-border-width: var(--ui-border-width);
@@ -4417,13 +4420,13 @@ fieldset:disabled .btn {
 .pagination-sm .page-link {
   --ui-pagination-padding-x: 0.5rem;
   --ui-pagination-padding-y: 0.25rem;
-  --ui-pagination-font-size: 0.875em;
+  --ui-pagination-font-size: var(--ui-font-size-sm);
 }
 
 .pagination-lg .page-link {
   --ui-pagination-padding-x: 1.5rem;
   --ui-pagination-padding-y: 0.75rem;
-  --ui-pagination-font-size: 1.25rem;
+  --ui-pagination-font-size: var(--ui-font-size-lg);
 }
 
 @keyframes placeholder-glow {
@@ -4512,7 +4515,7 @@ fieldset:disabled .btn {
   white-space: normal;
   word-spacing: normal;
   line-break: auto;
-  font-size: 0.875em;
+  font-size: var(--ui-font-size-sm);
   word-wrap: break-word;
   background-color: var(--ui-popover-bg);
   background-clip: padding-box;
@@ -4743,7 +4746,7 @@ fieldset:disabled .btn {
   --ui-toast-padding-x: 0.75rem;
   --ui-toast-padding-y: 0.75rem;
   --ui-toast-margin-bottom: 1rem;
-  --ui-toast-font-size: 0.875em;
+  --ui-toast-font-size: var(--ui-font-size-sm);
   --ui-toast-bg: rgba(var(--ui-body-bg-rgb), 0.85);
   --ui-toast-border-width: var(--ui-border-width);
   --ui-toast-border-color: var(--ui-border-color-translucent);
@@ -4807,7 +4810,7 @@ fieldset:disabled .btn {
   --ui-tooltip-max-width: 200px;
   --ui-tooltip-padding-x: 0.5rem;
   --ui-tooltip-padding-y: 0.25rem;
-  --ui-tooltip-font-size: 0.875em;
+  --ui-tooltip-font-size: var(--ui-font-size-sm);
   --ui-tooltip-color: var(--ui-body-bg);
   --ui-tooltip-bg: var(--ui-emphasis-color);
   --ui-tooltip-border-radius: var(--ui-border-radius);
@@ -5015,7 +5018,7 @@ fieldset:disabled .btn {
 
 .form-text {
   margin-top: 0.25rem;
-  font-size: 0.875em;
+  font-size: var(--ui-font-size-sm);
   color: var(--ui-body-color);
 }
 
@@ -5036,7 +5039,7 @@ fieldset:disabled .btn {
   display: flex;
   align-items: center;
   padding: 0.5rem 0.5rem;
-  font-size: 1rem;
+  font-size: var(--ui-font-size);
   font-weight: 400;
   line-height: 1.5;
   color: var(--ui-secondary-color);
@@ -5055,9 +5058,9 @@ fieldset:disabled .btn {
 .input-outline {
   display: block;
   width: 100%;
-  min-height: calc(1rem + 1rem + (var(--ui-border-width) * 2));
+  min-height: calc(var(--ui-font-size) + 1rem + (var(--ui-border-width) * 2));
   padding: 0.5rem 0.5rem;
-  font-size: 1rem;
+  font-size: var(--ui-font-size);
   line-height: 1.5;
   color: var(--ui-body-color);
 }
@@ -5154,7 +5157,7 @@ select.input-filled[multiple] option, select.input-outline[multiple] option {
 
 .input-sm {
   padding: 0.25rem 0.5rem;
-  font-size: 0.875em;
+  font-size: var(--ui-font-size-sm);
 }
 select.input-sm[multiple] option {
   padding: 0.25rem 0.5rem;
@@ -5162,7 +5165,7 @@ select.input-sm[multiple] option {
 
 .input-lg {
   padding: 0.5rem 0.5rem;
-  font-size: 1.25rem;
+  font-size: var(--ui-font-size-lg);
 }
 select.input-lg[multiple] option {
   padding: 0.5rem 0.5rem;
@@ -5257,7 +5260,7 @@ select.input-lg[multiple] option {
 .input-group-sm .input-outline,
 .input-group-sm .input-group-text {
   padding: 0.25rem 0.5rem;
-  font-size: 0.875em;
+  font-size: var(--ui-font-size-sm);
 }
 
 .input-group-lg .btn,
@@ -5265,7 +5268,7 @@ select.input-lg[multiple] option {
 .input-group-lg .input-outline,
 .input-group-lg .input-group-text {
   padding: 0.5rem 0.5rem;
-  font-size: 1.25rem;
+  font-size: var(--ui-font-size-lg);
 }
 
 .col-label {
@@ -5279,13 +5282,13 @@ select.input-lg[multiple] option {
 .col-label-sm {
   padding-top: calc(0.25rem + var(--ui-border-width));
   padding-bottom: calc(0.25rem + var(--ui-border-width));
-  font-size: 0.875em;
+  font-size: var(--ui-font-size-sm);
 }
 
 .col-label-lg {
   padding-top: calc(0.5rem + var(--ui-border-width));
   padding-bottom: calc(0.5rem + var(--ui-border-width));
-  font-size: 1.25rem;
+  font-size: var(--ui-font-size-lg);
 }
 
 .label-floating {
@@ -5296,7 +5299,7 @@ select.input-lg[multiple] option {
   width: 100%;
   padding: 0.75rem 0.5rem;
   margin-bottom: 0;
-  font-size: 1rem;
+  font-size: var(--ui-font-size);
   line-height: 1.5;
   color: var(--ui-tertiary-color);
   pointer-events: none;
@@ -5316,10 +5319,10 @@ select.input-lg[multiple] option {
   color: transparent;
 }
 .input-floating.input-sm ~ .label-floating, .input-group-sm .input-floating ~ .label-floating {
-  font-size: 0.875em;
+  font-size: var(--ui-font-size-sm);
 }
 .input-floating.input-lg ~ .label-floating, .input-group-lg .input-floating ~ .label-floating {
-  font-size: 1.25rem;
+  font-size: var(--ui-font-size-lg);
 }
 .input-floating.input-filled ~ .label-floating {
   border-bottom: var(--ui-border-width) var(--ui-border-style) transparent;

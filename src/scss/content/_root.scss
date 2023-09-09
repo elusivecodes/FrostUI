@@ -113,12 +113,16 @@
     --ui-dark-subtle-rgb: #{to-rgb($dark-subtle)};
     --ui-dark-contrast-rgb: #{to-rgb($dark-contrast)};
 
-    --ui-font-sans-serif: #{$font-sans-serif};
-    --ui-font-monospace: #{$font-monospace};
     --ui-gradient: #{$gradient};
 
+    --ui-font-sans-serif: #{$font-sans-serif};
+    --ui-font-monospace: #{$font-monospace};
+    --ui-font-size: #{$font-size};
+    --ui-font-size-sm: #{$font-size-sm};
+    --ui-font-size-lg: #{$font-size-lg};
+
     --ui-body-font-family: var(--ui-font-sans-serif);
-    --ui-body-font-size: #{$font-size};
+    --ui-body-font-size: #{$body-font-size};
     --ui-body-font-weight: #{$body-font-weight};
     --ui-body-line-height: #{$body-line-height};
 

@@ -29,7 +29,7 @@ $form-switch-input-check-checked-color: var(--ui-primary-contrast) !default;
 
 // form text
 $form-text-margin-top: $spacing * .25 !default;
-$form-text-font-size: $small-font-size !default;
+$form-text-font-size: var(--ui-font-size-sm) !default;
 $form-text-color: var(--ui-body-color) !default;
 
 $input-plain-text-color: var(--ui-body-color) !default;
@@ -41,7 +41,7 @@ $input-group-text-bg: var(--ui-tertiary-bg) !default;
 // input
 $input-padding-x: $spacing * .5 !default;
 $input-padding-y: $spacing * .5 !default;
-$input-font-size: 1rem !default;
+$input-font-size: var(--ui-font-size) !default;
 $input-line-height: map-get($line-heights, base) !default;
 $input-color: var(--ui-body-color) !default;
 $input-border-width: var(--ui-border-width) !default;
@@ -66,10 +66,10 @@ $input-outline-focus-shadow-color: var(--ui-focus-ring-color) !default;
 
 $input-sm-padding-x: $spacing * .5 !default;
 $input-sm-padding-y: $spacing * .25 !default;
-$input-sm-font-size: $small-font-size !default;
+$input-sm-font-size: var(--ui-font-size-sm) !default;
 $input-lg-padding-x: $input-padding-x !default;
 $input-lg-padding-y: $input-padding-y !default;
-$input-lg-font-size: map-get($font-sizes, 5) !default;
+$input-lg-font-size: var(--ui-font-size-lg) !default;
 
 $ripple-line-bg: var(--ui-primary) !default;
 

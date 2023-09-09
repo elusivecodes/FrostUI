@@ -157,7 +157,10 @@ $font-sizes: (
     $font-sizes: map-merge($font-sizes, ($key: $size));
 }
 
-$font-size: 1.1rem !default;
+$font-size-sm: .875rem !default;
+$font-size: 1rem !default;
+$font-size-lg: 1.25rem !default;
+$body-font-size: 1.1rem !default;
 $small-font-size: .875em !default;
 
 $font-weights: (
