@@ -286,19 +286,19 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 }
 
 h1, .h1 {
-  font-size: clamp(1.65rem, calc(1.65rem + 1.32vw), 3rem);
+  font-size: clamp(1.65rem, 1.65rem + 1.32vw, 3rem);
 }
 
 h2, .h2 {
-  font-size: clamp(1.55rem, calc(1.55rem + 0.99vw), 2.5rem);
+  font-size: clamp(1.55rem, 1.55rem + 0.99vw, 2.5rem);
 }
 
 h3, .h3 {
-  font-size: clamp(1.45rem, calc(1.45rem + 0.66vw), 2rem);
+  font-size: clamp(1.45rem, 1.45rem + 0.66vw, 2rem);
 }
 
 h4, .h4 {
-  font-size: clamp(1.35rem, calc(1.35rem + 0.33vw), 1.5rem);
+  font-size: clamp(1.35rem, 1.35rem + 0.33vw, 1.5rem);
 }
 
 h5, .h5 {
@@ -806,27 +806,27 @@ progress {
 }
 
 .display-1 {
-  font-size: clamp(2.05rem, calc(2.05rem + 2.64vw), 5rem);
+  font-size: clamp(2.05rem, 2.05rem + 2.64vw, 5rem);
 }
 
 .display-2 {
-  font-size: clamp(1.95rem, calc(1.95rem + 2.31vw), 4.5rem);
+  font-size: clamp(1.95rem, 1.95rem + 2.31vw, 4.5rem);
 }
 
 .display-3 {
-  font-size: clamp(1.85rem, calc(1.85rem + 1.98vw), 4rem);
+  font-size: clamp(1.85rem, 1.85rem + 1.98vw, 4rem);
 }
 
 .display-4 {
-  font-size: clamp(1.75rem, calc(1.75rem + 1.65vw), 3.5rem);
+  font-size: clamp(1.75rem, 1.75rem + 1.65vw, 3.5rem);
 }
 
 .display-5 {
-  font-size: clamp(1.65rem, calc(1.65rem + 1.32vw), 3rem);
+  font-size: clamp(1.65rem, 1.65rem + 1.32vw, 3rem);
 }
 
 .display-6 {
-  font-size: clamp(1.55rem, calc(1.55rem + 0.99vw), 2.5rem);
+  font-size: clamp(1.55rem, 1.55rem + 0.99vw, 2.5rem);
 }
 
 .initialism {
@@ -2020,7 +2020,7 @@ progress {
 }
 
 .alert-dismissable {
-  padding-right: calc((var(--ui-alert-padding-x) * 2) + 1em);
+  padding-right: calc(var(--ui-alert-padding-x) * 2 + 1em);
 }
 .alert-dismissable .btn-close {
   position: absolute;
@@ -2825,17 +2825,17 @@ fieldset:disabled .btn {
   padding: var(--ui-btn-close-padding-y) var(--ui-btn-close-padding-x);
   color: inherit;
   background-color: currentcolor;
+  border: 0;
+  opacity: var(--ui-btn-close-opacity);
   -webkit-mask-image: var(--ui-btn-close-icon);
   mask-image: var(--ui-btn-close-icon);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  -webkit-mask-size: var(--ui-btn-close-width);
-  mask-size: var(--ui-btn-close-width);
   -webkit-mask-position: center center;
   mask-position: center center;
-  border: 0;
+  -webkit-mask-size: var(--ui-btn-close-width);
+  mask-size: var(--ui-btn-close-width);
   border-radius: var(--ui-btn-close-border-radius);
-  opacity: var(--ui-btn-close-opacity);
 }
 .btn-close:hover {
   text-decoration: none;
@@ -5058,7 +5058,7 @@ fieldset:disabled .btn {
 .input-outline {
   display: block;
   width: 100%;
-  min-height: calc(var(--ui-font-size) + 1rem + (var(--ui-border-width) * 2));
+  min-height: calc(var(--ui-font-size) + 1rem + var(--ui-border-width) * 2);
   padding: 0.5rem 0.5rem;
   font-size: var(--ui-font-size);
   line-height: 1.5;
@@ -11722,19 +11722,19 @@ select.input-lg[multiple] option {
 }
 
 .fs-1 {
-  font-size: clamp(1.65rem, calc(1.65rem + 1.32vw), 3rem) !important;
+  font-size: clamp(1.65rem, 1.65rem + 1.32vw, 3rem) !important;
 }
 
 .fs-2 {
-  font-size: clamp(1.55rem, calc(1.55rem + 0.99vw), 2.5rem) !important;
+  font-size: clamp(1.55rem, 1.55rem + 0.99vw, 2.5rem) !important;
 }
 
 .fs-3 {
-  font-size: clamp(1.45rem, calc(1.45rem + 0.66vw), 2rem) !important;
+  font-size: clamp(1.45rem, 1.45rem + 0.66vw, 2rem) !important;
 }
 
 .fs-4 {
-  font-size: clamp(1.35rem, calc(1.35rem + 0.33vw), 1.5rem) !important;
+  font-size: clamp(1.35rem, 1.35rem + 0.33vw, 1.5rem) !important;
 }
 
 .fs-5 {

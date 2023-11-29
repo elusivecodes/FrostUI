@@ -16,13 +16,13 @@
     padding: var(--ui-btn-close-padding-y) var(--ui-btn-close-padding-x);
     color: inherit;
     background-color: currentcolor;
+    border: 0;
+    opacity: var(--ui-btn-close-opacity);
     mask-image: var(--ui-btn-close-icon);
     mask-repeat: no-repeat;
-    mask-size: var(--ui-btn-close-width);
     mask-position: center center;
-    border: 0;
+    mask-size: var(--ui-btn-close-width);
     @include border-radius(var(--ui-btn-close-border-radius));
-    opacity: var(--ui-btn-close-opacity);
 
     &:hover {
         text-decoration: none;
