@@ -7,19 +7,6 @@ import BaseComponent from './../base-component.js';
  */
 export default class FocusTrap extends BaseComponent {
     /**
-     * New FocusTrap constructor.
-     * @param {HTMLElement} node The input node.
-     * @param {object} options The options to create the FocusTrap with.
-     */
-    constructor(node, options) {
-        super(node, options);
-
-        if (this._options.autoFocus) {
-            $.focus(this._node);
-        }
-    }
-
-    /**
      * Activate the FocusTrap.
      */
     activate() {
@@ -28,6 +15,11 @@ export default class FocusTrap extends BaseComponent {
         }
 
         addFocusTrap(this);
+
+        if (this._options.autoFocus) {
+            $.focus(this._node);
+        }
+
         this._active = true;
     }
 
