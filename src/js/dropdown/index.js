@@ -82,8 +82,7 @@ $.addEvent(document, 'click.ui.dropdown', (e) => {
             (
                 hasDescendent &&
                 (
-                    $.is(target, 'form') ||
-                    $.closest(target, 'form', dropdown._menuNode).length ||
+                    $.is(target, 'form, input, textarea, select, option') ||
                     autoClose === 'outside' ||
                     autoClose === false
                 )
@@ -104,8 +103,8 @@ $.addEvent(document, 'click.ui.dropdown', (e) => {
     }
 }, { capture: true });
 
-$.addEvent(document, 'keyup.ui.dropdown', (e) => {
-    if (!['Tab', 'Escape'].includes(e.code)) {
+$.addEvent(document, 'keydown.ui.dropdown', (e) => {
+    if (e.code !== 'Escape') {
         return;
     }
 
@@ -116,17 +115,28 @@ $.addEvent(document, 'keyup.ui.dropdown', (e) => {
         const toggle = $.siblings(node, '[data-ui-toggle="dropdown"]').shift();
         const dropdown = Dropdown.init(toggle);
 
-        if (
-            (e.code === 'Tab' && $.isSame(dropdown._node, e.target)) ||
-            (
-                $.hasDescendent(dropdown._menuNode, e.target) &&
-                (
-                    e.code === 'Tab' ||
-                    $.is(e.target, 'form') ||
-                    $.closest(e.target, 'form', dropdown._menuNode).length
-                )
-            )
-        ) {
+        if (!stopped) {
+            stopped = true;
+            e.stopPropagation();
+        }
+
+        dropdown.hide();
+    }
+}, { capture: true });
+
+$.addEvent(document, 'keyup.ui.dropdown', (e) => {
+    if (e.code !== 'Tab') {
+        return;
+    }
+
+    let stopped = false;
+    const nodes = $.find('.dropdown-menu.show');
+
+    for (const node of nodes) {
+        const toggle = $.siblings(node, '[data-ui-toggle="dropdown"]').shift();
+        const dropdown = Dropdown.init(toggle);
+
+        if ($.hasDescendent(dropdown._menuNode, e.target)) {
             continue;
         }
 

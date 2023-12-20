@@ -61,7 +61,7 @@ $.addEvent(document, 'click.ui.offcanvas', (e) => {
     }
 });
 
-$.addEvent(document, 'keyup.ui.offcanvas', (e) => {
+$.addEvent(document, 'keydown.ui.offcanvas', (e) => {
     if (e.code !== 'Escape' || $.findOne('.modal.show')) {
         return;
     }

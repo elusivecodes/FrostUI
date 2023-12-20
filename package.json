@@ -1,6 +1,6 @@
 {
     "name": "@fr0st/ui",
-    "version": "2.4.2",
+    "version": "2.4.3",
     "description": "FrostUI is a free, open-source UI library for JavaScript.",
     "keywords": [
         "ui",
@@ -50,19 +50,19 @@
     "devDependencies": {
         "@rollup/plugin-node-resolve": "^15.2.3",
         "autoprefixer": "^10.4.16",
-        "clean-css-cli": "^5.6.2",
-        "eslint": "^8.54.0",
+        "clean-css-cli": "^5.6.3",
+        "eslint": "^8.56.0",
         "eslint-config-google": "^0.14.0",
         "find-unused-sass-variables": "^5.0.0",
         "mocha": "^10.2.0",
-        "postcss": "^8.4.31",
-        "postcss-cli": "^10.1.0",
-        "puppeteer": "^21.5.2",
-        "rollup": "^4.6.0",
+        "postcss": "^8.4.32",
+        "postcss-cli": "^11.0.0",
+        "puppeteer": "^21.6.1",
+        "rollup": "^4.9.1",
         "sass": "^1.69.5",
         "stylelint": "^15.11.0",
         "stylelint-config-twbs-bootstrap": "^12.0.0",
-        "terser": "^5.24.0"
+        "terser": "^5.26.0"
     },
     "dependencies": {
         "@fr0st/query": "^3.2.3"

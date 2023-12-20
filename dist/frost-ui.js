@@ -1799,8 +1799,7 @@
                 (
                     hasDescendent &&
                     (
-                        $$1.is(target, 'form') ||
-                        $$1.closest(target, 'form', dropdown._menuNode).length ||
+                        $$1.is(target, 'form, input, textarea, select, option') ||
                         autoClose === 'outside' ||
                         autoClose === false
                     )
@@ -1821,8 +1820,8 @@
         }
     }, { capture: true });
 
-    $$1.addEvent(document, 'keyup.ui.dropdown', (e) => {
-        if (!['Tab', 'Escape'].includes(e.code)) {
+    $$1.addEvent(document, 'keydown.ui.dropdown', (e) => {
+        if (e.code !== 'Escape') {
             return;
         }
 
@@ -1833,17 +1832,28 @@
             const toggle = $$1.siblings(node, '[data-ui-toggle="dropdown"]').shift();
             const dropdown = Dropdown.init(toggle);
 
-            if (
-                (e.code === 'Tab' && $$1.isSame(dropdown._node, e.target)) ||
-                (
-                    $$1.hasDescendent(dropdown._menuNode, e.target) &&
-                    (
-                        e.code === 'Tab' ||
-                        $$1.is(e.target, 'form') ||
-                        $$1.closest(e.target, 'form', dropdown._menuNode).length
-                    )
-                )
-            ) {
+            if (!stopped) {
+                stopped = true;
+                e.stopPropagation();
+            }
+
+            dropdown.hide();
+        }
+    }, { capture: true });
+
+    $$1.addEvent(document, 'keyup.ui.dropdown', (e) => {
+        if (e.code !== 'Tab') {
+            return;
+        }
+
+        let stopped = false;
+        const nodes = $$1.find('.dropdown-menu.show');
+
+        for (const node of nodes) {
+            const toggle = $$1.siblings(node, '[data-ui-toggle="dropdown"]').shift();
+            const dropdown = Dropdown.init(toggle);
+
+            if ($$1.hasDescendent(dropdown._menuNode, e.target)) {
                 continue;
             }
 
@@ -2309,7 +2319,7 @@
         modal.hide();
     });
 
-    $$1.addEvent(window$1, 'keyup.ui.modal', (e) => {
+    $$1.addEvent(window$1, 'keydown.ui.modal', (e) => {
         if (e.code !== 'Escape') {
             return;
         }
@@ -2564,7 +2574,7 @@
         }
     });
 
-    $$1.addEvent(document, 'keyup.ui.offcanvas', (e) => {
+    $$1.addEvent(document, 'keydown.ui.offcanvas', (e) => {
         if (e.code !== 'Escape' || $$1.findOne('.modal.show')) {
             return;
         }

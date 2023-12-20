@@ -1164,7 +1164,7 @@ describe('Modal', function() {
                 });
             }).then(waitFor(50)).then(async (_) => {
                 await exec((_) => {
-                    const event = new KeyboardEvent('keyup', {
+                    const event = new KeyboardEvent('keydown', {
                         bubbles: true,
                         code: 'Escape',
                     });

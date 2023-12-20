@@ -66,7 +66,7 @@ $.addEvent(window, 'click.ui.modal', (e) => {
     modal.hide();
 });
 
-$.addEvent(window, 'keyup.ui.modal', (e) => {
+$.addEvent(window, 'keydown.ui.modal', (e) => {
     if (e.code !== 'Escape') {
         return;
     }
