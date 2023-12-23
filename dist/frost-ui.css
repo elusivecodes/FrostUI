@@ -5175,7 +5175,7 @@ select.input-lg[multiple] option {
   position: absolute;
   bottom: 0;
   left: 0;
-  z-index: 2;
+  z-index: 4;
   width: 100%;
   height: calc(var(--ui-border-width) * 2);
   background-color: var(--ui-primary);
