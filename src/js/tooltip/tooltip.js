@@ -110,6 +110,7 @@ export default class Tooltip extends BaseComponent {
             $.removeClass(this._tooltip, 'show');
             $.detach(this._tooltip);
             $.removeDataset(this._tooltip, 'uiAnimating');
+            $.removeAttribute(this._node, 'aria-described-by');
             $.triggerEvent(this._node, 'hidden.ui.tooltip');
         }).catch((_) => {
             if ($.getDataset(this._tooltip, 'uiAnimating') === 'out') {

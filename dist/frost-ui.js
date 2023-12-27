@@ -409,7 +409,11 @@
     initComponent('button', Button);
 
     // Button events
-    $$1.addEventDelegate(document, 'click.ui.button', '[data-ui-toggle="button"]', (e) => {
+    $$1.addEventDelegate(document, 'click.ui.button keydown.ui.button', '[data-ui-toggle="button"]', (e) => {
+        if (e.code && e.code !== 'Space') {
+            return;
+        }
+
         e.preventDefault();
 
         const button = Button.init(e.currentTarget);
@@ -1735,7 +1739,7 @@
     initComponent('dropdown', Dropdown);
 
     // Dropdown events
-    $$1.addEventDelegate(document, 'click.ui.dropdown keyup.ui.dropdown', '[data-ui-toggle="dropdown"]', (e) => {
+    $$1.addEventDelegate(document, 'click.ui.dropdown keydown.ui.dropdown', '[data-ui-toggle="dropdown"]', (e) => {
         if (e.code && e.code !== 'Space') {
             return;
         }
@@ -2705,6 +2709,7 @@
 
                 $$1.detach(this._popover);
                 $$1.removeDataset(this._popover, 'uiAnimating');
+                $$1.removeAttribute(this._node, 'aria-described-by');
                 $$1.triggerEvent(this._node, 'hidden.ui.popover');
             }).catch((_) => {
                 if ($$1.getDataset(this._popover, 'uiAnimating') === 'out') {
@@ -3195,7 +3200,11 @@
     initComponent('tab', Tab);
 
     // Tab events
-    $$1.addEventDelegate(document, 'click.ui.tab', '[data-ui-toggle="tab"]', (e) => {
+    $$1.addEventDelegate(document, 'click.ui.tab keydown.ui.tab', '[data-ui-toggle="tab"]', (e) => {
+        if (e.code && e.code !== 'Space') {
+            return;
+        }
+
         e.preventDefault();
 
         const tab = Tab.init(e.currentTarget);
@@ -3430,6 +3439,7 @@
                 $$1.removeClass(this._tooltip, 'show');
                 $$1.detach(this._tooltip);
                 $$1.removeDataset(this._tooltip, 'uiAnimating');
+                $$1.removeAttribute(this._node, 'aria-described-by');
                 $$1.triggerEvent(this._node, 'hidden.ui.tooltip');
             }).catch((_) => {
                 if ($$1.getDataset(this._tooltip, 'uiAnimating') === 'out') {

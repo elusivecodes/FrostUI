@@ -18,7 +18,7 @@ Dropdown.defaults = {
 initComponent('dropdown', Dropdown);
 
 // Dropdown events
-$.addEventDelegate(document, 'click.ui.dropdown keyup.ui.dropdown', '[data-ui-toggle="dropdown"]', (e) => {
+$.addEventDelegate(document, 'click.ui.dropdown keydown.ui.dropdown', '[data-ui-toggle="dropdown"]', (e) => {
     if (e.code && e.code !== 'Space') {
         return;
     }

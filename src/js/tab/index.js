@@ -11,7 +11,11 @@ Tab.defaults = {
 initComponent('tab', Tab);
 
 // Tab events
-$.addEventDelegate(document, 'click.ui.tab', '[data-ui-toggle="tab"]', (e) => {
+$.addEventDelegate(document, 'click.ui.tab keydown.ui.tab', '[data-ui-toggle="tab"]', (e) => {
+    if (e.code && e.code !== 'Space') {
+        return;
+    }
+
     e.preventDefault();
 
     const tab = Tab.init(e.currentTarget);

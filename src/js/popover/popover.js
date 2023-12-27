@@ -110,6 +110,7 @@ export default class Popover extends BaseComponent {
 
             $.detach(this._popover);
             $.removeDataset(this._popover, 'uiAnimating');
+            $.removeAttribute(this._node, 'aria-described-by');
             $.triggerEvent(this._node, 'hidden.ui.popover');
         }).catch((_) => {
             if ($.getDataset(this._popover, 'uiAnimating') === 'out') {

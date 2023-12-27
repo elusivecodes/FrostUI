@@ -2179,15 +2179,19 @@ progress {
   transition-property: color, background-color, border-color, box-shadow;
   border-radius: var(--ui-btn-border-radius);
 }
-.btn:focus-visible {
-  outline: 0;
-  box-shadow: var(--ui-btn-focus-box-shadow);
-}
 .btn:hover,
 .btn-check:focus-visible + .btn,
 .btn:focus-visible {
   background-color: var(--ui-btn-hover-bg);
   border-color: var(--ui-btn-hover-border-color);
+  outline: 0;
+  box-shadow: var(--ui-btn-focus-box-shadow);
+}
+
+.btn-check:focus-visible + .btn,
+.btn:focus-visible {
+  outline: 0;
+  box-shadow: var(--ui-btn-focus-box-shadow);
 }
 
 .btn-check:checked + .btn,

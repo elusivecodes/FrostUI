@@ -4214,17 +4214,46 @@
             }
 
             Object.defineProperty(event, 'currentTarget', {
-                value: delegate,
                 configurable: true,
+                enumerable: true,
+                value: delegate,
             });
             Object.defineProperty(event, 'delegateTarget', {
-                value: node,
                 configurable: true,
+                enumerable: true,
+                value: node,
             });
 
             return callback(event);
         };
     }
+    /**
+     * Return a wrapped event callback that cleans up delegate events.
+     * @param {HTMLElement|ShadowRoot|Document} node The input node.
+     * @param {function} callback The event callback.
+     * @return {DOM~eventCallback} The cleaned event callback.
+     */
+    function delegateFactoryClean(node, callback) {
+        return (event) => {
+            if (!event.delegateTarget) {
+                return callback(event);
+            }
+
+            Object.defineProperty(event, 'currentTarget', {
+                configurable: true,
+                enumerable: true,
+                value: node,
+            });
+            Object.defineProperty(event, 'delegateTarget', {
+                writable: true,
+            });
+
+            delete event.delegateTarget;
+
+            return callback(event);
+        };
+    }
+
     /**
      * Return a wrapped mouse drag event (optionally debounced).
      * @param {DOM~eventCallback} down The callback to execute on mousedown.
@@ -4403,6 +4432,8 @@
 
                 if (delegate) {
                     realCallback = delegateFactory(node, delegate, realCallback);
+                } else {
+                    realCallback = delegateFactoryClean(node, realCallback);
                 }
 
                 realCallback = namespaceFactory(eventName, realCallback);
@@ -10220,7 +10251,11 @@
     initComponent('button', Button);
 
     // Button events
-    $$1.addEventDelegate(document$1, 'click.ui.button', '[data-ui-toggle="button"]', (e) => {
+    $$1.addEventDelegate(document$1, 'click.ui.button keydown.ui.button', '[data-ui-toggle="button"]', (e) => {
+        if (e.code && e.code !== 'Space') {
+            return;
+        }
+
         e.preventDefault();
 
         const button = Button.init(e.currentTarget);
@@ -11546,7 +11581,7 @@
     initComponent('dropdown', Dropdown);
 
     // Dropdown events
-    $$1.addEventDelegate(document$1, 'click.ui.dropdown keyup.ui.dropdown', '[data-ui-toggle="dropdown"]', (e) => {
+    $$1.addEventDelegate(document$1, 'click.ui.dropdown keydown.ui.dropdown', '[data-ui-toggle="dropdown"]', (e) => {
         if (e.code && e.code !== 'Space') {
             return;
         }
@@ -12516,6 +12551,7 @@
 
                 $$1.detach(this._popover);
                 $$1.removeDataset(this._popover, 'uiAnimating');
+                $$1.removeAttribute(this._node, 'aria-described-by');
                 $$1.triggerEvent(this._node, 'hidden.ui.popover');
             }).catch((_) => {
                 if ($$1.getDataset(this._popover, 'uiAnimating') === 'out') {
@@ -13006,7 +13042,11 @@
     initComponent('tab', Tab);
 
     // Tab events
-    $$1.addEventDelegate(document$1, 'click.ui.tab', '[data-ui-toggle="tab"]', (e) => {
+    $$1.addEventDelegate(document$1, 'click.ui.tab keydown.ui.tab', '[data-ui-toggle="tab"]', (e) => {
+        if (e.code && e.code !== 'Space') {
+            return;
+        }
+
         e.preventDefault();
 
         const tab = Tab.init(e.currentTarget);
@@ -13241,6 +13281,7 @@
                 $$1.removeClass(this._tooltip, 'show');
                 $$1.detach(this._tooltip);
                 $$1.removeDataset(this._tooltip, 'uiAnimating');
+                $$1.removeAttribute(this._node, 'aria-described-by');
                 $$1.triggerEvent(this._node, 'hidden.ui.tooltip');
             }).catch((_) => {
                 if ($$1.getDataset(this._tooltip, 'uiAnimating') === 'out') {
