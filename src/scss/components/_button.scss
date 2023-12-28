@@ -40,8 +40,6 @@
         #{&}:focus-visible {
             background-color: var(--ui-btn-hover-bg);
             border-color: var(--ui-btn-hover-border-color);
-            outline: 0;
-            box-shadow: var(--ui-btn-focus-box-shadow);
         }
 
         .btn-check:focus-visible+#{&},
