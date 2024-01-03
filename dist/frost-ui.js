@@ -1157,7 +1157,7 @@
                     popper.update();
                 }
             }),
-            true,
+            { passive: true },
         );
 
         running$1 = true;

@@ -41,7 +41,7 @@ export function addPopper(popper) {
                 popper.update();
             }
         }),
-        true,
+        { passive: true },
     );
 
     running = true;
