@@ -71,6 +71,27 @@ $input-lg-padding-x: $input-padding-x !default;
 $input-lg-padding-y: $input-padding-y !default;
 $input-lg-font-size: var(--ui-font-size-lg) !default;
 
+$input-file-button-color: var(--ui-body-color) !default;
+$input-file-button-bg: var(--ui-tertiary-bg) !default;
+
+$input-color-width: 3rem !default;
+
+$input-range-track-width: 100% !default;
+$input-range-track-height: .5rem !default;
+$input-range-track-bg: var(--ui-secondary-bg) !default;
+$input-range-track-border-radius: var(--ui-border-radius) !default;
+
+$input-range-thumb-width: 1rem !default;
+$input-range-thumb-height: $input-range-thumb-width !default;
+$input-range-thumb-bg: var(--ui-primary) !default;
+$input-range-thumb-border-radius: var(--ui-border-radius) !default;
+$input-range-thumb-box-shadow: 0 .1rem .25rem rgba(var(--ui-body-color-rgb), .1) !default;
+$input-range-thumb-focus-box-shadow: 0 0 0 1px var(--ui-body-bg), 0 0 0 var(--ui-focus-ring-width) var(--ui-focus-ring-color) !default;
+$input-range-thumb-focus-box-shadow-width: var(--ui-focus-ring-width);
+$input-range-thumb-active-bg: var(--ui-primary-active) !default;
+$input-range-thumb-disabled-bg: var(--ui-secondary-color) !default;
+$input-range-thumb-transition: background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
+
 $ripple-line-bg: var(--ui-primary) !default;
 
 // label

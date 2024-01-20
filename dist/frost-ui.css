@@ -584,6 +584,31 @@ legend + * {
   display: none;
 }
 
+::-webkit-datetime-edit-fields-wrapper,
+::-webkit-datetime-edit-text,
+::-webkit-datetime-edit-minute,
+::-webkit-datetime-edit-hour-field,
+::-webkit-datetime-edit-day-field,
+::-webkit-datetime-edit-month-field,
+::-webkit-datetime-edit-year-field {
+  padding: 0;
+}
+
+::-webkit-inner-spin-button {
+  height: auto;
+}
+
+::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+::file-selector-button {
+  font: inherit;
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+}
+
 output {
   display: inline-block;
 }
@@ -5060,7 +5085,6 @@ fieldset:disabled .btn {
 .input-outline {
   display: block;
   width: 100%;
-  min-height: calc(var(--ui-font-size) + 1rem + var(--ui-border-width) * 2);
   padding: 0.5rem 0.5rem;
   font-size: var(--ui-font-size);
   line-height: 1.5;
@@ -5132,6 +5156,43 @@ select.input-filled[multiple] option, select.input-outline[multiple] option {
   padding: 0.5rem 0.5rem;
 }
 
+.input-filled[type=file],
+.input-outline[type=file] {
+  overflow: hidden;
+}
+.input-filled[type=file]:not(:disabled):not([readonly]),
+.input-outline[type=file]:not(:disabled):not([readonly]) {
+  cursor: pointer;
+}
+.input-filled::file-selector-button,
+.input-outline::file-selector-button {
+  padding: 0.5rem 0.5rem;
+  margin: -0.5rem -0.5rem;
+  margin-inline-end: 0.5rem;
+  color: var(--ui-body-color);
+  pointer-events: none;
+  background-color: var(--ui-tertiary-bg);
+  border-color: inherit;
+  border-style: solid;
+  border-width: 0;
+  border-inline-end-width: var(--ui-border-width);
+  border-radius: 0;
+}
+.input-filled:hover:not(:disabled):not([readonly])::file-selector-button,
+.input-outline:hover:not(:disabled):not([readonly])::file-selector-button {
+  background-color: var(--ui-secondary-bg);
+}
+.input-filled::-webkit-date-and-time-value,
+.input-outline::-webkit-date-and-time-value {
+  min-width: 85px;
+  margin: 0;
+}
+.input-filled::-webkit-datetime-edit,
+.input-outline::-webkit-datetime-edit {
+  display: block;
+  padding: 0;
+}
+
 .input-filled {
   background-color: var(--ui-input-filled-bg, rgba(var(--ui-body-color-rgb), 0.05));
   border: 0;
@@ -5158,19 +5219,62 @@ select.input-filled[multiple] option, select.input-outline[multiple] option {
 }
 
 .input-sm {
+  min-height: calc(1.5em + 0.5rem + var(--ui-border-width) * 2);
   padding: 0.25rem 0.5rem;
   font-size: var(--ui-font-size-sm);
+}
+.input-sm::file-selector-button {
+  padding: 0.25rem 0.5rem;
+  margin: -0.25rem -0.5rem;
+  margin-inline-end: 0.5rem;
 }
 select.input-sm[multiple] option {
   padding: 0.25rem 0.5rem;
 }
 
 .input-lg {
+  min-height: calc(1.5em + 1rem + var(--ui-border-width) * 2);
   padding: 0.5rem 0.5rem;
   font-size: var(--ui-font-size-lg);
 }
+.input-lg::file-selector-button {
+  padding: 0.5rem 0.5rem;
+  margin: -0.5rem -0.5rem;
+  margin-inline-end: 0.5rem;
+}
 select.input-lg[multiple] option {
   padding: 0.5rem 0.5rem;
+}
+
+.form-input-color {
+  width: 3rem;
+}
+
+.input-color {
+  width: 3rem;
+  height: calc(1.5em + 1rem + var(--ui-border-width) * 2);
+  padding: 0.5rem;
+}
+.input-color:not(:disabled):not([readonly]) {
+  cursor: pointer;
+}
+.input-color::-moz-color-swatch {
+  border: 0 !important;
+}
+.input-color::-webkit-color-swatch {
+  border: 0 !important;
+}
+.input-color.input-sm {
+  height: calc(1.5em + 0.5rem + var(--ui-border-width) * 2);
+}
+.input-color.input-lg {
+  height: calc(1.5em + 1rem + var(--ui-border-width) * 2);
+}
+.input-color.input-outline::-moz-color-swatch {
+  border-radius: var(--ui-border-radius);
+}
+.input-color.input-outline::-webkit-color-swatch {
+  border-radius: var(--ui-border-radius);
 }
 
 .ripple-line {
@@ -5271,6 +5375,86 @@ select.input-lg[multiple] option {
 .input-group-lg .input-group-text {
   padding: 0.5rem 0.5rem;
   font-size: var(--ui-font-size-lg);
+}
+
+.input-range {
+  width: 100%;
+  height: calc(1rem + var(--ui-focus-ring-width) * 2);
+  padding: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+}
+.input-range:focus {
+  outline: 0;
+}
+.input-range:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 1px var(--ui-body-bg), 0 0 0 var(--ui-focus-ring-width) var(--ui-focus-ring-color);
+}
+.input-range:focus::-moz-range-thumb {
+  box-shadow: 0 0 0 1px var(--ui-body-bg), 0 0 0 var(--ui-focus-ring-width) var(--ui-focus-ring-color);
+}
+.input-range::-moz-focus-outer {
+  border: 0;
+}
+.input-range::-webkit-slider-thumb {
+  width: 1rem;
+  height: 1rem;
+  margin-top: -0.25rem;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--ui-primary);
+  border: 0;
+  border-radius: var(--ui-border-radius);
+  box-shadow: 0 0.1rem 0.25rem rgba(var(--ui-body-color-rgb), 0.1);
+  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.input-range::-webkit-slider-thumb:active {
+  background-color: var(--ui-primary-active);
+}
+.input-range::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 0.5rem;
+  cursor: pointer;
+  background-color: var(--ui-secondary-bg);
+  border-color: transparent;
+  border-radius: var(--ui-border-radius);
+  box-shadow: 0 0.1rem 0.25rem rgba(var(--ui-body-color-rgb), 0.1);
+}
+.input-range::-moz-range-thumb {
+  width: 1rem;
+  height: 1rem;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: var(--ui-primary);
+  border: 0;
+  border-radius: var(--ui-border-radius);
+  box-shadow: 0 0.1rem 0.25rem rgba(var(--ui-body-color-rgb), 0.1);
+  -moz-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.input-range::-moz-range-thumb:active {
+  background-color: var(--ui-primary-active);
+}
+.input-range::-moz-range-track {
+  width: 100%;
+  height: 0.5rem;
+  color: transparent;
+  cursor: pointer;
+  background-color: var(--ui-secondary-bg);
+  border-color: transparent;
+  border-radius: var(--ui-border-radius);
+}
+.input-range:disabled {
+  pointer-events: none;
+}
+.input-range:disabled::-webkit-slider-thumb {
+  background-color: var(--ui-secondary-color);
+}
+.input-range:disabled::-moz-range-thumb {
+  background-color: var(--ui-secondary-color);
 }
 
 .col-label {

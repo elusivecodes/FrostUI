@@ -378,6 +378,34 @@ legend {
     display: none;
 }
 
+::-webkit-datetime-edit-fields-wrapper,
+::-webkit-datetime-edit-text,
+::-webkit-datetime-edit-minute,
+::-webkit-datetime-edit-hour-field,
+::-webkit-datetime-edit-day-field,
+::-webkit-datetime-edit-month-field,
+::-webkit-datetime-edit-year-field {
+    padding: 0;
+}
+
+::-webkit-inner-spin-button {
+    height: auto;
+}
+
+::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+::-webkit-file-upload-button {
+    font: inherit;
+    appearance: button;
+}
+
+::file-selector-button {
+    font: inherit;
+    appearance: button;
+}
+
 output {
     display: inline-block;
 }
