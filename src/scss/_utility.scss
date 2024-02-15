@@ -39,7 +39,7 @@
 ));
 @include utility((
     property: border-right,
-    class: border-start,
+    class: border-end,
     values: (
         null: var(--ui-border-width) var(--ui-border-style) var(--ui-border-color),
         0: 0
@@ -54,7 +54,7 @@
 ));
 @include utility((
     property: border-left,
-    class: border-end,
+    class: border-start,
     values: (
         null: var(--ui-border-width) var(--ui-border-style) var(--ui-border-color),
         0: 0

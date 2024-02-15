@@ -6033,11 +6033,11 @@ select.input-lg[multiple] option {
   border-top: 0 !important;
 }
 
-.border-start {
+.border-end {
   border-right: var(--ui-border-width) var(--ui-border-style) var(--ui-border-color) !important;
 }
 
-.border-start-0 {
+.border-end-0 {
   border-right: 0 !important;
 }
 
@@ -6049,11 +6049,11 @@ select.input-lg[multiple] option {
   border-bottom: 0 !important;
 }
 
-.border-end {
+.border-start {
   border-left: var(--ui-border-width) var(--ui-border-style) var(--ui-border-color) !important;
 }
 
-.border-end-0 {
+.border-start-0 {
   border-left: 0 !important;
 }
 
