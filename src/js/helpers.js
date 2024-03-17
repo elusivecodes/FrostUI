@@ -7,18 +7,18 @@ let scrollbarSize;
  * @param {array} nodes The nodes.
  */
 export function addScrollPadding(nodes) {
-    const scrollSizeX = getScrollbarSize(window, document, 'x');
+    const scrollSizeY = getScrollbarSize(window, document, 'y');
 
-    if (!scrollSizeX) {
+    if (!scrollSizeY) {
         return;
     }
 
     for (const node of nodes) {
         $.setDataset(node, {
-            uiPaddingBottom: $.getStyle(node, 'paddingBottom'),
+            uiPaddingRight: $.getStyle(node, 'paddingRight'),
         });
         $.setStyle(node, {
-            paddingBottom: `${scrollSizeX + parseInt($.css(node, 'paddingBottom'))}px`,
+            paddingRight: `${scrollSizeY + parseInt($.css(node, 'paddingRight'))}px`,
         });
     }
 };
