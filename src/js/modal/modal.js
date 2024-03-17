@@ -39,6 +39,7 @@ export default class Modal extends BaseComponent {
         this._dialog = null;
         this._activeTarget = null;
         this._backdrop = null;
+        this._scrollNodes = null;
 
         super.dispose();
     }
@@ -81,16 +82,12 @@ export default class Modal extends BaseComponent {
                 'aria-modal': false,
             });
 
-            resetScrollPadding(this._dialog);
+            resetScrollPadding(this._scrollNodes);
+            this._scrollNodes = [];
 
             if (stackSize) {
                 $.setStyle(this._node, { zIndex: '' });
             } else {
-                if (this._scrollPadding) {
-                    resetScrollPadding();
-                    this._scrollPadding = false;
-                }
-
                 $.removeClass(document.body, 'modal-open');
             }
 
@@ -133,7 +130,7 @@ export default class Modal extends BaseComponent {
 
         $.removeClass(document.body, 'modal-open');
 
-        addScrollPadding(this._dialog);
+        this._scrollNodes = [this._dialog];
 
         if (stackSize) {
             let zIndex = $.css(this._node, 'zIndex');
@@ -142,9 +139,11 @@ export default class Modal extends BaseComponent {
 
             $.setStyle(this._node, { zIndex });
         } else if (!$.findOne('.offcanvas.show')) {
-            this._scrollPadding = true;
-            addScrollPadding();
+            this._scrollNodes.push(document.body);
+            this._scrollNodes.push(...$.find('.fixed-top, .fixed-bottom, .sticky-top'));
         }
+
+        addScrollPadding(this._scrollNodes);
 
         $.addClass(document.body, 'modal-open');
 

@@ -32,6 +32,7 @@ export default class Offcanvas extends BaseComponent {
         }
 
         this._activeTarget = null;
+        this._scrollNodes = null;
 
         super.dispose();
     }
@@ -75,7 +76,9 @@ export default class Offcanvas extends BaseComponent {
             }
 
             if (!this._options.scroll) {
-                resetScrollPadding();
+                resetScrollPadding(this._scrollNodes);
+                this._scrollNodes = [];
+
                 $.setStyle(document.body, { overflow: '' });
             }
 
@@ -113,8 +116,14 @@ export default class Offcanvas extends BaseComponent {
             $.addClass(document.body, 'offcanvas-backdrop');
         }
 
+        this._scrollNodes = [];
+
         if (!this._options.scroll) {
-            addScrollPadding();
+            this._scrollNodes.push(document.body);
+            this._scrollNodes.push(...$.find('.fixed-top, .fixed-bottom, .sticky-top'));
+
+            addScrollPadding(this._scrollNodes);
+
             $.setStyle(document.body, { overflow: 'hidden' });
         }
 

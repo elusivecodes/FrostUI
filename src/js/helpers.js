@@ -4,37 +4,23 @@ let scrollbarSize;
 
 /**
  * Add scrollbar padding to a node.
- * @param {HTMLElement} [node=document.body] The node.
+ * @param {array} nodes The nodes.
  */
-export function addScrollPadding(node = document.body) {
-    const scrollSizeY = getScrollbarSize(window, document, 'y');
+export function addScrollPadding(nodes) {
     const scrollSizeX = getScrollbarSize(window, document, 'x');
 
-    if (!scrollSizeY && !scrollSizeX) {
+    if (!scrollSizeX) {
         return;
     }
 
-    const data = {};
-    const style = {};
-
-    if (scrollSizeY) {
-        const currentPaddingRight = $.getStyle(node, 'paddingRight');
-        const paddingRight = $.css(node, 'paddingRight');
-
-        data.uiPaddingRight = currentPaddingRight;
-        style.paddingRight = `${scrollSizeY + parseInt(paddingRight)}px`;
+    for (const node of nodes) {
+        $.setDataset(node, {
+            uiPaddingBottom: $.getStyle(node, 'paddingBottom'),
+        });
+        $.setStyle(node, {
+            paddingBottom: `${scrollSizeX + parseInt($.css(node, 'paddingBottom'))}px`,
+        });
     }
-
-    if (scrollSizeX) {
-        const currentPaddingBottom = $.getStyle(node, 'paddingBottom');
-        const paddingBottom = $.css(node, 'paddingBottom');
-
-        data.uiPaddingBottom = currentPaddingBottom;
-        style.paddingBottom = `${scrollSizeX + parseInt(paddingBottom)}px`;
-    }
-
-    $.setDataset(node, data);
-    $.setStyle(node, style);
 };
 
 /**
@@ -271,14 +257,13 @@ export function initComponent(key, component) {
 
 /**
  * Reset body scrollbar padding.
- * @param {HTMLElement} [node=document.body] The node.
+ * @param {array} nodes The nodes.
  */
-export function resetScrollPadding(node = document.body) {
-    const paddingRight = $.getDataset(node, 'uiPaddingRight');
-    const paddingBottom = $.getDataset(node, 'uiPaddingBottom');
-
-    $.setStyle(node, { paddingRight, paddingBottom });
-
-    $.removeDataset(node, 'uiPaddingRight');
-    $.removeDataset(node, 'uiPaddingBottom');
+export function resetScrollPadding(nodes) {
+    for (const node of nodes) {
+        $.setStyle(node, {
+            paddingRight: $.getDataset(node, 'uiPaddingRight'),
+        });
+        $.removeDataset(node, 'uiPaddingRight');
+    }
 };

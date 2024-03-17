@@ -23,37 +23,23 @@
 
     /**
      * Add scrollbar padding to a node.
-     * @param {HTMLElement} [node=document.body] The node.
+     * @param {array} nodes The nodes.
      */
-    function addScrollPadding(node = document.body) {
-        const scrollSizeY = getScrollbarSize(window$1, document, 'y');
+    function addScrollPadding(nodes) {
         const scrollSizeX = getScrollbarSize(window$1, document, 'x');
 
-        if (!scrollSizeY && !scrollSizeX) {
+        if (!scrollSizeX) {
             return;
         }
 
-        const data = {};
-        const style = {};
-
-        if (scrollSizeY) {
-            const currentPaddingRight = $$1.getStyle(node, 'paddingRight');
-            const paddingRight = $$1.css(node, 'paddingRight');
-
-            data.uiPaddingRight = currentPaddingRight;
-            style.paddingRight = `${scrollSizeY + parseInt(paddingRight)}px`;
+        for (const node of nodes) {
+            $$1.setDataset(node, {
+                uiPaddingBottom: $$1.getStyle(node, 'paddingBottom'),
+            });
+            $$1.setStyle(node, {
+                paddingBottom: `${scrollSizeX + parseInt($$1.css(node, 'paddingBottom'))}px`,
+            });
         }
-
-        if (scrollSizeX) {
-            const currentPaddingBottom = $$1.getStyle(node, 'paddingBottom');
-            const paddingBottom = $$1.css(node, 'paddingBottom');
-
-            data.uiPaddingBottom = currentPaddingBottom;
-            style.paddingBottom = `${scrollSizeX + parseInt(paddingBottom)}px`;
-        }
-
-        $$1.setDataset(node, data);
-        $$1.setStyle(node, style);
     }
     /**
      * Get the size of the scrollbar.
@@ -278,16 +264,15 @@
     }
     /**
      * Reset body scrollbar padding.
-     * @param {HTMLElement} [node=document.body] The node.
+     * @param {array} nodes The nodes.
      */
-    function resetScrollPadding(node = document.body) {
-        const paddingRight = $$1.getDataset(node, 'uiPaddingRight');
-        const paddingBottom = $$1.getDataset(node, 'uiPaddingBottom');
-
-        $$1.setStyle(node, { paddingRight, paddingBottom });
-
-        $$1.removeDataset(node, 'uiPaddingRight');
-        $$1.removeDataset(node, 'uiPaddingBottom');
+    function resetScrollPadding(nodes) {
+        for (const node of nodes) {
+            $$1.setStyle(node, {
+                paddingRight: $$1.getDataset(node, 'uiPaddingRight'),
+            });
+            $$1.removeDataset(node, 'uiPaddingRight');
+        }
     }
 
     /**
@@ -2031,6 +2016,7 @@
             this._dialog = null;
             this._activeTarget = null;
             this._backdrop = null;
+            this._scrollNodes = null;
 
             super.dispose();
         }
@@ -2073,16 +2059,12 @@
                     'aria-modal': false,
                 });
 
-                resetScrollPadding(this._dialog);
+                resetScrollPadding(this._scrollNodes);
+                this._scrollNodes = [];
 
                 if (stackSize) {
                     $$1.setStyle(this._node, { zIndex: '' });
                 } else {
-                    if (this._scrollPadding) {
-                        resetScrollPadding();
-                        this._scrollPadding = false;
-                    }
-
                     $$1.removeClass(document.body, 'modal-open');
                 }
 
@@ -2125,7 +2107,7 @@
 
             $$1.removeClass(document.body, 'modal-open');
 
-            addScrollPadding(this._dialog);
+            this._scrollNodes = [this._dialog];
 
             if (stackSize) {
                 let zIndex = $$1.css(this._node, 'zIndex');
@@ -2134,9 +2116,11 @@
 
                 $$1.setStyle(this._node, { zIndex });
             } else if (!$$1.findOne('.offcanvas.show')) {
-                this._scrollPadding = true;
-                addScrollPadding();
+                this._scrollNodes.push(document.body);
+                this._scrollNodes.push(...$$1.find('.fixed-top, .fixed-bottom, .sticky-top'));
             }
+
+            addScrollPadding(this._scrollNodes);
 
             $$1.addClass(document.body, 'modal-open');
 
@@ -2395,6 +2379,7 @@
             }
 
             this._activeTarget = null;
+            this._scrollNodes = null;
 
             super.dispose();
         }
@@ -2438,7 +2423,9 @@
                 }
 
                 if (!this._options.scroll) {
-                    resetScrollPadding();
+                    resetScrollPadding(this._scrollNodes);
+                    this._scrollNodes = [];
+
                     $$1.setStyle(document.body, { overflow: '' });
                 }
 
@@ -2476,8 +2463,14 @@
                 $$1.addClass(document.body, 'offcanvas-backdrop');
             }
 
+            this._scrollNodes = [];
+
             if (!this._options.scroll) {
-                addScrollPadding();
+                this._scrollNodes.push(document.body);
+                this._scrollNodes.push(...$$1.find('.fixed-top, .fixed-bottom, .sticky-top'));
+
+                addScrollPadding(this._scrollNodes);
+
                 $$1.setStyle(document.body, { overflow: 'hidden' });
             }
 
