@@ -165,6 +165,7 @@
     property: color,
     class: text,
     values: map-merge($utilities-text-colors, (
+        body: var(--ui-body-color),
         body-secondary: var(--ui-secondary-color),
         body-tertiary: var(--ui-tertiary-color),
         body-emphasis: var(--ui-emphasis-color),

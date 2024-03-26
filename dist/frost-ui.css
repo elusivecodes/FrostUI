@@ -6497,6 +6497,11 @@ select.input-lg[multiple] option {
   color: rgba(var(--ui-dark-emphasis-rgb), var(--ui-text-opacity)) !important;
 }
 
+.text-body {
+  --ui-text-opacity: 1;
+  color: var(--ui-body-color) !important;
+}
+
 .text-body-secondary {
   --ui-text-opacity: 1;
   color: var(--ui-secondary-color) !important;
