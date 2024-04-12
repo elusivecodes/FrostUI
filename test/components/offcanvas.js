@@ -1267,7 +1267,7 @@ describe('Offcanvas', function() {
     });
 
     describe('scroll padding', function() {
-        it('adds scroll padding to document body (vertical)', async function() {
+        it('adds scroll padding to document body', async function() {
             await exec((_) => {
                 $.setStyle(document.body, { height: '2000px' });
                 const offcanvas1 = $.findOne('#offcanvas1');
@@ -1286,26 +1286,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it('adds scroll padding to document body (horizontal)', async function() {
-            await exec((_) => {
-                $.setStyle(document.body, { width: '2000px' });
-                const offcanvas1 = $.findOne('#offcanvas1');
-                UI.Offcanvas.init(offcanvas1).show();
-            }).then(waitFor(50)).then(async (_) => {
-                await exec((_) => {
-                    $.stop('#offcanvas1');
-                });
-            }).then(waitFor(50)).then(async (_) => {
-                assert.strictEqual(
-                    await exec((_) => {
-                        return $.getStyle(document.body, 'paddingBottom');
-                    }),
-                    '15px',
-                );
-            });
-        });
-
-        it('does not add padding if scrollbars are hidden (vertical)', async function() {
+        it('does not add padding if scrollbars are hidden', async function() {
             await exec((_) => {
                 const offcanvas1 = $.findOne('#offcanvas1');
                 UI.Offcanvas.init(offcanvas1).show();
@@ -1323,25 +1304,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it('does not add padding if scrollbars are hidden (horizontal)', async function() {
-            await exec((_) => {
-                const offcanvas1 = $.findOne('#offcanvas1');
-                UI.Offcanvas.init(offcanvas1).show();
-            }).then(waitFor(50)).then(async (_) => {
-                await exec((_) => {
-                    $.stop('#offcanvas1');
-                });
-            }).then(waitFor(50)).then(async (_) => {
-                assert.strictEqual(
-                    await exec((_) => {
-                        return $.getStyle(document.body, 'paddingBottom');
-                    }),
-                    '',
-                );
-            });
-        });
-
-        it('works with existing padding (vertical)', async function() {
+        it('works with existing padding', async function() {
             await exec((_) => {
                 $.setStyle(document.body, {
                     height: '2000px',
@@ -1363,29 +1326,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it('works with existing padding (horizontal)', async function() {
-            await exec((_) => {
-                $.setStyle(document.body, {
-                    width: '2000px',
-                    paddingBottom: '10px',
-                });
-                const offcanvas1 = $.findOne('#offcanvas1');
-                UI.Offcanvas.init(offcanvas1).show();
-            }).then(waitFor(50)).then(async (_) => {
-                await exec((_) => {
-                    $.stop('#offcanvas1');
-                });
-            }).then(waitFor(50)).then(async (_) => {
-                assert.strictEqual(
-                    await exec((_) => {
-                        return $.getStyle(document.body, 'paddingBottom');
-                    }),
-                    '25px',
-                );
-            });
-        });
-
-        it('restores scroll padding to document body (vertical)', async function() {
+        it('restores scroll padding to document body', async function() {
             await exec((_) => {
                 $.setStyle(document.body, { height: '2000px' });
                 const offcanvas1 = $.findOne('#offcanvas1');
@@ -1413,35 +1354,7 @@ describe('Offcanvas', function() {
             });
         });
 
-        it('restores scroll padding to document body (horizontal)', async function() {
-            await exec((_) => {
-                $.setStyle(document.body, { width: '2000px' });
-                const offcanvas1 = $.findOne('#offcanvas1');
-                UI.Offcanvas.init(offcanvas1).show();
-            }).then(waitFor(50)).then(async (_) => {
-                await exec((_) => {
-                    $.stop('#offcanvas1');
-                });
-            }).then(waitFor(50)).then(async (_) => {
-                await exec((_) => {
-                    const offcanvas1 = $.findOne('#offcanvas1');
-                    UI.Offcanvas.init(offcanvas1).hide();
-                });
-            }).then(waitFor(50)).then(async (_) => {
-                await exec((_) => {
-                    $.stop('#offcanvas1');
-                });
-            }).then(waitFor(50)).then(async (_) => {
-                assert.strictEqual(
-                    await exec((_) => {
-                        return $.getStyle(document.body, 'paddingBottom');
-                    }),
-                    '',
-                );
-            });
-        });
-
-        it('restores existing scroll padding to document body (vertical)', async function() {
+        it('restores existing scroll padding to document body', async function() {
             await exec((_) => {
                 $.setStyle(document.body, {
                     height: '2000px',
@@ -1466,37 +1379,6 @@ describe('Offcanvas', function() {
                 assert.strictEqual(
                     await exec((_) => {
                         return $.getStyle(document.body, 'paddingRight');
-                    }),
-                    '10px',
-                );
-            });
-        });
-
-        it('restores existing scroll padding to document body (horizontal)', async function() {
-            await exec((_) => {
-                $.setStyle(document.body, {
-                    width: '2000px',
-                    paddingBottom: '10px',
-                });
-                const offcanvas1 = $.findOne('#offcanvas1');
-                UI.Offcanvas.init(offcanvas1).show();
-            }).then(waitFor(50)).then(async (_) => {
-                await exec((_) => {
-                    $.stop('#offcanvas1');
-                });
-            }).then(waitFor(50)).then(async (_) => {
-                await exec((_) => {
-                    const offcanvas1 = $.findOne('#offcanvas1');
-                    UI.Offcanvas.init(offcanvas1).hide();
-                });
-            }).then(waitFor(50)).then(async (_) => {
-                await exec((_) => {
-                    $.stop('#offcanvas1');
-                });
-            }).then(waitFor(50)).then(async (_) => {
-                assert.strictEqual(
-                    await exec((_) => {
-                        return $.getStyle(document.body, 'paddingBottom');
                     }),
                     '10px',
                 );

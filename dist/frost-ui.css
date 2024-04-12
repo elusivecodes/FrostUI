@@ -3683,6 +3683,8 @@ fieldset:disabled .btn {
   padding: var(--ui-nav-link-padding-y) var(--ui-nav-link-padding-x);
   color: var(--ui-nav-link-color);
   text-decoration: none;
+  background: none;
+  border: 0;
   transition: all 0.25s ease-in-out;
   transition-property: color, background-color, border-color;
 }

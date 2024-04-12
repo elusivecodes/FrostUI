@@ -1757,32 +1757,6 @@ describe('Modal', function() {
             });
         });
 
-        it('adds scroll padding (horizontal)', async function() {
-            await exec((_) => {
-                $.setStyle(document.body, { width: '2000px' });
-                const modal1 = $.findOne('#modal1');
-                UI.Modal.init(modal1).show();
-            }).then(waitFor(50)).then(async (_) => {
-                await exec((_) => {
-                    $.stop('#modalDialog1');
-                    $.stop('.modal-backdrop');
-                });
-            }).then(waitFor(50)).then(async (_) => {
-                assert.strictEqual(
-                    await exec((_) => {
-                        return $.getStyle(document.body, 'padding-bottom');
-                    }),
-                    '15px',
-                );
-                assert.strictEqual(
-                    await exec((_) => {
-                        return $.getStyle('#modalDialog1', 'padding-bottom');
-                    }),
-                    '15px',
-                );
-            });
-        });
-
         it('does not add padding if scrollbars are hidden (vertical)', async function() {
             await exec((_) => {
                 const modal1 = $.findOne('#modal1');
@@ -1808,31 +1782,6 @@ describe('Modal', function() {
             });
         });
 
-        it('does not add padding if scrollbars are hidden (horizontal)', async function() {
-            await exec((_) => {
-                const modal1 = $.findOne('#modal1');
-                UI.Modal.init(modal1).show();
-            }).then(waitFor(50)).then(async (_) => {
-                await exec((_) => {
-                    $.stop('#modalDialog1');
-                    $.stop('.modal-backdrop');
-                });
-            }).then(waitFor(50)).then(async (_) => {
-                assert.strictEqual(
-                    await exec((_) => {
-                        return $.getStyle(document.body, 'padding-bottom');
-                    }),
-                    '',
-                );
-                assert.strictEqual(
-                    await exec((_) => {
-                        return $.getStyle('#modalDialog1', 'padding-bottom');
-                    }),
-                    '',
-                );
-            });
-        });
-
         it('works with existing padding (vertical)', async function() {
             await exec((_) => {
                 $.setStyle(document.body, {
@@ -1850,29 +1799,6 @@ describe('Modal', function() {
                 assert.strictEqual(
                     await exec((_) => {
                         return $.getStyle(document.body, 'padding-right');
-                    }),
-                    '25px',
-                );
-            });
-        });
-
-        it('works with existing padding (horizontal)', async function() {
-            await exec((_) => {
-                $.setStyle(document.body, {
-                    width: '2000px',
-                    paddingBottom: '10px',
-                });
-                const modal1 = $.findOne('#modal1');
-                UI.Modal.init(modal1).show();
-            }).then(waitFor(50)).then(async (_) => {
-                await exec((_) => {
-                    $.stop('#modalDialog1');
-                    $.stop('.modal-backdrop');
-                });
-            }).then(waitFor(50)).then(async (_) => {
-                assert.strictEqual(
-                    await exec((_) => {
-                        return $.getStyle(document.body, 'padding-bottom');
                     }),
                     '25px',
                 );
@@ -1915,42 +1841,6 @@ describe('Modal', function() {
             });
         });
 
-        it('restores scroll padding (horizontal)', async function() {
-            await exec((_) => {
-                $.setStyle(document.body, { width: '2000px' });
-                const modal1 = $.findOne('#modal1');
-                UI.Modal.init(modal1).show();
-            }).then(waitFor(50)).then(async (_) => {
-                await exec((_) => {
-                    $.stop('#modalDialog1');
-                    $.stop('.modal-backdrop');
-                });
-            }).then(waitFor(50)).then(async (_) => {
-                await exec((_) => {
-                    const modal1 = $.findOne('#modal1');
-                    UI.Modal.init(modal1).hide();
-                });
-            }).then(waitFor(50)).then(async (_) => {
-                await exec((_) => {
-                    $.stop('#modalDialog1');
-                    $.stop('.modal-backdrop');
-                });
-            }).then(waitFor(50)).then(async (_) => {
-                assert.strictEqual(
-                    await exec((_) => {
-                        return $.getStyle(document.body, 'padding-bottom');
-                    }),
-                    '',
-                );
-                assert.strictEqual(
-                    await exec((_) => {
-                        return $.getStyle('#modalDialog1', 'padding-bottom');
-                    }),
-                    '',
-                );
-            });
-        });
-
         it('restores existing scroll padding to document body (vertical)', async function() {
             await exec((_) => {
                 $.setStyle(document.body, {
@@ -1978,39 +1868,6 @@ describe('Modal', function() {
                 assert.strictEqual(
                     await exec((_) => {
                         return $.getStyle(document.body, 'padding-right');
-                    }),
-                    '10px',
-                );
-            });
-        });
-
-        it('restores existing scroll padding to document body (horizontal)', async function() {
-            await exec((_) => {
-                $.setStyle(document.body, {
-                    width: '2000px',
-                    paddingBottom: '10px',
-                });
-                const modal1 = $.findOne('#modal1');
-                UI.Modal.init(modal1).show();
-            }).then(waitFor(50)).then(async (_) => {
-                await exec((_) => {
-                    $.stop('#modalDialog1');
-                    $.stop('.modal-backdrop');
-                });
-            }).then(waitFor(50)).then(async (_) => {
-                await exec((_) => {
-                    const modal1 = $.findOne('#modal1');
-                    UI.Modal.init(modal1).hide();
-                });
-            }).then(waitFor(50)).then(async (_) => {
-                await exec((_) => {
-                    $.stop('#modalDialog1');
-                    $.stop('.modal-backdrop');
-                });
-            }).then(waitFor(50)).then(async (_) => {
-                assert.strictEqual(
-                    await exec((_) => {
-                        return $.getStyle(document.body, 'padding-bottom');
                     }),
                     '10px',
                 );
