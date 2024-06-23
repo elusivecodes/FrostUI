@@ -2497,7 +2497,7 @@ describe('Carousel', function() {
                 await exec((_) => {
                     $.triggerEvent('#carousel1', 'mouseleave');
                 });
-            }).then(waitFor(300)).then(async (_) => {
+            }).then(waitFor(200)).then(async (_) => {
                 assert.strictEqual(
                     await exec((_) => $.hasAnimation('#carousel1Item3')),
                     true,

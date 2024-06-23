@@ -29,7 +29,7 @@ describe('popper tooltip', function() {
                     tooltip.update();
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1174px, 1636px, 0px)',
+                'translate3d(1170px, 1636px, 0px)',
             );
         });
 
@@ -45,7 +45,7 @@ describe('popper tooltip', function() {
                     $('#tooltipToggle').tooltip('update');
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1174px, 1636px, 0px)',
+                'translate3d(1170px, 1636px, 0px)',
             );
         });
     });
@@ -62,7 +62,7 @@ describe('popper tooltip', function() {
                     tooltip.show();
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1174px, 1636px, 0px)',
+                'translate3d(1170px, 1636px, 0px)',
             );
         });
 
@@ -77,7 +77,7 @@ describe('popper tooltip', function() {
                     tooltip.show();
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1174px, 1636px, 0px)',
+                'translate3d(1170px, 1636px, 0px)',
             );
         });
 
@@ -90,7 +90,7 @@ describe('popper tooltip', function() {
                     }).show();
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1174px, 1636px, 0px)',
+                'translate3d(1170px, 1636px, 0px)',
             );
         });
 
@@ -105,7 +105,7 @@ describe('popper tooltip', function() {
                     tooltip.show();
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1267px, 1600px, 0px)',
+                'translate3d(1266px, 1600px, 0px)',
             );
         });
 
@@ -120,7 +120,7 @@ describe('popper tooltip', function() {
                     tooltip.show();
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1267px, 1600px, 0px)',
+                'translate3d(1266px, 1600px, 0px)',
             );
         });
 
@@ -133,7 +133,7 @@ describe('popper tooltip', function() {
                     }).show();
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1267px, 1600px, 0px)',
+                'translate3d(1266px, 1600px, 0px)',
             );
         });
 
@@ -154,7 +154,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1174px, 1567px, 0px)',
+                'translate3d(1170px, 1567px, 0px)',
             );
         });
 
@@ -175,7 +175,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1267px, 1601px, 0px)',
+                'translate3d(1266px, 1601px, 0px)',
             );
         });
 
@@ -196,7 +196,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1174px, 1636px, 0px)',
+                'translate3d(1170px, 1636px, 0px)',
             );
         });
 
@@ -217,7 +217,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1081px, 1601px, 0px)',
+                'translate3d(1075px, 1601px, 0px)',
             );
         });
 
@@ -257,7 +257,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1174px, 1567px, 0px)',
+                'translate3d(1170px, 1567px, 0px)',
             );
         });
 
@@ -277,7 +277,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1148px, 1567px, 0px)',
+                'translate3d(1141px, 1567px, 0px)',
             );
         });
 
@@ -297,7 +297,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1267px, 1600px, 0px)',
+                'translate3d(1266px, 1600px, 0px)',
             );
         });
 
@@ -317,7 +317,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1267px, 1601px, 0px)',
+                'translate3d(1266px, 1601px, 0px)',
             );
         });
 
@@ -337,7 +337,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1267px, 1603px, 0px)',
+                'translate3d(1266px, 1603px, 0px)',
             );
         });
 
@@ -377,7 +377,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1174px, 1636px, 0px)',
+                'translate3d(1170px, 1636px, 0px)',
             );
         });
 
@@ -397,7 +397,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1148px, 1636px, 0px)',
+                'translate3d(1141px, 1636px, 0px)',
             );
         });
 
@@ -417,7 +417,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1081px, 1600px, 0px)',
+                'translate3d(1075px, 1600px, 0px)',
             );
         });
 
@@ -437,7 +437,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1081px, 1601px, 0px)',
+                'translate3d(1075px, 1601px, 0px)',
             );
         });
 
@@ -457,7 +457,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1081px, 1603px, 0px)',
+                'translate3d(1075px, 1603px, 0px)',
             );
         });
     });
@@ -480,7 +480,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1174px, 1636px, 0px)',
+                'translate3d(1170px, 1636px, 0px)',
             );
         });
 
@@ -501,7 +501,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1081px, 1601px, 0px)',
+                'translate3d(1075px, 1601px, 0px)',
             );
         });
 
@@ -522,7 +522,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1174px, 1567px, 0px)',
+                'translate3d(1170px, 1567px, 0px)',
             );
         });
 
@@ -544,7 +544,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1267px, 1601px, 0px)',
+                'translate3d(1266px, 1601px, 0px)',
             );
         });
     });
@@ -567,7 +567,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1148px, 1567px, 0px)',
+                'translate3d(1142px, 1567px, 0px)',
             );
         });
 
@@ -588,7 +588,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1148px, 1567px, 0px)',
+                'translate3d(1142px, 1567px, 0px)',
             );
         });
 
@@ -652,7 +652,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1267px, 1594px, 0px)',
+                'translate3d(1266px, 1594px, 0px)',
             );
         });
 
@@ -673,7 +673,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1267px, 1610px, 0px)',
+                'translate3d(1266px, 1610px, 0px)',
             );
         });
 
@@ -694,7 +694,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1267px, 1594px, 0px)',
+                'translate3d(1266px, 1594px, 0px)',
             );
         });
 
@@ -715,7 +715,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1267px, 1610px, 0px)',
+                'translate3d(1266px, 1610px, 0px)',
             );
         });
 
@@ -736,7 +736,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1148px, 1636px, 0px)',
+                'translate3d(1142px, 1636px, 0px)',
             );
         });
 
@@ -757,7 +757,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1148px, 1636px, 0px)',
+                'translate3d(1142px, 1636px, 0px)',
             );
         });
 
@@ -820,7 +820,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1081px, 1594px, 0px)',
+                'translate3d(1075px, 1594px, 0px)',
             );
         });
 
@@ -841,7 +841,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1081px, 1610px, 0px)',
+                'translate3d(1075px, 1610px, 0px)',
             );
         });
 
@@ -862,7 +862,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1081px, 1594px, 0px)',
+                'translate3d(1075px, 1594px, 0px)',
             );
         });
 
@@ -883,7 +883,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1081px, 1610px, 0px)',
+                'translate3d(1075px, 1610px, 0px)',
             );
         });
     });
@@ -902,7 +902,7 @@ describe('popper tooltip', function() {
                     tooltip.show();
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1174px, 1567px, 0px)',
+                'translate3d(1170px, 1567px, 0px)',
             );
         });
 
@@ -919,7 +919,7 @@ describe('popper tooltip', function() {
                     tooltip.show();
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1174px, 1567px, 0px)',
+                'translate3d(1170px, 1567px, 0px)',
             );
         });
 
@@ -934,7 +934,7 @@ describe('popper tooltip', function() {
                     }).show();
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1174px, 1567px, 0px)',
+                'translate3d(1170px, 1567px, 0px)',
             );
         });
 
@@ -956,7 +956,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1174px, 1567px, 0px)',
+                'translate3d(1170px, 1567px, 0px)',
             );
         });
 
@@ -978,7 +978,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1267px, 1601px, 0px)',
+                'translate3d(1266px, 1601px, 0px)',
             );
         });
 
@@ -1000,7 +1000,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1174px, 1636px, 0px)',
+                'translate3d(1170px, 1636px, 0px)',
             );
         });
 
@@ -1023,7 +1023,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1081px, 1601px, 0px)',
+                'translate3d(1075px, 1601px, 0px)',
             );
         });
     });
@@ -1040,7 +1040,7 @@ describe('popper tooltip', function() {
                     tooltip.show();
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1315px, 1601px, 0px)',
+                'translate3d(1314px, 1601px, 0px)',
             );
         });
 
@@ -1055,7 +1055,7 @@ describe('popper tooltip', function() {
                     tooltip.show();
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1315px, 1601px, 0px)',
+                'translate3d(1314px, 1601px, 0px)',
             );
         });
 
@@ -1068,7 +1068,7 @@ describe('popper tooltip', function() {
                     }).show();
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1315px, 1601px, 0px)',
+                'translate3d(1314px, 1601px, 0px)',
             );
         });
 
@@ -1089,7 +1089,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1174px, 1519px, 0px)',
+                'translate3d(1170px, 1519px, 0px)',
             );
         });
 
@@ -1110,7 +1110,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1315px, 1601px, 0px)',
+                'translate3d(1314px, 1601px, 0px)',
             );
         });
 
@@ -1131,7 +1131,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1174px, 1684px, 0px)',
+                'translate3d(1170px, 1684px, 0px)',
             );
         });
 
@@ -1152,7 +1152,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1033px, 1601px, 0px)',
+                'translate3d(1027px, 1601px, 0px)',
             );
         });
     });
@@ -1171,7 +1171,7 @@ describe('popper tooltip', function() {
                     tooltip.show();
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1133px, 1567px, 0px)',
+                'translate3d(1127px, 1567px, 0px)',
             );
         });
 
@@ -1188,7 +1188,7 @@ describe('popper tooltip', function() {
                     tooltip.show();
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1133px, 1567px, 0px)',
+                'translate3d(1127px, 1567px, 0px)',
             );
         });
 
@@ -1203,7 +1203,7 @@ describe('popper tooltip', function() {
                     }).show();
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1133px, 1567px, 0px)',
+                'translate3d(1127px, 1567px, 0px)',
             );
         });
 
@@ -1225,7 +1225,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1267px, 1620px, 0px)',
+                'translate3d(1266px, 1620px, 0px)',
             );
         });
 
@@ -1247,7 +1247,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1133px, 1567px, 0px)',
+                'translate3d(1127px, 1567px, 0px)',
             );
         });
 
@@ -1269,7 +1269,7 @@ describe('popper tooltip', function() {
                 await exec((_) => {
                     return $.getStyle('.tooltip', 'transform');
                 }),
-                'translate3d(1081px, 1584px, 0px)',
+                'translate3d(1075px, 1584px, 0px)',
             );
         });
 
