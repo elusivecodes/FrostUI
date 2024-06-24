@@ -1,5 +1,5 @@
 export default {
     extends: [
-        '@fr0st/stylelint-config'
-    ]
+        '@fr0st/stylelint-config',
+    ],
 };

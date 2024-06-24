@@ -26,7 +26,7 @@ describe('popper container', function() {
                     });
                     return $.getStyle(badge, 'transform');
                 }),
-                'translate3d(-7px, 34px, 0px)',
+                'translate3d(-14px, 34px, 0px)',
             );
         });
 
@@ -40,7 +40,7 @@ describe('popper container', function() {
                     });
                     return $.getStyle('#badge', 'transform');
                 }),
-                'translate3d(-7px, 34px, 0px)',
+                'translate3d(-14px, 34px, 0px)',
             );
         });
     });

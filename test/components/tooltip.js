@@ -686,7 +686,7 @@ describe('Tooltip', function() {
                     '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-title="Test"></button>' +
                     '<div class="tooltip show" role="tooltip" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 0px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: 2px; left: -12px;"></div><div class="tooltip-inner">Test</div></div>' +
                     '<button class="btn btn-secondary" id="tooltipToggle2" type="button" data-ui-title="Test"></button>' +
-                    '<div class="tooltip show" role="tooltip" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(5px, 12px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -6px; left: 16px;"></div><div class="tooltip-inner">Test</div></div>',
+                    '<div class="tooltip show" role="tooltip" data-ui-placement="bottom" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(4px, 12px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -6px; left: 17px;"></div><div class="tooltip-inner">Test</div></div>',
                 );
             });
         });
