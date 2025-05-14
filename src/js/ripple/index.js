@@ -1,7 +1,7 @@
 import { $, document } from './../globals.js';
 
 // Ripple events
-$.addEventDelegate(document, 'mouseup.ui.ripple', '.ripple', (e) => {
+$.addEventDelegate(document, 'click.ui.ripple', '.ripple', (e) => {
     if (e.button !== 0) {
         return;
     }

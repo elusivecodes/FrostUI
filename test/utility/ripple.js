@@ -13,12 +13,12 @@ describe('Ripple', function() {
     });
 
     describe('user events', function() {
-        it('shows ripple effect on mouseup', async function() {
+        it('shows ripple effect on click', async function() {
             assert.strictEqual(
                 await exec((_) => {
                     const button = $.findOne('#button');
 
-                    const upEvent = new MouseEvent('mouseup', {
+                    const upEvent = new MouseEvent('click', {
                         button: 0,
                         bubbles: true,
                     });
@@ -34,7 +34,7 @@ describe('Ripple', function() {
             await exec((_) => {
                 const button = $.findOne('#button');
 
-                const upEvent = new MouseEvent('mouseup', {
+                const upEvent = new MouseEvent('click', {
                     button: 0,
                     bubbles: true,
                 });

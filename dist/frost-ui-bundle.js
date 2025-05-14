@@ -13628,7 +13628,7 @@
     });
 
     // Ripple events
-    $$1.addEventDelegate(document$1, 'mouseup.ui.ripple', '.ripple', (e) => {
+    $$1.addEventDelegate(document$1, 'click.ui.ripple', '.ripple', (e) => {
         if (e.button !== 0) {
             return;
         }

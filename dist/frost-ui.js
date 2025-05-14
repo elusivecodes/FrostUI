@@ -3729,7 +3729,7 @@
     });
 
     // Ripple events
-    $$1.addEventDelegate(document, 'mouseup.ui.ripple', '.ripple', (e) => {
+    $$1.addEventDelegate(document, 'click.ui.ripple', '.ripple', (e) => {
         if (e.button !== 0) {
             return;
         }
