@@ -331,8 +331,7 @@ button,
 [type="button"],
 [type="reset"],
 [type="submit"] {
-    appearance: button;
-
+    appearance: auto;
 
     &:not(:disabled) {
         cursor: pointer;
@@ -398,12 +397,12 @@ legend {
 
 ::-webkit-file-upload-button {
     font: inherit;
-    appearance: button;
+    appearance: auto;
 }
 
 ::file-selector-button {
     font: inherit;
-    appearance: button;
+    appearance: auto;
 }
 
 output {

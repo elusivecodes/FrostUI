@@ -1010,7 +1010,7 @@ describe('Tooltip', function() {
             }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
                     await exec((_) => $.getHTML(document.body)),
-                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-template="<div class=&quot;tooltip&quot; role=&quot;tooltip&quot; data-test=&quot;Test&quot;><div class=&quot;tooltip-arrow&quot;></div><div class=&quot;tooltip-inner&quot;></div></div>"></button>' +
+                    '<button class="btn btn-secondary" id="tooltipToggle1" type="button" data-ui-template="&lt;div class=&quot;tooltip&quot; role=&quot;tooltip&quot; data-test=&quot;Test&quot;&gt;&lt;div class=&quot;tooltip-arrow&quot;&gt;&lt;/div&gt;&lt;div class=&quot;tooltip-inner&quot;&gt;&lt;/div&gt;&lt;/div&gt;"></button>' +
                     '<div class="tooltip show" role="tooltip" data-test="Test" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(20px, 1px, 0px);"><div class="tooltip-arrow" style="position: absolute; top: -1px; left: -12px;"></div><div class="tooltip-inner"></div></div>' +
                     '<button class="btn btn-secondary" id="tooltipToggle2" type="button"></button>',
                 );

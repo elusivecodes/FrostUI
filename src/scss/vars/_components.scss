@@ -56,7 +56,7 @@ $btn-font-size: var(--ui-font-size) !default;
 $btn-font-weight: map-get($font-weights, normal) !default;
 $btn-line-height: map-get($line-heights, base) !default;
 $btn-border-width: var(--ui-border-width) !default;
-$btn-border-color: var(--ui-border-color) !default;
+$btn-active-border-color: var(--ui-border-color) !default;
 $btn-border-radius: var(--ui-border-radius) !default;
 $btn-disabled-opacity: var(--ui-disabled-opacity) !default;
 $btn-focus-box-shadow: 0 0 0 var(--ui-focus-ring-width) rgba(var(--ui-btn-focus-shadow-rgb), var(--ui-focus-ring-opacity)) !default;

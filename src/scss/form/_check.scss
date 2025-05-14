@@ -21,8 +21,8 @@
     width: $input-check-size;
     height: $input-check-size;
     margin-top: $input-check-margin-top;
-    color: $input-check-color;
     vertical-align: top;
+    color: $input-check-color;
     appearance: none;
     background-color: $input-check-bg;
     border: $input-check-border-width var(--ui-border-style) var(--ui-input-border-color, #{$input-check-border-color});
@@ -112,9 +112,9 @@
             height: math.div($input-check-size, 2);
             content: "";
             background-color: currentcolor;
+            translate: -50% -50%;
             transition: all $transition-time $transition-type;
             transition-property: left;
-            translate: -50% -50%;
             @include border-radius(50%);
         }
 
@@ -130,6 +130,6 @@
 
 .btn-check {
     position: absolute;
-    clip: rect(0, 0, 0, 0);
     pointer-events: none;
+    clip: rect(0, 0, 0, 0);
 }

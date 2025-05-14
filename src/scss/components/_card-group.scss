@@ -19,13 +19,13 @@
             &:not(:first-child) {
                 @include border-left-radius(0);
 
-                .card-img-top,
-                .card-header {
+                > .card-img-top,
+                > .card-header {
                     border-top-left-radius: 0;
                 }
 
-                .card-img-bottom,
-                .card-footer {
+                > .card-img-bottom,
+                > .card-footer {
                     border-bottom-left-radius: 0;
                 }
             }
@@ -33,13 +33,13 @@
             &:not(:last-child) {
                 @include border-right-radius(0);
 
-                .card-img-top,
-                .card-header {
+                > .card-img-top,
+                > .card-header {
                     border-top-right-radius: 0;
                 }
 
-                .card-img-bottom,
-                .card-footer {
+                > .card-img-bottom,
+                > .card-footer {
                     border-bottom-right-radius: 0;
                 }
             }

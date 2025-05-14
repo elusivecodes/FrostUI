@@ -92,7 +92,7 @@
     &:first-of-type {
         @include border-top-radius(var(--ui-accordion-border-radius));
 
-        .accordion-button {
+        > .accordion-header .accordion-button {
             @include border-top-radius(var(--ui-accordion-inner-border-radius));
         }
     }
@@ -102,9 +102,12 @@
         border-bottom-width: var(--ui-accordion-border-width);
         @include border-bottom-radius(var(--ui-accordion-border-radius));
 
-        .accordion-button.collapsed,
-        .accordion-collapse {
+        > .accordion-header .accordion-button.collapsed {
             @include border-bottom-radius(var(--ui-accordion-inner-border-radius));
+        }
+
+        > .accordion-collapse {
+            @include border-bottom-radius(var(--ui-accordion-border-radius));
         }
     }
 }

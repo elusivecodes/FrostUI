@@ -97,8 +97,7 @@
 .modal-header {
     display: flex;
     flex-shrink: 0;
-    align-items: flex-start;
-    justify-content: space-between;
+    align-items: center;
     padding: var(--ui-modal-header-padding-y) var(--ui-modal-header-padding-x);
     border-bottom: var(--ui-modal-header-border-width) var(--ui-border-style) var(--ui-modal-header-border-color);
     @include border-top-radius(var(--ui-modal-inner-border-radius));
@@ -108,6 +107,7 @@
         margin-top: calc(var(--ui-modal-header-padding-y) * -.5);
         margin-right: calc(var(--ui-modal-header-padding-x) * -.5);
         margin-bottom: calc(var(--ui-modal-header-padding-y) * -.5);
+        margin-left: auto;
     }
 }
 

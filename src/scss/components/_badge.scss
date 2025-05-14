@@ -11,10 +11,10 @@
     font-size: var(--ui-badge-font-size);
     font-weight: var(--ui-badge-font-weight);
     line-height: 1;
+    vertical-align: baseline;
     color: var(--ui-badge-color);
     text-align: center;
     white-space: nowrap;
-    vertical-align: baseline;
     @include border-radius(var(--ui-badge-border-radius));
 }
 

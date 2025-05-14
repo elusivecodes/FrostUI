@@ -11,10 +11,10 @@
     margin-bottom: 0;
     line-height: $input-line-height;
     color: $input-plain-text-color;
+    outline: 0;
     background-color: transparent;
     border: solid transparent;
     border-width: $input-border-width 0;
-    outline: 0;
 }
 
 .input-group-text {

@@ -1156,7 +1156,7 @@ describe('Popover', function() {
             }).then(waitFor(50)).then(async (_) => {
                 assert.strictEqual(
                     await exec((_) => $.getHTML(document.body)),
-                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-template="<div class=&quot;popover&quot; role=&quot;tooltip&quot; data-test=&quot;Test&quot;><div class=&quot;popover-arrow&quot;></div><h3 class=&quot;popover-header&quot;></h3><div class=&quot;popover-body&quot;></div></div>"></button>' +
+                    '<button class="btn btn-secondary" id="popoverToggle1" type="button" data-ui-template="&lt;div class=&quot;popover&quot; role=&quot;tooltip&quot; data-test=&quot;Test&quot;&gt;&lt;div class=&quot;popover-arrow&quot;&gt;&lt;/div&gt;&lt;h3 class=&quot;popover-header&quot;&gt;&lt;/h3&gt;&lt;div class=&quot;popover-body&quot;&gt;&lt;/div&gt;&lt;/div&gt;"></button>' +
                     '<div class="popover" role="tooltip" data-test="Test" data-ui-placement="right" style="margin: 0px; position: absolute; top: 0px; right: initial; bottom: initial; left: 0px; transform: translate3d(21px, 0px, 0px);"><div class="popover-arrow" style="position: absolute; top: -2px; left: -16px;"></div><h3 class="popover-header" style="display: none;"></h3><div class="popover-body"></div></div>' +
                     '<button class="btn btn-secondary" id="popoverToggle2" type="button"></button>',
                 );

@@ -37,10 +37,18 @@ before(async function() {
         waitUntil: 'domcontentloaded',
     });
 
-    await page.setViewport({ width: 800, height: 600 });
+    await page.setViewport({
+        width: 800,
+        height: 600,
+        deviceScaleFactor: 1,
+        isMobile: false,
+    });
 
     await page.emulateMediaFeatures([
-        { name: 'prefers-reduced-motion', value: 'reduce' },
+        {
+            name: 'prefers-reduced-motion',
+            value: 'reduce',
+        },
     ]);
 
     assert.strictEqual(

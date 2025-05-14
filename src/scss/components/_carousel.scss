@@ -61,9 +61,9 @@
     font-size: $carousel-control-font-size;
     color: rgba(var(--ui-carousel-control-color-rgb), var(--ui-carousel-control-opacity));
     text-align: center;
+    outline: 0;
     background: transparent;
     border: 0;
-    outline: 0;
 
     &:hover,
     &:focus {

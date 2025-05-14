@@ -51,8 +51,8 @@
     margin-right: var(--ui-navbar-brand-margin-right);
     font-size: var(--ui-navbar-brand-font-size);
     color: var(--ui-navbar-brand-color);
-    text-decoration: none;
     white-space: nowrap;
+    text-decoration: none;
 
     &:hover,
     &:focus {
@@ -173,8 +173,8 @@
                 position: inherit;
                 bottom: 0;
                 z-index: 1000;
-                flex-grow: 1;
                 visibility: visible !important;
+                flex-grow: 1;
                 background-color: transparent;
                 border-right: 0;
                 border-left: 0;

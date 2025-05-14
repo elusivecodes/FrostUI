@@ -1266,6 +1266,7 @@
             super(node, options);
 
             this._placement = $$1.getDataset(this._node, 'uiPlacement');
+            this._referencePlacement = $$1.getDataset(this._options.reference, 'uiPlacement');
 
             $$1.setStyle(this._node, {
                 margin: 0,
@@ -1292,7 +1293,11 @@
             }
 
             if (!this._options.noAttributes) {
-                $$1.removeDataset(this._options.reference, 'uiPlacement');
+                if (this._referencePlacement) {
+                    $$1.setDataset(this._options.reference, { uiPlacement: this._referencePlacement });
+                } else {
+                    $$1.removeDataset(this._options.reference, 'uiPlacement');
+                }
             }
 
             removePopper(this);
@@ -3724,13 +3729,17 @@
     });
 
     // Ripple events
-    $$1.addEventDelegate(document, 'mousedown.ui.ripple', '.ripple', (e) => {
+    $$1.addEventDelegate(document, 'mouseup.ui.ripple', '.ripple', (e) => {
+        if (e.button !== 0) {
+            return;
+        }
+
         const target = e.currentTarget;
         const pos = $$1.position(target, { offset: true });
 
         const width = $$1.width(target);
         const height = $$1.height(target);
-        const scaleMultiple = Math.max(width, height) * 3;
+        const scaleMultiple = Math.max(width, height);
 
         const isFixed = $$1.isFixed(target);
         const mouseX = isFixed ? e.clientX : e.pageX;
@@ -3751,34 +3760,19 @@
         });
         $$1.append(target, ripple);
 
-        const animation = $$1.animate(
+        $$1.animate(
             ripple,
             (node, progress) => {
                 $$1.setStyle(node, {
                     transform: 'scale(' + Math.floor(progress * scaleMultiple) + ')',
+                    opacity: 1 - Math.pow(progress, 2),
                 });
             },
             {
                 duration: 500,
             },
-        );
-
-        $$1.addEventOnce(document, 'mouseup.ui.ripple', (_) => {
-            animation.finally((_) => {
-                $$1.animate(
-                    ripple,
-                    (node, progress) => {
-                        $$1.setStyle(node, {
-                            opacity: 1 - Math.pow(progress, 2),
-                        });
-                    },
-                    {
-                        duration: 250,
-                    },
-                ).finally((_) => {
-                    $$1.detach(ripple);
-                });
-            });
+        ).finally((_) => {
+            $$1.detach(ripple);
         });
     });
 

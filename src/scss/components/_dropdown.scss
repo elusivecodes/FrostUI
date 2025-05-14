@@ -45,15 +45,15 @@
 }
 
 .dropdown-item {
+    clear: both;
     display: block;
     width: 100%;
     padding: var(--ui-dropdown-item-padding-y) var(--ui-dropdown-item-padding-x);
-    clear: both;
     font-weight: $dropdown-item-font-weight;
     color: var(--ui-dropdown-link-color);
     text-align: inherit;
-    text-decoration: none;
     white-space: nowrap;
+    text-decoration: none;
     background-color: transparent;
     border: 0;
 

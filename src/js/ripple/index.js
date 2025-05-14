@@ -1,13 +1,17 @@
 import { $, document } from './../globals.js';
 
 // Ripple events
-$.addEventDelegate(document, 'mousedown.ui.ripple', '.ripple', (e) => {
+$.addEventDelegate(document, 'mouseup.ui.ripple', '.ripple', (e) => {
+    if (e.button !== 0) {
+        return;
+    }
+
     const target = e.currentTarget;
     const pos = $.position(target, { offset: true });
 
     const width = $.width(target);
     const height = $.height(target);
-    const scaleMultiple = Math.max(width, height) * 3;
+    const scaleMultiple = Math.max(width, height);
 
     const isFixed = $.isFixed(target);
     const mouseX = isFixed ? e.clientX : e.pageX;
@@ -28,33 +32,18 @@ $.addEventDelegate(document, 'mousedown.ui.ripple', '.ripple', (e) => {
     });
     $.append(target, ripple);
 
-    const animation = $.animate(
+    $.animate(
         ripple,
         (node, progress) => {
             $.setStyle(node, {
                 transform: 'scale(' + Math.floor(progress * scaleMultiple) + ')',
+                opacity: 1 - Math.pow(progress, 2),
             });
         },
         {
             duration: 500,
         },
-    );
-
-    $.addEventOnce(document, 'mouseup.ui.ripple', (_) => {
-        animation.finally((_) => {
-            $.animate(
-                ripple,
-                (node, progress) => {
-                    $.setStyle(node, {
-                        opacity: 1 - Math.pow(progress, 2),
-                    });
-                },
-                {
-                    duration: 250,
-                },
-            ).finally((_) => {
-                $.detach(ripple);
-            });
-        });
+    ).finally((_) => {
+        $.detach(ripple);
     });
 });

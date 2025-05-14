@@ -13,10 +13,17 @@ describe('Ripple', function() {
     });
 
     describe('user events', function() {
-        it('shows ripple effect on mousedown', async function() {
+        it('shows ripple effect on mouseup', async function() {
             assert.strictEqual(
                 await exec((_) => {
-                    $.triggerEvent('#button', 'mousedown');
+                    const button = $.findOne('#button');
+
+                    const upEvent = new MouseEvent('mouseup', {
+                        button: 0,
+                        bubbles: true,
+                    });
+                    button.dispatchEvent(upEvent);
+
                     return $.hasAnimation('#button .ripple-effect');
                 }),
                 true,
@@ -25,27 +32,19 @@ describe('Ripple', function() {
 
         it('removes ripple effect after animation completes', async function() {
             await exec((_) => {
-                $.triggerEvent('#button', 'mousedown');
-                $.triggerEvent('#button', 'mouseup');
+                const button = $.findOne('#button');
+
+                const upEvent = new MouseEvent('mouseup', {
+                    button: 0,
+                    bubbles: true,
+                });
+                button.dispatchEvent(upEvent);
             }).then(waitFor(800)).then(async function() {
                 assert.strictEqual(
                     await exec((_) => {
                         return $.hasDescendent('#button', '.ripple-effect');
                     }),
                     false,
-                );
-            });
-        });
-
-        it('does not remove ripple effect until mouseup', async function() {
-            await exec((_) => {
-                $.triggerEvent('#button', 'mousedown');
-            }).then(waitFor(800)).then(async function() {
-                assert.strictEqual(
-                    await exec((_) => {
-                        return $.hasDescendent('#button', '.ripple-effect');
-                    }),
-                    true,
                 );
             });
         });

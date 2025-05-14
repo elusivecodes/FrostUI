@@ -427,6 +427,17 @@
     )
 ));
 
+// resize
+@include utility((
+    property: resize,
+    values: (
+        none: none,
+        both: both,
+        x: horizontal,
+        y: vertical
+    )
+));
+
 // shadow
 @include utility((
     property: box-shadow,
@@ -458,13 +469,23 @@
 ));
 @include utility((
     property: max-width,
-    class: mw,
+    class: max-w,
     values: (100: 100%)
 ));
 @include utility((
     property: max-height,
-    class: mh,
+    class: max-h,
     values: (100: 100%)
+));
+@include utility((
+    property: min-width,
+    class: min-w,
+    values: (0: 0)
+));
+@include utility((
+    property: min-height,
+    class: min-h,
+    values: (0: 0)
 ));
 @include utility((
     property: width,

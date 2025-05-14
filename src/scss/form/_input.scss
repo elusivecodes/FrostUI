@@ -225,9 +225,9 @@
     height: calc($input-border-width * 2);
     background-color: $ripple-line-bg;
     opacity: 0;
+    transform: scaleX(0);
     transition: all $transition-time $transition-type;
     transition-property: transform, opacity;
-    transform: scaleX(0);
 
     @at-root {
 

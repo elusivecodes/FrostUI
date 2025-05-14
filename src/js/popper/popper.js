@@ -17,6 +17,7 @@ export default class Popper extends BaseComponent {
         super(node, options);
 
         this._placement = $.getDataset(this._node, 'uiPlacement');
+        this._referencePlacement = $.getDataset(this._options.reference, 'uiPlacement');
 
         $.setStyle(this._node, {
             margin: 0,
@@ -43,7 +44,11 @@ export default class Popper extends BaseComponent {
         }
 
         if (!this._options.noAttributes) {
-            $.removeDataset(this._options.reference, 'uiPlacement');
+            if (this._referencePlacement) {
+                $.setDataset(this._options.reference, { uiPlacement: this._referencePlacement });
+            } else {
+                $.removeDataset(this._options.reference, 'uiPlacement');
+            }
         }
 
         removePopper(this);

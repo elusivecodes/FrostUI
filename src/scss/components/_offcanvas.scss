@@ -17,9 +17,9 @@
     flex-direction: column;
     max-width: 100%;
     color: var(--ui-offcanvas-color);
+    outline: 0;
     background-color: var(--ui-offcanvas-bg);
     background-clip: padding-box;
-    outline: 0;
 
     &:not(.show) {
         display: none;
@@ -29,7 +29,6 @@
 .offcanvas-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     padding: var(--ui-offcanvas-padding-y) var(--ui-offcanvas-padding-x);
 
     .btn-close {
@@ -37,6 +36,7 @@
         margin-top: calc(var(--ui-offcanvas-padding-y) * -.5);
         margin-right: calc(var(--ui-offcanvas-padding-x) * -.5);
         margin-bottom: calc(var(--ui-offcanvas-padding-y) * -.5);
+        margin-left: auto;
     }
 }
 
